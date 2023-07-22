@@ -16,4 +16,13 @@
   a:hover {
     color: $soft-color;
   }
+
+  .eye {
+    position: absolute;
+    color: $dark-color;
+    right: 10px;
+    top: 10%;
+    cursor: pointer;
+    z-index: 9999;
+  }
 }

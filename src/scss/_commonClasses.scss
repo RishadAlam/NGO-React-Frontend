@@ -81,4 +81,43 @@ body {
   color: $main-color;
   position: relative;
   height: 100%;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.img > img {
+  width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span {
+  padding: 0;
+  margin: 0;
+}
+
+.btn-check:active + .btn-warning:focus,
+.btn-check:checked + .btn-warning:focus,
+.btn-warning.active:focus,
+.btn-warning:active:focus,
+.show > .btn-warning.dropdown-toggle:focus,
+.btn-check:focus + .btn-warning,
+.btn-warning:focus,
+.btn-check:focus + .btn,
+.btn:focus,
+.form-control:focus {
+  box-shadow: none;
+}
+
+ol,
+ul {
+  list-style-type: none;
+  padding: 0;
 }
