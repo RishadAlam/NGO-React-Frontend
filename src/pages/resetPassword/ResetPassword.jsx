@@ -40,19 +40,23 @@ export default function ResetPassword() {
             !specialCharRegExp.test(password) ? draftErrors.passwordSpecial = true : delete draftErrors.passwordSpecial
         }))
 
-        console.log(errors)
     }
 
     const setChange = (name, val) => {
-        setInputs(prevInputs => create(prevInputs, (draftInputs) => (draftInputs[name] = val)))
+        setInputs(prevInputs => create(prevInputs, (draftInputs) => {
+            draftInputs[name] = val
+        }))
 
         SetErrors(prevErrors => create(prevErrors, (draftErrors) => {
             if (name === 'password') {
-                val === '' ? draftErrors.password = "password required!" : delete draftErrors.confirmPassword
+                val === '' ? draftErrors.password = "password required!" : delete draftErrors.password
                 checkPassword(val)
+            } else {
+                val === '' ? draftErrors.confirmPassword = "Confirm password required!" : delete draftErrors.confirmPassword
+                if (val !== '') {
+                    inputs.password !== val ? draftErrors.confirmPassword = "Confirm password does not match!" : delete draftErrors.confirmPassword
+                }
             }
-            val === '' ? draftErrors.confirmPassword = "Confirm password required!" : delete draftErrors.confirmPassword
-            inputs.password !== val ? draftErrors.confirmPassword = "Confirm password does not match!" : delete draftErrors.confirmPassword
         }))
     }
 
@@ -64,18 +68,28 @@ export default function ResetPassword() {
 
                     <input type="email" id="defaultLoginFormEmail" className="form-control mb-4" name="email" placeholder="E-mail" value={inputs.email || ''} onChange={e => setChange('email', e.target.value)} disabled />
 
-                    <div className="input-group position-relative">
-                        <input type={isPlainText.password ? "text" : "password"} className="form-control mb-4 pe-4" name="password" placeholder="New Password" value={inputs.password || ''} onChange={e => setChange('password', e.target.value)} />
+                    <div className="input-group position-relative mb-4">
+                        <input type={isPlainText.password ? "text" : "password"} className={`form-control pe-4 ${errors.password ? "is-invalid" : ""}`} name="password" placeholder="New Password" value={inputs.password || ''} onChange={e => setChange('password', e.target.value)} />
                         <span className="eye" onClick={() => SetIsPlainText(prev => ({ ...prev, password: !prev.password }))}>
                             {isPlainText.password ? <Eye size={20} /> : <EyeOff size={20} />}
                         </span>
+                        {errors.password &&
+                            <div class="invalid-feedback text-start">
+                                {errors.password}
+                            </div>
+                        }
                     </div>
 
-                    <div className="input-group position-relative">
-                        <input type={isPlainText.confirmPassword ? "text" : "password"} className="form-control mb-4 pe-4" name="confirmPassword" placeholder="Confirm Password" value={inputs.confirmPassword || ''} onChange={e => setChange('confirmPassword', e.target.value)} />
+                    <div className="input-group position-relative mb-4">
+                        <input type={isPlainText.confirmPassword ? "text" : "password"} className={`form-control pe-4 ${errors.confirmPassword ? "is-invalid" : ""}`} name="confirmPassword" placeholder="Confirm Password" value={inputs.confirmPassword || ''} onChange={e => setChange('confirmPassword', e.target.value)} />
                         <span className="eye" onClick={() => SetIsPlainText(prev => ({ ...prev, confirmPassword: !prev.confirmPassword }))}>
                             {isPlainText.confirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </span>
+                        {errors.confirmPassword &&
+                            <div class="invalid-feedback text-start">
+                                {errors.confirmPassword}
+                            </div>
+                        }
                     </div>
 
                     <ul className="text-start">
@@ -86,7 +100,7 @@ export default function ResetPassword() {
                         <li className={errors.passwordLength ? "text-danger" : "text-success"}><b>{errors.passwordLength ? <XCircle /> : <CheckCircle />} </b> Minimum 8 Cheracters</li>
                     </ul>
 
-                    <button className="btn btn-primary btn-block" type="submit" disabled={!errors.length}>Reset Password</button>
+                    <button className="btn btn-primary btn-block" type="submit" disabled={Object.keys(errors).length}>Reset Password</button>
                 </form >
             </div >
         </>
