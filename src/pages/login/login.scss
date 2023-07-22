@@ -7,4 +7,13 @@
     background-color: $soft-bg;
     border-radius: 20px;
   }
+
+  .custom-control-label {
+    cursor: pointer;
+  }
+
+  label:hover,
+  a:hover {
+    color: $soft-color;
+  }
 }

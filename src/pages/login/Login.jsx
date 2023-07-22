@@ -12,7 +12,7 @@ export default function Login() {
                     <div className="d-flex justify-content-between">
                         <div>
                             <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="defaultLoginFormRemember" />
+                                <input type="checkbox" className="custom-control-input" id="defaultLoginFormRemember" />&nbsp;
                                 <label className="custom-control-label" htmlFor="defaultLoginFormRemember">Remember me</label>
                             </div>
                         </div>
