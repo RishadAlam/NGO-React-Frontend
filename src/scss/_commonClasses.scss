@@ -8,6 +8,53 @@ html {
   height: 100%;
 }
 
+body,
+html {
+  font-family: "Poppins", sans-serif;
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 300;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 500;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 700;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-weight: 800;
+  src: local("Poppins"),
+    url(../fonts/poppins/Poppins-ExtraBold.ttf) format("truetype");
+}
+
 a {
   text-decoration: none;
   color: inherit;
