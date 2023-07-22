@@ -67,6 +67,15 @@ a {
   padding: 10px 15px;
 }
 
+.btn:active {
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  box-shadow: none;
+}
+
 body {
   background-color: $main-bg;
   color: $main-color;
