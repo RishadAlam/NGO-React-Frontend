@@ -1,1 +1,10 @@
 @import "../../scss/variables";
+
+.login {
+  width: 500px;
+
+  @media (max-width: 992px) {
+    background-color: $soft-bg;
+    border-radius: 20px;
+  }
+}

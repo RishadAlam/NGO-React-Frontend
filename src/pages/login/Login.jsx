@@ -1,14 +1,15 @@
 import "./login.scss"
+import { Link } from "react-router-dom"
 
 export default function Login() {
     return (
         <>
-            <div className="login">
+            <div className="login p-5">
                 <form className="text-center">
-                    <p className="h4 mb-4">Sign in</p>
+                    <p className="h4 mb-4">Login</p>
                     <input type="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
                     <input type="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
-                    <div className="d-flex justify-content-around">
+                    <div className="d-flex justify-content-between">
                         <div>
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id="defaultLoginFormRemember" />
@@ -16,10 +17,10 @@ export default function Login() {
                             </div>
                         </div>
                         <div>
-                            <a href="">Forgot password?</a>
+                            <Link to={'/forgot-password'} >Forgot password?</Link>
                         </div>
                     </div>
-                    <button className="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                    <button className="btn btn-info btn-block mt-4" type="submit">Login</button>
                 </form>
             </div>
         </>
