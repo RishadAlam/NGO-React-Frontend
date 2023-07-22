@@ -1,6 +1,6 @@
-import { useState } from "react";
-import "../login/login.scss"
 import { create } from "mutative";
+import { useState } from "react";
+import "../login/login.scss";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
