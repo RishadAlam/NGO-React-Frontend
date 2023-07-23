@@ -22,10 +22,10 @@ export default function OtpVerification() {
             <div className="login p-5">
                 <form className="text-center">
                     <h2 className="mb-4">OTP Verification</h2>
-                    <input type="number" id="defaultLoginFormEmail" className={`form-control ${error.otp ? " is-invalid" : ""}`} placeholder="OTP" value={otp || ''} onChange={e => setChange(e.target.value)} />
-                    {error.otp &&
-                        <div class="invalid-feedback text-start">
-                            {error.otp}
+                    <input type="number" id="defaultLoginFormEmail" className={`form-control ${error?.otp ? " is-invalid" : ""}`} placeholder="OTP" value={otp || ''} onChange={e => setChange(e.target.value)} />
+                    {error?.otp &&
+                        <div className="invalid-feedback text-start">
+                            {error?.otp}
                         </div>
                     }
                     <button className="btn btn-primary btn-block mt-4" type="submit" disabled={Object.keys(error).length}>Submit</button>

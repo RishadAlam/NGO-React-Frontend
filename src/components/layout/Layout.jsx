@@ -9,9 +9,9 @@ export default function Layout() {
                 <div className="container pt-5">
                     <div className="row">
                         <div className="col-lg-6 d-none d-lg-block">
-                            <a href="login-light-login.html" class="-intro-x d-flex align-items-center">
+                            <a href="login-light-login.html" className="-intro-x d-flex align-items-center">
                                 <img alt="logo" src="dist/images/logo.svg" />
-                                <span class="text-white fs-lg ms-3"> R<span class="fw-medium">A</span> </span>
+                                <span className="text-white fs-lg ms-3"> R<span className="fw-medium">A</span> </span>
                             </a>
                             <div className="mt-3">
                                 <Illustration size={300} stroke={'none'} />

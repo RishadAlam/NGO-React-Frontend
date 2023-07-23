@@ -23,10 +23,10 @@ export default function ForgotPassword() {
             <div className="login p-5">
                 <form className="text-center">
                     <h2 className="mb-4">Find Your Accoun & Reset Password</h2>
-                    <input type="email" id="defaultLoginFormEmail" className={`form-control ${error.email ? " is-invalid" : ""}`} placeholder="Email Address" value={email || ''} onChange={e => setChange(e.target.value)} />
-                    {error.email &&
-                        <div class="invalid-feedback text-start">
-                            {error.email}
+                    <input type="email" id="defaultLoginFormEmail" className={`form-control ${error?.email ? " is-invalid" : ""}`} placeholder="Email Address" value={email || ''} onChange={e => setChange(e.target.value)} />
+                    {error?.email &&
+                        <div className="invalid-feedback text-start">
+                            {error?.email}
                         </div>
                     }
                     <button className="btn btn-primary btn-block mt-4" type="submit" disabled={Object.keys(error).length}>Send Passsword Reset OTP</button>
