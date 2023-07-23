@@ -1,18 +1,17 @@
-import { useState } from "react"
-import Eye from "../../icons/Eye"
-import "../login/login.scss"
-import EyeOff from "../../icons/EyeOff"
-import { create } from "mutative"
-import CheckCircle from "../../icons/CheckCircle"
-import XCircle from "../../icons/XCircle"
+import { create } from "mutative";
+import { useState } from "react";
+import CheckCircle from "../../icons/CheckCircle";
+import Eye from "../../icons/Eye";
+import EyeOff from "../../icons/EyeOff";
+import XCircle from "../../icons/XCircle";
+import "../../pages/login/login.scss";
 
-export default function ResetPassword() {
+export default function ResetPassword({ email, setStep }) {
     const [isPlainText, SetIsPlainText] = useState({
         "password": false,
         "confirmPassword": false
     })
     const [inputs, setInputs] = useState({
-        "email": "",
         "password": "",
         "confirmPassword": ""
     })
@@ -66,7 +65,7 @@ export default function ResetPassword() {
                 <form className="text-center">
                     <p className="h4 mb-4">Reset Password</p>
 
-                    <input type="email" id="defaultLoginFormEmail" className="form-control mb-4" name="email" placeholder="E-mail" value={inputs.email || ''} onChange={e => setChange('email', e.target.value)} disabled />
+                    <input type="email" id="defaultLoginFormEmail" className="form-control mb-4" name="email" placeholder="E-mail" value={email || ''} disabled />
 
                     <div className="input-group position-relative mb-4">
                         <input type={isPlainText.password ? "text" : "password"} className={`form-control pe-4 ${errors?.password ? "is-invalid" : ""}`} name="password" placeholder="New Password" value={inputs.password || ''} onChange={e => setChange('password', e.target.value)} />

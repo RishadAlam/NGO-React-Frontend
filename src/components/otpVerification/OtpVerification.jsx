@@ -1,8 +1,8 @@
 import { create } from "mutative";
 import { useState } from "react";
-import "../login/login.scss";
+import "../../pages/login/login.scss";
 
-export default function OtpVerification() {
+export default function OtpVerification({ setStep }) {
     const [otp, setOtp] = useState('');
     const [error, setError] = useState({
         "otp": ''
@@ -17,10 +17,17 @@ export default function OtpVerification() {
             }
         }))
     }
+
+    const otpSubmit = event => {
+        event.preventDefault()
+        console.log(otp)
+        setStep(3)
+    }
+
     return (
         <>
             <div className="login p-5">
-                <form className="text-center">
+                <form className="text-center" onSubmit={otpSubmit}>
                     <h2 className="mb-4">OTP Verification</h2>
                     <input type="number" id="defaultLoginFormEmail" className={`form-control ${error?.otp ? " is-invalid" : ""}`} placeholder="OTP" value={otp || ''} onChange={e => setChange(e.target.value)} />
                     {error?.otp &&
