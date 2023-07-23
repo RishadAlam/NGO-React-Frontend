@@ -75,6 +75,12 @@ a {
   -o-transform: scale(0.95);
   box-shadow: none;
 }
+.btn:disabled,
+.btn.disabled,
+fieldset:disabled {
+  background-color: $soft-color !important;
+  color: $soft-dark !important;
+}
 
 body {
   background-color: $main-bg;
