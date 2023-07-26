@@ -30,6 +30,8 @@ export default function Login() {
       })
     )
   }
+  console.log(import.meta.env.VITE_BASE_URL)
+  console.log(import.meta.env.VITE_TEST_USER)
 
   return (
     <>
