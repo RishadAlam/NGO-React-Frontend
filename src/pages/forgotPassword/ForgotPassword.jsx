@@ -1,8 +1,11 @@
 import { create } from 'mutative'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { postRequest } from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [error, setError] = useState({
     email: ''
@@ -12,6 +15,7 @@ export default function ForgotPassword() {
     setEmail(val)
     setError((prevError) =>
       create(prevError, (draftErrors) => {
+        draftErrors?.message ? delete draftErrors.message : ''
         val === '' ? (draftErrors.email = 'Email Address is required!') : delete draftErrors.email
 
         if (val !== '') {
@@ -25,7 +29,16 @@ export default function ForgotPassword() {
 
   const emailSubmit = (event) => {
     event.preventDefault()
-    console.log(email)
+    const requestData = {
+      email: email
+    }
+    postRequest('forget-password', requestData, null, 'POST').then((result) => {
+      if (result.success) {
+        return navigate('/account-verification')
+      }
+
+      setError(result?.errors)
+    })
   }
 
   return (
@@ -33,6 +46,11 @@ export default function ForgotPassword() {
       <div className="login p-5">
         <form className="text-center" onSubmit={emailSubmit}>
           <h2 className="mb-4">Find Your Accoun & Reset Password</h2>
+          {error?.message && error?.message !== '' && (
+            <div className="alert alert-danger" role="alert">
+              <strong>{error?.message}</strong>
+            </div>
+          )}
           <input
             type="email"
             id="defaultLoginFormEmail"
@@ -45,7 +63,7 @@ export default function ForgotPassword() {
           <button
             className="btn btn-primary btn-block mt-4"
             type="submit"
-            disabled={Object.keys(error).length}>
+            disabled={(error && Object.keys(error).length) || false}>
             Send Passsword Reset OTP
           </button>
         </form>
