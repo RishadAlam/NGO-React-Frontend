@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import LoaderSm from '../../loaders/Loadersm'
 import '../../pages/login/login.scss'
-import { postRequest } from '../../utilities/xFetch'
+import { getRequest, postRequest } from '../../utilities/xFetch'
 
-export default function OtpVerification({ setStep, setUserId, loading, setLoading }) {
+export default function OtpVerification({ userId, setStep, loading, setLoading }) {
   const [otp, setOtp] = useState('')
   const [error, setError] = useState({
     otp: ''
@@ -49,6 +49,23 @@ export default function OtpVerification({ setStep, setUserId, loading, setLoadin
     })
   }
 
+  const resendOTP = () => {
+    if (userId === '' || userId === undefined) {
+      toast.error('Undefined User!')
+      return
+    }
+    setLoading({ ...loading, resendOtp: true })
+    getRequest(`otp-resend/${userId}`).then((result) => {
+      setLoading({ ...loading, resendOtp: false })
+
+      if (result.success) {
+        toast.success(result.message)
+        return
+      }
+      setError(result?.errors || result)
+    })
+  }
+
   return (
     <>
       <div className="login p-5">
@@ -71,6 +88,17 @@ export default function OtpVerification({ setStep, setUserId, loading, setLoadin
           />
           {error?.otp && <div className="invalid-feedback text-start">{error?.otp}</div>}
 
+          <div className="text-end mt-2">
+            {loading?.resendOtp ? (
+              <div className="d-inline-block">
+                <LoaderSm size={30} clr="#1c3faa" className="ms-2" />
+              </div>
+            ) : (
+              <p className="text-primary" onClick={resendOTP}>
+                Did not get OTP? Resend OTP{' '}
+              </p>
+            )}
+          </div>
           <button
             className="btn btn-primary btn-block mt-4"
             type="submit"

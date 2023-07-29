@@ -46,7 +46,7 @@ export default function ForgotPassword() {
 
       if (result.success) {
         toast.success(result.message)
-        return navigate('/account-verification')
+        return navigate('/account-verification', { state: { id: result.id } })
       }
       setError(result?.errors || result)
     })
