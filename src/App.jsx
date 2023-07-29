@@ -1,11 +1,15 @@
 import { Toaster } from 'react-hot-toast'
 import { Route, Routes } from 'react-router-dom'
+import { useAuthDataValue } from './atoms/authAtoms'
 import Layout from './components/layout/Layout'
 import AccountVerification from './pages/accountVerification/AccountVerification'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 
 export default function App() {
+  const authData = useAuthDataValue()
+
+  console.log(authData)
   return (
     <>
       <Toaster

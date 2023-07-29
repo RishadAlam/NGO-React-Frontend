@@ -2,14 +2,15 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import LoaderSm from '../../loaders/Loadersm'
 import { postRequest } from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
   const navigate = useNavigate()
+  const [loading, setLoading] = useLoadingState({})
   const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState({})
   const [error, setError] = useState({
     email: ''
   })

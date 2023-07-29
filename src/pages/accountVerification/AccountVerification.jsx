@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import OtpVerification from '../../components/otpVerification/OtpVerification'
 import ResetPassword from '../../components/resetPassword/ResetPassword'
 
 export default function AccountVerification() {
   const location = useLocation()
   const userId = location?.state?.id
-  const [loading, setLoading] = useState({})
+
+  const [loading, setLoading] = useLoadingState({})
   const [step, setStep] = useState(1)
+
   return (
     <>
       {step === 1 && (
