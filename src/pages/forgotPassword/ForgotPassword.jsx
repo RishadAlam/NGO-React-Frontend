@@ -48,7 +48,7 @@ export default function ForgotPassword() {
         toast.success(result.message)
         return navigate('/account-verification')
       }
-      setError(result?.errors)
+      setError(result?.errors || result)
     })
   }
 

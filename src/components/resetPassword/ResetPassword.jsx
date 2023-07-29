@@ -1,12 +1,17 @@
 import { create } from 'mutative'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 import CheckCircle from '../../icons/CheckCircle'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import XCircle from '../../icons/XCircle'
+import LoaderSm from '../../loaders/Loadersm'
 import '../../pages/login/login.scss'
+import { putRequest } from '../../utilities/xFetch'
 
 export default function ResetPassword({ userId, loading, setLoading }) {
+  const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState({
     password: false,
     confirmPassword: false
@@ -61,6 +66,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
 
     SetErrors((prevErrors) =>
       create(prevErrors, (draftErrors) => {
+        draftErrors?.message ? delete draftErrors.message : ''
         if (name === 'password') {
           val === '' ? (draftErrors.password = 'password required!') : delete draftErrors.password
           checkPassword(val)
@@ -78,11 +84,41 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     )
   }
 
+  const submitPassword = (event) => {
+    event.preventDefault()
+    if (inputs.password === '' || inputs.confirmPassword === '' || userId === '') {
+      toast.error('Required fields are empty!')
+      return
+    }
+
+    setLoading({ ...loading, resetPassword: true })
+    const requestData = {
+      user_id: userId,
+      new_password: inputs.password,
+      confirm_password: inputs.confirmPassword
+    }
+
+    putRequest('reset-password', requestData, null).then((result) => {
+      setLoading({ ...loading, resetPassword: false })
+
+      if (result.success) {
+        toast.success(result.message)
+        return navigate('/login')
+      }
+      SetErrors(result?.errors || result)
+    })
+  }
+
   return (
     <>
       <div className="login p-5">
-        <form className="text-center">
+        <form className="text-center" onSubmit={submitPassword}>
           <p className="h4 mb-4">Reset Password</p>
+          {errors?.message && errors?.message !== '' && (
+            <div className="alert alert-danger" role="alert">
+              <strong>{errors?.message}</strong>
+            </div>
+          )}
 
           <input type="hidden" name="id" value={userId || ''} disabled />
 
@@ -152,8 +188,11 @@ export default function ResetPassword({ userId, loading, setLoading }) {
           <button
             className="btn btn-primary btn-block"
             type="submit"
-            disabled={Object.keys(errors).length}>
-            Reset Password
+            disabled={Object.keys(errors).length || loading?.resetPassword}>
+            <div className="d-flex">
+              Reset Password
+              {loading?.resetPassword && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+            </div>
           </button>
         </form>
       </div>

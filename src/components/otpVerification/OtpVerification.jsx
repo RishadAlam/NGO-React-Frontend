@@ -45,7 +45,7 @@ export default function OtpVerification({ setStep, setUserId, loading, setLoadin
         setStep(2)
         return
       }
-      setError(result?.errors)
+      setError(result?.errors || result)
     })
   }
 
