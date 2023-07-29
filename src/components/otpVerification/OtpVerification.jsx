@@ -41,7 +41,6 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
 
       if (result.success) {
         toast.success(result.message)
-        setUserId(result.userId)
         setStep(2)
         return
       }
