@@ -1,5 +1,6 @@
 import { create } from 'mutative'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import LoaderSm from '../../loaders/Loadersm'
 import { postRequest } from '../../utilities/xFetch'
@@ -31,6 +32,10 @@ export default function ForgotPassword() {
 
   const emailSubmit = (event) => {
     event.preventDefault()
+    if (email === '') {
+      toast.error('Required fields are empty!')
+      return
+    }
     setLoading({ ...loading, email: true })
 
     const requestData = {
@@ -38,14 +43,14 @@ export default function ForgotPassword() {
     }
     postRequest('forget-password', requestData, null, 'POST').then((result) => {
       setLoading({ ...loading, email: false })
+
       if (result.success) {
+        toast.success(result.message)
         return navigate('/account-verification')
       }
-
       setError(result?.errors)
     })
   }
-  console.log(loading)
 
   return (
     <>
@@ -70,10 +75,10 @@ export default function ForgotPassword() {
             className="btn btn-primary btn-block mt-4"
             type="submit"
             disabled={Object.keys(error).length || loading?.email}>
-            <p className="d-flex">
+            <div className="d-flex">
               Send Passsword Reset OTP{' '}
               {loading?.email && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
-            </p>
+            </div>
           </button>
         </form>
       </div>
