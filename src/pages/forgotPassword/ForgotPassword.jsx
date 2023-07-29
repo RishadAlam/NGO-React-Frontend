@@ -1,12 +1,14 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import LoaderSm from '../../loaders/Loadersm'
 import { postRequest } from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState({})
   const [error, setError] = useState({
     email: ''
   })
@@ -29,10 +31,13 @@ export default function ForgotPassword() {
 
   const emailSubmit = (event) => {
     event.preventDefault()
+    setLoading({ ...loading, email: true })
+
     const requestData = {
       email: email
     }
     postRequest('forget-password', requestData, null, 'POST').then((result) => {
+      setLoading({ ...loading, email: false })
       if (result.success) {
         return navigate('/account-verification')
       }
@@ -40,6 +45,7 @@ export default function ForgotPassword() {
       setError(result?.errors)
     })
   }
+  console.log(loading)
 
   return (
     <>
@@ -63,8 +69,11 @@ export default function ForgotPassword() {
           <button
             className="btn btn-primary btn-block mt-4"
             type="submit"
-            disabled={(error && Object.keys(error).length) || false}>
-            Send Passsword Reset OTP
+            disabled={Object.keys(error).length || loading?.email}>
+            <p className="d-flex">
+              Send Passsword Reset OTP{' '}
+              {loading?.email && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+            </p>
           </button>
         </form>
       </div>

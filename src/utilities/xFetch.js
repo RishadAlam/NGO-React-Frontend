@@ -85,7 +85,7 @@ export async function postRequest(endpoint, data, queryParam = null) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Accept-Language': 'en'
+        'Accept-Language': 'bn'
       }
     })
     .then((res) => {
