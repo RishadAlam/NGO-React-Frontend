@@ -41,7 +41,7 @@ export default function ForgotPassword() {
     const requestData = {
       email: email
     }
-    postRequest('forget-password', requestData, null, 'POST').then((result) => {
+    postRequest('forget-password', requestData, null).then((result) => {
       setLoading({ ...loading, email: false })
 
       if (result.success) {

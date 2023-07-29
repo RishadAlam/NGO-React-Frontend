@@ -6,7 +6,7 @@ import EyeOff from '../../icons/EyeOff'
 import XCircle from '../../icons/XCircle'
 import '../../pages/login/login.scss'
 
-export default function ResetPassword({ email, setStep }) {
+export default function ResetPassword({ userId, loading, setLoading }) {
   const [isPlainText, SetIsPlainText] = useState({
     password: false,
     confirmPassword: false
@@ -84,15 +84,7 @@ export default function ResetPassword({ email, setStep }) {
         <form className="text-center">
           <p className="h4 mb-4">Reset Password</p>
 
-          <input
-            type="email"
-            id="defaultLoginFormEmail"
-            className="form-control mb-4"
-            name="email"
-            placeholder="E-mail"
-            value={email || ''}
-            disabled
-          />
+          <input type="hidden" name="id" value={userId || ''} disabled />
 
           <div className="input-group position-relative mb-4">
             <input
