@@ -69,6 +69,7 @@ export default function ForgotPassword() {
             placeholder="Email Address"
             value={email || ''}
             onChange={(e) => setChange(e.target.value)}
+            disabled={loading?.email}
           />
           {error?.email && <div className="invalid-feedback text-start">{error?.email}</div>}
           <button

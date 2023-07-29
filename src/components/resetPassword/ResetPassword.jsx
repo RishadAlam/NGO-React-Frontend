@@ -130,6 +130,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
               placeholder="New Password"
               value={inputs.password || ''}
               onChange={(e) => setChange('password', e.target.value)}
+              disabled={loading?.resetPassword}
             />
             <span
               className="eye"
@@ -149,6 +150,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
               placeholder="Confirm Password"
               value={inputs.confirmPassword || ''}
               onChange={(e) => setChange('confirmPassword', e.target.value)}
+              disabled={loading?.resetPassword}
             />
             <span
               className="eye"

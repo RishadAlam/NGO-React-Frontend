@@ -67,6 +67,7 @@ export default function OtpVerification({ setStep, setUserId, loading, setLoadin
             placeholder="OTP"
             value={otp || ''}
             onChange={(e) => setChange(e.target.value)}
+            disabled={loading?.otp}
           />
           {error?.otp && <div className="invalid-feedback text-start">{error?.otp}</div>}
 
