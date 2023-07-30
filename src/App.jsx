@@ -21,13 +21,15 @@ export default function App() {
         setIsAuthorized(true)
         setAuthData(JSON.parse(authorizedData))
       }
+    }
+    return () => {
       setIsLoading(false)
     }
   }, [])
 
-  if (isLoading) {
-    return <div>loading...</div>
-  }
+  // if (isLoading) {
+  //   return <div>loading...</div>
+  // }
 
   return (
     <>
