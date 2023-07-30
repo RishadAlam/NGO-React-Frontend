@@ -22,9 +22,7 @@ export default function App() {
         setAuthData(JSON.parse(authorizedData))
       }
     }
-    return () => {
-      setIsLoading(false)
-    }
+    setIsLoading(false)
   }, [])
 
   // if (isLoading) {
