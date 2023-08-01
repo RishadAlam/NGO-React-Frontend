@@ -10,49 +10,55 @@ html {
 
 body,
 html {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 300;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Light.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Light.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 400;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Regular.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Regular.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 500;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Medium.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Medium.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 600;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-SemiBold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-SemiBold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 700;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Bold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Bold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 800;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-ExtraBold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-ExtraBold.ttf) format('truetype');
 }
 
 a {
@@ -126,4 +132,13 @@ ol,
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

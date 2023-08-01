@@ -2,15 +2,17 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import checkPassword from '../../helper/checkPassword'
 import CheckCircle from '../../icons/CheckCircle'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import XCircle from '../../icons/XCircle'
 import LoaderSm from '../../loaders/Loadersm'
 import '../../pages/login/login.scss'
-import { putRequest } from '../../utilities/xFetch'
+import xFetch from '../../utilities/xFetch'
 
 export default function ResetPassword({ userId, loading, setLoading }) {
+  // States
   const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState({
     password: false,
@@ -30,33 +32,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     passwordSpecial: true
   })
 
-  const checkPassword = (password) => {
-    const uppercaseRegExp = /(?=.*?[A-Z])/
-    const lowercaseRegExp = /(?=.*?[a-z])/
-    const digitsRegExp = /(?=.*?[0-9])/
-    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/
-
-    SetErrors((prevErrors) =>
-      create(prevErrors, (draftErrors) => {
-        password.length < 8
-          ? (draftErrors.passwordLength = true)
-          : delete draftErrors.passwordLength
-        !uppercaseRegExp.test(password)
-          ? (draftErrors.passwordUppercase = true)
-          : delete draftErrors.passwordUppercase
-        !lowercaseRegExp.test(password)
-          ? (draftErrors.passwordLowercase = true)
-          : delete draftErrors.passwordLowercase
-        !digitsRegExp.test(password)
-          ? (draftErrors.passwordDigits = true)
-          : delete draftErrors.passwordDigits
-        !specialCharRegExp.test(password)
-          ? (draftErrors.passwordSpecial = true)
-          : delete draftErrors.passwordSpecial
-      })
-    )
-  }
-
+  // Set the OnChange Value
   const setChange = (name, val) => {
     setInputs((prevInputs) =>
       create(prevInputs, (draftInputs) => {
@@ -64,12 +40,13 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       })
     )
 
+    // Set Errors
     SetErrors((prevErrors) =>
       create(prevErrors, (draftErrors) => {
         draftErrors?.message ? delete draftErrors.message : ''
         if (name === 'password') {
           val === '' ? (draftErrors.password = 'password required!') : delete draftErrors.password
-          checkPassword(val)
+          checkPassword(val, SetErrors)
         } else {
           val === ''
             ? (draftErrors.confirmPassword = 'Confirm password required!')
@@ -84,6 +61,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     )
   }
 
+  // Submit Form
   const submitPassword = (event) => {
     event.preventDefault()
     if (inputs.password === '' || inputs.confirmPassword === '' || userId === '') {
@@ -98,14 +76,14 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       confirm_password: inputs.confirmPassword
     }
 
-    putRequest('reset-password', requestData, null).then((result) => {
+    xFetch('reset-password', requestData, null, 'PUT').then((response) => {
       setLoading({ ...loading, resetPassword: false })
 
-      if (result.success) {
-        toast.success(result.message)
+      if (response.success) {
+        toast.success(response.message)
         return navigate('/login')
       }
-      SetErrors(result?.errors || result)
+      SetErrors(response?.errors || response)
     })
   }
 

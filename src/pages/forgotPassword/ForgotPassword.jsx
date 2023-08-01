@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import LoaderSm from '../../loaders/Loadersm'
-import { postRequest } from '../../utilities/xFetch'
+import xFetch from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
@@ -37,19 +37,20 @@ export default function ForgotPassword() {
       toast.error('Required fields are empty!')
       return
     }
-    setLoading({ ...loading, email: true })
 
+    setLoading({ ...loading, email: true })
     const requestData = {
       email: email
     }
-    postRequest('forget-password', requestData, null).then((result) => {
+
+    xFetch('forget-password', requestData, null, 'POST').then((response) => {
       setLoading({ ...loading, email: false })
 
-      if (result.success) {
-        toast.success(result.message)
-        return navigate('/account-verification', { state: { id: result.id } })
+      if (response.success) {
+        toast.success(response.message)
+        return navigate('/account-verification', { state: { id: response.id } })
       }
-      setError(result?.errors || result)
+      setError(response?.errors || response)
     })
   }
 

@@ -3,14 +3,16 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import LoaderSm from '../../loaders/Loadersm'
 import '../../pages/login/login.scss'
-import { getRequest, postRequest } from '../../utilities/xFetch'
+import xFetch from '../../utilities/xFetch'
 
 export default function OtpVerification({ userId, setStep, loading, setLoading }) {
+  // States
   const [otp, setOtp] = useState('')
   const [error, setError] = useState({
     otp: ''
   })
 
+  // Set Onchange Value
   const setChange = (val) => {
     setOtp(val)
     setError((prevError) =>
@@ -24,6 +26,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
     )
   }
 
+  // Submit Data
   const otpSubmit = (event) => {
     event.preventDefault()
     if (otp === '') {
@@ -36,32 +39,34 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
       otp: otp
     }
 
-    postRequest('account-verification', requestData, null).then((result) => {
+    xFetch('account-verification', requestData, null, 'POST').then((response) => {
       setLoading({ ...loading, otp: false })
 
-      if (result.success) {
-        toast.success(result.message)
+      if (response.success) {
+        toast.success(response.message)
         setStep(2)
         return
       }
-      setError(result?.errors || result)
+      setError(response?.errors || response)
     })
   }
 
+  // Resend OTP
   const resendOTP = () => {
     if (userId === '' || userId === undefined) {
       toast.error('Undefined User!')
       return
     }
+
     setLoading({ ...loading, resendOtp: true })
-    getRequest(`otp-resend/${userId}`).then((result) => {
+    xFetch(`otp-resend/${userId}`).then((response) => {
       setLoading({ ...loading, resendOtp: false })
 
-      if (result.success) {
-        toast.success(result.message)
+      if (response.success) {
+        toast.success(response.message)
         return
       }
-      setError(result?.errors || result)
+      setError(response?.errors || response)
     })
   }
 
@@ -93,7 +98,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
                 <LoaderSm size={30} clr="#1c3faa" className="ms-2" />
               </div>
             ) : (
-              <p className="text-primary" onClick={resendOTP}>
+              <p className="text-warning cursor-pointer" onClick={resendOTP}>
                 Did not get OTP? Resend OTP{' '}
               </p>
             )}
