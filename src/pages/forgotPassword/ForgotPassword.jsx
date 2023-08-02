@@ -8,6 +8,7 @@ import xFetch from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
+  // States
   const navigate = useNavigate()
   const [loading, setLoading] = useLoadingState({})
   const [email, setEmail] = useState('')
@@ -15,6 +16,7 @@ export default function ForgotPassword() {
     email: ''
   })
 
+  // Set the OnChange Values
   const setChange = (val) => {
     setEmail(val)
     setError((prevError) =>
@@ -31,6 +33,7 @@ export default function ForgotPassword() {
     )
   }
 
+  // Submit Form
   const emailSubmit = (event) => {
     event.preventDefault()
     if (email === '') {

@@ -1,3 +1,4 @@
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Route, Routes } from 'react-router-dom'
@@ -16,10 +17,15 @@ export default function App() {
 
   useEffect(() => {
     if (!isAutorized) {
-      const authorizedData = GetSessionStorage('authData') || GetLocalStorage('authData')
-      if (authorizedData) {
+      const accessToken =
+        JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
+      if (accessToken) {
         setIsAuthorized(true)
-        setAuthData(JSON.parse(authorizedData))
+        setAuthData((prevAuthData) =>
+          create(prevAuthData, (draftAuthData) => {
+            draftAuthData.accessToken = accessToken
+          })
+        )
       }
     }
     setIsLoading(false)

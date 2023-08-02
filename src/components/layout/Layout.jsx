@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
 import { useIsLoadingValue } from '../../atoms/loaderAtoms'
 import Illustration from '../../icons/Illustration'
 import './layout.scss'
 
 export default function Layout() {
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
   const navigate = useNavigate()
   const isAutorized = useIsAuthorizedValue()
   const isLoading = useIsLoadingValue()
 
   useEffect(() => {
-    if (isAutorized) navigate('/')
+    if (isAutorized) navigate(from, { replace: true })
   }, [isAutorized])
 
   if (isLoading) {

@@ -11,6 +11,7 @@ export default async function xFetch(endpoint, data, queryParam = null, method =
     }
   }
 
+  // Build Config
   const config = {
     method: method.toUpperCase(),
     url: uri,
