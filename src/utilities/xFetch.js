@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-export default async function xFetch(endpoint, data, queryParam = null, method = 'GET') {
+export default async function xFetch(
+  endpoint,
+  data,
+  accessToken = null,
+  queryParam = null,
+  method = 'GET'
+) {
   const uri = new URL(`/api/${endpoint}`, import.meta.env.VITE_BASE_URI)
   // append query params in url
   if (queryParam) {
@@ -24,6 +30,9 @@ export default async function xFetch(endpoint, data, queryParam = null, method =
 
   if (method.toLowerCase() === 'post' || method.toLowerCase() === 'put') {
     config.data = data instanceof FormData ? data : JSON.stringify(data)
+  }
+  if (accessToken) {
+    config.headers.Authorization = accessToken
   }
 
   const response = await axios(config)

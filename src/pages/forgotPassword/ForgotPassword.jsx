@@ -49,7 +49,7 @@ export default function ForgotPassword() {
     xFetch('forget-password', requestData, null, 'POST').then((response) => {
       setLoading({ ...loading, email: false })
 
-      if (response.success) {
+      if (response?.success) {
         toast.success(response.message)
         return navigate('/account-verification', { state: { id: response.id } })
       }

@@ -11,25 +11,25 @@ import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 
 export default function App() {
-  const [authData, setAuthData] = useAuthDataState()
-  const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
-  const [isLoading, setIsLoading] = useIsLoadingState()
+  // const [authData, setAuthData] = useAuthDataState()
+  // const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
+  // const [isLoading, setIsLoading] = useIsLoadingState()
 
-  useEffect(() => {
-    if (!isAutorized) {
-      const accessToken =
-        JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
-      if (accessToken) {
-        setIsAuthorized(true)
-        setAuthData((prevAuthData) =>
-          create(prevAuthData, (draftAuthData) => {
-            draftAuthData.accessToken = accessToken
-          })
-        )
-      }
-    }
-    setIsLoading(false)
-  }, [])
+  // useEffect(() => {
+  //   if (!isAutorized) {
+  //     const accessToken =
+  //       JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
+  //     if (accessToken) {
+  //       setIsAuthorized(true)
+  //       setAuthData((prevAuthData) =>
+  //         create(prevAuthData, (draftAuthData) => {
+  //           draftAuthData.accessToken = accessToken
+  //         })
+  //       )
+  //     }
+  //   }
+  //   setIsLoading(false)
+  // }, [])
 
   // if (isLoading) {
   //   return <div>loading...</div>

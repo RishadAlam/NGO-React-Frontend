@@ -79,7 +79,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     xFetch('reset-password', requestData, null, 'PUT').then((response) => {
       setLoading({ ...loading, resetPassword: false })
 
-      if (response.success) {
+      if (response?.success) {
         toast.success(response.message)
         return navigate('/login')
       }

@@ -42,7 +42,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
     xFetch('account-verification', requestData, null, 'POST').then((response) => {
       setLoading({ ...loading, otp: false })
 
-      if (response.success) {
+      if (response?.success) {
         toast.success(response.message)
         setStep(2)
         return
@@ -62,7 +62,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
     xFetch(`otp-resend/${userId}`).then((response) => {
       setLoading({ ...loading, resendOtp: false })
 
-      if (response.success) {
+      if (response?.success) {
         toast.success(response.message)
         return
       }
