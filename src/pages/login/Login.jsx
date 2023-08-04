@@ -1,11 +1,10 @@
 import { create } from 'mutative'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
-import useLocalStorage from '../../hooks/useLocalStorage'
-import useSessionStorage from '../../hooks/useSessionStorage'
+import { setLocalStorage, setSessionStorage } from '../../helper/GetDataFromStorage'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import LoaderSm from '../../loaders/Loadersm'
@@ -17,8 +16,6 @@ export default function Login() {
   const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState(false)
   const [loading, setLoading] = useLoadingState({})
-  const [sessionAccessToken, setSessionAccessToken] = useSessionStorage('accessToken')
-  const [localAccessToken, setLocalAccessToken] = useLocalStorage('accessToken')
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
   const [authData, setAuthData] = useAuthDataState()
@@ -32,6 +29,10 @@ export default function Login() {
     email: '',
     password: ''
   })
+
+  useEffect(() => {
+    document.title = 'Login'
+  }, [])
 
   // Set the OnChange Values
   const setChange = (name, val) => {
@@ -69,8 +70,8 @@ export default function Login() {
 
       if (response.success) {
         inputs.rememberMe
-          ? setLocalAccessToken(response.access_token)
-          : setSessionAccessToken(response.access_token)
+          ? setLocalStorage('accessToken', response.access_token)
+          : setSessionStorage('accessToken', response.access_token)
 
         setIsAuthorized(true)
         setAuthData((prevAuthData) =>
