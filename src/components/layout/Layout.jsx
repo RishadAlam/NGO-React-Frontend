@@ -16,9 +16,9 @@ export default function Layout() {
     if (isAutorized) navigate(from, { replace: true })
   }, [isAutorized])
 
-  if (isLoading) {
-    return <div>loading...</div>
-  }
+  // if (isLoading) {
+  //   return <div>loading...</div>
+  // }
 
   return (
     <>

@@ -1,14 +1,15 @@
-@import "../../scss/variables";
+@import '../../scss/variables';
+@import '../../scss/responsive';
 .layout {
   //   background: $main-bg;
   height: 100%;
 
   &::before {
-    background-image: url("../../icons/bg-login-page-dark.svg");
+    background-image: url('../../icons/bg-login-page-dark.svg');
     background-position: 100%;
     background-repeat: no-repeat;
     background-size: auto 100%;
-    content: "";
+    content: '';
     height: inherit;
     left: 0;
     margin-left: -48%;
@@ -29,5 +30,41 @@
   }
   .layout-heading-sm {
     font-size: 22px;
+  }
+}
+
+.main {
+  .side-bar {
+    min-width: 250px;
+    background-color: aqua;
+
+    @include lg {
+      min-width: max-content !important;
+    }
+  }
+  .main-body {
+    width: 100%;
+    background-color: cadetblue;
+
+    .top-bar {
+      background-color: blueviolet;
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .content {
+      min-height: calc(100vh - 60px - 40px);
+    }
+  }
+  .footer {
+    background-color: tomato;
+    padding: 0 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }

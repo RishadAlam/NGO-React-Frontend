@@ -59,10 +59,6 @@ export default function AuthProvider({ children }) {
       }
     }
     setIsLoading(false)
-    console.log('isLoading', isLoading)
-    console.log('authorization', loading.authorization)
-    console.log('isAuthorized', isAutorized)
-    console.log('authdata', authData)
 
     return () => {
       controller.abort()
