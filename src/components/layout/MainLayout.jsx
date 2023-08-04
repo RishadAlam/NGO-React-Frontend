@@ -20,16 +20,18 @@ export default function MainLayout() {
 
   return (
     <>
-      <section className="main">
-        <div className="d-flex">
-          <div className="side-bar d-md-block d-none">SideBar</div>
-          <div className="main-body">
-            <div className="top-bar">TopBar</div>
-            <div className="content">content</div>
+      {isAutorized && (
+        <section className="main">
+          <div className="d-flex">
+            <div className="side-bar d-md-block d-none">SideBar</div>
+            <div className="main-body">
+              <div className="top-bar">TopBar</div>
+              <div className="content">content</div>
+            </div>
           </div>
-        </div>
-        <div className="footer">footer</div>
-      </section>
+          <div className="footer">footer</div>
+        </section>
+      )}
     </>
   )
 }

@@ -67,7 +67,7 @@ a {
 }
 
 .btn {
-  color: $main-color;
+  color: $white-color;
   background-color: $primary-bg;
   border: none;
   padding: 10px 15px;
@@ -81,11 +81,15 @@ a {
   -o-transform: scale(0.95);
   box-shadow: none;
 }
-.btn:disabled,
-.btn.disabled,
+.dark .btn:disabled,
 fieldset:disabled {
   background-color: $soft-color !important;
   color: $soft-dark !important;
+}
+.light .btn:disabled,
+fieldset:disabled {
+  background-color: $soft-color !important;
+  color: $white-color !important;
 }
 
 body {

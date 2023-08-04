@@ -154,7 +154,7 @@ export default function Login() {
                   disabled={loading?.login}
                 />
                 &nbsp;
-                <label className="custom-control-label" htmlFor="rememberMe">
+                <label className="cursor-pointer" htmlFor="rememberMe">
                   Remember me
                 </label>
               </div>
