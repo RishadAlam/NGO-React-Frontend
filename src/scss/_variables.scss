@@ -4,6 +4,7 @@ html.light {
   --dark-bg: #222b3c;
   --primary-bg: #1c3faa;
   --primary-soft-bg: #0a8dff;
+  --secondary-color: #384256;
   --main-color: #2d3748;
   --soft-color: #2d3748db;
   --dark-color: #2a3447;
@@ -16,6 +17,7 @@ html.dark {
   --dark-bg: #222b3c;
   --primary-bg: #1c3faa;
   --primary-soft-bg: #0a8dff;
+  --secondary-color: #384256;
   --main-color: #fff;
   --soft-color: #ddd;
   --dark-color: #2a3447;
@@ -38,6 +40,7 @@ $soft-bg: var(--soft-bg);
 $dark-bg: var(--dark-bg);
 $primary-bg: var(--primary-bg);
 $primary-soft-bg: var(--primary-soft-bg);
+$secondary-color: var(--secondary-color);
 $main-color: var(--main-color);
 $white-color: var(--white-color);
 $soft-color: var(--soft-color);
@@ -53,3 +56,7 @@ $gray-600: #718096;
 $gray-700: #4a5568;
 $gray-800: #2d3748;
 $gray-900: #1a202c;
+
+@mixin transition {
+  transition: 0.5s ease;
+}

@@ -19,7 +19,7 @@
     z-index: -9999;
   }
 
-  @media (max-width: 992px) {
+  @include lg {
     &::before {
       display: none;
     }
@@ -35,8 +35,11 @@
 
 .main {
   .side-bar {
-    min-width: 250px;
-    background-color: aqua;
+    min-width: 200px;
+    max-width: 250px;
+    border-right: 1px solid $primary-soft-bg;
+    // background-color: aqua;
+    padding: 0 10px;
 
     @include lg {
       min-width: max-content !important;
