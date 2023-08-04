@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import LoaderSm from '../../loaders/Loadersm'
+import LoaderSm from '../../components/loaders/LoaderSm'
 import '../../pages/login/login.scss'
 import xFetch from '../../utilities/xFetch'
 

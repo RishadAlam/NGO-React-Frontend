@@ -3,7 +3,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useLoadingState } from '../../atoms/loaderAtoms'
-import LoaderSm from '../../loaders/Loadersm'
+import LoaderSm from '../../components/loaders/LoaderSm'
 import xFetch from '../../utilities/xFetch'
 import '../login/login.scss'
 

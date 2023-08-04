@@ -6,6 +6,7 @@ import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
 import xFetch from '../../utilities/xFetch'
+import Loader from '../loaders/Loader'
 
 export default function AuthProvider({ children }) {
   const [authData, setAuthData] = useAuthDataState()
@@ -65,5 +66,11 @@ export default function AuthProvider({ children }) {
     }
   }, [])
 
-  return isLoading || loading?.authorization ? <div>1st Loading..........</div> : children
+  return isLoading || loading?.authorization ? (
+    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Loader />
+    </div>
+  ) : (
+    children
+  )
 }
