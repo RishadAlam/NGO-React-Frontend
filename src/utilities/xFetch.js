@@ -3,6 +3,7 @@ import axios from 'axios'
 export default async function xFetch(
   endpoint,
   data,
+  signal = null,
   accessToken = null,
   queryParam = null,
   method = 'GET'
@@ -33,6 +34,9 @@ export default async function xFetch(
   }
   if (accessToken) {
     config.headers.Authorization = accessToken
+  }
+  if (signal) {
+    config.signal = signal
   }
 
   const response = await axios(config)

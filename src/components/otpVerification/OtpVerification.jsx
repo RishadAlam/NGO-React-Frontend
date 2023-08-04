@@ -39,16 +39,20 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
       otp: otp
     }
 
-    xFetch('account-verification', requestData, null, 'POST').then((response) => {
-      setLoading({ ...loading, otp: false })
+    const controller = new AbortController()
+    xFetch('account-verification', requestData, null, controller.signal, null, 'POST').then(
+      (response) => {
+        setLoading({ ...loading, otp: false })
 
-      if (response?.success) {
-        toast.success(response.message)
-        setStep(2)
-        return
+        if (response?.success) {
+          toast.success(response.message)
+          setStep(2)
+          return
+        }
+        setError(response?.errors || response)
       }
-      setError(response?.errors || response)
-    })
+    )
+    controller.abort()
   }
 
   // Resend OTP

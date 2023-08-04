@@ -63,24 +63,37 @@ export default function Login() {
       password: inputs.password
     }
 
-    xFetch('login', requestData, null, 'POST').then((response) => {
+    const controller = new AbortController()
+    xFetch('login', requestData, null, controller.signal, null, 'POST').then((response) => {
       setLoading({ ...loading, login: false })
 
       if (response.success) {
-        console.log(inputs.rememberMe)
-        console.log(response.access_token)
         inputs.rememberMe
           ? setLocalAccessToken(response.access_token)
           : setSessionAccessToken(response.access_token)
 
         setIsAuthorized(true)
-        setAuthData(response)
+        setAuthData((prevAuthData) =>
+          create(prevAuthData, (draftAuthData) => {
+            draftAuthData.accessToken = `Bearer ${response.access_token}`
+            draftAuthData.id = response?.id
+            draftAuthData.name = response?.name
+            draftAuthData.email = response?.email
+            draftAuthData.email_verified_at = response?.email_verified_at ? true : false
+            draftAuthData.phone = response?.phone
+            draftAuthData.status = response?.status
+            draftAuthData.role = response?.role
+            draftAuthData.permissions = response?.permissions
+          })
+        )
+
         toast.success(response.message)
         navigate(from, { replace: true })
         return
       }
       SetErrors(response?.errors || response)
     })
+    controller.abort()
   }
 
   return (

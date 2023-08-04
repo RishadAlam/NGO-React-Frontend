@@ -46,15 +46,19 @@ export default function ForgotPassword() {
       email: email
     }
 
-    xFetch('forget-password', requestData, null, 'POST').then((response) => {
-      setLoading({ ...loading, email: false })
+    const controller = new AbortController()
+    xFetch('forget-password', requestData, null, controller.signal, null, 'POST').then(
+      (response) => {
+        setLoading({ ...loading, email: false })
 
-      if (response?.success) {
-        toast.success(response.message)
-        return navigate('/account-verification', { state: { id: response.id } })
+        if (response?.success) {
+          toast.success(response.message)
+          return navigate('/account-verification', { state: { id: response.id } })
+        }
+        setError(response?.errors || response)
       }
-      setError(response?.errors || response)
-    })
+    )
+    controller.abort()
   }
 
   return (

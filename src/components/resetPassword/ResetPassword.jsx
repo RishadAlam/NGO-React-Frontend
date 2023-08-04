@@ -76,7 +76,8 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       confirm_password: inputs.confirmPassword
     }
 
-    xFetch('reset-password', requestData, null, 'PUT').then((response) => {
+    const controller = new AbortController()
+    xFetch('reset-password', requestData, null, controller.signal, null, 'PUT').then((response) => {
       setLoading({ ...loading, resetPassword: false })
 
       if (response?.success) {
@@ -85,6 +86,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       }
       SetErrors(response?.errors || response)
     })
+    controller.abort()
   }
 
   return (
