@@ -1,40 +1,11 @@
-import { create } from 'mutative'
-import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Route, Routes } from 'react-router-dom'
-import { useAuthDataState, useIsAuthorizedState } from './atoms/authAtoms'
-import { useIsLoadingState } from './atoms/loaderAtoms'
 import Layout from './components/layout/Layout'
-import { GetLocalStorage, GetSessionStorage } from './helper/GetDataFromStorage'
 import AccountVerification from './pages/accountVerification/AccountVerification'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 
 export default function App() {
-  // const [authData, setAuthData] = useAuthDataState()
-  // const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
-  // const [isLoading, setIsLoading] = useIsLoadingState()
-
-  // useEffect(() => {
-  //   if (!isAutorized) {
-  //     const accessToken =
-  //       JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
-  //     if (accessToken) {
-  //       setIsAuthorized(true)
-  //       setAuthData((prevAuthData) =>
-  //         create(prevAuthData, (draftAuthData) => {
-  //           draftAuthData.accessToken = accessToken
-  //         })
-  //       )
-  //     }
-  //   }
-  //   setIsLoading(false)
-  // }, [])
-
-  // if (isLoading) {
-  //   return <div>loading...</div>
-  // }
-
   return (
     <>
       <Toaster
