@@ -1,45 +1,50 @@
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import ChevronDown from '../../icons/ChevronDown'
+import ChevronUp from '../../icons/ChevronUp'
+import Home from '../../icons/Home'
+import XCircle from '../../icons/XCircle'
 import './sidebarMenu.scss'
 
 export default function SideBarMenu() {
+  const location = useLocation()
+  const [dropDowns, setDropDowns] = useState({})
+  const toggleSideMenu = (id) => setDropDowns({ ...dropDowns, [id]: !dropDowns[id] })
+
   return (
     <>
-      <nav className="menu">
+      <nav className="menu mt-5">
         <ul>
           <li>
-            <a href="" className="side-menu">
+            <a
+              href=""
+              className={`side-menu ${location.pathname === '/' ? 'side-menu--active' : ''}`}>
               <div className="side-menu__icon">
-                {' '}
-                <i data-feather="home"></i>{' '}
+                <Home />
               </div>
-              <div className="side-menu__title">
-                Dashboard
-                <div className="side-menu__sub-icon">
-                  {' '}
-                  <i data-feather="chevron-down"></i>{' '}
-                </div>
-              </div>
+              <div className="side-menu__title">Dashboard</div>
             </a>
           </li>
           <div className="side-nav__devider my-2">
             <span>Registration</span>
           </div>
           <li>
-            <a href="" className="side-menu side-menu--active side-menu--open">
+            <a
+              onClick={() => toggleSideMenu('d1')}
+              className={`side-menu ${dropDowns?.d1 ? 'side-menu--open' : ''} cursor-pointer`}>
               <div className="side-menu__icon">
-                {' '}
-                <i data-feather="home"></i>{' '}
+                <XCircle />
               </div>
               <div className="side-menu__title">
-                Dashboard
+                Registration
                 <div className="side-menu__sub-icon">
-                  {' '}
-                  <i data-feather="chevron-down"></i>{' '}
+                  {dropDowns?.d1 ? <ChevronDown /> : <ChevronUp />}
                 </div>
               </div>
             </a>
-            <ul className="side-menu__sub-open shadow">
+            <ul className={`shadow ${dropDowns?.d1 ? 'side-menu__sub-open' : ''}`}>
               <li>
-                <a href="index.html" className="side-menu side-menu--active side-menu--open">
+                <a href="index.html" className="side-menu side-menu--active">
                   <div className="side-menu__icon">
                     {' '}
                     <i data-feather="activity"></i>{' '}
