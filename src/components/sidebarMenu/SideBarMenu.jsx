@@ -44,7 +44,11 @@ export default function SideBarMenu() {
             </a>
             <ul className={`shadow ${dropDowns?.d1 ? 'side-menu__sub-open' : ''}`}>
               <li>
-                <a href="index.html" className="side-menu side-menu--active">
+                <a
+                  href="index.html"
+                  className={`side-menu ${
+                    location.pathname === '/abc' ? 'side-menu--active' : ''
+                  }`}>
                   <div className="side-menu__icon">
                     {' '}
                     <i data-feather="activity"></i>{' '}

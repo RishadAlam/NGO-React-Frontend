@@ -1,51 +1,32 @@
 html.light {
   --main-bg: #f1f5f8;
   --soft-bg: #d5d5d5;
-  --dark-bg: #222b3c;
-  --primary-bg: #1c3faa;
-  --primary-soft-bg: #0a8dff;
-  --secondary-color: #384256;
   --main-color: #2d3748;
   --soft-color: #2d3748db;
   --dark-color: #2a3447;
   --soft-dark: #373b3e;
-  --white-color: #fff;
 }
 html.dark {
   --main-bg: #293145;
   --soft-bg: #384256;
-  --dark-bg: #222b3c;
-  --primary-bg: #1c3faa;
-  --primary-soft-bg: #0a8dff;
-  --secondary-color: #384256;
   --main-color: #fff;
-  --soft-color: #ddd;
+  --soft-color: #d5d5d5;
   --dark-color: #2a3447;
   --soft-dark: #373b3e;
-  --white-color: #fff;
-
-  --bs-gray-100: #f7fafc;
-  --bs-gray-200: #edf2f7;
-  --bs-gray-300: #e2e8f0;
-  --bs-gray-400: #cbd5e0;
-  --bs-gray-500: #a0aec0;
-  --bs-gray-600: #718096;
-  --bs-gray-700: #4a5568;
-  --bs-gray-800: #2d3748;
-  --bs-gray-900: #1a202c;
 }
 // Backgound
 $main-bg: var(--main-bg);
 $soft-bg: var(--soft-bg);
-$dark-bg: var(--dark-bg);
-$primary-bg: var(--primary-bg);
-$primary-soft-bg: var(--primary-soft-bg);
-$secondary-color: var(--secondary-color);
 $main-color: var(--main-color);
-$white-color: var(--white-color);
+$white-color: #fff;
 $soft-color: var(--soft-color);
 $dark-color: var(--dark-color);
 $soft-dark: var(--soft-dark);
+
+$dark-bg: #222b3c;
+$primary-bg: #1c3faa;
+$primary-soft-bg: #0a8dff;
+$secondary-color: #384256;
 
 $gray-100: #f7fafc;
 $gray-200: #edf2f7;
@@ -59,4 +40,8 @@ $gray-900: #1a202c;
 
 @mixin transition {
   transition: 0.5s ease;
+  -webkit-transition: 0.5s ease;
+  -moz-transition: 0.5s ease;
+  -ms-transition: 0.5s ease;
+  -o-transition: 0.5s ease;
 }
