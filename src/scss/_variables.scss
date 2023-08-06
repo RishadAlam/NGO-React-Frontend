@@ -4,7 +4,6 @@ html.light {
   --main-color: #2d3748;
   --soft-color: #2d3748db;
   --dark-color: #2a3447;
-  --soft-dark: #373b3e;
 }
 html.dark {
   --main-bg: #293145;
@@ -12,7 +11,6 @@ html.dark {
   --main-color: #fff;
   --soft-color: #d5d5d5;
   --dark-color: #2a3447;
-  --soft-dark: #373b3e;
 }
 // Backgound
 $main-bg: var(--main-bg);
@@ -21,8 +19,8 @@ $main-color: var(--main-color);
 $white-color: #fff;
 $soft-color: var(--soft-color);
 $dark-color: var(--dark-color);
-$soft-dark: var(--soft-dark);
 
+$soft-dark: #373b3e;
 $dark-bg: #222b3c;
 $primary-bg: #1c3faa;
 $primary-soft-bg: #0a8dff;

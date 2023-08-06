@@ -1,14 +1,19 @@
 import Nav from './Nav'
 
-export default function NavItem({ menu, menuKey, location }) {
+export default function NavItem({ menu, menuKey, location, userPermissions }) {
   return (
     <>
-      <div className="side-nav__devider my-2">
+      <div className="side-nav__devider my-4">
         <span>{menuKey}</span>
       </div>
 
       {menu[menuKey].map((m) => (
-        <Nav key={`${m.label}${m.id}`} m={m} location={location} />
+        <Nav
+          key={`${m.label}${m.id}`}
+          m={m}
+          location={location}
+          userPermissions={userPermissions}
+        />
       ))}
     </>
   )

@@ -146,3 +146,7 @@ ul {
   -ms-user-select: none;
   user-select: none;
 }
+
+.light .side-bar::after {
+  background-color: $gray-300;
+}

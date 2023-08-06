@@ -1,10 +1,12 @@
 import { useLocation } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import Home from '../../icons/Home'
 import { menu } from '../../resources/staticData/menu'
 import NavItem from './NavItem'
 import './sidebarMenu.scss'
 
 export default function SideBarMenu() {
+  const authData = useAuthDataValue()
   const location = useLocation()
 
   return (
@@ -22,7 +24,13 @@ export default function SideBarMenu() {
             </a>
           </li>
           {Object.keys(menu).map((key, i) => (
-            <NavItem key={i} menu={menu} menuKey={key} location={location} />
+            <NavItem
+              key={i}
+              menu={menu}
+              menuKey={key}
+              location={location}
+              userPermissions={authData.permissions}
+            />
           ))}
         </ul>
       </nav>

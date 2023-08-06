@@ -39,28 +39,45 @@
   .side-bar {
     min-width: 200px;
     max-width: 250px;
-    border-right: 1px solid $primary-soft-bg;
-    // background-color: aqua;
-    padding: 0 10px;
+    padding: 0 15px;
+    position: relative;
+    overflow-y: hidden;
+    @include transition;
 
-    @include lg {
-      min-width: max-content !important;
+    &::after {
+      content: '';
+      width: 1px;
+      height: 100%;
+      background: $soft-dark;
+      position: absolute;
+      top: 60px;
+      right: 0;
+    }
+
+    &.side-bar-sm {
+      min-width: min-content !important;
+      max-width: max-content !important;
+    }
+    &.side-bar-sm .side-menu {
+      justify-content: center;
+      padding-left: 0;
+    }
+    &.side-bar-sm .side-menu__title {
+      display: none;
+    }
+    &.side-bar-sm .logo .img {
+      width: 50px;
+    }
+    &.side-bar-sm .logo .title {
+      display: none;
     }
   }
+
   .main-body {
     width: 100%;
-    background-color: cadetblue;
-
-    .top-bar {
-      background-color: blueviolet;
-      padding: 0 20px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
 
     .content {
+      // background-color: cadetblue;
       min-height: calc(100vh - 60px - 40px);
     }
   }

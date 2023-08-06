@@ -47,7 +47,7 @@
         //display: block;
         visibility: visible;
         opacity: 1;
-        height: auto;
+        height: max-content;
 
         .side-menu--active {
           transform: translateX(30px);
@@ -61,7 +61,7 @@
     }
   }
   .side-nav__devider {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 200;
     color: $gray-500;
     text-transform: uppercase;
@@ -71,9 +71,8 @@
     border-radius: 10px;
     color: $white-color;
     display: flex;
-    height: 50px;
-    margin-bottom: 0.25rem;
-    padding-left: 1.25rem;
+    height: 45px;
+    padding-left: 1rem;
     position: relative;
 
     .side-menu--open .side-menu__title .side-menu__sub-icon {
@@ -115,12 +114,6 @@
         backdrop-filter,
         -webkit-backdrop-filter;
       transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-    }
-
-    @include lg {
-      .side-menu__title {
-        display: none;
-      }
     }
   }
 }
