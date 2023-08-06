@@ -116,10 +116,6 @@
         -webkit-backdrop-filter;
       transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
     }
-    .side-menu__title .side-menu__sub-icon svg {
-      height: 1rem;
-      width: 1rem;
-    }
 
     @include lg {
       .side-menu__title {
