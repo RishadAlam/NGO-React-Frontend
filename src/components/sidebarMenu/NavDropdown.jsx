@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import checkPermission from '../../helper/checkPermission'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
@@ -12,7 +13,7 @@ export default function NavDropdown({ m, location, userPermissions }) {
   return (
     <>
       <li>
-        <a
+        <Link
           onClick={() => toggleSideMenu(`d${m.id}`)}
           className={`side-menu ${
             dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''
@@ -26,7 +27,7 @@ export default function NavDropdown({ m, location, userPermissions }) {
               {dropDowns?.[`d${m.id}`] ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
             </div>
           </div>
-        </a>
+        </Link>
         <ul className={`shadow ${dropDowns?.[`d${m.id}`] ? 'side-menu__sub-open' : ''}`}>
           {m.subMenu.map(
             (subMenu) =>

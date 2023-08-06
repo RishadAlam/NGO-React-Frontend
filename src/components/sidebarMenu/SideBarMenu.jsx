@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import Home from '../../icons/Home'
 import { menu } from '../../resources/staticData/menu'
@@ -14,14 +14,14 @@ export default function SideBarMenu() {
       <nav className="menu mt-5">
         <ul>
           <li>
-            <a
-              href=""
+            <Link
+              to={'/'}
               className={`side-menu ${location.pathname === '/' ? 'side-menu--active' : ''}`}>
               <div className="side-menu__icon">
                 <Home />
               </div>
               <div className="side-menu__title">Dashboard</div>
-            </a>
+            </Link>
           </li>
           {Object.keys(menu).map((key, i) => (
             <NavItem

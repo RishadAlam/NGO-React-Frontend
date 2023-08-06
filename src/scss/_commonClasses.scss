@@ -150,3 +150,12 @@ ul {
 .light .side-bar::after {
   background-color: $gray-300;
 }
+.menu-btn:active,
+.side-menu:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
+  box-shadow: none;
+}
