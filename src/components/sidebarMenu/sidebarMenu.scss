@@ -22,6 +22,7 @@
 
     & > .side-menu.side-menu--active {
       background-color: $secondary-color;
+      // background-color: $primary-soft-bg;
       color: $white-color !important;
 
       .side-menu__title {

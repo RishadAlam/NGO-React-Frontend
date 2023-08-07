@@ -63,7 +63,9 @@
   }
 
   ul {
-    background-color: $dark-color;
+    background-color: $secondary-color;
+    @include transition;
+
     li {
       letter-spacing: 0;
       color: $white-color;

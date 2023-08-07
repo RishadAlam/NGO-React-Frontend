@@ -147,9 +147,9 @@ ul {
   user-select: none;
 }
 
-.light .side-bar::after {
-  background-color: $gray-300;
-}
+// .light .side-bar::after {
+//   background-color: $gray-300;
+// }
 .menu-btn:active,
 .side-menu:active {
   transform: scale(0.9);
@@ -160,7 +160,7 @@ ul {
   box-shadow: none;
 }
 
-// .light .side-bar
-// .light .side-bar {
-//   background-color: $primary-bg;
-// }
+.light .menu > ul > li > .side-menu.side-menu--active,
+.light .profile ul {
+  background-color: $primary-soft-bg;
+}
