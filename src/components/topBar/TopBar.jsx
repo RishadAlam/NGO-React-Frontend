@@ -1,4 +1,5 @@
 import Menu from '../../icons/Menu'
+import ProfileBox from '../profileBox/ProfileBox'
 import MainSearchBox from '../searchBox/MainSearchBox'
 import './topBar.scss'
 
@@ -13,6 +14,9 @@ export default function TopBar({ setIsSidebarMd }) {
         </div>
         <div className="ms-3">
           <MainSearchBox />
+        </div>
+        <div className="ms-auto">
+          <ProfileBox />
         </div>
       </div>
     </>
