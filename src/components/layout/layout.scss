@@ -42,17 +42,20 @@
     padding: 0 15px;
     position: relative;
     overflow-y: hidden;
+    box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
+    -webkit-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
+    -moz-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
     @include transition;
 
-    &::after {
-      content: '';
-      width: 1px;
-      height: 100%;
-      background: $soft-dark;
-      position: absolute;
-      top: 60px;
-      right: 0;
-    }
+    // &::after {
+    //   content: '';
+    //   width: 1px;
+    //   height: 100%;
+    //   background: $soft-dark;
+    //   position: absolute;
+    //   top: 60px;
+    //   right: 0;
+    // }
 
     &.side-bar-sm {
       min-width: min-content !important;

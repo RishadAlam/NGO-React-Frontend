@@ -66,6 +66,7 @@
     background-color: $dark-color;
     li {
       letter-spacing: 0;
+      color: $white-color;
       @include transition;
 
       &:first-child:hover {

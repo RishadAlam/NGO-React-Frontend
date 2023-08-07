@@ -6,6 +6,9 @@
   height: 60px;
   display: flex;
   align-items: center;
+  box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
+  -webkit-box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
+  -moz-box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
 
   .DarkLangButton > button {
     color: $main-color;
