@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import Key from '../../icons/Key'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
+import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
 import Button from '../util/Button'
 import './profileBox.scss'
 
@@ -15,8 +17,12 @@ export default function ProfileBox() {
         <div
           className="img cursor-pointer"
           onClick={() => setIsProfileVisible((prevState) => !prevState)}>
-          <img
+          <LazyLoadImage
             src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+            width="100%"
+            height="100%"
+            placeholderSrc={profilePlaceholder}
+            effect="blur"
             alt="Profile"
           />
         </div>

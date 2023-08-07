@@ -1,4 +1,5 @@
 import Menu from '../../icons/Menu'
+import DarkLangButton from '../darkLangButton/DarkLangButton'
 import ProfileBox from '../profileBox/ProfileBox'
 import MainSearchBox from '../searchBox/MainSearchBox'
 import './topBar.scss'
@@ -15,7 +16,8 @@ export default function TopBar({ setIsSidebarMd }) {
         <div className="ms-3">
           <MainSearchBox />
         </div>
-        <div className="ms-auto">
+        <div className="ms-auto d-flex align-items-center">
+          <DarkLangButton />
           <ProfileBox />
         </div>
       </div>

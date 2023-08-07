@@ -5,10 +5,12 @@ import { toast } from 'react-hot-toast'
 import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
+import useLocalStorage from '../../hooks/useLocalStorage'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
 export default function AuthProvider({ children }) {
+  const [isDark, setIsDark] = useLocalStorage('dark')
   const [authData, setAuthData] = useAuthDataState()
   const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
@@ -49,6 +51,7 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
+    document.body.className = isDark ? 'dark' : 'light'
     const controller = new AbortController()
     if (!isAutorized) {
       const Token =
