@@ -1,0 +1,43 @@
+@import '../../scss/variables';
+@import '../../scss/responsive';
+
+.mainSearchBox {
+  position: relative;
+
+  .searchIcon {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    color: $soft-dark;
+  }
+
+  .form-input {
+    text-indent: 8px;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .form-input:focus {
+    box-shadow: none;
+    border: none;
+  }
+
+  .left-pan {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    padding: 2px;
+    border-left: 1px solid $gray-400;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+
+    & > button {
+      padding: 0 10px !important;
+      color: $gray-700;
+      background-color: transparent;
+    }
+  }
+}
