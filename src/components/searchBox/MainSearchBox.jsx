@@ -1,4 +1,5 @@
 import Search from '../../icons/Search'
+import Button from '../util/Button'
 import './searchBox.scss'
 
 export default function MainSearchBox() {
@@ -8,11 +9,7 @@ export default function MainSearchBox() {
         <form>
           <input type="text" className="form-control form-input" placeholder="Search..." />
           <span className="left-pan">
-            <button className="btn btn-primary btn-block" type="submit">
-              <div className="d-flex">
-                <Search size={20} />
-              </div>
-            </button>
+            <Button name={<Search size={20} />} disabled={false} loading={false} type="submit" />
           </span>
         </form>
       </div>
