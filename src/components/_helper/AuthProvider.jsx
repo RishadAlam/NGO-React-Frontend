@@ -12,7 +12,7 @@ import Loader from '../loaders/Loader'
 export default function AuthProvider({ children }) {
   const [isDark, setIsDark] = useLocalStorage('dark')
   const [authData, setAuthData] = useAuthDataState()
-  const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
+  const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
 
@@ -53,7 +53,7 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     document.body.className = isDark ? 'dark' : 'light'
     const controller = new AbortController()
-    if (!isAutorized) {
+    if (!isAuthorized) {
       const Token =
         JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
 

@@ -11,13 +11,14 @@ import './layout.scss'
 export default function MainLayout() {
   const navigate = useNavigate()
   const location = useLocation()
-  const isAutorized = useIsAuthorizedValue()
+  const isAuthorized = useIsAuthorizedValue()
   const isLoading = useIsLoadingValue()
   const [isSidebarMd, setIsSidebarMd] = useState(() => (window.innerWidth <= 1024 ? true : false))
 
   useEffect(() => {
-    if (!isAutorized) navigate('login', { state: { from: location }, replace: false })
-  }, [isAutorized])
+    if (!isAuthorized) navigate('login', { state: { from: location }, replace: false })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthorized])
 
   //   if (isLoading) {
   //   return <div>loading...</div>
@@ -25,7 +26,7 @@ export default function MainLayout() {
 
   return (
     <>
-      {isAutorized && (
+      {isAuthorized && (
         <section className="main">
           <div className="d-flex">
             <div className={`side-bar d-md-block d-none ${isSidebarMd ? 'side-bar-sm' : ''}`}>

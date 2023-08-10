@@ -4,24 +4,22 @@ body.light {
   --soft-bg: #d5d5d5;
   --main-color: #2d3748;
   --soft-color: #2d3748db;
-  --dark-color: #2a3447;
 }
 body.dark {
   --main-bg: #293145;
   --soft-bg: #384256;
   --main-color: #fff;
   --soft-color: #d5d5d5;
-  --dark-color: #2a3447;
 }
 // Background
 $main-bg: var(--main-bg);
 $soft-bg: var(--soft-bg);
 $main-color: var(--main-color);
 $soft-color: var(--soft-color);
-$dark-color: var(--dark-color);
 
 $white-color: #fff;
 $soft-dark: #373b3e;
+$dark-color: #2a3447;
 $dark-bg: #222b3c;
 $primary-bg: #1c3faa;
 // $primary-soft-bg: #0a8dff;

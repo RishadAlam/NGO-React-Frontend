@@ -160,7 +160,34 @@ ul {
   box-shadow: none;
 }
 
-.light .menu > ul > li > .side-menu.side-menu--active,
+.light .menu > ul > li {
+  & > ul,
+  & > .side-menu.side-menu--active {
+    background-color: $primary-soft-bg;
+  }
+
+  & > a {
+    color: $soft-dark !important;
+
+    &:hover {
+      background-color: $primary-soft-bg !important;
+      color: $white-color !important;
+    }
+  }
+
+  & > ul > li > a:hover {
+    color: $white-color !important;
+  }
+}
+
 .light .profile ul {
   background-color: $primary-soft-bg;
+
+  li:hover {
+    color: $white-color !important;
+
+    button {
+      color: inherit !important;
+    }
+  }
 }

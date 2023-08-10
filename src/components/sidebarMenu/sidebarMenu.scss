@@ -6,18 +6,12 @@
     margin: 10px 0;
     & > a {
       color: $gray-400 !important;
-    }
-
-    & > a:hover {
-      background: $secondary-color !important;
-      color: $primary-soft-bg !important;
       @include transition;
-    }
 
-    & > ul > li > a:hover {
-      transform: translateX(30px);
-      color: $primary-soft-bg !important;
-      @include transition;
+      &:hover {
+        background: $secondary-color !important;
+        color: $primary-soft-bg !important;
+      }
     }
 
     & > .side-menu.side-menu--active {
@@ -40,8 +34,18 @@
       height: 0;
       @include transition;
 
-      &li > a {
+      & > li > a {
         color: $gray-400 !important;
+        @include transition;
+
+        &:hover {
+          color: $primary-soft-bg !important;
+          transform: translateX(10px);
+          -webkit-transform: translateX(10px);
+          -moz-transform: translateX(10px);
+          -ms-transform: translateX(10px);
+          -o-transform: translateX(10px);
+        }
       }
 
       &.side-menu__sub-open {
