@@ -1,4 +1,4 @@
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 const isAuthorizedState = atom({
   key: 'IsAuthorized',
@@ -11,8 +11,17 @@ const authDataState = atom({
 })
 
 const useIsAuthorizedState = () => useRecoilState(isAuthorizedState)
+const useSetIsAuthorizedState = () => useSetRecoilState(isAuthorizedState)
 const useIsAuthorizedValue = () => useRecoilValue(isAuthorizedState)
 const useAuthDataState = () => useRecoilState(authDataState)
+const useSetAuthDataState = () => useSetRecoilState(authDataState)
 const useAuthDataValue = () => useRecoilValue(authDataState)
 
-export { useAuthDataState, useAuthDataValue, useIsAuthorizedState, useIsAuthorizedValue }
+export {
+  useAuthDataState,
+  useAuthDataValue,
+  useIsAuthorizedState,
+  useIsAuthorizedValue,
+  useSetAuthDataState,
+  useSetIsAuthorizedState
+}

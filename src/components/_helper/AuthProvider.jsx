@@ -2,7 +2,7 @@ import axios from 'axios'
 import { create } from 'mutative'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
+import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
 import useLocalStorage from '../../hooks/useLocalStorage'
@@ -11,7 +11,7 @@ import Loader from '../loaders/Loader'
 
 export default function AuthProvider({ children }) {
   const [isDark, setIsDark] = useLocalStorage('dark')
-  const [authData, setAuthData] = useAuthDataState()
+  const setAuthData = useSetAuthDataState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
