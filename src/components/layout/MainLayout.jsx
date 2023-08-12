@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
@@ -14,6 +15,7 @@ export default function MainLayout() {
   const isAuthorized = useIsAuthorizedValue()
   const isLoading = useIsLoadingValue()
   const [isSidebarMd, setIsSidebarMd] = useState(() => (window.innerWidth <= 1024 ? true : false))
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!isAuthorized) navigate('login', { state: { from: location }, replace: false })
@@ -35,7 +37,7 @@ export default function MainLayout() {
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
-              <div className="content">content</div>
+              <div className="content">{t('common.Welcome_to_React')}</div>
             </div>
           </div>
           <div className="footer">footer</div>

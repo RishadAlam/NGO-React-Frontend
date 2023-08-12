@@ -2,6 +2,7 @@ import axios from 'axios'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi from 'i18next-http-backend'
+import Cookies from 'js-cookie'
 import { create } from 'mutative'
 import { useEffect } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
@@ -9,7 +10,6 @@ import { initReactI18next } from 'react-i18next'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
-import useLocalStorage from '../../hooks/useLocalStorage'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
@@ -18,11 +18,13 @@ i18n
   .use(LanguageDetector)
   .use(HttpApi)
   .init({
+    supportedLngs: ['en', 'bn'],
     fallbackLng: 'en',
+    debug: false,
     detection: {
       order: [
-        'querystring',
         'cookie',
+        'querystring',
         'localStorage',
         'sessionStorage',
         'navigator',
@@ -30,16 +32,16 @@ i18n
         'path',
         'subdomain'
       ],
-      caches: ['localStorage', 'cookie']
+      caches: ['cookie', 'localStorage'],
+      cookieMinutes: 43200
     },
     backend: {
-      loadPath: './lang/{{lng}}/translations.json'
+      loadPath: '/lang/{{lng}}/translations.json'
     }
     // react: { useSuspence: false }
   })
 
 export default function AuthProvider({ children }) {
-  const [isDark, setIsDark] = useLocalStorage('dark')
   const setAuthData = useSetAuthDataState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
@@ -80,8 +82,10 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    document.body.className = isDark ? 'dark' : 'light'
+    document.querySelector('html').lang = Cookies.get('i18next') || 'en'
+    document.body.className = Cookies.get('isDark') ? 'dark' : 'light'
     const controller = new AbortController()
+
     if (!isAuthorized) {
       const Token =
         JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))

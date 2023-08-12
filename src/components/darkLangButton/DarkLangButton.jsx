@@ -1,14 +1,28 @@
-import useLocalStorage from '../../hooks/useLocalStorage'
+import { changeLanguage } from 'i18next'
+import Cookies from 'js-cookie'
+import { useState } from 'react'
 import Moon from '../../icons/Moon'
 import Sun from '../../icons/Sun'
 import Button from '../util/Button'
 
 export default function DarkLangButton() {
-  const [isDark, setIsDark] = useLocalStorage('dark')
+  const [isDark, setIsDark] = useState(() => Cookies.get('isDark') || false)
+  const [lang, setLang] = useState(() => Cookies.get('i18next') || 'en')
+
   const setDarkMood = () =>
     setIsDark((prevState) => {
       document.body.className = prevState ? 'light' : 'dark'
+      Cookies.set('isDark', !prevState, { expires: 30 })
       return !prevState
+    })
+
+  const setLanguage = () =>
+    setLang((prevState) => {
+      const ln = prevState === 'en' ? 'bn' : 'en'
+      document.querySelector('html').lang = ln
+      Cookies.set('i18next', ln, { expires: 30 })
+      changeLanguage(ln)
+      return ln
     })
 
   return (
@@ -16,9 +30,10 @@ export default function DarkLangButton() {
       <div className="DarkLangButton me-5 d-flex justify-content-between" style={{ width: '80px' }}>
         <Button
           type="button"
-          name="Eng"
+          name={lang === 'en' ? 'Eng' : 'বাং'}
           disabled={false}
           loading={false}
+          onclick={setLanguage}
           style={{
             backgroundColor: 'transparent',
             padding: '0',
