@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import MainLayout from './components/layout/MainLayout'
@@ -9,19 +8,6 @@ import Login from './pages/login/Login'
 export default function App() {
   return (
     <>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-        toastOptions={{
-          // Define default options
-          className: '',
-          duration: 5000,
-          style: {
-            background: '#363636',
-            color: '#fff'
-          }
-        }}
-      />
       <Routes>
         {/* UnAuthenticate Routes */}
         <Route path="/login" element={<Layout />}>

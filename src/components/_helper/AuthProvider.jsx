@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { create } from 'mutative'
 import { useEffect } from 'react'
-import { toast } from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
@@ -69,11 +69,31 @@ export default function AuthProvider({ children }) {
     }
   }, [])
 
-  return isLoading || loading?.authorization ? (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <Loader />
-    </div>
-  ) : (
-    children
+  return (
+    <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 5000,
+          style: {
+            background: '#363636',
+            color: '#fff'
+          }
+        }}
+      />
+
+      {isLoading || loading?.authorization ? (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: '100vh' }}>
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
+    </>
   )
 }
