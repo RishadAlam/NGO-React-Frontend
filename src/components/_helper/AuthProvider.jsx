@@ -1,13 +1,42 @@
 import axios from 'axios'
+import i18n from 'i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import HttpApi from 'i18next-http-backend'
 import { create } from 'mutative'
 import { useEffect } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
+import { initReactI18next } from 'react-i18next'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector)
+  .use(HttpApi)
+  .init({
+    fallbackLng: 'en',
+    detection: {
+      order: [
+        'querystring',
+        'cookie',
+        'localStorage',
+        'sessionStorage',
+        'navigator',
+        'htmlTag',
+        'path',
+        'subdomain'
+      ],
+      caches: ['localStorage', 'cookie']
+    },
+    backend: {
+      loadPath: './lang/{{lng}}/translations.json'
+    }
+    // react: { useSuspence: false }
+  })
 
 export default function AuthProvider({ children }) {
   const [isDark, setIsDark] = useLocalStorage('dark')
