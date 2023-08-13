@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -5,7 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import LoaderSm from '../../components/loaders/LoaderSm'
-import { setLocalStorage, setSessionStorage } from '../../helper/GetDataFromStorage'
+import { setSessionStorage } from '../../helper/GetDataFromStorage'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import xFetch from '../../utilities/xFetch'
@@ -70,7 +71,7 @@ export default function Login() {
 
       if (response.success) {
         inputs.rememberMe
-          ? setLocalStorage('accessToken', response.access_token)
+          ? Cookies.set('accessToken', response.access_token, { expires: 30 })
           : setSessionStorage('accessToken', response.access_token)
 
         setIsAuthorized(true)

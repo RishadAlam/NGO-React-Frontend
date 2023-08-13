@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
@@ -12,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RecoilRoot>
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <Suspense fallback={'Loading...'}>
+            <App />
+          </Suspense>
         </AuthProvider>
       </BrowserRouter>
     </RecoilRoot>

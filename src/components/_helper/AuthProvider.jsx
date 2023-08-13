@@ -9,7 +9,7 @@ import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
-import { GetLocalStorage, GetSessionStorage } from '../../helper/GetDataFromStorage'
+import { GetSessionStorage } from '../../helper/GetDataFromStorage'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
@@ -87,8 +87,7 @@ export default function AuthProvider({ children }) {
     const controller = new AbortController()
 
     if (!isAuthorized) {
-      const Token =
-        JSON.parse(GetSessionStorage('accessToken')) || JSON.parse(GetLocalStorage('accessToken'))
+      const Token = JSON.parse(GetSessionStorage('accessToken')) || Cookies.get('accessToken')
 
       if (Token) {
         const signal = controller.signal

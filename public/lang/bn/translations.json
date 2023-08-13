@@ -1,5 +1,19 @@
 {
   "common": {
-    "Welcome_to_React": "React and react-i18next-এ স্বাগতম"
+    "search_placeholder": "অনুসন্ধান করুন..."
+  },
+
+  "app_config": {
+    "app_name": "জনকল্যান কো-অপারেটিভ সোসাইটি লিমিটেড"
+  },
+
+  "menu": {
+    "dashboard": "ড্যাশবোর্ড"
+  },
+
+  "profile_box": {
+    "profile": "প্রোফাইল",
+    "change_password": "পাসওয়ার্ড পরিবর্তন করুন",
+    "logout": "প্রস্থান"
   }
 }

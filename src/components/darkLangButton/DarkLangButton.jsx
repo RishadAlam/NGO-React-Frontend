@@ -30,7 +30,7 @@ export default function DarkLangButton() {
       <div className="DarkLangButton me-5 d-flex justify-content-between" style={{ width: '80px' }}>
         <Button
           type="button"
-          name={lang === 'en' ? 'Eng' : 'বাং'}
+          name={lang === 'en' ? 'Eng' : 'বাংলা'}
           disabled={false}
           loading={false}
           onclick={setLanguage}
@@ -43,7 +43,7 @@ export default function DarkLangButton() {
         />
         <Button
           type="button"
-          name={isDark ? <Sun /> : <Moon />}
+          name={isDark ? <Moon /> : <Sun />}
           disabled={false}
           loading={false}
           onclick={setDarkMood}

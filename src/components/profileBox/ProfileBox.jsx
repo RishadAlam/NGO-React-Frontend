@@ -9,7 +9,7 @@ import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholde
 import Button from '../util/Button'
 import './profileBox.scss'
 
-export default function ProfileBox() {
+export default function ProfileBox({ t }) {
   const [isProfileVisible, setIsProfileVisible] = useState(false)
 
   return (
@@ -40,7 +40,7 @@ export default function ProfileBox() {
                 <span className="me-2">
                   <User size={20} />
                 </span>
-                Profile
+                {t('profile_box.profile')}
               </Link>
             </li>
             <li className="pb-3 border-bottom mb-3">
@@ -48,7 +48,7 @@ export default function ProfileBox() {
                 <span className="me-2">
                   <Key size={20} />
                 </span>
-                Change Password
+                {t('profile_box.change_password')}
               </Link>
             </li>
             <li>
@@ -59,7 +59,7 @@ export default function ProfileBox() {
                     <span className="me-2">
                       <Logout size={20} />
                     </span>
-                    Logout
+                    {t('profile_box.logout')}
                   </p>
                 }
                 disabled={false}

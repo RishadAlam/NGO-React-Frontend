@@ -1,5 +1,19 @@
 {
   "common": {
-    "Welcome_to_React": "Welcome to React and react-i18next"
+    "search_placeholder": "Search..."
+  },
+
+  "app_config": {
+    "app_name": "Jonokollan Kormojibi Co-operative Society LTD"
+  },
+
+  "menu": {
+    "dashboard": "Dashboard"
+  },
+
+  "profile_box": {
+    "profile": "Profile",
+    "change_password": "Change Password",
+    "logout": "Logout"
   }
 }
