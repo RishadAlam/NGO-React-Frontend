@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
 import { useIsLoadingValue } from '../../atoms/loaderAtoms'
 import SideBarLogo from '../sidebarLogo/SideBarLogo'
@@ -37,7 +37,9 @@ export default function MainLayout() {
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
-              <div className="content">{t('common.Welcome_to_React')}</div>
+              <div className="content">
+                <Outlet />
+              </div>
             </div>
           </div>
           <div className="footer">footer</div>
