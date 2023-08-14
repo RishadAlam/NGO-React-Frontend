@@ -16,14 +16,15 @@ export default function DarkLangButton() {
       return !prevState
     })
 
-  const setLanguage = () =>
+  const setLanguage = () => {
+    changeLanguage(lang === 'en' ? 'bn' : 'en')
     setLang((prevState) => {
       const ln = prevState === 'en' ? 'bn' : 'en'
       document.querySelector('html').lang = ln
       Cookies.set('i18next', ln, { expires: 30 })
-      changeLanguage(ln)
       return ln
     })
+  }
 
   return (
     <>
