@@ -2,14 +2,12 @@ import { Outlet } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 
 export default function RequirePermissions({ allowedPermissions }) {
-  const authData = useAuthDataValue()
-  console.log(allowedPermissions)
-  console.log(authData.permissions)
+  const { permissions } = useAuthDataValue()
 
   return (
     <>
       {allowedPermissions &&
-      allowedPermissions.some((permission) => authData.permissions.includes(permission)) ? (
+      allowedPermissions?.some((permission) => permissions.includes(permission)) ? (
         <Outlet />
       ) : (
         'NO'
