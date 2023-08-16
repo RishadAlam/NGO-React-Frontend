@@ -18,6 +18,7 @@ const useSetAuthDataState = () => useSetRecoilState(authDataState)
 const useAuthDataValue = () => useRecoilValue(authDataState)
 
 export {
+  authDataState,
   useAuthDataState,
   useAuthDataValue,
   useIsAuthorizedState,

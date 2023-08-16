@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
-import { useAuthDataValue } from '../../atoms/authAtoms'
 import Home from '../../icons/Home'
-import { menu } from '../../resources/staticData/menu'
+import { mainMenu } from '../../resources/staticData/mainMenu'
 import NavItem from './NavItem'
 import './sidebarMenu.scss'
 
 export default function SideBarMenu() {
-  const authData = useAuthDataValue()
   const location = useLocation()
   const { t } = useTranslation()
+  const menu = mainMenu(t)
+  console.log(menu)
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function SideBarMenu() {
         <ul>
           <li>
             <Link
-              to={'/'}
+              to="/"
               className={`side-menu ${location.pathname === '/' ? 'side-menu--active' : ''}`}>
               <div className="side-menu__icon">
                 <Home />
@@ -26,13 +26,7 @@ export default function SideBarMenu() {
             </Link>
           </li>
           {Object.keys(menu).map((key, i) => (
-            <NavItem
-              key={i}
-              menu={menu}
-              menuKey={key}
-              location={location}
-              userPermissions={authData.permissions}
-            />
+            <NavItem key={i} menu={menu} menuKey={key} location={location} />
           ))}
         </ul>
       </nav>

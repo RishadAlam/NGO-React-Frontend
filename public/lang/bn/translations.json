@@ -8,7 +8,8 @@
   },
 
   "menu": {
-    "dashboard": "ড্যাশবোর্ড"
+    "dashboard": "ড্যাশবোর্ড",
+    "registration_label": "নিবন্ধন"
   },
 
   "profile_box": {

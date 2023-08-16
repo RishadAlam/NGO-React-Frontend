@@ -7,7 +7,7 @@ export default function NavLink({ m, location }) {
       <li>
         <Link
           to={m.path}
-          className={`side-menu ${location.pathname === '/abcd' ? 'side-menu--active' : ''}`}>
+          className={`side-menu ${location.pathname === m.path ? 'side-menu--active' : ''}`}>
           <div className="side-menu__icon">
             {' '}
             <i data-feather="activity"></i>{' '}
