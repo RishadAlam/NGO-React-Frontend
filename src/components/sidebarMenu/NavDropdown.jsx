@@ -7,13 +7,17 @@ import NavLink from './NavLink'
 
 export default function NavDropdown({ m, location }) {
   const [dropDowns, setDropDowns] = useState({})
-  const toggleSideMenu = (id) => setDropDowns({ [id]: !dropDowns[id] })
+  const toggleSideMenu = (e, id) => {
+    e.preventDefault()
+    setDropDowns({ [id]: !dropDowns[id] })
+  }
 
   return (
     <>
       <li>
         <Link
-          onClick={() => toggleSideMenu(`d${m.id}`)}
+          to="#"
+          onClick={(e) => toggleSideMenu(e, `d${m.id}`)}
           className={`side-menu ${
             dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''
           } cursor-pointer`}>
