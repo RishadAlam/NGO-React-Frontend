@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Link } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import Key from '../../icons/Key'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
@@ -11,6 +12,7 @@ import './profileBox.scss'
 
 export default function ProfileBox({ t }) {
   const [isProfileVisible, setIsProfileVisible] = useState(false)
+  const { name, role } = useAuthDataValue()
 
   return (
     <>
@@ -31,8 +33,8 @@ export default function ProfileBox({ t }) {
           <ul className="mb-0 p-3 shadow">
             <li className="pb-3 border-bottom mb-3">
               <div className="profile-info">
-                <h4>Danial Smooth</h4>
-                <small>Chife Executive</small>
+                <h4>{name}</h4>
+                <small>{role[0]}</small>
               </div>
             </li>
             <li className="pb-2">

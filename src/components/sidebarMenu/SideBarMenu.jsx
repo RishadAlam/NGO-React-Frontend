@@ -9,7 +9,6 @@ export default function SideBarMenu() {
   const location = useLocation()
   const { t } = useTranslation()
   const menu = mainMenu(t)
-  console.log(menu)
 
   return (
     <>

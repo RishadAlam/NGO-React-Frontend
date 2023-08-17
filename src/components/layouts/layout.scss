@@ -37,17 +37,23 @@
   overflow: hidden !important;
 
   .side-bar {
-    min-width: 200px;
-    max-width: 250px;
+    //min-width: 200px;
+    width: 300px;
+    // overflow-x: hidden;
     padding: 0 15px;
     position: relative;
     overflow-y: hidden;
     box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
     -webkit-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
     -moz-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
-    @include transition;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+    -moz-transition: width 0.3s ease;
+    -ms-transition: width 0.3s ease;
+    -o-transition: width 0.3s ease;
 
-    // &::after {
+    //&:after
+    // {
     //   content: '';
     //   width: 1px;
     //   height: 100%;
@@ -58,8 +64,8 @@
     // }
 
     &.side-bar-sm {
-      min-width: min-content !important;
-      max-width: max-content !important;
+      // min-width: min-content !important;
+      width: 80px !important;
     }
     &.side-bar-sm .side-menu {
       justify-content: center;
