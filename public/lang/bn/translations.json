@@ -16,5 +16,16 @@
     "profile": "প্রোফাইল",
     "change_password": "পাসওয়ার্ড পরিবর্তন করুন",
     "logout": "প্রস্থান"
+  },
+
+  "dashboard": {
+    "cards": {
+      "Loan_Given": "ঋণ দেওয়া হয়েছে",
+      "Loan_Recovered": "ঋণ পুনরুদ্ধার হয়েছে",
+      "Loan_Saving_Collections": "ঋণ সঞ্চয় সংগ্রহ হয়েছে",
+      "Saving_Collections": "সঞ্চয় সংগ্রহ হয়েছে",
+      "View_all": "সব দেখ",
+      "this_month": "এই মাসে"
+    }
   }
 }

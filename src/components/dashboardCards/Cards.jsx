@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
-import Taka from '../../icons/Taka'
 import './cards.scss'
 
-export default function Cards({ cardName, amount, compAmount }) {
+export default function Cards({ cardName, amount, compAmount, t }) {
   const chartData = [
     { name: 'Sun', users: 400 },
     { name: 'Mon', users: 600 },
@@ -20,13 +19,8 @@ export default function Cards({ cardName, amount, compAmount }) {
         <div className="title">
           {/* <img src={props.icon} alt="" /> */}$<span>{cardName}</span>
         </div>
-        <h1>
-          <span>
-            <Taka size={33} />
-          </span>
-          {amount}
-        </h1>
-        <Link to="/">View all</Link>
+        <h1>৳ {amount}</h1>
+        <Link to="/">{t('dashboard.cards.View_all')}</Link>
       </div>
       <div className="cardInfo">
         <div className="chart">
@@ -45,7 +39,7 @@ export default function Cards({ cardName, amount, compAmount }) {
           <span className="percentage" style={{ color: compAmount < 0 ? 'tomato' : 'limegreen' }}>
             {10}%
           </span>
-          <span className="duration">this month</span>
+          <span className="duration">{t('dashboard.cards.this_month')}</span>
         </div>
       </div>
     </div>

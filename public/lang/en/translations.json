@@ -16,5 +16,16 @@
     "profile": "Profile",
     "change_password": "Change Password",
     "logout": "Logout"
+  },
+
+  "dashboard": {
+    "cards": {
+      "Loan_Given": "Loan Given",
+      "Loan_Recovered": "Loan Recovered",
+      "Loan_Saving_Collections": "Loan Saving Collections",
+      "Saving_Collections": "Saving Collections",
+      "View_all": "View all",
+      "this_month": "this month"
+    }
   }
 }

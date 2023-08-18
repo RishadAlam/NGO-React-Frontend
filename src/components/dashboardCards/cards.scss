@@ -23,12 +23,18 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 26px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif !important;
+    }
+
+    a {
+      color: $blue-magenta;
       font-weight: 600;
     }
   }
@@ -52,6 +58,7 @@
       .percentage {
         font-weight: bold;
         font-size: 20px;
+        font-family: 'Poppins', sans-serif !important;
 
         @include xxl {
           font-size: 16px;
