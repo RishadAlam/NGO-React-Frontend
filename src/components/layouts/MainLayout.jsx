@@ -37,7 +37,7 @@ export default function MainLayout() {
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
-              <div className="content">
+              <div className="content p-3">
                 <Outlet />
               </div>
             </div>

@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
-import Dashboard from './components/dashboard/Dashboard'
 import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
 import RequirePermissions from './components/layouts/RequirePermissions'
 import ClientRegistration from './components/registrations/ClientRegistration'
 import AccountVerification from './pages/accountVerification/AccountVerification'
+import Dashboard from './pages/dashboard/Dashboard'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 
