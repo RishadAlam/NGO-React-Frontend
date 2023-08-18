@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
 import './cards.scss'
 
-export default function Cards({ cardName, amount, compAmount, t }) {
+export default function Cards({ cardName, amount, compAmount, color, t }) {
   const chartData = [
     { name: 'Sun', users: 400 },
     { name: 'Mon', users: 600 },
@@ -31,7 +31,7 @@ export default function Cards({ cardName, amount, compAmount, t }) {
                 labelStyle={{ display: 'none' }}
                 position={{ x: 10, y: 70 }}
               />
-              <Line type="monotone" dataKey="users" stroke="#8884d8" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="users" stroke={color} strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>

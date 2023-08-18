@@ -19,6 +19,8 @@
   },
 
   "dashboard": {
+    "Savings_Collection_by_Sources": "সূত্র দ্বারা সঞ্চয় সংগ্রহ",
+    "Loans_Collection_by_Sources": "সূত্র দ্বারা ঋণ সংগ্রহ",
     "cards": {
       "Loan_Given": "ঋণ দেওয়া হয়েছে",
       "Loan_Recovered": "ঋণ পুনরুদ্ধার হয়েছে",
