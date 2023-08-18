@@ -6,7 +6,7 @@ import Sun from '../../icons/Sun'
 import Button from '../util/Button'
 
 export default function DarkLangButton() {
-  const [isDark, setIsDark] = useState(() => Cookies.get('isDark') || false)
+  const [isDark, setIsDark] = useState(() => JSON.parse(Cookies.get('isDark')) || false)
   const [lang, setLang] = useState(() => Cookies.get('i18next') || 'en')
 
   const setDarkMood = () =>

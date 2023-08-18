@@ -83,7 +83,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     document.querySelector('html').lang = Cookies.get('i18next') || 'en'
-    document.body.className = Cookies.get('isDark') ? 'dark' : 'light'
+    document.body.className = JSON.parse(Cookies.get('isDark')) ? 'dark' : 'light'
     const controller = new AbortController()
 
     if (!isAuthorized) {
