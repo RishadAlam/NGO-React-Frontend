@@ -29,14 +29,14 @@ export default function PieChartBox({ chartName }) {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="options">
+      <div className="options d-flex flex-wrap">
         {data.map((item) => (
           <div className="option" key={item.name}>
             <div className="title">
               <div className="dot" style={{ backgroundColor: item.color }} />
               <span>{item.name}</span>
             </div>
-            <span>{item.value}</span>
+            <span>৳ {item.value}</span>
           </div>
         ))}
       </div>

@@ -29,3 +29,9 @@ $xxl: 1400px;
     @content;
   }
 }
+
+@mixin lgtoxl {
+  @media (min-width: ($lg)) and (max-width: ($xl)) {
+    @content;
+  }
+}
