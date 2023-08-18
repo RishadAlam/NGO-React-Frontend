@@ -1,0 +1,50 @@
+@import '../../scss/responsive';
+@import '../../scss/variables';
+
+.topBox {
+  h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .list {
+    .listItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+
+      .user {
+        display: flex;
+        gap: 10px;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .userTexts {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .username {
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .role {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .amount {
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif !important;
+      }
+    }
+  }
+}

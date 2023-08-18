@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import Cards from '../../components/dashboardCards/Cards'
 import PieChartBox from '../../components/pieChartBox/PieChartBox'
+import TopCollectors from '../../components/topCollectors/TopCollectors'
 import './dashboard.scss'
 
 export default function Dashboard() {
@@ -29,7 +30,9 @@ export default function Dashboard() {
             t={t}
           />
         </div>
-        <div className="box shadow top-collectionist">top</div>
+        <div className="box shadow top-collectors">
+          <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
+        </div>
         <div className="box shadow box-card">
           <Cards
             cardName={t('dashboard.cards.Loan_Saving_Collections')}

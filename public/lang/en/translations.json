@@ -21,6 +21,7 @@
   "dashboard": {
     "Savings_Collection_by_Sources": "Savings Collection by Sources",
     "Loans_Collection_by_Sources": "Loans collection by sources",
+    "Todays_Top_Money_Collectors": "Today's Top Money Collectors",
     "cards": {
       "Loan_Given": "Loan Given",
       "Loan_Recovered": "Loan Recovered",
