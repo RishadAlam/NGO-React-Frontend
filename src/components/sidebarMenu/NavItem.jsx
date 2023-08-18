@@ -1,7 +1,6 @@
 import Nav from './Nav'
 
 export default function NavItem({ menu, menuKey, location }) {
-  console.log(menu[menuKey].find((m) => m.view))
   return (
     <>
       {menu[menuKey].find((m) => m.view) && (
