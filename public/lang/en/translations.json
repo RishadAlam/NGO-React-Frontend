@@ -1,0 +1,34 @@
+{
+  "common": {
+    "search_placeholder": "Search..."
+  },
+
+  "app_config": {
+    "app_name": "Jonokollan Kormojibi Co-operative Society LTD"
+  },
+
+  "menu": {
+    "dashboard": "Dashboard",
+    "registration_label": "Registration"
+  },
+
+  "profile_box": {
+    "profile": "Profile",
+    "change_password": "Change Password",
+    "logout": "Logout"
+  },
+
+  "dashboard": {
+    "Savings_Collection_by_Sources": "Savings Collection by Sources",
+    "Loans_Collection_by_Sources": "Loans collection by sources",
+    "Todays_Top_Money_Collectors": "Today's Top Money Collectors",
+    "cards": {
+      "Loan_Given": "Loan Given",
+      "Loan_Recovered": "Loan Recovered",
+      "Loan_Saving_Collections": "Loan Saving Collections",
+      "Saving_Collections": "Saving Collections",
+      "View_all": "View all",
+      "this_month": "this month"
+    }
+  }
+}

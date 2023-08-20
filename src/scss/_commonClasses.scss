@@ -8,51 +8,76 @@ html {
   height: 100%;
 }
 
-body,
-html {
-  font-family: "Poppins", sans-serif;
-}
-
-@font-face {
-  font-family: "Poppins";
-  font-weight: 300;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Light.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Poppins";
+html[lang='en'] body {
+  font-family: 'Poppins', sans-serif !important;
   font-weight: 400;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Regular.ttf) format("truetype");
+  font-style: normal;
+}
+
+html[lang='bn'] body {
+  font-family: 'Tiro Bangla', sans-serif !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body.dark {
+  color: $soft-light;
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
+  font-weight: 300;
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 400;
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
   font-weight: 500;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Medium.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Medium.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 600;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-SemiBold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-SemiBold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 700;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-Bold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-Bold.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: 800;
-  src: local("Poppins"),
-    url(../fonts/poppins/Poppins-ExtraBold.ttf) format("truetype");
+  src:
+    local('Poppins'),
+    url(../fonts/poppins/Poppins-ExtraBold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Tiro Bangla';
+  font-weight: 400;
+  src:
+    local('TiroBangla'),
+    url(../fonts/tiroBangla/TiroBangla-Regular.ttf) format('truetype');
 }
 
 a {
@@ -61,12 +86,13 @@ a {
 }
 
 .btn {
-  color: $main-color;
+  color: $white-color;
   background-color: $primary-bg;
   border: none;
   padding: 10px 15px;
 }
 
+a:active,
 .btn:active {
   transform: scale(0.95);
   -webkit-transform: scale(0.95);
@@ -75,11 +101,15 @@ a {
   -o-transform: scale(0.95);
   box-shadow: none;
 }
-.btn:disabled,
-.btn.disabled,
+.dark .btn:disabled,
 fieldset:disabled {
   background-color: $soft-color !important;
   color: $soft-dark !important;
+}
+.light .btn:disabled,
+fieldset:disabled {
+  background-color: $soft-color !important;
+  color: $white-color !important;
 }
 
 body {
@@ -126,4 +156,72 @@ ol,
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// .light .side-bar::after {
+//   background-color: $gray-300;
+// }
+.menu-btn:active,
+.side-menu:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
+  box-shadow: none;
+}
+
+.light .menu > ul > li {
+  & > ul,
+  & > .side-menu.side-menu--active {
+    background-color: $primary-soft-bg;
+  }
+
+  & > a {
+    color: $soft-dark !important;
+
+    &:hover {
+      background-color: $primary-soft-bg !important;
+      color: $white-color !important;
+    }
+  }
+
+  & > ul > li > a:hover {
+    color: $white-color !important;
+  }
+}
+
+.light .profile ul {
+  background-color: $primary-soft-bg;
+
+  li:hover {
+    color: $white-color !important;
+
+    button {
+      color: inherit !important;
+    }
+  }
+}
+
+// .light .top-bar,
+// .light .side-bar,
+.light .box {
+  background-color: $white-color;
+}
+.light .content {
+  background-color: $soft-light;
+  border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -ms-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
 }

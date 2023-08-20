@@ -1,0 +1,101 @@
+@import '../../scss/variables';
+@import '../../scss/responsive';
+.layout {
+  //   background: $main-bg;
+  height: 100%;
+
+  &::before {
+    background-image: url('../../icons/bg-login-page-dark.svg');
+    background-position: 100%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    content: '';
+    height: inherit;
+    left: 0;
+    margin-left: -48%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -9999;
+  }
+
+  @include lg {
+    &::before {
+      display: none;
+    }
+  }
+
+  .layout-heading {
+    font-size: 36px;
+  }
+  .layout-heading-sm {
+    font-size: 22px;
+  }
+}
+
+.main {
+  overflow: hidden !important;
+
+  .side-bar {
+    //min-width: 200px;
+    width: 300px;
+    // overflow-x: hidden;
+    padding: 0 15px;
+    position: relative;
+    overflow-y: hidden;
+    box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
+    -webkit-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
+    -moz-box-shadow: 6px 0px 22px -6px rgba(0, 0, 0, 0.03);
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+    -moz-transition: width 0.3s ease;
+    -ms-transition: width 0.3s ease;
+    -o-transition: width 0.3s ease;
+
+    //&:after
+    // {
+    //   content: '';
+    //   width: 1px;
+    //   height: 100%;
+    //   background: $soft-dark;
+    //   position: absolute;
+    //   top: 60px;
+    //   right: 0;
+    // }
+
+    &.side-bar-sm {
+      // min-width: min-content !important;
+      width: 80px !important;
+    }
+    &.side-bar-sm .side-menu {
+      justify-content: center;
+      padding-left: 0;
+    }
+    &.side-bar-sm .side-menu__title {
+      display: none;
+    }
+    &.side-bar-sm .logo .img {
+      width: 50px;
+    }
+    &.side-bar-sm .logo .title {
+      display: none;
+    }
+  }
+
+  .main-body {
+    width: 100%;
+
+    .content {
+      // background-color: cadetblue;
+      min-height: calc(100vh - 60px - 40px);
+    }
+  }
+  .footer {
+    background-color: tomato;
+    padding: 0 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,89 @@
+@import '../../scss/variables';
+
+.profile {
+  & > .img {
+    width: 46px;
+    height: 46px;
+
+    &:active {
+      transform: scale(0.9);
+      -webkit-transform: scale(0.9);
+      -moz-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+      -o-transform: scale(0.9);
+    }
+
+    & img {
+      height: inherit;
+      width: inherit;
+      object-fit: cover;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+    }
+  }
+
+  .profile-dropdown {
+    width: 220px;
+    height: 0px;
+    top: 120%;
+    right: 5%;
+    visibility: hidden;
+    overflow: hidden;
+    // padding: 0;
+    transition: height 0.5s ease;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    -webkit-transition: height 0.5s ease;
+    -moz-transition: height 0.5s ease;
+    -ms-transition: height 0.5s ease;
+    -o-transition: height 0.5s ease;
+  }
+
+  .profile-dropdown.active {
+    height: 215px;
+    // padding: 15px;
+    visibility: visible;
+  }
+
+  .profile-info {
+    & > h4 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    & > small {
+      font-size: 12px;
+      font-weight: 300;
+    }
+  }
+
+  ul {
+    background-color: $secondary-color;
+    @include transition;
+
+    li {
+      letter-spacing: 0;
+      color: $white-color;
+      @include transition;
+
+      &:first-child:hover {
+        letter-spacing: 0;
+        color: inherit;
+      }
+      &:hover > button,
+      &:hover {
+        letter-spacing: 2px;
+        color: $primary-soft-bg;
+      }
+
+      button {
+        @include transition;
+      }
+    }
+  }
+}

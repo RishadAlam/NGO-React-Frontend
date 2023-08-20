@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-const useSessionStorage = (key, initialValue) => {
+const useSessionStorage = (key, initialValue = null) => {
   const [value, setValue] = useState(() => {
-    const localValue = window.sessionStorage.getItem(key)
+    const localValue = sessionStorage.getItem(key)
     return localValue ? JSON.parse(localValue) : initialValue
   })
 
   useEffect(() => {
-    window.sessionStorage.setItem(key, JSON.stringify(value))
+    sessionStorage.setItem(key, JSON.stringify(value))
   }, [value, setValue])
 
   return [value, setValue]

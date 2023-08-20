@@ -1,12 +1,19 @@
 import { create } from 'mutative'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import LoaderSm from '../../components/loaders/LoaderSm'
+import checkPassword from '../../helper/checkPassword'
 import CheckCircle from '../../icons/CheckCircle'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import XCircle from '../../icons/XCircle'
 import '../../pages/login/login.scss'
+import xFetch from '../../utilities/xFetch'
 
-export default function ResetPassword({ email, setStep }) {
+export default function ResetPassword({ userId, loading, setLoading }) {
+  // States
+  const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState({
     password: false,
     confirmPassword: false
@@ -25,33 +32,7 @@ export default function ResetPassword({ email, setStep }) {
     passwordSpecial: true
   })
 
-  const checkPassword = (password) => {
-    const uppercaseRegExp = /(?=.*?[A-Z])/
-    const lowercaseRegExp = /(?=.*?[a-z])/
-    const digitsRegExp = /(?=.*?[0-9])/
-    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/
-
-    SetErrors((prevErrors) =>
-      create(prevErrors, (draftErrors) => {
-        password.length < 8
-          ? (draftErrors.passwordLength = true)
-          : delete draftErrors.passwordLength
-        !uppercaseRegExp.test(password)
-          ? (draftErrors.passwordUppercase = true)
-          : delete draftErrors.passwordUppercase
-        !lowercaseRegExp.test(password)
-          ? (draftErrors.passwordLowercase = true)
-          : delete draftErrors.passwordLowercase
-        !digitsRegExp.test(password)
-          ? (draftErrors.passwordDigits = true)
-          : delete draftErrors.passwordDigits
-        !specialCharRegExp.test(password)
-          ? (draftErrors.passwordSpecial = true)
-          : delete draftErrors.passwordSpecial
-      })
-    )
-  }
-
+  // Set the OnChange Value
   const setChange = (name, val) => {
     setInputs((prevInputs) =>
       create(prevInputs, (draftInputs) => {
@@ -59,11 +40,13 @@ export default function ResetPassword({ email, setStep }) {
       })
     )
 
+    // Set Errors
     SetErrors((prevErrors) =>
       create(prevErrors, (draftErrors) => {
+        draftErrors?.message ? delete draftErrors.message : ''
         if (name === 'password') {
           val === '' ? (draftErrors.password = 'password required!') : delete draftErrors.password
-          checkPassword(val)
+          checkPassword(val, SetErrors)
         } else {
           val === ''
             ? (draftErrors.confirmPassword = 'Confirm password required!')
@@ -78,21 +61,46 @@ export default function ResetPassword({ email, setStep }) {
     )
   }
 
+  // Submit Form
+  const submitPassword = (event) => {
+    event.preventDefault()
+    if (inputs.password === '' || inputs.confirmPassword === '' || userId === '') {
+      toast.error('Required fields are empty!')
+      return
+    }
+
+    setLoading({ ...loading, resetPassword: true })
+    const requestData = {
+      user_id: userId,
+      new_password: inputs.password,
+      confirm_password: inputs.confirmPassword
+    }
+
+    const controller = new AbortController()
+    xFetch('reset-password', requestData, null, controller.signal, null, 'PUT').then((response) => {
+      setLoading({ ...loading, resetPassword: false })
+
+      if (response?.success) {
+        toast.success(response.message)
+        return navigate('/login')
+      }
+      SetErrors(response?.errors || response)
+    })
+    controller.abort()
+  }
+
   return (
     <>
       <div className="login p-5">
-        <form className="text-center">
+        <form className="text-center" onSubmit={submitPassword}>
           <p className="h4 mb-4">Reset Password</p>
+          {errors?.message && errors?.message !== '' && (
+            <div className="alert alert-danger" role="alert">
+              <strong>{errors?.message}</strong>
+            </div>
+          )}
 
-          <input
-            type="email"
-            id="defaultLoginFormEmail"
-            className="form-control mb-4"
-            name="email"
-            placeholder="E-mail"
-            value={email || ''}
-            disabled
-          />
+          <input type="hidden" name="id" value={userId || ''} disabled />
 
           <div className="input-group position-relative mb-4">
             <input
@@ -102,6 +110,7 @@ export default function ResetPassword({ email, setStep }) {
               placeholder="New Password"
               value={inputs.password || ''}
               onChange={(e) => setChange('password', e.target.value)}
+              disabled={loading?.resetPassword}
             />
             <span
               className="eye"
@@ -121,6 +130,7 @@ export default function ResetPassword({ email, setStep }) {
               placeholder="Confirm Password"
               value={inputs.confirmPassword || ''}
               onChange={(e) => setChange('confirmPassword', e.target.value)}
+              disabled={loading?.resetPassword}
             />
             <span
               className="eye"
@@ -160,8 +170,11 @@ export default function ResetPassword({ email, setStep }) {
           <button
             className="btn btn-primary btn-block"
             type="submit"
-            disabled={Object.keys(errors).length}>
-            Reset Password
+            disabled={Object.keys(errors).length || loading?.resetPassword}>
+            <div className="d-flex">
+              Reset Password
+              {loading?.resetPassword && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+            </div>
           </button>
         </form>
       </div>
