@@ -58,7 +58,7 @@ export default function AuthProvider({ children }) {
       const appConfigData = Response[1]
 
       if (!authorizedData?.success || !appConfigData?.success) {
-        toast.error(authorizedData?.message || appConfigData?.message)
+        toast.error(!authorizedData?.success ? authorizedData?.message : appConfigData?.message)
         return
       }
 
@@ -82,8 +82,10 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    document.querySelector('html').lang = Cookies.get('i18next') || 'en'
-    document.body.className = JSON.parse(Cookies.get('isDark')) ? 'dark' : 'light'
+    const lang = Cookies.get('i18next')
+    const darkMood = Cookies.get('isDark')
+    document.querySelector('html').lang = lang ? lang : 'en'
+    document.body.className = darkMood ? JSON.parse(darkMood) ? 'dark' : 'light' : 'light'
     const controller = new AbortController()
 
     if (!isAuthorized) {
