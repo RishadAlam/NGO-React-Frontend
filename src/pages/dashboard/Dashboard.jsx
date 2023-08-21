@@ -98,20 +98,26 @@ export default function Dashboard() {
                   />
                 </div>
               </div>
-              <div className="col-md-6 mt-2 pe-md-1">
+              <div className="col-md-6 mt-2 pe-md-1 d-lg-none d-block">
                 <div className="box shadow withdrawal-list">bar1</div>
               </div>
-              <div className="col-md-6 mt-2 ps-md-1">
+              <div className="col-md-6 mt-2 ps-md-1 d-lg-none d-block">
                 <div className="box shadow withdrawal-list">bar2</div>
               </div>
+              <div className="col-md-12 mt-2">
+                <div className="box shadow collection-list">analytics</div>
+              </div>
+              <div className="col-md-12 mt-3">
+                <div className="box shadow collection-list">analytics2</div>
+              </div>
             </div>
-            <div className="box mb-3 shadow collection-list">analytics</div>
-            <div className="box mb-3 shadow collection-list">analytics2</div>
           </div>
           <div className="col-xl-3 col-lg-4 collectors">
             <div className="box mb-3 shadow top-collectors">
               <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
             </div>
+            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">bar1</div>
+            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">bar2</div>
           </div>
         </div>
       </div>
