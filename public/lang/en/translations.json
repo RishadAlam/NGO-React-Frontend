@@ -27,6 +27,8 @@
       "Loan_Recovered": "Loan Recovered",
       "Loan_Saving_Collections": "Loan Saving Collections",
       "Saving_Collections": "Saving Collections",
+      "DPS_Collections": "DPS Collections",
+      "Monthly_Loan_Collections": "Monthly Loan Collections",
       "View_all": "View all",
       "this_month": "this month"
     }
