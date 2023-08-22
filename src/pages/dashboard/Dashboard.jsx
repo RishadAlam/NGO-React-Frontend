@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import Cards from '../../components/dashboardCards/Cards'
 import PieChartBox from '../../components/pieChartBox/PieChartBox'
+import SavingCollectionLists from '../../components/savingCollectionLists/SavingCollectionLists'
 import TopCollectors from '../../components/topCollectors/TopCollectors'
 import LoanGiven from '../../icons/LoanGiven'
 import LoanIcon from '../../icons/LoanIcon'
@@ -105,7 +106,9 @@ export default function Dashboard() {
                 <div className="box shadow withdrawal-list">bar2</div>
               </div>
               <div className="col-md-12 mt-2">
-                <div className="box shadow collection-list">analytics</div>
+                <div className="box shadow collection-list">
+                  <SavingCollectionLists />
+                </div>
               </div>
               <div className="col-md-12 mt-3">
                 <div className="box shadow collection-list">analytics2</div>
