@@ -3,7 +3,7 @@
 
 .cardBox {
   display: flex;
-  height: 100%;
+  min-height: 200px;
 
   @include sm {
     flex-direction: column;

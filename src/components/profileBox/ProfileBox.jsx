@@ -7,7 +7,7 @@ import Key from '../../icons/key'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
 import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
-import Button from '../util/Button'
+import Button from '../utilities/Button'
 import './profileBox.scss'
 
 export default function ProfileBox({ t }) {

@@ -1,5 +1,5 @@
 import Search from '../../icons/Search'
-import Button from '../util/Button'
+import Button from '../utilities/Button'
 import './searchBox.scss'
 
 export default function MainSearchBox({ t }) {

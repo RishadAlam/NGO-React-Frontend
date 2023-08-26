@@ -3,11 +3,11 @@ import Cookies from 'js-cookie'
 import { useState } from 'react'
 import Moon from '../../icons/Moon'
 import Sun from '../../icons/Sun'
-import Button from '../util/Button'
+import Button from '../utilities/Button'
 
 export default function DarkLangButton() {
   const darkMood = Cookies.get('isDark')
-  const [isDark, setIsDark] = useState(() => darkMood ? JSON.parse(darkMood) : false)
+  const [isDark, setIsDark] = useState(() => (darkMood ? JSON.parse(darkMood) : false))
   const [lang, setLang] = useState(() => Cookies.get('i18next') || 'en')
 
   const setDarkMood = () =>
