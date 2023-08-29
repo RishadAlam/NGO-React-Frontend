@@ -1,6 +1,6 @@
-import { FormControl, MenuItem, Select } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { useMemo } from 'react'
-import { useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table'
+import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import CornerRightDownArrow from '../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../icons/CornerRightUpArrow'
 import GlobalFilter from '../utilities/GlobalFilter'
@@ -10,7 +10,7 @@ export default function SavingCollectionLists() {
     () => [
       { Header: '#', accessor: 'id' },
       { Header: 'First Name', accessor: 'firstName' },
-      { Header: 'Last Name', accessor: 'lastName' }
+      { Header: 'Last Name', accessor: 'lastName', show: false }
     ],
     []
   )
@@ -524,13 +524,18 @@ export default function SavingCollectionLists() {
   const tableInstaed = useTable(
     {
       columns,
-      data
+      data,
+      initialState: {
+        hiddenColumns: columns.map((column) => {
+          if (column.show === false) return column.accessor || column.id
+        })
+      }
     },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
+    useResizeColumns
   )
-  console.log(tableInstaed)
 
   const {
     getTableProps,
@@ -545,7 +550,10 @@ export default function SavingCollectionLists() {
     canNextPage,
     canPreviousPage,
     pageOptions,
-    setPageSize
+    setPageSize,
+    gotoPage,
+    pageCount,
+    allColumns
   } = tableInstaed
   const { globalFilter, pageIndex, pageSize } = state
   const showedTotalRows =
@@ -559,7 +567,7 @@ export default function SavingCollectionLists() {
     <>
       <div className="table-responsive">
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          {/* <InputLabel id="demo-simple-select-standard-label">Size</InputLabel> */}
+          <InputLabel id="demo-simple-select-standard-label">Showing</InputLabel>
           <Select value={pageSize} onChange={(e) => setPageSize(e.target.value)} label="Page Size">
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
@@ -570,6 +578,14 @@ export default function SavingCollectionLists() {
           </Select>
         </FormControl>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <div>
+          {allColumns.map((column, index) => (
+            <label key={index}>
+              <input type="checkbox" {...column.getToggleHiddenProps()} />
+              {column.Header}
+            </label>
+          ))}
+        </div>
         <table {...getTableProps()} className="table table-hover table-report">
           <thead>
             {headerGroups.map((headerGroup, i) => (
@@ -618,6 +634,47 @@ export default function SavingCollectionLists() {
           <button onClick={() => previousPage()} disabled={!canPreviousPage}>
             Prev
           </button>
+
+          {pageCount > 5
+            ? pageOptions.map((page, key) => {
+                if (page === 0) {
+                  return (
+                    <button
+                      key={`1st-${key}`}
+                      onClick={() => gotoPage(page)}
+                      disabled={!canNextPage}>
+                      {++page}
+                    </button>
+                  )
+                } else if (page > pageIndex - 2 && page < pageIndex + 5) {
+                  return (
+                    <button
+                      key={`2nd-${key}`}
+                      onClick={() => gotoPage(page)}
+                      disabled={!canNextPage}>
+                      {++page}
+                    </button>
+                  )
+                } else if (page === pageCount - 1) {
+                  return (
+                    <>
+                      <span key={`${key}-x`}>...</span>
+                      <button
+                        key={`last-${key}`}
+                        onClick={() => gotoPage(page)}
+                        disabled={!canNextPage}>
+                        {++page}
+                      </button>
+                    </>
+                  )
+                }
+              })
+            : pageOptions.map((page, key) => (
+                <button key={key} onClick={() => gotoPage(page)} disabled={!canNextPage}>
+                  {++page}
+                </button>
+              ))}
+
           <button onClick={() => nextPage()} disabled={!canNextPage}>
             next
           </button>
