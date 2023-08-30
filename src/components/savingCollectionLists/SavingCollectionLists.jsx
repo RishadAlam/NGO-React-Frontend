@@ -8,7 +8,7 @@ import GlobalFilter from '../utilities/GlobalFilter'
 export default function SavingCollectionLists() {
   const columns = useMemo(
     () => [
-      { Header: '#', accessor: 'id' },
+      { Header: '#', accessor: 'id', disable: true },
       { Header: 'First Name', accessor: 'firstName' },
       { Header: 'Last Name', accessor: 'lastName', show: false }
     ],
@@ -581,7 +581,11 @@ export default function SavingCollectionLists() {
         <div>
           {allColumns.map((column, index) => (
             <label key={index}>
-              <input type="checkbox" {...column.getToggleHiddenProps()} />
+              <input
+                type="checkbox"
+                {...column.getToggleHiddenProps()}
+                disabled={column?.disable || false}
+              />
               {column.Header}
             </label>
           ))}
