@@ -1,0 +1,37 @@
+@import '../../../scss/variables';
+
+.heading {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.table-btn {
+  padding: 5px;
+  border-radius: 0.375rem;
+  box-shadow: 0 3px 20px #0000000b;
+  font-size: 16px;
+  font-weight: 400;
+  margin-right: 0.5rem;
+  min-width: 40px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: $main-color;
+  @include transition;
+
+  &:active {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+  }
+
+  &:hover {
+    color: $primary-soft-bg;
+  }
+
+  &.active {
+    background-color: $soft-bg;
+  }
+}
