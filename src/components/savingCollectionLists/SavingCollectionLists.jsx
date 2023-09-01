@@ -517,5 +517,5 @@ export default function SavingCollectionLists() {
     []
   )
 
-  return <ReactTable columns={columns} data={data} />
+  return <ReactTable columns={columns} data={[]} />
 }

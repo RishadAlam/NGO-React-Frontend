@@ -1,15 +1,17 @@
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { memo } from 'react'
+import { FormControlLabel, Switch } from '@mui/material'
+import { memo, useState } from 'react'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import CornerRightDownArrow from '../../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../../icons/CornerRightUpArrow'
 import MoreVertical from '../../../icons/MoreVertical'
 import GlobalFilter from '../GlobalFilter'
+import PageOptions from './PageOptions'
+import ShowingRows from './ShowingRows'
 import './table.scss'
 
 function ReactTable({ columns, data }) {
-  console.log('rendered')
+  const [showToggleColumn, setShowToggleColumn] = useState(false)
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -53,43 +55,41 @@ function ReactTable({ columns, data }) {
 
   return (
     <>
-      <div className="d-flex justify-content-between mb-3">
+      <div className="d-flex justify-content-between">
         <h2 className="heading">React table</h2>
         <div className="column-hiding text-end position-relative">
-          <button className="table-btn">
+          <button
+            className="table-btn"
+            onClick={() => setShowToggleColumn((prevState) => !prevState)}>
             <MoreVertical size={26} />
           </button>
 
-          <div>
-            {allColumns.map((column, index) => (
-              <label key={index}>
-                <input
-                  type="checkbox"
-                  {...column.getToggleHiddenProps()}
-                  disabled={column?.disable || false}
-                />
-                {column.Header}
-              </label>
-            ))}
+          <div className={`column-dropdown position-absolute ${showToggleColumn ? 'active' : ''}`}>
+            <ul className="p-3 pe-4 m-0 shadow text-start">
+              <li className="pb-2 mb-3 text-center">
+                <b>Toggle Column</b>
+              </li>
+              {allColumns.map((column, index) => (
+                <li key={index} className="pb-2">
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        {...column.getToggleHiddenProps()}
+                        disabled={column?.disable || false}
+                      />
+                    }
+                    label={column.Header}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
       <div className="row">
         <div className="col-sm-6">
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-standard-label">Showing</InputLabel>
-            <Select
-              value={pageSize}
-              onChange={(e) => setPageSize(e.target.value)}
-              label="Page Size">
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
-              <MenuItem value={500}>500</MenuItem>
-            </Select>
-          </FormControl>
+          <ShowingRows pageSize={pageSize} setPageSize={setPageSize} />
         </div>
         <div className="col-sm-6 text-end">
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -121,86 +121,53 @@ function ReactTable({ columns, data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr key={i} {...row.getRowProps()}>
-                  {row.cells.map((cell, index) => (
-                    <td key={index} {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              )
-            })}
+            {page.langth > 0 ? (
+              page.map((row, i) => {
+                prepareRow(row)
+                return (
+                  <tr key={i} {...row.getRowProps()}>
+                    {row.cells.map((cell, index) => (
+                      <td key={index} {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                )
+              })
+            ) : (
+              <tr>
+                <td colSpan={allColumns.length} className="text-center">
+                  No Records Found!
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
 
-      <div className="row align-items-center">
-        <div className="col-sm-4">
-          <span>
-            Showing {rowStart} to {showedTotalRows} of {totalRows} results
-          </span>
+      {pageCount > 0 && (
+        <div className="row align-items-center">
+          <div className="col-sm-4">
+            <span>
+              Showing {rowStart} to {showedTotalRows} of {totalRows} results
+            </span>
+          </div>
+          <div className="col-sm-8 text-end">
+            {pageCount > 1 && (
+              <PageOptions
+                previousPage={previousPage}
+                canPreviousPage={canPreviousPage}
+                nextPage={nextPage}
+                canNextPage={canNextPage}
+                pageCount={pageCount}
+                pageOptions={pageOptions}
+                pageIndex={pageIndex}
+                gotoPage={gotoPage}
+              />
+            )}
+          </div>
         </div>
-        <div className="col-sm-8 text-end">
-          <button className="table-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
-            <ChevronLeft size={30} />
-          </button>
-          {pageCount > 5
-            ? pageOptions.map((page, key) => {
-                if (page === 0) {
-                  return (
-                    <button
-                      className="table-btn active"
-                      key={`1st-${key}`}
-                      onClick={() => gotoPage(page)}
-                      disabled={!canNextPage}>
-                      {++page}
-                    </button>
-                  )
-                } else if (page > pageIndex - 2 && page < pageIndex + 5) {
-                  return (
-                    <button
-                      className="table-btn"
-                      key={`2nd-${key}`}
-                      onClick={() => gotoPage(page)}
-                      disabled={!canNextPage}>
-                      {++page}
-                    </button>
-                  )
-                } else if (page === pageCount - 1) {
-                  return (
-                    <>
-                      <span className="table-btn" key={`${key}-x`}>
-                        ...
-                      </span>
-                      <button
-                        className="table-btn"
-                        key={`last-${key}`}
-                        onClick={() => gotoPage(page)}
-                        disabled={!canNextPage}>
-                        {++page}
-                      </button>
-                    </>
-                  )
-                }
-              })
-            : pageOptions.map((page, key) => (
-                <button
-                  className="table-btn"
-                  key={key}
-                  onClick={() => gotoPage(page)}
-                  disabled={!canNextPage}>
-                  {++page}
-                </button>
-              ))}
-
-          <button className="table-btn" onClick={() => nextPage()} disabled={!canNextPage}>
-            <ChevronRight size={30} />
-          </button>
-        </div>
-      </div>
+      )}
     </>
   )
 }

@@ -186,6 +186,16 @@ ul {
   box-shadow: none;
 }
 
+.light .css-jsexje-MuiSwitch-thumb {
+  background-color: $main-bg !important;
+}
+.dark .css-jsexje-MuiSwitch-thumb {
+  background-color: $main-color !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: $gray-300 !important;
+}
+
 .light .menu > ul > li {
   & > ul,
   & > .side-menu.side-menu--active {
@@ -247,11 +257,19 @@ ul {
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
+.light .table-btn:hover,
+.light .table-btn.active,
 .light .table > :not(caption) > * > * {
   background-color: $main-bg !important;
 }
 
+.dark .table-btn:hover,
+.dark .table-btn.active,
 .dark .table > :not(caption) > * > * {
   background-color: $secondary-color !important;
   color: $white-color !important;
+}
+
+.light .column-hiding .column-dropdown ul {
+  background-color: $primary-soft-bg;
 }
