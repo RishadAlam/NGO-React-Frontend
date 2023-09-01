@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React from 'react'
-import PageOption from './Pageoption'
+import PageOption from './PageOption'
 
 export default function PageOptions({
   previousPage,

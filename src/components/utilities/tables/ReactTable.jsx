@@ -121,7 +121,7 @@ function ReactTable({ columns, data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.langth > 0 ? (
+            {page.length > 0 ? (
               page.map((row, i) => {
                 prepareRow(row)
                 return (
