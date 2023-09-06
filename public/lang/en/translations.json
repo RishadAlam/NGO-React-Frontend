@@ -1,6 +1,8 @@
 {
   "common": {
     "search_placeholder": "Search...",
+    "No_Records_Found": "No Records Found!",
+    "Showing_Up": "Showing Up",
     "client_name": "Client",
     "acc_no": "Account",
     "volume": "Volume",
@@ -15,6 +17,10 @@
     "interest": "Interest",
     "withdrawal": "Withdrawal",
     "total": "Total"
+  },
+
+  "react_table": {
+    "No_Records_Found": "No Records Found!"
   },
 
   "app_config": {

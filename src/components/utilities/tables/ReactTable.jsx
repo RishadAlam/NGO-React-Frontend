@@ -1,5 +1,6 @@
 import { FormControlLabel, Switch } from '@mui/material'
 import { memo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import CornerRightDownArrow from '../../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../../icons/CornerRightUpArrow'
@@ -10,6 +11,7 @@ import ShowingRows from './ShowingRows'
 import './table.scss'
 
 function ReactTable({ title, columns, data }) {
+  const { t } = useTranslation()
   const [showToggleColumn, setShowToggleColumn] = useState(false)
 
   const {
@@ -89,10 +91,10 @@ function ReactTable({ title, columns, data }) {
       </div>
       <div className="row">
         <div className="col-sm-6">
-          <ShowingRows pageSize={pageSize} setPageSize={setPageSize} />
+          <ShowingRows pageSize={pageSize} setPageSize={setPageSize} t={t} />
         </div>
         <div className="col-sm-6 text-end">
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} t={t} />
         </div>
       </div>
 
@@ -140,7 +142,7 @@ function ReactTable({ title, columns, data }) {
             ) : (
               <tr>
                 <td colSpan={allColumns.length} className="text-center">
-                  No Records Found!
+                  {t('common.No_Records_Found')}
                 </td>
               </tr>
             )}
