@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import Cards from '../../components/dashboardCards/Cards'
+import LoanCollectionLists from '../../components/loanCollectionLists/LoanCollectionLists'
+import LoanWithdrawalLists from '../../components/loanWithdrawalLists/LoanWithdrawalLists'
 import PieChartBox from '../../components/pieChartBox/PieChartBox'
 import SavingCollectionLists from '../../components/savingCollectionLists/SavingCollectionLists'
+import SavingWithdrawalLists from '../../components/savingWithdrawalLists/SavingWithdrawalLists'
 import TopCollectors from '../../components/topCollectors/TopCollectors'
 import LoanGiven from '../../icons/LoanGiven'
 import LoanIcon from '../../icons/LoanIcon'
@@ -100,10 +103,14 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="col-md-6 mt-2 pe-md-1 d-lg-none d-block">
-                <div className="box shadow withdrawal-list">bar1</div>
+                <div className="box shadow withdrawal-list">
+                  <SavingWithdrawalLists />
+                </div>
               </div>
               <div className="col-md-6 mt-2 ps-md-1 d-lg-none d-block">
-                <div className="box shadow withdrawal-list">bar2</div>
+                <div className="box shadow withdrawal-list">
+                  <LoanWithdrawalLists />
+                </div>
               </div>
               <div className="col-md-12 mt-2">
                 <div className="box shadow collection-list">
@@ -111,7 +118,9 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="col-md-12 mt-3">
-                <div className="box shadow collection-list">analytics2</div>
+                <div className="box shadow collection-list">
+                  <LoanCollectionLists />
+                </div>
               </div>
             </div>
           </div>
@@ -119,8 +128,12 @@ export default function Dashboard() {
             <div className="box mb-3 shadow top-collectors">
               <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
             </div>
-            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">bar1</div>
-            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">bar2</div>
+            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">
+              <SavingWithdrawalLists />
+            </div>
+            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">
+              <LoanWithdrawalLists />
+            </div>
           </div>
         </div>
       </div>

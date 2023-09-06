@@ -9,7 +9,7 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import './table.scss'
 
-function ReactTable({ columns, data }) {
+function ReactTable({ title, columns, data }) {
   const [showToggleColumn, setShowToggleColumn] = useState(false)
 
   const {
@@ -56,7 +56,7 @@ function ReactTable({ columns, data }) {
   return (
     <>
       <div className="d-flex justify-content-between">
-        <h2 className="heading">React table</h2>
+        <h2 className="heading">{title}</h2>
         <div className="column-hiding text-end position-relative">
           <button
             className="table-btn"
@@ -102,7 +102,10 @@ function ReactTable({ columns, data }) {
             {headerGroups.map((headerGroup, i) => (
               <tr key={i} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, index) => (
-                  <th key={index} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th
+                    key={index}
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="text-nowrap">
                     {column.render('Header')}{' '}
                     <span>
                       {column.isSorted ? (

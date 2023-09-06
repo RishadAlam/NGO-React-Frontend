@@ -5,10 +5,6 @@
   display: flex;
   min-height: 200px;
 
-  @include sm {
-    flex-direction: column;
-  }
-
   .boxInfo {
     flex: 3;
     display: flex;
