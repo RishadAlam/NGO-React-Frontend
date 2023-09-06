@@ -1,41 +1,41 @@
-export const DashSavingCollectionTableColumns = () => [
+export const DashSavingCollectionTableColumns = (t) => [
   { Header: '#', accessor: 'id', disable: true },
-  { Header: 'Client Name', accessor: 'name', disable: true },
-  { Header: 'Account No', accessor: 'acc_no', disable: true },
-  { Header: 'Volume', accessor: 'volume', show: false },
-  { Header: 'Center', accessor: 'center', show: false },
-  { Header: 'Type', accessor: 'type' },
-  { Header: 'Description', accessor: 'description', show: false },
-  { Header: 'Deposit', accessor: 'deposit' },
-  { Header: 'Officer', accessor: 'officer' },
-  { Header: 'Time', accessor: 'time' }
+  { Header: t('common.client_name'), accessor: 'name', disable: true },
+  { Header: t('common.acc_no'), accessor: 'acc_no', disable: true },
+  { Header: t('common.volume'), accessor: 'volume', show: false },
+  { Header: t('common.center'), accessor: 'center', show: false },
+  { Header: t('common.type'), accessor: 'type' },
+  { Header: t('common.description'), accessor: 'description', show: false },
+  { Header: t('common.deposit'), accessor: 'deposit' },
+  { Header: t('common.officer'), accessor: 'officer' },
+  { Header: t('common.time'), accessor: 'time' }
 ]
 
-export const DashLoanCollectionTableColumns = () => [
+export const DashLoanCollectionTableColumns = (t) => [
   { Header: '#', accessor: 'id', disable: true },
-  { Header: 'Client Name', accessor: 'name', disable: true },
-  { Header: 'Account No', accessor: 'acc_no', disable: true },
-  { Header: 'Volume', accessor: 'volume', show: false },
-  { Header: 'Center', accessor: 'center', show: false },
-  { Header: 'Type', accessor: 'type' },
-  { Header: 'Description', accessor: 'description', show: false },
-  { Header: 'Deposit', accessor: 'deposit' },
-  { Header: 'Loan', accessor: 'loan' },
-  { Header: 'Interest', accessor: 'interest' },
-  { Header: 'Total', accessor: 'total' },
-  { Header: 'Officer', accessor: 'officer' },
-  { Header: 'Time', accessor: 'time' }
+  { Header: t('common.client_name'), accessor: 'name', disable: true },
+  { Header: t('common.acc_no'), accessor: 'acc_no', disable: true },
+  { Header: t('common.volume'), accessor: 'volume', show: false },
+  { Header: t('common.center'), accessor: 'center', show: false },
+  { Header: t('common.type'), accessor: 'type' },
+  { Header: t('common.description'), accessor: 'description', show: false },
+  { Header: t('common.deposit'), accessor: 'deposit' },
+  { Header: t('common.loan'), accessor: 'loan' },
+  { Header: t('common.interest'), accessor: 'interest' },
+  { Header: t('common.total'), accessor: 'total' },
+  { Header: t('common.officer'), accessor: 'officer' },
+  { Header: t('common.time'), accessor: 'time' }
 ]
 
-export const DashWithdrawalTableColumns = () => [
+export const DashWithdrawalTableColumns = (t) => [
   { Header: '#', accessor: 'id', show: false },
-  { Header: 'Client Name', accessor: 'name' },
-  { Header: 'Account No', accessor: 'acc_no' },
-  { Header: 'Volume', accessor: 'volume', show: false },
-  { Header: 'Center', accessor: 'center', show: false },
-  { Header: 'Type', accessor: 'type', show: false },
-  { Header: 'Description', accessor: 'description', show: false },
-  { Header: 'Withdraw', accessor: 'withdraw' },
-  { Header: 'Officer', accessor: 'officer' },
-  { Header: 'Time', accessor: 'time', show: false }
+  { Header: t('common.client_name'), accessor: 'name' },
+  { Header: t('common.acc_no'), accessor: 'acc_no' },
+  { Header: t('common.volume'), accessor: 'volume', show: false },
+  { Header: t('common.center'), accessor: 'center', show: false },
+  { Header: t('common.type'), accessor: 'type', show: false },
+  { Header: t('common.description'), accessor: 'description', show: false },
+  { Header: t('common.withdrawal'), accessor: 'withdraw' },
+  { Header: t('common.officer'), accessor: 'officer' },
+  { Header: t('common.time'), accessor: 'time', show: false }
 ]

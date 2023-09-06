@@ -1,6 +1,20 @@
 {
   "common": {
-    "search_placeholder": "Search..."
+    "search_placeholder": "Search...",
+    "client_name": "Client",
+    "acc_no": "Account",
+    "volume": "Volume",
+    "center": "Center",
+    "type": "Type",
+    "officer": "Officer",
+    "time": "Time",
+    "date": "Date",
+    "description": "Description",
+    "deposit": "Deposit",
+    "loan": "Loan",
+    "interest": "Interest",
+    "withdrawal": "Withdrawal",
+    "total": "Total"
   },
 
   "app_config": {
@@ -22,6 +36,10 @@
     "Savings_Collection_by_Sources": "Savings Collection by Sources",
     "Loans_Collection_by_Sources": "Loans collection by sources",
     "Todays_Top_Money_Collectors": "Today's Top Money Collectors",
+    "Recent_Saving_Collections": "Recent Saving Collections",
+    "Recent_Loan_Collections": "Recent Loan Collections",
+    "Recent_Saving_Withdrawals": "Recent Saving Withdrawals",
+    "Recent_Loan_Withdrawals": "Recent Loan Withdrawals",
     "cards": {
       "Loan_Given": "Loan Given",
       "Loan_Recovered": "Loan Recovered",

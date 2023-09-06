@@ -1,6 +1,20 @@
 {
   "common": {
-    "search_placeholder": "অনুসন্ধান করুন..."
+    "search_placeholder": "অনুসন্ধান করুন...",
+    "client_name": "সদস্য",
+    "acc_no": "বই নং",
+    "volume": "এলাকা",
+    "center": "কেন্দ্র",
+    "type": "ক্ষেত্র",
+    "officer": "অফিসার",
+    "time": "সময়",
+    "date": "তারিখ",
+    "description": "মতামত",
+    "deposit": "জমা",
+    "loan": "ঋণ",
+    "interest": "লাভ",
+    "withdrawal": "উত্তোলন",
+    "total": "মোট"
   },
 
   "app_config": {
@@ -22,6 +36,10 @@
     "Savings_Collection_by_Sources": "সূত্র দ্বারা সঞ্চয় সংগ্রহ",
     "Loans_Collection_by_Sources": "সূত্র দ্বারা ঋণ সংগ্রহ",
     "Todays_Top_Money_Collectors": "আজকের শীর্ষ অর্থ সংগ্রাহকগণ",
+    "Recent_Saving_Collections": "সাম্প্রতিক সঞ্চয় সংগ্রহ",
+    "Recent_Loan_Collections": "সাম্প্রতিক ঋণ সংগ্রহ",
+    "Recent_Saving_Withdrawals": "সাম্প্রতিক সঞ্চয় উত্তোলন",
+    "Recent_Loan_Withdrawals": "সাম্প্রতিক ঋণ উত্তোলন",
     "cards": {
       "Loan_Given": "ঋণ দেওয়া হয়েছে",
       "Loan_Recovered": "ঋণ পুনরুদ্ধার হয়েছে",
