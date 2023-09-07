@@ -85,6 +85,27 @@
   .main-body {
     width: 100%;
 
+    .mobile-menu {
+      display: none;
+
+      @include md {
+        display: grid;
+        grid-template-rows: 0fr !important;
+        transition: grid-template-rows 0.3s ease-in-out;
+        -webkit-transition: grid-template-rows 0.3s ease-in-out;
+        -moz-transition: grid-template-rows 0.3s ease-in-out;
+        -ms-transition: grid-template-rows 0.3s ease-in-out;
+        -o-transition: grid-template-rows 0.3s ease-in-out;
+
+        & > .menu {
+          overflow: hidden;
+        }
+        &.active {
+          grid-template-rows: 1fr !important;
+        }
+      }
+    }
+
     .content {
       // background-color: cadetblue;
       min-height: calc(100vh - 60px - 40px);

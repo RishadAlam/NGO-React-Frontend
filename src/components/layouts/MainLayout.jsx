@@ -4,8 +4,8 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
 import { useIsLoadingValue } from '../../atoms/loaderAtoms'
+import Menu from '../menu/Menu'
 import SideBarLogo from '../sidebarLogo/SideBarLogo'
-import SideBarMenu from '../sidebarMenu/SideBarMenu'
 import TopBar from '../topBar/TopBar'
 import './layout.scss'
 
@@ -33,10 +33,13 @@ export default function MainLayout() {
           <div className="d-flex">
             <div className={`side-bar d-md-block d-none ${isSidebarMd ? 'side-bar-sm' : ''}`}>
               <SideBarLogo />
-              <SideBarMenu />
+              <Menu />
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
+              <div className={`mobile-menu px-3 d-md-none ${isSidebarMd ? 'active' : ''}`}>
+                <Menu />
+              </div>
               <div className="content p-2">
                 <Outlet />
               </div>

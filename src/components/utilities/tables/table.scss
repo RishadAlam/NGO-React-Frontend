@@ -7,28 +7,31 @@
 
 .column-hiding {
   .column-dropdown {
-    // width: 220px;
-    height: 0px;
+    //width: 220px;
+    //height: 0px;
+    display: grid;
+    grid-template-rows: 0fr !important;
     top: 100%;
     right: 88%;
-    visibility: hidden;
-    overflow: hidden;
+    //visibility: hidden;
+    //overflow: hidden;
     z-index: 99999;
-    transition: height 0.5s ease;
+    transition: grid-template-rows 0.5s ease;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    -webkit-transition: height 0.5s ease;
-    -moz-transition: height 0.5s ease;
-    -ms-transition: height 0.5s ease;
-    -o-transition: height 0.5s ease;
-    @include transition;
+    -webkit-transition: grid-template-rows 0.5s ease;
+    -moz-transition: grid-template-rows 0.5s ease;
+    -ms-transition: grid-template-rows 0.5s ease;
+    -o-transition: grid-template-rows 0.5s ease;
 
     ul {
       width: max-content;
+      // height: max-content;
       background-color: $secondary-color;
+      overflow: hidden;
       @include transition;
 
       li {
@@ -36,11 +39,12 @@
         @include transition;
       }
     }
-  }
 
-  .column-dropdown.active {
-    height: auto;
-    visibility: visible;
+    &.active {
+      // height: auto;
+      // visibility: visible;
+      grid-template-rows: 1fr !important;
+    }
   }
 }
 

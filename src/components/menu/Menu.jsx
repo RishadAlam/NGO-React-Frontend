@@ -2,17 +2,17 @@ import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import Home from '../../icons/Home'
 import { mainMenu } from '../../resources/staticData/mainMenu'
+import './Menu.scss'
 import NavItem from './NavItem'
-import './sidebarMenu.scss'
 
-export default function SideBarMenu() {
+export default function Menu() {
   const location = useLocation()
   const { t } = useTranslation()
   const menu = mainMenu(t)
 
   return (
     <>
-      <nav className="menu mt-5">
+      <nav className="menu mt-md-5">
         <ul>
           <li>
             <Link
