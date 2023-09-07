@@ -29,7 +29,9 @@ export default function DarkLangButton() {
 
   return (
     <>
-      <div className="DarkLangButton me-5 d-flex justify-content-between" style={{ width: '80px' }}>
+      <div
+        className="DarkLangButton me-3 me-md-5 d-flex justify-content-between"
+        style={{ width: '80px' }}>
         <Button
           type="button"
           name={lang === 'en' ? 'Eng' : 'বাংলা'}

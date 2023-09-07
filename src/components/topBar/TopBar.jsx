@@ -15,7 +15,7 @@ export default function TopBar({ setIsSidebarMd }) {
           onClick={() => setIsSidebarMd((prevState) => !prevState)}>
           <Menu />
         </div>
-        <div className="ms-3">
+        <div className="mx-3">
           <MainSearchBox t={t} />
         </div>
         <div className="ms-auto d-flex align-items-center">

@@ -15,11 +15,12 @@
     text-indent: 8px;
     border-radius: 10px;
     border: none;
-  }
+    padding-right: 45px;
+    border: 1px solid $blue-magenta !important;
 
-  .form-input:focus {
-    box-shadow: none;
-    border: none;
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   .left-pan {
@@ -27,7 +28,7 @@
     right: 0;
     top: 50%;
     padding: 2px;
-    border-left: 1px solid $gray-400;
+    border-left: 1px solid $blue-magenta;
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
@@ -36,7 +37,7 @@
 
     & > button {
       padding: 0 10px !important;
-      color: $gray-700;
+      color: $blue-magenta;
       background-color: transparent;
     }
 
@@ -44,5 +45,37 @@
       color: $gray-700;
       background-color: transparent;
     }
+  }
+}
+
+body.dark .mainSearchBox .form-input {
+  color: $soft-light !important;
+  background-color: transparent !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+
+  &::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: $soft-light;
+  }
+  :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $soft-light;
+  }
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $soft-light;
+  }
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $soft-light;
+  }
+  &::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $soft-light;
+  }
+
+  &::placeholder {
+    /* Most modern browsers support this now. */
+    color: $soft-light;
   }
 }

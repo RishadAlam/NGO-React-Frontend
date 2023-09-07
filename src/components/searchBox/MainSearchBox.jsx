@@ -13,7 +13,7 @@ export default function MainSearchBox({ t }) {
             placeholder={t('common.search_placeholder')}
           />
           <span className="left-pan">
-            <Button name={<Search size={20} />} disabled={false} loading={false} type="submit" />
+            <Button name={<Search size={20} />} disabled={false} loading={false} type="button" />
           </span>
         </form>
       </div>
