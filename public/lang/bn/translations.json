@@ -25,7 +25,14 @@
 
   "menu": {
     "dashboard": "ড্যাশবোর্ড",
-    "registration_label": "নিবন্ধন"
+    "categories": {
+      "Basic": "মৌলিক",
+      "Control_Panel": "কন্ট্রোল প্যানেল"
+    },
+    "label": {
+      "registration": "নিবন্ধন",
+      "staff": "কর্মচারিবর্গ"
+    }
   },
 
   "profile_box": {

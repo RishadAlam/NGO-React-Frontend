@@ -13,8 +13,8 @@
     grid-template-rows: 0fr !important;
     top: 100%;
     right: 88%;
-    //visibility: hidden;
-    //overflow: hidden;
+    visibility: hidden;
+    overflow: hidden;
     z-index: 99999;
     transition: grid-template-rows 0.5s ease;
     border-radius: 10px;
@@ -42,7 +42,7 @@
 
     &.active {
       // height: auto;
-      // visibility: visible;
+      visibility: visible;
       grid-template-rows: 1fr !important;
     }
   }

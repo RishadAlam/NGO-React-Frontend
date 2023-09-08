@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
-import { DashWithdrawalTableColumns } from '../../resources/staticData/tableColumns,js'
+import { DashWithdrawalTableColumns } from '../../resources/staticData/tableColumns.js'
 import ReactTable from '../utilities/tables/ReactTable'
 
 export default function SavingWithdrawalLists() {

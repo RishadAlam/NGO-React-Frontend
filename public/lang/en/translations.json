@@ -29,7 +29,14 @@
 
   "menu": {
     "dashboard": "Dashboard",
-    "registration_label": "Registration"
+    "categories": {
+      "Basic": "Basic",
+      "Control_Panel": "Control Panel"
+    },
+    "label": {
+      "registration": "Registration",
+      "staff": "Staff"
+    }
   },
 
   "profile_box": {
