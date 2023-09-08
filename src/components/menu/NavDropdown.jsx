@@ -6,7 +6,8 @@ import XCircle from '../../icons/XCircle'
 import NavLink from './NavLink'
 
 export default function NavDropdown({ m, location }) {
-  const [dropDowns, setDropDowns] = useState({})
+  const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
+  const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
   const toggleSideMenu = (e, id) => {
     e.preventDefault()
     setDropDowns({ [id]: !dropDowns[id] })
@@ -18,8 +19,8 @@ export default function NavDropdown({ m, location }) {
         <Link
           to="#"
           onClick={(e) => toggleSideMenu(e, `d${m.id}`)}
-          className={`side-menu ${
-            dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''
+          className={`side-menu ${dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''} ${
+            isDropDownActive ? 'side-menu--active' : ''
           } cursor-pointer`}>
           <div className="side-menu__icon">
             <XCircle />
