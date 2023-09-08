@@ -16,7 +16,15 @@
     "loan": "Loan",
     "interest": "Interest",
     "withdrawal": "Withdrawal",
-    "total": "Total"
+    "total": "Total",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "mobile": "Mobile",
+    "image": "Image",
+    "status": "Status",
+    "toggle_status": "Toggle Status",
+    "action": "Action"
   },
 
   "react_table": {
@@ -67,5 +75,8 @@
       "View_all": "View all",
       "this_month": "this month"
     }
+  },
+  "staffs": {
+    "Staff_List": "Staff List"
   }
 }

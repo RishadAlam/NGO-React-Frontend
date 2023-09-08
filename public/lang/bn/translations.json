@@ -16,7 +16,15 @@
     "loan": "ঋণ",
     "interest": "লাভ",
     "withdrawal": "উত্তোলন",
-    "total": "মোট"
+    "total": "মোট",
+    "name": "নাম",
+    "email": "ইমেল",
+    "role": "ভূমিকা",
+    "mobile": "মুঠোফোন",
+    "image": "ছবি",
+    "status": "স্ট্যাটাস",
+    "toggle_status": "টগল স্ট্যাটাস",
+    "action": "পদক্ষেপ"
   },
 
   "app_config": {
@@ -63,5 +71,8 @@
       "View_all": "সব দেখ",
       "this_month": "এই মাসে"
     }
+  },
+  "staffs": {
+    "Staff_List": "কর্মচারিবর্গের তালিকা"
   }
 }

@@ -277,3 +277,12 @@ ul {
 .light .column-hiding .column-dropdown ul {
   background-color: $primary-soft-bg;
 }
+
+.light .staff .staff-table {
+  -webkit-box-shadow:
+    0px 5px 13px -7px #000000,
+    0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
+  box-shadow:
+    0px 5px 13px -7px #000000,
+    0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
+}
