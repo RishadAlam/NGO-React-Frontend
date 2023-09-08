@@ -48,14 +48,14 @@ export const mainMenu = (t) => {
         subMenu: [
           {
             id: 'staff1',
-            label: 'Staff',
-            path: '/staff',
+            label: t('menu.staffs.Staffs'),
+            path: '/staffs',
             icon: '',
             view: true
           },
           {
             id: 'staff2',
-            label: 'Staff Permissions',
+            label: t('menu.staffs.Staff_Permissions'),
             path: '/staff-permissions',
             icon: '',
             view: true

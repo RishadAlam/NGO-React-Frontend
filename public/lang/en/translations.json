@@ -35,7 +35,11 @@
     },
     "label": {
       "registration": "Registration",
-      "staff": "Staff"
+      "staff": "Staffs"
+    },
+    "staffs": {
+      "Staffs": "Staffs",
+      "Staff_Permissions": "Staff Permissions"
     }
   },
 

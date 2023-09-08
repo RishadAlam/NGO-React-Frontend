@@ -32,6 +32,10 @@
     "label": {
       "registration": "নিবন্ধন",
       "staff": "কর্মচারিবর্গ"
+    },
+    "staffs": {
+      "Staffs": "কর্মচারিবর্গ",
+      "Staff_Permissions": "কর্মচারিবর্গের অনুমতি"
     }
   },
 

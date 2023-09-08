@@ -230,8 +230,10 @@ ul {
   }
 }
 
-// .light .top-bar,
-// .light .side-bar,
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: $primary-bg !important;
+}
+
 .light .box {
   background-color: $white-color;
 }
