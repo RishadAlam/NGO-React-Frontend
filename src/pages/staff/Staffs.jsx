@@ -8,8 +8,11 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
+import List from '../../icons/List'
 import Pen from '../../icons/Pen'
+import Trash from '../../icons/Trash'
 import { MOCK_DATA } from '../../resources/staticData/MOCK_DATA'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import './staff.scss'
@@ -21,21 +24,20 @@ export default function Staffs() {
   const statusSwitch = (value, id) => (
     <AndroidSwitch value={value} id={id} toggleStatus={toggleStatus} />
   )
-  const actionBtnGroup = (id) => {
-    return (
-      <ActionBtnGroup>
-        <IconButton className="text-success" onClick={() => view(id)}>
-          {<Pen />}
-        </IconButton>
-        <IconButton className="text-warning" onClick={() => editf(id)}>
-          {<Pen />}
-        </IconButton>
-        <IconButton className="text-danger" onClick={() => deletef(id)}>
-          {<Pen />}
-        </IconButton>
-      </ActionBtnGroup>
-    )
-  }
+  const actionBtnGroup = (id) => (
+    <ActionBtnGroup>
+      <IconButton className="text-success" onClick={() => view(id)}>
+        {<List size={20} />}
+      </IconButton>
+      <IconButton className="text-warning" onClick={() => editf(id)}>
+        {<Edit size={20} />}
+      </IconButton>
+      <IconButton className="text-danger" onClick={() => deletef(id)}>
+        {<Trash size={20} />}
+      </IconButton>
+    </ActionBtnGroup>
+  )
+
   const columns = useMemo(
     () => StaffTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
