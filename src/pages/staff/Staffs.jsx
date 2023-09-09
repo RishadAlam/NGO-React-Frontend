@@ -1,4 +1,5 @@
 import { IconButton } from '@mui/joy'
+import { Tooltip, Zoom } from '@mui/material'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -26,15 +27,21 @@ export default function Staffs() {
   )
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      <IconButton className="text-success" onClick={() => view(id)}>
-        {<List size={20} />}
-      </IconButton>
-      <IconButton className="text-warning" onClick={() => editf(id)}>
-        {<Edit size={20} />}
-      </IconButton>
-      <IconButton className="text-danger" onClick={() => deletef(id)}>
-        {<Trash size={20} />}
-      </IconButton>
+      <Tooltip TransitionComponent={Zoom} title="View User Permissions" arrow followCursor>
+        <IconButton className="text-success" onClick={() => view(id)}>
+          {<List size={20} />}
+        </IconButton>
+      </Tooltip>
+      <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <IconButton className="text-warning" onClick={() => editf(id)}>
+          {<Edit size={20} />}
+        </IconButton>
+      </Tooltip>
+      <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <IconButton className="text-danger" onClick={() => deletef(id)}>
+          {<Trash size={20} />}
+        </IconButton>
+      </Tooltip>
     </ActionBtnGroup>
   )
 
