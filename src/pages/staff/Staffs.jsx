@@ -1,7 +1,9 @@
+import { IconButton } from '@mui/joy'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -19,13 +21,31 @@ export default function Staffs() {
   const statusSwitch = (value, id) => (
     <AndroidSwitch value={value} id={id} toggleStatus={toggleStatus} />
   )
+  const actionBtnGroup = (id) => {
+    return (
+      <ActionBtnGroup>
+        <IconButton className="text-success" onClick={() => view(id)}>
+          {<Pen />}
+        </IconButton>
+        <IconButton className="text-warning" onClick={() => editf(id)}>
+          {<Pen />}
+        </IconButton>
+        <IconButton className="text-danger" onClick={() => deletef(id)}>
+          {<Pen />}
+        </IconButton>
+      </ActionBtnGroup>
+    )
+  }
   const columns = useMemo(
-    () => StaffTableColumns(t, windowWidth, avatar, statusSwitch),
+    () => StaffTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
   const data = useMemo(() => MOCK_DATA(), [])
-
   const toggleStatus = (id) => console.log(id)
+  const editf = (id) => console.log(id)
+  const deletef = (id) => console.log(id)
+  const view = (id) => console.log(id)
 
   return (
     <>
