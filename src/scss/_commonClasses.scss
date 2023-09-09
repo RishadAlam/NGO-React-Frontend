@@ -301,9 +301,11 @@ ul {
 }
 
 .dark .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root {
-  &,
-  p {
+  & {
     color: $soft-color !important;
+  }
+  p {
+    color: $white-color !important;
   }
 }
 
