@@ -24,7 +24,10 @@
     "image": "ছবি",
     "status": "স্ট্যাটাস",
     "toggle_status": "টগল স্ট্যাটাস",
-    "action": "পদক্ষেপ"
+    "action": "পদক্ষেপ",
+    "registration": "নিবন্ধন",
+    "cancel": "বাতিল করুণ",
+    "create": "তৈরি করুণ"
   },
 
   "app_config": {

@@ -23,13 +23,13 @@ export default function RoleRegistration({ isRoleModalOpen, setIsRoleModalOpen, 
           <div className="card-body">
             <div className="row">
               <div className="col-md-12 mb-3">
-                <TextInputField label="Name" defaultValue="" />
+                <TextInputField label={t('common.name')} defaultValue="" />
               </div>
             </div>
           </div>
           <div className="card-footer text-end">
             <Button
-              name={'Create'}
+              name={t('common.registration')}
               className={'btn-primary py-2 px-3'}
               loading={false}
               endIcon={<Pen size={20} />}

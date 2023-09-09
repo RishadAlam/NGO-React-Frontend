@@ -5,14 +5,14 @@ import ModalPro from '../utilities/ModalPro'
 import SelectDropdownField from '../utilities/SelectDropdownField'
 import TextInputField from '../utilities/TextInputField'
 
-export default function StaffRegistration({ isUserModalOpen, setIsUserModalOpen }) {
+export default function StaffRegistration({ isUserModalOpen, setIsUserModalOpen, t }) {
   return (
     <>
       <ModalPro open={isUserModalOpen} handleClose={() => setIsUserModalOpen(false)}>
         <div className="card">
           <div className="card-header">
             <div className="d-flex align-items-center justify-content-between">
-              <b className="text-uppercase">Staff Registration</b>
+              <b className="text-uppercase">{t('staffs.Staff_Registration')}</b>
               <Button
                 className={'text-danger p-0'}
                 loading={false}
@@ -24,22 +24,22 @@ export default function StaffRegistration({ isUserModalOpen, setIsUserModalOpen 
           <div className="card-body">
             <div className="row">
               <div className="col-md-6 mb-3">
-                <TextInputField label="Name" defaultValue="" />
+                <TextInputField label={t('common.name')} defaultValue="" />
               </div>
               <div className="col-md-6 mb-3">
-                <TextInputField label="Email" type="email" defaultValue="" />
+                <TextInputField label={t('common.email')} type="email" defaultValue="" />
               </div>
               <div className="col-md-6 mb-3">
-                <TextInputField label="Phone" type="number" defaultValue="" />
+                <TextInputField label={t('common.mobile')} type="number" defaultValue="" />
               </div>
               <div className="col-md-6 mb-3">
-                <SelectDropdownField label="Role" defaultValue="" />
+                <SelectDropdownField label={t('common.role')} defaultValue="" />
               </div>
             </div>
           </div>
           <div className="card-footer text-end">
             <Button
-              name={'Create'}
+              name={t('common.registration')}
               className={'btn-primary py-2 px-3'}
               loading={false}
               endIcon={<Pen size={20} />}

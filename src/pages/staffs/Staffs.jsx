@@ -80,6 +80,7 @@ export default function Staffs() {
             <StaffRegistration
               isUserModalOpen={isUserModalOpen}
               setIsUserModalOpen={setIsUserModalOpen}
+              t={t}
             />
           </div>
         </div>

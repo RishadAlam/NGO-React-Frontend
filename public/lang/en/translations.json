@@ -24,7 +24,10 @@
     "image": "Image",
     "status": "Status",
     "toggle_status": "Toggle Status",
-    "action": "Action"
+    "action": "Action",
+    "registration": "Registration",
+    "cancel": "cancel",
+    "create": "Create"
   },
 
   "react_table": {
