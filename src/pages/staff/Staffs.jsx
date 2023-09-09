@@ -2,18 +2,21 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import Avatar from '../../components/utilities/Avatar'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
+import { MOCK_DATA } from '../../resources/staticData/MOCK_DATA'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import './staff.scss'
 
 export default function Staffs() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const columns = useMemo(() => StaffTableColumns(t, windowWidth), [t, windowWidth])
-  const data = []
+  const avatar = (name, img) => <Avatar name={name} img={img} />
+  const columns = useMemo(() => StaffTableColumns(t, windowWidth, avatar), [t, windowWidth])
+  const data = useMemo(() => MOCK_DATA(), [])
 
   return (
     <>
