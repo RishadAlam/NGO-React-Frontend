@@ -89,9 +89,12 @@ a {
 
 .btn {
   color: $white-color;
-  background-color: $primary-bg;
   border: none;
   padding: 10px 15px;
+}
+
+.btn-primary {
+  background-color: $primary-bg;
 }
 
 a:active,
@@ -121,6 +124,15 @@ body {
   height: 100%;
   font-size: 14px;
   font-weight: 400;
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 tr,
@@ -328,4 +340,45 @@ ul {
 .css-1sfcfqv-JoyIconButton-root:hover {
   background-color: transparent !important;
   color: $blue-magenta !important;
+}
+
+.css-1ps13i2 {
+  background-color: $main-bg !important;
+}
+
+.dark {
+  .card-footer,
+  .card-header {
+    background-color: $soft-bg;
+    color: $soft-color;
+    overflow: hidden;
+  }
+
+  .card-body {
+    background-color: $main-bg;
+  }
+  .css-1869usk-MuiFormControl-root,
+  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    background-color: transparent !important;
+  }
+
+  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
+  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+    border-color: $soft-light !important;
+  }
+
+  .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+    color: $soft-light !important;
+  }
+  .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    background-color: $soft-bg !important;
+
+    li {
+      color: $soft-light !important;
+
+      &:hover {
+        background-color: $primary-bg-hover !important;
+      }
+    }
+  }
 }

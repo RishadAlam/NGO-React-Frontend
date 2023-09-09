@@ -7,6 +7,7 @@ export default function PrimaryBtn({
   disabled,
   loading,
   style,
+  size,
   onclick,
   variant,
   endIcon
@@ -19,6 +20,7 @@ export default function PrimaryBtn({
         type={type || 'button'}
         disabled={disabled || false}
         style={style}
+        size={size || 'lg'}
         onClick={onclick}>
         {name}
       </Button>

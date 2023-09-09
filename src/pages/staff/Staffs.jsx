@@ -1,9 +1,10 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import StaffRegistration from '../../components/staffRegistration/StaffRegistration'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
@@ -19,6 +20,7 @@ import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import './staff.scss'
 
 export default function Staffs() {
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const avatar = (name, img) => <Avatar name={name} img={img} />
@@ -69,7 +71,16 @@ export default function Staffs() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn name={'Create Staff'} loading={false} endIcon={<Pen size={20} />} />
+            <PrimaryBtn
+              name={'Staff Registration'}
+              loading={false}
+              endIcon={<Pen size={20} />}
+              onclick={() => setIsUserModalOpen(true)}
+            />
+            <StaffRegistration
+              isUserModalOpen={isUserModalOpen}
+              setIsUserModalOpen={setIsUserModalOpen}
+            />
           </div>
         </div>
         <div className="staff-table">
