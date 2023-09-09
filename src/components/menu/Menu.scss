@@ -10,7 +10,7 @@
 
       &:hover {
         background: $secondary-color !important;
-        color: $primary-soft-bg !important;
+        color: $blue-magenta !important;
       }
     }
 
@@ -38,7 +38,7 @@
         @include transition;
 
         &:hover {
-          color: $primary-soft-bg !important;
+          color: $blue-magenta !important;
           transform: translateX(10px);
           -webkit-transform: translateX(10px);
           -moz-transform: translateX(10px);
