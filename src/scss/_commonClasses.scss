@@ -201,14 +201,14 @@ ul {
 .light .menu > ul > li {
   & > ul,
   & > .side-menu.side-menu--active {
-    background-color: $primary-soft-bg;
+    background-color: $primary-bg;
   }
 
   & > a {
     color: $soft-dark !important;
 
     &:hover {
-      background-color: $primary-soft-bg !important;
+      background-color: $primary-bg-hover !important;
       color: $white-color !important;
     }
   }
@@ -219,7 +219,7 @@ ul {
 }
 
 .light .profile ul {
-  background-color: $primary-soft-bg;
+  background-color: $primary-bg;
 
   li:hover {
     color: $white-color !important;
@@ -232,6 +232,18 @@ ul {
 
 .css-sghohy-MuiButtonBase-root-MuiButton-root {
   background-color: $primary-bg !important;
+
+  &:hover {
+    background-color: $primary-bg-hover !important;
+  }
+
+  &:active {
+    transform: scale(0.95) !important;
+    -webkit-transform: scale(0.95) !important;
+    -moz-transform: scale(0.95) !important;
+    -ms-transform: scale(0.95) !important;
+    -o-transform: scale(0.95) !important;
+  }
 }
 
 .light .box {
@@ -252,7 +264,7 @@ ul {
 }
 .table-hover > tbody > tr:hover > * {
   color: $white-color !important;
-  background-color: $primary-soft-bg !important;
+  background-color: $primary-bg-hover !important;
 }
 
 .table-report tr {
@@ -275,14 +287,26 @@ ul {
 }
 
 .light .column-hiding .column-dropdown ul {
-  background-color: $primary-soft-bg;
+  background-color: $primary-bg;
 }
 
 .light .staff .staff-table {
+  background-color: $white-color;
   -webkit-box-shadow:
     0px 5px 13px -7px #000000,
     0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
   box-shadow:
     0px 5px 13px -7px #000000,
     0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
+}
+
+.dark .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root {
+  &,
+  p {
+    color: $soft-color !important;
+  }
+}
+
+.css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root:hover {
+  color: $blue-magenta !important;
 }
