@@ -74,6 +74,11 @@
     }
   },
   "staffs": {
-    "Staff_List": "কর্মচারিবর্গের তালিকা"
+    "Staff_List": "কর্মচারিবর্গের তালিকা",
+    "Staff_Registration": "কর্মচারিবর্গের নিবন্ধন"
+  },
+  "staff_roles": {
+    "Staff_Role_List": "কর্মচারিবর্গের ভূমিকার তালিকা",
+    "Staff_Roles_Registration": "ভূমিকা নিবন্ধন"
   }
 }

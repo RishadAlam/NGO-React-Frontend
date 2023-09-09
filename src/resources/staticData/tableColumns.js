@@ -1,5 +1,5 @@
 export const DashSavingCollectionTableColumns = (t, windowWidth) => [
-  { Header: '#', accessor: 'id' },
+  { Header: '#', accessor: 'id', Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0') },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.volume'), accessor: 'volume', show: false },
@@ -12,7 +12,7 @@ export const DashSavingCollectionTableColumns = (t, windowWidth) => [
 ]
 
 export const DashLoanCollectionTableColumns = (t, windowWidth) => [
-  { Header: '#', accessor: 'id' },
+  { Header: '#', accessor: 'id', Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0') },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.volume'), accessor: 'volume', show: false },
@@ -28,7 +28,12 @@ export const DashLoanCollectionTableColumns = (t, windowWidth) => [
 ]
 
 export const DashWithdrawalTableColumns = (t, windowWidth) => [
-  { Header: '#', accessor: 'id', show: false },
+  {
+    Header: '#',
+    accessor: 'id',
+    show: false,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.volume'), accessor: 'volume', show: false },
@@ -67,5 +72,19 @@ export const StaffTableColumns = (t, windowWidth, avatar, statusSwitch, actionBt
     accessor: 'action',
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) => actionBtnGroup(row.original.id)
+  }
+]
+
+export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  { Header: t('common.role'), accessor: 'name' },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    Cell: ({ row }) => row.original.is_default && actionBtnGroup(row.original.id)
   }
 ]

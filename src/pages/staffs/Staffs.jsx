@@ -72,7 +72,7 @@ export default function Staffs() {
           </div>
           <div className="col-sm-6 text-end">
             <PrimaryBtn
-              name={'Staff Registration'}
+              name={t('staffs.Staff_Registration')}
               loading={false}
               endIcon={<Pen size={20} />}
               onclick={() => setIsUserModalOpen(true)}

@@ -78,6 +78,11 @@
     }
   },
   "staffs": {
-    "Staff_List": "Staff List"
+    "Staff_List": "STAFF LIST",
+    "Staff_Registration": "Staff Registration"
+  },
+  "staff_roles": {
+    "Staff_Role_List": "STAFF ROLE LIST",
+    "Staff_Roles_Registration": "Role Registration"
   }
 }
