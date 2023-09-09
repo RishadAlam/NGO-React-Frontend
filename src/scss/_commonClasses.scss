@@ -317,3 +317,7 @@ ul {
   width: 70px;
   padding: 5px 0px;
 }
+
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: $primary-soft-bg !important;
+}

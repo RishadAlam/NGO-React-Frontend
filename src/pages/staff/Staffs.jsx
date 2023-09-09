@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
-import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import Home from '../../icons/Home'
@@ -16,9 +16,16 @@ export default function Staffs() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const badge = (name, classs) => <Badge name={name} classs={classs} />
-  const columns = useMemo(() => StaffTableColumns(t, windowWidth, avatar, badge), [t, windowWidth])
+  const statusSwitch = (value, id) => (
+    <AndroidSwitch value={value} id={id} toggleStatus={toggleStatus} />
+  )
+  const columns = useMemo(
+    () => StaffTableColumns(t, windowWidth, avatar, statusSwitch),
+    [t, windowWidth]
+  )
   const data = useMemo(() => MOCK_DATA(), [])
+
+  const toggleStatus = (id) => console.log(id)
 
   return (
     <>

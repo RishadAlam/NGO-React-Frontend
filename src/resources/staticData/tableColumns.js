@@ -40,7 +40,7 @@ export const DashWithdrawalTableColumns = (t, windowWidth) => [
   { Header: t('common.time'), accessor: 'time', show: false }
 ]
 
-export const StaffTableColumns = (t, windowWidth, avatar, badge) => [
+export const StaffTableColumns = (t, windowWidth, avatar, statusSwitch) => [
   {
     Header: '#',
     accessor: 'id',
@@ -60,12 +60,7 @@ export const StaffTableColumns = (t, windowWidth, avatar, badge) => [
   {
     Header: t('common.status'),
     accessor: 'status',
-    Cell: ({ value }) => (value ? badge('Active', 'bg-primary') : badge('Deactive', 'bg-danger'))
-  },
-  {
-    Header: t('common.toggle_status'),
-    accessor: 'toggle_status',
-    show: windowWidth < 576 ? false : true
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   { Header: t('common.action'), accessor: 'action', show: windowWidth < 576 ? false : true }
 ]
