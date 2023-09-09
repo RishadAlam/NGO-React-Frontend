@@ -17,7 +17,7 @@ import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { MOCK_DATA } from '../../resources/staticData/MOCK_DATA'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
-import './staff.scss'
+import './staffs.scss'
 
 export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)

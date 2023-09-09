@@ -59,6 +59,13 @@ export const mainMenu = (t) => {
             path: '/staff-permissions',
             icon: '',
             view: true
+          },
+          {
+            id: 'staff3',
+            label: t('menu.staffs.Staff_Roles'),
+            path: '/staff-roles',
+            icon: '',
+            view: true
           }
         ]
       }

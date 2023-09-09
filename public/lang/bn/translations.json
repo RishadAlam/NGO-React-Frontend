@@ -43,7 +43,8 @@
     },
     "staffs": {
       "Staffs": "কর্মচারিবর্গ",
-      "Staff_Permissions": "কর্মচারিবর্গের অনুমতি"
+      "Staff_Permissions": "কর্মচারিবর্গের অনুমতি",
+      "Staff_Roles": "কর্মচারিবর্গের ভূমিকা"
     }
   },
 

@@ -10,7 +10,8 @@ import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 
 const ClientRegistration = lazy(() => import('./components/registrations/ClientRegistration'))
-const Staff = lazy(() => import('./pages/staff/Staffs'))
+const Staffs = lazy(() => import('./pages/staffs/Staffs'))
+const StaffRoles = lazy(() => import('./pages/staffRoles/StaffRoles'))
 
 export default function App() {
   return (
@@ -50,7 +51,19 @@ export default function App() {
               index
               element={
                 <Suspense fallback={<div>Staff is Loading..............</div>}>
-                  <Staff />
+                  <Staffs />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route
+            path="staff-roles"
+            element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
+            <Route
+              index
+              element={
+                <Suspense fallback={<div>Staff Roles is Loading..............</div>}>
+                  <StaffRoles />
                 </Suspense>
               }
             />

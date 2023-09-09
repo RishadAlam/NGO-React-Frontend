@@ -47,7 +47,8 @@
     },
     "staffs": {
       "Staffs": "Staffs",
-      "Staff_Permissions": "Staff Permissions"
+      "Staff_Permissions": "Staff Permissions",
+      "Staff_Roles": "Staff Roles"
     }
   },
 
