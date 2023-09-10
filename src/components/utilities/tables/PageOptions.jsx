@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import React from 'react'
+import React, { Fragment } from 'react'
 import PageOption from './PageOption'
 
 export default function PageOptions({
@@ -25,14 +25,14 @@ export default function PageOptions({
               return <PageOption key={key} pageIndex={pageIndex} page={page} gotoPage={gotoPage} />
             } else if (page === pageCount - 1) {
               return (
-                <>
-                  <span className="table-btn" key={`${key}-x`}>
-                    ...
-                  </span>
-                  <PageOption key={key} pageIndex={pageIndex} page={page} gotoPage={gotoPage} />
-                </>
+                <Fragment key={key}>
+                  <span className="table-btn">...</span>
+                  <PageOption pageIndex={pageIndex} page={page} gotoPage={gotoPage} />
+                </Fragment>
               )
             }
+
+            return <Fragment key={key}></Fragment>
           })
         : pageOptions.map((page, key) => (
             <PageOption key={key} pageIndex={pageIndex} page={page} gotoPage={gotoPage} />
