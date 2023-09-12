@@ -85,6 +85,6 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
   {
     Header: t('common.action'),
     accessor: 'action',
-    Cell: ({ row }) => row.original.is_default && actionBtnGroup(row.original.id)
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id)
   }
 ]

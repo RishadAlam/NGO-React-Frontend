@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { toast } from 'react-hot-toast'
 
 export default async function xFetch(
@@ -26,7 +27,7 @@ export default async function xFetch(
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Accept-Language': 'en'
+      'Accept-Language': Cookies.get('i18next') || 'en'
     }
   }
 
@@ -36,6 +37,8 @@ export default async function xFetch(
   if (accessToken) {
     config.headers.Authorization = accessToken
   }
+
+  // AbortController Signal
   if (signal) {
     config.signal = signal
   }
@@ -52,6 +55,8 @@ export default async function xFetch(
         // console.log(errors.response.data)
         // console.log(errors.response.status)
         // console.log(errors.response.headers)
+        toast.error(errors.response.data.message)
+        errors.response.data['status'] = errors.response.status
         return errors.response.data
       } else if (errors.request) {
         // The request was made but no response was received

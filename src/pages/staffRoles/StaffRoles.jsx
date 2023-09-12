@@ -1,13 +1,14 @@
-import { IconButton, Zoom } from '@mui/material'
+import { IconButton } from '@mui/joy'
+import { Tooltip, Zoom } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Tooltip } from 'recharts'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import RoleRegistration from '../../components/roleRegistration/RoleRegistration'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
@@ -19,6 +20,8 @@ export default function StaffRoles() {
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const { data: { data: roles } = [], mutate, isLoading, isError } = useFetch({ action: 'roles' })
+
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
       <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
@@ -39,7 +42,7 @@ export default function StaffRoles() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
-  const data = useMemo(() => [], [])
+  // const data = useMemo(() => [], [])
   const editf = (id) => console.log(id)
   const deletef = (id) => console.log(id)
 
@@ -70,7 +73,9 @@ export default function StaffRoles() {
           </div>
         </div>
         <div className="staff-table">
-          <ReactTable title={t('staff_roles.Staff_Role_List')} columns={columns} data={data} />
+          {!isLoading && roles && (
+            <ReactTable title={t('staff_roles.Staff_Role_List')} columns={columns} data={roles} />
+          )}
         </div>
       </section>
     </>

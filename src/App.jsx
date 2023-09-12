@@ -8,6 +8,7 @@ import AccountVerification from './pages/accountVerification/AccountVerification
 import Dashboard from './pages/dashboard/Dashboard'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
+import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const ClientRegistration = lazy(() => import('./components/registrations/ClientRegistration'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
@@ -18,6 +19,7 @@ export default function App() {
     <>
       <Routes>
         {/* UnAuthenticate Routes */}
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/login" element={<Layout />}>
           <Route index element={<Login />} />
         </Route>
