@@ -45,7 +45,14 @@ export const DashWithdrawalTableColumns = (t, windowWidth) => [
   { Header: t('common.time'), accessor: 'time', show: false }
 ]
 
-export const StaffTableColumns = (t, windowWidth, avatar, statusSwitch, actionBtnGroup) => [
+export const StaffTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  pendingBadge,
+  statusSwitch,
+  actionBtnGroup
+) => [
   {
     Header: '#',
     accessor: 'id',
@@ -54,14 +61,24 @@ export const StaffTableColumns = (t, windowWidth, avatar, statusSwitch, actionBt
   },
   {
     Header: t('common.image'),
-    accessor: 'image',
+    accessor: 'image_uri',
     show: windowWidth < 576 ? false : true,
     Cell: ({ row, value }) => avatar(row.original.name, value)
   },
   { Header: t('common.name'), accessor: 'name' },
   { Header: t('common.email'), accessor: 'email', show: windowWidth < 576 ? false : true },
-  { Header: t('common.role'), accessor: 'role' },
-  { Header: t('common.mobile'), accessor: 'mobile', show: windowWidth < 576 ? false : true },
+  {
+    Header: t('common.role'),
+    accessor: 'role',
+    Cell: ({ row }) => row.original.role_name
+  },
+  { Header: t('common.mobile'), accessor: 'phone', show: windowWidth < 576 ? false : true },
+  {
+    Header: t('common.verified_at'),
+    accessor: 'verified_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => pendingBadge(value)
+  },
   {
     Header: t('common.status'),
     accessor: 'status',

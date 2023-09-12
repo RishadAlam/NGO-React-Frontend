@@ -27,7 +27,9 @@
     "action": "পদক্ষেপ",
     "registration": "নিবন্ধন",
     "cancel": "বাতিল করুণ",
-    "create": "তৈরি করুণ"
+    "create": "তৈরি করুণ",
+    "verified_at": "যাচাই করা হয়েছে",
+    "pending": "অপেক্ষারত"
   },
 
   "app_config": {

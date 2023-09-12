@@ -8,14 +8,15 @@ import StaffRegistration from '../../components/staffRegistration/StaffRegistrat
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
+import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import List from '../../icons/List'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
-import { MOCK_DATA } from '../../resources/staticData/MOCK_DATA'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import './staffs.scss'
 
@@ -23,9 +24,16 @@ export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const { data: { data: staffs } = [], mutate, isLoading, isError } = useFetch({ action: 'users' })
   const avatar = (name, img) => <Avatar name={name} img={img} />
+  const pendingBadge = (value) => (
+    <Badge
+      name={value ? t('common.verified_at') : t('common.pending')}
+      className={value ? 'bg-success' : 'bg-danger'}
+    />
+  )
   const statusSwitch = (value, id) => (
-    <AndroidSwitch value={value} id={id} toggleStatus={toggleStatus} />
+    <AndroidSwitch value={value ? true : false} toggleStatus={() => toggleStatus(id)} />
   )
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
@@ -48,11 +56,10 @@ export default function Staffs() {
   )
 
   const columns = useMemo(
-    () => StaffTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
+    () => StaffTableColumns(t, windowWidth, avatar, pendingBadge, statusSwitch, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
-  const data = useMemo(() => MOCK_DATA(), [])
   const toggleStatus = (id) => console.log(id)
   const editf = (id) => console.log(id)
   const deletef = (id) => console.log(id)
@@ -85,7 +92,9 @@ export default function Staffs() {
           </div>
         </div>
         <div className="staff-table">
-          <ReactTable title={t('staffs.Staff_List')} columns={columns} data={data} />
+          {!isLoading && staffs && (
+            <ReactTable title={t('staffs.Staff_List')} columns={columns} data={staffs} />
+          )}
         </div>
       </section>
     </>

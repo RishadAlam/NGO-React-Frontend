@@ -27,7 +27,9 @@
     "action": "Action",
     "registration": "Registration",
     "cancel": "cancel",
-    "create": "Create"
+    "create": "Create",
+    "verified_at": "Verified at",
+    "pending": "Pending"
   },
 
   "react_table": {
