@@ -37,7 +37,7 @@ export default function MainLayout() {
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
-              <div className={`mobile-menu px-3 d-md-none ${isSidebarMd ? 'active' : ''}`}>
+              <div className={`mobile-menu px-3 d-md-none ${isSidebarMd ? '' : 'active'}`}>
                 <Menu />
               </div>
               <div className="content p-2">
