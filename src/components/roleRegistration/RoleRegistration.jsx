@@ -30,7 +30,7 @@ export default function RoleRegistration({ isRoleModalOpen, setIsRoleModalOpen, 
   const submit = (event) => {
     event.preventDefault()
     if (roleName === '') {
-      toast.error(t('common_Validation.required_fields_are_empty'))
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 

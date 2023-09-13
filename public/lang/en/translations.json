@@ -26,14 +26,19 @@
     "toggle_status": "Toggle Status",
     "action": "Action",
     "registration": "Registration",
-    "cancel": "cancel",
+    "cancel": "Cancel",
     "create": "Create",
     "verified_at": "Verified at",
-    "pending": "Pending"
+    "pending": "Pending",
+    "deleted": "Deleted!"
   },
 
-  "common_Validation": {
-    "required_fields_are_empty": "Required fields are empty!"
+  "common_validation": {
+    "required_fields_are_empty": "Required fields are empty!",
+    "Are_you_sure": "Are you sure?",
+    "You_wont_be_able_to_revert_this": "You won't be able to revert this!",
+    "Yes_delete_it": "Yes, delete it!",
+    "data_has_been_deleted": "Data has been deleted."
   },
 
   "react_table": {
