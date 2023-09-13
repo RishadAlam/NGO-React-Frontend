@@ -39,7 +39,12 @@ function ReactTable({ title, columns, data }) {
         hiddenColumns: columns.map((column) => {
           if (column.show === false) return column.accessor || column.id
         })
-      }
+      },
+      autoResetPage: false,
+      autoResetFilters: false,
+      autoResetSortBy: false,
+      autoResetExpanded: false,
+      autoResetGlobalFilter: false
     },
     useGlobalFilter,
     useSortBy,
