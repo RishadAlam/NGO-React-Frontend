@@ -30,7 +30,9 @@
     "create": "Create",
     "verified_at": "Verified at",
     "pending": "Pending",
-    "deleted": "Deleted!"
+    "deleted": "Deleted!",
+    "delete": "Delete",
+    "edit": "Edit"
   },
 
   "common_validation": {

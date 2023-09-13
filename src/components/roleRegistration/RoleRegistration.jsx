@@ -1,7 +1,6 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Pen from '../../icons/Pen'
 import XCircle from '../../icons/XCircle'
@@ -11,11 +10,16 @@ import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import TextInputField from '../utilities/TextInputField'
 
-export default function RoleRegistration({ isRoleModalOpen, setIsRoleModalOpen, t, mutate }) {
+export default function RoleRegistration({
+  isRoleModalOpen,
+  setIsRoleModalOpen,
+  accessToken,
+  t,
+  mutate
+}) {
   const [roleName, setRoleName] = useState('')
   const [error, setError] = useState({ name: '' })
   const [loading, setLoading] = useLoadingState({})
-  const { accessToken } = useAuthDataValue()
 
   const setChange = (val) => {
     setRoleName(val)

@@ -1,36 +1,42 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import React, { useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import RoleRegistration from '../../components/roleRegistration/RoleRegistration'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import DeleteAlert from '../../helper/deleteAlert'
+import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { RolesTableColumns } from '../../resources/staticData/tableColumns'
+import xFetch from '../../utilities/xFetch'
 import '../staffs/staffs.scss'
 
 export default function StaffRoles() {
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false)
+  const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: roles } = [], mutate, isLoading, isError } = useFetch({ action: 'roles' })
 
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+      <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
         <IconButton className="text-warning" onClick={() => editf(id)}>
           {<Edit size={20} />}
         </IconButton>
       </Tooltip>
-      <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-        <IconButton className="text-danger" onClick={() => deletef(id)}>
+      <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
+        <IconButton className="text-danger" onClick={() => deleteRole(id)}>
           {<Trash size={20} />}
         </IconButton>
       </Tooltip>
@@ -42,9 +48,26 @@ export default function StaffRoles() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
-  // const data = useMemo(() => [], [])
+
   const editf = (id) => console.log(id)
-  const deletef = (id) => console.log(id)
+  const deleteRole = (id) => {
+    DeleteAlert(t).then((result) => {
+      if (result.isConfirmed) {
+        xFetch(`roles/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
+          if (response?.success) {
+            successAlert(
+              t('common.deleted'),
+              response?.message || t('common_validation.data_has_been_deleted'),
+              'success'
+            )
+            mutate()
+            return
+          }
+          toast.error(response?.message)
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -65,12 +88,15 @@ export default function StaffRoles() {
               endIcon={<Pen size={20} />}
               onclick={() => setIsRoleModalOpen(true)}
             />
-            <RoleRegistration
-              isRoleModalOpen={isRoleModalOpen}
-              setIsRoleModalOpen={setIsRoleModalOpen}
-              t={t}
-              mutate={mutate}
-            />
+            {isRoleModalOpen && (
+              <RoleRegistration
+                isRoleModalOpen={isRoleModalOpen}
+                setIsRoleModalOpen={setIsRoleModalOpen}
+                accessToken={accessToken}
+                t={t}
+                mutate={mutate}
+              />
+            )}
           </div>
         </div>
         <div className="staff-table">
