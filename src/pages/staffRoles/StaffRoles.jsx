@@ -69,6 +69,7 @@ export default function StaffRoles() {
               isRoleModalOpen={isRoleModalOpen}
               setIsRoleModalOpen={setIsRoleModalOpen}
               t={t}
+              mutate={mutate}
             />
           </div>
         </div>

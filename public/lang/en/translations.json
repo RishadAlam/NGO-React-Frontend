@@ -32,6 +32,10 @@
     "pending": "Pending"
   },
 
+  "common_Validation": {
+    "required_fields_are_empty": "Required fields are empty!"
+  },
+
   "react_table": {
     "No_Records_Found": "No Records Found!"
   },
@@ -88,6 +92,7 @@
   },
   "staff_roles": {
     "Staff_Role_List": "STAFF ROLE LIST",
-    "Staff_Roles_Registration": "Role Registration"
+    "Staff_Roles_Registration": "Role Registration",
+    "Role_Name_is_Required": "Role Name is Required!"
   }
 }

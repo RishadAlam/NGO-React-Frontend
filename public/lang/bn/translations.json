@@ -32,6 +32,10 @@
     "pending": "অপেক্ষারত"
   },
 
+  "common_Validation": {
+    "required_fields_are_empty": "প্রয়োজনীয় ক্ষেত্র খালি।"
+  },
+
   "app_config": {
     "app_name": "জনকল্যান কো-অপারেটিভ সোসাইটি লিমিটেড"
   },
@@ -84,6 +88,7 @@
   },
   "staff_roles": {
     "Staff_Role_List": "কর্মচারিবর্গের ভূমিকার তালিকা",
-    "Staff_Roles_Registration": "ভূমিকা নিবন্ধন"
+    "Staff_Roles_Registration": "ভূমিকা নিবন্ধন",
+    "Role_Name_is_Required": "ভূমিকার নাম প্রয়োজন।"
   }
 }
