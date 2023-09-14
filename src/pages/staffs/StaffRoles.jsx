@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import React, { useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -57,7 +58,9 @@ export default function StaffRoles() {
   const roleDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
+        const toasterLoading = toast.loading(`${t('common.delete')}...`)
         xFetch(`roles/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
+          toast.dismiss(toasterLoading)
           if (response?.success) {
             successAlert(
               t('common.deleted'),
