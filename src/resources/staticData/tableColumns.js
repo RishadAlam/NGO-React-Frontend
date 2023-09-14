@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 export const DashSavingCollectionTableColumns = (t, windowWidth) => [
   { Header: '#', accessor: 'id', Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0') },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
@@ -77,7 +79,8 @@ export const StaffTableColumns = (
     Header: t('common.verified_at'),
     accessor: 'verified_at',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => pendingBadge(value)
+    Cell: ({ value }) =>
+      value ? format(new Date(value), 'dd/MM/yyyy hh:mm a') : pendingBadge(value)
   },
   {
     Header: t('common.status'),
