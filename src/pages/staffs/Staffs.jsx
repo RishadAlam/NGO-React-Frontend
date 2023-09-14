@@ -1,7 +1,9 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import StaffRegistration from '../../components/staffRegistration/StaffRegistration'
@@ -18,10 +20,12 @@ import List from '../../icons/List'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
+import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
 
 export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)
+  const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: staffs } = [], mutate, isLoading, isError } = useFetch({ action: 'users' })
@@ -33,7 +37,10 @@ export default function Staffs() {
     />
   )
   const statusSwitch = (value, id) => (
-    <AndroidSwitch value={value ? true : false} toggleStatus={() => toggleStatus(id)} />
+    <AndroidSwitch
+      value={value ? true : false}
+      toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+    />
   )
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
@@ -60,7 +67,20 @@ export default function Staffs() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
-  const toggleStatus = (id) => console.log(id)
+  const toggleStatus = (id, isChecked) => {
+    const toasterLoading = toast.loading(`${t('common.status')}...`)
+    xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT').then(
+      (response) => {
+        toast.dismiss(toasterLoading)
+        if (response?.success) {
+          toast.success(response?.message)
+          mutate()
+          return
+        }
+        toast.error(response?.message)
+      }
+    )
+  }
   const editf = (id) => console.log(id)
   const deletef = (id) => console.log(id)
   const view = (id) => console.log(id)

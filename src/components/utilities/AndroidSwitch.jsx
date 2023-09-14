@@ -36,9 +36,5 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }))
 
 export default function AndroidSwitch({ value = false, toggleStatus }) {
-  return (
-    <FormControlLabel
-      control={<Android12Switch defaultChecked={value} onChange={toggleStatus} />}
-    />
-  )
+  return <FormControlLabel control={<Android12Switch checked={value} onChange={toggleStatus} />} />
 }
