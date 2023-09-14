@@ -13,6 +13,8 @@ import Avatar from '../../components/utilities/Avatar'
 import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import deleteAlert from '../../helper/deleteAlert'
+import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
@@ -55,7 +57,7 @@ export default function Staffs() {
         </IconButton>
       </Tooltip>
       <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-        <IconButton className="text-danger" onClick={() => deletef(id)}>
+        <IconButton className="text-danger" onClick={() => staffDelete(id)}>
           {<Trash size={20} />}
         </IconButton>
       </Tooltip>
@@ -82,8 +84,27 @@ export default function Staffs() {
     )
   }
   const editf = (id) => console.log(id)
-  const deletef = (id) => console.log(id)
   const view = (id) => console.log(id)
+  const staffDelete = (id) => {
+    deleteAlert(t).then((result) => {
+      if (result.isConfirmed) {
+        const toasterLoading = toast.loading(`${t('common.delete')}...`)
+        xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
+          toast.dismiss(toasterLoading)
+          if (response?.success) {
+            successAlert(
+              t('common.deleted'),
+              response?.message || t('common_validation.data_has_been_deleted'),
+              'success'
+            )
+            mutate()
+            return
+          }
+          successAlert(t('common.deleted'), response?.message, 'error')
+        })
+      }
+    })
+  }
 
   return (
     <>
