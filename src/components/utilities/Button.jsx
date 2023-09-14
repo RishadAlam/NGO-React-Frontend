@@ -3,7 +3,7 @@ import LoaderSm from '../loaders/LoaderSm'
 
 export default function Button({
   name,
-  type,
+  type = 'button',
   disabled,
   loading,
   style,

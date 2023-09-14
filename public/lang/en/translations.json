@@ -32,7 +32,8 @@
     "pending": "Pending",
     "deleted": "Deleted!",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "update": "Update"
   },
 
   "common_validation": {
@@ -100,6 +101,7 @@
   "staff_roles": {
     "Staff_Role_List": "STAFF ROLE LIST",
     "Staff_Roles_Registration": "Role Registration",
+    "Staff_Roles_Update": "Role Update",
     "Role_Name_is_Required": "Role Name is Required!"
   }
 }

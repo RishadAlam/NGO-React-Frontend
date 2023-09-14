@@ -6,6 +6,6 @@ export default function successAlert(title, text, icon) {
     text: text,
     icon: icon,
     showConfirmButton: false,
-    timer: 1500
+    timer: 2000
   })
 }

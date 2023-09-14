@@ -12,7 +12,7 @@ import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const ClientRegistration = lazy(() => import('./components/registrations/ClientRegistration'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
-const StaffRoles = lazy(() => import('./pages/staffRoles/StaffRoles'))
+const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 
 export default function App() {
   return (

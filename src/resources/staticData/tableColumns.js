@@ -88,7 +88,7 @@ export const StaffTableColumns = (
     Header: t('common.action'),
     accessor: 'action',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => actionBtnGroup(row.original.id)
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
 
@@ -102,6 +102,6 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
   {
     Header: t('common.action'),
     accessor: 'action',
-    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id)
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
   }
 ]

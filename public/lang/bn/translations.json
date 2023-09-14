@@ -32,7 +32,8 @@
     "pending": "অপেক্ষারত",
     "deleted": "মুছে ফেলা হয়েছে!",
     "delete": "মুছে ফেলুন",
-    "edit": "সম্পাদন করুন"
+    "edit": "সম্পাদন করুন",
+    "update": "আপডেট"
   },
 
   "common_validation": {
@@ -96,6 +97,7 @@
   "staff_roles": {
     "Staff_Role_List": "কর্মচারিবর্গের ভূমিকার তালিকা",
     "Staff_Roles_Registration": "ভূমিকা নিবন্ধন",
+    "Staff_Roles_Update": "ভূমিকা আপডেট",
     "Role_Name_is_Required": "ভূমিকার নাম প্রয়োজন।"
   }
 }

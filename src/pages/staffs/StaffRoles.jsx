@@ -1,16 +1,16 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import React, { useMemo, useState } from 'react'
-import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
-import RoleRegistration from '../../components/roleRegistration/RoleRegistration'
+import RoleRegistration from '../../components/staffRoles/RoleRegistration'
+import RoleUpdate from '../../components/staffRoles/RoleUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import DeleteAlert from '../../helper/deleteAlert'
+import deleteAlert from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
@@ -19,24 +19,26 @@ import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { RolesTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
-import '../staffs/staffs.scss'
+import './staffs.scss'
 
 export default function StaffRoles() {
-  const [isRoleModalOpen, setIsRoleModalOpen] = useState(false)
+  const [isRegModalOpen, setIsRegModalOpen] = useState(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [editRoleData, setEditRoleData] = useState({})
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: roles } = [], mutate, isLoading, isError } = useFetch({ action: 'roles' })
 
-  const actionBtnGroup = (id) => (
+  const actionBtnGroup = (id, role) => (
     <ActionBtnGroup>
       <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
-        <IconButton className="text-warning" onClick={() => editf(id)}>
+        <IconButton className="text-warning" onClick={() => roleEdit(role)}>
           {<Edit size={20} />}
         </IconButton>
       </Tooltip>
       <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
-        <IconButton className="text-danger" onClick={() => deleteRole(id)}>
+        <IconButton className="text-danger" onClick={() => roleDelete(id)}>
           {<Trash size={20} />}
         </IconButton>
       </Tooltip>
@@ -48,10 +50,12 @@ export default function StaffRoles() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
-
-  const editf = (id) => console.log(id)
-  const deleteRole = (id) => {
-    DeleteAlert(t).then((result) => {
+  const roleEdit = (role) => {
+    setEditRoleData(role)
+    setIsUpdateModalOpen(true)
+  }
+  const roleDelete = (id) => {
+    deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         xFetch(`roles/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
           if (response?.success) {
@@ -63,7 +67,7 @@ export default function StaffRoles() {
             mutate()
             return
           }
-          toast.error(response?.message)
+          successAlert(t('common.deleted'), response?.message, 'error')
         })
       }
     })
@@ -86,13 +90,23 @@ export default function StaffRoles() {
               name={t('staff_roles.Staff_Roles_Registration')}
               loading={false}
               endIcon={<Pen size={20} />}
-              onclick={() => setIsRoleModalOpen(true)}
+              onclick={() => setIsRegModalOpen(true)}
             />
-            {isRoleModalOpen && (
+            {isRegModalOpen && (
               <RoleRegistration
-                isRoleModalOpen={isRoleModalOpen}
-                setIsRoleModalOpen={setIsRoleModalOpen}
+                isOpen={isRegModalOpen}
+                setIsOpen={setIsRegModalOpen}
                 accessToken={accessToken}
+                t={t}
+                mutate={mutate}
+              />
+            )}
+            {isUpdateModalOpen && Object.keys(editRoleData).length && (
+              <RoleUpdate
+                isOpen={isUpdateModalOpen}
+                setIsOpen={setIsUpdateModalOpen}
+                accessToken={accessToken}
+                data={editRoleData}
                 t={t}
                 mutate={mutate}
               />

@@ -8,7 +8,8 @@ export default function TextInputField({
   defaultValue,
   error,
   setChange,
-  isRequired = false
+  isRequired = false,
+  autoFocus = false
 }) {
   const requiredLabel = (
     <span>
@@ -31,6 +32,7 @@ export default function TextInputField({
       variant={variant || 'standard'}
       error={error ? true : false}
       helperText={error}
+      autoFocus={autoFocus}
     />
   )
 }
