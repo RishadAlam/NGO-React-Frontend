@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
-import StaffRegistration from '../../components/staffRegistration/StaffRegistration'
+import StaffRegistration from '../../components/staff/StaffRegistration'
+import StaffUpdate from '../../components/staff/StaffUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
@@ -29,6 +30,8 @@ import './staffs.scss'
 
 export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)
+  const [isUserUpdateModalOpen, setIsUserUpdateModalOpen] = useState(false)
+  const [editableStaff, setEditableStaff] = useState(false)
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
@@ -46,7 +49,7 @@ export default function Staffs() {
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
   )
-  const actionBtnGroup = (id) => (
+  const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
       <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
         <IconButton className="text-success" onClick={() => view(id)}>
@@ -54,7 +57,7 @@ export default function Staffs() {
         </IconButton>
       </Tooltip>
       <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-        <IconButton className="text-warning" onClick={() => editf(id)}>
+        <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
           {<Edit size={20} />}
         </IconButton>
       </Tooltip>
@@ -95,7 +98,16 @@ export default function Staffs() {
       }
     )
   }
-  const editf = (id) => console.log(id)
+  const staffEdit = (staff) => {
+    setEditableStaff({
+      id: staff?.id,
+      name: staff?.name,
+      email: staff?.email,
+      phone: staff?.phone,
+      role: staff?.role_id
+    })
+    setIsUserUpdateModalOpen(true)
+  }
   const view = (id) => console.log(id)
   const staffDelete = (id) => {
     deleteAlert(t).then((result) => {
@@ -137,13 +149,25 @@ export default function Staffs() {
               endIcon={<UserPlus size={20} />}
               onclick={() => setIsUserModalOpen(true)}
             />
-            <StaffRegistration
-              isOpen={isUserModalOpen}
-              setIsOpen={setIsUserModalOpen}
-              t={t}
-              accessToken={accessToken}
-              mutate={mutate}
-            />
+            {isUserModalOpen && (
+              <StaffRegistration
+                isOpen={isUserModalOpen}
+                setIsOpen={setIsUserModalOpen}
+                t={t}
+                accessToken={accessToken}
+                mutate={mutate}
+              />
+            )}
+            {isUserUpdateModalOpen && Object.keys(editableStaff).length && (
+              <StaffUpdate
+                isOpen={isUserUpdateModalOpen}
+                setIsOpen={setIsUserUpdateModalOpen}
+                data={editableStaff}
+                t={t}
+                accessToken={accessToken}
+                mutate={mutate}
+              />
+            )}
           </div>
         </div>
         <div className="staff-table">
