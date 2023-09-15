@@ -1,5 +1,5 @@
 import React from 'react'
-import Pen from '../../icons/Pen'
+import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import LoaderSm from '../loaders/LoaderSm'
 import Button from '../utilities/Button'
@@ -62,7 +62,7 @@ export default function RoleFormModal({
                   loading?.roleName ? (
                     <LoaderSm size={20} clr="#8884d8" className="ms-2" />
                   ) : (
-                    <Pen size={20} />
+                    <Save size={20} />
                   )
                 }
                 type="submit"

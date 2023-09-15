@@ -1,4 +1,4 @@
-import Pen from '../../icons/Pen'
+import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
@@ -42,7 +42,7 @@ export default function StaffRegistration({ isUserModalOpen, setIsUserModalOpen,
               name={t('common.registration')}
               className={'btn-primary py-2 px-3'}
               loading={false}
-              endIcon={<Pen size={20} />}
+              endIcon={<Save size={20} />}
               onclick={() => setIsUserModalOpen(false)}
             />
           </div>

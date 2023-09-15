@@ -16,11 +16,13 @@ import ReactTable from '../../components/utilities/tables/ReactTable'
 import deleteAlert from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
+import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import List from '../../icons/List'
-import Pen from '../../icons/Pen'
+import Reset from '../../icons/Reset'
 import Trash from '../../icons/Trash'
+import UserPlus from '../../icons/UserPlus'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
@@ -46,7 +48,7 @@ export default function Staffs() {
   )
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title="View User Permissions" arrow followCursor>
+      <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
         <IconButton className="text-success" onClick={() => view(id)}>
           {<List size={20} />}
         </IconButton>
@@ -59,6 +61,16 @@ export default function Staffs() {
       <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
         <IconButton className="text-danger" onClick={() => staffDelete(id)}>
           {<Trash size={20} />}
+        </IconButton>
+      </Tooltip>
+      <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <IconButton className="text-info" onClick={() => staffDelete(id)}>
+          {<Clock size={20} />}
+        </IconButton>
+      </Tooltip>
+      <Tooltip TransitionComponent={Zoom} title="Reset Password" arrow followCursor>
+        <IconButton className="text-danger" onClick={() => staffDelete(id)}>
+          {<Reset size={20} />}
         </IconButton>
       </Tooltip>
     </ActionBtnGroup>
@@ -122,7 +134,7 @@ export default function Staffs() {
             <PrimaryBtn
               name={t('staffs.Staff_Registration')}
               loading={false}
-              endIcon={<Pen size={20} />}
+              endIcon={<UserPlus size={20} />}
               onclick={() => setIsUserModalOpen(true)}
             />
             <StaffRegistration
