@@ -85,7 +85,7 @@ export default function AuthProvider({ children }) {
     const lang = Cookies.get('i18next')
     const darkMood = Cookies.get('isDark')
     document.querySelector('html').lang = lang ? lang : 'en'
-    document.body.className = darkMood ? JSON.parse(darkMood) ? 'dark' : 'light' : 'light'
+    document.body.className = darkMood ? (JSON.parse(darkMood) ? 'dark' : 'light') : 'light'
     const controller = new AbortController()
 
     if (!isAuthorized) {
@@ -119,15 +119,7 @@ export default function AuthProvider({ children }) {
         }}
       />
 
-      {isLoading || loading?.authorization ? (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: '100vh' }}>
-          <Loader />
-        </div>
-      ) : (
-        children
-      )}
+      {isLoading || loading?.authorization ? <Loader /> : children}
     </>
   )
 }

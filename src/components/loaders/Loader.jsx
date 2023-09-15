@@ -1,6 +1,6 @@
-export default function Loader({ color = '#0a8dff', style, className }) {
+export default function Loader({ color = '#0a8dff', style = { height: '100vh' }, className }) {
   return (
-    <div className={className} style={style}>
+    <div className={`d-flex align-items-center justify-content-center ${className}`} style={style}>
       <div>
         <svg
           version="1.1"

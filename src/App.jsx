@@ -4,6 +4,7 @@ import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
 import RequirePermissions from './components/layouts/RequirePermissions'
 // import ClientRegistration from './components/registrations/ClientRegistration'
+import Loader from './components/loaders/Loader'
 import AccountVerification from './pages/accountVerification/AccountVerification'
 import Dashboard from './pages/dashboard/Dashboard'
 import ForgotPassword from './pages/forgotPassword/ForgotPassword'
@@ -52,7 +53,7 @@ export default function App() {
             <Route
               index
               element={
-                <Suspense fallback={<div>Staff is Loading..............</div>}>
+                <Suspense fallback={<Loader />}>
                   <Staffs />
                 </Suspense>
               }
@@ -64,7 +65,7 @@ export default function App() {
             <Route
               index
               element={
-                <Suspense fallback={<div>Staff Roles is Loading..............</div>}>
+                <Suspense fallback={<Loader />}>
                   <StaffRoles />
                 </Suspense>
               }
