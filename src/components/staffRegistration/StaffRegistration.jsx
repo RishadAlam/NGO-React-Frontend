@@ -1,53 +1,98 @@
-import Save from '../../icons/Save'
-import XCircle from '../../icons/XCircle'
-import Button from '../utilities/Button'
-import ModalPro from '../utilities/ModalPro'
-import SelectDropdownField from '../utilities/SelectDropdownField'
-import TextInputField from '../utilities/TextInputField'
+import { create, rawReturn } from 'mutative'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useLoadingState } from '../../atoms/loaderAtoms'
+import xFetch from '../../utilities/xFetch'
+import StaffFormModal from '../_helper/StaffFormModal'
 
-export default function StaffRegistration({ isUserModalOpen, setIsUserModalOpen, t }) {
+export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
+  const [staffData, setStaffData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    role: ''
+  })
+  const [error, setError] = useState({
+    name: '',
+    email: '',
+    role: ''
+  })
+  const [loading, setLoading] = useLoadingState({})
+
+  const setChange = (val, name) => {
+    setStaffData((prevData) =>
+      create(prevData, (draftData) => {
+        draftData[name] = val
+      })
+    )
+
+    setError((prevErr) =>
+      create(prevErr, (draftErr) => {
+        delete draftErr.message
+
+        if (name !== 'phone') {
+          val === ''
+            ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
+            : delete draftErr[name]
+
+          if (val !== '' && name === 'email') {
+            !/\S+@\S+\.\S+/.test(val)
+              ? (draftErr.email = `${t(`common.${name}`)} is invalid!`)
+              : delete draftErr.email
+          }
+        }
+      })
+    )
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    if (staffData.name === '' || staffData.email === '' || staffData.role === '') {
+      toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
+
+    setLoading({ ...loading, staffForm: true })
+    xFetch('users', staffData, null, accessToken, null, 'POST').then((response) => {
+      setLoading({ ...loading, staffForm: false })
+      if (response?.success) {
+        toast.success(response.message)
+        mutate()
+        setIsOpen(false)
+        setStaffData({
+          name: '',
+          email: '',
+          phone: '',
+          role: ''
+        })
+        return
+      }
+      setError((prevErr) =>
+        create(prevErr, (draftErr) => {
+          if (!response?.errors) {
+            draftErr.message = response?.message
+            return
+          }
+          return rawReturn(response?.errors || response)
+        })
+      )
+    })
+  }
+
   return (
     <>
-      <ModalPro open={isUserModalOpen} handleClose={() => setIsUserModalOpen(false)}>
-        <div className="card">
-          <div className="card-header">
-            <div className="d-flex align-items-center justify-content-between">
-              <b className="text-uppercase">{t('staffs.Staff_Registration')}</b>
-              <Button
-                className={'text-danger p-0'}
-                loading={false}
-                endIcon={<XCircle size={30} />}
-                onclick={() => setIsUserModalOpen(false)}
-              />
-            </div>
-          </div>
-          <div className="card-body">
-            <div className="row">
-              <div className="col-md-6 mb-3">
-                <TextInputField label={t('common.name')} defaultValue="" />
-              </div>
-              <div className="col-md-6 mb-3">
-                <TextInputField label={t('common.email')} type="email" defaultValue="" />
-              </div>
-              <div className="col-md-6 mb-3">
-                <TextInputField label={t('common.mobile')} type="number" defaultValue="" />
-              </div>
-              <div className="col-md-6 mb-3">
-                <SelectDropdownField label={t('common.role')} defaultValue="" />
-              </div>
-            </div>
-          </div>
-          <div className="card-footer text-end">
-            <Button
-              name={t('common.registration')}
-              className={'btn-primary py-2 px-3'}
-              loading={false}
-              endIcon={<Save size={20} />}
-              onclick={() => setIsUserModalOpen(false)}
-            />
-          </div>
-        </div>
-      </ModalPro>
+      <StaffFormModal
+        open={isOpen}
+        setOpen={setIsOpen}
+        error={error}
+        modalTitle={t('staffs.Staff_Registration')}
+        btnTitle={t('common.registration')}
+        defaultValues={staffData}
+        setChange={setChange}
+        t={t}
+        onSubmit={onSubmit}
+        loading={loading}
+      />
     </>
   )
 }

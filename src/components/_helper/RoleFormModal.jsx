@@ -1,7 +1,5 @@
-import React from 'react'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
-import LoaderSm from '../loaders/LoaderSm'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import TextInputField from '../utilities/TextInputField'
@@ -49,6 +47,7 @@ export default function RoleFormModal({
                     setChange={setChange}
                     error={error?.name}
                     autoFocus={true}
+                    disabled={loading?.roleName}
                   />
                 </div>
               </div>
@@ -57,14 +56,8 @@ export default function RoleFormModal({
               <Button
                 name={btnTitle}
                 className={'btn-primary py-2 px-3'}
-                loading={false}
-                endIcon={
-                  loading?.roleName ? (
-                    <LoaderSm size={20} clr="#8884d8" className="ms-2" />
-                  ) : (
-                    <Save size={20} />
-                  )
-                }
+                loading={loading?.roleName || false}
+                endIcon={<Save size={20} />}
                 type="submit"
                 disabled={Object.keys(error).length || loading?.roleName}
               />

@@ -20,7 +20,7 @@
     "name": "Name",
     "email": "Email",
     "role": "Role",
-    "mobile": "Mobile",
+    "phone": "Mobile",
     "image": "Image",
     "status": "Status",
     "toggle_status": "Toggle Status",
@@ -33,7 +33,8 @@
     "deleted": "Deleted!",
     "delete": "Delete",
     "edit": "Edit",
-    "update": "Update"
+    "update": "Update",
+    "select": "Select"
   },
 
   "common_validation": {

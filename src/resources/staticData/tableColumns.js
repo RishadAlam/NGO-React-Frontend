@@ -74,7 +74,7 @@ export const StaffTableColumns = (
     accessor: 'role',
     Cell: ({ row }) => row.original.role_name
   },
-  { Header: t('common.mobile'), accessor: 'phone', show: windowWidth < 576 ? false : true },
+  { Header: t('common.phone'), accessor: 'phone', show: windowWidth < 576 ? false : true },
   {
     Header: t('common.verified_at'),
     accessor: 'verified_at',

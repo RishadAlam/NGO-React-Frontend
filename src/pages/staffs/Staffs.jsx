@@ -138,9 +138,11 @@ export default function Staffs() {
               onclick={() => setIsUserModalOpen(true)}
             />
             <StaffRegistration
-              isUserModalOpen={isUserModalOpen}
-              setIsUserModalOpen={setIsUserModalOpen}
+              isOpen={isUserModalOpen}
+              setIsOpen={setIsUserModalOpen}
               t={t}
+              accessToken={accessToken}
+              mutate={mutate}
             />
           </div>
         </div>
