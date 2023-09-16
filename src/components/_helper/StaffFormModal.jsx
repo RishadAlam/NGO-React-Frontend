@@ -69,7 +69,6 @@ export default function StaffFormModal({
                 <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.phone')}
-                    type="number"
                     defaultValue={defaultValues?.phone || ''}
                     setChange={(val) => setChange(val, 'phone')}
                     error={error?.phone}

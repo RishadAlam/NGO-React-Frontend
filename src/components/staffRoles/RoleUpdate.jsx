@@ -14,12 +14,12 @@ export default function RoleUpdate({
   mutate
 }) {
   const [roleName, setRoleName] = useState(name)
-  const [error, setError] = useState({ name: '' })
+  const [errors, setErrors] = useState({ name: '' })
   const [loading, setLoading] = useLoadingState({})
 
   const setChange = (val) => {
     setRoleName(val)
-    setError((prevErr) =>
+    setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
         val !== '' ? delete draftErr.name : (draftErr.name = t('staff_roles.Role_Name_is_Required'))
@@ -48,7 +48,7 @@ export default function RoleUpdate({
         setIsOpen(false)
         return
       }
-      setError((prevErr) =>
+      setErrors((prevErr) =>
         create(prevErr, (draftErr) => {
           if (response?.message) {
             draftErr.message = response?.message
@@ -65,7 +65,7 @@ export default function RoleUpdate({
       <RoleFormModal
         open={isOpen}
         setOpen={setIsOpen}
-        error={error}
+        error={errors}
         modalTitle={t('staff_roles.Staff_Roles_Update')}
         btnTitle={t('common.update')}
         defaultValue={roleName}

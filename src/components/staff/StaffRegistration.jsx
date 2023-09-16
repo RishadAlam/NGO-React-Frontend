@@ -12,13 +12,12 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
     phone: '',
     role: ''
   })
-  const [error, setError] = useState({
+  const [errors, setErrors] = useState({
     name: '',
     email: '',
     role: ''
   })
   const [loading, setLoading] = useLoadingState({})
-
   const setChange = (val, name) => {
     setStaffData((prevData) =>
       create(prevData, (draftData) => {
@@ -26,7 +25,7 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
       })
     )
 
-    setError((prevErr) =>
+    setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
 
@@ -40,7 +39,12 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
               ? (draftErr.email = `${t(`common.${name}`)} is invalid!`)
               : delete draftErr.email
           }
+          return
         }
+
+        name === 'phone' && !isNaN(val)
+          ? delete draftErr.phone
+          : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
       })
     )
   }
@@ -67,7 +71,7 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
         })
         return
       }
-      setError((prevErr) =>
+      setErrors((prevErr) =>
         create(prevErr, (draftErr) => {
           if (!response?.errors) {
             draftErr.message = response?.message
@@ -84,7 +88,7 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
       <StaffFormModal
         open={isOpen}
         setOpen={setIsOpen}
-        error={error}
+        error={errors}
         modalTitle={t('staffs.Staff_Registration')}
         btnTitle={t('common.registration')}
         defaultValues={staffData}

@@ -31,7 +31,12 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
               ? (draftErr.email = `${t(`common.${name}`)} is invalid!`)
               : delete draftErr.email
           }
+          return
         }
+
+        name === 'phone' && !isNaN(val)
+          ? delete draftErr.phone
+          : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
       })
     )
   }
