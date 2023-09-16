@@ -72,6 +72,8 @@ export default function AuthProvider({ children }) {
           draftAuthData.email = authorizedData?.email
           draftAuthData.email_verified_at = authorizedData?.email_verified_at ? true : false
           draftAuthData.phone = authorizedData?.phone
+          draftAuthData.image = authorizedData?.image
+          draftAuthData.image_uri = authorizedData?.image_uri
           draftAuthData.status = authorizedData?.status
           draftAuthData.role = authorizedData?.role
           draftAuthData.permissions = authorizedData?.permissions

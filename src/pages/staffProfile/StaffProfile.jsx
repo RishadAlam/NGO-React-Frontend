@@ -1,29 +1,107 @@
+import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useAuthDataState } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import Button from '../../components/utilities/Button'
+import ImagePreview from '../../components/utilities/ImagePreview'
 import TextInputField from '../../components/utilities/TextInputField'
-import Camera from '../../icons/Camera'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import User from '../../icons/User'
 import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
+import xFetch from '../../utilities/xFetch'
 
 export default function StaffProfile() {
-  const data = useAuthDataValue()
+  const [authData, setAuthData] = useAuthDataState()
   const { t } = useTranslation()
-  const [profileImage, setProfileImage] = useState(data.image_uri || profilePlaceholder)
+  const [profileImage, setProfileImage] = useState(authData.image_uri || profilePlaceholder)
+  const [errors, setErrors] = useState({})
+  const [loading, setLoading] = useLoadingState({})
   const [profileInputs, setProfileInputs] = useState(() => ({
-    id: data.id,
-    name: data.name,
-    email: data.email,
-    phone: data.phone
+    name: authData.name,
+    phone: authData.phone,
+    image: ''
   }))
 
-  const getImagePreview = (event) => {
-    // var image = URL.createObjectURL(event.target.files[0])
-    setProfileImage(URL.createObjectURL(event.target.files[0]))
+  const setChange = (val, name) => {
+    if (name === 'image') {
+      setProfileImage(URL.createObjectURL(val))
+    }
+    setProfileInputs((prevInputs) =>
+      create(prevInputs, (draftInputs) => {
+        draftInputs[name] = val
+      })
+    )
+
+    setErrors((prevErr) =>
+      create(prevErr, (draftErr) => {
+        delete draftErr.message
+
+        if (name !== 'phone' && name !== 'image') {
+          val === ''
+            ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
+            : delete draftErr[name]
+          return
+        }
+
+        if (name === 'phone') {
+          !isNaN(val)
+            ? delete draftErr.phone
+            : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
+        }
+        if (name === 'image') {
+          val.size / 1024 <= 5120
+            ? delete draftErr[name]
+            : (draftErr[name] = `${t(`common.${name}`)} is Max size 5MB!`)
+        }
+      })
+    )
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    if (profileInputs.name === '') {
+      toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('_method', 'PUT')
+    formData.append('name', profileInputs.name)
+    formData.append('phone', profileInputs.phone)
+    formData.append('image', profileInputs.image)
+
+    setLoading({ ...loading, staffForm: true })
+    xFetch('profile-update', formData, null, authData.accessToken, null, 'POST', true).then(
+      (response) => {
+        setLoading({ ...loading, staffForm: false })
+        if (response?.success) {
+          toast.success(response.message)
+          // console.log(response)
+          setAuthData((prevData) =>
+            create(prevData, (draftAuthData) => {
+              draftAuthData.name = response?.name
+              draftAuthData.phone = response?.phone
+              draftAuthData.image = response?.image
+              draftAuthData.image_uri = response?.image_uri
+            })
+          )
+          return
+        }
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      }
+    )
   }
 
   return (
@@ -38,89 +116,61 @@ export default function StaffProfile() {
 
         <div className="profile-form text-center my-5">
           <div className="card">
-            <div className="card-header">
-              <b className="text-uppercase">Profile</b>
-            </div>
-            <div className="card-body">
+            <form onSubmit={onSubmit}>
+              <div className="card-header">
+                <b className="text-uppercase">Profile</b>
+              </div>
               <div className="card-body">
-                {/* {error?.message && error?.message !== '' && (
-                  <div className="alert alert-danger" role="alert">
-                    <strong>{error?.message}</strong>
-                  </div>
-                )} */}
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <TextInputField
-                      label={t('common.name')}
-                      isRequired={true}
-                      defaultValue={profileInputs.name}
-                      autoFocus={true}
-                      //   setChange={(val) => setChange(val, 'name')}
-                      //   error={error?.name}
-                      //   disabled={loading?.staffForm}
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <TextInputField
-                      label={t('common.email')}
-                      type="email"
-                      isRequired={true}
-                      defaultValue={profileInputs?.email || ''}
-                      //   setChange={(val) => setChange(val, 'email')}
-                      //   error={error?.email}
-                      //   disabled={loading?.staffForm}
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <TextInputField
-                      label={t('common.phone')}
-                      defaultValue={profileInputs?.phone || ''}
-                      //   setChange={(val) => setChange(val, 'phone')}
-                      //   error={error?.phone}
-                      //   disabled={loading?.staffForm}
-                    />
-                  </div>
-                  <div className="col-md-6 mb-3 text-start">
-                    <label className="form-label mb-3">Image</label>
-                    <div
-                      className="border border-secondary shadow rounded-4 p-3"
-                      style={{ width: 'max-content' }}>
-                      <div className="img" style={{ width: '250px', height: '250px' }}>
-                        <img
-                          className="rounded-2"
-                          alt="image"
-                          src={profileImage}
-                          style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
-                        />
-                      </div>
-                      <div className="mx-auto position-relative mt-3">
-                        <label htmlFor="image" className="btn btn-primary form-control">
-                          <Camera />
-                        </label>
-                        <input
-                          type="file"
-                          id="image"
-                          name="image"
-                          className="top-0 start-0 position-absolute opacity-0 cursor-pointer"
-                          onChange={getImagePreview}
-                          accept="image/*"
-                        />
-                      </div>
+                <div className="card-body">
+                  {errors?.message && errors?.message !== '' && (
+                    <div className="alert alert-danger" role="alert">
+                      <strong>{errors?.message}</strong>
+                    </div>
+                  )}
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <TextInputField
+                        label={t('common.name')}
+                        isRequired={true}
+                        defaultValue={profileInputs.name}
+                        autoFocus={true}
+                        setChange={(val) => setChange(val, 'name')}
+                        error={errors?.name}
+                        disabled={loading?.profile}
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <TextInputField
+                        label={t('common.phone')}
+                        defaultValue={profileInputs?.phone || ''}
+                        setChange={(val) => setChange(val, 'phone')}
+                        error={errors?.phone}
+                        disabled={loading?.profile}
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3 text-start">
+                      <ImagePreview
+                        label={t('common.image')}
+                        src={profileImage}
+                        setChange={(val) => setChange(val, 'image')}
+                        error={errors?.image}
+                        disabled={loading?.profile}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="card-footer">
-              <Button
-                name={t('common.update')}
-                className={'btn-primary py-2 px-3'}
-                // loading={loading?.roleName || false}
-                endIcon={<Save size={20} />}
-                type="submit"
-                // disabled={Object.keys(error).length || loading?.roleName}
-              />
-            </div>
+              <div className="card-footer">
+                <Button
+                  name={t('common.update')}
+                  className={'btn-primary py-2 px-3'}
+                  loading={loading?.profile || false}
+                  endIcon={<Save size={20} />}
+                  type="submit"
+                  disabled={Object.keys(errors).length || loading?.profile}
+                />
+              </div>
+            </form>
           </div>
         </div>
       </section>

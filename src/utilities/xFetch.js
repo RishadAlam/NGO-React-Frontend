@@ -8,7 +8,8 @@ export default async function xFetch(
   signal = null,
   accessToken = null,
   queryParam = null,
-  method = 'GET'
+  method = 'GET',
+  multipart = false
 ) {
   const uri = new URL(`/api/${endpoint}`, import.meta.env.VITE_BASE_URI)
   // append query params in url
@@ -36,6 +37,9 @@ export default async function xFetch(
   }
   if (accessToken) {
     config.headers.Authorization = accessToken
+  }
+  if (multipart) {
+    config.headers['Content-Type'] = 'multipart/form-data'
   }
 
   // AbortController Signal
