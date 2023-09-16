@@ -44,7 +44,8 @@ function ReactTable({ title, columns, data }) {
       autoResetFilters: false,
       autoResetSortBy: false,
       autoResetExpanded: false,
-      autoResetGlobalFilter: false
+      autoResetGlobalFilter: false,
+      autoResetHiddenColumns: false
     },
     useGlobalFilter,
     useSortBy,

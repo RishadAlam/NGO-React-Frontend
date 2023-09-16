@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import StaffPermissions from '../../components/staff/StaffPermissions'
 import StaffRegistration from '../../components/staff/StaffRegistration'
 import StaffUpdate from '../../components/staff/StaffUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -31,7 +32,9 @@ import './staffs.scss'
 export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)
   const [isUserUpdateModalOpen, setIsUserUpdateModalOpen] = useState(false)
+  const [isUserPermissionsModalOpen, setIsUserPermissionsModalOpen] = useState(false)
   const [editableStaff, setEditableStaff] = useState(false)
+  const [userPermissions, setUserPermissions] = useState([])
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
@@ -43,16 +46,20 @@ export default function Staffs() {
       className={value ? 'bg-success' : 'bg-danger'}
     />
   )
+
   const statusSwitch = (value, id) => (
     <AndroidSwitch
       value={value ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
   )
+
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
       <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
-        <IconButton className="text-success" onClick={() => view(id)}>
+        <IconButton
+          className="text-success"
+          onClick={() => viewUserPermissions(staff?.permissions)}>
           {<List size={20} />}
         </IconButton>
       </Tooltip>
@@ -84,6 +91,7 @@ export default function Staffs() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
+
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT').then(
@@ -98,6 +106,7 @@ export default function Staffs() {
       }
     )
   }
+
   const staffEdit = (staff) => {
     setEditableStaff({
       id: staff?.id,
@@ -108,7 +117,12 @@ export default function Staffs() {
     })
     setIsUserUpdateModalOpen(true)
   }
-  const view = (id) => console.log(id)
+
+  const viewUserPermissions = (permissions) => {
+    setUserPermissions(permissions)
+    setIsUserPermissionsModalOpen(true)
+  }
+
   const staffDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
@@ -166,6 +180,16 @@ export default function Staffs() {
                 t={t}
                 accessToken={accessToken}
                 mutate={mutate}
+              />
+            )}
+            {isUserPermissionsModalOpen && (
+              <StaffPermissions
+                isOpen={isUserPermissionsModalOpen}
+                setIsOpen={setIsUserPermissionsModalOpen}
+                data={userPermissions}
+                t={t}
+                modalTitle={t('staffs.Staff_Registration')}
+                btnTitle={t('common.update')}
               />
             )}
           </div>
