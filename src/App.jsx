@@ -11,7 +11,7 @@ import ForgotPassword from './pages/forgotPassword/ForgotPassword'
 import Login from './pages/login/Login'
 import Unauthorized from './pages/unauthorized/Unauthorized'
 
-const ClientRegistration = lazy(() => import('./components/registrations/ClientRegistration'))
+const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 
@@ -36,13 +36,13 @@ export default function App() {
           <Route index element={<Dashboard />} />
 
           <Route
-            path="registration"
+            path="profile"
             element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
             <Route
               index
               element={
-                <Suspense fallback={<div>ClientRegister is Loading..............</div>}>
-                  <ClientRegistration />
+                <Suspense fallback={<Loader />}>
+                  <StaffProfile />
                 </Suspense>
               }
             />
