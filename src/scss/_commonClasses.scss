@@ -303,16 +303,6 @@ ul {
   background-color: $primary-bg;
 }
 
-.light .staff .staff-table {
-  background-color: $white-color;
-  -webkit-box-shadow:
-    0px 5px 13px -7px #000000,
-    0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
-  box-shadow:
-    0px 5px 13px -7px #000000,
-    0px 0px 9px 1px rgba(0, 0, 0, 0.46) !important;
-}
-
 .dark .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root {
   & {
     color: $soft-color !important;
@@ -347,6 +337,10 @@ ul {
 }
 
 .dark {
+  .card {
+    border-color: $blue-magenta !important;
+  }
+
   .card-footer,
   .card-header {
     background-color: $soft-bg;
@@ -355,7 +349,7 @@ ul {
   }
 
   .card-body {
-    background-color: $main-bg;
+    background-color: $main-bg !important;
     color: $white-color;
     overflow-y: auto !important;
   }

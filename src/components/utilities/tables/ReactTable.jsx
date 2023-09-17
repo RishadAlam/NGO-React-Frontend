@@ -63,122 +63,129 @@ function ReactTable({ title, columns, data }) {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <h2 className="heading">{title}</h2>
-        <div className="column-hiding text-end position-relative">
-          <button
-            className="table-btn"
-            onClick={() => setShowToggleColumn((prevState) => !prevState)}>
-            <MoreVertical size={26} />
-          </button>
+      <div className="card">
+        <div className="card-header">
+          <div className="d-flex justify-content-between align-items-center">
+            <h2 className="heading">{title}</h2>
+            <div className="column-hiding text-end position-relative">
+              <button
+                className="table-btn p-0"
+                onClick={() => setShowToggleColumn((prevState) => !prevState)}>
+                <MoreVertical size={24} />
+              </button>
 
-          <div className={`column-dropdown position-absolute ${showToggleColumn ? 'active' : ''}`}>
-            <ul className="p-3 pe-4 m-0 shadow text-start">
-              <li className="pb-2 mb-3 text-center">
-                <b>Toggle Column</b>
-              </li>
-              {allColumns.map((column, index) => (
-                <li key={index} className="pb-2">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        size="small"
-                        {...column.getToggleHiddenProps()}
-                        disabled={column?.disable || false}
+              <div
+                className={`column-dropdown position-absolute ${showToggleColumn ? 'active' : ''}`}>
+                <ul className="p-3 pe-4 m-0 shadow text-start">
+                  <li className="pb-2 mb-3 text-center">
+                    <b>Toggle Column</b>
+                  </li>
+                  {allColumns.map((column, index) => (
+                    <li key={index} className="pb-2">
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            size="small"
+                            {...column.getToggleHiddenProps()}
+                            disabled={column?.disable || false}
+                          />
+                        }
+                        label={column.Header}
                       />
-                    }
-                    label={column.Header}
-                  />
-                </li>
-              ))}
-            </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-6">
-          <ShowingRows pageSize={pageSize} setPageSize={setPageSize} t={t} />
-        </div>
-        <div className="col-sm-6 text-end">
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} t={t} />
-        </div>
-      </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-sm-6">
+              <ShowingRows pageSize={pageSize} setPageSize={setPageSize} t={t} />
+            </div>
+            <div className="col-sm-6 text-end">
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} t={t} />
+            </div>
+          </div>
 
-      <div className="table-responsive">
-        <table {...getTableProps()} className="table table-hover table-report">
-          <thead>
-            {headerGroups.map((headerGroup, i) => (
-              <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, index) => (
-                  <th
-                    key={index}
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="text-nowrap">
-                    {column.render('Header')}{' '}
-                    <span>
-                      {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <CornerRightDownArrow size={12} />
-                        ) : (
-                          <CornerRightUpArrow size={12} />
-                        )
-                      ) : (
-                        ''
-                      )}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.length > 0 ? (
-              page.map((row, i) => {
-                prepareRow(row)
-                return (
-                  <tr key={i} {...row.getRowProps()}>
-                    {row.cells.map((cell, index) => (
-                      <td key={index} {...cell.getCellProps()}>
-                        {cell.render('Cell')}
-                      </td>
+          <div className="table-responsive">
+            <table {...getTableProps()} className="table table-hover table-report">
+              <thead>
+                {headerGroups.map((headerGroup, i) => (
+                  <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column, index) => (
+                      <th
+                        key={index}
+                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                        className="text-nowrap">
+                        {column.render('Header')}{' '}
+                        <span>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <CornerRightDownArrow size={12} />
+                            ) : (
+                              <CornerRightUpArrow size={12} />
+                            )
+                          ) : (
+                            ''
+                          )}
+                        </span>
+                      </th>
                     ))}
                   </tr>
-                )
-              })
-            ) : (
-              <tr>
-                <td colSpan={allColumns.length} className="text-center">
-                  {t('common.No_Records_Found')}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.length > 0 ? (
+                  page.map((row, i) => {
+                    prepareRow(row)
+                    return (
+                      <tr key={i} {...row.getRowProps()}>
+                        {row.cells.map((cell, index) => (
+                          <td key={index} {...cell.getCellProps()}>
+                            {cell.render('Cell')}
+                          </td>
+                        ))}
+                      </tr>
+                    )
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={allColumns.length} className="text-center">
+                      {t('common.No_Records_Found')}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
-      {pageCount > 0 && (
-        <div className="row align-items-center">
-          <div className="col-sm-4">
-            <span>
-              Showing {rowStart} to {showedTotalRows} of {totalRows} results
-            </span>
-          </div>
-          <div className="col-sm-8 text-end">
-            {pageCount > 1 && (
-              <PageOptions
-                previousPage={previousPage}
-                canPreviousPage={canPreviousPage}
-                nextPage={nextPage}
-                canNextPage={canNextPage}
-                pageCount={pageCount}
-                pageOptions={pageOptions}
-                pageIndex={pageIndex}
-                gotoPage={gotoPage}
-              />
-            )}
-          </div>
+          {pageCount > 0 && (
+            <div className="row align-items-center">
+              <div className="col-sm-4">
+                <span>
+                  Showing {rowStart} to {showedTotalRows} of {totalRows} results
+                </span>
+              </div>
+              <div className="col-sm-8 text-end">
+                {pageCount > 1 && (
+                  <PageOptions
+                    previousPage={previousPage}
+                    canPreviousPage={canPreviousPage}
+                    nextPage={nextPage}
+                    canNextPage={canNextPage}
+                    pageCount={pageCount}
+                    pageOptions={pageOptions}
+                    pageIndex={pageIndex}
+                    gotoPage={gotoPage}
+                  />
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </>
   )
 }

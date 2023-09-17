@@ -58,28 +58,34 @@ export default function TopCollectors({ heading }) {
 
   return (
     <div className="topBox">
-      <h1>{heading}</h1>
-      <div className="list">
-        {topDealUsers.map((user) => (
-          <div className="listItem" key={user.id}>
-            <div className="user">
-              {/* <img src={user.img} alt="" /> */}
-              <LazyLoadImage
-                src={user.img}
-                width="100%"
-                height="100%"
-                placeholderSrc={profilePlaceholder}
-                effect="blur"
-                alt="User"
-              />
-              <div className="userTexts">
-                <span className="username">{user.username}</span>
-                <span className="role">{user.email}</span>
+      <div className="card">
+        <div className="card-header">
+          <h1>{heading}</h1>
+        </div>
+        <div className="card-body">
+          <div className="list">
+            {topDealUsers.map((user) => (
+              <div className="listItem" key={user.id}>
+                <div className="user">
+                  {/* <img src={user.img} alt="" /> */}
+                  <LazyLoadImage
+                    src={user.img}
+                    width="100%"
+                    height="100%"
+                    placeholderSrc={profilePlaceholder}
+                    effect="blur"
+                    alt="User"
+                  />
+                  <div className="userTexts">
+                    <span className="username">{user.username}</span>
+                    <span className="role">{user.email}</span>
+                  </div>
+                </div>
+                <span className="amount">৳ {user.amount}</span>
               </div>
-            </div>
-            <span className="amount">৳ {user.amount}</span>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   )

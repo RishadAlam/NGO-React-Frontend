@@ -121,42 +121,40 @@ export default function StaffProfile() {
                 <b className="text-uppercase">Profile</b>
               </div>
               <div className="card-body">
-                <div className="card-body">
-                  {errors?.message && errors?.message !== '' && (
-                    <div className="alert alert-danger" role="alert">
-                      <strong>{errors?.message}</strong>
-                    </div>
-                  )}
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <TextInputField
-                        label={t('common.name')}
-                        isRequired={true}
-                        defaultValue={profileInputs.name}
-                        autoFocus={true}
-                        setChange={(val) => setChange(val, 'name')}
-                        error={errors?.name}
-                        disabled={loading?.profile}
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <TextInputField
-                        label={t('common.phone')}
-                        defaultValue={profileInputs?.phone || ''}
-                        setChange={(val) => setChange(val, 'phone')}
-                        error={errors?.phone}
-                        disabled={loading?.profile}
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3 text-start">
-                      <ImagePreview
-                        label={t('common.image')}
-                        src={profileImage}
-                        setChange={(val) => setChange(val, 'image')}
-                        error={errors?.image}
-                        disabled={loading?.profile}
-                      />
-                    </div>
+                {errors?.message && errors?.message !== '' && (
+                  <div className="alert alert-danger" role="alert">
+                    <strong>{errors?.message}</strong>
+                  </div>
+                )}
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <TextInputField
+                      label={t('common.name')}
+                      isRequired={true}
+                      defaultValue={profileInputs.name}
+                      autoFocus={true}
+                      setChange={(val) => setChange(val, 'name')}
+                      error={errors?.name}
+                      disabled={loading?.profile}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <TextInputField
+                      label={t('common.phone')}
+                      defaultValue={profileInputs?.phone || ''}
+                      setChange={(val) => setChange(val, 'phone')}
+                      error={errors?.phone}
+                      disabled={loading?.profile}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3 text-start">
+                    <ImagePreview
+                      label={t('common.image')}
+                      src={profileImage}
+                      setChange={(val) => setChange(val, 'image')}
+                      error={errors?.image}
+                      disabled={loading?.profile}
+                    />
                   </div>
                 </div>
               </div>

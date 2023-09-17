@@ -35,7 +35,7 @@ export default function Staffs() {
   const [isUserPermissionsModalOpen, setIsUserPermissionsModalOpen] = useState(false)
   const [editableStaff, setEditableStaff] = useState(false)
   const [userPermissions, setUserPermissions] = useState([])
-  const { accessToken } = useAuthDataValue()
+  const { accessToken, id: authId } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: staffs } = [], mutate, isLoading, isError } = useFetch({ action: 'users' })
@@ -68,21 +68,25 @@ export default function Staffs() {
           {<Edit size={20} />}
         </IconButton>
       </Tooltip>
-      <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-        <IconButton className="text-danger" onClick={() => staffDelete(id)}>
-          {<Trash size={20} />}
-        </IconButton>
-      </Tooltip>
+      {authId !== id && (
+        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+          <IconButton className="text-danger" onClick={() => staffDelete(id)}>
+            {<Trash size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
       <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
         <IconButton className="text-info" onClick={() => staffDelete(id)}>
           {<Clock size={20} />}
         </IconButton>
       </Tooltip>
-      <Tooltip TransitionComponent={Zoom} title="Reset Password" arrow followCursor>
-        <IconButton className="text-danger" onClick={() => staffDelete(id)}>
-          {<Reset size={20} />}
-        </IconButton>
-      </Tooltip>
+      {authId !== id && (
+        <Tooltip TransitionComponent={Zoom} title="Reset Password" arrow followCursor>
+          <IconButton className="text-danger" onClick={() => staffDelete(id)}>
+            {<Reset size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
     </ActionBtnGroup>
   )
 

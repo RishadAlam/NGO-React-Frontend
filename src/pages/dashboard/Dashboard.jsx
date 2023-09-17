@@ -103,35 +103,35 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="col-md-6 mt-2 pe-md-1 d-lg-none d-block">
-                <div className="box shadow withdrawal-list">
+                <div className="box withdrawal-list">
                   <SavingWithdrawalLists />
                 </div>
               </div>
               <div className="col-md-6 mt-2 ps-md-1 d-lg-none d-block">
-                <div className="box shadow withdrawal-list">
+                <div className="box withdrawal-list">
                   <LoanWithdrawalLists />
                 </div>
               </div>
               <div className="col-md-12 mt-2">
-                <div className="box shadow collection-list">
+                <div className="box collection-list">
                   <SavingCollectionLists />
                 </div>
               </div>
               <div className="col-md-12 mt-3">
-                <div className="box shadow collection-list">
+                <div className="box collection-list">
                   <LoanCollectionLists />
                 </div>
               </div>
             </div>
           </div>
           <div className="col-xl-3 col-lg-4 collectors">
-            <div className="box mb-3 shadow top-collectors">
+            <div className="box mb-3 top-collectors">
               <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
             </div>
-            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">
+            <div className="box withdrawal-list mb-3 d-lg-block d-none">
               <SavingWithdrawalLists />
             </div>
-            <div className="box shadow withdrawal-list mb-3 d-lg-block d-none">
+            <div className="box withdrawal-list mb-3 d-lg-block d-none">
               <LoanWithdrawalLists />
             </div>
           </div>

@@ -6,6 +6,15 @@
     padding: 20px;
     border-radius: 10px;
     border: 2px solid $blue-soft-magenta;
+
+    &.withdrawal-list,
+    &.collection-list,
+    &.top-collectors,
+    &.pie-analytics {
+      padding: 0 !important;
+      border: none !important;
+      background-color: transparent !important;
+    }
   }
 
   .withdrawal-list,
