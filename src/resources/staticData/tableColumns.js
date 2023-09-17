@@ -71,8 +71,9 @@ export const StaffTableColumns = (
   { Header: t('common.email'), accessor: 'email', show: windowWidth < 576 ? false : true },
   {
     Header: t('common.role'),
-    accessor: 'role',
-    Cell: ({ row }) => row.original.role_name
+    accessor: 'role_name',
+    Cell: ({ row, value }) =>
+      row.original.role_is_default ? t(`staff_roles.default.${value}`) : value
   },
   { Header: t('common.phone'), accessor: 'phone', show: windowWidth < 576 ? false : true },
   {
@@ -101,7 +102,11 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
     accessor: 'id',
     Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
   },
-  { Header: t('common.role'), accessor: 'name' },
+  {
+    Header: t('common.role'),
+    accessor: 'name',
+    Cell: ({ row, value }) => (row.original.is_default ? t(`staff_roles.default.${value}`) : value)
+  },
   {
     Header: t('common.action'),
     accessor: 'action',

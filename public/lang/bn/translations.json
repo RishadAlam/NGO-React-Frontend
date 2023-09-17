@@ -99,6 +99,14 @@
     "Staff_Role_List": "কর্মচারিবর্গের ভূমিকার তালিকা",
     "Staff_Roles_Registration": "ভূমিকা নিবন্ধন",
     "Staff_Roles_Update": "ভূমিকা আপডেট",
-    "Role_Name_is_Required": "ভূমিকার নাম প্রয়োজন।"
+    "Role_Name_is_Required": "ভূমিকার নাম প্রয়োজন।",
+
+    "default": {
+      "developer": "ডেভেলপার",
+      "super_admin": "সুপার অ্যাডমিন",
+      "admin": "অ্যাডমিন",
+      "manager": "ম্যানেজার",
+      "field_officer": "মাঠ কর্মী"
+    }
   }
 }

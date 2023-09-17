@@ -103,6 +103,14 @@
     "Staff_Role_List": "STAFF ROLE LIST",
     "Staff_Roles_Registration": "Role Registration",
     "Staff_Roles_Update": "Role Update",
-    "Role_Name_is_Required": "Role Name is Required!"
+    "Role_Name_is_Required": "Role Name is Required!",
+
+    "default": {
+      "developer": "Developer",
+      "super_admin": "Super Admin",
+      "admin": "Admin",
+      "manager": "Manager",
+      "field_officer": "Field Officer"
+    }
   }
 }

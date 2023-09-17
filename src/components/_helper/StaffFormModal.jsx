@@ -19,7 +19,12 @@ export default function StaffFormModal({
   onSubmit
 }) {
   const { data: { data: roles } = [] } = useFetch({ action: 'roles' })
-  const rolesOptions = roles && roles?.map((role) => ({ value: role.id, label: role.name }))
+  const rolesOptions =
+    roles &&
+    roles?.map((role) => ({
+      value: role.id,
+      label: role.is_default ? t(`staff_roles.default.${role.name}`) : role.name
+    }))
 
   return (
     <>
@@ -32,7 +37,7 @@ export default function StaffFormModal({
                 <Button
                   className={'text-danger p-0'}
                   loading={false}
-                  endIcon={<XCircle size={30} />}
+                  endIcon={<XCircle size={24} />}
                   onclick={() => setOpen(false)}
                 />
               </div>
