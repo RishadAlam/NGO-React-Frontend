@@ -308,7 +308,7 @@ ul {
     color: $soft-color !important;
   }
   p {
-    color: $white-color !important;
+    color: $blue-magenta !important;
   }
 }
 
@@ -337,6 +337,10 @@ ul {
 }
 
 .dark {
+  .table > :not(caption) > * > *,
+  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
+  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before,
+  .image-preview,
   .card {
     border-color: $blue-magenta !important;
   }
@@ -358,10 +362,10 @@ ul {
     background-color: transparent !important;
   }
 
-  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
-  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
-    border-color: $soft-light !important;
-  }
+  // .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
+  // .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+  //   border-color: $soft-light !important;
+  // }
 
   .css-oicxb9 {
     max-height: 90vh !important;
@@ -389,5 +393,10 @@ ul {
         background-color: $primary-bg-hover !important;
       }
     }
+  }
+
+  div:where(.swal2-container) div:where(.swal2-popup) {
+    background-color: $main-bg !important;
+    color: $white-color !important;
   }
 }

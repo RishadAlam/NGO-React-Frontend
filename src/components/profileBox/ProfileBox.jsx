@@ -3,16 +3,16 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Link } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
-import Key from '../../icons/key'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
+import Key from '../../icons/key'
 import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
 import Button from '../utilities/Button'
 import './profileBox.scss'
 
 export default function ProfileBox({ t }) {
   const [isProfileVisible, setIsProfileVisible] = useState(false)
-  const { name, role } = useAuthDataValue()
+  const { name, role, image_uri } = useAuthDataValue()
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function ProfileBox({ t }) {
           className="img cursor-pointer"
           onClick={() => setIsProfileVisible((prevState) => !prevState)}>
           <LazyLoadImage
-            src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+            src={image_uri}
             width="100%"
             height="100%"
             placeholderSrc={profilePlaceholder}

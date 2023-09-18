@@ -37,8 +37,7 @@
   overflow: hidden !important;
 
   .side-bar {
-    //min-width: 200px;
-    width: 300px;
+    min-width: 250px;
     // overflow-x: hidden;
     padding: 0 15px;
     position: relative;
@@ -52,20 +51,9 @@
     -ms-transition: width 0.3s ease;
     -o-transition: width 0.3s ease;
 
-    //&:after
-    // {
-    //   content: '';
-    //   width: 1px;
-    //   height: 100%;
-    //   background: $soft-dark;
-    //   position: absolute;
-    //   top: 60px;
-    //   right: 0;
-    // }
-
     &.side-bar-sm {
       // min-width: min-content !important;
-      width: 80px !important;
+      min-width: 80px !important;
     }
     &.side-bar-sm .side-menu {
       justify-content: center;
@@ -83,7 +71,11 @@
   }
 
   .main-body {
-    width: 100%;
+    min-width: calc(100vw - 265px);
+
+    @include md {
+      min-width: 100vw;
+    }
 
     .mobile-menu {
       display: none;
@@ -111,6 +103,11 @@
       min-height: calc(100vh - 60px - 40px);
     }
   }
+
+  .side-bar-sm ~ .main-body {
+    min-width: calc(100vw - 95px);
+  }
+
   .footer {
     background-color: tomato;
     padding: 0 20px;

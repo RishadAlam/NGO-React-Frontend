@@ -6,7 +6,7 @@ export default function ImagePreview({ label, src, setChange, error, disabled = 
     <>
       <label className="form-label mb-3">{label}</label>
       <div
-        className={`border border-secondary shadow rounded-4 p-3 ${error && 'border-danger'}`}
+        className={`image-preview border shadow rounded-4 p-3 ${error && 'border-danger'}`}
         style={{ width: 'max-content' }}>
         <div className="img" style={{ width: '250px', height: '250px' }}>
           <img
