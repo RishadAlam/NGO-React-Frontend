@@ -108,5 +108,25 @@
       "manager": "ম্যানেজার",
       "field_officer": "মাঠ কর্মী"
     }
+  },
+  "staff_permissions": {
+    "group_name": {
+      "dashboard": "ড্যাশবোর্ড",
+      "staff": "কর্মচারি",
+      "role": "ভূমিকা"
+    },
+    "permissions": {
+      "view_dashboard_as_admin": "অ্যাডমিন হিসাবে ড্যাশবোর্ড দেখুন",
+      "staff_list_view": "কর্মচারিবর্গের তালিকা দেখুন",
+      "staff_permissions_view": "কর্মচারিবর্গের অনুমতি দেখুন",
+      "staff_registration": "কর্মচারিবর্গের নিবন্ধন",
+      "staff_data_update": "কর্মচারিবর্গের ডেটা আপডেট",
+      "staff_soft_delete": "কর্মচারি ডিলিট",
+      "staff_permanently_delete": "কর্মচারি স্থায়ীভাবে ডিলিট",
+      "role_list_view": "ভূমিকার তালিকা দেখুন",
+      "role_registration": "ভূমিকা নিবন্ধন",
+      "role_update": "ভূমিকা আপডেট",
+      "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিট"
+    }
   }
 }

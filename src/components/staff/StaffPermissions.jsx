@@ -40,7 +40,9 @@ export default function StaffPermissions({ isOpen, setIsOpen, t, data, modalTitl
                         <div className="card">
                           <div className="card-header">
                             <div className="d-flex align-items-center justify-content-between">
-                              <b className="text-uppercase">{group_name}</b>
+                              <b className="text-uppercase">
+                                {t(`staff_permissions.group_name.${group_name}`)}
+                              </b>
                             </div>
                           </div>
                           <div className="card-body">
@@ -51,7 +53,9 @@ export default function StaffPermissions({ isOpen, setIsOpen, t, data, modalTitl
                                     <li>
                                       <div className="row mb-2 align-items-center">
                                         <div className="col-10">
-                                          <h6>{t('permissions.permission')}</h6>
+                                          <h6>
+                                            {t(`staff_permissions.permissions.${permission}`)}
+                                          </h6>
                                         </div>
                                         <div className="col-2 text-end text-success">
                                           <CheckCircle size={20} />

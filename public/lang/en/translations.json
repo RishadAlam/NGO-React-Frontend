@@ -112,5 +112,25 @@
       "manager": "Manager",
       "field_officer": "Field Officer"
     }
+  },
+  "staff_permissions": {
+    "group_name": {
+      "dashboard": "Dashboard",
+      "staff": "Staff",
+      "role": "Role"
+    },
+    "permissions": {
+      "view_dashboard_as_admin": "View Dashboard As Admin",
+      "staff_list_view": "Staff List View",
+      "staff_permissions_view": "Staff Permissions View",
+      "staff_registration": "Staff Registration",
+      "staff_data_update": "Staff Data Update",
+      "staff_soft_delete": "Staff Soft Delete",
+      "staff_permanently_delete": "Staff Permanently Delete",
+      "role_list_view": "Role List View",
+      "role_registration": "Role Registration",
+      "role_update": "Role Update",
+      "role_delete": "Role Delete"
+    }
   }
 }
