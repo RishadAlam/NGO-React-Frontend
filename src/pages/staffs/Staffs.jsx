@@ -59,7 +59,7 @@ export default function Staffs() {
       <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
         <IconButton
           className="text-success"
-          onClick={() => viewUserPermissions(staff?.permissions)}>
+          onClick={() => viewUserPermissions(id, staff?.permissions)}>
           {<List size={20} />}
         </IconButton>
       </Tooltip>
@@ -122,8 +122,8 @@ export default function Staffs() {
     setIsUserUpdateModalOpen(true)
   }
 
-  const viewUserPermissions = (permissions) => {
-    setUserPermissions(permissions)
+  const viewUserPermissions = (id, permissions) => {
+    setUserPermissions({ staff_id: id, staff_permissions: permissions })
     setIsUserPermissionsModalOpen(true)
   }
 
@@ -191,6 +191,7 @@ export default function Staffs() {
                 isOpen={isUserPermissionsModalOpen}
                 setIsOpen={setIsUserPermissionsModalOpen}
                 data={userPermissions}
+                authId={authId}
                 t={t}
                 modalTitle={t('staffs.Staff_Registration')}
                 btnTitle={t('common.update')}

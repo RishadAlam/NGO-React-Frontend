@@ -1,12 +1,24 @@
 import React, { Fragment, useState } from 'react'
+import { Link } from 'react-router-dom'
 import CheckCircle from '../../icons/CheckCircle'
+import ExternalLink from '../../icons/ExternalLink'
 import XCircle from '../../icons/XCircle'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function StaffPermissions({ isOpen, setIsOpen, t, data, modalTitle, btnTitle }) {
+export default function StaffPermissions({
+  isOpen,
+  setIsOpen,
+  t,
+  data,
+  authId,
+  modalTitle,
+  btnTitle
+}) {
+  const { staff_id, staff_permissions } = data
+  // eslint-disable-next-line no-unused-vars
   const [permissions, setPermissions] = useState((permissions = {}) => {
-    data.forEach((permission) => {
+    staff_permissions.forEach((permission) => {
       if (!Array.isArray(permissions[permission.group_name])) {
         permissions[permission.group_name] = []
       }
@@ -36,7 +48,7 @@ export default function StaffPermissions({ isOpen, setIsOpen, t, data, modalTitl
                 Object.keys(permissions).map((group_name, index) => {
                   return (
                     <Fragment key={index}>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-lg-6 mb-3">
                         <div className="card">
                           <div className="card-header">
                             <div className="d-flex align-items-center justify-content-between">
@@ -81,16 +93,17 @@ export default function StaffPermissions({ isOpen, setIsOpen, t, data, modalTitl
               )}
             </div>
           </div>
-          <div className="card-footer text-end">
-            {/* <Button
-              type="submit"
-              name={btnTitle}
-              className={'btn-primary py-2 px-3'}
-              loading={loading?.staffForm || false}
-              endIcon={<Save size={20} />}
-              disabled={Object.keys(error).length || loading?.staffForm}
-            /> */}
-          </div>
+          {authId !== staff_id && (
+            <div className="card-footer text-end">
+              <Link
+                to={`/staff-permissions/${staff_id}`}
+                className={'btn-primary btn btn-block btn-primary py-2 px-3'}>
+                {btnTitle}
+                &nbsp;
+                <ExternalLink size={20} />
+              </Link>
+            </div>
+          )}
         </div>
       </ModalPro>
     </>

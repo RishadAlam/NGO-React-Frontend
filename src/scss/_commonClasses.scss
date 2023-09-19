@@ -338,6 +338,20 @@ ul {
   background-color: $main-bg !important;
 }
 
+.css-rj9mdg {
+  max-height: 90vh !important;
+  max-width: 90vw !important;
+
+  .card {
+    max-height: 90vh !important;
+    max-width: 90vw !important;
+
+    .card-body {
+      overflow-y: auto !important;
+    }
+  }
+}
+
 .dark {
   .table > :not(caption) > * > *,
   .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
@@ -357,7 +371,6 @@ ul {
   .card-body {
     background-color: $main-bg !important;
     color: $white-color;
-    overflow-y: auto !important;
   }
   .css-1869usk-MuiFormControl-root,
   .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
