@@ -113,7 +113,7 @@
     "group_name": {
       "dashboard": "ড্যাশবোর্ড",
       "staff": "কর্মচারি",
-      "role": "ভূমিকা"
+      "staff_role": "কর্মচারিবর্গের ভূমিকা"
     },
     "permissions": {
       "view_dashboard_as_admin": "অ্যাডমিন হিসাবে ড্যাশবোর্ড দেখুন",

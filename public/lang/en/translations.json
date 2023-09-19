@@ -117,7 +117,7 @@
     "group_name": {
       "dashboard": "Dashboard",
       "staff": "Staff",
-      "role": "Role"
+      "staff_role": "Staff Role"
     },
     "permissions": {
       "view_dashboard_as_admin": "View Dashboard As Admin",
