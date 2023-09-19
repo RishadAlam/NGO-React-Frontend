@@ -1,4 +1,7 @@
 import { FormControlLabel, Switch } from '@mui/material'
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
@@ -12,7 +15,15 @@ import './table.scss'
 
 function ReactTable({ title, columns, data }) {
   const { t } = useTranslation()
-  const [showToggleColumn, setShowToggleColumn] = useState(false)
+  // const [showToggleColumn, setShowToggleColumn] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const {
     getTableProps,
@@ -68,7 +79,7 @@ function ReactTable({ title, columns, data }) {
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="heading">{title}</h2>
             <div className="column-hiding text-end position-relative">
-              <button
+              {/* <button
                 className="table-btn p-0"
                 onClick={() => setShowToggleColumn((prevState) => !prevState)}>
                 <MoreVertical size={24} />
@@ -95,7 +106,42 @@ function ReactTable({ title, columns, data }) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
+              <Button
+                id="hide-column--button"
+                className="table-btn p-0"
+                aria-controls={open ? 'hide-column-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}>
+                <MoreVertical size={24} />
+              </Button>
+              <Menu
+                id="hide-column-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'hide-column--button'
+                }}>
+                {allColumns.map((column, index) => (
+                  <MenuItem key={index}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          size="small"
+                          {...column.getToggleHiddenProps()}
+                          disabled={column?.disable || false}
+                        />
+                      }
+                      label={column.Header}
+                    />
+                  </MenuItem>
+                ))}
+                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+              </Menu>
             </div>
           </div>
         </div>
