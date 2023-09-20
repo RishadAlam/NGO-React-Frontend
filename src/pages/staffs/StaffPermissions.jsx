@@ -1,16 +1,25 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
 import { Fragment, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
+import Button from '../../components/utilities/Button'
 import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
+import Save from '../../icons/Save'
+import xFetch from '../../utilities/xFetch'
 
 export default function StaffPermissions() {
   const { id } = useParams()
-  const [permissions, setPermissions] = useState({})
   const { t } = useTranslation()
+  const [permissions, setPermissions] = useState({})
+  const [error, setError] = useState({})
+  const [loading, setLoading] = useLoadingState({})
+  const { accessToken, id: authId } = useAuthDataValue()
   const {
     data: {
       data: { allPermissions, userPermissions } = {
@@ -24,18 +33,19 @@ export default function StaffPermissions() {
   } = useFetch({ action: `permissions/${id}` })
 
   useEffect(() => {
-    setPermissions(() =>
-      create({}, (draftPerm) => {
-        allPermissions.forEach((permission) => {
-          if (typeof draftPerm[permission.group_name] !== 'object') {
-            draftPerm[permission.group_name] = {}
-          }
-          draftPerm[permission.group_name][permission.name] = userPermissions.includes(
-            permission.name
-          )
+    allPermissions.length &&
+      setPermissions(() =>
+        create({}, (draftPerm) => {
+          allPermissions.forEach((permission) => {
+            if (typeof draftPerm[permission.group_name] !== 'object') {
+              draftPerm[permission.group_name] = {}
+            }
+            draftPerm[permission.group_name][permission.name] = userPermissions.includes(
+              permission.name
+            )
+          })
         })
-      })
-    )
+      )
   }, [allPermissions, userPermissions])
 
   const setChange = (group_name, permission, isChecked) => {
@@ -58,6 +68,44 @@ export default function StaffPermissions() {
         })
       })
     )
+  }
+
+  const updatePermissions = (event) => {
+    event.preventDefault()
+    const staffPermissions = []
+
+    Object.keys(permissions).forEach((group) => {
+      Object.keys(permissions[group]).forEach((permission) => {
+        if (permissions[group][permission]) {
+          staffPermissions.push(permission)
+        }
+      })
+    })
+
+    setLoading({ ...loading, staffPermissions: true })
+    xFetch(
+      `permissions/${id}`,
+      { permissions: staffPermissions },
+      null,
+      accessToken,
+      null,
+      'PUT'
+    ).then((response) => {
+      setLoading({ ...loading, staffPermissions: false })
+      if (response?.success) {
+        toast.success(response.message)
+        mutate()
+      }
+      setError((prevErr) =>
+        create(prevErr, (draftErr) => {
+          if (!response?.errors) {
+            draftErr.message = response?.message
+            return
+          }
+          return rawReturn(response?.errors || response)
+        })
+      )
+    })
   }
 
   return (
@@ -86,7 +134,7 @@ export default function StaffPermissions() {
           </div>
           <div className="card-body py-0 px-2">
             <div className="row">
-              {Object.keys(permissions).length &&
+              {Object.keys(permissions).length > 0 &&
                 Object.keys(permissions).map((group, index) => (
                   <Fragment key={index}>
                     <div className="col-lg-6 col-xxl-4 m-0 p-0 border border-1">
@@ -131,7 +179,17 @@ export default function StaffPermissions() {
                 ))}
             </div>
           </div>
-          <div className="card-footer"></div>
+          <div className="card-footer text-center">
+            <Button
+              type="button"
+              name={t('common.update')}
+              className={'btn-primary py-2 px-3'}
+              loading={loading?.staffPermissions || false}
+              endIcon={<Save size={20} />}
+              onclick={(e) => updatePermissions(e)}
+              disabled={Object.keys(error).length || loading?.staffPermissions}
+            />
+          </div>
         </div>
       </section>
     </>

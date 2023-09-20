@@ -27,9 +27,6 @@ export default function StaffPermissions({
     return permissions
   })
 
-  console.log('staff_permissions:', staff_permissions)
-  console.log('permissions:', permissions)
-
   return (
     <>
       <ModalPro open={isOpen} handleClose={() => setIsOpen(false)}>
