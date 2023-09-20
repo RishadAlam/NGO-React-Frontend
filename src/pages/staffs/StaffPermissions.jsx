@@ -10,6 +10,7 @@ import Home from '../../icons/Home'
 export default function StaffPermissions() {
   const { id } = useParams()
   const [permissions, setPermissions] = useState({})
+  const { t } = useTranslation()
   const {
     data: {
       data: { allPermissions, userPermissions } = {
@@ -21,7 +22,6 @@ export default function StaffPermissions() {
     isLoading,
     isError
   } = useFetch({ action: `permissions/${id}` })
-  const { t } = useTranslation()
 
   useEffect(() => {
     setPermissions(() =>
@@ -30,18 +30,33 @@ export default function StaffPermissions() {
           if (typeof draftPerm[permission.group_name] !== 'object') {
             draftPerm[permission.group_name] = {}
           }
-          draftPerm[permission.group_name][permission.name] =
-            userPermissions.includes(permission.name) || true
+          draftPerm[permission.group_name][permission.name] = userPermissions.includes(
+            permission.name
+          )
         })
       })
     )
   }, [allPermissions, userPermissions])
 
-  console.log(permissions)
-
   const setChange = (group_name, permission, isChecked) => {
     setPermissions((prevPerm) =>
-      create(prevPerm, (draftPerm) => (draftPerm[group_name][permission] = isChecked))
+      create(prevPerm, (draftPerm) => {
+        draftPerm[group_name][permission] = isChecked
+      })
+    )
+  }
+
+  const setGroupChecked = (permissions) => {
+    return Object.keys(permissions).every((permission) => permissions[permission])
+  }
+
+  const toggleGroupPermissions = (group, isChecked) => {
+    setPermissions((prevPerm) =>
+      create(prevPerm, (draftPerm) => {
+        Object.keys(draftPerm[group]).forEach((permission) => {
+          draftPerm[group][permission] = isChecked
+        })
+      })
     )
   }
 
@@ -81,7 +96,10 @@ export default function StaffPermissions() {
                             <b className="text-capitalize">
                               {t(`staff_permissions.group_name.${group}`)}
                             </b>
-                            <AndroidSwitch />
+                            <AndroidSwitch
+                              value={setGroupChecked(permissions[group])}
+                              toggleStatus={(e) => toggleGroupPermissions(group, e.target.checked)}
+                            />
                           </div>
                         </div>
                         <div className="card-body">
