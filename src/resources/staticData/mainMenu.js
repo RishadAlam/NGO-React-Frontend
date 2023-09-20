@@ -55,13 +55,6 @@ export const mainMenu = (t) => {
           },
           {
             id: 'staff2',
-            label: t('menu.staffs.Staff_Permissions'),
-            path: '/staff-permissions',
-            icon: '',
-            view: true
-          },
-          {
-            id: 'staff3',
             label: t('menu.staffs.Staff_Roles'),
             path: '/staff-roles',
             icon: '',
