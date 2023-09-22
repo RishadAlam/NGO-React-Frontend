@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import StaffPermissions from '../../components/staff/StaffPermissions'
@@ -34,6 +35,7 @@ export default function Staffs() {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false)
   const [isUserUpdateModalOpen, setIsUserUpdateModalOpen] = useState(false)
   const [isUserPermissionsModalOpen, setIsUserPermissionsModalOpen] = useState(false)
+  const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [editableStaff, setEditableStaff] = useState(false)
   const [userPermissions, setUserPermissions] = useState([])
   const { accessToken, id: authId, permissions: authPermissions } = useAuthDataValue()
@@ -81,7 +83,7 @@ export default function Staffs() {
       )}
       {authPermissions.includes('staff_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
-          <IconButton className="text-info" onClick={() => staffDelete(id)}>
+          <IconButton className="text-info" onClick={() => staffActionHistory(staff)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -126,6 +128,10 @@ export default function Staffs() {
       role: staff?.role_id
     })
     setIsUserUpdateModalOpen(true)
+  }
+
+  const staffActionHistory = (staff) => {
+    setIsActionHistoryModalOpen(true)
   }
 
   const viewUserPermissions = (id, permissions) => {
@@ -201,6 +207,13 @@ export default function Staffs() {
                 t={t}
                 modalTitle={t('staffs.Staff_Registration')}
                 btnTitle={t('common.update')}
+              />
+            )}
+            {isActionHistoryModalOpen && (
+              <ActionHistoryModal
+                open={isActionHistoryModalOpen}
+                setOpen={setIsActionHistoryModalOpen}
+                t={t}
               />
             )}
           </div>

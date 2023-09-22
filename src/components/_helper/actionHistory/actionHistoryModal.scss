@@ -1,0 +1,55 @@
+@import '../../../scss/variables';
+@import '../../../scss/responsive';
+
+.historyBox {
+  padding-left: 50px;
+  margin-top: 30px;
+
+  &:before {
+    width: 1px;
+    height: 140%;
+    background-color: $blue-magenta;
+    content: '';
+    z-index: 9;
+    position: absolute;
+    left: 20px;
+    top: 0;
+  }
+
+  &:last-child:before {
+    display: none !important;
+  }
+
+  .avatar {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border: 1px solid $blue-magenta;
+    text-align: center;
+    font-size: 24px;
+    color: $blue-magenta;
+    border-radius: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+  }
+
+  .heading {
+    background-color: $blue-soft-magenta;
+    width: max-content;
+    -webkit-clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 15% 50%, 0% 0%);
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 15% 50%, 0% 0%);
+  }
+
+  .details {
+    background-color: $soft-bg;
+    width: 80%;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+  }
+}
