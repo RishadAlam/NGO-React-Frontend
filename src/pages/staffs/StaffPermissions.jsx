@@ -51,7 +51,8 @@ export default function StaffPermissions() {
           })
         })
       )
-  }, [allPermissions, authId, id, navigate, userPermissions])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allPermissions, authId, id, userPermissions])
 
   const setChange = (group_name, permission, isChecked) => {
     setPermissions((prevPerm) =>
