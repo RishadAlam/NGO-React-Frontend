@@ -2,12 +2,17 @@
 @import '../../../scss/responsive';
 
 .historyBox {
+  width: inherit;
   padding-left: 50px;
   margin-top: 30px;
 
+  &:first-child {
+    margin-top: 0 !important;
+  }
+
   &:before {
     width: 1px;
-    height: 140%;
+    height: 170%;
     background-color: $blue-magenta;
     content: '';
     z-index: 9;
@@ -44,12 +49,18 @@
   }
 
   .details {
+    width: max-content;
     background-color: $soft-bg;
-    width: 80%;
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+  }
+
+  .date {
+    p {
+      font-family: 'Poppins', sans-serif !important;
+    }
   }
 }

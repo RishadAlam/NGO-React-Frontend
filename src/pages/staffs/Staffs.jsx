@@ -38,6 +38,7 @@ export default function Staffs() {
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [editableStaff, setEditableStaff] = useState(false)
   const [userPermissions, setUserPermissions] = useState([])
+  const [actionHistory, setActionHistory] = useState([])
   const { accessToken, id: authId, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
@@ -83,7 +84,9 @@ export default function Staffs() {
       )}
       {authPermissions.includes('staff_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
-          <IconButton className="text-info" onClick={() => staffActionHistory(staff)}>
+          <IconButton
+            className="text-info"
+            onClick={() => staffActionHistory(staff.action_history)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -130,7 +133,8 @@ export default function Staffs() {
     setIsUserUpdateModalOpen(true)
   }
 
-  const staffActionHistory = (staff) => {
+  const staffActionHistory = (actionHistory) => {
+    setActionHistory(actionHistory)
     setIsActionHistoryModalOpen(true)
   }
 
@@ -214,6 +218,7 @@ export default function Staffs() {
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
                 t={t}
+                actionHistory={actionHistory}
               />
             )}
           </div>

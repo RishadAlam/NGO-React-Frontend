@@ -1,5 +1,11 @@
 {
   "common": {
+    "action_history": {
+      "action_history": "Action History",
+      "update": "Updated at",
+      "delete": "Deleted at",
+      "restore": "Restored at"
+    },
     "search_placeholder": "Search...",
     "No_Records_Found": "No Records Found!",
     "Showing_Up": "Showing Up",

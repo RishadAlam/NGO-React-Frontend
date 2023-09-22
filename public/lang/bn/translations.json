@@ -1,5 +1,11 @@
 {
   "common": {
+    "action_history": {
+      "action_history": "পদক্ষেপ ইতিহাস",
+      "update": "মুছে ফেলা হয়েছে",
+      "delete": "পরিবর্তন হয়েছে",
+      "restore": "ফিরিয়ে আনা হয়েছে"
+    },
     "search_placeholder": "অনুসন্ধান করুন...",
     "No_Records_Found": "কোন তথ্য পাওয়া যায়নি!",
     "Showing_Up": "প্রদর্শন",
