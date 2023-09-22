@@ -126,6 +126,8 @@
       "staff_registration": "Staff Registration",
       "staff_data_update": "Staff Data Update",
       "staff_soft_delete": "Staff Soft Delete",
+      "staff_action_history": "Staff Action History",
+      "staff_reset_password": "Staff Reset Password",
       "staff_permanently_delete": "Staff Permanently Delete",
       "role_list_view": "Role List View",
       "role_registration": "Role Registration",

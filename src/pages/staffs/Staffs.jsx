@@ -36,7 +36,7 @@ export default function Staffs() {
   const [isUserPermissionsModalOpen, setIsUserPermissionsModalOpen] = useState(false)
   const [editableStaff, setEditableStaff] = useState(false)
   const [userPermissions, setUserPermissions] = useState([])
-  const { accessToken, id: authId } = useAuthDataValue()
+  const { accessToken, id: authId, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: staffs } = [], mutate, isLoading, isError } = useFetch({ action: 'users' })
@@ -54,34 +54,39 @@ export default function Staffs() {
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
   )
-
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
-        <IconButton
-          className="text-success"
-          onClick={() => viewUserPermissions(id, staff?.permissions)}>
-          {<List size={20} />}
-        </IconButton>
-      </Tooltip>
-      <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-        <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
-          {<Edit size={20} />}
-        </IconButton>
-      </Tooltip>
-      {authId !== id && (
+      {authPermissions.includes('staff_permissions_view') && (
+        <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
+          <IconButton
+            className="text-success"
+            onClick={() => viewUserPermissions(id, staff?.permissions)}>
+            {<List size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
+      {authPermissions.includes('staff_data_update') && (
+        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+          <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
+            {<Edit size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
+      {authId !== id && authPermissions.includes('staff_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => staffDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
-        <IconButton className="text-info" onClick={() => staffDelete(id)}>
-          {<Clock size={20} />}
-        </IconButton>
-      </Tooltip>
-      {authId !== id && (
+      {authPermissions.includes('staff_action_history') && (
+        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+          <IconButton className="text-info" onClick={() => staffDelete(id)}>
+            {<Clock size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
+      {authId !== id && authPermissions.includes('staff_reset_password') && (
         <Tooltip TransitionComponent={Zoom} title="Reset Password" arrow followCursor>
           <IconButton className="text-danger" onClick={() => staffDelete(id)}>
             {<Reset size={20} />}

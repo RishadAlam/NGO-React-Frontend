@@ -102,6 +102,7 @@ export default function StaffPermissions() {
       if (response?.success) {
         toast.success(response.message)
         mutate()
+        return
       }
       setError((prevErr) =>
         create(prevErr, (draftErr) => {

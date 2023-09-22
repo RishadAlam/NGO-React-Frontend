@@ -122,6 +122,8 @@
       "staff_registration": "কর্মচারিবর্গের নিবন্ধন",
       "staff_data_update": "কর্মচারিবর্গের ডেটা আপডেট",
       "staff_soft_delete": "কর্মচারি ডিলিট",
+      "staff_action_history": "কর্মচারি পদক্ষেপ ইতিহাস",
+      "staff_reset_password": "কর্মচারি পাসওয়ার্ড রিসেট",
       "staff_permanently_delete": "কর্মচারি স্থায়ীভাবে ডিলিট",
       "role_list_view": "ভূমিকার তালিকা দেখুন",
       "role_registration": "ভূমিকা নিবন্ধন",

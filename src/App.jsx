@@ -52,7 +52,7 @@ export default function App() {
           </Route>
           <Route
             path="staffs"
-            element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
+            element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
             <Route
               index
               element={
@@ -64,7 +64,7 @@ export default function App() {
           </Route>
           <Route
             path="staff-roles"
-            element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
+            element={<RequirePermissions allowedPermissions={['role_list_view']} />}>
             <Route
               index
               element={
@@ -76,7 +76,7 @@ export default function App() {
           </Route>
           <Route
             path="staff-permissions/:id"
-            element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
+            element={<RequirePermissions allowedPermissions={['staff_registration']} />}>
             <Route
               index
               element={
