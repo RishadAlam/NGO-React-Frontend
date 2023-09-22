@@ -2,7 +2,7 @@ import { create, rawReturn } from 'mutative'
 import { Fragment, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -15,6 +15,7 @@ import xFetch from '../../utilities/xFetch'
 
 export default function StaffPermissions() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const [permissions, setPermissions] = useState({})
   const [error, setError] = useState({})
@@ -33,6 +34,10 @@ export default function StaffPermissions() {
   } = useFetch({ action: `permissions/${id}` })
 
   useEffect(() => {
+    if (Number(authId) === Number(id)) {
+      return navigate('/unauthorized')
+    }
+
     allPermissions.length &&
       setPermissions(() =>
         create({}, (draftPerm) => {
@@ -46,7 +51,7 @@ export default function StaffPermissions() {
           })
         })
       )
-  }, [allPermissions, userPermissions])
+  }, [allPermissions, authId, id, navigate, userPermissions])
 
   const setChange = (group_name, permission, isChecked) => {
     setPermissions((prevPerm) =>
