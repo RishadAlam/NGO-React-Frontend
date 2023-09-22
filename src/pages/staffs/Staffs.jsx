@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import StaffPermissions from '../../components/staff/StaffPermissions'
 import StaffRegistration from '../../components/staff/StaffRegistration'
 import StaffUpdate from '../../components/staff/StaffUpdate'
@@ -200,7 +201,9 @@ export default function Staffs() {
           </div>
         </div>
         <div className="staff-table">
-          {!isLoading && staffs && (
+          {isLoading && !staffs ? (
+            <ReactTableSkeleton />
+          ) : (
             <ReactTable title={t('staffs.Staff_List')} columns={columns} data={staffs} />
           )}
         </div>

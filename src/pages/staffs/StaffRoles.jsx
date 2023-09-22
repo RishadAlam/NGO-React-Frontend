@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import RoleRegistration from '../../components/staffRoles/RoleRegistration'
 import RoleUpdate from '../../components/staffRoles/RoleUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -117,7 +118,9 @@ export default function StaffRoles() {
           </div>
         </div>
         <div className="staff-table">
-          {!isLoading && roles && (
+          {isLoading && !roles ? (
+            <ReactTableSkeleton />
+          ) : (
             <ReactTable title={t('staff_roles.Staff_Role_List')} columns={columns} data={roles} />
           )}
         </div>

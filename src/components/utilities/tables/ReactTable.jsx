@@ -15,7 +15,6 @@ import './table.scss'
 
 function ReactTable({ title, columns, data }) {
   const { t } = useTranslation()
-  // const [showToggleColumn, setShowToggleColumn] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -79,34 +78,6 @@ function ReactTable({ title, columns, data }) {
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="heading">{title}</h2>
             <div className="column-hiding text-end position-relative">
-              {/* <button
-                className="table-btn p-0"
-                onClick={() => setShowToggleColumn((prevState) => !prevState)}>
-                <MoreVertical size={24} />
-              </button>
-
-              <div
-                className={`column-dropdown position-absolute ${showToggleColumn ? 'active' : ''}`}>
-                <ul className="p-3 pe-4 m-0 shadow text-start">
-                  <li className="pb-2 mb-3 text-center">
-                    <b>Toggle Column</b>
-                  </li>
-                  {allColumns.map((column, index) => (
-                    <li key={index} className="pb-2">
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            size="small"
-                            {...column.getToggleHiddenProps()}
-                            disabled={column?.disable || false}
-                          />
-                        }
-                        label={column.Header}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
               <Button
                 id="hide-column--button"
                 className="table-btn p-0"
@@ -138,9 +109,6 @@ function ReactTable({ title, columns, data }) {
                     />
                   </MenuItem>
                 ))}
-                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem> */}
               </Menu>
             </div>
           </div>
