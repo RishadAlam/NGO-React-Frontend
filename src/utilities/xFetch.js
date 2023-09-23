@@ -61,17 +61,20 @@ export default async function xFetch(
         // console.log(errors.response.headers)
         toast.error(errors.response.data.message)
         errors.response.data['status'] = errors.response.status
-        return errors.response.data
+        // return errors.response.data
+        return Promise.reject(errors.response.data)
       } else if (errors.request) {
         // The request was made but no response was received
         // `errors.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
         toast.error('Something went wrong!')
-        return errors.request
+        // return errors.request
+        return Promise.reject(errors.request)
       } else {
         // Something happened in setting up the request that triggered an Error
         // console.log('Error', errors.message)
-        return { success: false, errors: { message: errors.message } }
+        // return { success: false, errors: { message: errors.message } }
+        return Promise.reject({ success: false, errors: { message: errors.message } })
       }
     })
 

@@ -1,11 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css'
-import React, { Suspense } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { ErrorBoundary } from 'react-error-boundary'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import RecoilNexus from 'recoil-nexus'
 import App from './App.jsx'
 import AuthProvider from './components/_helper/AuthProvider.jsx'
+import ErrorFallback from './components/_helper/errorFallback/ErrorFallback.jsx'
 import './scss/app.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -13,11 +15,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RecoilRoot>
       <RecoilNexus />
       <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={'Loading...'}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <AuthProvider>
             <App />
-          </Suspense>
-        </AuthProvider>
+          </AuthProvider>
+        </ErrorBoundary>
       </BrowserRouter>
     </RecoilRoot>
   </React.StrictMode>

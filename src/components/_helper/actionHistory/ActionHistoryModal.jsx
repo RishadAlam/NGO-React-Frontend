@@ -25,51 +25,57 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
           <div className="card-body">
             <div className="row">
               <div className="col-12">
-                {actionHistory.length > 0
-                  ? actionHistory.map((history, index) => (
-                      <Fragment key={index}>
-                        <div className="historyBox position-relative">
-                          <div className="avatar">
-                            <Avatar
-                              name={'test'}
-                              img={history?.author ? history?.author?.image_uri : history.image_uri}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div
-                              className={`heading py-1 px-5 ${
-                                history.action_type === 'delete'
-                                  ? 'bg-danger'
-                                  : history.action_type === 'restore'
-                                  ? 'bg-success'
-                                  : ''
-                              }`}>
-                              <b className="text-capitalize">
-                                {t(`common.action_history.${history.action_type}`)}
-                              </b>
-                            </div>
-                            <div className="date text-end">
-                              <p>{dateFormat(history.created_at, 'dd/MM/yyyy hh:mm a')}</p>
-                              <b className="text-capitalize">
-                                {history?.author ? history?.author?.name : history.name}
-                              </b>
-                            </div>
-                          </div>
-                          {history.action_details?.length > 0 && (
-                            <div className="details p-3 mt-2">
-                              <ul className="m-0 p-0">
-                                {history.action_details.map((action, key) => (
-                                  <li key={key} className="text-nowrap">
-                                    {action}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                {actionHistory.length > 0 ? (
+                  actionHistory.map((history, index) => (
+                    <Fragment key={index}>
+                      <div className="historyBox position-relative">
+                        <div className="avatar">
+                          <Avatar
+                            name={'test'}
+                            img={history?.author ? history?.author?.image_uri : history.image_uri}
+                          />
                         </div>
-                      </Fragment>
-                    ))
-                  : ''}
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div
+                            className={`heading py-1 px-5 ${
+                              history.action_type === 'delete'
+                                ? 'bg-danger'
+                                : history.action_type === 'restore'
+                                ? 'bg-success'
+                                : ''
+                            }`}>
+                            <b className="text-capitalize text-white">
+                              {t(`common.action_history.${history.action_type}`)}
+                            </b>
+                          </div>
+                          <div className="date text-end">
+                            <p>{dateFormat(history.created_at, 'dd/MM/yyyy hh:mm a')}</p>
+                            <b className="text-capitalize">
+                              {history?.author ? history?.author?.name : history.name}
+                            </b>
+                          </div>
+                        </div>
+                        {history.action_details?.length > 0 && (
+                          <div className="details p-3 mt-2">
+                            <ul className="m-0 p-0">
+                              {history.action_details.map((action, key) => (
+                                <li key={key} className="text-nowrap">
+                                  {action}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </Fragment>
+                  ))
+                ) : (
+                  <div
+                    className="col-md-12 d-flex align-items-center justify-content-center"
+                    style={{ height: '100px' }}>
+                    <h4>{t('common.No_Records_Found')}</h4>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -4,6 +4,8 @@ import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
 import RequirePermissions from './components/layouts/RequirePermissions'
 // import ClientRegistration from './components/registrations/ClientRegistration'
+import { ErrorBoundary } from 'react-error-boundary'
+import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Loader from './components/loaders/Loader'
 import AccountVerification from './pages/accountVerification/AccountVerification'
 import Dashboard from './pages/dashboard/Dashboard'
@@ -56,9 +58,11 @@ export default function App() {
             <Route
               index
               element={
-                <Suspense fallback={<Loader />}>
-                  <Staffs />
-                </Suspense>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <Staffs />
+                  </Suspense>
+                </ErrorBoundary>
               }
             />
           </Route>
@@ -68,9 +72,11 @@ export default function App() {
             <Route
               index
               element={
-                <Suspense fallback={<Loader />}>
-                  <StaffRoles />
-                </Suspense>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <StaffRoles />
+                  </Suspense>
+                </ErrorBoundary>
               }
             />
           </Route>
@@ -80,9 +86,11 @@ export default function App() {
             <Route
               index
               element={
-                <Suspense fallback={<Loader />}>
-                  <StaffPermissions />
-                </Suspense>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <StaffPermissions />
+                  </Suspense>
+                </ErrorBoundary>
               }
             />
           </Route>
