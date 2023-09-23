@@ -39,19 +39,17 @@ export default function App() {
         {/* Authenticate Routes */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
-
           <Route
             path="profile"
-            element={<RequirePermissions allowedPermissions={['dashboardAsAdmin']} />}>
-            <Route
-              index
-              element={
+            element={
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <Suspense fallback={<Loader />}>
                   <StaffProfile />
                 </Suspense>
-              }
-            />
-          </Route>
+              </ErrorBoundary>
+            }
+          />
+
           <Route
             path="staffs"
             element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
