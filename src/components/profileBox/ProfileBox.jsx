@@ -38,7 +38,7 @@ export default function ProfileBox({ t }) {
               </div>
             </li>
             <li className="pb-2">
-              <Link to="/profile">
+              <Link to="/profile" onClick={() => setIsProfileVisible(false)}>
                 <span className="me-2">
                   <User size={20} />
                 </span>
@@ -46,7 +46,7 @@ export default function ProfileBox({ t }) {
               </Link>
             </li>
             <li className="pb-3 border-bottom mb-3">
-              <Link to="/change-password">
+              <Link to="/change-password" onClick={() => setIsProfileVisible(false)}>
                 <span className="me-2">
                   <Key size={20} />
                 </span>
