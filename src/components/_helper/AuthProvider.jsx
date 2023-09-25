@@ -5,6 +5,7 @@ import HttpApi from 'i18next-http-backend'
 import Cookies from 'js-cookie'
 import { create } from 'mutative'
 import { useEffect } from 'react'
+import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
@@ -45,6 +46,7 @@ export default function AuthProvider({ children }) {
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
+  const { showBoundary } = useErrorBoundary()
 
   const authFetch = (Token, signal) => {
     setLoading({ ...loading, authorization: true })
@@ -84,7 +86,9 @@ export default function AuthProvider({ children }) {
         setLoading({ ...loading, authorization: false })
       })
       .catch((error) => {
-        throw new Error(error.message)
+        if (error?.message) {
+          showBoundary(error)
+        }
       })
   }
 
@@ -108,6 +112,7 @@ export default function AuthProvider({ children }) {
     return () => {
       controller.abort()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -7,7 +7,7 @@ export default function ErrorFallback({ error }) {
       role="alert">
       <AlertTriangle size={30} />
       &nbsp;&nbsp;
-      <div>{error.message}</div>
+      <div>{error.message || 'Somethin went wrong!'}</div>
     </div>
   )
 }
