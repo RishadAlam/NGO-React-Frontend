@@ -5,7 +5,7 @@ import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
 
-export default function Menu() {
+export default function Menu({ setMobileMenuClosed }) {
   const location = useLocation()
   const { t } = useTranslation()
   const menu = mainMenu(t)
@@ -17,7 +17,8 @@ export default function Menu() {
           <li>
             <Link
               to="/"
-              className={`side-menu ${location.pathname === '/' ? 'side-menu--active' : ''}`}>
+              className={`side-menu ${location.pathname === '/' ? 'side-menu--active' : ''}`}
+              onClick={setMobileMenuClosed}>
               <div className="side-menu__icon">
                 <Home />
               </div>
@@ -25,7 +26,13 @@ export default function Menu() {
             </Link>
           </li>
           {Object.keys(menu).map((key, i) => (
-            <NavItem key={i} menu={menu} menuKey={key} location={location} />
+            <NavItem
+              key={i}
+              menu={menu}
+              menuKey={key}
+              location={location}
+              setMobileMenuClosed={setMobileMenuClosed}
+            />
           ))}
         </ul>
       </nav>

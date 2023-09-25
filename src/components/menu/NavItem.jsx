@@ -1,6 +1,6 @@
 import Nav from './Nav'
 
-export default function NavItem({ menu, menuKey, location }) {
+export default function NavItem({ menu, menuKey, location, setMobileMenuClosed }) {
   return (
     <>
       {menu[menuKey].find((m) => m.view) && (
@@ -10,7 +10,12 @@ export default function NavItem({ menu, menuKey, location }) {
       )}
 
       {menu[menuKey].map((m) => (
-        <Nav key={`${m.label}${m.id}`} m={m} location={location} />
+        <Nav
+          key={`${m.label}${m.id}`}
+          m={m}
+          location={location}
+          setMobileMenuClosed={setMobileMenuClosed}
+        />
       ))}
     </>
   )

@@ -5,7 +5,7 @@ import ChevronUp from '../../icons/ChevronUp'
 import XCircle from '../../icons/XCircle'
 import NavLink from './NavLink'
 
-export default function NavDropdown({ m, location }) {
+export default function NavDropdown({ m, location, setMobileMenuClosed }) {
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
   const toggleSideMenu = (e, id) => {
@@ -36,7 +36,12 @@ export default function NavDropdown({ m, location }) {
           {m.subMenu.map(
             (subMenu) =>
               subMenu.view && (
-                <NavLink key={`${subMenu.label}${subMenu.label}`} m={subMenu} location={location} />
+                <NavLink
+                  key={`${subMenu.label}${subMenu.label}`}
+                  m={subMenu}
+                  location={location}
+                  setMobileMenuClosed={setMobileMenuClosed}
+                />
               )
           )}
         </ul>
