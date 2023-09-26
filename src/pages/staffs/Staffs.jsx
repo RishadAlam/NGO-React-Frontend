@@ -17,6 +17,7 @@ import Avatar from '../../components/utilities/Avatar'
 import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { checkPermissions } from '../../helper/checkPermission'
 import deleteAlert from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -102,7 +103,25 @@ export default function Staffs() {
   )
 
   const columns = useMemo(
-    () => StaffTableColumns(t, windowWidth, avatar, pendingBadge, statusSwitch, actionBtnGroup),
+    () =>
+      StaffTableColumns(
+        t,
+        windowWidth,
+        avatar,
+        pendingBadge,
+        statusSwitch,
+        actionBtnGroup,
+        !checkPermissions(
+          [
+            'staff_permissions_view',
+            'staff_data_update',
+            'staff_soft_delete',
+            'staff_action_history',
+            'staff_reset_password'
+          ],
+          authPermissions
+        )
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )

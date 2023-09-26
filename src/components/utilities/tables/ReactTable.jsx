@@ -95,20 +95,22 @@ function ReactTable({ title, columns, data }) {
                 MenuListProps={{
                   'aria-labelledby': 'hide-column--button'
                 }}>
-                {allColumns.map((column, index) => (
-                  <MenuItem key={index}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          size="small"
-                          {...column.getToggleHiddenProps()}
-                          disabled={column?.disable || false}
-                        />
-                      }
-                      label={column.Header}
-                    />
-                  </MenuItem>
-                ))}
+                {allColumns
+                  .filter((column) => !column?.isActionHide)
+                  .map((column, index) => (
+                    <MenuItem key={index}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            size="small"
+                            {...column.getToggleHiddenProps()}
+                            disabled={column?.disable || false}
+                          />
+                        }
+                        label={column.Header}
+                      />
+                    </MenuItem>
+                  ))}
               </Menu>
             </div>
           </div>

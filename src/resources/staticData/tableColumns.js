@@ -53,7 +53,8 @@ export const StaffTableColumns = (
   avatar,
   pendingBadge,
   statusSwitch,
-  actionBtnGroup
+  actionBtnGroup,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -90,7 +91,9 @@ export const StaffTableColumns = (
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
