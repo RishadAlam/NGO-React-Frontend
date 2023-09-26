@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
-import XCircle from '../../icons/XCircle'
+import LoaderSm from '../loaders/LoaderSm'
 import NavLink from './NavLink'
 
 export default function NavDropdown({ m, location, setMobileMenuClosed }) {
+  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}`))
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
   const toggleSideMenu = (e, id) => {
@@ -23,8 +24,11 @@ export default function NavDropdown({ m, location, setMobileMenuClosed }) {
             isDropDownActive ? 'side-menu--active' : ''
           } cursor-pointer`}>
           <div className="side-menu__icon">
-            <XCircle />
+            <Suspense fallback={<LoaderSm size={20} clr="#1c3faa" className="ms-2" />}>
+              <DynamicIcon />
+            </Suspense>
           </div>
+
           <div className="side-menu__title">
             {m.label}
             <div className="side-menu__sub-icon">

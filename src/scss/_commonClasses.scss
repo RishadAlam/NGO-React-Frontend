@@ -189,6 +189,14 @@ ul {
   user-select: none;
 }
 
+.side-bar-sm .menu > ul > li > ul.side-menu__sub-open .side-menu--active{
+  transform: translateX(10px) !important;
+  -webkit-transform: translateX(10px) !important;
+  -moz-transform: translateX(10px) !important;
+  -ms-transform: translateX(10px) !important;
+  -o-transform: translateX(10px) !important;
+}
+
 // .light .side-bar::after {
 //   background-color: $gray-300;
 // }

@@ -67,13 +67,15 @@
     },
     "label": {
       "registration": "Registration",
-      "staff": "Staffs"
+      "staff": "Staffs",
+      "settings_and_privacy": "Settings & Privacy"
     },
     "staffs": {
       "Staffs": "Staffs",
       "Staff_Permissions": "Staff Permissions",
       "Staff_Roles": "Staff Roles"
-    }
+    },
+    "settings_and_privacy": {}
   },
 
   "profile_box": {
@@ -126,7 +128,7 @@
       "staff_role": "Staff Role"
     },
     "permissions": {
-      "view_dashboard_as_admin": "View Dashboard As Admin",
+      "view_dashboard_as_admin": "Dashboard View As Admin",
       "staff_list_view": "Staff List View",
       "staff_permissions_view": "Staff Permissions View",
       "staff_registration": "Staff Registration",
