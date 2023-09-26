@@ -58,7 +58,7 @@ export default function StaffPermissions({
                             </div>
                           </div>
                           <div className="card-body">
-                            <ul>
+                            <ul className="mb-0">
                               {permissions[group_name].map((permission, key) => {
                                 return (
                                   <Fragment key={key}>
