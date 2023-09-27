@@ -71,7 +71,9 @@
       "Staff_Permissions": "কর্মচারিবর্গের অনুমতি",
       "Staff_Roles": "কর্মচারিবর্গের ভূমিকা"
     },
-    "settings_and_privacy": {}
+    "settings_and_privacy": {
+      "app_settings": "অ্যাপ সেটিংস"
+    }
   },
 
   "profile_box": {
@@ -117,11 +119,18 @@
       "field_officer": "মাঠ কর্মী"
     }
   },
+  "app_settings": {
+    "company_name": "প্রতিষ্ঠানের নাম",
+    "company_short_name": "প্রতিষ্ঠানের সংক্ষিপ্ত নাম",
+    "company_address": "প্রতিষ্ঠানের ঠিকানা",
+    "company_logo": "প্রতিষ্ঠানের লোগো"
+  },
   "staff_permissions": {
     "group_name": {
       "dashboard": "ড্যাশবোর্ড",
       "staff": "কর্মচারি",
-      "staff_role": "কর্মচারিবর্গের ভূমিকা"
+      "staff_role": "কর্মচারিবর্গের ভূমিকা",
+      "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
     },
     "permissions": {
       "view_dashboard_as_admin": "অ্যাডমিন হিসাবে ড্যাশবোর্ড দেখুন",
@@ -136,7 +145,8 @@
       "role_list_view": "ভূমিকার তালিকা দেখুন",
       "role_registration": "ভূমিকা নিবন্ধন",
       "role_update": "ভূমিকা আপডেট",
-      "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিট"
+      "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিট",
+      "app_settings": "অ্যাপ সেটিংস"
     }
   }
 }

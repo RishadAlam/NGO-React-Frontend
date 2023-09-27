@@ -70,9 +70,9 @@ export const mainMenu = (t) => {
         view: true,
         subMenu: [
           {
-            id: 'staff1',
-            label: t('menu.staffs.Staffs'),
-            path: '/staffss',
+            id: 'config1',
+            label: t('menu.settings_and_privacy.app_settings'),
+            path: '/settings-and-privacy',
             icon: 'Tool',
             view: true
           }

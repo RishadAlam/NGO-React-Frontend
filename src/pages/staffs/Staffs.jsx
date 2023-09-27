@@ -28,6 +28,7 @@ import List from '../../icons/List'
 import Reset from '../../icons/Reset'
 import Trash from '../../icons/Trash'
 import UserPlus from '../../icons/UserPlus'
+import Users from '../../icons/Users'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
@@ -191,7 +192,7 @@ export default function Staffs() {
             <Breadcrumb
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
-                { name: t('menu.staffs.Staffs'), icon: <Home size={16} />, active: true }
+                { name: t('menu.staffs.Staffs'), icon: <Users size={16} />, active: true }
               ]}
             />
           </div>

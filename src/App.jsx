@@ -18,6 +18,7 @@ const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
+const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 
 export default function App() {
   return (
@@ -91,6 +92,22 @@ export default function App() {
                 </ErrorBoundary>
               }
             />
+          </Route>
+
+          {/* App Configurations Routes */}
+          <Route path="settings-and-privacy">
+            <Route element={<RequirePermissions allowedPermissions={['app_settings']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <AppSettings />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>

@@ -19,6 +19,7 @@ import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
+import UserCheck from '../../icons/UserCheck'
 import { RolesTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
@@ -85,7 +86,7 @@ export default function StaffRoles() {
             <Breadcrumb
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
-                { name: t('menu.staffs.Staff_Roles'), icon: <Home size={16} />, active: true }
+                { name: t('menu.staffs.Staff_Roles'), icon: <UserCheck size={16} />, active: true }
               ]}
             />
           </div>

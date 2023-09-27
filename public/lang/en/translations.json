@@ -75,7 +75,9 @@
       "Staff_Permissions": "Staff Permissions",
       "Staff_Roles": "Staff Roles"
     },
-    "settings_and_privacy": {}
+    "settings_and_privacy": {
+      "app_settings": "App Settings"
+    }
   },
 
   "profile_box": {
@@ -121,11 +123,18 @@
       "field_officer": "Field Officer"
     }
   },
+  "app_settings": {
+    "company_name": "Company Name",
+    "company_short_name": "Company Short Name",
+    "company_address": "Company Address",
+    "company_logo": "Company Logo"
+  },
   "staff_permissions": {
     "group_name": {
       "dashboard": "Dashboard",
       "staff": "Staff",
-      "staff_role": "Staff Role"
+      "staff_role": "Staff Role",
+      "settings_and_privacy": "Settings & Privacy"
     },
     "permissions": {
       "view_dashboard_as_admin": "Dashboard View As Admin",
@@ -140,7 +149,8 @@
       "role_list_view": "Role List View",
       "role_registration": "Role Registration",
       "role_update": "Role Update",
-      "role_delete": "Role Delete"
+      "role_delete": "Role Delete",
+      "app_settings": "App Settings"
     }
   }
 }
