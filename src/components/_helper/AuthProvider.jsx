@@ -42,55 +42,11 @@ i18n
   })
 
 export default function AuthProvider({ children }) {
+  const { showBoundary } = useErrorBoundary()
   const setAuthData = useSetAuthDataState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
-  const { showBoundary } = useErrorBoundary()
-
-  const authFetch = (Token, signal) => {
-    setLoading({ ...loading, authorization: true })
-    const accessToken = `Bearer ${Token}`
-    const authorizedData = xFetch('authorization', null, signal, accessToken)
-    const appConfigData = xFetch('app-config', null, signal, accessToken)
-
-    axios
-      .all([authorizedData, appConfigData])
-      .then((Response) => {
-        const authorizedData = Response[0]
-        const appConfigData = Response[1]
-
-        if (!authorizedData?.success || !appConfigData?.success) {
-          toast.error(!authorizedData?.success ? authorizedData?.message : appConfigData?.message)
-          console.log('first')
-          return
-        }
-
-        toast.success(authorizedData?.message)
-        setIsAuthorized(true)
-        setAuthData((prevAuthData) =>
-          create(prevAuthData, (draftAuthData) => {
-            draftAuthData.accessToken = accessToken
-            draftAuthData.id = authorizedData?.id
-            draftAuthData.name = authorizedData?.name
-            draftAuthData.email = authorizedData?.email
-            draftAuthData.email_verified_at = authorizedData?.email_verified_at ? true : false
-            draftAuthData.phone = authorizedData?.phone
-            draftAuthData.image = authorizedData?.image
-            draftAuthData.image_uri = authorizedData?.image_uri
-            draftAuthData.status = authorizedData?.status
-            draftAuthData.role = authorizedData?.role
-            draftAuthData.permissions = authorizedData?.permissions
-          })
-        )
-        setLoading({ ...loading, authorization: false })
-      })
-      .catch((error) => {
-        if (error?.message) {
-          showBoundary(error)
-        }
-      })
-  }
 
   useEffect(() => {
     const lang = Cookies.get('i18next')
@@ -104,7 +60,7 @@ export default function AuthProvider({ children }) {
 
       if (Token) {
         const signal = controller.signal
-        authFetch(Token, signal)
+        authFetch(Token, signal, setIsAuthorized, setAuthData, loading, setLoading, showBoundary)
       }
     }
     setIsLoading(false)
@@ -134,4 +90,55 @@ export default function AuthProvider({ children }) {
       {isLoading || loading?.authorization ? <Loader /> : children}
     </>
   )
+}
+
+const authFetch = (
+  Token,
+  signal,
+  setIsAuthorized,
+  setAuthData,
+  loading,
+  setLoading,
+  showBoundary
+) => {
+  setLoading({ ...loading, authorization: true })
+  const accessToken = `Bearer ${Token}`
+  const authorizedData = xFetch('authorization', null, signal, accessToken)
+  const appConfigData = xFetch('app-config', null, signal, accessToken)
+
+  axios
+    .all([authorizedData, appConfigData])
+    .then((Response) => {
+      const authorizedData = Response[0]
+      const appConfigData = Response[1]
+
+      if (!authorizedData?.success || !appConfigData?.success) {
+        toast.error(!authorizedData?.success ? authorizedData?.message : appConfigData?.message)
+        return
+      }
+
+      toast.success(authorizedData?.message)
+      setIsAuthorized(true)
+      setAuthData((prevAuthData) =>
+        create(prevAuthData, (draftAuthData) => {
+          draftAuthData.accessToken = accessToken
+          draftAuthData.id = authorizedData?.id
+          draftAuthData.name = authorizedData?.name
+          draftAuthData.email = authorizedData?.email
+          draftAuthData.email_verified_at = authorizedData?.email_verified_at ? true : false
+          draftAuthData.phone = authorizedData?.phone
+          draftAuthData.image = authorizedData?.image
+          draftAuthData.image_uri = authorizedData?.image_uri
+          draftAuthData.status = authorizedData?.status
+          draftAuthData.role = authorizedData?.role
+          draftAuthData.permissions = authorizedData?.permissions
+        })
+      )
+      setLoading({ ...loading, authorization: false })
+    })
+    .catch((error) => {
+      if (error?.message) {
+        showBoundary(error)
+      }
+    })
 }
