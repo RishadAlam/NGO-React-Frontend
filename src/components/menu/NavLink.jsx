@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import LoaderSm from '../loaders/LoaderSm'
 
 export default function NavLink({ m, location, setMobileMenuClosed }) {
-  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}`))
+  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
 
   return (
     <>

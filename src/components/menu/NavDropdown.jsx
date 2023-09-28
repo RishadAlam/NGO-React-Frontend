@@ -6,7 +6,7 @@ import LoaderSm from '../loaders/LoaderSm'
 import NavLink from './NavLink'
 
 export default function NavDropdown({ m, location, setMobileMenuClosed }) {
-  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}`))
+  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
   const toggleSideMenu = (e, id) => {
