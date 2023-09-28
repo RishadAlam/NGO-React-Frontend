@@ -1,7 +1,9 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAppSettingsState } from '../../atoms/appSettingsAtoms'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import Button from '../../components/utilities/Button'
@@ -11,9 +13,11 @@ import TextInputField from '../../components/utilities/TextInputField'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import Tool from '../../icons/Tool'
+import xFetch from '../../utilities/xFetch'
 
 export default function AppSettings() {
   const [appSettings, setAppSettings] = useAppSettingsState()
+  const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const [companyLogo, setCompanyLogo] = useState(appSettings?.company_logo_uri)
   const [errors, setErrors] = useState({})
@@ -22,8 +26,7 @@ export default function AppSettings() {
     company_name: appSettings.company_name || '',
     company_short_name: appSettings.company_short_name || '',
     company_address: appSettings.company_address || '',
-    company_logo: appSettings.company_logo || '',
-    company_logo_uri: appSettings.company_logo_uri || ''
+    company_logo: ''
   }))
 
   const setChange = (val, name) => {
@@ -39,69 +42,64 @@ export default function AppSettings() {
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-
-        // if (name !== 'phone' && name !== 'image') {
-        //   val === ''
-        //     ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
-        //     : delete draftErr[name]
-        //   return
-        // }
-
-        // if (name === 'phone') {
-        //   !isNaN(val)
-        //     ? delete draftErr.phone
-        //     : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
-        // }
-        // if (name === 'image') {
-        //   val.size / 1024 <= 5120
-        //     ? delete draftErr[name]
-        //     : (draftErr[name] = `${t(`common.${name}`)} is Max size 5MB!`)
-        // }
+        val === ''
+          ? (draftErr[name] = `${t(`app_settings.${name}`)} is Required!`)
+          : delete draftErr[name]
       })
     )
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
-    // if (inputs.name === '') {
-    //   toast.error(t('common_validation.required_fields_are_empty'))
-    //   return
-    // }
+    if (
+      inputs.company_name === '' ||
+      inputs.company_short_name === '' ||
+      inputs.company_address === ''
+    ) {
+      toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
 
-    // const formData = new FormData()
-    // formData.append('_method', 'PUT')
-    // formData.append('name', inputs.name)
-    // formData.append('phone', inputs.phone)
-    // formData.append('image', inputs.image)
+    const formData = new FormData()
+    formData.append('_method', 'PUT')
+    formData.append('company_name', inputs.company_name)
+    formData.append('company_short_name', inputs.company_short_name)
+    formData.append('company_address', inputs.company_address)
+    formData.append('company_logo', inputs.company_logo)
+    formData.append('company_old_logo', appSettings.company_logo)
+    formData.append('company_logo_uri', appSettings.company_logo_uri)
 
-    // setLoading({ ...loading, staffForm: true })
-    // xFetch('appSettings-update', formData, null, authData.accessToken, null, 'POST', true).then(
-    //   (response) => {
-    //     setLoading({ ...loading, staffForm: false })
-    //     if (response?.success) {
-    //       toast.success(response.message)
-    //       // console.log(response)
-    //       setAuthData((prevData) =>
-    //         create(prevData, (draftAuthData) => {
-    //           draftAuthData.name = response?.name
-    //           draftAuthData.phone = response?.phone
-    //           draftAuthData.image = response?.image
-    //           draftAuthData.image_uri = response?.image_uri
-    //         })
-    //       )
-    //       return
-    //     }
-    //     setErrors((prevErr) =>
-    //       create(prevErr, (draftErr) => {
-    //         if (!response?.errors) {
-    //           draftErr.message = response?.message
-    //           return
-    //         }
-    //         return rawReturn(response?.errors || response)
-    //       })
-    //     )
-    //   }
-    // )
+    setLoading({ ...loading, appSettings: true })
+    xFetch('app-settings-update', formData, null, accessToken, null, 'POST', true)
+      .then((response) => {
+        setLoading({ ...loading, appSettings: false })
+        if (response?.success) {
+          toast.success(response.message)
+          setAppSettings(response?.data)
+          return
+        }
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      })
+      .catch((errorResponse) => {
+        setLoading({ ...loading, appSettings: false })
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!errorResponse?.errors) {
+              draftErr.message = errorResponse?.message
+              return
+            }
+            return rawReturn(errorResponse?.errors || errorResponse)
+          })
+        )
+      })
   }
 
   return (
@@ -169,9 +167,9 @@ export default function AppSettings() {
                       <TextAreaInputField
                         label={t('app_settings.company_address')}
                         isRequired={true}
-                        defaultValue={inputs.company_short_name}
-                        setChange={(val) => setChange(val, 'company_short_name')}
-                        error={errors?.company_short_name}
+                        defaultValue={inputs.company_address}
+                        setChange={(val) => setChange(val, 'company_address')}
+                        error={errors?.company_address}
                         disabled={loading?.appSettings}
                       />
                     </div>
