@@ -1,9 +1,10 @@
-import { Suspense, lazy } from 'react'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
 import RequirePermissions from './components/layouts/RequirePermissions'
 // import ClientRegistration from './components/registrations/ClientRegistration'
+import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Loader from './components/loaders/Loader'
@@ -23,94 +24,96 @@ const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 export default function App() {
   return (
     <>
-      <Routes>
-        {/* UnAuthenticate Routes */}
-        <Route path="/*" element={<NotFound />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/login" element={<Layout />}>
-          <Route index element={<Login />} />
-        </Route>
-        <Route path="/forgot-password" element={<Layout />}>
-          <Route index element={<ForgotPassword />} />
-        </Route>
-        <Route path="/account-verification" element={<Layout />}>
-          <Route index element={<AccountVerification />} />
-        </Route>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          {/* UnAuthenticate Routes */}
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/login" element={<Layout />}>
+            <Route index element={<Login />} />
+          </Route>
+          <Route path="/forgot-password" element={<Layout />}>
+            <Route index element={<ForgotPassword />} />
+          </Route>
+          <Route path="/account-verification" element={<Layout />}>
+            <Route index element={<AccountVerification />} />
+          </Route>
 
-        {/* Authenticate Routes */}
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route
-            path="profile"
-            element={
-              <ErrorBoundary FallbackComponent={ErrorFallback}>
-                <Suspense fallback={<Loader />}>
-                  <StaffProfile />
-                </Suspense>
-              </ErrorBoundary>
-            }
-          />
-
-          <Route
-            path="staffs"
-            element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
+          {/* Authenticate Routes */}
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
             <Route
-              index
+              path="profile"
               element={
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                   <Suspense fallback={<Loader />}>
-                    <Staffs />
+                    <StaffProfile />
                   </Suspense>
                 </ErrorBoundary>
               }
             />
-          </Route>
-          <Route
-            path="staff-roles"
-            element={<RequirePermissions allowedPermissions={['role_list_view']} />}>
-            <Route
-              index
-              element={
-                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <Suspense fallback={<Loader />}>
-                    <StaffRoles />
-                  </Suspense>
-                </ErrorBoundary>
-              }
-            />
-          </Route>
-          <Route
-            path="staff-permissions/:id"
-            element={<RequirePermissions allowedPermissions={['staff_registration']} />}>
-            <Route
-              index
-              element={
-                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <Suspense fallback={<Loader />}>
-                    <StaffPermissions />
-                  </Suspense>
-                </ErrorBoundary>
-              }
-            />
-          </Route>
 
-          {/* App Configurations Routes */}
-          <Route path="settings-and-privacy">
-            <Route element={<RequirePermissions allowedPermissions={['app_settings']} />}>
+            <Route
+              path="staffs"
+              element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
               <Route
                 index
                 element={
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <Suspense fallback={<Loader />}>
-                      <AppSettings />
+                      <Staffs />
                     </Suspense>
                   </ErrorBoundary>
                 }
               />
             </Route>
+            <Route
+              path="staff-roles"
+              element={<RequirePermissions allowedPermissions={['role_list_view']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <StaffRoles />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+            <Route
+              path="staff-permissions/:id"
+              element={<RequirePermissions allowedPermissions={['staff_registration']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <StaffPermissions />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+
+            {/* App Configurations Routes */}
+            <Route path="settings-and-privacy">
+              <Route element={<RequirePermissions allowedPermissions={['app_settings']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <AppSettings />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   )
 }

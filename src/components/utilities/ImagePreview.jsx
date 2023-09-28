@@ -1,13 +1,28 @@
 import React from 'react'
 import Camera from '../../icons/Camera'
 
-export default function ImagePreview({ label, src, setChange, error, disabled = false }) {
+export default function ImagePreview({
+  label,
+  src,
+  setChange,
+  error,
+  style = { width: 'max-content' },
+  disabled = false,
+  isRequired = false
+}) {
+  const requiredLabel = (
+    <span>
+      {label}
+      <span className="text-danger">*</span>
+    </span>
+  )
+
   return (
     <>
-      <label className="form-label mb-3">{label}</label>
+      <label className="form-label mb-3">{isRequired ? requiredLabel : label}</label>
       <div
         className={`image-preview border shadow rounded-4 p-3 ${error && 'border-danger'}`}
-        style={{ width: 'max-content' }}>
+        style={style}>
         <div className="img" style={{ width: '250px', height: '250px' }}>
           <img
             className="rounded-2"

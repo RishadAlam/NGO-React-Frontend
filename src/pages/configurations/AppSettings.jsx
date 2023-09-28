@@ -19,11 +19,11 @@ export default function AppSettings() {
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useLoadingState({})
   const [inputs, setInputs] = useState(() => ({
-    company_name: appSettings.company_name,
-    company_short_name: appSettings.company_short_name,
-    company_address: appSettings.company_address,
-    company_logo: appSettings.company_logo,
-    company_logo_uri: appSettings.company_logo_uri
+    company_name: appSettings.company_name || '',
+    company_short_name: appSettings.company_short_name || '',
+    company_address: appSettings.company_address || '',
+    company_logo: appSettings.company_logo || '',
+    company_logo_uri: appSettings.company_logo_uri || ''
   }))
 
   const setChange = (val, name) => {
@@ -120,7 +120,7 @@ export default function AppSettings() {
               ]}
             />
           </div>
-          <div className="appSettings-form text-center my-5">
+          <div className="appSettings-form text-center mt-3">
             <div className="card">
               <form onSubmit={onSubmit}>
                 <div className="card-header">
@@ -133,6 +133,17 @@ export default function AppSettings() {
                     </div>
                   )}
                   <div className="row">
+                    <div className="col-md-12 mb-3 text-center">
+                      <ImagePreview
+                        label={t('app_settings.company_logo')}
+                        src={companyLogo || ''}
+                        setChange={(val) => setChange(val, 'company_logo')}
+                        error={errors?.company_logo}
+                        disabled={loading?.appSettings}
+                        isRequired={true}
+                        style={{ width: 'max-content', margin: 'auto' }}
+                      />
+                    </div>
                     <div className="col-md-6 mb-3">
                       <TextInputField
                         label={t('app_settings.company_name')}
@@ -154,22 +165,13 @@ export default function AppSettings() {
                         disabled={loading?.appSettings}
                       />
                     </div>
-                    <div className="col-md-12 mb-3">
+                    <div className="col-md-12 mb-3 text-start">
                       <TextAreaInputField
-                        label={t('app_settings.company_short_name')}
+                        label={t('app_settings.company_address')}
                         isRequired={true}
                         defaultValue={inputs.company_short_name}
                         setChange={(val) => setChange(val, 'company_short_name')}
                         error={errors?.company_short_name}
-                        disabled={loading?.appSettings}
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3 text-start">
-                      <ImagePreview
-                        label={t('app_settings.company_logo')}
-                        src={companyLogo || ''}
-                        setChange={(val) => setChange(val, 'company_logo')}
-                        error={errors?.company_logo}
                         disabled={loading?.appSettings}
                       />
                     </div>
