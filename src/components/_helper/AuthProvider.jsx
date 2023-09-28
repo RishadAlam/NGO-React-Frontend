@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
+import { useSetAppSettingsState } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetSessionStorage } from '../../helper/GetDataFromStorage'
@@ -44,6 +45,7 @@ i18n
 export default function AuthProvider({ children }) {
   const { showBoundary } = useErrorBoundary()
   const setAuthData = useSetAuthDataState()
+  const setAppSettings = useSetAppSettingsState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
@@ -60,7 +62,16 @@ export default function AuthProvider({ children }) {
 
       if (Token) {
         const signal = controller.signal
-        authFetch(Token, signal, setIsAuthorized, setAuthData, loading, setLoading, showBoundary)
+        authFetch(
+          Token,
+          signal,
+          setIsAuthorized,
+          setAuthData,
+          setAppSettings,
+          loading,
+          setLoading,
+          showBoundary
+        )
       }
     }
     setIsLoading(false)
@@ -97,6 +108,7 @@ const authFetch = (
   signal,
   setIsAuthorized,
   setAuthData,
+  setAppSettings,
   loading,
   setLoading,
   showBoundary
@@ -104,11 +116,12 @@ const authFetch = (
   setLoading({ ...loading, authorization: true })
   const accessToken = `Bearer ${Token}`
   const authorizedData = xFetch('authorization', null, signal, accessToken)
-  const appConfigData = xFetch('app-config', null, signal, accessToken)
+  const appConfigData = xFetch('app-settings', null, signal, accessToken)
 
   axios
     .all([authorizedData, appConfigData])
     .then((Response) => {
+      setLoading({ ...loading, authorization: false })
       const authorizedData = Response[0]
       const appConfigData = Response[1]
 
@@ -134,7 +147,7 @@ const authFetch = (
           draftAuthData.permissions = authorizedData?.permissions
         })
       )
-      setLoading({ ...loading, authorization: false })
+      setAppSettings(appConfigData?.data)
     })
     .catch((error) => {
       if (error?.message) {
