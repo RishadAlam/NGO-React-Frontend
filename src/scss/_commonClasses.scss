@@ -9,6 +9,11 @@ html {
 }
 
 html[lang='en'] .css-ahj2mt-MuiTypography-root,
+html[lang='en'] .css-1u10cx5-MuiTypography-root,
+html[lang='en'] .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root,
+html[lang='en'] input,
+html[lang='en'] label,
+html[lang='en'] *,
 html[lang='en'] body {
   font-family: 'Poppins', sans-serif !important;
   font-weight: 400;
@@ -16,8 +21,11 @@ html[lang='en'] body {
 }
 
 html[lang='bn'] .css-ahj2mt-MuiTypography-root,
+html[lang='bn'] .css-1u10cx5-MuiTypography-root,
+html[lang='bn'] .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root,
 html[lang='bn'] input,
 html[lang='bn'] label,
+html[lang='bn'] *,
 html[lang='bn'] body {
   font-family: 'Tiro Bangla', sans-serif !important;
   font-weight: 400;

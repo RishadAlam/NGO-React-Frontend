@@ -161,7 +161,8 @@
       "role_registration": "Role Registration",
       "role_update": "Role Update",
       "role_delete": "Role Delete",
-      "app_settings": "App Settings"
+      "app_settings": "App Settings",
+      "approvals_config": "Approvals Configuration"
     }
   }
 }

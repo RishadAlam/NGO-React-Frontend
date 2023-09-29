@@ -1,16 +1,18 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import logo from '../../resources/img/logo.png'
+import { useAppSettingsValue } from '../../atoms/appSettingsAtoms'
 import logoPlaceholder from '../../resources/placeholderImg/logoPlaceholder.webp'
 import './sidebarLogo.scss'
 
 export default function SideBarLogo() {
+  const { company_logo_uri, company_short_name } = useAppSettingsValue()
+
   return (
     <>
       <div className="logo my-3">
         <div className="img mx-auto">
           <LazyLoadImage
-            src={logo}
+            src={company_logo_uri}
             width="100%"
             height="100%"
             placeholderSrc={logoPlaceholder}
@@ -19,7 +21,7 @@ export default function SideBarLogo() {
           />
         </div>
         <div className="title text-center my-3">
-          <h2>Jonokollan kormojibi Co-Oparetive Society LTD</h2>
+          <h2>{company_short_name}</h2>
         </div>
       </div>
     </>

@@ -67,21 +67,21 @@ export const mainMenu = (t) => {
         label: t('menu.label.settings_and_privacy'),
         path: '',
         icon: 'Settings',
-        view: true,
+        view: checkPermissions(['app_settings', 'approvals_config'], permissions),
         subMenu: [
           {
             id: 'config1',
             label: t('menu.settings_and_privacy.app_settings'),
             path: '/settings-and-privacy',
             icon: 'Tool',
-            view: true
+            view: checkPermission('app_settings', permissions)
           },
           {
             id: 'config2',
             label: t('menu.settings_and_privacy.approvals_config'),
             path: '/settings-and-privacy/approvals',
             icon: 'Tool',
-            view: true
+            view: checkPermission('approvals_config', permissions)
           }
         ]
       }
