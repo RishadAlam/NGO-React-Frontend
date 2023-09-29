@@ -54,10 +54,14 @@
         height: max-content;
 
         .side-menu--active {
-          transform: translateX(30px);
           color: $white-color !important;
-
-          .side-menu__title {
+          transform: translateX(15px);
+          -webkit-transform: translateX(15px);
+          -moz-transform: translateX(15px);
+          -ms-transform: translateX(15px);
+          -o-transform: translateX(15px);
+          
+          .side-menu__title{
             font-weight: 600;
           }
         }

@@ -41,36 +41,43 @@ export default function ApprovalsConfig() {
         })
       })
     )
+    setError({})
   }
 
   const updatePermissions = (event) => {
     event.preventDefault()
 
     setLoading({ ...loading, ApprovalsConfig: true })
-    xFetch(
-      'approvals-config-update',
-      { approvals: allApprovals },
-      null,
-      accessToken,
-      null,
-      'PUT'
-    ).then((response) => {
-      setLoading({ ...loading, ApprovalsConfig: false })
-      if (response?.success) {
-        toast.success(response.message)
-        mutate()
-        return
-      }
-      setError((prevErr) =>
-        create(prevErr, (draftErr) => {
-          if (!response?.errors) {
-            draftErr.message = response?.message
-            return
-          }
-          return rawReturn(response?.errors || response)
-        })
-      )
-    })
+    xFetch('approvals-config-update', { approvals: allApprovals }, null, accessToken, null, 'PUT')
+      .then((response) => {
+        setLoading({ ...loading, ApprovalsConfig: false })
+        if (response?.success) {
+          toast.success(response.message)
+          mutate()
+          return
+        }
+        setError((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      })
+      .catch((errorResponse) => {
+        setLoading({ ...loading, ApprovalsConfig: false })
+        setError((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!errorResponse?.errors) {
+              draftErr.message = errorResponse?.message
+              return
+            }
+            return rawReturn(errorResponse?.errors || errorResponse)
+          })
+        )
+      })
   }
 
   return (
@@ -100,6 +107,11 @@ export default function ApprovalsConfig() {
               <b className="text-uppercase">{t('menu.settings_and_privacy.approvals_config')}</b>
             </div>
             <div className="card-body">
+              {error?.message && error?.message !== '' && (
+                <div className="alert alert-danger" role="alert">
+                  <strong>{error?.message}</strong>
+                </div>
+              )}
               <ul className="mb-0">
                 {allApprovals.length > 0 &&
                   allApprovals.map((approval) => (
