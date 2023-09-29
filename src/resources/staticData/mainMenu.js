@@ -75,6 +75,13 @@ export const mainMenu = (t) => {
             path: '/settings-and-privacy',
             icon: 'Tool',
             view: true
+          },
+          {
+            id: 'config2',
+            label: t('menu.settings_and_privacy.approvals_config'),
+            path: '/settings-and-privacy/approvals',
+            icon: 'Tool',
+            view: true
           }
         ]
       }

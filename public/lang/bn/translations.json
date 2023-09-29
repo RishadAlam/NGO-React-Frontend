@@ -72,7 +72,8 @@
       "Staff_Roles": "কর্মচারিবর্গের ভূমিকা"
     },
     "settings_and_privacy": {
-      "app_settings": "অ্যাপ সেটিংস"
+      "app_settings": "অ্যাপ সেটিংস",
+      "approvals_config": "অনুমোদন কনফিগারেশন"
     }
   },
 
@@ -124,6 +125,16 @@
     "company_short_name": "প্রতিষ্ঠানের সংক্ষিপ্ত নাম",
     "company_address": "প্রতিষ্ঠানের ঠিকানা",
     "company_logo": "প্রতিষ্ঠানের লোগো"
+  },
+  "approvals_config": {
+    "saving_collection_approval": "সঞ্চয় সংগ্রহ অনুমোদন",
+    "loan_collection_approval": "ঋণ সংগ্রহের অনুমোদন",
+    "money_exchange_approval": "অর্থ বিনিময় অনুমোদন",
+    "money_withdrawal_approval": "অর্থ উত্তোলন অনুমোদন",
+    "saving_account_registration_approval": "সেভিংস অ্যাকাউন্ট নিবন্ধন অনুমোদন",
+    "saving_account_closing_approval": "সেভিংস অ্যাকাউন্ট বন্ধ করার অনুমোদন",
+    "loan_account_registration_approval": "ঋণ অ্যাকাউন্ট নিবন্ধন অনুমোদন",
+    "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন"
   },
   "staff_permissions": {
     "group_name": {
