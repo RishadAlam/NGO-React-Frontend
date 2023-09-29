@@ -99,8 +99,8 @@ export default function ApprovalsConfig() {
           ]}
         />
 
-        {isLoading ? (
-          <StaffPermissionSkeleton />
+        {!isLoading ? (
+          <StaffPermissionSkeleton skeletonSize={2} />
         ) : (
           <div className="card my-3 mx-auto" style={{ maxWidth: '500px' }}>
             <div className="card-header">

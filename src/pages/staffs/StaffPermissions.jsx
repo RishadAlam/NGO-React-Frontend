@@ -137,7 +137,7 @@ export default function StaffPermissions() {
         />
 
         {isLoading ? (
-          <StaffPermissionSkeleton />
+          <StaffPermissionSkeleton skeletonSize={6} />
         ) : (
           <div className="card my-3">
             <div className="card-header">
