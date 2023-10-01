@@ -58,11 +58,15 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
                         {history.action_details?.length > 0 && (
                           <div className="details p-3 mt-2">
                             <ul className="m-0 p-0">
-                              {history.action_details.map((action, key) => (
-                                <li key={key} className="text-nowrap">
-                                  {action}
-                                </li>
-                              ))}
+                              {history.action_type === 'update' &&
+                                Object.keys(JSON.parse(history.action_details)).map(
+                                  (dataKey, index) => (
+                                    <li key={index} className="text-nowrap">
+                                      {t(`common.${dataKey}`)} :{' '}
+                                      {JSON.parse(history.action_details)[dataKey]}
+                                    </li>
+                                  )
+                                )}
                             </ul>
                           </div>
                         )}
