@@ -45,27 +45,27 @@ export default function Field() {
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
   )
-  const actionBtnGroup = (id, staff) => (
+  const actionBtnGroup = (id, field) => (
     <ActionBtnGroup>
-      {authPermissions.includes('staff_data_update') && (
+      {authPermissions.includes('field_data_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
+          <IconButton className="text-warning" onClick={() => fieldEdit(field)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('staff_soft_delete') && (
+      {authPermissions.includes('field_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => staffDelete(id)}>
+          <IconButton className="text-danger" onClick={() => fieldDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('staff_action_history') && (
+      {authPermissions.includes('field_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
           <IconButton
             className="text-info"
-            onClick={() => staffActionHistory(staff.action_history)}>
+            onClick={() => fieldActionHistory(field.field_action_history)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -91,20 +91,25 @@ export default function Field() {
 
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
-    xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT').then(
-      (response) => {
-        toast.dismiss(toasterLoading)
-        if (response?.success) {
-          toast.success(response?.message)
-          mutate()
-          return
-        }
-        toast.error(response?.message)
+    xFetch(
+      `fields/change-status/${id}`,
+      { status: isChecked },
+      null,
+      accessToken,
+      null,
+      'PUT'
+    ).then((response) => {
+      toast.dismiss(toasterLoading)
+      if (response?.success) {
+        toast.success(response?.message)
+        mutate()
+        return
       }
-    )
+      toast.error(response?.message)
+    })
   }
 
-  const staffEdit = (staff) => {
+  const fieldEdit = (staff) => {
     setEditableStaff({
       id: staff?.id,
       name: staff?.name,
@@ -115,16 +120,16 @@ export default function Field() {
     setIsFieldUpdateModalOpen(true)
   }
 
-  const staffActionHistory = (actionHistory) => {
+  const fieldActionHistory = (actionHistory) => {
     setActionHistory(actionHistory)
     setIsActionHistoryModalOpen(true)
   }
 
-  const staffDelete = (id) => {
+  const fieldDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
+        xFetch(`fields/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
           toast.dismiss(toasterLoading)
           if (response?.success) {
             successAlert(
