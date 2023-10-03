@@ -63,6 +63,9 @@
     },
     "label": {
       "registration": "নিবন্ধন",
+      "field": "ফিল্ড",
+      "center": "কেন্দ্র",
+      "category": "ক্যাটাগরি",
       "staff": "কর্মচারিবর্গ",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
     },

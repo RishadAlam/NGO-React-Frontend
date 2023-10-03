@@ -41,6 +41,27 @@ export const mainMenu = (t) => {
     [t('menu.categories.Control_Panel')]: [
       {
         id: 1,
+        label: t('menu.label.field'),
+        path: '/fields',
+        icon: 'Globe',
+        view: checkPermission('field_list_view', permissions)
+      },
+      {
+        id: 2,
+        label: t('menu.label.center'),
+        path: '/centers',
+        icon: 'Chrome',
+        view: checkPermission('center_list_view', permissions)
+      },
+      {
+        id: 3,
+        label: t('menu.label.category'),
+        path: '/categories',
+        icon: 'Command',
+        view: checkPermission('category_list_view', permissions)
+      },
+      {
+        id: 4,
         label: t('menu.label.staff'),
         path: '',
         icon: 'Users',
@@ -63,7 +84,7 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 2,
+        id: 5,
         label: t('menu.label.settings_and_privacy'),
         path: '',
         icon: 'Settings',

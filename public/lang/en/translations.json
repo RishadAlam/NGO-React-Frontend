@@ -67,6 +67,9 @@
     },
     "label": {
       "registration": "Registration",
+      "field": "Fields",
+      "center": "Centers",
+      "category": "Categories",
       "staff": "Staffs",
       "settings_and_privacy": "Settings & Privacy"
     },

@@ -3,7 +3,7 @@
 
 .menu {
   & > ul > li {
-    margin: 10px 0;
+    margin: 5px 0;
     & > a {
       color: $gray-400 !important;
       @include transition;
@@ -71,7 +71,7 @@
   .side-nav__devider {
     font-size: 10px;
     font-weight: 200;
-    color: $gray-500;
+    // color: $gray-500;
     text-transform: uppercase;
   }
   .side-menu {

@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react'
 import { Link } from 'react-router-dom'
 import LoaderSm from '../loaders/LoaderSm'
 
-export default function NavLink({ m, location, setMobileMenuClosed }) {
+export default function NavLink({ m, location, setMobileMenuClosed, iconSize = 22 }) {
   const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
 
   return (
@@ -14,7 +14,7 @@ export default function NavLink({ m, location, setMobileMenuClosed }) {
           onClick={setMobileMenuClosed}>
           <div className="side-menu__icon">
             <Suspense fallback={<LoaderSm size={20} clr="#1c3faa" className="ms-2" />}>
-              <DynamicIcon size={18} />
+              <DynamicIcon size={iconSize} />
             </Suspense>
           </div>
           <div className="side-menu__title">{m.label}</div>

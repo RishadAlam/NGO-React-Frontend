@@ -45,6 +45,7 @@ export default function NavDropdown({ m, location, setMobileMenuClosed }) {
                   m={subMenu}
                   location={location}
                   setMobileMenuClosed={setMobileMenuClosed}
+                  iconSize={18}
                 />
               )
           )}
