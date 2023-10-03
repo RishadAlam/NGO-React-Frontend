@@ -41,7 +41,9 @@
     "edit": "Edit",
     "update": "Update",
     "select": "Select",
-    "creator": "Creator"
+    "creator": "Creator",
+    "created_at": "Created at",
+    "updated_at": "Updated at"
   },
 
   "common_validation": {

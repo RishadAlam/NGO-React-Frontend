@@ -72,6 +72,18 @@ export const FieldTableColumns = (t, windowWidth, statusSwitch, actionBtnGroup, 
     Cell: ({ value, row }) => value
   },
   {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
     Header: t('common.action'),
     accessor: 'action',
     show: isActionHide ? false : windowWidth < 576 ? false : true,

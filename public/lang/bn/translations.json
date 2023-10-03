@@ -41,7 +41,9 @@
     "edit": "সম্পাদন করুন",
     "update": "আপডেট",
     "select": "নির্বাচন করুন",
-    "creator": "নির্মাতা"
+    "creator": "নির্মাতা",
+    "created_at": "নিবন্ধন হয়েছে",
+    "updated_at": "সর্বশেষ আপডেট"
   },
 
   "common_validation": {
