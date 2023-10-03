@@ -16,6 +16,9 @@ import NotFound from './pages/unauthorized/NotFound'
 import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
+const Field = lazy(() => import('./pages/field/Field'))
+const Center = lazy(() => import('./pages/center/Center'))
+const Category = lazy(() => import('./pages/category/Category'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
@@ -54,6 +57,51 @@ export default function App() {
               }
             />
 
+            {/* Field, Center, Category */}
+            <Route
+              path="fields"
+              element={<RequirePermissions allowedPermissions={['field_list_view']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <Field />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+            <Route
+              path="centers"
+              element={<RequirePermissions allowedPermissions={['center_list_view']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <Center />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+            <Route
+              path="categories"
+              element={<RequirePermissions allowedPermissions={['category_list_view']} />}>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <Category />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+
+            {/* Staffs */}
             <Route
               path="staffs"
               element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
