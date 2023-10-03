@@ -142,12 +142,33 @@
   "staff_permissions": {
     "group_name": {
       "dashboard": "ড্যাশবোর্ড",
+      "field": "ফিল্ড",
+      "center": "কেন্দ্র",
+      "category": "ক্যাটাগরি",
       "staff": "কর্মচারি",
       "staff_role": "কর্মচারিবর্গের ভূমিকা",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
     },
     "permissions": {
       "view_dashboard_as_admin": "অ্যাডমিন হিসাবে ড্যাশবোর্ড দেখুন",
+      "field_list_view": "ফিল্ড তালিকা দেখুন",
+      "field_registration": "ফিল্ড নিবন্ধন",
+      "field_data_update": "ফিল্ড ডেটা আপডেট",
+      "field_soft_delete": "ফিল্ড ডিলিট",
+      "field_action_history": "ফিল্ড পদক্ষেপ ইতিহাস",
+      "field_permanently_delete": "ফিল্ড স্থায়ীভাবে ডিলিট",
+      "center_list_view": "কেন্দ্র তালিকা দেখুন",
+      "center_registration": "কেন্দ্র নিবন্ধন",
+      "center_data_update": "কেন্দ্র ডেটা আপডেট",
+      "center_soft_delete": "কেন্দ্র ডিলিট",
+      "center_action_history": "কেন্দ্র পদক্ষেপ ইতিহাস",
+      "center_permanently_delete": "কেন্দ্র স্থায়ীভাবে ডিলিট",
+      "category_list_view": "ক্যাটাগরি তালিকা দেখুন",
+      "category_registration": "ক্যাটাগরি নিবন্ধন",
+      "category_data_update": "ক্যাটাগরি ডেটা আপডেট",
+      "category_soft_delete": "ক্যাটাগরি ডিলিট",
+      "category_action_history": "ক্যাটাগরি পদক্ষেপ ইতিহাস",
+      "category_permanently_delete": "ক্যাটাগরি স্থায়ীভাবে ডিলিট",
       "staff_list_view": "কর্মচারিবর্গের তালিকা দেখুন",
       "staff_permissions_view": "কর্মচারিবর্গের অনুমতি দেখুন",
       "staff_registration": "কর্মচারিবর্গের নিবন্ধন",
@@ -160,7 +181,8 @@
       "role_registration": "ভূমিকা নিবন্ধন",
       "role_update": "ভূমিকা আপডেট",
       "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিট",
-      "app_settings": "অ্যাপ সেটিংস"
+      "app_settings": "অ্যাপ সেটিংস",
+      "approvals_config": "অনুমোদন কনফিগারেশন"
     }
   }
 }
