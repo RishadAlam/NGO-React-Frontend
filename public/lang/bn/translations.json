@@ -40,7 +40,8 @@
     "delete": "মুছে ফেলুন",
     "edit": "সম্পাদন করুন",
     "update": "আপডেট",
-    "select": "নির্বাচন করুন"
+    "select": "নির্বাচন করুন",
+    "creator": "নির্মাতা"
   },
 
   "common_validation": {
@@ -105,9 +106,15 @@
       "this_month": "এই মাসে"
     }
   },
+  "field": {
+    "Field_List": "ফিল্ড তালিকা",
+    "Field_Registration": "ফিল্ড নিবন্ধন",
+    "Field_edit": "ফিল্ড ইডিট"
+  },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",
-    "Staff_Registration": "কর্মচারিবর্গের নিবন্ধন"
+    "Staff_Registration": "কর্মচারি নিবন্ধন",
+    "Staff_Edit": "কর্মচারি ইডিট"
   },
   "staff_roles": {
     "Staff_Role_List": "কর্মচারিবর্গের ভূমিকার তালিকা",

@@ -47,6 +47,40 @@ export const DashWithdrawalTableColumns = (t, windowWidth) => [
   { Header: t('common.time'), accessor: 'time', show: false }
 ]
 
+export const FieldTableColumns = (t, windowWidth, statusSwitch, actionBtnGroup, isActionHide) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  { Header: t('common.name'), accessor: 'name' },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.status'),
+    accessor: 'status',
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'creator_id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value, row }) => value
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]
+
 export const StaffTableColumns = (
   t,
   windowWidth,

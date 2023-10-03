@@ -81,7 +81,7 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
         open={isOpen}
         setOpen={setIsOpen}
         error={error}
-        modalTitle={t('staffs.Staff_Registration')}
+        modalTitle={t('staffs.Staff_Edit')}
         btnTitle={t('common.update')}
         defaultValues={staffData}
         setChange={setChange}

@@ -40,7 +40,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "update": "Update",
-    "select": "Select"
+    "select": "Select",
+    "creator": "Creator"
   },
 
   "common_validation": {
@@ -109,9 +110,15 @@
       "this_month": "this month"
     }
   },
+  "field": {
+    "Field_List": "FIELD LIST",
+    "Field_Registration": "Field Registration",
+    "Field_Edit": "Field Edit"
+  },
   "staffs": {
     "Staff_List": "STAFF LIST",
-    "Staff_Registration": "Staff Registration"
+    "Staff_Registration": "Staff Registration",
+    "Staff_Edit": "Staff Edit"
   },
   "staff_roles": {
     "Staff_Role_List": "STAFF ROLE LIST",
