@@ -64,7 +64,7 @@ export default function CategoryFormModal({
                       label={t('common.saving')}
                       isRequired={true}
                       isChecked={defaultValues?.saving || false}
-                      setChange={(val) => setChange(val, 'saving')}
+                      setChange={(e) => setChange(e.target.checked, 'saving')}
                       error={error?.saving}
                       disabled={loading?.categoryForm}
                     />
@@ -72,7 +72,7 @@ export default function CategoryFormModal({
                       label={t('common.loan')}
                       isRequired={true}
                       isChecked={defaultValues?.loan || false}
-                      setChange={(val) => setChange(val, 'loan')}
+                      setChange={(e) => setChange(e.target.checked, 'loan')}
                       error={error?.loan}
                       disabled={loading?.categoryForm}
                     />

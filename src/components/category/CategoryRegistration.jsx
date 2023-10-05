@@ -12,7 +12,7 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
     saving: false,
     loan: false
   })
-  const [errors, setErrors] = useState({ name: '' })
+  const [errors, setErrors] = useState({ name: '', saving: '', loan: '' })
   const [loading, setLoading] = useLoadingState({})
   const setChange = (val, name) => {
     setCategoryData((prevData) =>
@@ -24,6 +24,13 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
+        if (val !== '' && val === true && (name === 'saving' || name === 'loan')) {
+          delete draftErr['saving']
+          delete draftErr['loan']
+        } else if (val === false) {
+          draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`
+        }
+
         val === ''
           ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
           : delete draftErr[name]

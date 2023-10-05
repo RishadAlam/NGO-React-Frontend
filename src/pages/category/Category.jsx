@@ -131,7 +131,9 @@ export default function Category() {
     setEditableCategory({
       id: category?.id,
       name: category?.name,
-      description: category?.description
+      description: category?.description,
+      saving: category?.saving,
+      loan: category?.loan
     })
     setIsCategoryUpdateModalOpen(true)
   }
