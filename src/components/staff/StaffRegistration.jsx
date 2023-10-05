@@ -57,30 +57,43 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
     }
 
     setLoading({ ...loading, staffForm: true })
-    xFetch('users', staffData, null, accessToken, null, 'POST').then((response) => {
-      setLoading({ ...loading, staffForm: false })
-      if (response?.success) {
-        toast.success(response.message)
-        mutate()
-        setIsOpen(false)
-        setStaffData({
-          name: '',
-          email: '',
-          phone: '',
-          role: ''
-        })
-        return
-      }
-      setErrors((prevErr) =>
-        create(prevErr, (draftErr) => {
-          if (!response?.errors) {
-            draftErr.message = response?.message
-            return
-          }
-          return rawReturn(response?.errors || response)
-        })
-      )
-    })
+    xFetch('users', staffData, null, accessToken, null, 'POST')
+      .then((response) => {
+        setLoading({ ...loading, staffForm: false })
+        if (response?.success) {
+          toast.success(response.message)
+          mutate()
+          setIsOpen(false)
+          setStaffData({
+            name: '',
+            email: '',
+            phone: '',
+            role: ''
+          })
+          return
+        }
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      })
+      .catch((errResponse) => {
+        setLoading({ ...loading, staffForm: false })
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!errResponse?.errors) {
+              draftErr.message = errResponse?.message
+              return
+            }
+            return rawReturn(errResponse?.errors || errResponse)
+          })
+        )
+      })
   }
 
   return (

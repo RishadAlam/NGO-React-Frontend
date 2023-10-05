@@ -5,11 +5,15 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
 import FieldFormModal from './FieldFormModal'
 
-export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, mutate }) {
-  const [fieldData, setFieldData] = useState({ ...data })
-  const [error, setError] = useState({})
+export default function FieldRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
+  const [fieldData, setFieldData] = useState({
+    name: '',
+    description: ''
+  })
+  const [errors, setErrors] = useState({
+    name: ''
+  })
   const [loading, setLoading] = useLoadingState({})
-
   const setChange = (val, name) => {
     setFieldData((prevData) =>
       create(prevData, (draftData) => {
@@ -17,7 +21,7 @@ export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, m
       })
     )
 
-    setError((prevErr) =>
+    setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
         val === ''
@@ -35,7 +39,7 @@ export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, m
     }
 
     setLoading({ ...loading, fieldForm: true })
-    xFetch(`fields/${fieldData.id}`, fieldData, null, accessToken, null, 'PUT')
+    xFetch('fields', fieldData, null, accessToken, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, fieldForm: false })
         if (response?.success) {
@@ -48,7 +52,7 @@ export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, m
           })
           return
         }
-        setError((prevErr) =>
+        setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!response?.errors) {
               draftErr.message = response?.message
@@ -60,7 +64,7 @@ export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, m
       })
       .catch((errResponse) => {
         setLoading({ ...loading, fieldForm: false })
-        setError((prevErr) =>
+        setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
               draftErr.message = errResponse?.message
@@ -77,9 +81,9 @@ export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, m
       <FieldFormModal
         open={isOpen}
         setOpen={setIsOpen}
-        error={error}
-        modalTitle={t('field.Field_Edit')}
-        btnTitle={t('common.update')}
+        error={errors}
+        modalTitle={t('field.Field_Registration')}
+        btnTitle={t('common.registration')}
         defaultValues={fieldData}
         setChange={setChange}
         t={t}

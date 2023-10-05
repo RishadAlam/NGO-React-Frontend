@@ -49,30 +49,43 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
     }
 
     setLoading({ ...loading, staffForm: true })
-    xFetch(`users/${staffData.id}`, staffData, null, accessToken, null, 'PUT').then((response) => {
-      setLoading({ ...loading, staffForm: false })
-      if (response?.success) {
-        toast.success(response.message)
-        mutate()
-        setIsOpen(false)
-        setStaffData({
-          name: '',
-          email: '',
-          phone: '',
-          role: ''
-        })
-        return
-      }
-      setError((prevErr) =>
-        create(prevErr, (draftErr) => {
-          if (!response?.errors) {
-            draftErr.message = response?.message
-            return
-          }
-          return rawReturn(response?.errors || response)
-        })
-      )
-    })
+    xFetch(`users/${staffData.id}`, staffData, null, accessToken, null, 'PUT')
+      .then((response) => {
+        setLoading({ ...loading, staffForm: false })
+        if (response?.success) {
+          toast.success(response.message)
+          mutate()
+          setIsOpen(false)
+          setStaffData({
+            name: '',
+            email: '',
+            phone: '',
+            role: ''
+          })
+          return
+        }
+        setError((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      })
+      .catch((errResponse) => {
+        setLoading({ ...loading, staffForm: false })
+        setError((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!errResponse?.errors) {
+              draftErr.message = errResponse?.message
+              return
+            }
+            return rawReturn(errResponse?.errors || errResponse)
+          })
+        )
+      })
   }
 
   return (

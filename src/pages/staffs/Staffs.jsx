@@ -129,8 +129,8 @@ export default function Staffs() {
 
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
-    xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT').then(
-      (response) => {
+    xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
+      .then((response) => {
         toast.dismiss(toasterLoading)
         if (response?.success) {
           toast.success(response?.message)
@@ -138,8 +138,8 @@ export default function Staffs() {
           return
         }
         toast.error(response?.message)
-      }
-    )
+      })
+      .catch((errResponse) => toast.error(errResponse?.message))
   }
 
   const staffEdit = (staff) => {
@@ -167,19 +167,21 @@ export default function Staffs() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
-          toast.dismiss(toasterLoading)
-          if (response?.success) {
-            successAlert(
-              t('common.deleted'),
-              response?.message || t('common_validation.data_has_been_deleted'),
-              'success'
-            )
-            mutate()
-            return
-          }
-          successAlert(t('common.deleted'), response?.message, 'error')
-        })
+        xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE')
+          .then((response) => {
+            toast.dismiss(toasterLoading)
+            if (response?.success) {
+              successAlert(
+                t('common.deleted'),
+                response?.message || t('common_validation.data_has_been_deleted'),
+                'success'
+              )
+              mutate()
+              return
+            }
+            successAlert(t('common.deleted'), response?.message, 'error')
+          })
+          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
       }
     })
   }

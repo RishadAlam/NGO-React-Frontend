@@ -7,9 +7,9 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import FieldRegistration from '../../components/field/FieldRegistration'
 import FieldUpdate from '../../components/field/FieldUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
-import StaffRegistration from '../../components/staff/StaffRegistration'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -96,22 +96,17 @@ export default function Field() {
 
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
-    xFetch(
-      `fields/change-status/${id}`,
-      { status: isChecked },
-      null,
-      accessToken,
-      null,
-      'PUT'
-    ).then((response) => {
-      toast.dismiss(toasterLoading)
-      if (response?.success) {
-        toast.success(response?.message)
-        mutate()
-        return
-      }
-      toast.error(response?.message)
-    })
+    xFetch(`fields/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
+      .then((response) => {
+        toast.dismiss(toasterLoading)
+        if (response?.success) {
+          toast.success(response?.message)
+          mutate()
+          return
+        }
+        toast.error(response?.message)
+      })
+      .catch((errResponse) => toast.error(errResponse?.message))
   }
 
   const fieldEdit = (field) => {
@@ -132,19 +127,21 @@ export default function Field() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`fields/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
-          toast.dismiss(toasterLoading)
-          if (response?.success) {
-            successAlert(
-              t('common.deleted'),
-              response?.message || t('common_validation.data_has_been_deleted'),
-              'success'
-            )
-            mutate()
-            return
-          }
-          successAlert(t('common.deleted'), response?.message, 'error')
-        })
+        xFetch(`fields/${id}`, null, null, accessToken, null, 'DELETE')
+          .then((response) => {
+            toast.dismiss(toasterLoading)
+            if (response?.success) {
+              successAlert(
+                t('common.deleted'),
+                response?.message || t('common_validation.data_has_been_deleted'),
+                'success'
+              )
+              mutate()
+              return
+            }
+            successAlert(t('common.deleted'), response?.message, 'error')
+          })
+          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
       }
     })
   }
@@ -169,7 +166,7 @@ export default function Field() {
               onclick={() => setIsFieldModalOpen(true)}
             />
             {isFieldModalOpen && (
-              <StaffRegistration
+              <FieldRegistration
                 isOpen={isFieldModalOpen}
                 setIsOpen={setIsFieldModalOpen}
                 t={t}
