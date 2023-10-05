@@ -26,7 +26,7 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
             <div className="row">
               <div className="col-12">
                 {actionHistory.length > 0 ? (
-                  actionHistory.map((history, index) => (
+                  actionHistory.toReversed().map((history, index) => (
                     <Fragment key={index}>
                       <div className="historyBox position-relative">
                         <div className="avatar">
