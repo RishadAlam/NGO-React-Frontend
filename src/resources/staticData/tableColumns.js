@@ -75,9 +75,9 @@ export const FieldTableColumns = (
   },
   {
     Header: t('common.creator'),
-    accessor: 'creator_id',
+    accessor: 'author',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value, row }) => value
+    Cell: ({ value }) => (value ? value.name : '')
   },
   {
     Header: t('common.created_at'),
