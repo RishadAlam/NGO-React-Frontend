@@ -119,6 +119,11 @@
     "Field_Registration": "Field Registration",
     "Field_Edit": "Field Edit"
   },
+  "center": {
+    "Center_List": "CENTER LIST",
+    "Center_Registration": "Center Registration",
+    "Center_Edit": "Center Edit"
+  },
   "staffs": {
     "Staff_List": "STAFF LIST",
     "Staff_Registration": "Staff Registration",

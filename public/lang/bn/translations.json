@@ -2,8 +2,8 @@
   "common": {
     "action_history": {
       "action_history": "পদক্ষেপ ইতিহাস",
-      "update": "মুছে ফেলা হয়েছে",
-      "delete": "পরিবর্তন হয়েছে",
+      "update": "পরিবর্তন হয়েছে",
+      "delete": "মুছে ফেলা হয়েছে",
       "restore": "ফিরিয়ে আনা হয়েছে"
     },
     "search_placeholder": "অনুসন্ধান করুন...",
@@ -114,6 +114,11 @@
     "Field_List": "ফিল্ড তালিকা",
     "Field_Registration": "ফিল্ড নিবন্ধন",
     "Field_edit": "ফিল্ড ইডিট"
+  },
+  "center": {
+    "Center_List": "কেন্দ্র তালিকা",
+    "Center_Registration": "কেন্দ্র নিবন্ধন",
+    "Center_edit": "কেন্দ্র ইডিট"
   },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",

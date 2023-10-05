@@ -101,6 +101,60 @@ export const FieldTableColumns = (
   }
 ]
 
+export const CenterTableColumns = (
+  t,
+  windowWidth,
+  statusSwitch,
+  actionBtnGroup,
+  isActionHide,
+  descParser
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  { Header: t('common.name'), accessor: 'name' },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => descParser(value)
+  },
+  {
+    Header: t('common.status'),
+    accessor: 'status',
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]
+
 export const StaffTableColumns = (
   t,
   windowWidth,

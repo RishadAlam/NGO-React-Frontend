@@ -3,17 +3,17 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
-import FieldFormModal from './FieldFormModal'
+import CenterFormModal from './CenterFormModal'
 
-export default function FieldRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
-  const [fieldData, setFieldData] = useState({
+export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
+  const [centerData, setCenterData] = useState({
     name: '',
     description: ''
   })
   const [errors, setErrors] = useState({ name: '' })
   const [loading, setLoading] = useLoadingState({})
   const setChange = (val, name) => {
-    setFieldData((prevData) =>
+    setCenterData((prevData) =>
       create(prevData, (draftData) => {
         draftData[name] = val
       })
@@ -31,20 +31,20 @@ export default function FieldRegistration({ isOpen, setIsOpen, accessToken, t, m
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (fieldData.name === '') {
+    if (centerData.name === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
-    setLoading({ ...loading, fieldForm: true })
-    xFetch('fields', fieldData, null, accessToken, null, 'POST')
+    setLoading({ ...loading, centerForm: true })
+    xFetch('centers', centerData, null, accessToken, null, 'POST')
       .then((response) => {
-        setLoading({ ...loading, fieldForm: false })
+        setLoading({ ...loading, centerForm: false })
         if (response?.success) {
           toast.success(response.message)
           mutate()
           setIsOpen(false)
-          setFieldData({
+          setCenterData({
             name: '',
             description: ''
           })
@@ -61,7 +61,7 @@ export default function FieldRegistration({ isOpen, setIsOpen, accessToken, t, m
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, fieldForm: false })
+        setLoading({ ...loading, centerForm: false })
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -76,13 +76,13 @@ export default function FieldRegistration({ isOpen, setIsOpen, accessToken, t, m
 
   return (
     <>
-      <FieldFormModal
+      <CenterFormModal
         open={isOpen}
         setOpen={setIsOpen}
         error={errors}
-        modalTitle={t('field.Field_Registration')}
+        modalTitle={t('center.Center_Registration')}
         btnTitle={t('common.registration')}
-        defaultValues={fieldData}
+        defaultValues={centerData}
         setChange={setChange}
         t={t}
         onSubmit={onSubmit}

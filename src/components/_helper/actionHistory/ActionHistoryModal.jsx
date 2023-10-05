@@ -1,3 +1,4 @@
+import parse from 'html-react-parser'
 import { Fragment } from 'react'
 import XCircle from '../../../icons/XCircle'
 import dateFormat from '../../../libs/dateFormat'
@@ -61,7 +62,8 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
                               {history.action_type === 'update' &&
                                 Object.keys(history.action_details).map((dataKey, index) => (
                                   <li key={index} className="text-nowrap">
-                                    {t(`common.${dataKey}`)} : {history.action_details[dataKey]}
+                                    {t(`common.${dataKey}`)} :{' '}
+                                    {parse(history.action_details[dataKey])}
                                   </li>
                                 ))}
                             </ul>

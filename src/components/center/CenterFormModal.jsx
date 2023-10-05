@@ -5,7 +5,7 @@ import ModalPro from '../utilities/ModalPro'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
-export default function FieldFormModal({
+export default function CenterFormModal({
   open,
   setOpen,
   error,
@@ -48,7 +48,7 @@ export default function FieldFormModal({
                     setChange={(val) => setChange(val, 'name')}
                     error={error?.name}
                     autoFocus={true}
-                    disabled={loading?.fieldForm}
+                    disabled={loading?.centerForm}
                   />
                 </div>
                 <div className="col-md-12 mb-3 text-start">
@@ -57,7 +57,7 @@ export default function FieldFormModal({
                     defaultValue={defaultValues?.description}
                     setChange={(val) => setChange(val, 'description')}
                     error={error?.description}
-                    disabled={loading?.fieldForm}
+                    disabled={loading?.centerForm}
                   />
                 </div>
               </div>
@@ -67,9 +67,9 @@ export default function FieldFormModal({
                 type="submit"
                 name={btnTitle}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.fieldForm || false}
+                loading={loading?.centerForm || false}
                 endIcon={<Save size={20} />}
-                disabled={Object.keys(error).length || loading?.fieldForm}
+                disabled={Object.keys(error).length || loading?.centerForm}
               />
             </div>
           </form>
