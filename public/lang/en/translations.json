@@ -20,6 +20,7 @@
     "description": "Description",
     "deposit": "Deposit",
     "loan": "Loan",
+    "saving": "Saving",
     "interest": "Interest",
     "withdrawal": "Withdrawal",
     "total": "Total",
@@ -123,6 +124,11 @@
     "Center_List": "CENTER LIST",
     "Center_Registration": "Center Registration",
     "Center_Edit": "Center Edit"
+  },
+  "category": {
+    "Category_List": "CATEGORY LIST",
+    "Category_Registration": "Category Registration",
+    "Category_Edit": "Category Edit"
   },
   "staffs": {
     "Staff_List": "STAFF LIST",

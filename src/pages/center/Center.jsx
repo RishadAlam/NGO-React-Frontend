@@ -22,8 +22,8 @@ import Chrome from '../../icons/Chrome'
 import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
+import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
-import UserPlus from '../../icons/UserPlus'
 import { CenterTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 import '../staffs/staffs.scss'
@@ -167,7 +167,7 @@ export default function Center() {
             <PrimaryBtn
               name={t('center.Center_Registration')}
               loading={false}
-              endIcon={<UserPlus size={20} />}
+              endIcon={<Pen size={20} />}
               onclick={() => setIsCenterModalOpen(true)}
             />
             {isCenterModalOpen && (

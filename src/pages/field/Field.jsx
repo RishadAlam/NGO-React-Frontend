@@ -22,8 +22,8 @@ import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Globe from '../../icons/Globe'
 import Home from '../../icons/Home'
+import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
-import UserPlus from '../../icons/UserPlus'
 import { FieldTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 import '../staffs/staffs.scss'
@@ -162,7 +162,7 @@ export default function Field() {
             <PrimaryBtn
               name={t('field.Field_Registration')}
               loading={false}
-              endIcon={<UserPlus size={20} />}
+              endIcon={<Pen size={20} />}
               onclick={() => setIsFieldModalOpen(true)}
             />
             {isFieldModalOpen && (

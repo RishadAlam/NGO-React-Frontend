@@ -20,6 +20,7 @@
     "description": "মতামত",
     "deposit": "জমা",
     "loan": "ঋণ",
+    "saving": "সঞ্চয়",
     "interest": "লাভ",
     "withdrawal": "উত্তোলন",
     "total": "মোট",
@@ -119,6 +120,11 @@
     "Center_List": "কেন্দ্র তালিকা",
     "Center_Registration": "কেন্দ্র নিবন্ধন",
     "Center_edit": "কেন্দ্র ইডিট"
+  },
+  "category": {
+    "Category_List": "ক্যাটাগরি তালিকা",
+    "Category_Registration": "ক্যাটাগরি নিবন্ধন",
+    "Category_edit": "ক্যাটাগরি ইডিট"
   },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",
