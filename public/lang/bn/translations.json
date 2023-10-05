@@ -51,7 +51,9 @@
     "Are_you_sure": "আপনি কি নিশ্চিত?",
     "You_wont_be_able_to_revert_this": "আপনি এটি আর ফিরিয়ে আনতে পারবেন না!",
     "Yes_delete_it": "হ্যাঁ, এটা মুছে ফেলুন!",
-    "data_has_been_deleted": "ডেটা মুছে ফেলা হয়েছে।"
+    "data_has_been_deleted": "ডেটা মুছে ফেলা হয়েছে।",
+    "is_required": "প্রয়োজন।",
+    "is_invalid": "অবৈধ।"
   },
 
   "app_config": {

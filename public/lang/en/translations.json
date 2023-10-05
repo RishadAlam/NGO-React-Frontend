@@ -51,7 +51,9 @@
     "Are_you_sure": "Are you sure?",
     "You_wont_be_able_to_revert_this": "You won't be able to revert this!",
     "Yes_delete_it": "Yes, delete it!",
-    "data_has_been_deleted": "Data has been deleted."
+    "data_has_been_deleted": "Data has been deleted.",
+    "is_required": "is required!",
+    "is_invalid": "is invalid!"
   },
 
   "react_table": {

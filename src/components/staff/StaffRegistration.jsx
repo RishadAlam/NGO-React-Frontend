@@ -3,7 +3,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
-import StaffFormModal from '../_helper/StaffFormModal'
+import StaffFormModal from './StaffFormModal'
 
 export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
   const [staffData, setStaffData] = useState({

@@ -3,15 +3,15 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
-import StaffFormModal from './StaffFormModal'
+import FieldFormModal from './FieldFormModal'
 
-export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, mutate }) {
-  const [staffData, setStaffData] = useState({ ...data })
+export default function FieldUpdate({ isOpen, setIsOpen, data, accessToken, t, mutate }) {
+  const [fieldData, setFieldData] = useState({ ...data })
   const [error, setError] = useState({})
   const [loading, setLoading] = useLoadingState({})
 
   const setChange = (val, name) => {
-    setStaffData((prevData) =>
+    setFieldData((prevData) =>
       create(prevData, (draftData) => {
         draftData[name] = val
       })
@@ -20,46 +20,30 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
     setError((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-
-        if (name !== 'phone') {
-          val === ''
-            ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
-            : delete draftErr[name]
-
-          if (val !== '' && name === 'email') {
-            !/\S+@\S+\.\S+/.test(val)
-              ? (draftErr.email = `${t(`common.${name}`)} is invalid!`)
-              : delete draftErr.email
-          }
-          return
-        }
-
-        name === 'phone' && !isNaN(val)
-          ? delete draftErr.phone
-          : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
+        val === ''
+          ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common.common_validation.is_required`)}`)
+          : delete draftErr[name]
       })
     )
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (staffData.name === '' || staffData.email === '' || staffData.role === '') {
+    if (fieldData.name === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
-    setLoading({ ...loading, staffForm: true })
-    xFetch(`users/${staffData.id}`, staffData, null, accessToken, null, 'PUT').then((response) => {
-      setLoading({ ...loading, staffForm: false })
+    setLoading({ ...loading, fieldForm: true })
+    xFetch(`fields/${fieldData.id}`, fieldData, null, accessToken, null, 'PUT').then((response) => {
+      setLoading({ ...loading, fieldForm: false })
       if (response?.success) {
         toast.success(response.message)
         mutate()
         setIsOpen(false)
-        setStaffData({
+        setFieldData({
           name: '',
-          email: '',
-          phone: '',
-          role: ''
+          description: ''
         })
         return
       }
@@ -77,13 +61,13 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
 
   return (
     <>
-      <StaffFormModal
+      <FieldFormModal
         open={isOpen}
         setOpen={setIsOpen}
         error={error}
-        modalTitle={t('staffs.Staff_Edit')}
+        modalTitle={t('field.Field_Edit')}
         btnTitle={t('common.update')}
-        defaultValues={staffData}
+        defaultValues={fieldData}
         setChange={setChange}
         t={t}
         onSubmit={onSubmit}

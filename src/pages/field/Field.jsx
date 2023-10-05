@@ -7,9 +7,9 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import FieldUpdate from '../../components/field/FieldUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import StaffRegistration from '../../components/staff/StaffRegistration'
-import StaffUpdate from '../../components/staff/StaffUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -32,7 +32,7 @@ export default function Field() {
   const [isFieldModalOpen, setIsFieldModalOpen] = useState(false)
   const [isFieldUpdateModalOpen, setIsFieldUpdateModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-  const [editableStaff, setEditableStaff] = useState(false)
+  const [editableField, setEditableField] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
@@ -73,6 +73,10 @@ export default function Field() {
     </ActionBtnGroup>
   )
 
+  const descParser = (value) => (
+    <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: value }}></div>
+  )
+
   const columns = useMemo(
     () =>
       FieldTableColumns(
@@ -83,7 +87,8 @@ export default function Field() {
         !checkPermissions(
           ['field_data_update', 'field_soft_delete', 'field_action_history'],
           authPermissions
-        )
+        ),
+        descParser
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
@@ -109,13 +114,11 @@ export default function Field() {
     })
   }
 
-  const fieldEdit = (staff) => {
-    setEditableStaff({
-      id: staff?.id,
-      name: staff?.name,
-      email: staff?.email,
-      phone: staff?.phone,
-      role: staff?.role_id
+  const fieldEdit = (field) => {
+    setEditableField({
+      id: field?.id,
+      name: field?.name,
+      description: field?.description
     })
     setIsFieldUpdateModalOpen(true)
   }
@@ -174,11 +177,11 @@ export default function Field() {
                 mutate={mutate}
               />
             )}
-            {isFieldUpdateModalOpen && Object.keys(editableStaff).length && (
-              <StaffUpdate
+            {isFieldUpdateModalOpen && Object.keys(editableField).length && (
+              <FieldUpdate
                 isOpen={isFieldUpdateModalOpen}
                 setIsOpen={setIsFieldUpdateModalOpen}
-                data={editableStaff}
+                data={editableField}
                 t={t}
                 accessToken={accessToken}
                 mutate={mutate}

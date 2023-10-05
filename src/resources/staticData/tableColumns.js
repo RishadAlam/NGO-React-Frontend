@@ -47,7 +47,14 @@ export const DashWithdrawalTableColumns = (t, windowWidth) => [
   { Header: t('common.time'), accessor: 'time', show: false }
 ]
 
-export const FieldTableColumns = (t, windowWidth, statusSwitch, actionBtnGroup, isActionHide) => [
+export const FieldTableColumns = (
+  t,
+  windowWidth,
+  statusSwitch,
+  actionBtnGroup,
+  isActionHide,
+  descParser
+) => [
   {
     Header: '#',
     accessor: 'id',
@@ -58,7 +65,8 @@ export const FieldTableColumns = (t, windowWidth, statusSwitch, actionBtnGroup, 
   {
     Header: t('common.description'),
     accessor: 'description',
-    show: windowWidth < 576 ? false : true
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => descParser(value)
   },
   {
     Header: t('common.status'),
