@@ -119,7 +119,7 @@ export default function ApprovalsConfig() {
                       <li>
                         <div className="row mb-2 align-items-center">
                           <div className="col-10">
-                            <h6>{t(`approvals_config.${approval.meta_key}`)}</h6>
+                            <p>{t(`approvals_config.${approval.meta_key}`)}</p>
                           </div>
                           <div className="col-2 text-end text-success">
                             <AndroidSwitch
