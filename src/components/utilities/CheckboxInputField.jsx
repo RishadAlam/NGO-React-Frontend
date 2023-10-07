@@ -62,24 +62,27 @@ export default function CheckboxInputField({
 
   return (
     <>
-      <Checkbox
-        sx={{
-          '&:hover': { bgcolor: 'transparent' }
-        }}
-        id={label}
-        // disableRipple
-        color="default"
-        checkedIcon={<BpCheckedIcon />}
-        icon={<BpIcon />}
-        checked={isChecked}
-        onChange={setChange}
-        inputProps={{ 'aria-label': 'Checkbox demo' }}
-        disabled={disabled}
-      />
-      <label htmlFor={label} className="form-label mb-1 cursor-pointer">
-        {isRequired ? requiredLabel : label}
-      </label>
-      {error && <span className="text-danger my-3">{error}</span>}
+      <span className="d-inline-block">
+        <Checkbox
+          sx={{
+            '&:hover': { bgcolor: 'transparent' }
+          }}
+          id={label}
+          // disableRipple
+          color="default"
+          checkedIcon={<BpCheckedIcon />}
+          icon={<BpIcon />}
+          checked={isChecked}
+          onChange={setChange}
+          inputProps={{ 'aria-label': 'Checkbox demo' }}
+          disabled={disabled}
+        />
+        <label htmlFor={label} className="form-label mb-1 cursor-pointer">
+          {isRequired ? requiredLabel : label}
+        </label>
+        <br />
+        {error && <span className="text-danger my-3">{error}</span>}
+      </span>
     </>
   )
 }

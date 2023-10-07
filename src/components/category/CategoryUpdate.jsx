@@ -34,6 +34,16 @@ export default function CategoryUpdate({ isOpen, setIsOpen, data, accessToken, t
       return
     }
 
+    if (categoryData.saving === false && categoryData.loan === false) {
+      setError((prevErr) =>
+        create(prevErr, (draftErr) => {
+          draftErr.saving = `${t('common.saving')} ${t('common_validation.is_required')}`
+          draftErr.loan = `${t('common.loan')} ${t('common_validation.is_required')}`
+        })
+      )
+      return
+    }
+
     setLoading({ ...loading, categoryForm: true })
     xFetch(`categories/${categoryData.id}`, categoryData, null, accessToken, null, 'PUT')
       .then((response) => {

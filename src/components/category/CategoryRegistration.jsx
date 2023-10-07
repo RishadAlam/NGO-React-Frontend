@@ -28,11 +28,11 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
           delete draftErr['saving']
           delete draftErr['loan']
         } else if (val === false) {
-          draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`
+          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`
         }
 
         val === ''
-          ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
+          ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`)
           : delete draftErr[name]
       })
     )
@@ -42,6 +42,16 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
     event.preventDefault()
     if (categoryData.name === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
+
+    if (categoryData.saving === false && categoryData.loan === false) {
+      setErrors((prevErr) =>
+        create(prevErr, (draftErr) => {
+          draftErr.saving = `${t('common.saving')} ${t('common_validation.is_required')}`
+          draftErr.loan = `${t('common.loan')} ${t('common_validation.is_required')}`
+        })
+      )
       return
     }
 
