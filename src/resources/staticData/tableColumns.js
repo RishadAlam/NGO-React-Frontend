@@ -116,6 +116,7 @@ export const CenterTableColumns = (
     Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
   },
   { Header: t('common.name'), accessor: 'name' },
+  { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
   {
     Header: t('common.description'),
     accessor: 'description',
