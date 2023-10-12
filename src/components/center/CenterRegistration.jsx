@@ -8,13 +8,21 @@ import CenterFormModal from './CenterFormModal'
 export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
   const [centerData, setCenterData] = useState({
     name: '',
+    field_id: '',
+    field: null,
     description: ''
   })
-  const [errors, setErrors] = useState({ name: '' })
+  const [errors, setErrors] = useState({ name: '', field: '' })
   const [loading, setLoading] = useLoadingState({})
   const setChange = (val, name) => {
     setCenterData((prevData) =>
       create(prevData, (draftData) => {
+        if (name === 'field') {
+          draftData.field_id = val?.id || ''
+          draftData.field = val || null
+          return
+        }
+
         draftData[name] = val
       })
     )
@@ -22,7 +30,7 @@ export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, 
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        val === ''
+        val === '' || val === null
           ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
           : delete draftErr[name]
       })
@@ -31,7 +39,7 @@ export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, 
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (centerData.name === '') {
+    if (centerData.name === '' || centerData.field_id === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
@@ -46,6 +54,8 @@ export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, 
           setIsOpen(false)
           setCenterData({
             name: '',
+            field_id: '',
+            field: null,
             description: ''
           })
           return

@@ -1,7 +1,9 @@
+import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
+import SelectBoxField from '../utilities/SelectBoxField'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
@@ -17,6 +19,15 @@ export default function CenterFormModal({
   loading,
   onSubmit
 }) {
+  const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
+  const selectBoxConfig = {
+    options: fields,
+    value: defaultValues?.field || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setChange(option, 'field'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
@@ -40,7 +51,7 @@ export default function CenterFormModal({
                 </div>
               )}
               <div className="row">
-                <div className="col-md-12 mb-3">
+                <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.name')}
                     isRequired={true}
@@ -48,6 +59,15 @@ export default function CenterFormModal({
                     setChange={(val) => setChange(val, 'name')}
                     error={error?.name}
                     autoFocus={true}
+                    disabled={loading?.centerForm}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <SelectBoxField
+                    label={t('common.field')}
+                    config={selectBoxConfig}
+                    isRequired={true}
+                    error={error?.field}
                     disabled={loading?.centerForm}
                   />
                 </div>
