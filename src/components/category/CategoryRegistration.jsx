@@ -8,11 +8,12 @@ import CategoryFormModal from './CategoryFormModal'
 export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
   const [categoryData, setCategoryData] = useState({
     name: '',
+    group: null,
     description: '',
     saving: false,
     loan: false
   })
-  const [errors, setErrors] = useState({ name: '', saving: '', loan: '' })
+  const [errors, setErrors] = useState({ name: '', group: '', saving: '', loan: '' })
   const [loading, setLoading] = useLoadingState({})
   const setChange = (val, name) => {
     setCategoryData((prevData) =>
@@ -31,7 +32,7 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
           draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`
         }
 
-        val === ''
+        val === '' || val === null
           ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`)
           : delete draftErr[name]
       })
@@ -40,7 +41,7 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (categoryData.name === '') {
+    if (categoryData.name === '' || categoryData.group === null) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
@@ -65,6 +66,7 @@ export default function CategoryRegistration({ isOpen, setIsOpen, accessToken, t
           setIsOpen(false)
           setCategoryData({
             name: '',
+            group: null,
             description: '',
             saving: false,
             loan: false

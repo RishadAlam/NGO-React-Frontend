@@ -172,6 +172,7 @@ export const CategoryTableColumns = (
     Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
   },
   { Header: t('common.name'), accessor: 'name' },
+  { Header: t('common.group'), accessor: 'group' },
   {
     Header: t('common.description'),
     accessor: 'description',

@@ -1,8 +1,10 @@
+import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import Button from '../utilities/Button'
 import CheckboxInputField from '../utilities/CheckboxInputField'
 import ModalPro from '../utilities/ModalPro'
+import SelectBoxField from '../utilities/SelectBoxField'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
@@ -18,6 +20,14 @@ export default function CategoryFormModal({
   loading,
   onSubmit
 }) {
+  const { data: { data: groups = [] } = [] } = useFetch({ action: 'categories/groups' })
+  const selectBoxConfig = {
+    options: groups,
+    value: defaultValues?.group || null,
+    freeSolo: true,
+    onInputChange: (e, option) => setChange(option, 'group')
+  }
+
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
@@ -49,6 +59,15 @@ export default function CategoryFormModal({
                     setChange={(val) => setChange(val, 'name')}
                     error={error?.name}
                     autoFocus={true}
+                    disabled={loading?.categoryForm}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <SelectBoxField
+                    label={t('common.group')}
+                    config={selectBoxConfig}
+                    isRequired={true}
+                    error={error?.group}
                     disabled={loading?.categoryForm}
                   />
                 </div>
