@@ -118,6 +118,8 @@ export default function Center() {
     setEditableCenter({
       id: center?.id,
       name: center?.name,
+      field_id: center?.field_id,
+      field: center?.field,
       description: center?.description
     })
     setIsCenterUpdateModalOpen(true)
