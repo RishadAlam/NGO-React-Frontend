@@ -14,6 +14,7 @@
     "field": "Field",
     "center": "Center",
     "type": "Type",
+    "group": "Group",
     "officer": "Officer",
     "time": "Time",
     "date": "Date",

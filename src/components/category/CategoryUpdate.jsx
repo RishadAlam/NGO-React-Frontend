@@ -20,7 +20,7 @@ export default function CategoryUpdate({ isOpen, setIsOpen, data, accessToken, t
     setError((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        val === ''
+        val === '' || val === null
           ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
           : delete draftErr[name]
       })
@@ -29,7 +29,7 @@ export default function CategoryUpdate({ isOpen, setIsOpen, data, accessToken, t
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (categoryData.name === '') {
+    if (categoryData.name === '' || categoryData.group === null) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
@@ -54,7 +54,10 @@ export default function CategoryUpdate({ isOpen, setIsOpen, data, accessToken, t
           setIsOpen(false)
           setCategoryData({
             name: '',
-            description: ''
+            group: null,
+            description: '',
+            saving: false,
+            loan: false
           })
           return
         }
