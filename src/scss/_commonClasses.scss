@@ -213,7 +213,7 @@ ul {
 // .light .side-bar::after {
 //   background-color: $gray-300;
 // }
-.css-1sfcfqv-JoyIconButton-root:active,
+.JoyIconButton-root:active,
 .menu-btn:active,
 .side-menu:active {
   transform: scale(0.9);
@@ -224,13 +224,13 @@ ul {
   box-shadow: none;
 }
 
-.light .css-jsexje-MuiSwitch-thumb {
+.light .MuiSwitch-thumb {
   background-color: $main-bg !important;
 }
-.dark .css-jsexje-MuiSwitch-thumb {
+.dark .MuiSwitch-thumb {
   background-color: $main-color !important;
 }
-.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
   background-color: $gray-300 !important;
 }
 
@@ -266,7 +266,7 @@ ul {
   }
 }
 
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
+.MuiButton-containedPrimary {
   background-color: $primary-bg !important;
 
   &:hover {
@@ -326,7 +326,7 @@ ul {
   background-color: $primary-bg;
 }
 
-.dark .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root {
+.dark .MuiBreadcrumbs-root {
   & {
     color: $soft-color !important;
   }
@@ -335,7 +335,7 @@ ul {
   }
 }
 
-.css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root li:hover {
+.MuiBreadcrumbs-root li:hover {
   color: $blue-magenta !important;
 }
 
@@ -344,13 +344,13 @@ ul {
   padding: 5px 0px;
 }
 
-.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
   background-color: $primary-soft-bg !important;
 }
-.css-1sfcfqv-JoyIconButton-root {
+.JoyIconButton-root {
   border-color: $blue-magenta !important;
 }
-.css-1sfcfqv-JoyIconButton-root:hover {
+.JoyIconButton-root:hover {
   background-color: transparent !important;
   color: $blue-magenta !important;
 }
@@ -359,7 +359,7 @@ ul {
   background-color: $main-bg !important;
 }
 
-.css-rj9mdg {
+.MuiBox-root {
   max-height: 90vh !important;
   max-width: 90vw !important;
 
@@ -377,8 +377,8 @@ ul {
   .quill-text-editor .ql-toolbar,
   .quill-text-editor .ql-container,
   .table > :not(caption) > * > *,
-  .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
-  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before,
+  .MuiInput-underline:before,
+  // .css-v4u5dn-MuiInputBase-root-MuiInput-root:before,
   .image-preview,
   .card {
     border-color: $blue-magenta !important;
@@ -395,15 +395,10 @@ ul {
     background-color: $main-bg !important;
     color: $white-color;
   }
-  .css-1869usk-MuiFormControl-root,
-  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  .MuiFormControl-root,
+  .MuiTextField-root {
     background-color: transparent !important;
   }
-
-  // .css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root:before,
-  // .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
-  //   border-color: $soft-light !important;
-  // }
 
   .css-oicxb9 {
     max-height: 90vh !important;
@@ -413,15 +408,13 @@ ul {
     }
   }
 
-  .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon,
-  .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
-  .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.MuiSelect-select,
-  .css-c63i49-MuiInputBase-input-MuiInput-input,
-  .css-1x51dt5-MuiInputBase-input-MuiInput-input,
-  .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+  .MuiSelect-icon,
+  .MuiFormLabel-root,
+  .MuiInput-input,
+  .MuiInputBase-input{
     color: $soft-light !important;
   }
-  .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  .MuiPaper-root {
     background-color: $soft-bg !important;
 
     li {
