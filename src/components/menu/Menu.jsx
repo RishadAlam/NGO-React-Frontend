@@ -9,7 +9,7 @@ import NavItem from './NavItem'
 function Menu({ setMobileMenuClosed }) {
   const location = useLocation()
   const { t } = useTranslation()
-  const menu = useMemo(() => mainMenu(t), [])
+  const menu = useMemo(() => mainMenu(t), [t])
 
   return (
     <>
