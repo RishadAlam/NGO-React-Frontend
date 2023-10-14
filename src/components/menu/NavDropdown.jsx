@@ -1,11 +1,11 @@
-import { Suspense, lazy, useState } from 'react'
+import { Suspense, lazy, memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
 import LoaderSm from '../loaders/LoaderSm'
 import NavLink from './NavLink'
 
-export default function NavDropdown({ m, location, setMobileMenuClosed }) {
+function NavDropdown({ m, location, setMobileMenuClosed }) {
   const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
@@ -54,3 +54,5 @@ export default function NavDropdown({ m, location, setMobileMenuClosed }) {
     </>
   )
 }
+
+export default memo(NavDropdown)

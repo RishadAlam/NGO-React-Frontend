@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import Nav from './Nav'
 
-export default function NavItem({ menu, menuKey, location, setMobileMenuClosed }) {
+function NavItem({ menu, menuKey, location, setMobileMenuClosed }) {
   return (
     <>
       {menu[menuKey].find((m) => m.view) && (
@@ -20,3 +21,5 @@ export default function NavItem({ menu, menuKey, location, setMobileMenuClosed }
     </>
   )
 }
+
+export default memo(NavItem)

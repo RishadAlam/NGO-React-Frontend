@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import Home from '../../icons/Home'
@@ -5,10 +6,10 @@ import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
 
-export default function Menu({ setMobileMenuClosed }) {
+function Menu({ setMobileMenuClosed }) {
   const location = useLocation()
   const { t } = useTranslation()
-  const menu = mainMenu(t)
+  const menu = useMemo(() => mainMenu(t), [])
 
   return (
     <>
@@ -39,3 +40,5 @@ export default function Menu({ setMobileMenuClosed }) {
     </>
   )
 }
+
+export default memo(Menu)

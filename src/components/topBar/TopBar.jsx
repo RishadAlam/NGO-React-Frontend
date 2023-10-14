@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Menu from '../../icons/Menu'
 import DarkLangButton from '../darkLangButton/DarkLangButton'
@@ -5,8 +6,9 @@ import ProfileBox from '../profileBox/ProfileBox'
 import MainSearchBox from '../searchBox/MainSearchBox'
 import './topBar.scss'
 
-export default function TopBar({ setIsSidebarMd }) {
+function TopBar({ setIsSidebarMd }) {
   const { t } = useTranslation()
+
   return (
     <>
       <div className="top-bar d-flex align-items-center">
@@ -26,3 +28,5 @@ export default function TopBar({ setIsSidebarMd }) {
     </>
   )
 }
+
+export default memo(TopBar)

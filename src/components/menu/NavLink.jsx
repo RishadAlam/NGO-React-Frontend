@@ -1,8 +1,8 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, memo } from 'react'
 import { Link } from 'react-router-dom'
 import LoaderSm from '../loaders/LoaderSm'
 
-export default function NavLink({ m, location, setMobileMenuClosed, iconSize = 22 }) {
+function NavLink({ m, location, setMobileMenuClosed, iconSize = 22 }) {
   const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
 
   return (
@@ -23,3 +23,5 @@ export default function NavLink({ m, location, setMobileMenuClosed, iconSize = 2
     </>
   )
 }
+
+export default memo(NavLink)
