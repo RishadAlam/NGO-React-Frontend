@@ -1,12 +1,18 @@
-import { Suspense, lazy, memo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import loadable from "@loadable/component"
+import { memo, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
 import LoaderSm from '../loaders/LoaderSm'
 import NavLink from './NavLink'
 
-function NavDropdown({ m, location, setMobileMenuClosed }) {
-  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
+const DynamicIcon = loadable(({ icon }) => import(`../../icons/${icon}.jsx`), {
+  fallback: <LoaderSm size={20} clr="#1c3faa" className="ms-2" />,
+  cacheKey: ({ icon }) => icon
+})
+
+function NavDropdown({ m, setMobileMenuClosed }) {
+  const location = useLocation()
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
   const toggleSideMenu = (e, id) => {
@@ -20,13 +26,10 @@ function NavDropdown({ m, location, setMobileMenuClosed }) {
         <Link
           to="#"
           onClick={(e) => toggleSideMenu(e, `d${m.id}`)}
-          className={`side-menu ${dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''} ${
-            isDropDownActive ? 'side-menu--active' : ''
-          } cursor-pointer`}>
+          className={`side-menu ${dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''} ${isDropDownActive ? 'side-menu--active' : ''
+            } cursor-pointer`}>
           <div className="side-menu__icon">
-            <Suspense fallback={<LoaderSm size={20} clr="#1c3faa" className="ms-2" />}>
-              <DynamicIcon />
-            </Suspense>
+            <DynamicIcon icon={m.icon} />
           </div>
 
           <div className="side-menu__title">
@@ -43,7 +46,6 @@ function NavDropdown({ m, location, setMobileMenuClosed }) {
                 <NavLink
                   key={`${subMenu.label}${subMenu.label}`}
                   m={subMenu}
-                  location={location}
                   setMobileMenuClosed={setMobileMenuClosed}
                   iconSize={18}
                 />

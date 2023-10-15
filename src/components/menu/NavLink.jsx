@@ -1,9 +1,15 @@
-import React, { Suspense, lazy, memo } from 'react'
-import { Link } from 'react-router-dom'
-import LoaderSm from '../loaders/LoaderSm'
+import loadable from "@loadable/component";
+import React, { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import LoaderSm from '../loaders/LoaderSm';
 
-function NavLink({ m, location, setMobileMenuClosed, iconSize = 22 }) {
-  const DynamicIcon = lazy(() => import(`../../icons/${m.icon}.jsx`))
+const DynamicIcon = loadable(({ icon }) => import(`../../icons/${icon}.jsx`), {
+  fallback: <LoaderSm size={20} clr="#1c3faa" className="ms-2" />,
+  cacheKey: ({ icon }) => icon
+})
+
+function NavLink({ m, setMobileMenuClosed, iconSize = 22 }) {
+  const location = useLocation()
 
   return (
     <>
@@ -13,9 +19,7 @@ function NavLink({ m, location, setMobileMenuClosed, iconSize = 22 }) {
           className={`side-menu ${location.pathname === m.path ? 'side-menu--active' : ''}`}
           onClick={setMobileMenuClosed}>
           <div className="side-menu__icon">
-            <Suspense fallback={<LoaderSm size={20} clr="#1c3faa" className="ms-2" />}>
-              <DynamicIcon size={iconSize} />
-            </Suspense>
+            <DynamicIcon icon={m.icon} size={iconSize} />
           </div>
           <div className="side-menu__title">{m.label}</div>
         </Link>

@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import Nav from './Nav'
 
-function NavItem({ menu, menuKey, location, setMobileMenuClosed }) {
+function NavItem({ menu, menuKey, setMobileMenuClosed }) {
   return (
     <>
       {menu[menuKey].find((m) => m.view) && (
@@ -14,7 +14,6 @@ function NavItem({ menu, menuKey, location, setMobileMenuClosed }) {
         <Nav
           key={`${m.label}${m.id}`}
           m={m}
-          location={location}
           setMobileMenuClosed={setMobileMenuClosed}
         />
       ))}
