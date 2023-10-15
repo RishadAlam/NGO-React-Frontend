@@ -1,17 +1,17 @@
-import loadable from "@loadable/component"
-import { memo, useState } from 'react'
+import loadable from '@loadable/component'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
 import LoaderSm from '../loaders/LoaderSm'
-import NavLink from './NavLink'
+import NavItemLink from './NavItemLink'
 
 const DynamicIcon = loadable(({ icon }) => import(`../../icons/${icon}.jsx`), {
   fallback: <LoaderSm size={20} clr="#1c3faa" className="ms-2" />,
   cacheKey: ({ icon }) => icon
 })
 
-function NavDropdown({ m, setMobileMenuClosed }) {
+export default function NavDropdown({ m, setMobileMenuClosed }) {
   const location = useLocation()
   const isDropDownActive = m.subMenu.map((menu) => menu.path).includes(location.pathname)
   const [dropDowns, setDropDowns] = useState(() => (isDropDownActive ? { [`d${m.id}`]: true } : {}))
@@ -26,8 +26,9 @@ function NavDropdown({ m, setMobileMenuClosed }) {
         <Link
           to="#"
           onClick={(e) => toggleSideMenu(e, `d${m.id}`)}
-          className={`side-menu ${dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''} ${isDropDownActive ? 'side-menu--active' : ''
-            } cursor-pointer`}>
+          className={`side-menu ${dropDowns?.[`d${m.id}`] ? 'side-menu--open' : ''} ${
+            isDropDownActive ? 'side-menu--active' : ''
+          } cursor-pointer`}>
           <div className="side-menu__icon">
             <DynamicIcon icon={m.icon} />
           </div>
@@ -43,7 +44,7 @@ function NavDropdown({ m, setMobileMenuClosed }) {
           {m.subMenu.map(
             (subMenu) =>
               subMenu.view && (
-                <NavLink
+                <NavItemLink
                   key={`${subMenu.label}${subMenu.label}`}
                   m={subMenu}
                   setMobileMenuClosed={setMobileMenuClosed}
@@ -56,5 +57,3 @@ function NavDropdown({ m, setMobileMenuClosed }) {
     </>
   )
 }
-
-export default memo(NavDropdown)

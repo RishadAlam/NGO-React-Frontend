@@ -1,13 +1,12 @@
 import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Home from '../../icons/Home'
 import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
 
 function Menu({ setMobileMenuClosed }) {
-  const location = useLocation()
   const { t } = useTranslation()
   const menu = useMemo(() => mainMenu(t), [t])
 
@@ -26,12 +25,7 @@ function Menu({ setMobileMenuClosed }) {
           </NavLink>
         </li>
         {Object.keys(menu).map((key, i) => (
-          <NavItem
-            key={i}
-            menu={menu}
-            menuKey={key}
-            setMobileMenuClosed={setMobileMenuClosed}
-          />
+          <NavItem key={i} menu={menu} menuKey={key} setMobileMenuClosed={setMobileMenuClosed} />
         ))}
       </ul>
     </nav>
