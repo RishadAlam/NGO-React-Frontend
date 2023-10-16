@@ -6,6 +6,7 @@
       "delete": "মুছে ফেলা হয়েছে",
       "restore": "ফিরিয়ে আনা হয়েছে"
     },
+    "account": "অ্যাকাউন্ট",
     "search_placeholder": "অনুসন্ধান করুন...",
     "No_Records_Found": "কোন তথ্য পাওয়া যায়নি!",
     "Showing_Up": "প্রদর্শন",
@@ -21,6 +22,7 @@
     "description": "মতামত",
     "deposit": "জমা",
     "loan": "ঋণ",
+    "loan_saving": "ঋণ সঞ্চয়",
     "saving": "সঞ্চয়",
     "interest": "লাভ",
     "withdrawal": "উত্তোলন",
@@ -34,6 +36,7 @@
     "toggle_status": "টগল স্ট্যাটাস",
     "action": "পদক্ষেপ",
     "registration": "নিবন্ধন",
+    "closing": "ক্লোজিং",
     "cancel": "বাতিল করুণ",
     "create": "তৈরি করুণ",
     "verified_at": "যাচাই করা হয়েছে",
@@ -45,7 +48,9 @@
     "select": "নির্বাচন করুন",
     "creator": "নির্মাতা",
     "created_at": "নিবন্ধন হয়েছে",
-    "updated_at": "সর্বশেষ আপডেট"
+    "updated_at": "সর্বশেষ আপডেট",
+    "min": "সর্বনিম্ন",
+    "max": "সর্বোচ্চ"
   },
 
   "common_validation": {
@@ -83,7 +88,8 @@
     },
     "settings_and_privacy": {
       "app_settings": "অ্যাপ সেটিংস",
-      "approvals_config": "অনুমোদন কনফিগারেশন"
+      "approvals_config": "অনুমোদন কনফিগারেশন",
+      "categories_config": "ক্যাটাগরি কনফিগারেশন"
     }
   },
 
@@ -162,6 +168,15 @@
     "saving_account_closing_approval": "সেভিংস অ্যাকাউন্ট বন্ধ করার অনুমোদন",
     "loan_account_registration_approval": "ঋণ অ্যাকাউন্ট নিবন্ধন অনুমোদন",
     "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন"
+  },
+  "categories_config": {
+    "account_reg_closing_fees": "অ্যাকাউন্ট নিবন্ধন ও ক্লোজিং ফি",
+    "loan_account_fees": "ঋণ অ্যাকাউন্ট ফি",
+    "withdrawal_fees": "উত্তোলন ফি",
+    "limitations_of_withdrawals": "সঞ্চয় উত্তোলনের সীমাবদ্ধতা",
+    "period_of_account_checking": "অ্যাকাউন্ট চেকের সময়কাল",
+    "disable_unchecked_accounts": "চেকহিন অ্যাকাউন্ট নিষ্ক্রিয় করণ",
+    "period_of_inactive_account_disable": "অক্রিয় অ্যাকাউন্ট নিষ্ক্রিয় করণের সময়কাল"
   },
   "staff_permissions": {
     "group_name": {

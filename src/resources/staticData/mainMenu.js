@@ -103,6 +103,13 @@ export const mainMenu = (t) => {
             path: '/settings-and-privacy/approvals',
             icon: 'Tool',
             view: checkPermission('approvals_config', permissions)
+          },
+          {
+            id: 'config3',
+            label: t('menu.settings_and_privacy.categories_config'),
+            path: '/settings-and-privacy/categories-config',
+            icon: 'Tool',
+            view: checkPermission('categories_config', permissions)
           }
         ]
       }

@@ -6,6 +6,7 @@
       "delete": "Deleted at",
       "restore": "Restored at"
     },
+    "account": "Account",
     "search_placeholder": "Search...",
     "No_Records_Found": "No Records Found!",
     "Showing_Up": "Showing Up",
@@ -21,6 +22,7 @@
     "description": "Description",
     "deposit": "Deposit",
     "loan": "Loan",
+    "loan_saving": "Loan Saving",
     "saving": "Saving",
     "interest": "Interest",
     "withdrawal": "Withdrawal",
@@ -34,6 +36,7 @@
     "toggle_status": "Toggle Status",
     "action": "Action",
     "registration": "Registration",
+    "closing": "Closing",
     "cancel": "Cancel",
     "create": "Create",
     "verified_at": "Verified at",
@@ -45,7 +48,9 @@
     "select": "Select",
     "creator": "Creator",
     "created_at": "Created at",
-    "updated_at": "Updated at"
+    "updated_at": "Updated at",
+    "min": "Min",
+    "max": "Max"
   },
 
   "common_validation": {
@@ -87,7 +92,8 @@
     },
     "settings_and_privacy": {
       "app_settings": "App Settings",
-      "approvals_config": "Approvals Configuration"
+      "approvals_config": "Approvals Configuration",
+      "categories_config": "Categories Configuration"
     }
   },
 
@@ -166,6 +172,14 @@
     "saving_account_closing_approval": "Saving Account Closing Approval",
     "loan_account_registration_approval": "Loan Account Registration Approval",
     "loan_account_closing_approval": "Loan Account Closing Approval"
+  },
+  "categories_config": {
+    "account_reg_closing_fees": "Account Registration & Closing fees",
+    "withdrawal_fees": "Withdrawal fees",
+    "limitations_of_withdrawals": "Limitations of Withdrawals",
+    "period_of_account_checking": "Period of Account Checking",
+    "disable_unchecked_accounts": "Disable Unchecked Accounts",
+    "period_of_inactive_account_disable": "Period of Inactive Account Disable"
   },
   "staff_permissions": {
     "group_name": {

@@ -24,6 +24,7 @@ const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
 const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfig'))
+const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
 
 export default function App() {
   return (
@@ -168,6 +169,20 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <ApprovalsConfig />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="categories-config"
+                element={<RequirePermissions allowedPermissions={['categories_config']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <CategoriesConfig />
                       </Suspense>
                     </ErrorBoundary>
                   }
