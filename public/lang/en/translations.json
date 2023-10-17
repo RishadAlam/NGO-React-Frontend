@@ -50,7 +50,8 @@
     "created_at": "Created at",
     "updated_at": "Updated at",
     "min": "Min",
-    "max": "Max"
+    "max": "Max",
+    "day": "Day"
   },
 
   "common_validation": {

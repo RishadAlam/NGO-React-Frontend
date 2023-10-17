@@ -373,6 +373,10 @@ ul {
   }
 }
 
+.MuiTextField-root {
+  background-color: transparent !important;
+}
+
 .dark {
   .quill-text-editor .ql-toolbar,
   .quill-text-editor .ql-container,
@@ -395,8 +399,7 @@ ul {
     background-color: $main-bg !important;
     color: $white-color;
   }
-  .MuiFormControl-root,
-  .MuiTextField-root {
+  .MuiFormControl-root {
     background-color: transparent !important;
   }
 
