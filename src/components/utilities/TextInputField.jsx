@@ -32,7 +32,7 @@ export default function TextInputField({
       //   }}
       variant={variant || 'standard'}
       error={error ? true : false}
-      helperText={error}
+      helperText={typeof error === 'string' ? error : ''}
       autoFocus={autoFocus}
       disabled={disabled ? true : false}
     />

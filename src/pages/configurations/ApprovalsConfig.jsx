@@ -41,7 +41,6 @@ export default function ApprovalsConfig() {
         })
       })
     )
-    setError({})
   }
 
   const updatePermissions = (event) => {

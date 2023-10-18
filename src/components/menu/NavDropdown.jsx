@@ -40,7 +40,7 @@ export default function NavDropdown({ m, setMobileMenuClosed }) {
             </div>
           </div>
         </Link>
-        <ul className={`shadow ${dropDowns?.[`d${m.id}`] ? 'side-menu__sub-open' : ''}`}>
+        <ul className={`shadow mt-1 ${dropDowns?.[`d${m.id}`] ? 'side-menu__sub-open' : ''}`}>
           {m.subMenu.map(
             (subMenu) =>
               subMenu.view && (

@@ -1,9 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Save from '../../icons/Save'
-import AndroidSwitch from '../utilities/AndroidSwitch'
 import Button from '../utilities/Button'
-import InputFieldSetup from './InputFieldSetup'
+import CategoryConfigRow from './CategoryConfigRow'
 
 export default function CategoryConfig({ allConfigurations, error, setChange, update, loading }) {
   const { t } = useTranslation()
@@ -111,152 +110,14 @@ export default function CategoryConfig({ allConfigurations, error, setChange, up
             <tbody>
               {allConfigurations.length > 0 ? (
                 allConfigurations.map((config, index) => (
-                  <tr key={config.id}>
-                    <td>{index + 1}</td>
-                    <td>{config?.category?.name}</td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.saving_acc_reg_fee}
-                        name="saving_acc_reg_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.saving_acc_closing_fee}
-                        name="saving_acc_closing_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.loan_acc_reg_fee}
-                        name="loan_acc_reg_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.loan_acc_closing_fee}
-                        name="loan_acc_closing_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.saving_withdrawal_fee}
-                        name="saving_withdrawal_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.loan_saving_withdrawal_fee}
-                        name="loan_saving_withdrawal_fee"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.min_saving_withdrawal}
-                        name="min_saving_withdrawal"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.max_saving_withdrawal}
-                        name="max_saving_withdrawal"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.min_loan_saving_withdrawal}
-                        name="min_loan_saving_withdrawal"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.max_loan_saving_withdrawal}
-                        name="max_loan_saving_withdrawal"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.saving_acc_check_time_period}
-                        name="saving_acc_check_time_period"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.loan_acc_check_time_period}
-                        name="loan_acc_check_time_period"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <AndroidSwitch
-                        value={config?.disable_unchecked_saving_acc}
-                        toggleStatus={(e) =>
-                          setChange(e.target.checked, 'disable_unchecked_saving_acc', index)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <AndroidSwitch
-                        value={config?.disable_unchecked_loan_acc}
-                        toggleStatus={(e) =>
-                          setChange(e.target.checked, 'disable_unchecked_loan_acc', index)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.inactive_saving_acc_disable_time_period}
-                        name="inactive_saving_acc_disable_time_period"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                    <td>
-                      <InputFieldSetup
-                        val={config?.inactive_loan_acc_disable_time_period}
-                        name="inactive_loan_acc_disable_time_period"
-                        index={index}
-                        setChange={setChange}
-                        disabled={loading}
-                      />
-                    </td>
-                  </tr>
+                  <CategoryConfigRow
+                    key={config.id}
+                    config={config}
+                    index={index}
+                    setChange={setChange}
+                    loading={loading}
+                    error={error}
+                  />
                 ))
               ) : (
                 <tr>

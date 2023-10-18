@@ -15,8 +15,8 @@ import xFetch from '../../utilities/xFetch'
 
 export default function CategoriesConfig() {
   const { t } = useTranslation()
-  const [loading, setLoading] = useLoadingState({})
   const [allConfigurations, setAllConfigurations] = useState([])
+  const [loading, setLoading] = useLoadingState({})
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
   const {
@@ -31,7 +31,7 @@ export default function CategoriesConfig() {
   }, [categories])
 
   const setChange = (val, name, index) => {
-    if (val === 0 || val === false || val.length > 4) {
+    if ((val !== '' && Number(val) === 0) || val === false || val.length > 4) {
       val = 0
     }
 
@@ -41,21 +41,24 @@ export default function CategoriesConfig() {
       })
     )
 
-    if (val === '') {
-      setError((prevErr) =>
-        create(prevErr, (draftErr) => {
-          draftErr[name] = `${name} ${t('common_validation.is_invalid')}`
-        })
-      )
-    }
+    setError((prevErr) =>
+      create(prevErr, (draftErr) => {
+        if (val === '') {
+          draftErr[name] = true
+        } else {
+          delete draftErr[name]
+        }
+      })
+    )
   }
-  const updatePermissions = (event) => {
+
+  const updateConfig = (event) => {
     event.preventDefault()
 
     setLoading({ ...loading, CategoriesConfig: true })
     xFetch(
       'categories-config-update',
-      { categories: allConfigurations },
+      { categoriesConfig: allConfigurations },
       null,
       accessToken,
       null,
@@ -111,14 +114,14 @@ export default function CategoriesConfig() {
           ]}
         />
 
-        {isLoading && !allConfigurations.length ? (
+        {isLoading ? (
           <ReactTableSkeleton />
         ) : (
           <CategoryConfig
             allConfigurations={allConfigurations}
             error={error}
             setChange={setChange}
-            update={updatePermissions}
+            update={updateConfig}
             loading={loading?.CategoriesConfig || false}
           />
         )}
@@ -126,17 +129,3 @@ export default function CategoriesConfig() {
     </>
   )
 }
-
-// const createInputField = (val, name, index, setChange, disabled) => {
-//   return val === 0 ? (
-//     <AndroidSwitch value={val} toggleStatus={(e) => setChange(e.target.checked, name, index)} />
-//   ) : (
-//     <TextInputField
-//       type="number"
-//       autoFocus={true}
-//       defaultValue={val}
-//       setChange={(val) => setChange(val, name, index)}
-//       disabled={disabled}
-//     />
-//   )
-// }
