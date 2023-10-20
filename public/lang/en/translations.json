@@ -51,7 +51,10 @@
     "updated_at": "Updated at",
     "min": "Min",
     "max": "Max",
-    "day": "Day"
+    "day": "Day",
+    "balance": "Balance",
+    "total_deposit": "Total Deposit",
+    "total_withdraw": "Total Withdraw"
   },
 
   "common_validation": {
@@ -141,6 +144,13 @@
     "Category_List": "CATEGORY LIST",
     "Category_Registration": "Category Registration",
     "Category_Edit": "Category Edit"
+  },
+  "account": {
+    "Account_List": "ACCOUNT LIST",
+    "Account_Registration": "Account Registration",
+    "Account_Edit": "Account Edit",
+    "Account_Info": "Account Info",
+    "cash": "Cash"
   },
   "staffs": {
     "Staff_List": "STAFF LIST",

@@ -290,3 +290,69 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
     Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
   }
 ]
+
+export const AccountTableColumns = (
+  t,
+  windowWidth,
+  statusSwitch,
+  actionBtnGroup,
+  isActionHide,
+  accInfo,
+  accBalance
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  {
+    Header: t('account.Account_Info'),
+    accessor: 'Account_Info',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) =>
+      accInfo(
+        row.original.is_default ? t(`account.${row.original.name}`) : row.original.name,
+        row.original.acc_no,
+        row.original.acc_details
+      )
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) =>
+      accBalance(row.original.total_deposit, row.original.total_withdrawal, row.original.balance)
+  },
+  {
+    Header: t('common.status'),
+    accessor: 'status',
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
+  }
+]

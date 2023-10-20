@@ -51,7 +51,10 @@
     "updated_at": "সর্বশেষ আপডেট",
     "min": "সর্বনিম্ন",
     "max": "সর্বোচ্চ",
-    "day": "দিন"
+    "day": "দিন",
+    "balance": "ব্যালেন্স",
+    "total_deposit": "সর্বমোট জমা",
+    "total_withdraw": "সর্বমোট উত্তোলন"
   },
 
   "common_validation": {
@@ -137,6 +140,13 @@
     "Category_List": "ক্যাটাগরি তালিকা",
     "Category_Registration": "ক্যাটাগরি নিবন্ধন",
     "Category_edit": "ক্যাটাগরি ইডিট"
+  },
+  "account": {
+    "Account_List": "অ্যাকাউন্ট তালিকা",
+    "Account_Registration": "অ্যাকাউন্ট নিবন্ধন",
+    "Account_edit": "অ্যাকাউন্ট ইডিট",
+    "Account_Info": "অ্যাকাউন্ট তথ্য",
+    "cash": "নগদ"
   },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",
