@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
+import AccountRegistration from '../../components/accounts/AccountRegistration'
+import AccountUpdate from '../../components/accounts/AccountUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -206,8 +208,6 @@ export default function Accounts() {
               <AccountRegistration
                 isOpen={isAccountModalOpen}
                 setIsOpen={setIsAccountModalOpen}
-                t={t}
-                accessToken={accessToken}
                 mutate={mutate}
               />
             )}
@@ -216,8 +216,6 @@ export default function Accounts() {
                 isOpen={isAccountUpdateModalOpen}
                 setIsOpen={setIsAccountUpdateModalOpen}
                 data={editableAccount}
-                t={t}
-                accessToken={accessToken}
                 mutate={mutate}
               />
             )}
