@@ -74,7 +74,10 @@ export default function AccountFormModal({
                     />
                   </div>
                 )}
-                <div className="col-md-6 mb-3">
+                <div
+                  className={`${
+                    typeof defaultValues?.initial_balance !== 'undefined' ? 'col-md-6' : 'col-md-12'
+                  } mb-3`}>
                   <TextInputField
                     label={t('common.acc_details')}
                     defaultValue={defaultValues?.acc_details || ''}

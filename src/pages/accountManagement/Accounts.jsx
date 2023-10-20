@@ -148,7 +148,8 @@ export default function Accounts() {
     setEditableAccount({
       id: account?.id,
       name: account?.name,
-      description: account?.description
+      acc_no: account?.acc_no,
+      acc_details: account?.acc_details
     })
     setIsAccountUpdateModalOpen(true)
   }

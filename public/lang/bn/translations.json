@@ -201,6 +201,7 @@
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
+      "account_management": "হিসাব ব্যবস্থাপনা",
       "staff": "কর্মচারি",
       "staff_role": "কর্মচারিবর্গের ভূমিকা",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
@@ -225,6 +226,12 @@
       "category_soft_delete": "ক্যাটাগরি ডিলিট",
       "category_action_history": "ক্যাটাগরি পদক্ষেপ ইতিহাস",
       "category_permanently_delete": "ক্যাটাগরি স্থায়ীভাবে ডিলিট",
+      "account_list_view": "অ্যাকাউন্ট তালিকা দেখুন",
+      "account_registration": "অ্যাকাউন্ট নিবন্ধন",
+      "account_data_update": "অ্যাকাউন্ট ডেটা আপডেট",
+      "account_soft_delete": "অ্যাকাউন্ট ডিলিট",
+      "account_action_history": "অ্যাকাউন্ট পদক্ষেপ ইতিহাস",
+      "account_permanently_delete": "অ্যাকাউন্ট স্থায়ীভাবে ডিলিট",
       "staff_list_view": "কর্মচারিবর্গের তালিকা দেখুন",
       "staff_permissions_view": "কর্মচারিবর্গের অনুমতি দেখুন",
       "staff_registration": "কর্মচারিবর্গের নিবন্ধন",
@@ -238,7 +245,8 @@
       "role_update": "ভূমিকা আপডেট",
       "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিট",
       "app_settings": "অ্যাপ সেটিংস",
-      "approvals_config": "অনুমোদন কনফিগারেশন"
+      "approvals_config": "অনুমোদন কনফিগারেশন",
+      "categories_config": "ক্যাটাগরি কনফিগারেশন"
     }
   }
 }

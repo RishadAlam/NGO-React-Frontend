@@ -204,6 +204,7 @@
       "field": "Field",
       "center": "Center",
       "category": "Category",
+      "account_management": "Account Management",
       "staff": "Staff",
       "staff_role": "Staff Role",
       "settings_and_privacy": "Settings & Privacy"
@@ -228,6 +229,12 @@
       "category_soft_delete": "Category Soft Delete",
       "category_action_history": "Category Action History",
       "category_permanently_delete": "Category Permanently Delete",
+      "account_list_view": "Account List View",
+      "account_registration": "Account Registration",
+      "account_data_update": "Account Data Update",
+      "account_soft_delete": "Account Soft Delete",
+      "account_action_history": "Account Action History",
+      "account_permanently_delete": "Account Permanently Delete",
       "staff_list_view": "Staff List View",
       "staff_permissions_view": "Staff Permissions View",
       "staff_registration": "Staff Registration",
@@ -241,7 +248,8 @@
       "role_update": "Role Update",
       "role_delete": "Role Delete",
       "app_settings": "App Settings",
-      "approvals_config": "Approvals Configuration"
+      "approvals_config": "Approvals Configuration",
+      "categories_config": "Categories Configuration"
     }
   }
 }
