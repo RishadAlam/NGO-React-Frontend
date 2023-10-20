@@ -62,6 +62,22 @@ export const mainMenu = (t) => {
       },
       {
         id: 4,
+        label: t('menu.label.account'),
+        path: '',
+        icon: 'Shield',
+        view: checkPermissions(['account_list_view'], permissions),
+        subMenu: [
+          {
+            id: 'acc1',
+            label: t('menu.accounts.Accounts'),
+            path: '/accounts',
+            icon: 'Dollar',
+            view: checkPermission('account_list_view', permissions)
+          }
+        ]
+      },
+      {
+        id: 5,
         label: t('menu.label.staff'),
         path: '',
         icon: 'Users',
@@ -84,7 +100,7 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 5,
+        id: 6,
         label: t('menu.label.settings_and_privacy'),
         path: '',
         icon: 'Settings',

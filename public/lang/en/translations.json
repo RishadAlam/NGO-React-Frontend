@@ -83,8 +83,12 @@
       "field": "Fields",
       "center": "Centers",
       "category": "Categories",
+      "account": "Accounts",
       "staff": "Staffs",
       "settings_and_privacy": "Settings & Privacy"
+    },
+    "accounts": {
+      "Accounts": "Accounts"
     },
     "staffs": {
       "Staffs": "Staffs",
