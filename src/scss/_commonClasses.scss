@@ -213,7 +213,7 @@ ul {
 // .light .side-bar::after {
 //   background-color: $gray-300;
 // }
-.JoyIconButton-root:active,
+.MuiIconButton-root:active,
 .menu-btn:active,
 .side-menu:active {
   transform: scale(0.9);
@@ -347,10 +347,10 @@ ul {
 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
   background-color: $primary-soft-bg !important;
 }
-.JoyIconButton-root {
+.MuiIconButton-root {
   border-color: $blue-magenta !important;
 }
-.JoyIconButton-root:hover {
+.MuiIconButton-root:hover {
   background-color: transparent !important;
   color: $blue-magenta !important;
 }
