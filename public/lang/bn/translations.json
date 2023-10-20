@@ -79,11 +79,11 @@
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
-      "account": "অ্যাকাউন্ট",
+      "account_management": "হিসাব ব্যবস্থাপনা",
       "staff": "কর্মচারিবর্গ",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
     },
-    "accounts": {
+    "account_management": {
       "Accounts": "অ্যাকাউন্ট"
     },
     "staffs": {

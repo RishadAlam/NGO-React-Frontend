@@ -62,14 +62,14 @@ export const mainMenu = (t) => {
       },
       {
         id: 4,
-        label: t('menu.label.account'),
+        label: t('menu.label.account_management'),
         path: '',
         icon: 'Shield',
         view: checkPermissions(['account_list_view'], permissions),
         subMenu: [
           {
             id: 'acc1',
-            label: t('menu.accounts.Accounts'),
+            label: t('menu.account_management.Accounts'),
             path: '/accounts',
             icon: 'Dollar',
             view: checkPermission('account_list_view', permissions)

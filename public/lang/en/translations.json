@@ -83,11 +83,11 @@
       "field": "Fields",
       "center": "Centers",
       "category": "Categories",
-      "account": "Accounts",
+      "account_management": "Account Management",
       "staff": "Staffs",
       "settings_and_privacy": "Settings & Privacy"
     },
-    "accounts": {
+    "account_management": {
       "Accounts": "Accounts"
     },
     "staffs": {

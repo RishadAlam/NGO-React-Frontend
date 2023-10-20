@@ -19,6 +19,7 @@ const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
+const Accounts = lazy(() => import('./pages/accountManagement/Accounts'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
@@ -100,6 +101,22 @@ export default function App() {
                   </ErrorBoundary>
                 }
               />
+            </Route>
+
+            {/* Account Management Routes */}
+            <Route path="accounts">
+              <Route element={<RequirePermissions allowedPermissions={['account_list_view']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <Accounts />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
             </Route>
 
             {/* Staffs */}
