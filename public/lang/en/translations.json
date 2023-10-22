@@ -93,7 +93,9 @@
       "settings_and_privacy": "Settings & Privacy"
     },
     "account_management": {
-      "Accounts": "Accounts"
+      "Accounts": "Accounts",
+      "Income_Categories": "Income Categories",
+      "Expense_Categories": "Expense Categories"
     },
     "staffs": {
       "Staffs": "Staffs",
@@ -153,6 +155,17 @@
     "Account_Edit": "Account Edit",
     "Account_Info": "Account Info",
     "cash": "Cash"
+  },
+  "income_categories": {
+    "Income_Categories_List": "Income Categories LIST",
+    "Income_Categories_Registration": "Income Categories Registration",
+    "Income_Categories_Edit": "Income Categories Edit",
+
+    "default": {
+      "registration_fee": "Registration Fee",
+      "closing_fee": "Closing Fee",
+      "withdrawal_fee": "Withdrawal Fee"
+    }
   },
   "staffs": {
     "Staff_List": "STAFF LIST",

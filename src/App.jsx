@@ -20,6 +20,8 @@ const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
 const Accounts = lazy(() => import('./pages/accountManagement/Accounts'))
+const IncomeCategories = lazy(() => import('./pages/accountManagement/IncomeCategories'))
+const ExpenseCategories = lazy(() => import('./pages/accountManagement/ExpenseCategories'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
@@ -116,6 +118,44 @@ export default function App() {
                     </ErrorBoundary>
                   }
                 />
+              </Route>
+              {/* Income */}
+              <Route path="income">
+                <Route
+                  path="categories"
+                  element={
+                    <RequirePermissions allowedPermissions={['income_category_list_view']} />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <IncomeCategories />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
+              </Route>
+              {/* Expense */}
+              <Route path="expense">
+                <Route
+                  path="categories"
+                  element={
+                    <RequirePermissions allowedPermissions={['income_category_list_view']} />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <ExpenseCategories />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
               </Route>
             </Route>
 

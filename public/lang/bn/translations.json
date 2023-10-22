@@ -89,7 +89,9 @@
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
     },
     "account_management": {
-      "Accounts": "অ্যাকাউন্ট"
+      "Accounts": "অ্যাকাউন্ট",
+      "Income_Categories": "আয় ক্যাটাগরি",
+      "Expense_Categories": "ব্যয় ক্যাটাগরি"
     },
     "staffs": {
       "Staffs": "কর্মচারিবর্গ",
@@ -149,6 +151,17 @@
     "Account_edit": "অ্যাকাউন্ট ইডিট",
     "Account_Info": "অ্যাকাউন্ট তথ্য",
     "cash": "নগদ"
+  },
+  "income_categories": {
+    "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",
+    "Income_Categories_Registration": "আয় ক্যাটাগরি নিবন্ধন",
+    "Income_Categories_Edit": "আয় ক্যাটাগরি ইডিট",
+
+    "default": {
+      "registration_fee": "নিবন্ধন ফি",
+      "closing_fee": "ক্লোজিং ফি",
+      "withdrawal_fee": "উত্তোলন ফি"
+    }
   },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",
