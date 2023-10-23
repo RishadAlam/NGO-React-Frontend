@@ -362,8 +362,7 @@ export const IncomeCategoriesTableColumns = (
   windowWidth,
   statusSwitch,
   actionBtnGroup,
-  isActionHide,
-  descParser
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -380,8 +379,64 @@ export const IncomeCategoriesTableColumns = (
   {
     Header: t('common.description'),
     accessor: 'description',
+    show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.status'),
+    accessor: 'status',
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => descParser(value)
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
+  }
+]
+
+export const ExpenseCategoriesTableColumns = (
+  t,
+  windowWidth,
+  statusSwitch,
+  actionBtnGroup,
+  isActionHide
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  {
+    Header: t('common.name'),
+    accessor: 'name',
+    Cell: ({ row, value }) =>
+      row.original.is_default ? t(`expense_categories.default.${value}`) : value
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.status'),

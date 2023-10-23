@@ -67,10 +67,6 @@ export default function IncomeCategories() {
     </ActionBtnGroup>
   )
 
-  const descParser = (value) => (
-    <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: value }}></div>
-  )
-
   const columns = useMemo(
     () =>
       IncomeCategoriesTableColumns(
@@ -81,8 +77,7 @@ export default function IncomeCategories() {
         !checkPermissions(
           ['income_category_data_update', 'income_category_soft_delete'],
           authPermissions
-        ),
-        descParser
+        )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]

@@ -163,6 +163,17 @@
       "withdrawal_fee": "উত্তোলন ফি"
     }
   },
+  "expense_categories": {
+    "Expense_Categories_List": "ব্যয় ক্যাটাগরি তালিকা",
+    "Expense_Categories_Registration": "ব্যয় ক্যাটাগরি নিবন্ধন",
+    "Expense_Categories_Edit": "ব্যয় ক্যাটাগরি ইডিট",
+
+    "default": {
+      "electricity_bill": "বিদ্যুৎ বিল",
+      "office_rent": "অফিস ভাড়া",
+      "daily_expense": "দৈনিক খরচ"
+    }
+  },
   "staffs": {
     "Staff_List": "কর্মচারিবর্গের তালিকা",
     "Staff_Registration": "কর্মচারি নিবন্ধন",

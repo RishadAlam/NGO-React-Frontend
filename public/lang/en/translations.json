@@ -157,7 +157,7 @@
     "cash": "Cash"
   },
   "income_categories": {
-    "Income_Categories_List": "Income Category LIST",
+    "Income_Categories_List": "INCOME CATEGORY LIST",
     "Income_Categories_Registration": "Income Category Registration",
     "Income_Categories_Edit": "Income Category Edit",
 
@@ -165,6 +165,17 @@
       "registration_fee": "Registration Fee",
       "closing_fee": "Closing Fee",
       "withdrawal_fee": "Withdrawal Fee"
+    }
+  },
+  "expense_categories": {
+    "Expense_Categories_List": "EXPENSE CATEGORY LIST",
+    "Expense_Categories_Registration": "Expense Category Registration",
+    "Expense_Categories_Edit": "Expense Category Edit",
+
+    "default": {
+      "electricity_bill": "Electricity Bill",
+      "office_rent": "Office Rent",
+      "daily_expense": "Daily Expense"
     }
   },
   "staffs": {
