@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import IncomeCategoriesRegistration from '../../components/incomeCategories/IncomeCategoriesRegistration'
+import IncomeCategoriesUpdate from '../../components/incomeCategories/IncomeCategoriesUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
@@ -176,8 +177,6 @@ export default function IncomeCategories() {
                 isOpen={isIncomeCategoriesUpdateModalOpen}
                 setIsOpen={setIsIncomeCategoriesUpdateModalOpen}
                 data={editableIncomeCategories}
-                t={t}
-                accessToken={accessToken}
                 mutate={mutate}
               />
             )}

@@ -125,7 +125,7 @@
     "Recent_Loan_Withdrawals": "Recent Loan Withdrawals",
     "cards": {
       "Loan_Given": "Loan Given",
-      "Loan_Recovered": "Loan Recovered",
+      "Loan_Recovered": "Loan Collections",
       "Loan_Saving_Collections": "Loan Saving Collections",
       "Saving_Collections": "Saving Collections",
       "DPS_Collections": "DPS Collections",
@@ -157,9 +157,9 @@
     "cash": "Cash"
   },
   "income_categories": {
-    "Income_Categories_List": "Income Categories LIST",
-    "Income_Categories_Registration": "Income Categories Registration",
-    "Income_Categories_Edit": "Income Categories Edit",
+    "Income_Categories_List": "Income Category LIST",
+    "Income_Categories_Registration": "Income Category Registration",
+    "Income_Categories_Edit": "Income Category Edit",
 
     "default": {
       "registration_fee": "Registration Fee",

@@ -7,15 +7,13 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
 import IncomeCategoriesFormModal from './IncomeCategoriesFormModal'
 
-export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate }) {
+export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate }) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
-  const [incomeCategoriesData, setIncomeCategoriesData] = useState({
-    name: '',
-    description: ''
-  })
-  const [errors, setErrors] = useState({ name: '' })
+  const [incomeCategoriesData, setIncomeCategoriesData] = useState({ ...data })
+  const [error, setError] = useState({})
   const [loading, setLoading] = useLoadingState({})
+
   const setChange = (val, name) => {
     setIncomeCategoriesData((prevData) =>
       create(prevData, (draftData) => {
@@ -23,7 +21,7 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
       })
     )
 
-    setErrors((prevErr) =>
+    setError((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
         val === '' && name === 'name'
@@ -36,14 +34,21 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
   const onSubmit = (event) => {
     event.preventDefault()
     if (incomeCategoriesData.name === '') {
-      toast.error(t('common_validation.required_fields_are_empty'))
+      toast.error(t('common_validation.required_accounts_are_empty'))
       return
     }
 
-    setLoading({ ...loading, incomeCategoriesForm: true })
-    xFetch('income-categories', incomeCategoriesData, null, accessToken, null, 'POST')
+    setLoading({ ...loading, accountForm: true })
+    xFetch(
+      `income-categories/${incomeCategoriesData.id}`,
+      incomeCategoriesData,
+      null,
+      accessToken,
+      null,
+      'PUT'
+    )
       .then((response) => {
-        setLoading({ ...loading, incomeCategoriesForm: false })
+        setLoading({ ...loading, accountForm: false })
         if (response?.success) {
           toast.success(response.message)
           mutate()
@@ -54,7 +59,7 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
           })
           return
         }
-        setErrors((prevErr) =>
+        setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!response?.errors) {
               draftErr.message = response?.message
@@ -65,8 +70,8 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, incomeCategoriesForm: false })
-        setErrors((prevErr) =>
+        setLoading({ ...loading, accountForm: false })
+        setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
               draftErr.message = errResponse?.message
@@ -83,9 +88,9 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
       <IncomeCategoriesFormModal
         open={isOpen}
         setOpen={setIsOpen}
-        error={errors}
-        modalTitle={t('income_categories.Income_Categories_Registration')}
-        btnTitle={t('common.registration')}
+        error={error}
+        modalTitle={t('income_categories.Income_Categories_Edit')}
+        btnTitle={t('common.update')}
         defaultValues={incomeCategoriesData}
         setChange={setChange}
         onSubmit={onSubmit}
