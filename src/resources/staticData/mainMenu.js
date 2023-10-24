@@ -76,13 +76,27 @@ export const mainMenu = (t) => {
           },
           {
             id: 'acc2',
+            label: t('menu.account_management.Income'),
+            path: '/accounts/income',
+            icon: 'Dollar',
+            view: checkPermission('income_list_view', permissions)
+          },
+          {
+            id: 'acc3',
+            label: t('menu.account_management.Expense'),
+            path: '/accounts/expense',
+            icon: 'Dollar',
+            view: checkPermission('expense_list_view', permissions)
+          },
+          {
+            id: 'acc4',
             label: t('menu.account_management.Income_Categories'),
             path: '/accounts/income/categories',
             icon: 'Dollar',
             view: checkPermission('income_category_list_view', permissions)
           },
           {
-            id: 'acc3',
+            id: 'acc5',
             label: t('menu.account_management.Expense_Categories'),
             path: '/accounts/expense/categories',
             icon: 'Dollar',

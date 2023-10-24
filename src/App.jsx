@@ -20,6 +20,8 @@ const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
 const Accounts = lazy(() => import('./pages/accountManagement/Accounts'))
+const Income = lazy(() => import('./pages/accountManagement/Income'))
+const Expense = lazy(() => import('./pages/accountManagement/Expense'))
 const IncomeCategories = lazy(() => import('./pages/accountManagement/IncomeCategories'))
 const ExpenseCategories = lazy(() => import('./pages/accountManagement/ExpenseCategories'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
@@ -121,6 +123,18 @@ export default function App() {
               </Route>
               {/* Income */}
               <Route path="income">
+                <Route element={<RequirePermissions allowedPermissions={['income_list_view']} />}>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <Income />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
                 <Route
                   path="categories"
                   element={
@@ -140,6 +154,18 @@ export default function App() {
               </Route>
               {/* Expense */}
               <Route path="expense">
+                <Route element={<RequirePermissions allowedPermissions={['expense_list_view']} />}>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <Expense />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
                 <Route
                   path="categories"
                   element={

@@ -55,8 +55,11 @@
     "max": "সর্বোচ্চ",
     "day": "দিন",
     "balance": "ব্যালেন্স",
+    "previous_balance": "পূর্বের ব্যালেন্স",
     "total_deposit": "সর্বমোট জমা",
-    "total_withdraw": "সর্বমোট উত্তোলন"
+    "total_withdraw": "সর্বমোট উত্তোলন",
+    "amount": "পরিমাণ",
+    "category": "ক্যাটাগরি"
   },
 
   "common_validation": {
@@ -90,6 +93,8 @@
     },
     "account_management": {
       "Accounts": "অ্যাকাউন্ট",
+      "Income": "আয়",
+      "Expense": "ব্যয়",
       "Income_Categories": "আয় ক্যাটাগরি",
       "Expense_Categories": "ব্যয় ক্যাটাগরি"
     },
@@ -150,7 +155,10 @@
     "Account_Registration": "অ্যাকাউন্ট নিবন্ধন",
     "Account_edit": "অ্যাকাউন্ট ইডিট",
     "Account_Info": "অ্যাকাউন্ট তথ্য",
-    "cash": "নগদ"
+
+    "default": {
+      "cash": "নগদ"
+    }
   },
   "income_categories": {
     "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",
@@ -226,6 +234,8 @@
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
       "account_management": "হিসাব ব্যবস্থাপনা",
+      "income": "আয়",
+      "expense": "ব্যয়",
       "income_category": "আয় ক্যাটাগরি",
       "expense_category": "ব্যয় ক্যাটাগরি",
       "staff": "কর্মচারি",
@@ -258,11 +268,23 @@
       "account_soft_delete": "অ্যাকাউন্ট ডিলিট",
       "account_action_history": "অ্যাকাউন্ট পদক্ষেপ ইতিহাস",
       "account_permanently_delete": "অ্যাকাউন্ট স্থায়ীভাবে ডিলিট",
+      "income_list_view": "আয় তালিকা দেখুন",
+      "income_registration": "আয় নিবন্ধন",
+      "income_data_update": "আয় ডেটা আপডেট",
+      "income_soft_delete": "আয় ডিলিট",
+      "income_action_history": "আয় পদক্ষেপ ইতিহাস",
+      "income_permanently_delete": "আয় স্থায়ীভাবে ডিলিট",
       "income_category_list_view": "আয় ক্যাটাগরি তালিকা দেখুন",
       "income_category_registration": "আয় ক্যাটাগরি নিবন্ধন",
       "income_category_data_update": "আয় ক্যাটাগরি ডেটা আপডেট",
       "income_category_soft_delete": "আয় ক্যাটাগরি ডিলিট",
       "income_category_permanently_delete": "আয় ক্যাটাগরি স্থায়ীভাবে ডিলিট",
+      "expense_list_view": "ব্যয় তালিকা দেখুন",
+      "expense_registration": "ব্যয় নিবন্ধন",
+      "expense_data_update": "ব্যয় ডেটা আপডেট",
+      "expense_soft_delete": "ব্যয় ডিলিট",
+      "expense_action_history": "ব্যয় পদক্ষেপ ইতিহাস",
+      "expense_permanently_delete": "ব্যয় স্থায়ীভাবে ডিলিট",
       "expense_category_list_view": "ব্যয় ক্যাটাগরি তালিকা দেখুন",
       "expense_category_registration": "ব্যয় ক্যাটাগরি নিবন্ধন",
       "expense_category_data_update": "ব্যয় ক্যাটাগরি ডেটা আপডেট",

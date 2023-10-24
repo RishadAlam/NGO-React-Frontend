@@ -312,7 +312,7 @@ export const AccountTableColumns = (
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) =>
       accInfo(
-        row.original.is_default ? t(`account.${row.original.name}`) : row.original.name,
+        row.original.is_default ? t(`account.default.${row.original.name}`) : row.original.name,
         row.original.acc_no,
         row.original.acc_details
       )
@@ -442,6 +442,73 @@ export const ExpenseCategoriesTableColumns = (
     Header: t('common.status'),
     accessor: 'status',
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
+  }
+]
+
+export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+  },
+  { Header: t('common.amount'), accessor: 'amount', Cell: ({ value }) => `৳ ${value}` },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) =>
+      value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
+  },
+  {
+    Header: t('common.category'),
+    accessor: 'income_category',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) =>
+      value ? (value.is_default ? t(`income_categories.default.${value.name}`) : value.name) : ''
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.creator'),

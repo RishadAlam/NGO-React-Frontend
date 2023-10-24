@@ -55,8 +55,11 @@
     "max": "Max",
     "day": "Day",
     "balance": "Balance",
+    "previous_balance": "Previous Balance",
     "total_deposit": "Total Deposit",
-    "total_withdraw": "Total Withdraw"
+    "total_withdraw": "Total Withdraw",
+    "amount": "Amount",
+    "category": "Category"
   },
 
   "common_validation": {
@@ -94,6 +97,8 @@
     },
     "account_management": {
       "Accounts": "Accounts",
+      "Income": "Income",
+      "Expense": "Expense",
       "Income_Categories": "Income Categories",
       "Expense_Categories": "Expense Categories"
     },
@@ -154,7 +159,10 @@
     "Account_Registration": "Account Registration",
     "Account_Edit": "Account Edit",
     "Account_Info": "Account Info",
-    "cash": "Cash"
+
+    "default": {
+      "cash": "Cash"
+    }
   },
   "income_categories": {
     "Income_Categories_List": "INCOME CATEGORY LIST",
@@ -229,6 +237,8 @@
       "center": "Center",
       "category": "Category",
       "account_management": "Account Management",
+      "income": "Income",
+      "expense": "Expense",
       "income_category": "Income Category",
       "expense_category": "Expense Category",
       "staff": "Staff",
@@ -261,11 +271,23 @@
       "account_soft_delete": "Account Soft Delete",
       "account_action_history": "Account Action History",
       "account_permanently_delete": "Account Permanently Delete",
+      "income_list_view": "Income List View",
+      "income_registration": "Income Registration",
+      "income_data_update": "Income Data Update",
+      "income_soft_delete": "Income Soft Delete",
+      "income_action_history": "Income Action History",
+      "income_permanently_delete": "Income Permanently Delete",
       "income_category_list_view": "Income Category List View",
       "income_category_registration": "Income Category Registration",
       "income_category_data_update": "Income Category Data Update",
       "income_category_soft_delete": "Income Category Soft Delete",
       "income_category_permanently_delete": "Income Category Permanently Delete",
+      "expense_list_view": "Expense List View",
+      "expense_registration": "Expense Registration",
+      "expense_data_update": "Expense Data Update",
+      "expense_soft_delete": "Expense Soft Delete",
+      "expense_action_history": "Expense Action History",
+      "expense_permanently_delete": "Expense Permanently Delete",
       "expense_category_list_view": "Expense Category List View",
       "expense_category_registration": "Expense Category Registration",
       "expense_category_data_update": "Expense Category Data Update",
