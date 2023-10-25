@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import IncomeRegistration from '../../components/income/IncomeRegistration'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -130,7 +131,7 @@ export default function Income() {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.income_management.Incomes'),
+                  name: t('menu.account_management.Income'),
                   icon: <Dollar size={16} />,
                   active: true
                 }
@@ -144,14 +145,14 @@ export default function Income() {
               endIcon={<Pen size={20} />}
               onclick={() => setIsIncomeModalOpen(true)}
             />
-            {/* {isIncomeModalOpen && (
+            {isIncomeModalOpen && (
               <IncomeRegistration
                 isOpen={isIncomeModalOpen}
                 setIsOpen={setIsIncomeModalOpen}
                 mutate={mutate}
               />
             )}
-            {isIncomeUpdateModalOpen && Object.keys(editableIncome).length && (
+            {/* {isIncomeUpdateModalOpen && Object.keys(editableIncome).length && (
               <IncomeUpdate
                 isOpen={isIncomeUpdateModalOpen}
                 setIsOpen={setIsIncomeUpdateModalOpen}

@@ -160,6 +160,16 @@
       "cash": "নগদ"
     }
   },
+  "income": {
+    "Income_List": "আয় তালিকা",
+    "Income_Registration": "আয় নিবন্ধন",
+    "Income_Edit": "আয় ইডিট"
+  },
+  "expense": {
+    "Expense_List": "ব্যয় তালিকা",
+    "Expense_Registration": "ব্যয় নিবন্ধন",
+    "Expense_Edit": "ব্যয় ইডিট"
+  },
   "income_categories": {
     "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",
     "Income_Categories_Registration": "আয় ক্যাটাগরি নিবন্ধন",
@@ -168,7 +178,8 @@
     "default": {
       "registration_fee": "নিবন্ধন ফি",
       "closing_fee": "ক্লোজিং ফি",
-      "withdrawal_fee": "উত্তোলন ফি"
+      "withdrawal_fee": "উত্তোলন ফি",
+      "money_transfer_transaction_fee": "Money Transfer Fee"
     }
   },
   "expense_categories": {

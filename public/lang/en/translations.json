@@ -164,6 +164,16 @@
       "cash": "Cash"
     }
   },
+  "income": {
+    "Income_List": "INCOME LIST",
+    "Income_Registration": "Income Registration",
+    "Income_Edit": "Income Edit"
+  },
+  "expense": {
+    "Expense_List": "EXPENSE LIST",
+    "Expense_Registration": "Expense Registration",
+    "Expense_Edit": "Expense Edit"
+  },
   "income_categories": {
     "Income_Categories_List": "INCOME CATEGORY LIST",
     "Income_Categories_Registration": "Income Category Registration",
@@ -172,7 +182,8 @@
     "default": {
       "registration_fee": "Registration Fee",
       "closing_fee": "Closing Fee",
-      "withdrawal_fee": "Withdrawal Fee"
+      "withdrawal_fee": "Withdrawal Fee",
+      "money_transfer_transaction_fee": "Money Transfer Fee"
     }
   },
   "expense_categories": {

@@ -478,6 +478,11 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
   },
+  {
+    Header: t('common.date'),
+    accessor: 'date',
+    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy')
+  },
   { Header: t('common.amount'), accessor: 'amount', Cell: ({ value }) => `৳ ${value}` },
   {
     Header: t('common.previous_balance'),
@@ -513,7 +518,7 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
   {
     Header: t('common.creator'),
     accessor: 'author',
-    show: windowWidth < 576 ? false : true,
+    show: false,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {

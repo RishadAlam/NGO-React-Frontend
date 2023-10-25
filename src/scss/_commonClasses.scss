@@ -15,7 +15,7 @@ html[lang='en'] input,
 html[lang='en'] label,
 html[lang='en'] *,
 html[lang='en'] body {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Poppins', 'Tiro Bangla', sans-serif !important;
   // font-weight: 400;
   font-style: normal;
 }
@@ -27,7 +27,7 @@ html[lang='bn'] input,
 html[lang='bn'] label,
 html[lang='bn'] *,
 html[lang='bn'] body {
-  font-family: 'Tiro Bangla', sans-serif !important;
+  font-family: 'Tiro Bangla', 'Poppins', sans-serif !important;
   // font-weight: 400;
   font-style: normal;
 }
@@ -373,8 +373,25 @@ ul {
   }
 }
 
+.MuiOutlinedInput-notchedOutline{
+  border: none !important;
+  border-bottom: 1px solid !important;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  -o-border-radius: 0 !important;
+}
+
 .MuiTextField-root {
   background-color: transparent !important;
+}
+
+.MuiInputBase-root{
+  margin-top: 16px !important;
+}
+.MuiOutlinedInput-input{
+  padding: 4px 0 5px !important;
 }
 
 .dark {
@@ -382,8 +399,9 @@ ul {
   .quill-text-editor .ql-container,
   .table > :not(caption) > * > *,
   .MuiInput-underline:before,
-  // .css-v4u5dn-MuiInputBase-root-MuiInput-root:before,
+  .MuiOutlinedInput-notchedOutline,
   .image-preview,
+  .MuiPickersDay-today,
   .card {
     border-color: $blue-magenta !important;
   }
@@ -411,6 +429,14 @@ ul {
     }
   }
 
+  .MuiInput-input.Mui-disabled{
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.60) !important;
+  }
+
+  .MuiDayCalendar-weekDayLabel,
+  .MuiPickersCalendarHeader-label,
+  .MuiPickersDay-dayWithMargin,
+  .MuiPickersYear-yearButton,
   .MuiSelect-icon,
   .MuiSvgIcon-root,
   .MuiFormLabel-root,
