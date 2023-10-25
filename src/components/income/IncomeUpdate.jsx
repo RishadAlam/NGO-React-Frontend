@@ -5,57 +5,87 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
-import IncomeCategoriesFormModal from './IncomeFormModal'
+import IncomeFormModal from './IncomeFormModal'
 
-export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate }) {
+export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
-  const [incomeCategoriesData, setIncomeCategoriesData] = useState({ ...data })
+  const [incomeData, setIncomeData] = useState({ ...data })
   const [error, setError] = useState({})
   const [loading, setLoading] = useLoadingState({})
 
   const setChange = (val, name) => {
-    setIncomeCategoriesData((prevData) =>
+    setIncomeData((prevData) =>
       create(prevData, (draftData) => {
+        if (name === 'account_id') {
+          draftData.account_id = val?.id || ''
+          draftData.previous_balance = val?.balance
+          draftData.balance = parseInt(val?.balance) + parseInt(draftData.amount)
+          draftData.account = val
+          return
+        }
+        if (name === 'income_category_id') {
+          draftData.income_category_id = val?.id || ''
+          draftData.category = val
+          return
+        }
+        if (name === 'amount') {
+          draftData.amount = parseInt(val)
+          draftData.balance = parseInt(draftData.previous_balance) + parseInt(val)
+          return
+        }
         draftData[name] = val
       })
     )
 
     setError((prevErr) =>
       create(prevErr, (draftErr) => {
-        delete draftErr.message
-        val === '' && name === 'name'
-          ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-          : delete draftErr[name]
+        delete draftErr?.message
+
+        if ((val === '' || val === null) && name !== 'description') {
+          const key =
+            name === 'account_id' ? 'account' : name === 'income_category_id' ? 'category' : name
+          draftErr[name] = `${t(`common.${key}`)} ${t(`common_validation.is_required`)}`
+        } else {
+          delete draftErr[name]
+        }
       })
     )
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (incomeCategoriesData.name === '') {
+    if (
+      incomeData.account_id === '' ||
+      incomeData.income_category_id === '' ||
+      incomeData.amount === '' ||
+      incomeData.amount === 0 ||
+      incomeData.previous_balance === '' ||
+      incomeData.balance === '' ||
+      incomeData.date === ''
+    ) {
       toast.error(t('common_validation.required_accounts_are_empty'))
       return
     }
 
-    setLoading({ ...loading, accountForm: true })
-    xFetch(
-      `income-categories/${incomeCategoriesData.id}`,
-      incomeCategoriesData,
-      null,
-      accessToken,
-      null,
-      'PUT'
-    )
+    setLoading({ ...loading, incomeForm: true })
+    xFetch(`incomes/${incomeData.id}`, incomeData, null, accessToken, null, 'PUT')
       .then((response) => {
-        setLoading({ ...loading, accountForm: false })
+        setLoading({ ...loading, incomeForm: false })
         if (response?.success) {
           toast.success(response.message)
           mutate()
           setIsOpen(false)
-          setIncomeCategoriesData({
-            name: '',
-            description: ''
+          setIncomeData({
+            account_id: '',
+            income_category_id: '',
+            amount: '',
+            previous_balance: '',
+            balance: '',
+            description: '',
+            date: new Date(),
+            account: null,
+            category: null
           })
           return
         }
@@ -70,7 +100,7 @@ export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, accountForm: false })
+        setLoading({ ...loading, incomeForm: false })
         setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -85,13 +115,13 @@ export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate
 
   return (
     <>
-      <IncomeCategoriesFormModal
+      <IncomeFormModal
         open={isOpen}
         setOpen={setIsOpen}
         error={error}
-        modalTitle={t('income_categories.Income_Categories_Edit')}
+        modalTitle={t('income.Income_Edit')}
         btnTitle={t('common.update')}
-        defaultValues={incomeCategoriesData}
+        defaultValues={incomeData}
         setChange={setChange}
         onSubmit={onSubmit}
         loading={loading}

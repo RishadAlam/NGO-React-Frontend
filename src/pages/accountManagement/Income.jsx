@@ -8,6 +8,7 @@ import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import IncomeRegistration from '../../components/income/IncomeRegistration'
+import IncomeUpdate from '../../components/income/IncomeUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -86,10 +87,14 @@ export default function Income() {
 
   const incomeEdit = (income) => {
     setEditableIncome({
-      id: income?.id,
-      name: income?.name,
-      acc_no: income?.acc_no,
-      acc_details: income?.acc_details
+      id: income.id,
+      income_category_id: income.income_category_id,
+      amount: income.amount,
+      previous_balance: income.previous_balance,
+      balance: income.balance,
+      description: income.description,
+      date: new Date(income.date),
+      category: income.income_category
     })
     setIsIncomeUpdateModalOpen(true)
   }
@@ -152,14 +157,14 @@ export default function Income() {
                 mutate={mutate}
               />
             )}
-            {/* {isIncomeUpdateModalOpen && Object.keys(editableIncome).length && (
+            {isIncomeUpdateModalOpen && Object.keys(editableIncome).length && (
               <IncomeUpdate
                 isOpen={isIncomeUpdateModalOpen}
                 setIsOpen={setIsIncomeUpdateModalOpen}
                 data={editableIncome}
                 mutate={mutate}
               />
-            )} */}
+            )}
             {isActionHistoryModalOpen && (
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}

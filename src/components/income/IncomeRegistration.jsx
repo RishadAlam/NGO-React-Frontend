@@ -97,7 +97,9 @@ export default function IncomeRegistration({ isOpen, setIsOpen, mutate }) {
             previous_balance: '',
             balance: '',
             description: '',
-            date: ''
+            date: new Date(),
+            account: null,
+            category: null
           })
           return
         }

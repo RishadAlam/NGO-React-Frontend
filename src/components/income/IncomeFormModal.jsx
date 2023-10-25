@@ -65,15 +65,17 @@ export default function IncomeCategoriesFormModal({
                 </div>
               )}
               <div className="row">
-                <div className="col-md-6 mb-3">
-                  <SelectBoxField
-                    label={t('common.account')}
-                    config={accountSelectBoxConfig}
-                    isRequired={true}
-                    error={error?.account_id}
-                    disabled={loading?.IncomeForm}
-                  />
-                </div>
+                {typeof defaultValues?.account !== 'undefined' && (
+                  <div className="col-md-6 mb-3">
+                    <SelectBoxField
+                      label={t('common.account')}
+                      config={accountSelectBoxConfig}
+                      isRequired={true}
+                      error={error?.account_id}
+                      disabled={loading?.IncomeForm}
+                    />
+                  </div>
+                )}
                 <div className="col-md-6 mb-3">
                   <SelectBoxField
                     label={t('common.category')}
@@ -123,7 +125,10 @@ export default function IncomeCategoriesFormModal({
                     disabled={true}
                   />
                 </div>
-                <div className="col-md-12 mb-3">
+                <div
+                  className={`${
+                    typeof defaultValues?.account !== 'undefined' ? 'col-md-12' : 'col-md-6'
+                  } mb-3`}>
                   <TextInputField
                     label={t('common.description')}
                     defaultValue={defaultValues?.description || ''}
