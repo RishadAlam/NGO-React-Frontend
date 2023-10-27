@@ -59,7 +59,16 @@
     "total_deposit": "Total Deposit",
     "total_withdraw": "Total Withdraw",
     "amount": "Amount",
-    "category": "Category"
+    "category": "Category",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "last_7days": "Last 7 Days",
+    "last_30days": "Last 30 Days",
+    "last_365days": "Last 365 Days",
+    "last_month": "Last Month",
+    "last_year": "Last Year",
+    "this_month": "This Month",
+    "this_year": "This Year"
   },
 
   "common_validation": {

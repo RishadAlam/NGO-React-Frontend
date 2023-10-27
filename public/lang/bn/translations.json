@@ -59,7 +59,16 @@
     "total_deposit": "সর্বমোট জমা",
     "total_withdraw": "সর্বমোট উত্তোলন",
     "amount": "পরিমাণ",
-    "category": "ক্যাটাগরি"
+    "category": "ক্যাটাগরি",
+    "today": "আজ",
+    "yesterday": "গতকাল",
+    "last_7days": "গত ৭ দিন",
+    "last_30days": "গত ৩০ দিন",
+    "last_365days": "গত ৩৬৫ দিন",
+    "last_month": "গত মাস",
+    "last_year": "গত বছর",
+    "this_month": "এই মাস",
+    "this_year": "এই বছর"
   },
 
   "common_validation": {
