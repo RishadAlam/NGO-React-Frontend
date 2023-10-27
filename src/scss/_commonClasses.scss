@@ -198,7 +198,7 @@ ul {
   user-select: none;
 }
 
-.quill-text-editor .ql-container .ql-editor{
+.quill-text-editor .ql-container .ql-editor {
   min-height: 200px;
 }
 
@@ -373,7 +373,7 @@ ul {
   }
 }
 
-.MuiOutlinedInput-notchedOutline{
+.MuiOutlinedInput-notchedOutline {
   border: none !important;
   border-bottom: 1px solid !important;
   border-radius: 0 !important;
@@ -387,11 +387,20 @@ ul {
   background-color: transparent !important;
 }
 
-.MuiInputBase-root{
+.MuiInputBase-root {
   margin-top: 16px !important;
 }
-.MuiOutlinedInput-input{
+.MuiOutlinedInput-input {
   padding: 4px 0 5px !important;
+}
+
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content,
+.rs-btn-primary {
+  background-color: $primary-bg;
+}
+
+.rs-btn-link{
+  color: $soft-dark !important;
 }
 
 .dark {
@@ -429,8 +438,8 @@ ul {
     }
   }
 
-  .MuiInput-input.Mui-disabled{
-    -webkit-text-fill-color: rgba(255, 255, 255, 0.60) !important;
+  .MuiInput-input.Mui-disabled {
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
   }
 
   .MuiDayCalendar-weekDayLabel,
@@ -441,9 +450,10 @@ ul {
   .MuiSvgIcon-root,
   .MuiFormLabel-root,
   .MuiInput-input,
-  .MuiInputBase-input{
+  .MuiInputBase-input {
     color: $soft-light !important;
   }
+
   .MuiPaper-root {
     background-color: $soft-bg !important;
 
@@ -494,5 +504,25 @@ ul {
   .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
   .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
     color: $blue-magenta !important;
+  }
+
+  .rs-picker-daterange-panel,
+  .rs-picker-toggle-textbox,
+  .rs-picker-toggle-active,
+  .rs-picker-toggle {
+    background-color: $soft-bg !important;
+    border: none !important;
+    outline: none !important;
+
+    * {
+      color: $soft-light !important;
+      border-color: $blue-magenta !important;
+    }
+
+    .rs-btn-subtle:hover,
+    .rs-btn-subtle:focus,
+    .rs-calendar-table-cell-in-range::before {
+      background-color: $main-bg !important;
+    }
   }
 }

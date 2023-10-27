@@ -11,6 +11,7 @@ import IncomeRegistration from '../../components/income/IncomeRegistration'
 import IncomeUpdate from '../../components/income/IncomeUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
+import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -23,6 +24,7 @@ import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
+import getCurrentMonth from '../../libs/getCurrentMonth'
 import { IncomeTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
@@ -35,12 +37,17 @@ export default function Income() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const [dateRange, setDateRange] = useState(getCurrentMonth())
   const {
     data: { data: incomes } = [],
     mutate,
     isLoading,
     isError
   } = useFetch({ action: 'incomes' })
+
+  const setDateRangeField = (dateRange) => {
+    setDateRange(dateRange)
+  }
 
   const actionBtnGroup = (id, income) => (
     <ActionBtnGroup>
@@ -174,6 +181,9 @@ export default function Income() {
               />
             )}
           </div>
+        </div>
+        <div className="text-end mb-3">
+          <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
         <div className="staff-table">
           {isLoading && !incomes ? (
