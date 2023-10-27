@@ -20,8 +20,42 @@ export default function DateRangePickerInputField({
       placement: 'left'
     },
     {
-      label: 'last7Days',
+      label: 'last 7Days',
       value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
+      placement: 'left'
+    },
+    {
+      label: 'last 30Days',
+      value: [startOfDay(subDays(new Date(), 29)), endOfDay(new Date())],
+      placement: 'left'
+    },
+    {
+      label: 'This month',
+      value: [
+        startOfDay(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)),
+        endOfDay(new Date(new Date().getFullYear(), new Date().getMonth(), 0))
+      ],
+      placement: 'left'
+    },
+    {
+      label: 'last 365Days',
+      value: [startOfDay(subDays(new Date(), 364)), endOfDay(new Date())],
+      placement: 'left'
+    },
+    {
+      label: 'Last Year',
+      value: [
+        startOfDay(new Date(new Date().getFullYear() - 1, 0, 1)),
+        endOfDay(new Date(new Date().getFullYear() - 1, 11, 31))
+      ],
+      placement: 'left'
+    },
+    {
+      label: 'This Year',
+      value: [
+        startOfDay(new Date(new Date().getFullYear(), 0, 1)),
+        endOfDay(new Date(new Date().getFullYear(), 11, 31))
+      ],
       placement: 'left'
     }
   ]

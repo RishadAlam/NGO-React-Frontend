@@ -43,10 +43,11 @@ export default function Income() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'incomes' })
+  } = useFetch({ action: `incomes/${JSON.stringify(dateRange)}` })
 
   const setDateRangeField = (dateRange) => {
     setDateRange(dateRange)
+    mutate()
   }
 
   const actionBtnGroup = (id, income) => (
