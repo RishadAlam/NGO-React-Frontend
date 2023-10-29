@@ -1,7 +1,12 @@
 import dateFormat from '../../libs/dateFormat'
+import setFontFamily from '../../libs/setFontFamily'
 
 export const DashSavingCollectionTableColumns = (t, windowWidth) => [
-  { Header: '#', accessor: 'id', Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0') },
+  {
+    Header: '#',
+    accessor: 'id',
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+  },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.volume'), accessor: 'volume', show: false },
@@ -14,7 +19,11 @@ export const DashSavingCollectionTableColumns = (t, windowWidth) => [
 ]
 
 export const DashLoanCollectionTableColumns = (t, windowWidth) => [
-  { Header: '#', accessor: 'id', Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0') },
+  {
+    Header: '#',
+    accessor: 'id',
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+  },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.volume'), accessor: 'volume', show: false },
@@ -34,7 +43,7 @@ export const DashWithdrawalTableColumns = (t, windowWidth) => [
     Header: '#',
     accessor: 'id',
     show: false,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
   { Header: t('common.acc_no'), accessor: 'acc_no' },
@@ -59,7 +68,7 @@ export const FieldTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   { Header: t('common.name'), accessor: 'name' },
   {
@@ -83,13 +92,13 @@ export const FieldTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -113,7 +122,7 @@ export const CenterTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   { Header: t('common.name'), accessor: 'name' },
   { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
@@ -138,13 +147,13 @@ export const CenterTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -169,7 +178,7 @@ export const CategoryTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   { Header: t('common.name'), accessor: 'name' },
   { Header: t('common.group'), accessor: 'group' },
@@ -204,13 +213,13 @@ export const CategoryTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -235,7 +244,7 @@ export const StaffTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.image'),
@@ -256,7 +265,8 @@ export const StaffTableColumns = (
     Header: t('common.verified_at'),
     accessor: 'verified_at',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? dateFormat(value, 'dd/MM/yyyy hh:mm a') : pendingBadge(value))
+    Cell: ({ value }) =>
+      value ? setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a')) : pendingBadge(value)
   },
   {
     Header: t('common.status'),
@@ -277,7 +287,7 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
   {
     Header: '#',
     accessor: 'id',
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.role'),
@@ -297,14 +307,13 @@ export const AccountTableColumns = (
   statusSwitch,
   actionBtnGroup,
   isActionHide,
-  accInfo,
-  accBalance
+  accInfo
 ) => [
   {
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('account.Account_Info'),
@@ -313,16 +322,26 @@ export const AccountTableColumns = (
     Cell: ({ row }) =>
       accInfo(
         row.original.is_default ? t(`account.default.${row.original.name}`) : row.original.name,
-        row.original.acc_no,
+        setFontFamily(row.original.acc_no),
         row.original.acc_details
       )
   },
   {
+    Header: t('common.total_deposit'),
+    accessor: 'total_deposit',
+    show: false,
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
+    Header: t('common.total_withdraw'),
+    accessor: 'total_withdrawal',
+    show: false,
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
     Header: t('common.balance'),
     accessor: 'balance',
-    show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) =>
-      accBalance(row.original.total_deposit, row.original.total_withdrawal, row.original.balance)
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
   },
   {
     Header: t('common.status'),
@@ -339,13 +358,13 @@ export const AccountTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a')))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a')))
   },
   {
     Header: t('common.action'),
@@ -368,7 +387,7 @@ export const IncomeCategoriesTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.name'),
@@ -396,13 +415,13 @@ export const IncomeCategoriesTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -425,7 +444,7 @@ export const ExpenseCategoriesTableColumns = (
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.name'),
@@ -453,13 +472,13 @@ export const ExpenseCategoriesTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -476,25 +495,29 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.date'),
     accessor: 'date',
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
   },
-  { Header: t('common.amount'), accessor: 'amount', Cell: ({ value }) => `৳ ${value}` },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.account'),
@@ -525,13 +548,13 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
@@ -548,25 +571,29 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => (row.index + 1).toString().padStart(2, '0')
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.date'),
     accessor: 'date',
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
   },
-  { Header: t('common.amount'), accessor: 'amount', Cell: ({ value }) => `৳ ${value}` },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? `৳ ${value}` : '')
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.account'),
@@ -597,13 +624,13 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => dateFormat(value, 'dd/MM/yyyy hh:mm a')
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.action'),
