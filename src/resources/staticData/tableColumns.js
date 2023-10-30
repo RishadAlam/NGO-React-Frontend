@@ -641,3 +641,72 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
+
+export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionHide) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.date'),
+    accessor: 'date',
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) =>
+      value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]

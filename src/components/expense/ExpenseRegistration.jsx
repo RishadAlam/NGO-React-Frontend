@@ -133,7 +133,7 @@ export default function ExpenseRegistration({ isOpen, setIsOpen, mutate }) {
         open={isOpen}
         setOpen={setIsOpen}
         error={errors}
-        modalTitle={t('expense_categories.Expense_Categories_Registration')}
+        modalTitle={t('expense.Expense_Registration')}
         btnTitle={t('common.registration')}
         defaultValues={expenseData}
         setChange={setChange}

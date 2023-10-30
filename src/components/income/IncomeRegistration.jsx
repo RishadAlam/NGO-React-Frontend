@@ -133,7 +133,7 @@ export default function IncomeRegistration({ isOpen, setIsOpen, mutate }) {
         open={isOpen}
         setOpen={setIsOpen}
         error={errors}
-        modalTitle={t('income_categories.Income_Categories_Registration')}
+        modalTitle={t('income.Income_Registration')}
         btnTitle={t('common.registration')}
         defaultValues={incomeData}
         setChange={setChange}

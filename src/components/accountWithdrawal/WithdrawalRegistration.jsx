@@ -5,17 +5,28 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import xFetch from '../../utilities/xFetch'
-import IncomeFormModal from './IncomeFormModal'
+import WithdrawalFormModal from './WithdrawalFormModal'
 
-export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
+export default function WithdrawalRegistration({ isOpen, setIsOpen, mutate }) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
-  const [incomeData, setIncomeData] = useState({ ...data })
-  const [error, setError] = useState({})
   const [loading, setLoading] = useLoadingState({})
+  const [withdrawalData, setWithdrawalData] = useState({
+    account_id: '',
+    amount: 0,
+    previous_balance: 0,
+    balance: 0,
+    description: '',
+    date: new Date(),
+    account: null
+  })
+  const [errors, setErrors] = useState({
+    account_id: '',
+    amount: ''
+  })
 
   const setChange = (val, name) => {
-    setIncomeData((prevData) =>
+    setWithdrawalData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'account_id') {
           draftData.account_id = val?.id || ''
@@ -24,27 +35,21 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
           draftData.account = val
           return
         }
-        if (name === 'income_category_id') {
-          draftData.income_category_id = val?.id || ''
-          draftData.category = val
-          return
-        }
         if (name === 'amount') {
           draftData.amount = parseInt(val)
-          draftData.balance = parseInt(draftData.previous_balance) + parseInt(val)
+          draftData.balance = parseInt(draftData.previous_balance) - parseInt(val)
           return
         }
         draftData[name] = val
       })
     )
 
-    setError((prevErr) =>
+    setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr?.message
 
-        if ((val === '' || val === null) && name !== 'description') {
-          const key =
-            name === 'account_id' ? 'account' : name === 'income_category_id' ? 'category' : name
+        if (val === '' || val === null) {
+          const key = name === 'account_id' ? 'account' : name
           draftErr[name] = `${t(`common.${key}`)} ${t(`common_validation.is_required`)}`
         } else {
           delete draftErr[name]
@@ -56,29 +61,28 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
   const onSubmit = (event) => {
     event.preventDefault()
     if (
-      incomeData.account_id === '' ||
-      incomeData.income_category_id === '' ||
-      incomeData.amount === '' ||
-      incomeData.amount === 0 ||
-      incomeData.previous_balance === '' ||
-      incomeData.balance === '' ||
-      incomeData.date === ''
+      withdrawalData.account_id === '' ||
+      withdrawalData.amount === '' ||
+      withdrawalData.amount === 0 ||
+      withdrawalData.previous_balance === '' ||
+      withdrawalData.balance === '' ||
+      withdrawalData.date === '' ||
+      withdrawalData.description === ''
     ) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
-    setLoading({ ...loading, incomeForm: true })
-    xFetch(`incomes/${incomeData.id}`, incomeData, null, accessToken, null, 'PUT')
+    setLoading({ ...loading, withdrawalForm: true })
+    xFetch('accounts/withdrawals', withdrawalData, null, accessToken, null, 'POST')
       .then((response) => {
-        setLoading({ ...loading, incomeForm: false })
+        setLoading({ ...loading, withdrawalForm: false })
         if (response?.success) {
           toast.success(response.message)
           mutate()
           setIsOpen(false)
-          setIncomeData({
+          setWithdrawalData({
             account_id: '',
-            income_category_id: '',
             amount: '',
             previous_balance: '',
             balance: '',
@@ -89,7 +93,7 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
           })
           return
         }
-        setError((prevErr) =>
+        setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!response?.errors) {
               draftErr.message = response?.message
@@ -100,8 +104,8 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, incomeForm: false })
-        setError((prevErr) =>
+        setLoading({ ...loading, withdrawalForm: false })
+        setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
               draftErr.message = errResponse?.message
@@ -115,13 +119,13 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
 
   return (
     <>
-      <IncomeFormModal
+      <WithdrawalFormModal
         open={isOpen}
         setOpen={setIsOpen}
-        error={error}
-        modalTitle={t('income.Income_Edit')}
-        btnTitle={t('common.update')}
-        defaultValues={incomeData}
+        error={errors}
+        modalTitle={t('account_withdrawal.Withdrawal_Registration')}
+        btnTitle={t('common.registration')}
+        defaultValues={withdrawalData}
         setChange={setChange}
         onSubmit={onSubmit}
         loading={loading}

@@ -34,7 +34,7 @@ export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate
   const onSubmit = (event) => {
     event.preventDefault()
     if (incomeCategoriesData.name === '') {
-      toast.error(t('common_validation.required_accounts_are_empty'))
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 

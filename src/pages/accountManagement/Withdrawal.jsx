@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
+import WithdrawalRegistration from '../../components/accountWithdrawal/WithdrawalRegistration'
+import WithdrawalUpdate from '../../components/accountWithdrawal/WithdrawalUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
-import ExpenseRegistration from '../../components/expense/ExpenseRegistration'
-import ExpenseUpdate from '../../components/expense/ExpenseUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
@@ -25,25 +25,25 @@ import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import getCurrentMonth from '../../libs/getCurrentMonth'
-import { ExpenseTableColumns } from '../../resources/staticData/tableColumns'
+import { WithdrawalTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
-export default function Expense() {
-  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false)
-  const [isExpenseUpdateModalOpen, setIsExpenseUpdateModalOpen] = useState(false)
+export default function Withdrawal() {
+  const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false)
+  const [isWithdrawalUpdateModalOpen, setIsWithdrawalUpdateModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-  const [editableExpense, setEditableExpense] = useState(false)
+  const [editableWithdrawal, setEditableWithdrawal] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const {
-    data: { data: expenses } = [],
+    data: { data: withdrawals } = [],
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: `expenses/${JSON.stringify(dateRange)}` })
+  } = useFetch({ action: `accounts/withdrawals/${JSON.stringify(dateRange)}` })
 
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
@@ -52,27 +52,27 @@ export default function Expense() {
     }
   }
 
-  const actionBtnGroup = (id, expense) => (
+  const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
-      {authPermissions.includes('expense_data_update') && (
+      {authPermissions.includes('account_withdrawal_data_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => expenseEdit(expense)}>
+          <IconButton className="text-warning" onClick={() => withdrawalEdit(withdrawal)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('expense_soft_delete') && (
+      {authPermissions.includes('account_withdrawal_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => expenseDelete(id)}>
+          <IconButton className="text-danger" onClick={() => withdrawalDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('expense_action_history') && (
+      {authPermissions.includes('account_withdrawal_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
           <IconButton
             className="text-info"
-            onClick={() => expenseActionHistory(expense.expense_action_history)}>
+            onClick={() => withdrawalActionHistory(withdrawal.account_withdrawal_action_history)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -82,12 +82,16 @@ export default function Expense() {
 
   const columns = useMemo(
     () =>
-      ExpenseTableColumns(
+      WithdrawalTableColumns(
         t,
         windowWidth,
         actionBtnGroup,
         !checkPermissions(
-          ['expense_data_update', 'expense_soft_delete', 'expense_action_history'],
+          [
+            'account_withdrawal_data_update',
+            'account_withdrawal_soft_delete',
+            'account_withdrawal_action_history'
+          ],
           authPermissions
         )
       ),
@@ -95,30 +99,29 @@ export default function Expense() {
     [t, windowWidth]
   )
 
-  const expenseEdit = (expense) => {
-    setEditableExpense({
-      id: expense.id,
-      expense_category_id: expense.expense_category_id,
-      amount: expense.amount,
-      previous_balance: expense.previous_balance,
-      balance: expense.balance,
-      description: expense.description,
-      date: new Date(expense.date),
-      category: expense.expense_category
+  const withdrawalEdit = (withdrawal) => {
+    setEditableWithdrawal({
+      id: withdrawal.id,
+      amount: withdrawal.amount,
+      previous_balance: withdrawal.previous_balance,
+      balance: withdrawal.balance,
+      description: withdrawal.description,
+      date: new Date(withdrawal.date),
+      category: withdrawal.withdrawal_category
     })
-    setIsExpenseUpdateModalOpen(true)
+    setIsWithdrawalUpdateModalOpen(true)
   }
 
-  const expenseActionHistory = (actionHistory) => {
+  const withdrawalActionHistory = (actionHistory) => {
     setActionHistory(actionHistory)
     setIsActionHistoryModalOpen(true)
   }
 
-  const expenseDelete = (id) => {
+  const withdrawalDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`expenses/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`accounts/withdrawals/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {
@@ -146,7 +149,13 @@ export default function Expense() {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.account_management.Expenses'),
+                  name: t('menu.account_management.Accounts'),
+                  path: '/accounts',
+                  icon: <Dollar size={16} />,
+                  active: false
+                },
+                {
+                  name: t('menu.account_management.Withdrawals'),
                   icon: <Dollar size={16} />,
                   active: true
                 }
@@ -155,23 +164,23 @@ export default function Expense() {
           </div>
           <div className="col-sm-6 text-end">
             <PrimaryBtn
-              name={t('expense.Expense_Registration')}
+              name={t('account_withdrawal.Withdrawal_Registration')}
               loading={false}
               endIcon={<Pen size={20} />}
-              onclick={() => setIsExpenseModalOpen(true)}
+              onclick={() => setIsWithdrawalModalOpen(true)}
             />
-            {isExpenseModalOpen && (
-              <ExpenseRegistration
-                isOpen={isExpenseModalOpen}
-                setIsOpen={setIsExpenseModalOpen}
+            {isWithdrawalModalOpen && (
+              <WithdrawalRegistration
+                isOpen={isWithdrawalModalOpen}
+                setIsOpen={setIsWithdrawalModalOpen}
                 mutate={mutate}
               />
             )}
-            {isExpenseUpdateModalOpen && Object.keys(editableExpense).length && (
-              <ExpenseUpdate
-                isOpen={isExpenseUpdateModalOpen}
-                setIsOpen={setIsExpenseUpdateModalOpen}
-                data={editableExpense}
+            {isWithdrawalUpdateModalOpen && Object.keys(editableWithdrawal).length && (
+              <WithdrawalUpdate
+                isOpen={isWithdrawalUpdateModalOpen}
+                setIsOpen={setIsWithdrawalUpdateModalOpen}
+                data={editableWithdrawal}
                 mutate={mutate}
               />
             )}
@@ -189,10 +198,14 @@ export default function Expense() {
           <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
         <div className="staff-table">
-          {isLoading && !expenses ? (
+          {isLoading && !withdrawals ? (
             <ReactTableSkeleton />
           ) : (
-            <ReactTable title={t('expense.Expense_List')} columns={columns} data={expenses} />
+            <ReactTable
+              title={t('account_withdrawal.Withdrawal_List')}
+              columns={columns}
+              data={withdrawals}
+            />
           )}
         </div>
       </section>

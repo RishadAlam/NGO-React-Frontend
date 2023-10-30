@@ -64,7 +64,7 @@ export default function ExpenseUpdate({ isOpen, setIsOpen, data, mutate }) {
       expenseData.balance === '' ||
       expenseData.date === ''
     ) {
-      toast.error(t('common_validation.required_accounts_are_empty'))
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 

@@ -146,7 +146,7 @@ export default function Income() {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.account_management.Income'),
+                  name: t('menu.account_management.Incomes'),
                   icon: <Dollar size={16} />,
                   active: true
                 }

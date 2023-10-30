@@ -102,8 +102,9 @@
     },
     "account_management": {
       "Accounts": "অ্যাকাউন্ট",
-      "Income": "আয়",
-      "Expense": "ব্যয়",
+      "Incomes": "আয়",
+      "Expenses": "ব্যয়",
+      "Withdrawals": "উত্তোলন",
       "Income_Categories": "আয় ক্যাটাগরি",
       "Expense_Categories": "ব্যয় ক্যাটাগরি"
     },
@@ -178,6 +179,11 @@
     "Expense_List": "ব্যয় তালিকা",
     "Expense_Registration": "ব্যয় নিবন্ধন",
     "Expense_Edit": "ব্যয় ইডিট"
+  },
+  "account_withdrawal": {
+    "Withdrawal_List": "উত্তোলন তালিকা",
+    "Withdrawal_Registration": "উত্তোলন নিবন্ধন",
+    "Withdrawal_Edit": "উত্তোলন ইডিট"
   },
   "income_categories": {
     "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",

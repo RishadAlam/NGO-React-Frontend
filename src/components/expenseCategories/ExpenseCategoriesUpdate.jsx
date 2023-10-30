@@ -34,7 +34,7 @@ export default function ExpenseCategoriesUpdate({ isOpen, setIsOpen, data, mutat
   const onSubmit = (event) => {
     event.preventDefault()
     if (expenseCategoriesData.name === '') {
-      toast.error(t('common_validation.required_accounts_are_empty'))
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 

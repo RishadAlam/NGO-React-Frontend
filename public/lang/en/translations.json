@@ -106,8 +106,9 @@
     },
     "account_management": {
       "Accounts": "Accounts",
-      "Income": "Income",
-      "Expense": "Expense",
+      "Incomes": "Incomes",
+      "Expenses": "Expenses",
+      "Withdrawals": "Withdrawals",
       "Income_Categories": "Income Categories",
       "Expense_Categories": "Expense Categories"
     },
@@ -182,6 +183,11 @@
     "Expense_List": "EXPENSE LIST",
     "Expense_Registration": "Expense Registration",
     "Expense_Edit": "Expense Edit"
+  },
+  "account_withdrawal": {
+    "Withdrawal_List": "WITHDRAWAL LIST",
+    "Withdrawal_Registration": "Withdrawal Registration",
+    "Withdrawal_Edit": "Withdrawal Edit"
   },
   "income_categories": {
     "Income_Categories_List": "INCOME CATEGORY LIST",
