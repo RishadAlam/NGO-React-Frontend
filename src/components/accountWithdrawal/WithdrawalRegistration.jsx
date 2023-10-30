@@ -22,7 +22,8 @@ export default function WithdrawalRegistration({ isOpen, setIsOpen, mutate }) {
   })
   const [errors, setErrors] = useState({
     account_id: '',
-    amount: ''
+    amount: '',
+    description: ''
   })
 
   const setChange = (val, name) => {
@@ -66,6 +67,7 @@ export default function WithdrawalRegistration({ isOpen, setIsOpen, mutate }) {
       withdrawalData.amount === 0 ||
       withdrawalData.previous_balance === '' ||
       withdrawalData.balance === '' ||
+      withdrawalData.balance <= 0 ||
       withdrawalData.date === '' ||
       withdrawalData.description === ''
     ) {

@@ -46,6 +46,7 @@ export default function WithdrawalUpdate({ isOpen, setIsOpen, data, mutate }) {
       withdrawalData.amount === 0 ||
       withdrawalData.previous_balance === '' ||
       withdrawalData.balance === '' ||
+      withdrawalData.balance <= 0 ||
       withdrawalData.date === '' ||
       withdrawalData.description === ''
     ) {

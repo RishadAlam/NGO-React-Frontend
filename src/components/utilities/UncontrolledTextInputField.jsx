@@ -16,13 +16,17 @@ export default function UncontrolledTextInputField({
   )
 
   return (
-    <TextField
-      className="form-control"
-      value={defaultValue}
-      label={isRequired ? requiredLabel : label}
-      variant={variant || 'standard'}
-      error={error ? true : false}
-      disabled={disabled ? true : false}
-    />
+    <>
+      <TextField
+        className="form-control"
+        value={defaultValue}
+        label={isRequired ? requiredLabel : label}
+        variant={variant || 'standard'}
+        error={error ? true : false}
+        disabled={disabled ? true : false}
+      />
+
+      {error && <span className="text-danger my-3">{error}</span>}
+    </>
   )
 }
