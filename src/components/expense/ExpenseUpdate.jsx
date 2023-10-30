@@ -17,13 +17,6 @@ export default function ExpenseUpdate({ isOpen, setIsOpen, data, mutate }) {
   const setChange = (val, name) => {
     setExpenseData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'account_id') {
-          draftData.account_id = val?.id || ''
-          draftData.previous_balance = val?.balance
-          draftData.balance = parseInt(val?.balance) + parseInt(draftData.amount)
-          draftData.account = val
-          return
-        }
         if (name === 'expense_category_id') {
           draftData.expense_category_id = val?.id || ''
           draftData.category = val
@@ -43,8 +36,7 @@ export default function ExpenseUpdate({ isOpen, setIsOpen, data, mutate }) {
         delete draftErr?.message
 
         if ((val === '' || val === null) && name !== 'description') {
-          const key =
-            name === 'account_id' ? 'account' : name === 'expense_category_id' ? 'category' : name
+          const key = name === 'expense_category_id' ? 'category' : name
           draftErr[name] = `${t(`common.${key}`)} ${t(`common_validation.is_required`)}`
         } else {
           delete draftErr[name]
@@ -56,7 +48,6 @@ export default function ExpenseUpdate({ isOpen, setIsOpen, data, mutate }) {
   const onSubmit = (event) => {
     event.preventDefault()
     if (
-      expenseData.account_id === '' ||
       expenseData.expense_category_id === '' ||
       expenseData.amount === '' ||
       expenseData.amount === 0 ||

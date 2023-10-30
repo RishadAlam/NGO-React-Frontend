@@ -17,13 +17,6 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
   const setChange = (val, name) => {
     setIncomeData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'account_id') {
-          draftData.account_id = val?.id || ''
-          draftData.previous_balance = val?.balance
-          draftData.balance = parseInt(val?.balance) + parseInt(draftData.amount)
-          draftData.account = val
-          return
-        }
         if (name === 'income_category_id') {
           draftData.income_category_id = val?.id || ''
           draftData.category = val
@@ -43,8 +36,7 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
         delete draftErr?.message
 
         if ((val === '' || val === null) && name !== 'description') {
-          const key =
-            name === 'account_id' ? 'account' : name === 'income_category_id' ? 'category' : name
+          const key = name === 'income_category_id' ? 'category' : name
           draftErr[name] = `${t(`common.${key}`)} ${t(`common_validation.is_required`)}`
         } else {
           delete draftErr[name]
@@ -56,7 +48,6 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
   const onSubmit = (event) => {
     event.preventDefault()
     if (
-      incomeData.account_id === '' ||
       incomeData.income_category_id === '' ||
       incomeData.amount === '' ||
       incomeData.amount === 0 ||
