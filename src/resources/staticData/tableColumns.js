@@ -503,23 +503,6 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
   },
   {
-    Header: t('common.amount'),
-    accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
-  },
-  {
-    Header: t('common.previous_balance'),
-    accessor: 'previous_balance',
-    show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
-  },
-  {
-    Header: t('common.balance'),
-    accessor: 'balance',
-    show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
-  },
-  {
     Header: t('common.account'),
     accessor: 'account',
     show: windowWidth < 576 ? false : true,
@@ -537,6 +520,23 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Header: t('common.description'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.creator'),
@@ -579,23 +579,6 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
   },
   {
-    Header: t('common.amount'),
-    accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
-  },
-  {
-    Header: t('common.previous_balance'),
-    accessor: 'previous_balance',
-    show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
-  },
-  {
-    Header: t('common.balance'),
-    accessor: 'balance',
-    show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
-  },
-  {
     Header: t('common.account'),
     accessor: 'account',
     show: windowWidth < 576 ? false : true,
@@ -613,6 +596,23 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Header: t('common.description'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
   },
   {
     Header: t('common.creator'),
