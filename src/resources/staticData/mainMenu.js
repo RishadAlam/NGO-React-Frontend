@@ -90,20 +90,27 @@ export const mainMenu = (t) => {
           },
           {
             id: 'acc4',
+            label: t('menu.account_management.Transfers'),
+            path: '/accounts/transfers',
+            icon: 'Dollar',
+            view: checkPermission('account_transfer_list_view', permissions)
+          },
+          {
+            id: 'acc5',
             label: t('menu.account_management.Withdrawals'),
             path: '/accounts/withdrawals',
             icon: 'Dollar',
             view: checkPermission('account_withdrawal_list_view', permissions)
           },
           {
-            id: 'acc5',
+            id: 'acc6',
             label: t('menu.account_management.Income_Categories'),
             path: '/accounts/incomes/categories',
             icon: 'Dollar',
             view: checkPermission('income_category_list_view', permissions)
           },
           {
-            id: 'acc6',
+            id: 'acc7',
             label: t('menu.account_management.Expense_Categories'),
             path: '/accounts/expenses/categories',
             icon: 'Dollar',

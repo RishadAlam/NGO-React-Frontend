@@ -68,7 +68,10 @@
     "last_month": "Last Month",
     "last_year": "Last Year",
     "this_month": "This Month",
-    "this_year": "This Year"
+    "this_year": "This Year",
+    "transaction": "Transaction",
+    "send_money": "Send Money",
+    "received_money": "Received Money"
   },
 
   "common_validation": {
@@ -109,6 +112,7 @@
       "Incomes": "Incomes",
       "Expenses": "Expenses",
       "Withdrawals": "Withdrawals",
+      "Transfers": "Transfers",
       "Income_Categories": "Income Categories",
       "Expense_Categories": "Expense Categories"
     },
@@ -188,6 +192,10 @@
     "Withdrawal_List": "WITHDRAWAL LIST",
     "Withdrawal_Registration": "Withdrawal Registration",
     "Withdrawal_Edit": "Withdrawal Edit"
+  },
+  "account_transfer": {
+    "Transfer_List": "TRANSFER LIST",
+    "Transfer_Registration": "Transfer Registration"
   },
   "income_categories": {
     "Income_Categories_List": "INCOME CATEGORY LIST",
