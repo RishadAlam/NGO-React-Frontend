@@ -9,7 +9,7 @@ import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
 import UncontrolledTextInputField from '../utilities/UncontrolledTextInputField'
 
-export default function IncomeCategoriesFormModal({
+export default function TransferFormModal({
   open,
   setOpen,
   error,
@@ -22,23 +22,23 @@ export default function IncomeCategoriesFormModal({
 }) {
   const { t } = useTranslation()
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
-  const { data: { data: categories = [] } = [] } = useFetch({ action: 'income-categories/active' })
 
-  const accountSelectBoxConfig = {
+  const txAccountSelectBoxConfig = {
     options: accounts,
-    value: defaultValues?.account || null,
+    value: defaultValues?.tx_account || null,
     getOptionLabel: (option) =>
       option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'account_id'),
+    onChange: (e, option) => setChange(option, 'tx_acc_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
-
-  const categoriesSelectBoxConfig = {
-    options: categories,
-    value: defaultValues?.category || null,
+  const rxAccountSelectBoxConfig = {
+    options: defaultValues?.tx_acc_id
+      ? accounts.filter((account) => account.id !== defaultValues?.tx_acc_id)
+      : accounts,
+    value: defaultValues?.rx_account || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`income_categories.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'income_category_id'),
+      option.is_default ? t(`account.default.${option.name}`) : option.name,
+    onChange: (e, option) => setChange(option, 'rx_acc_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
 
@@ -65,24 +65,22 @@ export default function IncomeCategoriesFormModal({
                 </div>
               )}
               <div className="row">
-                {typeof defaultValues?.account !== 'undefined' && (
-                  <div className="col-md-6 mb-3">
-                    <SelectBoxField
-                      label={t('common.account')}
-                      config={accountSelectBoxConfig}
-                      isRequired={true}
-                      error={error?.account_id}
-                      disabled={loading?.IncomeForm}
-                    />
-                  </div>
-                )}
                 <div className="col-md-6 mb-3">
                   <SelectBoxField
-                    label={t('common.category')}
-                    config={categoriesSelectBoxConfig}
+                    label={t('common.account')}
+                    config={txAccountSelectBoxConfig}
                     isRequired={true}
-                    error={error?.income_category_id}
-                    disabled={loading?.IncomeForm}
+                    error={error?.tx_acc_id}
+                    disabled={loading?.TransferForm}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <SelectBoxField
+                    label={`${t('common.transaction')} ${t('common.account')}`}
+                    config={rxAccountSelectBoxConfig}
+                    isRequired={true}
+                    error={error?.rx_acc_id}
+                    disabled={loading?.TransferForm}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -92,7 +90,7 @@ export default function IncomeCategoriesFormModal({
                     defaultValue={defaultValues?.date || ''}
                     setChange={(val) => setChange(val, 'date')}
                     error={error?.date}
-                    disabled={loading?.IncomeForm}
+                    disabled={loading?.TransferForm}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -104,15 +102,15 @@ export default function IncomeCategoriesFormModal({
                     setChange={(val) => setChange(val, 'amount')}
                     error={error?.amount}
                     autoFocus={true}
-                    disabled={loading?.IncomeForm}
+                    disabled={loading?.TransferForm}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
                   <UncontrolledTextInputField
                     label={t('common.previous_balance')}
                     isRequired={true}
-                    defaultValue={defaultValues?.previous_balance || ''}
-                    error={error?.previous_balance}
+                    defaultValue={defaultValues?.tx_prev_balance || ''}
+                    error={error?.tx_prev_balance}
                     disabled={true}
                   />
                 </div>
@@ -120,21 +118,18 @@ export default function IncomeCategoriesFormModal({
                   <UncontrolledTextInputField
                     label={t('common.balance')}
                     isRequired={true}
-                    defaultValue={defaultValues?.balance || ''}
-                    error={error?.balance}
+                    defaultValue={defaultValues?.tx_balance || ''}
+                    error={error?.tx_balance}
                     disabled={true}
                   />
                 </div>
-                <div
-                  className={`${
-                    typeof defaultValues?.account !== 'undefined' ? 'col-md-12' : 'col-md-6'
-                  } mb-3`}>
+                <div className="col-md-12 mb-3">
                   <TextInputField
                     label={t('common.description')}
                     defaultValue={defaultValues?.description || ''}
                     setChange={(val) => setChange(val, 'description')}
                     error={error?.description}
-                    disabled={loading?.IncomeForm}
+                    disabled={loading?.TransferForm}
                   />
                 </div>
               </div>
@@ -144,9 +139,9 @@ export default function IncomeCategoriesFormModal({
                 type="submit"
                 name={btnTitle}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.IncomeForm || false}
+                loading={loading?.TransferForm || false}
                 endIcon={<Save size={20} />}
-                disabled={Object.keys(error).length || loading?.IncomeForm}
+                disabled={Object.keys(error).length || loading?.TransferForm}
               />
             </div>
           </form>
