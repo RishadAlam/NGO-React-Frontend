@@ -70,8 +70,10 @@
     "this_month": "এই মাস",
     "this_year": "এই বছর",
     "transaction": "লেনদেন",
-    "send_money": "টাকা পাঠিয়েছি",
-    "received_money": "টাকা পেয়েছি"
+    "send_money": "টাকা পাঠিয়েছে",
+    "received_money": "টাকা এসেছে",
+    "income": "আয়",
+    "expense": "ব্যয়"
   },
 
   "common_validation": {
@@ -109,6 +111,7 @@
       "Expenses": "ব্যয়",
       "Withdrawals": "উত্তোলন",
       "Transfers": "টাকা স্থানান্তর",
+      "Transactions": "লেনদেন",
       "Income_Categories": "আয় ক্যাটাগরি",
       "Expense_Categories": "ব্যয় ক্যাটাগরি"
     },
@@ -192,6 +195,9 @@
   "account_transfer": {
     "Transfer_List": "টাকা স্থানান্তর তালিকা",
     "Transfer_Registration": "টাকা স্থানান্তর নিবন্ধন"
+  },
+  "account_transaction": {
+    "Transaction_List": "লেনদেন তালিকা"
   },
   "income_categories": {
     "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",

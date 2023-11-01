@@ -23,6 +23,7 @@ const Accounts = lazy(() => import('./pages/accountManagement/Accounts'))
 const Income = lazy(() => import('./pages/accountManagement/Income'))
 const Expense = lazy(() => import('./pages/accountManagement/Expense'))
 const Transfers = lazy(() => import('./pages/accountManagement/Transfers'))
+const Transactions = lazy(() => import('./pages/accountManagement/Transactions'))
 const Withdrawal = lazy(() => import('./pages/accountManagement/Withdrawal'))
 const IncomeCategories = lazy(() => import('./pages/accountManagement/IncomeCategories'))
 const ExpenseCategories = lazy(() => import('./pages/accountManagement/ExpenseCategories'))
@@ -135,6 +136,23 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <Transfers />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              {/* Account Transfer */}
+              <Route
+                path="transactions"
+                element={
+                  <RequirePermissions allowedPermissions={['account_transfer_list_view']} />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <Transactions />
                       </Suspense>
                     </ErrorBoundary>
                   }

@@ -76,41 +76,48 @@ export const mainMenu = (t) => {
           },
           {
             id: 'acc2',
+            label: t('menu.account_management.Transactions'),
+            path: '/accounts/transactions',
+            icon: 'Dollar',
+            view: checkPermission('account_transaction_list_view', permissions)
+          },
+          {
+            id: 'acc3',
             label: t('menu.account_management.Incomes'),
             path: '/accounts/incomes',
             icon: 'Dollar',
             view: checkPermission('income_list_view', permissions)
           },
           {
-            id: 'acc3',
+            id: 'acc4',
             label: t('menu.account_management.Expenses'),
             path: '/accounts/expenses',
             icon: 'Dollar',
             view: checkPermission('expense_list_view', permissions)
           },
           {
-            id: 'acc4',
+            id: 'acc5',
             label: t('menu.account_management.Transfers'),
             path: '/accounts/transfers',
             icon: 'Dollar',
             view: checkPermission('account_transfer_list_view', permissions)
           },
           {
-            id: 'acc5',
+            id: 'acc6',
             label: t('menu.account_management.Withdrawals'),
             path: '/accounts/withdrawals',
             icon: 'Dollar',
             view: checkPermission('account_withdrawal_list_view', permissions)
           },
           {
-            id: 'acc6',
+            id: 'acc7',
             label: t('menu.account_management.Income_Categories'),
             path: '/accounts/incomes/categories',
             icon: 'Dollar',
             view: checkPermission('income_category_list_view', permissions)
           },
           {
-            id: 'acc7',
+            id: 'acc8',
             label: t('menu.account_management.Expense_Categories'),
             path: '/accounts/expenses/categories',
             icon: 'Dollar',

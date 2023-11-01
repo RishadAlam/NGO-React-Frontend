@@ -778,3 +778,64 @@ export const TransferTableColumns = (t, windowWidth) => [
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
 ]
+
+export const TransactionTableColumns = (t, windowWidth) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.date'),
+    accessor: 'date',
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy'))
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) =>
+      value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
+  },
+  {
+    Header: t('common.type'),
+    accessor: 'type',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => t(`common.${value}`)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => setFontFamily(`৳${value}`)
+  },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  }
+]
