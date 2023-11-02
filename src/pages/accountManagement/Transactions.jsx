@@ -24,7 +24,7 @@ export default function Transactions() {
     isError
   } = useFetch({
     action: `accounts/transactions/${JSON.stringify(dateRange)}/${
-      selectedAcc ? selectedAcc?.id : ''
+      selectedAcc ? selectedAcc?.id : 0
     }`
   })
   const { data: { data: accounts = [] } = [], isLoading: accountsLoading } = useFetch({
