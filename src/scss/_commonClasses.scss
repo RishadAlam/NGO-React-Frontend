@@ -168,6 +168,7 @@ a,
 span {
   padding: 0;
   margin: 0;
+  line-height: unset !important;
 }
 
 .btn-check:active + .btn-warning:focus,
