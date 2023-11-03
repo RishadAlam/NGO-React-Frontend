@@ -13,6 +13,7 @@ export default function NavItemLink({ m, setMobileMenuClosed, iconSize = 22 }) {
     <>
       <li>
         <NavLink
+          end
           to={m.path}
           className={({ isActive }) => `side-menu ${isActive ? 'side-menu--active' : ''}`}
           onClick={setMobileMenuClosed}>

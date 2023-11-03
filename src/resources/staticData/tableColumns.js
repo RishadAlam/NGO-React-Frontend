@@ -318,7 +318,6 @@ export const AccountTableColumns = (
   {
     Header: t('account.Account_Info'),
     accessor: 'Account_Info',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ row }) =>
       accInfo(
         row.original.is_default ? t(`account.default.${row.original.name}`) : row.original.name,
@@ -505,7 +504,6 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
   {
     Header: t('common.account'),
     accessor: 'account',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
       value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
   },
@@ -581,7 +579,6 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
   {
     Header: t('common.account'),
     accessor: 'account',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
       value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
   },
@@ -657,7 +654,6 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
   {
     Header: t('common.account'),
     accessor: 'account',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
       value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
   },
@@ -726,7 +722,6 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   {
     Header: t('common.account'),
     accessor: 'account',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
       value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
   },
@@ -740,7 +735,6 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   {
     Header: t('common.type'),
     accessor: 'type',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => setTransactionTypes(value)
   },
   {
@@ -794,14 +788,12 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   {
     Header: t('common.account'),
     accessor: 'account',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
       value ? (value.is_default ? t(`account.default.${value.name}`) : value.name) : ''
   },
   {
     Header: t('common.type'),
     accessor: 'type',
-    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => setTransactionTypes(value)
   },
   {

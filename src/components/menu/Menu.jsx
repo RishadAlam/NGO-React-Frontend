@@ -15,6 +15,7 @@ function Menu({ setMobileMenuClosed }) {
       <ul>
         <li>
           <NavLink
+            end
             to="/"
             className={({ isActive }) => `side-menu ${isActive ? 'side-menu--active' : ''}`}
             onClick={setMobileMenuClosed}>

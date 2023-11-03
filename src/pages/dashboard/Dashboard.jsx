@@ -124,7 +124,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="col-xl-3 col-lg-4 collectors">
+          <div className="col-xl-3 col-lg-4 col-md-6 collectors">
             <div className="box mb-3 top-collectors">
               <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
             </div>
@@ -133,6 +133,16 @@ export default function Dashboard() {
             </div>
             <div className="box withdrawal-list mb-3 d-lg-block d-none">
               <LoanWithdrawalLists />
+            </div>
+          </div>
+          <div className="col-md-6 d-lg-none d-block">
+            <div className="box mb-3 shadow pie-analytics">
+              <PieChartBox chartName={t('dashboard.Savings_Collection_by_Sources')} />
+            </div>
+          </div>
+          <div className="col-md-6 d-lg-none d-block">
+            <div className="box mb-3 shadow pie-analytics">
+              <PieChartBox chartName={t('dashboard.Loans_Collection_by_Sources')} />
             </div>
           </div>
         </div>

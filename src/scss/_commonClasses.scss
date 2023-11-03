@@ -1,3 +1,5 @@
+@import './responsive';
+
 * {
   margin: 0;
   padding: 0;
@@ -344,6 +346,10 @@ ul {
 .badge {
   min-width: 120px;
   padding: 5px 10px;
+
+  @include sm{
+    min-width: max-content;
+  }
 }
 
 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
