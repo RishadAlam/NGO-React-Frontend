@@ -711,7 +711,7 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
   }
 ]
 
-export const TransferTableColumns = (t, windowWidth) => [
+export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   {
     Header: '#',
     accessor: 'id',
@@ -741,7 +741,7 @@ export const TransferTableColumns = (t, windowWidth) => [
     Header: t('common.type'),
     accessor: 'type',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => t(`common.${value}`)
+    Cell: ({ value }) => setTransactionTypes(value)
   },
   {
     Header: t('common.description'),
@@ -779,7 +779,7 @@ export const TransferTableColumns = (t, windowWidth) => [
   }
 ]
 
-export const TransactionTableColumns = (t, windowWidth) => [
+export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => [
   {
     Header: '#',
     accessor: 'id',
@@ -802,7 +802,7 @@ export const TransactionTableColumns = (t, windowWidth) => [
     Header: t('common.type'),
     accessor: 'type',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => t(`common.${value}`)
+    Cell: ({ value }) => setTransactionTypes(value)
   },
   {
     Header: t('common.description'),

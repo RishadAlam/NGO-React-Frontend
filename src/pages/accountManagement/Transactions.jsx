@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
+import Badge from '../../components/utilities/Badge'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
@@ -52,8 +53,24 @@ export default function Transactions() {
     mutate()
   }
 
+  const setTransactionTypes = (value) => {
+    let className = 'bg-primary'
+
+    if (value === 'send_money') {
+      className = 'bg-warning text-dark'
+    } else if (value === 'received_money') {
+      className = 'bg-primary'
+    } else if (value === 'income') {
+      className = 'bg-success'
+    } else if (value === 'expense' || value === 'withdrawal') {
+      className = 'bg-danger'
+    }
+
+    return <Badge name={t(`common.${value}`)} className={className} />
+  }
+
   const columns = useMemo(
-    () => TransactionTableColumns(t, windowWidth),
+    () => TransactionTableColumns(t, windowWidth, setTransactionTypes),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )

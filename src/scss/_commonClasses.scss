@@ -342,8 +342,8 @@ ul {
 }
 
 .badge {
-  width: 70px;
-  padding: 5px 0px;
+  min-width: 120px;
+  padding: 5px 10px;
 }
 
 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {

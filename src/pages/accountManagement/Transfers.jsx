@@ -4,6 +4,7 @@ import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import TransferRegistration from '../../components/transfer/TransferRegistration'
+import Badge from '../../components/utilities/Badge'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
@@ -33,8 +34,13 @@ export default function Transfers() {
     }
   }
 
+  const setTransactionTypes = (value) => {
+    let className = value === 'send_money' ? 'bg-danger' : 'bg-primary'
+    return <Badge name={t(`common.${value}`)} className={className} />
+  }
+
   const columns = useMemo(
-    () => TransferTableColumns(t, windowWidth),
+    () => TransferTableColumns(t, windowWidth, setTransactionTypes),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
