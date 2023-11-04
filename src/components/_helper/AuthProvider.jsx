@@ -8,10 +8,11 @@ import { useEffect } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useSetAppSettingsState } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
-import { GetSessionStorage } from '../../helper/GetDataFromStorage'
+import { GetSessionStorage, removeSessionStorage } from '../../helper/GetDataFromStorage'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
@@ -49,6 +50,7 @@ export default function AuthProvider({ children }) {
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const lang = Cookies.get('i18next')
@@ -70,7 +72,9 @@ export default function AuthProvider({ children }) {
           setAppSettings,
           loading,
           setLoading,
-          showBoundary
+          showBoundary,
+          navigate,
+          setIsLoading
         )
       }
     }
@@ -111,7 +115,9 @@ const authFetch = (
   setAppSettings,
   loading,
   setLoading,
-  showBoundary
+  showBoundary,
+  navigate,
+  setIsLoading
 ) => {
   setLoading({ ...loading, authorization: true })
   const accessToken = `Bearer ${Token}`
@@ -121,6 +127,7 @@ const authFetch = (
   axios
     .all([authorizedData, appConfigData])
     .then((Response) => {
+      console.log('first: ', Response)
       setLoading({ ...loading, authorization: false })
       const authorizedData = Response[0]
       const appConfigData = Response[1]
@@ -150,8 +157,19 @@ const authFetch = (
       setAppSettings(appConfigData?.data)
     })
     .catch((error) => {
+      console.log('second: ', error)
       if (error?.message) {
-        showBoundary(error)
+        if (error.message === 'Unauthenticated.' || error.status === 401) {
+          removeSessionStorage('accessToken')
+          Cookies.remove('accessToken')
+          setIsAuthorized(false)
+          setLoading({ ...loading, authorization: false })
+          setIsLoading(false)
+          navigate('login')
+          return
+        }
+
+        showBoundary(error?.message)
       }
     })
 }

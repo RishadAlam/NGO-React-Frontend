@@ -1,18 +1,47 @@
+import Cookies from 'js-cookie'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import { Link } from 'react-router-dom'
-import { useAuthDataValue } from '../../atoms/authAtoms'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthDataValue, useSetIsAuthorizedState } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
+import { removeSessionStorage } from '../../helper/GetDataFromStorage'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
 import Key from '../../icons/key'
 import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
+import xFetch from '../../utilities/xFetch'
 import Button from '../utilities/Button'
 import './profileBox.scss'
 
 export default function ProfileBox({ t }) {
   const [isProfileVisible, setIsProfileVisible] = useState(false)
-  const { name, role, image_uri } = useAuthDataValue()
+  const { name, accessToken, role, image_uri } = useAuthDataValue()
+  const setIsAuthorized = useSetIsAuthorizedState()
+  const [loading, setLoading] = useLoadingState()
+  const navigate = useNavigate()
+
+  const logout = () => {
+    setLoading({ ...loading, logout: true })
+
+    xFetch('logout', null, null, accessToken, null, 'POST')
+      .then((response) => {
+        setLoading({ ...loading, logout: false })
+        if (response.success) {
+          removeSessionStorage('accessToken')
+          Cookies.remove('accessToken')
+          setIsAuthorized(false)
+          navigate('/login')
+        }
+      })
+      .catch((error) => {
+        setLoading({ ...loading, logout: false })
+        if (error?.message) {
+          toast.error(error?.message)
+        }
+      })
+  }
 
   return (
     <>
@@ -64,8 +93,9 @@ export default function ProfileBox({ t }) {
                     {t('profile_box.logout')}
                   </p>
                 }
-                disabled={false}
-                loading={false}
+                disabled={loading?.logout || false}
+                loading={loading?.logout || false}
+                onclick={logout}
                 style={{
                   backgroundColor: 'transparent',
                   padding: '0',
