@@ -41,7 +41,7 @@ export default function ExpenseCategoriesRegistration({ isOpen, setIsOpen, mutat
     }
 
     setLoading({ ...loading, expenseCategoriesForm: true })
-    xFetch('expense-categories', expenseCategoriesData, null, accessToken, null, 'POST')
+    xFetch('accounts/expenses/categories', expenseCategoriesData, null, accessToken, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, expenseCategoriesForm: false })
         if (response?.success) {

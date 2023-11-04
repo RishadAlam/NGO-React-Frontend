@@ -39,7 +39,7 @@ export default function ExpenseCategories() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'expense-categories' })
+  } = useFetch({ action: 'accounts/expenses/categories' })
 
   const statusSwitch = (value, id) => (
     <AndroidSwitch
@@ -87,7 +87,7 @@ export default function ExpenseCategories() {
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(
-      `expense-categories/change-status/${id}`,
+      `accounts/expenses/categories/change-status/${id}`,
       { status: isChecked },
       null,
       accessToken,
@@ -119,7 +119,7 @@ export default function ExpenseCategories() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`expense-categories/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`accounts/expenses/categories/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {

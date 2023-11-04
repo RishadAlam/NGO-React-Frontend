@@ -22,7 +22,9 @@ export default function IncomeCategoriesFormModal({
 }) {
   const { t } = useTranslation()
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
-  const { data: { data: categories = [] } = [] } = useFetch({ action: 'income-categories/active' })
+  const { data: { data: categories = [] } = [] } = useFetch({
+    action: 'accounts/incomes/categories/active'
+  })
 
   const accountSelectBoxConfig = {
     options: accounts,

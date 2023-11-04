@@ -38,7 +38,7 @@ export default function IncomeCategories() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'income-categories' })
+  } = useFetch({ action: 'accounts/incomes/categories' })
 
   const statusSwitch = (value, id) => (
     <AndroidSwitch
@@ -86,7 +86,7 @@ export default function IncomeCategories() {
   const toggleStatus = (id, isChecked) => {
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(
-      `income-categories/change-status/${id}`,
+      `accounts/incomes/categories/change-status/${id}`,
       { status: isChecked },
       null,
       accessToken,
@@ -118,7 +118,7 @@ export default function IncomeCategories() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`income-categories/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`accounts/incomes/categories/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {

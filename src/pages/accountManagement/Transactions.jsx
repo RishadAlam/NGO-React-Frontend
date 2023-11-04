@@ -24,9 +24,8 @@ export default function Transactions() {
     isLoading,
     isError
   } = useFetch({
-    action: `accounts/transactions/${JSON.stringify(dateRange)}/${
-      selectedAcc ? selectedAcc?.id : 0
-    }`
+    action: `accounts/transactions/${selectedAcc ? selectedAcc?.id : 0}`,
+    queryParams: { date_range: JSON.stringify(dateRange) }
   })
   const { data: { data: accounts = [] } = [], isLoading: accountsLoading } = useFetch({
     action: 'accounts/active'

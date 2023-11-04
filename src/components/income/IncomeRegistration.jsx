@@ -83,7 +83,7 @@ export default function IncomeRegistration({ isOpen, setIsOpen, mutate }) {
     }
 
     setLoading({ ...loading, incomeForm: true })
-    xFetch('incomes', incomeData, null, accessToken, null, 'POST')
+    xFetch('accounts/incomes', incomeData, null, accessToken, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, incomeForm: false })
         if (response?.success) {

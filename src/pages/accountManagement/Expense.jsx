@@ -43,7 +43,10 @@ export default function Expense() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: `expenses/${JSON.stringify(dateRange)}` })
+  } = useFetch({
+    action: 'accounts/expenses',
+    queryParams: { date_range: JSON.stringify(dateRange) }
+  })
 
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
@@ -118,7 +121,7 @@ export default function Expense() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`expenses/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`accounts/expenses/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {

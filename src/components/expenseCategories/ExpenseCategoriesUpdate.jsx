@@ -40,7 +40,7 @@ export default function ExpenseCategoriesUpdate({ isOpen, setIsOpen, data, mutat
 
     setLoading({ ...loading, accountForm: true })
     xFetch(
-      `expense-categories/${expenseCategoriesData.id}`,
+      `accounts/expenses/categories/${expenseCategoriesData.id}`,
       expenseCategoriesData,
       null,
       accessToken,

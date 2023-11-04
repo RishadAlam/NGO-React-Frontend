@@ -25,7 +25,10 @@ export default function Transfers() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: `accounts/transfers/${JSON.stringify(dateRange)}` })
+  } = useFetch({
+    action: 'accounts/transfers',
+    queryParams: { date_range: JSON.stringify(dateRange) }
+  })
 
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {

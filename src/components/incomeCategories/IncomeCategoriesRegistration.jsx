@@ -41,7 +41,7 @@ export default function IncomeCategoriesRegistration({ isOpen, setIsOpen, mutate
     }
 
     setLoading({ ...loading, incomeCategoriesForm: true })
-    xFetch('income-categories', incomeCategoriesData, null, accessToken, null, 'POST')
+    xFetch('accounts/incomes/categories', incomeCategoriesData, null, accessToken, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, incomeCategoriesForm: false })
         if (response?.success) {

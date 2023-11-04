@@ -60,7 +60,7 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
     }
 
     setLoading({ ...loading, incomeForm: true })
-    xFetch(`incomes/${incomeData.id}`, incomeData, null, accessToken, null, 'PUT')
+    xFetch(`accounts/incomes/${incomeData.id}`, incomeData, null, accessToken, null, 'PUT')
       .then((response) => {
         setLoading({ ...loading, incomeForm: false })
         if (response?.success) {

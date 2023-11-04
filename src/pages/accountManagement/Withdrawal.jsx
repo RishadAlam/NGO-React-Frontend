@@ -43,7 +43,10 @@ export default function Withdrawal() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: `accounts/withdrawals/${JSON.stringify(dateRange)}` })
+  } = useFetch({
+    action: 'accounts/withdrawals',
+    queryParams: { date_range: JSON.stringify(dateRange) }
+  })
 
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {

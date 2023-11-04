@@ -43,7 +43,10 @@ export default function Income() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: `incomes/${JSON.stringify(dateRange)}` })
+  } = useFetch({
+    action: 'accounts/incomes',
+    queryParams: { date_range: JSON.stringify(dateRange) }
+  })
 
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
@@ -118,7 +121,7 @@ export default function Income() {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`incomes/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`accounts/incomes/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {

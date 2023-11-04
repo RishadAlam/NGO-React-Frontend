@@ -60,7 +60,7 @@ export default function ExpenseUpdate({ isOpen, setIsOpen, data, mutate }) {
     }
 
     setLoading({ ...loading, expenseForm: true })
-    xFetch(`expenses/${expenseData.id}`, expenseData, null, accessToken, null, 'PUT')
+    xFetch(`accounts/expenses/${expenseData.id}`, expenseData, null, accessToken, null, 'PUT')
       .then((response) => {
         setLoading({ ...loading, expenseForm: false })
         if (response?.success) {

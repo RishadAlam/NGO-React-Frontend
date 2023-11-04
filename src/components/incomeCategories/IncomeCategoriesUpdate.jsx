@@ -40,7 +40,7 @@ export default function IncomeCategoriesUpdate({ isOpen, setIsOpen, data, mutate
 
     setLoading({ ...loading, accountForm: true })
     xFetch(
-      `income-categories/${incomeCategoriesData.id}`,
+      `accounts/incomes/categories/${incomeCategoriesData.id}`,
       incomeCategoriesData,
       null,
       accessToken,
