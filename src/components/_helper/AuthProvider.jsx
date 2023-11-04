@@ -127,7 +127,6 @@ const authFetch = (
   axios
     .all([authorizedData, appConfigData])
     .then((Response) => {
-      console.log('first: ', Response)
       setLoading({ ...loading, authorization: false })
       const authorizedData = Response[0]
       const appConfigData = Response[1]
@@ -157,7 +156,6 @@ const authFetch = (
       setAppSettings(appConfigData?.data)
     })
     .catch((error) => {
-      console.log('second: ', error)
       if (error?.message) {
         if (error.message === 'Unauthenticated.' || error.status === 401) {
           removeSessionStorage('accessToken')
