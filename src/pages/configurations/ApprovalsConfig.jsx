@@ -57,7 +57,7 @@ export default function ApprovalsConfig() {
         />
 
         <div className="row my-3">
-          <div className="col-lg-6 col-xl-4">
+          <div className="col-lg-5 col-xl-4">
             <ApprovalConfigs
               allApprovals={allApprovals}
               isLoading={isLoading}
@@ -65,7 +65,7 @@ export default function ApprovalsConfig() {
               mutate={mutate}
             />
           </div>
-          <div className="col-lg-6 col-xl-8">
+          <div className="col-lg-7 col-xl-8">
             <TransferTransactionConfig
               accTransferConfigs={accTransferConfigs}
               setAccTransferConfigs={setAccTransferConfigs}
