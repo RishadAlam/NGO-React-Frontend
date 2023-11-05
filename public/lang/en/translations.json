@@ -73,7 +73,11 @@
     "send_money": "Send Money",
     "received_money": "Received Money",
     "income": "Income",
-    "expense": "Expense"
+    "expense": "Expense",
+    "fee": "Fee",
+    "store": "Store",
+    "limit": "Limit",
+    "configuration": "Configuration"
   },
 
   "common_validation": {

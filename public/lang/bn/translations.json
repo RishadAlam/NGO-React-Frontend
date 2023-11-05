@@ -73,7 +73,11 @@
     "send_money": "টাকা পাঠিয়েছে",
     "received_money": "টাকা এসেছে",
     "income": "আয়",
-    "expense": "ব্যয়"
+    "expense": "ব্যয়",
+    "fee": "ফি",
+    "store": "জমা",
+    "limit": "লিমিট",
+    "configuration": "কনফিগারেশন"
   },
 
   "common_validation": {

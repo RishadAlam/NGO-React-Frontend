@@ -1,5 +1,5 @@
+import InputFieldSetup from '../_helper/InputFieldSetup'
 import AndroidSwitch from '../utilities/AndroidSwitch'
-import InputFieldSetup from './InputFieldSetup'
 
 export default function CategoryConfigRow({ config, index, setChange, loading, error }) {
   return (

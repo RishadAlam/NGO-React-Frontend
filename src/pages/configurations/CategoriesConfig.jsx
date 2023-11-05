@@ -31,7 +31,7 @@ export default function CategoriesConfig() {
   }, [categories])
 
   const setChange = (val, name, index) => {
-    if ((val !== '' && Number(val) === 0) || val === false || val.length > 4) {
+    if ((val !== '' && Number(val) === 0) || val === false || val.length > 8) {
       val = 0
     }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Save from '../../icons/Save'
 import Button from '../utilities/Button'
