@@ -329,18 +329,18 @@ export const AccountTableColumns = (
     Header: t('common.total_deposit'),
     accessor: 'total_deposit',
     show: false,
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.total_withdraw'),
     accessor: 'total_withdrawal',
     show: false,
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.status'),
@@ -522,19 +522,19 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.creator'),
@@ -597,19 +597,19 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.creator'),
@@ -665,19 +665,19 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.creator'),
@@ -745,19 +745,19 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.creator'),
@@ -804,19 +804,19 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => setFontFamily(`৳${value}`)
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.previous_balance'),
     accessor: 'previous_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.balance'),
     accessor: 'balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => (value ? setFontFamily(`৳${value}`) : '')
+    Cell: ({ value }) => setFontFamily(`৳${value ? value : 0}`)
   },
   {
     Header: t('common.creator'),
