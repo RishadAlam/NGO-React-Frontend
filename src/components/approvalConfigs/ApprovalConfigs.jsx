@@ -66,8 +66,8 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
 
   return (
     <>
-      {isLoading ? (
-        <StaffPermissionSkeleton skeletonSize={2} />
+      {isLoading || !allApprovals.length ? (
+        <StaffPermissionSkeleton skeletonSize={3} />
       ) : (
         <div className="card my-3 mx-auto">
           <div className="card-header">

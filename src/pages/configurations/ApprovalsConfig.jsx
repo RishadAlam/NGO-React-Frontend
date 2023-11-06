@@ -70,6 +70,7 @@ export default function ApprovalsConfig() {
               accTransferConfigs={accTransferConfigs}
               setAccTransferConfigs={setAccTransferConfigs}
               mutate={mutate}
+              isLoading={isLoading}
             />
           </div>
         </div>
