@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
+import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import Button from '../utilities/Button'
 import CategoryConfigRow from './CategoryConfigRow'
 
 export default function CategoryConfig({ allConfigurations, error, setChange, update, loading }) {
   const { t } = useTranslation()
+  const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   return (
     <div className="card my-3 mx-auto">
@@ -113,6 +115,7 @@ export default function CategoryConfig({ allConfigurations, error, setChange, up
                     key={config.id}
                     config={config}
                     index={index}
+                    accounts={accounts}
                     setChange={setChange}
                     loading={loading}
                     error={error}
