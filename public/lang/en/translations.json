@@ -31,6 +31,8 @@
     "total": "Total",
     "name": "Name",
     "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
     "role": "Role",
     "phone": "Mobile",
     "image": "Image",
@@ -87,7 +89,9 @@
     "Yes_delete_it": "Yes, delete it!",
     "data_has_been_deleted": "Data has been deleted.",
     "is_required": "is required!",
-    "is_invalid": "is invalid!"
+    "is_invalid": "is invalid!",
+    "week": "Week",
+    "confirm_password_not_match": "Make sure the passwords do not match"
   },
 
   "react_table": {

@@ -31,6 +31,8 @@
     "total": "মোট",
     "name": "নাম",
     "email": "ইমেল",
+    "password": "পাসওয়ার্ড",
+    "confirm_password": "পাসওয়ার্ড নিশ্চিত করুন",
     "role": "ভূমিকা",
     "phone": "মুঠোফোন",
     "image": "ছবি",
@@ -87,7 +89,9 @@
     "Yes_delete_it": "হ্যাঁ, এটা মুছে ফেলুন!",
     "data_has_been_deleted": "ডেটা মুছে ফেলা হয়েছে।",
     "is_required": "প্রয়োজন।",
-    "is_invalid": "অবৈধ।"
+    "is_invalid": "অবৈধ।",
+    "week": "দুর্বল",
+    "confirm_password_not_match": "পাসওয়ার্ড মেলে না তা নিশ্চিত করুন"
   },
 
   "app_config": {

@@ -3,6 +3,7 @@ import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
+import PasswordInputField from '../utilities/PasswordInputField'
 import SelectDropdownField from '../utilities/SelectDropdownField'
 import TextInputField from '../utilities/TextInputField'
 
@@ -68,6 +69,24 @@ export default function StaffFormModal({
                     defaultValue={defaultValues?.email || ''}
                     setChange={(val) => setChange(val, 'email')}
                     error={error?.email}
+                    disabled={loading?.staffForm}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <PasswordInputField
+                    label={t('common.password')}
+                    defaultValue={defaultValues?.password || ''}
+                    setChange={(val) => setChange(val, 'password')}
+                    error={error?.password}
+                    disabled={loading?.staffForm}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <PasswordInputField
+                    label={t('common.confirm_password')}
+                    defaultValue={defaultValues?.confirm_password || ''}
+                    setChange={(val) => setChange(val, 'confirm_password')}
+                    error={error?.confirm_password}
                     disabled={loading?.staffForm}
                   />
                 </div>
