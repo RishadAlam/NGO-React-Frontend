@@ -305,6 +305,10 @@ ul {
 .table-hover > tbody > tr:hover > * {
   color: $white-color !important;
   background-color: $primary-bg-hover !important;
+  
+  *{
+    color: $white-color !important;
+  }
 }
 
 .table-report tr {
