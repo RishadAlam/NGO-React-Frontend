@@ -44,7 +44,9 @@ export default function StaffRegistration({ isOpen, setIsOpen, accessToken, t, m
               : delete draftErr.email
           }
           if (val !== '' && name === 'password') {
-            const reg = new RegExp('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,32}$')
+            const reg = new RegExp(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+            )
             !reg.test(val)
               ? (draftErr.password = ` ${t(`common_validation.week`)} ${t('common.password')}`)
               : delete draftErr.password

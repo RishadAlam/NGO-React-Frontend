@@ -25,7 +25,6 @@ import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import List from '../../icons/List'
-import Reset from '../../icons/Reset'
 import Trash from '../../icons/Trash'
 import UserPlus from '../../icons/UserPlus'
 import Users from '../../icons/Users'
@@ -93,13 +92,6 @@ export default function Staffs() {
           </IconButton>
         </Tooltip>
       )}
-      {authId !== id && authPermissions.includes('staff_reset_password') && (
-        <Tooltip TransitionComponent={Zoom} title="Reset Password" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => staffDelete(id)}>
-            {<Reset size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
     </ActionBtnGroup>
   )
 
@@ -147,6 +139,8 @@ export default function Staffs() {
       id: staff?.id,
       name: staff?.name,
       email: staff?.email,
+      password: '',
+      confirm_password: '',
       phone: staff?.phone,
       role: staff?.role_id
     })

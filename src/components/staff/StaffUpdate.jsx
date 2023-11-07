@@ -21,22 +21,38 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
       create(prevErr, (draftErr) => {
         delete draftErr.message
 
-        if (name !== 'phone') {
+        if (name !== 'phone' && name !== 'password' && name !== 'confirm_password') {
           val === ''
-            ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
+            ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
             : delete draftErr[name]
 
           if (val !== '' && name === 'email') {
             !/\S+@\S+\.\S+/.test(val)
-              ? (draftErr.email = `${t(`common.${name}`)} is invalid!`)
+              ? (draftErr.email = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
               : delete draftErr.email
           }
           return
         }
 
+        if (name === 'password' && name !== 'phone') {
+          const reg = new RegExp(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+          )
+          val !== '' && !reg.test(val)
+            ? (draftErr.password = ` ${t(`common_validation.week`)} ${t('common.password')}`)
+            : delete draftErr.password
+          return
+        }
+        if (name === 'confirm_password' && name !== 'phone') {
+          val !== '' && staffData.password !== val
+            ? (draftErr.confirm_password = `${t('common_validation.confirm_password_not_match')}`)
+            : delete draftErr.confirm_password
+          return
+        }
+
         name === 'phone' && !isNaN(val)
           ? delete draftErr.phone
-          : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
+          : (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
       })
     )
   }
@@ -59,6 +75,8 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
           setStaffData({
             name: '',
             email: '',
+            password: '',
+            confirm_password: '',
             phone: '',
             role: ''
           })
