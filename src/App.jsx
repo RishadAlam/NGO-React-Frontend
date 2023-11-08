@@ -16,6 +16,7 @@ import NotFound from './pages/unauthorized/NotFound'
 import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
+const ClientRegistration = lazy(() => import('./pages/registration/ClientRegistration'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -65,6 +66,24 @@ export default function App() {
                 </ErrorBoundary>
               }
             />
+
+            {/* Client Registrations Routes */}
+            <Route path="registration">
+              <Route
+                path="client"
+                element={<RequirePermissions allowedPermissions={['client_registration']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <ClientRegistration />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+            </Route>
 
             {/* Field, Center, Category */}
             <Route

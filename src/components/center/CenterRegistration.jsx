@@ -6,14 +6,15 @@ import xFetch from '../../utilities/xFetch'
 import CenterFormModal from './CenterFormModal'
 
 export default function CenterRegistration({ isOpen, setIsOpen, accessToken, t, mutate }) {
+  const [errors, setErrors] = useState({ name: '', field: '' })
+  const [loading, setLoading] = useLoadingState({})
   const [centerData, setCenterData] = useState({
     name: '',
     field_id: '',
     field: null,
     description: ''
   })
-  const [errors, setErrors] = useState({ name: '', field: '' })
-  const [loading, setLoading] = useLoadingState({})
+
   const setChange = (val, name) => {
     setCenterData((prevData) =>
       create(prevData, (draftData) => {

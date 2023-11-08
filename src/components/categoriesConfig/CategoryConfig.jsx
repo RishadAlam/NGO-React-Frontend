@@ -20,7 +20,7 @@ export default function CategoryConfig({ allConfigurations, error, setChange, up
           </div>
         )}
         <div className="table-responsive">
-          <table className="table table-hover table-report mb-0">
+          <table className="table table-hover table-report mb-0 config-table">
             <thead>
               <tr>
                 <th colSpan="2" className="text-center border-bottom-0"></th>

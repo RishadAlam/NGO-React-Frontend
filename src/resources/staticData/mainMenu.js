@@ -12,18 +12,18 @@ export const mainMenu = (t) => {
         label: t('menu.label.registration'),
         path: '',
         icon: 'UserPlus',
-        view: checkPermissions([], permissions),
+        view: checkPermissions(['client_registration'], permissions),
         subMenu: [
           {
             id: 'reg1',
-            label: 'Client Registration',
-            path: '/client-registration',
+            label: t('menu.registration.Client_Registration'),
+            path: '/registration/client',
             icon: 'UserPlus',
-            view: checkPermission('', permissions)
+            view: checkPermission('client_registration', permissions)
           },
           {
             id: 'reg2',
-            label: 'Create Saving Account',
+            label: t('menu.label.client_registration'),
             path: '/create-saving-account',
             icon: 'UserPlus',
             view: checkPermission('', permissions)
