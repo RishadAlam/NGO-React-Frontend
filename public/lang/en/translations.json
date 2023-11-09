@@ -99,7 +99,14 @@
     "fee": "Fee",
     "store": "Store",
     "limit": "Limit",
-    "configuration": "Configuration"
+    "configuration": "Configuration",
+    "male": "Male",
+    "female": "Female",
+    "others": "Others",
+    "islam": "Islam",
+    "hindu": "Hindu",
+    "christian": "Christian",
+    "Buddhist": "Buddha"
   },
 
   "common_validation": {

@@ -99,7 +99,14 @@
     "fee": "ফি",
     "store": "জমা",
     "limit": "লিমিট",
-    "configuration": "কনফিগারেশন"
+    "configuration": "কনফিগারেশন",
+    "male": "পুরুষ",
+    "female": "মহিলা",
+    "others": "অন্যান্য",
+    "islam": "ইসলাম",
+    "hindu": "হিন্দু",
+    "christian": "খ্রিস্টান",
+    "Buddhist": "বৌদ্ধ"
   },
 
   "common_validation": {
