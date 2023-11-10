@@ -1,12 +1,12 @@
 import { create, rawReturn } from 'mutative'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import AddressFields from '../../components/clientRegistration/AddressFields'
 import Button from '../../components/utilities/Button'
-import CheckboxInputField from '../../components/utilities/CheckboxInputField'
 import DatePickerInputField from '../../components/utilities/DatePickerInputField'
 import ImagePreview from '../../components/utilities/ImagePreview'
 import RadioInputGroup from '../../components/utilities/RadioInputGroup'
@@ -16,10 +16,6 @@ import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
-import { districts } from '../../resources/staticData/districts'
-import { divisions } from '../../resources/staticData/divisions'
-import { policeStations } from '../../resources/staticData/policeStations'
-import { postCodes } from '../../resources/staticData/postCodes'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
@@ -67,10 +63,6 @@ export default function ClientRegistration() {
     center: ''
   })
 
-  const divisionData = useMemo(() => divisions(), [])
-  const districtData = useMemo(() => districts(), [])
-  const policeStationData = useMemo(() => policeStations(), [])
-  const postCodeData = useMemo(() => postCodes(), [])
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
   const { data: { data: occupations = [] } = [] } = useFetch({
@@ -98,54 +90,6 @@ export default function ClientRegistration() {
     onInputChange: (e, option) => setChange(option, 'occupation')
   }
 
-  const presentDivisionConfig = {
-    options: divisionData,
-    value: clientData?.present_address_division || null,
-    freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
-    onChange: (e, option) => setAddress(option, 'division', 'present_address'),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const presentDistrictConfig = {
-    options: clientData?.present_address_division?.id
-      ? districtData?.filter(
-          (district) => district.division_id === clientData?.present_address_division?.id
-        )
-      : districtData,
-    value: clientData?.present_address_district || null,
-    freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
-    onChange: (e, option) => setAddress(option, 'district', 'present_address'),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const presentPoliceStationConfig = {
-    options: clientData?.present_address_district?.id
-      ? policeStationData?.filter(
-          (policeStation) => policeStation.district_id === clientData?.present_address_district?.id
-        )
-      : policeStationData,
-    value: clientData?.present_address_police_station || null,
-    freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
-    onChange: (e, option) => setAddress(option, 'police_station', 'present_address'),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const presentPostCodeConfig = {
-    options:
-      clientData?.present_address_district?.id || clientData?.present_address_division?.id
-        ? postCodeData?.filter(
-            (postCode) =>
-              postCode.district_id === clientData?.present_address_district?.id ||
-              postCode.division_id === clientData?.present_address_division?.id
-          )
-        : postCodeData,
-    value: clientData?.present_address_police_station || null,
-    freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
-    onChange: (e, option) => setAddress(option, 'police_station', 'present_address'),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-
   const setChange = (val, name) => {
     setClientData((prevData) =>
       create(prevData, (draftData) => {
@@ -167,30 +111,6 @@ export default function ClientRegistration() {
           : delete draftErr[name]
       })
     )
-  }
-
-  const setAddress = (val, name, address) => {
-    console.log(val)
-    // setClientData((prevData) =>
-    //   create(prevData, (draftData) => {
-    //     if (name === 'field') {
-    //       draftData.field_id = val?.id || ''
-    //       draftData.field = val || null
-    //       return
-    //     }
-
-    //     draftData[name] = val
-    //   })
-    // )
-
-    // setErrors((prevErr) =>
-    //   create(prevErr, (draftErr) => {
-    //     delete draftErr.message
-    //     val === '' || val === null
-    //       ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-    //       : delete draftErr[name]
-    //   })
-    // )
   }
 
   const onSubmit = (event) => {
@@ -440,168 +360,7 @@ export default function ClientRegistration() {
                       disabled={loading?.clientRegistrationForm}
                     />
                   </div>
-
-                  {/* Present Address */}
-                  <div className="col-md-12 mt-5">
-                    <div className="form-divider py-2 px-3">
-                      <h5>{t('common.present_address')}</h5>
-                    </div>
-                  </div>
-                  <div className="col-md-12 mb-3">
-                    <TextInputField
-                      label={t('common.street_address')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.street_address || ''}
-                      setChange={(val) => setAddress(val, 'street_address', 'present_address')}
-                      error={errors?.present_address?.street_address}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.city')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.city || ''}
-                      setChange={(val) => setAddress(val, 'city', 'present_address')}
-                      error={errors?.present_address?.city}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.post_office')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.post_office || ''}
-                      setChange={(val) => setAddress(val, 'post_office', 'present_address')}
-                      error={errors?.present_address?.post_office}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.post_code')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.post_code || ''}
-                      setChange={(val) => setAddress(val, 'post_code', 'present_address')}
-                      error={errors?.present_address?.post_code}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.police_station')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.police_station || ''}
-                      setChange={(val) => setAddress(val, 'police_station', 'present_address')}
-                      error={errors?.present_address?.police_station}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.state')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.state || ''}
-                      setChange={(val) => setAddress(val, 'state', 'present_address')}
-                      error={errors?.present_address?.state}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.division')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.division || ''}
-                      setChange={(val) => setAddress(val, 'division', 'present_address')}
-                      error={errors?.present_address?.division}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-
-                  {/* Permanent Address */}
-                  <div className="col-md-12 mt-5">
-                    <div className="form-divider py-2 px-3 d-flex align-items-center justify-content-between">
-                      <h5>{t('common.permanent_address')}</h5>
-                      <div>
-                        <CheckboxInputField
-                          label="If Permanent Address same as Present Address"
-                          isChecked={false}
-                          setChange={(e) => setChange(e.target.checked, 'saving')}
-                          error={false}
-                          disabled={loading?.clientRegistrationForm}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-12 mb-3">
-                    <TextInputField
-                      label={t('common.street_address')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.street_address || ''}
-                      setChange={(val) => setAddress(val, 'street_address', 'permanent_address')}
-                      error={errors?.present_address?.street_address}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.city')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.city || ''}
-                      setChange={(val) => setAddress(val, 'city', 'permanent_address')}
-                      error={errors?.present_address?.city}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.post_office')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.post_office || ''}
-                      setChange={(val) => setAddress(val, 'post_office', 'permanent_address')}
-                      error={errors?.present_address?.post_office}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.post_code')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.post_code || ''}
-                      setChange={(val) => setAddress(val, 'post_code', 'permanent_address')}
-                      error={errors?.present_address?.post_code}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.police_station')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.police_station || ''}
-                      setChange={(val) => setAddress(val, 'police_station', 'permanent_address')}
-                      error={errors?.present_address?.police_station}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <TextInputField
-                      label={t('common.state')}
-                      isRequired={true}
-                      defaultValue={clientData?.present_address?.state || ''}
-                      setChange={(val) => setAddress(val, 'state', 'permanent_address')}
-                      error={errors?.present_address?.state}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
-                  <div className="col-md-6 col-lg-4 mb-3">
-                    <SelectBoxField
-                      label={t('common.division')}
-                      config={presentDivisionConfig || {}}
-                      isRequired={true}
-                      error={errors?.present_address?.division}
-                      disabled={loading?.clientRegistrationForm}
-                    />
-                  </div>
+                  <AddressFields clientData={clientData} errors={errors} loading={loading} />
                 </div>
               </div>
               <div className="card-footer text-center">
