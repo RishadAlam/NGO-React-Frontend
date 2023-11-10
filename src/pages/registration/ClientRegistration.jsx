@@ -47,7 +47,7 @@ export default function ClientRegistration() {
       post_office: '',
       post_code: '',
       police_station: '',
-      state: '',
+      district: '',
       division: ''
     },
     permanent_address: {
@@ -56,7 +56,7 @@ export default function ClientRegistration() {
       post_office: '',
       post_code: '',
       police_station: '',
-      state: '',
+      district: '',
       division: ''
     },
     field: '',
@@ -360,7 +360,13 @@ export default function ClientRegistration() {
                       disabled={loading?.clientRegistrationForm}
                     />
                   </div>
-                  <AddressFields clientData={clientData} errors={errors} loading={loading} />
+                  <AddressFields
+                    clientData={clientData}
+                    setClientData={setClientData}
+                    errors={errors}
+                    setErrors={setErrors}
+                    loading={loading}
+                  />
                 </div>
               </div>
               <div className="card-footer text-center">
