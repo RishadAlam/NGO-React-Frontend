@@ -10,6 +10,7 @@ import TextInputField from '../utilities/TextInputField'
 
 export default function AddressFields({ clientData, errors, loading }) {
   const { t } = useTranslation()
+  const lang = document.querySelector('html').lang
   const divisionData = useMemo(() => divisions(), [])
   const districtData = useMemo(() => districts(), [])
   const policeStationData = useMemo(() => policeStations(), [])
@@ -19,12 +20,15 @@ export default function AddressFields({ clientData, errors, loading }) {
     options: divisionData,
     value: clientData?.present_address_division || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'division', 'present_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const presentDistrictConfig = {
@@ -35,12 +39,15 @@ export default function AddressFields({ clientData, errors, loading }) {
       : districtData,
     value: clientData?.present_address_district || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'district', 'present_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const presentPoliceStationConfig = {
@@ -51,12 +58,15 @@ export default function AddressFields({ clientData, errors, loading }) {
       : policeStationData,
     value: clientData?.present_address_police_station || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'police_station', 'present_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const presentPostCodeConfig = {
@@ -83,12 +93,15 @@ export default function AddressFields({ clientData, errors, loading }) {
     options: divisionData,
     value: clientData?.permanent_address_division || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'division', 'permanent_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const permanentDistrictConfig = {
@@ -99,12 +112,15 @@ export default function AddressFields({ clientData, errors, loading }) {
       : districtData,
     value: clientData?.permanent_address_district || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'district', 'permanent_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const permanentPoliceStationConfig = {
@@ -116,12 +132,15 @@ export default function AddressFields({ clientData, errors, loading }) {
       : policeStationData,
     value: clientData?.permanent_address_police_station || null,
     freeSolo: true,
-    getOptionLabel: (option) => option?.name || option,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
     onChange: (e, option) => setAddress(option, 'police_station', 'permanent_address'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
       props.key = props.id
-      return <li {...props}>{option?.name || option}</li>
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
     }
   }
   const permanentPostCodeConfig = {
