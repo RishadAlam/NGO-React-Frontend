@@ -21,19 +21,17 @@ export default function TextInputField({
 
   return (
     <TextField
-      // id="input-with-icon-textfield"
       className="form-control"
       label={isRequired ? requiredLabel : label}
       type={type || 'text'}
-      defaultValue={defaultValue}
+      // defaultValue={defaultValue}
+      value={defaultValue}
       onChange={(e) => setChange(e.target.value)}
-      //   InputProps={{
-      //     startAdornment: <InputAdornment position="start">{icon}</InputAdornment>
-      //   }}
       variant={variant || 'standard'}
       error={error ? true : false}
       helperText={typeof error === 'string' ? error : ''}
       autoFocus={autoFocus}
+      required={isRequired}
       disabled={disabled ? true : false}
     />
   )

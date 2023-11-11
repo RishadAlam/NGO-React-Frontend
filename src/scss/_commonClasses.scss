@@ -413,6 +413,10 @@ ul {
   padding: 4px 0 5px !important;
 }
 
+.MuiFormLabel-asterisk{
+  display: none;
+}
+
 .rs-calendar-table-cell-selected .rs-calendar-table-cell-content,
 .rs-btn-primary {
   background-color: $primary-bg;

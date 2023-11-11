@@ -19,7 +19,6 @@ import UserPlus from '../../icons/UserPlus'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
-  const [errors, setErrors] = useState({ name: '', field: '' })
   const [imageUri, setImageUri] = useState()
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
@@ -62,6 +61,36 @@ export default function ClientRegistration() {
     field: '',
     center: ''
   })
+  const [errors, setErrors] = useState({
+    field: '',
+    center: '',
+    acc_no: '',
+    name: '',
+    father_name: '',
+    husband_name: '',
+    mother_name: '',
+    nid: '',
+    occupation: '',
+    religion: '',
+    gender: '',
+    primary_phone: '',
+    image: '',
+    share: '',
+    present_address_street_address: '',
+    present_address_city: '',
+    present_address_post_office: '',
+    present_address_post_code: '',
+    present_address_police_station: '',
+    present_address_district: '',
+    present_address_division: '',
+    permanent_address_street_address: '',
+    permanent_address_city: '',
+    permanent_address_post_office: '',
+    permanent_address_post_code: '',
+    permanent_address_police_station: '',
+    permanent_address_district: '',
+    permanent_address_division: ''
+  })
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
@@ -73,14 +102,14 @@ export default function ClientRegistration() {
     options: fields,
     value: clientData?.field || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'field_id'),
+    onChange: (e, option) => setChange(option, 'field'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const centerConfig = {
     options: centers,
     value: clientData?.center || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'center_id'),
+    onChange: (e, option) => setChange(option, 'center'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const occupationConfig = {
@@ -91,11 +120,17 @@ export default function ClientRegistration() {
   }
 
   const setChange = (val, name) => {
+    console.log(val)
     setClientData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'field') {
           draftData.field_id = val?.id || ''
           draftData.field = val || null
+          return
+        }
+        if (name === 'center') {
+          draftData.center_id = val?.id || ''
+          draftData.center = val || null
           return
         }
 

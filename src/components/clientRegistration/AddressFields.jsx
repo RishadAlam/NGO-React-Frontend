@@ -18,75 +18,46 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
   const policeStationData = useMemo(() => policeStations(), [])
   const postCodeData = useMemo(() => postCodes(), [])
 
+  const setCommonConfig = {
+    freeSolo: true,
+    getOptionLabel: (option) =>
+      lang === 'en' ? option?.name || option : option?.bn_name || option,
+    isOptionEqualToValue: (option, value) => option.id === value.id,
+    renderOption: (props, option, state) => {
+      props.key = props.id
+      return (
+        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
+      )
+    }
+  }
+
   const presentDivisionConfig = {
+    ...setCommonConfig,
     options: divisionData,
     value: clientData?.present_address_division || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'division', 'present_address', 'present_address_division'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'division', 'present_address', 'present_address_division')
   }
   const presentDistrictConfig = {
-    options: clientData?.present_address_division?.id
-      ? districtData?.filter(
-          (district) => district?.division_id === clientData?.present_address_division?.id
-        )
-      : districtData,
+    ...setCommonConfig,
+    options: districtData,
     value: clientData?.present_address_district || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'district', 'present_address', 'present_address_district'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'district', 'present_address', 'present_address_district')
   }
   const presentPoliceStationConfig = {
-    options: clientData?.present_address_district?.id
-      ? policeStationData?.filter(
-          (policeStation) => policeStation?.district_id === clientData?.present_address_district?.id
-        )
-      : policeStationData,
+    ...setCommonConfig,
+    options: policeStationData,
     value: clientData?.present_address_police_station || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'police_station', 'present_address', 'present_address_police_station'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'police_station', 'present_address', 'present_address_police_station')
   }
   const presentPostCodeConfig = {
-    options:
-      clientData?.present_address_district?.id || clientData?.present_address_division?.id
-        ? postCodeData?.filter(
-            (postCode) =>
-              postCode?.district_id === clientData?.present_address_district?.id ||
-              postCode?.division_id === clientData?.present_address_division?.id
-          )
-        : postCodeData,
+    options: postCodeData,
     value: clientData?.present_address_post_code || null,
     freeSolo: true,
     getOptionLabel: (option) => option?.postCode || option,
-    onChange: (e, option) =>
+    onInputChange: (e, option) =>
       setAddress(option, 'post_code', 'present_address', 'present_address_post_code'),
     isOptionEqualToValue: (option, value) => option.id === value.id,
     renderOption: (props, option, state) => {
@@ -96,77 +67,34 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
   }
 
   const permanentDivisionConfig = {
+    ...setCommonConfig,
     options: divisionData,
     value: clientData?.permanent_address_division || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'division', 'permanent_address', 'permanent_address_division'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'division', 'permanent_address', 'permanent_address_division')
   }
   const permanentDistrictConfig = {
-    options: clientData?.permanent_address_division?.id
-      ? districtData?.filter(
-          (district) => district?.division_id === clientData?.permanent_address_division?.id
-        )
-      : districtData,
+    ...setCommonConfig,
+    options: districtData,
     value: clientData?.permanent_address_district || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'district', 'permanent_address', 'permanent_address_district'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'district', 'permanent_address', 'permanent_address_district')
   }
   const permanentPoliceStationConfig = {
-    options: clientData?.permanent_address_district?.id
-      ? policeStationData?.filter(
-          (policeStation) =>
-            policeStation?.district_id === clientData?.permanent_address_district?.id
-        )
-      : policeStationData,
+    ...setCommonConfig,
+    options: policeStationData,
     value: clientData?.permanent_address_police_station || null,
-    freeSolo: true,
-    getOptionLabel: (option) =>
-      lang === 'en' ? option?.name || option : option?.bn_name || option,
-    onChange: (e, option) =>
-      setAddress(option, 'police_station', 'permanent_address', 'permanent_address_police_station'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
-    renderOption: (props, option, state) => {
-      props.key = props.id
-      return (
-        <li {...props}>{lang === 'en' ? option?.name || option : option?.bn_name || option}</li>
-      )
-    }
+    onInputChange: (e, option) =>
+      setAddress(option, 'police_station', 'permanent_address', 'permanent_address_police_station')
   }
   const permanentPostCodeConfig = {
-    options:
-      clientData?.permanent_address_district?.id || clientData?.permanent_address_division?.id
-        ? postCodeData?.filter(
-            (postCode) =>
-              postCode?.district_id === clientData?.permanent_address_district?.id ||
-              postCode?.division_id === clientData?.permanent_address_division?.id
-          )
-        : postCodeData,
+    options: postCodeData,
     value: clientData?.permanent_address_post_code || null,
     freeSolo: true,
     getOptionLabel: (option) => option?.postCode || option,
-    onChange: (e, option) =>
+    onInputChange: (e, option) =>
       setAddress(option, 'post_code', 'permanent_address', 'permanent_address_post_code'),
-    isOptionEqualToValue: (option, value) => option.id === value.id,
+    isOptionEqualToValue: (option, value) => option.postCode === value.postCode,
     renderOption: (props, option, state) => {
       props.key = option.postCode
       return <li {...props}>{option?.postCode || option}</li>
@@ -174,7 +102,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
   }
 
   const setPermanentAddress = (isChecked) => {
-    console.log(isChecked)
     if (isChecked) {
       setClientData((prevData) =>
         create(prevData, (draftData) => {
@@ -183,6 +110,17 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           draftData['permanent_address_division'] = draftData.present_address_division
           draftData['permanent_address_police_station'] = draftData.present_address_police_station
           draftData['permanent_address_post_code'] = draftData.present_address_post_code
+        })
+      )
+      setErrors((prevErr) =>
+        create(prevErr, (draftErr) => {
+          delete draftErr.permanent_address_district
+          delete draftErr.permanent_address_division
+          delete draftErr.permanent_address_police_station
+          delete draftErr.permanent_address_post_code
+          delete draftErr.permanent_address_post_office
+          delete draftErr.permanent_address_city
+          delete draftErr.permanent_address_street_address
         })
       )
     } else {
@@ -203,6 +141,31 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           delete draftData.permanent_address_post_code
         })
       )
+      setErrors((prevErr) =>
+        create(prevErr, (draftErr) => {
+          draftErr.permanent_address_district = `${t('common.district')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_division = `${t('common.division')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_police_station = `${t('common.police_station')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_post_code = `${t('common.post_code')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_post_office = `${t('common.post_office')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_city = `${t('common.city')} ${t(
+            `common_validation.is_required`
+          )}`
+          draftErr.permanent_address_street_address = `${t('common.street_address')} ${t(
+            `common_validation.is_required`
+          )}`
+        })
+      )
     }
     setAddressCheck(isChecked)
   }
@@ -210,7 +173,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
   const setAddress = (val, name, address, addressObj = null) => {
     setClientData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'post_code') {
+        if (name === 'post_code' && val !== '' && val !== null) {
           if (typeof val === 'string') {
             draftData[address][name] = val
             draftData[addressObj] = {
@@ -223,10 +186,9 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           return
         }
         if (
-          name === 'post_code' ||
-          name === 'police_station' ||
-          name === 'district' ||
-          name === 'division'
+          (name === 'police_station' || name === 'district' || name === 'division') &&
+          val !== '' &&
+          val !== null
         ) {
           if (typeof val === 'string') {
             draftData[address][name] = val
@@ -246,14 +208,16 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
       })
     )
 
-    // setErrors((prevErr) =>
-    //   create(prevErr, (draftErr) => {
-    //     delete draftErr.message
-    //     val === '' || val === null
-    //       ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-    //       : delete draftErr[name]
-    //   })
-    // )
+    setErrors((prevErr) =>
+      create(prevErr, (draftErr) => {
+        delete draftErr.message
+        val === '' || val === null
+          ? (draftErr[`${address}_${name}`] = `${t(`common.${name}`)} ${t(
+              `common_validation.is_required`
+            )}`)
+          : delete draftErr[`${address}_${name}`]
+      })
+    )
   }
 
   return (
@@ -270,7 +234,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.present_address?.street_address || ''}
           setChange={(val) => setAddress(val, 'street_address', 'present_address')}
-          error={errors?.present_address?.street_address}
+          error={errors?.present_address_street_address}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -280,7 +244,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.present_address?.city || ''}
           setChange={(val) => setAddress(val, 'city', 'present_address')}
-          error={errors?.present_address?.city}
+          error={errors?.present_address_city}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -290,7 +254,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.present_address?.post_office || ''}
           setChange={(val) => setAddress(val, 'post_office', 'present_address')}
-          error={errors?.present_address?.post_office}
+          error={errors?.present_address_post_office}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -299,7 +263,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.post_code')}
           config={presentPostCodeConfig || {}}
           isRequired={true}
-          error={errors?.present_address?.post_code}
+          error={errors?.present_address_post_code}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -308,7 +272,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.police_station')}
           config={presentPoliceStationConfig || {}}
           isRequired={true}
-          error={errors?.present_address?.police_station}
+          error={errors?.present_address_police_station}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -317,7 +281,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.district')}
           config={presentDistrictConfig || {}}
           isRequired={true}
-          error={errors?.present_address?.district}
+          error={errors?.present_address_district}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -326,7 +290,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.division')}
           config={presentDivisionConfig || {}}
           isRequired={true}
-          error={errors?.present_address?.division}
+          error={errors?.present_address_division}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -352,7 +316,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.permanent_address?.street_address || ''}
           setChange={(val) => setAddress(val, 'street_address', 'permanent_address')}
-          error={errors?.permanent_address?.street_address}
+          error={errors?.permanent_address_street_address}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -362,7 +326,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.permanent_address?.city || ''}
           setChange={(val) => setAddress(val, 'city', 'permanent_address')}
-          error={errors?.permanent_address?.city}
+          error={errors?.permanent_address_city}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -372,7 +336,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           isRequired={true}
           defaultValue={clientData?.permanent_address?.post_office || ''}
           setChange={(val) => setAddress(val, 'post_office', 'permanent_address')}
-          error={errors?.permanent_address?.post_office}
+          error={errors?.permanent_address_post_office}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -381,7 +345,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.post_code')}
           config={permanentPostCodeConfig || {}}
           isRequired={true}
-          error={errors?.permanent_address?.post_code}
+          error={errors?.permanent_address_post_code}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -390,7 +354,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.police_station')}
           config={permanentPoliceStationConfig || {}}
           isRequired={true}
-          error={errors?.permanent_address?.police_station}
+          error={errors?.permanent_address_police_station}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -399,7 +363,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.district')}
           config={permanentDistrictConfig || {}}
           isRequired={true}
-          error={errors?.permanent_address?.district}
+          error={errors?.permanent_address_district}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
@@ -408,7 +372,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.division')}
           config={permanentDivisionConfig || {}}
           isRequired={true}
-          error={errors?.permanent_address?.division}
+          error={errors?.permanent_address_division}
           disabled={loading?.clientRegistrationForm}
         />
       </div>
