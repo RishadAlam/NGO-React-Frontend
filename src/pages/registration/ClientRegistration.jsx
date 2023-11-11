@@ -16,10 +16,11 @@ import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
+import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
-  const [imageUri, setImageUri] = useState()
+  const [imageUri, setImageUri] = useState(profilePlaceholder)
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
@@ -120,7 +121,6 @@ export default function ClientRegistration() {
   }
 
   const setChange = (val, name) => {
-    console.log(val)
     setClientData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'field') {
@@ -133,6 +133,9 @@ export default function ClientRegistration() {
           draftData.center = val || null
           return
         }
+        if (name === 'image') {
+          setImageUri(URL.createObjectURL(val))
+        }
 
         draftData[name] = val
       })
@@ -141,12 +144,15 @@ export default function ClientRegistration() {
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        val === '' || val === null
-          ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-          : delete draftErr[name]
+        if (name !== 'secondary_phone') {
+          val === '' || val === null
+            ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
+            : delete draftErr[name]
+        }
       })
     )
   }
+  console.log(errors)
 
   const onSubmit = (event) => {
     event.preventDefault()
