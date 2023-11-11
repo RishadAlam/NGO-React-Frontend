@@ -20,6 +20,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
 
   const setCommonConfig = {
     freeSolo: true,
+    clearOnBlur: true,
     getOptionLabel: (option) =>
       lang === 'en' ? option?.name || option : option?.bn_name || option,
     isOptionEqualToValue: (option, value) => option.id === value.id,
@@ -56,6 +57,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
     options: postCodeData,
     value: clientData?.present_address_post_code || null,
     freeSolo: true,
+    clearOnBlur: true,
     getOptionLabel: (option) => option?.postCode || option,
     onInputChange: (e, option) =>
       setAddress(option, 'post_code', 'present_address', 'present_address_post_code'),
@@ -91,6 +93,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
     options: postCodeData,
     value: clientData?.permanent_address_post_code || null,
     freeSolo: true,
+    clearOnBlur: true,
     getOptionLabel: (option) => option?.postCode || option,
     onInputChange: (e, option) =>
       setAddress(option, 'post_code', 'permanent_address', 'permanent_address_post_code'),
@@ -117,7 +120,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           delete draftErr.permanent_address_district
           delete draftErr.permanent_address_division
           delete draftErr.permanent_address_police_station
-          delete draftErr.permanent_address_post_code
           delete draftErr.permanent_address_post_office
           delete draftErr.permanent_address_city
           delete draftErr.permanent_address_street_address
@@ -150,9 +152,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
             `common_validation.is_required`
           )}`
           draftErr.permanent_address_police_station = `${t('common.police_station')} ${t(
-            `common_validation.is_required`
-          )}`
-          draftErr.permanent_address_post_code = `${t('common.post_code')} ${t(
             `common_validation.is_required`
           )}`
           draftErr.permanent_address_post_office = `${t('common.post_office')} ${t(
@@ -211,11 +210,13 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        val === '' || val === null
-          ? (draftErr[`${address}_${name}`] = `${t(`common.${name}`)} ${t(
-              `common_validation.is_required`
-            )}`)
-          : delete draftErr[`${address}_${name}`]
+        if (name !== 'word_no') {
+          val === '' || val === null
+            ? (draftErr[`${address}_${name}`] = `${t(`common.${name}`)} ${t(
+                `common_validation.is_required`
+              )}`)
+            : delete draftErr[`${address}_${name}`]
+        }
       })
     )
   }
@@ -250,6 +251,15 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
         <TextInputField
+          label={t('common.word_no')}
+          defaultValue={clientData?.present_address?.word_no || ''}
+          setChange={(val) => setAddress(val, 'word_no', 'present_address')}
+          error={errors?.present_address_word_no}
+          disabled={loading?.clientRegistrationForm}
+        />
+      </div>
+      <div className="col-md-6 col-lg-4 mb-3">
+        <TextInputField
           label={t('common.post_office')}
           isRequired={true}
           defaultValue={clientData?.present_address?.post_office || ''}
@@ -262,7 +272,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
         <SelectBoxField
           label={t('common.post_code')}
           config={presentPostCodeConfig || {}}
-          isRequired={true}
           error={errors?.present_address_post_code}
           disabled={loading?.clientRegistrationForm}
         />
@@ -332,6 +341,15 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
         <TextInputField
+          label={t('common.word_no')}
+          defaultValue={clientData?.permanent_address?.word_no || ''}
+          setChange={(val) => setAddress(val, 'word_no', 'permanent_address')}
+          error={errors?.permanent_address_word_no}
+          disabled={loading?.clientRegistrationForm}
+        />
+      </div>
+      <div className="col-md-6 col-lg-4 mb-3">
+        <TextInputField
           label={t('common.post_office')}
           isRequired={true}
           defaultValue={clientData?.permanent_address?.post_office || ''}
@@ -344,7 +362,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
         <SelectBoxField
           label={t('common.post_code')}
           config={permanentPostCodeConfig || {}}
-          isRequired={true}
           error={errors?.permanent_address_post_code}
           disabled={loading?.clientRegistrationForm}
         />

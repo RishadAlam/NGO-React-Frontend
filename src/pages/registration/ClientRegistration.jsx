@@ -24,7 +24,7 @@ export default function ClientRegistration() {
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
-  const [clientData, setClientData] = useState({
+  const clientDataFields = {
     field_id: '',
     center_id: '',
     acc_no: '',
@@ -41,9 +41,13 @@ export default function ClientRegistration() {
     secondary_phone: '',
     image: '',
     share: '',
+    annual_income: '',
+    bank_acc_no: '',
+    bank_check_no: '',
     present_address: {
       street_address: '',
       city: '',
+      word_no: '',
       post_office: '',
       post_code: '',
       police_station: '',
@@ -53,6 +57,7 @@ export default function ClientRegistration() {
     permanent_address: {
       street_address: '',
       city: '',
+      word_no: '',
       post_office: '',
       post_code: '',
       police_station: '',
@@ -60,15 +65,22 @@ export default function ClientRegistration() {
       division: ''
     },
     field: '',
-    center: ''
-  })
-  const [errors, setErrors] = useState({
+    center: '',
+    present_address_district: '',
+    present_address_division: '',
+    present_address_police_station: '',
+    present_address_post_code: '',
+    permanent_address_district: '',
+    permanent_address_division: '',
+    permanent_address_police_station: '',
+    permanent_address_post_code: ''
+  }
+  const clientDataErrs = {
     field: '',
     center: '',
     acc_no: '',
     name: '',
     father_name: '',
-    husband_name: '',
     mother_name: '',
     nid: '',
     occupation: '',
@@ -80,18 +92,19 @@ export default function ClientRegistration() {
     present_address_street_address: '',
     present_address_city: '',
     present_address_post_office: '',
-    present_address_post_code: '',
     present_address_police_station: '',
     present_address_district: '',
     present_address_division: '',
     permanent_address_street_address: '',
     permanent_address_city: '',
     permanent_address_post_office: '',
-    permanent_address_post_code: '',
     permanent_address_police_station: '',
     permanent_address_district: '',
     permanent_address_division: ''
-  })
+  }
+
+  const [clientData, setClientData] = useState(clientDataFields)
+  const [errors, setErrors] = useState(clientDataErrs)
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
@@ -144,14 +157,23 @@ export default function ClientRegistration() {
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        if (name !== 'secondary_phone') {
+        if (
+          name !== 'secondary_phone' &&
+          name !== 'annual_income' &&
+          name !== 'bank_acc_no' &&
+          name !== 'bank_check_no'
+        ) {
           val === '' || val === null
             ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
             : delete draftErr[name]
         }
-        if ((name === 'father_name' || name === 'husband_name') && val !== '') {
-          delete draftErr.father_name
-          delete draftErr.husband_name
+        if (name === 'primary_phone' || name === 'secondary_phone') {
+          val.length === 11
+            ? delete draftErr[name]
+            : (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`)
+          if (name === 'secondary_phone' && val === '') {
+            delete draftErr[name]
+          }
         }
       })
     )
@@ -164,7 +186,7 @@ export default function ClientRegistration() {
       clientData.center_id === '' ||
       clientData.acc_no === '' ||
       clientData.name === '' ||
-      (clientData.father_name === '' && clientData.husband_name === '') ||
+      clientData.father_name === '' ||
       clientData.mother_name === '' ||
       clientData.nid === '' ||
       clientData.dob === '' ||
@@ -209,6 +231,9 @@ export default function ClientRegistration() {
     formData.append('primary_phone', clientData.primary_phone)
     formData.append('secondary_phone', clientData.secondary_phone)
     formData.append('image', clientData.image)
+    formData.append('annual_income', clientData.annual_income)
+    formData.append('bank_acc_no', clientData.bank_acc_no)
+    formData.append('bank_check_no', clientData.bank_check_no)
     formData.append('share', clientData.share)
     formData.append('present_address', JSON.stringify(clientData.present_address))
     formData.append('permanent_address', JSON.stringify(clientData.permanent_address))
@@ -219,12 +244,9 @@ export default function ClientRegistration() {
         setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setClientData({
-            name: '',
-            field_id: '',
-            field: null,
-            description: ''
-          })
+          setClientData(clientDataFields)
+          setImageUri(profilePlaceholder)
+          setErrors(clientDataErrs)
           return
         }
         setErrors((prevErr) =>
@@ -334,6 +356,7 @@ export default function ClientRegistration() {
                       label={t('common.father_name')}
                       defaultValue={clientData?.father_name || ''}
                       setChange={(val) => setChange(val, 'father_name')}
+                      isRequired={true}
                       error={errors?.father_name}
                       disabled={loading?.clientRegistrationForm}
                     />
@@ -437,6 +460,36 @@ export default function ClientRegistration() {
                       defaultValue={clientData?.secondary_phone || ''}
                       setChange={(val) => setChange(val, 'secondary_phone')}
                       error={errors?.secondary_phone}
+                      disabled={loading?.clientRegistrationForm}
+                    />
+                  </div>
+                  <div className="col-md-6 col-xl-4 mb-3">
+                    <TextInputField
+                      label={t('common.annual_income')}
+                      type="number"
+                      defaultValue={clientData?.annual_income || ''}
+                      setChange={(val) => setChange(val, 'annual_income')}
+                      error={errors?.annual_income}
+                      disabled={loading?.clientRegistrationForm}
+                    />
+                  </div>
+                  <div className="col-md-6 col-xl-4 mb-3">
+                    <TextInputField
+                      label={t('common.bank_acc_no')}
+                      type="number"
+                      defaultValue={clientData?.bank_acc_no || ''}
+                      setChange={(val) => setChange(val, 'bank_acc_no')}
+                      error={errors?.bank_acc_no}
+                      disabled={loading?.clientRegistrationForm}
+                    />
+                  </div>
+                  <div className="col-md-6 col-xl-4 mb-3">
+                    <TextInputField
+                      label={t('common.bank_check_no')}
+                      type="number"
+                      defaultValue={clientData?.bank_check_no || ''}
+                      setChange={(val) => setChange(val, 'bank_check_no')}
+                      error={errors?.bank_check_no}
                       disabled={loading?.clientRegistrationForm}
                     />
                   </div>

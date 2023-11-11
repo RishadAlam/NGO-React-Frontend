@@ -29,7 +29,7 @@ export default function TextInputField({
       onChange={(e) => setChange(e.target.value)}
       variant={variant || 'standard'}
       error={error ? true : false}
-      helperText={typeof error === 'string' ? error : ''}
+      helperText={typeof error === 'string' ? error : typeof error === 'object' ? error[0] : ''}
       autoFocus={autoFocus}
       required={isRequired}
       disabled={disabled ? true : false}
