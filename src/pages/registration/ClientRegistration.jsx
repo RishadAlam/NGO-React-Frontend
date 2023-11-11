@@ -33,7 +33,7 @@ export default function ClientRegistration() {
     husband_name: '',
     mother_name: '',
     nid: '',
-    dob: '',
+    dob: new Date(),
     occupation: '',
     religion: '',
     gender: '',
@@ -121,6 +121,9 @@ export default function ClientRegistration() {
   }
 
   const setChange = (val, name) => {
+    if (name === 'image') {
+      setImageUri(URL.createObjectURL(val))
+    }
     setClientData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'field') {
@@ -132,9 +135,6 @@ export default function ClientRegistration() {
           draftData.center_id = val?.id || ''
           draftData.center = val || null
           return
-        }
-        if (name === 'image') {
-          setImageUri(URL.createObjectURL(val))
         }
 
         draftData[name] = val
@@ -149,22 +149,74 @@ export default function ClientRegistration() {
             ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
             : delete draftErr[name]
         }
+        if ((name === 'father_name' || name === 'husband_name') && val !== '') {
+          delete draftErr.father_name
+          delete draftErr.husband_name
+        }
       })
     )
   }
-  console.log(errors)
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (clientData.name === '' || clientData.field_id === '') {
+    if (
+      clientData.field_id === '' ||
+      clientData.center_id === '' ||
+      clientData.acc_no === '' ||
+      clientData.name === '' ||
+      (clientData.father_name === '' && clientData.husband_name === '') ||
+      clientData.mother_name === '' ||
+      clientData.nid === '' ||
+      clientData.dob === '' ||
+      clientData.occupation === '' ||
+      clientData.religion === '' ||
+      clientData.gender === '' ||
+      clientData.primary_phone === '' ||
+      clientData.image === '' ||
+      clientData.share === '' ||
+      clientData.present_address.street_address === '' ||
+      clientData.present_address.city === '' ||
+      clientData.present_address.post_office === '' ||
+      clientData.present_address.post_code === '' ||
+      clientData.present_address.police_station === '' ||
+      clientData.present_address.district === '' ||
+      clientData.present_address.division === '' ||
+      clientData.permanent_address.street_address === '' ||
+      clientData.permanent_address.city === '' ||
+      clientData.permanent_address.post_office === '' ||
+      clientData.permanent_address.post_code === '' ||
+      clientData.permanent_address.police_station === '' ||
+      clientData.permanent_address.district === '' ||
+      clientData.permanent_address.division === ''
+    ) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
-    setLoading({ ...loading, centerForm: true })
-    xFetch('centers', clientData, null, accessToken, null, 'POST')
+    const formData = new FormData()
+    formData.append('field_id', clientData.field_id)
+    formData.append('center_id', clientData.center_id)
+    formData.append('acc_no', clientData.acc_no)
+    formData.append('name', clientData.name)
+    formData.append('father_name', clientData.father_name)
+    formData.append('husband_name', clientData.husband_name)
+    formData.append('mother_name', clientData.mother_name)
+    formData.append('nid', clientData.nid)
+    formData.append('dob', clientData.dob)
+    formData.append('occupation', clientData.occupation)
+    formData.append('religion', clientData.religion)
+    formData.append('gender', clientData.gender)
+    formData.append('primary_phone', clientData.primary_phone)
+    formData.append('secondary_phone', clientData.secondary_phone)
+    formData.append('image', clientData.image)
+    formData.append('share', clientData.share)
+    formData.append('present_address', JSON.stringify(clientData.present_address))
+    formData.append('permanent_address', JSON.stringify(clientData.permanent_address))
+
+    setLoading({ ...loading, clientRegistrationForm: true })
+    xFetch('client/registration', formData, null, accessToken, null, 'POST', true)
       .then((response) => {
-        setLoading({ ...loading, centerForm: false })
+        setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {
           toast.success(response.message)
           setClientData({
@@ -186,7 +238,7 @@ export default function ClientRegistration() {
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, centerForm: false })
+        setLoading({ ...loading, clientRegistrationForm: false })
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -280,7 +332,6 @@ export default function ClientRegistration() {
                   <div className="col-md-6 col-xl-4 mb-3">
                     <TextInputField
                       label={t('common.father_name')}
-                      isRequired={true}
                       defaultValue={clientData?.father_name || ''}
                       setChange={(val) => setChange(val, 'father_name')}
                       error={errors?.father_name}
@@ -290,7 +341,6 @@ export default function ClientRegistration() {
                   <div className="col-md-6 col-xl-4 mb-3">
                     <TextInputField
                       label={t('common.husband_name')}
-                      isRequired={true}
                       defaultValue={clientData?.husband_name || ''}
                       setChange={(val) => setChange(val, 'husband_name')}
                       error={errors?.husband_name}
