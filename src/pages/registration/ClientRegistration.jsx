@@ -11,16 +11,20 @@ import DatePickerInputField from '../../components/utilities/DatePickerInputFiel
 import ImagePreview from '../../components/utilities/ImagePreview'
 import RadioInputGroup from '../../components/utilities/RadioInputGroup'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
+import SignaturePadField from '../../components/utilities/SignaturePadField'
 import TextInputField from '../../components/utilities/TextInputField'
 import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
-import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
+import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
+import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
   const [imageUri, setImageUri] = useState(profilePlaceholder)
+  const [signatureUri, setSignatureUri] = useState(SignaturePlaceholder)
+  const [signatureModal, setSignatureModal] = useState(false)
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
@@ -40,6 +44,7 @@ export default function ClientRegistration() {
     primary_phone: '',
     secondary_phone: '',
     image: '',
+    signature: '',
     share: '',
     annual_income: '',
     bank_acc_no: '',
@@ -231,6 +236,7 @@ export default function ClientRegistration() {
     formData.append('primary_phone', clientData.primary_phone)
     formData.append('secondary_phone', clientData.secondary_phone)
     formData.append('image', clientData.image)
+    formData.append('signature', clientData.signature)
     formData.append('annual_income', clientData.annual_income)
     formData.append('bank_acc_no', clientData.bank_acc_no)
     formData.append('bank_check_no', clientData.bank_check_no)
@@ -246,6 +252,7 @@ export default function ClientRegistration() {
           toast.success(response.message)
           setClientData(clientDataFields)
           setImageUri(profilePlaceholder)
+          setSignatureUri(SignaturePlaceholder)
           setErrors(clientDataErrs)
           return
         }
@@ -301,7 +308,7 @@ export default function ClientRegistration() {
                   </div>
                 )}
                 <div className="row">
-                  <div className="col-md-12 mb-3">
+                  <div className="col-md-6 mb-3">
                     <ImagePreview
                       label={t('common.image')}
                       src={imageUri}
@@ -310,6 +317,19 @@ export default function ClientRegistration() {
                       disabled={loading?.clientRegistrationForm}
                       isRequired={true}
                       style={{ width: 'max-content', margin: 'auto' }}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <SignaturePadField
+                      label={t('common.signature_pad')}
+                      open={signatureModal}
+                      setOpen={setSignatureModal}
+                      imageURL={signatureUri}
+                      setImageURL={setSignatureUri}
+                      setSignature={setClientData}
+                      error={errors?.signature}
+                      disabled={loading?.clientRegistrationForm}
+                      isRequired={true}
                     />
                   </div>
                   <div className="col-md-6 col-xl-4 mb-3">

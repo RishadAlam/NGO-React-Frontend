@@ -111,7 +111,9 @@
     "islam": "Islam",
     "hindu": "Hindu",
     "christian": "Christian",
-    "Buddhist": "Buddha"
+    "Buddhist": "Buddha",
+    "open_signature_pad": "Open Signature Pad",
+    "signature_pad": "Signature Pad"
   },
 
   "common_validation": {
