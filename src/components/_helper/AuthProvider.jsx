@@ -9,7 +9,7 @@ import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { useAppApprovalConfigsState } from '../../atoms/appApprovalConfigAtoms'
+import { useSetAppApprovalConfigsState } from '../../atoms/appApprovalConfigAtoms'
 import { useSetAppSettingsState } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
@@ -48,7 +48,7 @@ export default function AuthProvider({ children }) {
   const { showBoundary } = useErrorBoundary()
   const setAuthData = useSetAuthDataState()
   const setAppSettings = useSetAppSettingsState()
-  const setAppApprovalConfigs = useAppApprovalConfigsState()
+  const setAppApprovalConfigs = useSetAppApprovalConfigsState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
@@ -137,11 +137,15 @@ const authFetch = (
       const appSettingsData = Response[1]
       const appApprovalConfigData = Response[2]
 
-      if ((!authorizedData?.success || !appSettingsData?.success, appApprovalConfigData?.success)) {
+      if (
+        !authorizedData?.success ||
+        !appSettingsData?.success ||
+        !appApprovalConfigData?.success
+      ) {
         toast.error(
-          authorizedData?.success
+          !authorizedData?.success
             ? authorizedData?.message
-            : appSettingsData?.message
+            : !appSettingsData?.success
             ? appSettingsData?.message
             : appApprovalConfigData?.message
         )

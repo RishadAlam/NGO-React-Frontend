@@ -1,8 +1,8 @@
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 const appApprovalConfigsState = atom({
-  key: 'appConfigs',
-  default: {}
+  key: 'appApprovalConfigs',
+  default: []
 })
 
 const useAppApprovalConfigsState = () => useRecoilState(appApprovalConfigsState)
