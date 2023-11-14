@@ -170,7 +170,12 @@ const authFetch = (
         })
       )
       setAppSettings(appSettingsData?.data)
-      setAppApprovalConfigs(appApprovalConfigData?.data)
+      const approvals = {}
+      Array.isArray(appApprovalConfigData?.data) &&
+        appApprovalConfigData?.data.forEach((approval) => {
+          approvals[approval.meta_key] = approval.meta_value
+        })
+      setAppApprovalConfigs(approvals)
     })
     .catch((error) => {
       if (error?.message) {

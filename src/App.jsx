@@ -17,6 +17,7 @@ import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const ClientRegistration = lazy(() => import('./pages/registration/ClientRegistration'))
+const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/PendingClientReg'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -78,6 +79,26 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <ClientRegistration />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+            </Route>
+
+            {/* Pending Registrations Routes */}
+            <Route path="pending/registration">
+              <Route
+                path="client"
+                element={
+                  <RequirePermissions allowedPermissions={['client_registration_approval']} />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingClientReg />
                       </Suspense>
                     </ErrorBoundary>
                   }

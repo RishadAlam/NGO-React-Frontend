@@ -5,16 +5,7 @@ import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 
 export const mainMenu = (t) => {
   const { permissions } = getRecoil(authDataState)
-  const approvals = getRecoil(appApprovalConfigsState)
-
-  let client_registration_approval = true
-
-  Array.isArray(approvals) &&
-    approvals.forEach((approval) => {
-      if (approval.meta_key === 'client_registration_approval') {
-        client_registration_approval = approval.meta_value
-      }
-    })
+  const { client_registration_approval } = getRecoil(appApprovalConfigsState)
 
   return {
     [t('menu.categories.Basic')]: [
@@ -60,23 +51,23 @@ export const mainMenu = (t) => {
           checkPermissions(['client_registration_approval'], permissions),
         subMenu: [
           {
-            id: 'reg1',
+            id: 'pndReg1',
             label: t('menu.registration.Client_Registration'),
-            path: '/registration/client',
+            path: '/pending/registration/client',
             icon: 'UserPlus',
             view:
               !client_registration_approval &&
               checkPermission('client_registration_approval', permissions)
           },
           {
-            id: 'reg2',
+            id: 'pndReg1',
             label: t('menu.label.client_registration'),
             path: '/create-saving-account',
             icon: 'UserPlus',
             view: checkPermission('', permissions)
           },
           {
-            id: 'reg3',
+            id: 'pndReg1',
             label: 'Create Loan Account',
             path: '/create-loan-account',
             icon: 'UserPlus',

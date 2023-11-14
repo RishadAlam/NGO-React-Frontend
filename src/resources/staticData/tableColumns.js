@@ -847,3 +847,54 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
 ]
+
+export const PendingClientRegTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  statusSwitch,
+  actionBtnGroup
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.image'),
+    accessor: 'image_uri',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row, value }) => avatar(row.original.name, value)
+  },
+  { Header: t('common.name'), accessor: 'name' },
+  { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
+  {
+    Header: t('common.center'),
+    accessor: 'center',
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.status'),
+    accessor: 'status',
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]

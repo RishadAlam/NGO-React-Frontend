@@ -29,7 +29,7 @@ export default function ClientRegistration() {
   const [signatureModal, setSignatureModal] = useState(false)
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
-  const approvals = useApprovalConfigsValue()
+  const { client_reg_sign_is_required } = useApprovalConfigsValue()
   const { t } = useTranslation()
   const clientDataFields = {
     field_id: '',
@@ -110,16 +110,6 @@ export default function ClientRegistration() {
     permanent_address_district: '',
     permanent_address_division: ''
   }
-
-  let client_reg_sign_is_required = false
-
-  Array.isArray(approvals) &&
-    approvals.forEach((approval) => {
-      if (approval.meta_key === 'client_reg_sign_is_required' && approval.meta_value) {
-        client_reg_sign_is_required = true
-        clientDataErrs['signature'] = ''
-      }
-    })
 
   const [clientData, setClientData] = useState(clientDataFields)
   const [errors, setErrors] = useState(clientDataErrs)
