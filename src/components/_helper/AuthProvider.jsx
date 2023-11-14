@@ -9,6 +9,7 @@ import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { useAppApprovalConfigsState } from '../../atoms/appApprovalConfigAtoms'
 import { useSetAppSettingsState } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
@@ -47,6 +48,7 @@ export default function AuthProvider({ children }) {
   const { showBoundary } = useErrorBoundary()
   const setAuthData = useSetAuthDataState()
   const setAppSettings = useSetAppSettingsState()
+  const setAppApprovalConfigs = useAppApprovalConfigsState()
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
@@ -70,6 +72,7 @@ export default function AuthProvider({ children }) {
           setIsAuthorized,
           setAuthData,
           setAppSettings,
+          setAppApprovalConfigs,
           loading,
           setLoading,
           showBoundary,
@@ -113,6 +116,7 @@ const authFetch = (
   setIsAuthorized,
   setAuthData,
   setAppSettings,
+  setAppApprovalConfigs,
   loading,
   setLoading,
   showBoundary,
@@ -122,17 +126,25 @@ const authFetch = (
   setLoading({ ...loading, authorization: true })
   const accessToken = `Bearer ${Token}`
   const authorizedData = xFetch('authorization', null, signal, accessToken)
-  const appConfigData = xFetch('app-settings', null, signal, accessToken)
+  const appSettingsData = xFetch('app-settings', null, signal, accessToken)
+  const appApprovalConfigData = xFetch('approvals-config', null, signal, accessToken)
 
   axios
-    .all([authorizedData, appConfigData])
+    .all([authorizedData, appSettingsData, appApprovalConfigData])
     .then((Response) => {
       setLoading({ ...loading, authorization: false })
       const authorizedData = Response[0]
-      const appConfigData = Response[1]
+      const appSettingsData = Response[1]
+      const appApprovalConfigData = Response[2]
 
-      if (!authorizedData?.success || !appConfigData?.success) {
-        toast.error(!authorizedData?.success ? authorizedData?.message : appConfigData?.message)
+      if ((!authorizedData?.success || !appSettingsData?.success, appApprovalConfigData?.success)) {
+        toast.error(
+          authorizedData?.success
+            ? authorizedData?.message
+            : appSettingsData?.message
+            ? appSettingsData?.message
+            : appApprovalConfigData?.message
+        )
         return
       }
 
@@ -153,7 +165,8 @@ const authFetch = (
           draftAuthData.permissions = authorizedData?.permissions
         })
       )
-      setAppSettings(appConfigData?.data)
+      setAppSettings(appSettingsData?.data)
+      setAppApprovalConfigs(appApprovalConfigData?.data)
     })
     .catch((error) => {
       if (error?.message) {
