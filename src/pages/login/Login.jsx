@@ -94,6 +94,12 @@ export default function Login() {
           navigate(from, { replace: true })
           return
         }
+        if (response?.otp_sended && response?.user_id) {
+          toast.success(response?.errors?.message)
+          return navigate('/account-verification', {
+            state: { id: response.user_id, message: response?.errors?.message }
+          })
+        }
         SetErrors(response?.errors || response)
       })
       .catch((error) => {

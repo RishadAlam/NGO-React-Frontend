@@ -5,11 +5,12 @@ import LoaderSm from '../../components/loaders/LoaderSm'
 import '../../pages/login/login.scss'
 import xFetch from '../../utilities/xFetch'
 
-export default function OtpVerification({ userId, setStep, loading, setLoading }) {
+export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
   // States
   const [otp, setOtp] = useState('')
   const [error, setError] = useState({
-    otp: ''
+    otp: '',
+    message: message
   })
 
   // Set Onchange Value
@@ -102,7 +103,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading }
                 <LoaderSm size={30} clr="#1c3faa" className="ms-2" />
               </div>
             ) : (
-              <p className="text-warning cursor-pointer" onClick={resendOTP}>
+              <p className="cursor-pointer" onClick={resendOTP}>
                 Did not get OTP? Resend OTP{' '}
               </p>
             )}
