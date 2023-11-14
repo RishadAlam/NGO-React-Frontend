@@ -19,6 +19,7 @@ export default function SignaturePadField({
   imageURL,
   setImageURL,
   setSignature,
+  setErrors,
   isRequired = false,
   error = false,
   disabled = false
@@ -39,6 +40,13 @@ export default function SignaturePadField({
     setSignature((prev) =>
       create(prev, (draft) => {
         draft.signature = signature
+      })
+    )
+    setErrors((prevErr) =>
+      create(prevErr, (draftErr) => {
+        signature === '' || signature === null || signature === undefined
+          ? (draftErr.signature = `${t(`common.signature`)} ${t('common_validation.is_required')}`)
+          : delete draftErr.signature
       })
     )
     setOpen(false)

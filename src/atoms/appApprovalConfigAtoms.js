@@ -6,12 +6,12 @@ const appApprovalConfigsState = atom({
 })
 
 const useAppApprovalConfigsState = () => useRecoilState(appApprovalConfigsState)
-const useAppSettingsValue = () => useRecoilValue(appApprovalConfigsState)
+const useApprovalConfigsValue = () => useRecoilValue(appApprovalConfigsState)
 const useSetAppApprovalConfigsState = () => useSetRecoilState(appApprovalConfigsState)
 
 export {
   appApprovalConfigsState,
   useAppApprovalConfigsState,
-  useAppSettingsValue,
+  useApprovalConfigsValue,
   useSetAppApprovalConfigsState
 }

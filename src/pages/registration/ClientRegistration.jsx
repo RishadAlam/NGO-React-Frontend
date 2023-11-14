@@ -2,6 +2,7 @@ import { create, rawReturn } from 'mutative'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useApprovalConfigsValue } from '../../atoms/appApprovalConfigAtoms'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -28,6 +29,7 @@ export default function ClientRegistration() {
   const [signatureModal, setSignatureModal] = useState(false)
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const approvals = useApprovalConfigsValue()
   const { t } = useTranslation()
   const clientDataFields = {
     field_id: '',
@@ -38,7 +40,7 @@ export default function ClientRegistration() {
     husband_name: '',
     mother_name: '',
     nid: '',
-    dob: dateFormat(new Date(), 'MM-dd-yyyy'),
+    dob: dateFormat(new Date(), 'yyyy-MM-dd'),
     occupation: '',
     religion: '',
     gender: '',
@@ -109,6 +111,16 @@ export default function ClientRegistration() {
     permanent_address_division: ''
   }
 
+  let client_reg_sign_is_required = false
+
+  Array.isArray(approvals) &&
+    approvals.forEach((approval) => {
+      if (approval.meta_key === 'client_reg_sign_is_required' && approval.meta_value) {
+        client_reg_sign_is_required = true
+        clientDataErrs['signature'] = ''
+      }
+    })
+
   const [clientData, setClientData] = useState(clientDataFields)
   const [errors, setErrors] = useState(clientDataErrs)
 
@@ -156,7 +168,7 @@ export default function ClientRegistration() {
           return
         }
         if (name === 'dob') {
-          draftData.dob = dateFormat(val, 'MM-dd-yyyy')
+          draftData.dob = dateFormat(val, 'yyyy-MM-dd')
           return
         }
 
@@ -222,6 +234,10 @@ export default function ClientRegistration() {
       clientData.permanent_address.division === ''
     ) {
       toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
+    if (client_reg_sign_is_required && clientData.signature === '') {
+      toast.error(`${t(`common.signature`)} ${t('common_validation.is_required')}`)
       return
     }
 
@@ -332,9 +348,10 @@ export default function ClientRegistration() {
                       imageURL={signatureUri}
                       setImageURL={setSignatureUri}
                       setSignature={setClientData}
+                      setErrors={setErrors}
                       error={errors?.signature}
                       disabled={loading?.clientRegistrationForm}
-                      isRequired={true}
+                      isRequired={client_reg_sign_is_required}
                     />
                   </div>
                   <div className="col-md-6 col-xl-4 mb-3">
