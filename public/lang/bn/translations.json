@@ -136,6 +136,7 @@
     "dashboard": "ড্যাশবোর্ড",
     "categories": {
       "Basic": "মৌলিক",
+      "Pending_Approval": "অনুমোদন অপেক্ষারত",
       "Control_Panel": "কন্ট্রোল প্যানেল"
     },
     "label": {
@@ -301,7 +302,8 @@
     "saving_account_registration_approval": "সেভিংস অ্যাকাউন্ট নিবন্ধন অনুমোদন",
     "saving_account_closing_approval": "সেভিংস অ্যাকাউন্ট বন্ধ করার অনুমোদন",
     "loan_account_registration_approval": "ঋণ অ্যাকাউন্ট নিবন্ধন অনুমোদন",
-    "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন"
+    "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন",
+    "client_reg_sign_is_required": "ক্লায়েন্ট নিবন্ধন স্বাক্ষর প্রয়োজন?"
   },
   "categories_config": {
     "account_reg_closing_fees": "অ্যাকাউন্ট নিবন্ধন ও ক্লোজিং ফি",
@@ -318,11 +320,12 @@
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
+      "registration": "নিবন্ধন",
       "account_management": "হিসাব ব্যবস্থাপনা",
-      "Account_transfer": "টাকা স্থানান্তর",
+      "account_transfer": "টাকা স্থানান্তর",
       "income": "আয়",
       "expense": "ব্যয়",
-      "Account_withdrawal": "হিসাব উত্তোলন",
+      "account_withdrawal": "হিসাব উত্তোলন",
       "income_category": "আয় ক্যাটাগরি",
       "expense_category": "ব্যয় ক্যাটাগরি",
       "staff": "কর্মচারি",
@@ -349,6 +352,8 @@
       "category_soft_delete": "ক্যাটাগরি ডিলিট",
       "category_action_history": "ক্যাটাগরি পদক্ষেপ ইতিহাস",
       "category_permanently_delete": "ক্যাটাগরি স্থায়ীভাবে ডিলিট",
+      "client_registration": "সদস্য নিবন্ধন",
+      "client_registration_approval": "সদস্য নিবন্ধন অনুমোদন",
       "account_list_view": "অ্যাকাউন্ট তালিকা দেখুন",
       "account_transaction_list_view": "অ্যাকাউন্ট লেনদেন তালিকা দেখুন",
       "account_registration": "অ্যাকাউন্ট নিবন্ধন",

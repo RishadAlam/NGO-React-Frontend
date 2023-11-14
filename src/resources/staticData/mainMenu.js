@@ -49,10 +49,10 @@ export const mainMenu = (t) => {
         ]
       }
     ],
-    [t('menu.categories.Pending')]: [
+    [t('menu.categories.Pending_Approval')]: [
       {
         id: 1,
-        label: t('menu.label.registration'),
+        label: `${t('menu.categories.Pending_Approval')} ${t('menu.label.registration')}`,
         path: '',
         icon: 'UserPlus',
         view:

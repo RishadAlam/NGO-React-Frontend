@@ -140,6 +140,7 @@
     "dashboard": "Dashboard",
     "categories": {
       "Basic": "Basic",
+      "Pending_Approval": "Pending Approval",
       "Control_Panel": "Control Panel"
     },
     "label": {
@@ -305,7 +306,8 @@
     "saving_account_registration_approval": "Saving Account Registration Approval",
     "saving_account_closing_approval": "Saving Account Closing Approval",
     "loan_account_registration_approval": "Loan Account Registration Approval",
-    "loan_account_closing_approval": "Loan Account Closing Approval"
+    "loan_account_closing_approval": "Loan Account Closing Approval",
+    "client_reg_sign_is_required": "Client Registration Signature Field Required?"
   },
   "categories_config": {
     "account_reg_closing_fees": "Account Registration & Closing fees",
@@ -322,10 +324,10 @@
       "center": "Center",
       "category": "Category",
       "account_management": "Account Management",
-      "Account_transfer": "Account Transfer",
+      "account_transfer": "Account Transfer",
       "income": "Income",
       "expense": "Expense",
-      "Account_withdrawal": "Account Withdrawal",
+      "account_withdrawal": "Account Withdrawal",
       "income_category": "Income Category",
       "expense_category": "Expense Category",
       "staff": "Staff",
@@ -352,6 +354,8 @@
       "category_soft_delete": "Category Soft Delete",
       "category_action_history": "Category Action History",
       "category_permanently_delete": "Category Permanently Delete",
+      "client_registration": "Client Registration",
+      "client_registration_approval": "Client Registration Approval",
       "account_list_view": "Account List View",
       "account_transaction_list_view": "Account Transaction List View",
       "account_registration": "Account Registration",
