@@ -22,7 +22,7 @@ export default function DatePickerInputField({
       <DatePicker
         label={isRequired ? requiredLabel : label}
         className="form-control"
-        value={defaultValue || new Date()}
+        value={(defaultValue && new Date(defaultValue)) || new Date()}
         format="dd/MM/yyyy"
         onChange={(newValue) => setChange(newValue)}
         error={error ? true : false}

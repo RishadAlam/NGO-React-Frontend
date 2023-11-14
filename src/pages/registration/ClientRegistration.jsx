@@ -17,6 +17,7 @@ import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
+import dateFormat from '../../libs/dateFormat'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
@@ -37,7 +38,7 @@ export default function ClientRegistration() {
     husband_name: '',
     mother_name: '',
     nid: '',
-    dob: new Date(),
+    dob: dateFormat(new Date(), 'MM-dd-yyyy'),
     occupation: '',
     religion: '',
     gender: '',
@@ -152,6 +153,10 @@ export default function ClientRegistration() {
         if (name === 'center') {
           draftData.center_id = val?.id || ''
           draftData.center = val || null
+          return
+        }
+        if (name === 'dob') {
+          draftData.dob = dateFormat(val, 'MM-dd-yyyy')
           return
         }
 
