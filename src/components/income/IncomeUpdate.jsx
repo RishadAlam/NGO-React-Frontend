@@ -44,6 +44,7 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
       })
     )
   }
+  console.log(incomeData.date)
 
   const onSubmit = (event) => {
     event.preventDefault()

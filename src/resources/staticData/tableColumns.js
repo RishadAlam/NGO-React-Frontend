@@ -770,6 +770,12 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
     accessor: 'created_at',
     show: false,
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
 ]
 
@@ -827,6 +833,12 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   {
     Header: t('common.created_at'),
     accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
     show: false,
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
