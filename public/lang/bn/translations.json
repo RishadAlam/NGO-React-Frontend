@@ -211,7 +211,12 @@
   "category": {
     "Category_List": "ক্যাটাগরি তালিকা",
     "Category_Registration": "ক্যাটাগরি নিবন্ধন",
-    "Category_edit": "ক্যাটাগরি ইডিট"
+    "Category_edit": "ক্যাটাগরি ইডিট",
+
+    "default": {
+      "monthly_loan": "মাসিক ঋণ",
+      "dps": "ডিপিএস"
+    }
   },
   "account": {
     "Account_List": "অ্যাকাউন্ট তালিকা",

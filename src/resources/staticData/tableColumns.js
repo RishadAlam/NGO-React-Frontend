@@ -180,7 +180,11 @@ export const CategoryTableColumns = (
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
   },
-  { Header: t('common.name'), accessor: 'name' },
+  {
+    Header: t('common.name'),
+    accessor: 'name',
+    Cell: ({ row, value }) => (row.original.is_default ? t(`category.default.${value}`) : value)
+  },
   { Header: t('common.group'), accessor: 'group' },
   {
     Header: t('common.description'),

@@ -215,7 +215,12 @@
   "category": {
     "Category_List": "CATEGORY LIST",
     "Category_Registration": "Category Registration",
-    "Category_Edit": "Category Edit"
+    "Category_Edit": "Category Edit",
+
+    "default": {
+      "monthly_loan": "Monthly Loan",
+      "dps": "DPS"
+    }
   },
   "account": {
     "Account_List": "ACCOUNT LIST",
