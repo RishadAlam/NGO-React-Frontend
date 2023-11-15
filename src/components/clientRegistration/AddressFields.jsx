@@ -9,7 +9,7 @@ import CheckboxInputField from '../utilities/CheckboxInputField'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
 
-export default function AddressFields({ clientData, setClientData, errors, setErrors, loading }) {
+export default function AddressFields({ clientData, setClientData, errors, setErrors, disabled }) {
   const { t } = useTranslation()
   const [addressCheck, setAddressCheck] = useState(false)
   const lang = document.querySelector('html').lang
@@ -236,7 +236,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.present_address?.street_address || ''}
           setChange={(val) => setAddress(val, 'street_address', 'present_address')}
           error={errors?.present_address_street_address}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -246,7 +246,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.present_address?.city || ''}
           setChange={(val) => setAddress(val, 'city', 'present_address')}
           error={errors?.present_address_city}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -255,7 +255,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.present_address?.word_no || ''}
           setChange={(val) => setAddress(val, 'word_no', 'present_address')}
           error={errors?.present_address_word_no}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -265,7 +265,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.present_address?.post_office || ''}
           setChange={(val) => setAddress(val, 'post_office', 'present_address')}
           error={errors?.present_address_post_office}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -273,7 +273,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.post_code')}
           config={presentPostCodeConfig || {}}
           error={errors?.present_address_post_code}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -282,7 +282,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={presentPoliceStationConfig || {}}
           isRequired={true}
           error={errors?.present_address_police_station}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -291,7 +291,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={presentDistrictConfig || {}}
           isRequired={true}
           error={errors?.present_address_district}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -300,7 +300,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={presentDivisionConfig || {}}
           isRequired={true}
           error={errors?.present_address_division}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
 
@@ -314,7 +314,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
               isChecked={addressCheck}
               setChange={(e) => setPermanentAddress(e.target.checked)}
               error={false}
-              disabled={loading?.clientRegistrationForm}
+              disabled={disabled}
             />
           </div>
         </div>
@@ -326,7 +326,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.permanent_address?.street_address || ''}
           setChange={(val) => setAddress(val, 'street_address', 'permanent_address')}
           error={errors?.permanent_address_street_address}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -336,7 +336,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.permanent_address?.city || ''}
           setChange={(val) => setAddress(val, 'city', 'permanent_address')}
           error={errors?.permanent_address_city}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -345,7 +345,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.permanent_address?.word_no || ''}
           setChange={(val) => setAddress(val, 'word_no', 'permanent_address')}
           error={errors?.permanent_address_word_no}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -355,7 +355,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           defaultValue={clientData?.permanent_address?.post_office || ''}
           setChange={(val) => setAddress(val, 'post_office', 'permanent_address')}
           error={errors?.permanent_address_post_office}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -363,7 +363,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           label={t('common.post_code')}
           config={permanentPostCodeConfig || {}}
           error={errors?.permanent_address_post_code}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -372,7 +372,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={permanentPoliceStationConfig || {}}
           isRequired={true}
           error={errors?.permanent_address_police_station}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -381,7 +381,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={permanentDistrictConfig || {}}
           isRequired={true}
           error={errors?.permanent_address_district}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
       <div className="col-md-6 col-lg-4 mb-3">
@@ -390,7 +390,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           config={permanentDivisionConfig || {}}
           isRequired={true}
           error={errors?.permanent_address_division}
-          disabled={loading?.clientRegistrationForm}
+          disabled={disabled}
         />
       </div>
     </>
