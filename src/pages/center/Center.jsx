@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -37,6 +38,7 @@ export default function Center() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const [loading, setLoading] = useLoadingState({})
   const {
     data: { data: centers } = [],
     mutate,
@@ -48,6 +50,7 @@ export default function Center() {
     <AndroidSwitch
       value={value ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      disabled={loading?.changeStatus || false}
     />
   )
   const actionBtnGroup = (id, center) => (
@@ -61,7 +64,10 @@ export default function Center() {
       )}
       {authPermissions.includes('center_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => centerDelete(id)}>
+          <IconButton
+            className="text-danger"
+            onClick={() => centerDelete(id)}
+            disabled={loading?.itemDelete || false}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -96,13 +102,15 @@ export default function Center() {
         descParser
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, loading]
   )
 
   const toggleStatus = (id, isChecked) => {
+    setLoading({ ...loading, changeStatus: true })
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(`centers/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
       .then((response) => {
+        setLoading({ ...loading, changeStatus: false })
         toast.dismiss(toasterLoading)
         if (response?.success) {
           toast.success(response?.message)
@@ -111,7 +119,10 @@ export default function Center() {
         }
         toast.error(response?.message)
       })
-      .catch((errResponse) => toast.error(errResponse?.message))
+      .catch((errResponse) => {
+        setLoading({ ...loading, changeStatus: false })
+        toast.error(errResponse?.message)
+      })
   }
 
   const centerEdit = (center) => {
@@ -133,9 +144,11 @@ export default function Center() {
   const centerDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
+        setLoading({ ...loading, itemDelete: true })
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
         xFetch(`centers/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
+            setLoading({ ...loading, itemDelete: false })
             toast.dismiss(toasterLoading)
             if (response?.success) {
               successAlert(
@@ -148,7 +161,10 @@ export default function Center() {
             }
             successAlert(t('common.deleted'), response?.message, 'error')
           })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          .catch((errResponse) => {
+            setLoading({ ...loading, itemDelete: false })
+            successAlert(t('common.deleted'), errResponse?.message, 'error')
+          })
       }
     })
   }

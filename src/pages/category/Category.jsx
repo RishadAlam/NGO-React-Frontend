@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -39,6 +40,7 @@ export default function Category() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const [loading, setLoading] = useLoadingState({})
   const {
     data: { data: categories } = [],
     mutate,
@@ -50,6 +52,7 @@ export default function Category() {
     <AndroidSwitch
       value={value ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      disabled={loading?.changeStatus || false}
     />
   )
   const actionBtnGroup = (id, category) => (
@@ -63,7 +66,10 @@ export default function Category() {
       )}
       {authPermissions.includes('category_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => categoryDelete(id)}>
+          <IconButton
+            className="text-danger"
+            onClick={() => categoryDelete(id)}
+            disabled={loading?.itemDelete || false}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -109,13 +115,15 @@ export default function Category() {
         savingLoanStatus
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, loading]
   )
 
   const toggleStatus = (id, isChecked) => {
+    setLoading({ ...loading, changeStatus: true })
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(`categories/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
       .then((response) => {
+        setLoading({ ...loading, changeStatus: false })
         toast.dismiss(toasterLoading)
         if (response?.success) {
           toast.success(response?.message)
@@ -124,7 +132,10 @@ export default function Category() {
         }
         toast.error(response?.message)
       })
-      .catch((errResponse) => toast.error(errResponse?.message))
+      .catch((errResponse) => {
+        setLoading({ ...loading, changeStatus: false })
+        toast.error(errResponse?.message)
+      })
   }
 
   const categoryEdit = (category) => {
@@ -147,9 +158,11 @@ export default function Category() {
   const categoryDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
+        setLoading({ ...loading, itemDelete: true })
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
         xFetch(`categories/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
+            setLoading({ ...loading, itemDelete: false })
             toast.dismiss(toasterLoading)
             if (response?.success) {
               successAlert(
@@ -162,7 +175,10 @@ export default function Category() {
             }
             successAlert(t('common.deleted'), response?.message, 'error')
           })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          .catch((errResponse) => {
+            setLoading({ ...loading, itemDelete: false })
+            successAlert(t('common.deleted'), errResponse?.message, 'error')
+          })
       }
     })
   }
