@@ -91,7 +91,9 @@ export default function App() {
               <Route
                 path="client"
                 element={
-                  <RequirePermissions allowedPermissions={['client_registration_approval']} />
+                  <RequirePermissions
+                    allowedPermissions={['pending_client_registration_list_view']}
+                  />
                 }>
                 <Route
                   index

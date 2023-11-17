@@ -48,7 +48,7 @@ export const mainMenu = (t) => {
         icon: 'UserPlus',
         view:
           !client_registration_approval &&
-          checkPermissions(['client_registration_approval'], permissions),
+          checkPermissions(['pending_client_registration_list_view'], permissions),
         subMenu: [
           {
             id: 'pndReg1',
@@ -57,7 +57,7 @@ export const mainMenu = (t) => {
             icon: 'UserPlus',
             view:
               !client_registration_approval &&
-              checkPermission('client_registration_approval', permissions)
+              checkPermission('pending_client_registration_list_view', permissions)
           },
           {
             id: 'pndReg1',
