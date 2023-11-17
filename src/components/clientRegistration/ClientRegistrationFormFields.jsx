@@ -67,7 +67,7 @@ export default function ClientRegistrationFormFields({
       </div>
       <div className="col-md-6 mb-3">
         <SignaturePadField
-          label={t('common.signature_pad')}
+          label={t('common.signature')}
           open={signatureModal}
           setOpen={setSignatureModal}
           imageURL={signatureUri}

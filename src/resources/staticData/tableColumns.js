@@ -848,13 +848,7 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   }
 ]
 
-export const PendingClientRegTableColumns = (
-  t,
-  windowWidth,
-  avatar,
-  statusSwitch,
-  actionBtnGroup
-) => [
+export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitch, actionBtnGroup) => [
   {
     Header: '#',
     accessor: 'id',
@@ -878,6 +872,12 @@ export const PendingClientRegTableColumns = (
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
     Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {

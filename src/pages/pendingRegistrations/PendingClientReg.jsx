@@ -91,6 +91,7 @@ export default function PendingClientReg() {
     const present_address = JSON.parse(profile.present_address)
     const permanent_address = JSON.parse(profile.permanent_address)
     return {
+      id: profile.id,
       field_id: profile.field_id,
       center_id: profile.center_id,
       acc_no: profile.acc_no,
@@ -104,15 +105,15 @@ export default function PendingClientReg() {
       religion: profile.religion,
       gender: profile.gender,
       primary_phone: profile.primary_phone,
-      secondary_phone: profile.secondary_phone,
-      image: profile.image,
+      secondary_phone: profile.secondary_phone || '',
+      image: '',
       image_uri: profile.image_uri,
-      signature: profile.signature,
+      signature: '',
       signature_uri: profile.signature_uri,
       share: profile.share,
-      annual_income: profile.annual_income,
-      bank_acc_no: profile.bank_acc_no,
-      bank_check_no: profile.bank_check_no,
+      annual_income: profile.annual_income || '',
+      bank_acc_no: profile.bank_acc_no || '',
+      bank_check_no: profile.bank_check_no || '',
       present_address: {
         street_address: present_address.street_address,
         city: present_address.city,
@@ -207,6 +208,7 @@ export default function PendingClientReg() {
             setOpen={setEditProfileDataModal}
             profileData={editProfileData}
             setProfileData={setEditProfileData}
+            mutate={mutate}
           />
         )}
         <div className="staff-table">

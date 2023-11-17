@@ -15,7 +15,13 @@ import ClientRegistrationFormFields from '../clientRegistration/ClientRegistrati
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditClientProfileModal({ open, setOpen, profileData, setProfileData }) {
+export default function EditClientProfileModal({
+  open,
+  setOpen,
+  profileData,
+  setProfileData,
+  mutate
+}) {
   const [imageUri, setImageUri] = useState(profileData?.image_uri || profilePlaceholder)
   const [signatureUri, setSignatureUri] = useState(
     profileData?.signature_uri || SignaturePlaceholder
@@ -93,7 +99,6 @@ export default function EditClientProfileModal({ open, setOpen, profileData, set
       profileData.religion === '' ||
       profileData.gender === '' ||
       profileData.primary_phone === '' ||
-      profileData.image === '' ||
       profileData.share === '' ||
       profileData.present_address.street_address === '' ||
       profileData.present_address.city === '' ||
@@ -109,10 +114,6 @@ export default function EditClientProfileModal({ open, setOpen, profileData, set
       profileData.permanent_address.division === ''
     ) {
       toast.error(t('common_validation.required_fields_are_empty'))
-      return
-    }
-    if (client_reg_sign_is_required && profileData.signature === '') {
-      toast.error(`${t(`common.signature`)} ${t('common_validation.is_required')}`)
       return
     }
 
@@ -142,7 +143,7 @@ export default function EditClientProfileModal({ open, setOpen, profileData, set
     formData.append('permanent_address', JSON.stringify(profileData.permanent_address))
 
     setLoading({ ...loading, clientRegistrationForm: true })
-    xFetch('client/registration', formData, null, accessToken, null, 'POST', true)
+    xFetch(`client/registration/${profileData.id}`, formData, null, accessToken, null, 'POST', true)
       .then((response) => {
         setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {
@@ -152,6 +153,7 @@ export default function EditClientProfileModal({ open, setOpen, profileData, set
           setSignatureUri(SignaturePlaceholder)
           setErrors({})
           setOpen(false)
+          mutate()
           return
         }
         setErrors((prevErr) =>

@@ -113,7 +113,8 @@
     "christian": "Christian",
     "Buddhist": "Buddha",
     "open_signature_pad": "Open Signature Pad",
-    "signature_pad": "Signature Pad"
+    "signature_pad": "Signature Pad",
+    "signature": "Signature"
   },
 
   "common_validation": {
