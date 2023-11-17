@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
@@ -13,6 +14,7 @@ import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -33,6 +35,7 @@ export default function PendingClientReg() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken } = useAuthDataValue()
+  const [loading, setLoading] = useLoadingState({})
   const {
     data: { data: clientProfiles } = [],
     mutate,
@@ -45,21 +48,31 @@ export default function PendingClientReg() {
     <AndroidSwitch
       value={value ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      disabled={loading?.approval || false}
     />
   )
-  const toggleStatus = (id, isChecked) => {
-    const toasterLoading = toast.loading(`${t('common.status')}...`)
-    // xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
-    //   .then((response) => {
-    //     toast.dismiss(toasterLoading)
-    //     if (response?.success) {
-    //       toast.success(response?.message)
-    //       mutate()
-    //       return
-    //     }
-    //     toast.error(response?.message)
-    //   })
-    //   .catch((errResponse) => toast.error(errResponse?.message))
+  const toggleStatus = (id) => {
+    clientRegApprovalAlert(t).then((result) => {
+      if (result.isConfirmed) {
+        setLoading({ ...loading, approval: true })
+        const toasterLoading = toast.loading(`${t('common.approval')}...`)
+        xFetch(`client/registration/approved/${id}`, null, null, accessToken, null, 'PUT')
+          .then((response) => {
+            setLoading({ ...loading, approval: false })
+            toast.dismiss(toasterLoading)
+            if (response?.success) {
+              toast.success(response?.message)
+              mutate()
+              return
+            }
+            toast.error(response?.message)
+          })
+          .catch((errResponse) => {
+            setLoading({ ...loading, approval: false })
+            toast.error(errResponse?.message)
+          })
+      }
+    })
   }
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
@@ -84,7 +97,7 @@ export default function PendingClientReg() {
   const columns = useMemo(
     () => PendingClientRegTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, loading]
   )
 
   const setProfileDataObj = (profile) => {

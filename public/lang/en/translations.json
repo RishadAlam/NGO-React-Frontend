@@ -114,16 +114,19 @@
     "Buddhist": "Buddha",
     "open_signature_pad": "Open Signature Pad",
     "signature_pad": "Signature Pad",
-    "signature": "Signature"
+    "signature": "Signature",
+    "approval": "approval"
   },
 
   "common_validation": {
     "required_fields_are_empty": "Required fields are empty!",
     "Are_you_sure": "Are you sure?",
     "Are_you_sure_to_delete_permanently": "Are you sure to delete permanently?",
+    "Are_you_sure_to_approve_it": "Are you sure to approve it?",
     "you_can_bring_it_back": "You can bring it back.",
     "You_wont_be_able_to_revert_this": "You won't be able to revert this!",
     "Yes_delete_it": "Yes, delete it!",
+    "Yes_approve_it": "Yes, approve it!",
     "data_has_been_deleted": "Data has been deleted.",
     "is_required": "is required!",
     "is_invalid": "is invalid!",

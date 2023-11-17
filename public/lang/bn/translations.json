@@ -114,16 +114,19 @@
     "Buddhist": "বৌদ্ধ",
     "open_signature_pad": "স্বাক্ষর প্যাড খুলুন",
     "signature_pad": "স্বাক্ষর প্যাড",
-    "signature": "স্বাক্ষর"
+    "signature": "স্বাক্ষর",
+    "approval": "অনুমোদন"
   },
 
   "common_validation": {
     "required_fields_are_empty": "প্রয়োজনীয় ক্ষেত্র খালি।",
     "Are_you_sure": "আপনি কি নিশ্চিত?",
     "Are_you_sure_to_delete_permanently": "আপনি স্থায়ীভাবে মুছে ফেলার বিষয়ে নিশ্চিত?",
+    "Are_you_sure_to_approve_it": "আপনি কি নিশ্চিত এটি অনুমোদনের করতে?",
     "you_can_bring_it_back": "আপনি এটি আবার ফিরিয়ে আনতে পারবেন।",
     "You_wont_be_able_to_revert_this": "আপনি এটি আর ফিরিয়ে আনতে পারবেন না!",
     "Yes_delete_it": "হ্যাঁ, এটা মুছে ফেলুন!",
+    "Yes_approve_it": "হ্যাঁ, এটি অনুমোদিত!",
     "data_has_been_deleted": "ডেটা মুছে ফেলা হয়েছে।",
     "is_required": "প্রয়োজন।",
     "is_invalid": "অবৈধ।",
