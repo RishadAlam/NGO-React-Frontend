@@ -231,7 +231,7 @@ export const CategoryTableColumns = (
     show: isActionHide ? false : windowWidth < 576 ? false : true,
     disable: isActionHide,
     isActionHide: isActionHide,
-    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+    Cell: ({ row }) => !row.original.is_default && actionBtnGroup(row.original.id, row.original)
   }
 ]
 
@@ -848,7 +848,13 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   }
 ]
 
-export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitch, actionBtnGroup) => [
+export const PendingClientRegTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  statusSwitch,
+  actionBtnGroup
+) => [
   {
     Header: '#',
     accessor: 'id',
