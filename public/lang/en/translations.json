@@ -119,6 +119,8 @@
   "common_validation": {
     "required_fields_are_empty": "Required fields are empty!",
     "Are_you_sure": "Are you sure?",
+    "Are_you_sure_to_delete_permanently": "Are you sure to delete permanently?",
+    "you_can_bring_it_back": "You can bring it back.",
     "You_wont_be_able_to_revert_this": "You won't be able to revert this!",
     "Yes_delete_it": "Yes, delete it!",
     "data_has_been_deleted": "Data has been deleted.",

@@ -119,6 +119,8 @@
   "common_validation": {
     "required_fields_are_empty": "প্রয়োজনীয় ক্ষেত্র খালি।",
     "Are_you_sure": "আপনি কি নিশ্চিত?",
+    "Are_you_sure_to_delete_permanently": "আপনি স্থায়ীভাবে মুছে ফেলার বিষয়ে নিশ্চিত?",
+    "you_can_bring_it_back": "আপনি এটি আবার ফিরিয়ে আনতে পারবেন।",
     "You_wont_be_able_to_revert_this": "আপনি এটি আর ফিরিয়ে আনতে পারবেন না!",
     "Yes_delete_it": "হ্যাঁ, এটা মুছে ফেলুন!",
     "data_has_been_deleted": "ডেটা মুছে ফেলা হয়েছে।",
