@@ -218,6 +218,11 @@
       "dps": "ডিপিএস"
     }
   },
+  "client": {
+    "pending_client_reg_list": "সদস্য নিবন্ধন অনুমোদন অপেক্ষারত তালিকা",
+    "edit_client_profile": "সদস্য প্রোফাইল সম্পাদনা",
+    "view_client_profile": "সদস্য প্রোফাইল দেখুন"
+  },
   "account": {
     "Account_List": "অ্যাকাউন্ট তালিকা",
     "Account_Registration": "অ্যাকাউন্ট নিবন্ধন",

@@ -222,6 +222,11 @@
       "dps": "DPS"
     }
   },
+  "client": {
+    "pending_client_reg_list": "Client registration approval pending list",
+    "edit_client_profile": "Edit Client Profile",
+    "view_client_profile": "View Client Profile"
+  },
   "account": {
     "Account_List": "ACCOUNT LIST",
     "Account_Registration": "Account Registration",
@@ -328,6 +333,7 @@
       "field": "Field",
       "center": "Center",
       "category": "Category",
+      "registration": "Registration",
       "account_management": "Account Management",
       "account_transfer": "Account Transfer",
       "income": "Income",
