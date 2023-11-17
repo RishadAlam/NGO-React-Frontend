@@ -196,16 +196,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           disabled={disabled}
         />
       </div>
-      {/* <div className="col-md-6 col-lg-4 mb-3">
-        <TextInputField
-          label={t('common.post_office')}
-          isRequired={true}
-          defaultValue={clientData?.present_address?.post_office || ''}
-          setChange={(val) => setAddress(val, 'post_office', 'present_address')}
-          error={errors?.present_address_post_office}
-          disabled={disabled}
-        />
-      </div> */}
       <div className="col-md-6 col-lg-4 mb-3">
         <SelectBoxField
           label={t('common.post_office')}
@@ -246,16 +236,18 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
       {/* Permanent Address */}
       <div className="col-md-12 my-3">
         <div className="form-divider py-2 px-3 d-flex align-items-center justify-content-between">
-          <h5>{t('common.permanent_address')}</h5>
-          <div>
-            <CheckboxInputField
-              label={t('common.if_permanent_address_same_as_present_address')}
-              isChecked={addressCheck}
-              setChange={(e) => setPermanentAddress(e.target.checked)}
-              error={false}
-              disabled={disabled}
-            />
-          </div>
+          <h6>{t('common.permanent_address')}</h6>
+          {!disabled && (
+            <div>
+              <CheckboxInputField
+                label={t('common.if_permanent_address_same_as_present_address')}
+                isChecked={addressCheck}
+                setChange={(e) => setPermanentAddress(e.target.checked)}
+                error={false}
+                disabled={disabled}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="col-md-12 mb-3">
@@ -287,16 +279,6 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
           disabled={disabled}
         />
       </div>
-      {/* <div className="col-md-6 col-lg-4 mb-3">
-        <TextInputField
-          label={t('common.post_office')}
-          isRequired={true}
-          defaultValue={clientData?.permanent_address?.post_office || ''}
-          setChange={(val) => setAddress(val, 'post_office', 'permanent_address')}
-          error={errors?.permanent_address_post_office}
-          disabled={disabled}
-        />
-      </div> */}
       <div className="col-md-6 col-lg-4 mb-3">
         <SelectBoxField
           label={t('common.post_office')}

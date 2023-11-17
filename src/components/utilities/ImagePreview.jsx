@@ -31,8 +31,8 @@ export default function ImagePreview({
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
           />
         </div>
-        <div className="mx-auto position-relative mt-3">
-          <label htmlFor="image" className="btn btn-primary form-control" disabled={disabled}>
+        <div className={`mx-auto position-relative mt-3 ${disabled ? 'd-none' : ''}`}>
+          <label htmlFor="image" className="btn btn-primary form-control">
             <Camera />
           </label>
           <input

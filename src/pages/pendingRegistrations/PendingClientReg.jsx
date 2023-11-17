@@ -87,9 +87,59 @@ export default function PendingClientReg() {
     [t, windowWidth]
   )
 
+  const setProfileDataObj = (profile) => {
+    const present_address = JSON.parse(profile.present_address)
+    const permanent_address = JSON.parse(profile.permanent_address)
+    return {
+      field_id: profile.field_id,
+      center_id: profile.center_id,
+      acc_no: profile.acc_no,
+      name: profile.name,
+      father_name: profile.father_name,
+      husband_name: profile.husband_name,
+      mother_name: profile.mother_name,
+      nid: profile.nid,
+      dob: dateFormat(profile.dob, 'yyyy-MM-dd'),
+      occupation: profile.occupation,
+      religion: profile.religion,
+      gender: profile.gender,
+      primary_phone: profile.primary_phone,
+      secondary_phone: profile.secondary_phone,
+      image: profile.image,
+      image_uri: profile.image_uri,
+      signature: profile.signature,
+      signature_uri: profile.signature_uri,
+      share: profile.share,
+      annual_income: profile.annual_income,
+      bank_acc_no: profile.bank_acc_no,
+      bank_check_no: profile.bank_check_no,
+      present_address: {
+        street_address: present_address.street_address,
+        city: present_address.city,
+        word_no: present_address.word_no,
+        post_office: present_address.post_office,
+        post_code: present_address.post_code,
+        police_station: present_address.police_station,
+        district: present_address.district,
+        division: present_address.division
+      },
+      permanent_address: {
+        street_address: permanent_address.street_address,
+        city: permanent_address.city,
+        word_no: permanent_address.word_no,
+        post_office: permanent_address.post_office,
+        post_code: permanent_address.post_code,
+        police_station: permanent_address.police_station,
+        district: permanent_address.district,
+        division: permanent_address.division
+      },
+      field: profile.field,
+      center: profile.center
+    }
+  }
+
   const viewClientProfile = (profile) => {
-    console.log(profile)
-    setViewProfileData(profile)
+    setViewProfileData(setProfileDataObj(profile))
     setViewProfileDataModal(true)
   }
 
@@ -190,11 +240,14 @@ export default function PendingClientReg() {
             />
           </div>
         </div>
-        <ViewClientProfileModal
-          open={viewProfileDataModal}
-          setOpen={setViewProfileDataModal}
-          profileData={viewProfileData}
-        />
+        {viewProfileData && (
+          <ViewClientProfileModal
+            open={viewProfileDataModal}
+            setOpen={setViewProfileDataModal}
+            profileData={viewProfileData}
+            setProfileData={setViewProfileData}
+          />
+        )}
         {editProfileData && (
           <EditClientProfileModal
             open={editProfileDataModal}

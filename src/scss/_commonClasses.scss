@@ -475,6 +475,11 @@ ul {
     -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
   }
 
+  .Mui-disabled {
+    color: $gray-500 !important;
+    -webkit-text-fill-color: $gray-500 !important;
+  }
+
   .MuiDayCalendar-weekDayLabel,
   .MuiPickersCalendarHeader-label,
   .MuiPickersDay-dayWithMargin,
@@ -485,6 +490,7 @@ ul {
   .MuiInput-input,
   .MuiInputBase-input {
     color: $soft-light !important;
+    -webkit-text-fill-color: $soft-light !important;
   }
 
   .MuiPaper-root {
