@@ -848,13 +848,7 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   }
 ]
 
-export const PendingClientRegTableColumns = (
-  t,
-  windowWidth,
-  avatar,
-  statusSwitch,
-  actionBtnGroup
-) => [
+export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitch, actionBtnGroup) => [
   {
     Header: '#',
     accessor: 'id',
@@ -868,6 +862,7 @@ export const PendingClientRegTableColumns = (
     Cell: ({ row, value }) => avatar(row.original.name, value)
   },
   { Header: t('common.name'), accessor: 'name' },
+  { Header: t('common.acc_no'), accessor: 'acc_no' },
   { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
   {
     Header: t('common.center'),
@@ -889,7 +884,7 @@ export const PendingClientRegTableColumns = (
   {
     Header: t('common.creator'),
     accessor: 'author',
-    show: false,
+    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {

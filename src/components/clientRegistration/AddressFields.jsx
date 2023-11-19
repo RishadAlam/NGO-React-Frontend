@@ -283,6 +283,7 @@ export default function AddressFields({ clientData, setClientData, errors, setEr
         <SelectBoxField
           label={t('common.post_office')}
           config={permanentPostOfficeConfig || {}}
+          isRequired={true}
           error={errors?.permanent_address_post_office}
           disabled={disabled}
         />
