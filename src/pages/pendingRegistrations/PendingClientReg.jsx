@@ -83,14 +83,14 @@ export default function PendingClientReg() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('client_registration_update') && (
+      {authPermissions.includes('pending_client_registration_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => clientProfileEdit(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('client_registration_permanently_delete') && (
+      {authPermissions.includes('pending_client_registration_permanently_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => clientProfileDelete(id)}>
             {<Trash size={20} />}
@@ -221,7 +221,7 @@ export default function PendingClientReg() {
             setProfileData={setViewProfileData}
           />
         )}
-        {editProfileData && authPermissions.includes('client_registration_update') && (
+        {editProfileData && authPermissions.includes('pending_client_registration_update') && (
           <EditClientProfileModal
             open={editProfileDataModal}
             setOpen={setEditProfileDataModal}

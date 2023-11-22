@@ -26,7 +26,10 @@ export default function ClientRegistrationFormFields({
   const { t } = useTranslation()
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
-  const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
+  const { data: { data: centers = [] } = [] } = useFetch({
+    action: 'centers/active',
+    queryParams: clientData.field_id ? { field_id: clientData.field_id } : null
+  })
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/occupations'
   })
@@ -39,7 +42,9 @@ export default function ClientRegistrationFormFields({
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const centerConfig = {
-    options: centers,
+    options: centers?.length
+      ? centers.filter((center) => center?.field_id === clientData.field_id)
+      : [],
     value: clientData?.center || null,
     getOptionLabel: (option) => option.name,
     onChange: (e, option) => setChange(option, 'center'),
