@@ -112,6 +112,7 @@ export default function SignaturePadField({
           maxWidth: '600px'
         }}
       />
+      {error && <span className="text-danger my-3">{error}</span>}
       <Button
         type="button"
         name={t('common.open_signature_pad')}

@@ -92,7 +92,10 @@ export default function App() {
                 path="client"
                 element={
                   <RequirePermissions
-                    allowedPermissions={['pending_client_registration_list_view']}
+                    allowedPermissions={[
+                      'pending_client_registration_list_view',
+                      'pending_client_registration_list_view_as_admin'
+                    ]}
                   />
                 }>
                 <Route

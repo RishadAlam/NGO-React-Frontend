@@ -46,32 +46,50 @@ export const mainMenu = (t) => {
         label: `${t('menu.categories.Pending_Approval')} ${t('menu.label.registration')}`,
         path: '',
         icon: 'UserPlus',
-        view:
-          !client_registration_approval &&
-          checkPermissions(['pending_client_registration_list_view'], permissions),
+        view: checkPermissions(
+          [
+            'pending_client_registration_list_view',
+            'pending_client_registration_list_view_as_admin',
+            'pending_saving_acc_list_view',
+            'pending_saving_acc_list_view_as_admin',
+            'pending_loan_acc_list_view',
+            'pending_loan_acc_list_view_as_admin'
+          ],
+          permissions
+        ),
         subMenu: [
           {
             id: 'pndReg1',
             label: t('menu.registration.Client_Registration'),
             path: '/pending/registration/client',
             icon: 'UserPlus',
-            view:
-              !client_registration_approval &&
-              checkPermission('pending_client_registration_list_view', permissions)
+            view: checkPermissions(
+              [
+                'pending_client_registration_list_view',
+                'pending_client_registration_list_view_as_admin'
+              ],
+              permissions
+            )
           },
           {
-            id: 'pndReg1',
-            label: t('menu.label.client_registration'),
-            path: '/create-saving-account',
+            id: 'pndReg2',
+            label: t('menu.registration.saving_account_registration'),
+            path: '/pending/registration/saving-account',
             icon: 'UserPlus',
-            view: checkPermission('', permissions)
+            view: checkPermissions(
+              ['pending_saving_acc_list_view', 'pending_saving_acc_list_view_as_admin'],
+              permissions
+            )
           },
           {
-            id: 'pndReg1',
-            label: 'Create Loan Account',
-            path: '/create-loan-account',
+            id: 'pndReg3',
+            label: t('menu.registration.loan_account_registration'),
+            path: '/pending/registration/loan-account',
             icon: 'UserPlus',
-            view: checkPermission('', permissions)
+            view: checkPermissions(
+              ['pending_loan_acc_list_view', 'pending_loan_acc_list_view_as_admin'],
+              permissions
+            )
           }
         ]
       }
