@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
+import tsNumbers from '../../libs/tsNumbers'
 import DatePickerInputField from '../utilities/DatePickerInputField'
 import ImagePreview from '../utilities/ImagePreview'
 import RadioInputGroup from '../utilities/RadioInputGroup'
@@ -106,7 +107,7 @@ export default function ClientRegistrationFormFields({
         <TextInputField
           label={t('common.acc_no')}
           isRequired={true}
-          defaultValue={clientData?.acc_no || ''}
+          defaultValue={tsNumbers(clientData?.acc_no) || ''}
           setChange={(val) => setChange(val, 'acc_no')}
           error={errors?.acc_no}
           autoFocus={true}
@@ -155,9 +156,8 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.nid')}
-          type="number"
           isRequired={true}
-          defaultValue={clientData?.nid || ''}
+          defaultValue={tsNumbers(clientData?.nid) || ''}
           setChange={(val) => setChange(val, 'nid')}
           error={errors?.nid}
           disabled={disabled}
@@ -217,9 +217,8 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.primary_phone')}
-          type="number"
           isRequired={true}
-          defaultValue={clientData?.primary_phone || ''}
+          defaultValue={tsNumbers(clientData?.primary_phone) || ''}
           setChange={(val) => setChange(val, 'primary_phone')}
           error={errors?.primary_phone}
           disabled={disabled}
@@ -228,8 +227,7 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.secondary_phone')}
-          type="number"
-          defaultValue={clientData?.secondary_phone || ''}
+          defaultValue={tsNumbers(clientData?.secondary_phone) || ''}
           setChange={(val) => setChange(val, 'secondary_phone')}
           error={errors?.secondary_phone}
           disabled={disabled}
@@ -238,8 +236,7 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.annual_income')}
-          type="number"
-          defaultValue={clientData?.annual_income || ''}
+          defaultValue={tsNumbers(clientData?.annual_income) || ''}
           setChange={(val) => setChange(val, 'annual_income')}
           error={errors?.annual_income}
           disabled={disabled}
@@ -248,8 +245,7 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.bank_acc_no')}
-          type="number"
-          defaultValue={clientData?.bank_acc_no || ''}
+          defaultValue={tsNumbers(clientData?.bank_acc_no) || ''}
           setChange={(val) => setChange(val, 'bank_acc_no')}
           error={errors?.bank_acc_no}
           disabled={disabled}
@@ -258,8 +254,7 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.bank_check_no')}
-          type="number"
-          defaultValue={clientData?.bank_check_no || ''}
+          defaultValue={tsNumbers(clientData?.bank_check_no) || ''}
           setChange={(val) => setChange(val, 'bank_check_no')}
           error={errors?.bank_check_no}
           disabled={disabled}
@@ -268,9 +263,8 @@ export default function ClientRegistrationFormFields({
       <div className="col-md-6 col-xl-4 mb-3">
         <TextInputField
           label={t('common.share')}
-          type="number"
           isRequired={true}
-          defaultValue={clientData?.share || ''}
+          defaultValue={tsNumbers(clientData?.share) || ''}
           setChange={(val) => setChange(val, 'share')}
           error={errors?.share}
           disabled={disabled}

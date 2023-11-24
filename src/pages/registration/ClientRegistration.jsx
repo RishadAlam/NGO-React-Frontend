@@ -12,6 +12,7 @@ import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
 import dateFormat from '../../libs/dateFormat'
+import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
@@ -108,6 +109,16 @@ export default function ClientRegistration() {
   const [errors, setErrors] = useState(clientDataErrs)
 
   const setChange = (val, name) => {
+    if (
+      name === 'nid' ||
+      name === 'primary_phone' ||
+      name === 'secondary_phone' ||
+      name === 'annual_income' ||
+      name === 'bank_acc_no' ||
+      name === 'bank_check_no'
+    ) {
+      val = tsNumbers(val, true)
+    }
     if (name === 'image') {
       setImageUri(URL.createObjectURL(val))
     }
@@ -136,6 +147,18 @@ export default function ClientRegistration() {
       create(prevErr, (draftErr) => {
         delete draftErr.message
         if (
+          (name === 'nid' ||
+            name === 'primary_phone' ||
+            name === 'secondary_phone' ||
+            name === 'annual_income' ||
+            name === 'bank_acc_no' ||
+            name === 'bank_check_no') &&
+          !Number(val)
+        ) {
+          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
+          return
+        }
+        if (
           name !== 'husband_name' &&
           name !== 'secondary_phone' &&
           name !== 'annual_income' &&
@@ -147,9 +170,9 @@ export default function ClientRegistration() {
             : delete draftErr[name]
         }
         if (name === 'primary_phone' || name === 'secondary_phone') {
-          val.length === 11
-            ? delete draftErr[name]
-            : (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`)
+          val.length !== 11 || !String(val).startsWith('01')
+            ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`)
+            : delete draftErr[name]
           if (name === 'secondary_phone' && val === '') {
             delete draftErr[name]
           }
@@ -157,6 +180,8 @@ export default function ClientRegistration() {
       })
     )
   }
+
+  console.log(clientData)
 
   const onSubmit = (event) => {
     event.preventDefault()
