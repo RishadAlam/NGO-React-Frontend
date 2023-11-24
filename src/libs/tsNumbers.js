@@ -12,7 +12,8 @@ export default function tsNumbers(numbers, en = false) {
     '৭': '7',
     '৮': '8',
     '৯': '9',
-    '০': '0'
+    '০': '0',
+    '৳': '$'
   }
   const en_to_bn = {
     1: '১',
@@ -24,14 +25,15 @@ export default function tsNumbers(numbers, en = false) {
     7: '৭',
     8: '৮',
     9: '৯',
-    0: '০'
+    0: '০',
+    $: '৳'
   }
 
   return lang !== 'bn' || en
-    ? String(numbers).replace(/[১২৩৪৫৬৭৮৯০]/g, function (e) {
+    ? String(numbers).replace(/[১২৩৪৫৬৭৮৯০৳]/g, function (e) {
         return bn_to_en[e]
       })
-    : String(numbers).replace(/[1234567890]/g, function (e) {
+    : String(numbers).replace(/[1234567890$]/g, function (e) {
         return en_to_bn[e]
       })
 }
