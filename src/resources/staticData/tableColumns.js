@@ -1,5 +1,6 @@
 import dateFormat from '../../libs/dateFormat'
 import setFontFamily from '../../libs/setFontFamily'
+import tsNumbers from '../../libs/tsNumbers'
 
 export const DashSavingCollectionTableColumns = (t, windowWidth) => [
   {
@@ -848,12 +849,18 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   }
 ]
 
-export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitch, actionBtnGroup) => [
+export const PendingClientRegTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  statusSwitch,
+  actionBtnGroup
+) => [
   {
     Header: '#',
     accessor: 'id',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => setFontFamily((row.index + 1).toString().padStart(2, '0'))
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
   },
   {
     Header: t('common.image'),
@@ -862,7 +869,11 @@ export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitc
     Cell: ({ row, value }) => avatar(row.original.name, value)
   },
   { Header: t('common.name'), accessor: 'name' },
-  { Header: t('common.acc_no'), accessor: 'acc_no' },
+  {
+    Header: t('common.acc_no'),
+    accessor: 'acc_no',
+    Cell: ({ value }) => tsNumbers(value)
+  },
   { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
   {
     Header: t('common.center'),
@@ -873,13 +884,13 @@ export const PendingClientRegTableColumns = (t, windowWidth, avatar, statusSwitc
     Header: t('common.created_at'),
     accessor: 'created_at',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.updated_at'),
     accessor: 'updated_at',
     show: false,
-    Cell: ({ value }) => setFontFamily(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
     Header: t('common.creator'),

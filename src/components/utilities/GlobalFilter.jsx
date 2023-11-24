@@ -1,4 +1,5 @@
 import { TextField } from '@mui/material'
+import tsNumbers from '../../libs/tsNumbers'
 
 export default function GlobalFilter({ filter, setFilter, t }) {
   return (
@@ -8,8 +9,8 @@ export default function GlobalFilter({ filter, setFilter, t }) {
         variant="standard"
         type="search"
         label={t('common.search_placeholder')}
-        value={filter || ''}
-        onChange={(e) => setFilter(e.target.value)}
+        value={filter ? tsNumbers(filter) : ''}
+        onChange={(e) => setFilter(tsNumbers(e.target.value, true))}
       />
     </div>
   )

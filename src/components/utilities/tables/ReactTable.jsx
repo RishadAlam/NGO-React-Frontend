@@ -2,12 +2,14 @@ import { FormControlLabel, Switch } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import Cookies from 'js-cookie'
 import { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import CornerRightDownArrow from '../../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../../icons/CornerRightUpArrow'
 import MoreVertical from '../../../icons/MoreVertical'
+import tsNumbers from '../../../libs/tsNumbers'
 import GlobalFilter from '../GlobalFilter'
 import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
@@ -15,6 +17,7 @@ import './table.scss'
 
 function ReactTable({ title, columns, data }) {
   const { t } = useTranslation()
+  const lang = Cookies.get('i18next')
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -180,9 +183,16 @@ function ReactTable({ title, columns, data }) {
           {pageCount > 0 && (
             <div className="row align-items-center">
               <div className="col-sm-4">
-                <span>
-                  Showing {rowStart} to {showedTotalRows} of {totalRows} results
-                </span>
+                {lang !== 'bn' ? (
+                  <span>
+                    Showing {rowStart} to {showedTotalRows} of {totalRows} results.
+                  </span>
+                ) : (
+                  <span>
+                    {tsNumbers(totalRows)}টি ফলাফলের মধ্যে {tsNumbers(rowStart)} থেকে{' '}
+                    {tsNumbers(showedTotalRows)} পর্যন্ত দেখানো হয়েছে।
+                  </span>
+                )}
               </div>
               <div className="col-sm-8 text-end">
                 {pageCount > 1 && (

@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import tsNumbers from '../../../libs/tsNumbers'
 
 export default function ShowingRows({ pageSize, setPageSize, t }) {
   return (
@@ -9,12 +10,12 @@ export default function ShowingRows({ pageSize, setPageSize, t }) {
           value={pageSize}
           onChange={(e) => setPageSize(e.target.value)}
           label={t('common.Showing_Up')}>
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={30}>30</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
-          <MenuItem value={100}>100</MenuItem>
-          <MenuItem value={500}>500</MenuItem>
+          <MenuItem value={10}>{tsNumbers(10)}</MenuItem>
+          <MenuItem value={20}>{tsNumbers(20)}</MenuItem>
+          <MenuItem value={30}>{tsNumbers(30)}</MenuItem>
+          <MenuItem value={50}>{tsNumbers(50)}</MenuItem>
+          <MenuItem value={100}>{tsNumbers(100)}</MenuItem>
+          <MenuItem value={500}>{tsNumbers(500)}</MenuItem>
         </Select>
       </FormControl>
     </>
