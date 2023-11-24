@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthDataValue, useSetIsAuthorizedState } from '../../atoms/authAtoms'
@@ -10,8 +9,8 @@ import { removeSessionStorage } from '../../helper/GetDataFromStorage'
 import Logout from '../../icons/Logout'
 import User from '../../icons/User'
 import Key from '../../icons/key'
-import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
 import xFetch from '../../utilities/xFetch'
+import Avatar from '../utilities/Avatar'
 import Button from '../utilities/Button'
 import './profileBox.scss'
 
@@ -49,14 +48,7 @@ export default function ProfileBox({ t }) {
         <div
           className="img cursor-pointer"
           onClick={() => setIsProfileVisible((prevState) => !prevState)}>
-          <LazyLoadImage
-            src={image_uri}
-            width="100%"
-            height="100%"
-            placeholderSrc={profilePlaceholder}
-            effect="blur"
-            alt="Profile"
-          />
+          <Avatar name={name} img={image_uri} />
         </div>
         <div className={`profile-dropdown position-absolute  ${isProfileVisible ? 'active' : ''}`}>
           <ul className="mb-0 p-3 shadow">
