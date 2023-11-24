@@ -83,7 +83,11 @@ export default function CategoryConfigRow({ config, index, accounts, setChange, 
   return (
     <tr>
       <td>{index + 1}</td>
-      <td>{config?.category?.name}</td>
+      <td>
+        {config?.category?.is_default
+          ? t(`category.default.${config?.category?.name}`)
+          : config?.category?.name}
+      </td>
       <td>
         <InputFieldSetup
           val={config?.saving_acc_reg_fee}
