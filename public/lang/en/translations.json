@@ -124,7 +124,10 @@
     "signature_pad": "Signature Pad",
     "signature": "Signature",
     "approval": "approval",
-    "saving_info": "Saving Info"
+    "saving_info": "Saving Info",
+    "nominee_info": "Nominee Info",
+    "add_nominee": "Add Nominee",
+    "remove_nominee": "Remove Nominee"
   },
 
   "common_validation": {

@@ -7,6 +7,7 @@ import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import ImagePreview from '../utilities/ImagePreview'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
+import Nominees from './Nominees'
 import SavingFields from './SavingFields'
 
 export default function SavingAccRegFormFields({
@@ -224,13 +225,13 @@ export default function SavingAccRegFormFields({
         setErrors={setErrors}
         disabled={disabled}
       />
-      {/* <AddressFields
+      <Nominees
         formData={formData}
         setFormData={setFormData}
         errors={errors}
         setErrors={setErrors}
         disabled={disabled}
-      /> */}
+      />
     </div>
   )
 }

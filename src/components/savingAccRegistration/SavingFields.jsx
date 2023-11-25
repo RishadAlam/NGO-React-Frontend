@@ -7,18 +7,6 @@ import TextInputField from '../utilities/TextInputField'
 export default function SavingFields({ formData, setFormData, errors, setErrors, disabled }) {
   const { t } = useTranslation()
 
-  //   function totalValue() {
-  //     var installment = $('#installment').val()
-  //     var deposit = $('#deposit').val()
-  //     var interest = $('#interest').val()
-  //     var ceil = Math.round(installment * deposit)
-  //     var total = ceil
-  //     var total_int = (total / 100) * interest
-  //     var total_with_int = Math.ceil(parseFloat(total) + parseFloat(total_int))
-  //     $('#totalWithoutInterest').val(ceil)
-  //     $('#totalWithInterest').val(total_with_int)
-  //   }
-
   const total = (deposit = 0, installment = 0, interest = 0, ints = false) => {
     const total = Math.round(installment * deposit)
     if (ints) {

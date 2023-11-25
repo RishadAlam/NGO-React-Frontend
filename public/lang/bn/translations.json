@@ -124,7 +124,10 @@
     "signature_pad": "স্বাক্ষর প্যাড",
     "signature": "স্বাক্ষর",
     "approval": "অনুমোদন",
-    "saving_info": "সঞ্চয় তথ্য"
+    "saving_info": "সঞ্চয় তথ্য",
+    "nominee_info": "নমিনির তথ্য",
+    "add_nominee": "নমিনি যোগ করুন",
+    "remove_nominee": "নমিনি বিয়োগ দিন"
   },
 
   "common_validation": {
