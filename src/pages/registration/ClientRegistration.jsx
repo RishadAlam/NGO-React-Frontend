@@ -110,6 +110,7 @@ export default function ClientRegistration() {
 
   const setChange = (val, name) => {
     if (
+      name === 'acc_no' ||
       name === 'nid' ||
       name === 'primary_phone' ||
       name === 'secondary_phone' ||
@@ -180,8 +181,6 @@ export default function ClientRegistration() {
       })
     )
   }
-
-  console.log(clientData)
 
   const onSubmit = (event) => {
     event.preventDefault()

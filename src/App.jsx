@@ -17,6 +17,7 @@ import Unauthorized from './pages/unauthorized/Unauthorized'
 
 const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const ClientRegistration = lazy(() => import('./pages/registration/ClientRegistration'))
+const SavingAccReg = lazy(() => import('./pages/registration/SavingAccReg'))
 const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/PendingClientReg'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
@@ -79,6 +80,34 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <ClientRegistration />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="saving-account"
+                element={<RequirePermissions allowedPermissions={['saving_acc_registration']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <SavingAccReg />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="loan-account"
+                element={<RequirePermissions allowedPermissions={['loan_acc_registration']} />}>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <SavingAccReg />
                       </Suspense>
                     </ErrorBoundary>
                   }

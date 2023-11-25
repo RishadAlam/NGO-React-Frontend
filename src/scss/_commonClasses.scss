@@ -35,11 +35,10 @@ html[lang='bn'] body {
 
   .rs-picker-toolbar *,
   .rs-picker-daterange-content *,
-  .MuiDateCalendar-root *{
+  .MuiDateCalendar-root * {
     font-family: 'Poppins', sans-serif !important;
   }
 }
-
 
 body.dark {
   color: $soft-light !important;
@@ -101,7 +100,8 @@ body.dark {
     url(../fonts/tiroBangla/TiroBangla-Regular.ttf) format('truetype');
 }
 
-a:hover, a:focus,
+a:hover,
+a:focus,
 a {
   text-decoration: none;
   color: inherit;
@@ -314,7 +314,7 @@ ul {
   background-color: $primary-bg-hover !important;
 }
 
-.config-table > tbody > tr:hover *{
+.config-table > tbody > tr:hover * {
   color: $white-color !important;
 }
 
@@ -358,7 +358,7 @@ ul {
   min-width: 120px;
   padding: 5px 10px;
 
-  @include sm{
+  @include sm {
     min-width: max-content;
   }
 }
@@ -413,7 +413,7 @@ ul {
   padding: 4px 0 5px !important;
 }
 
-.MuiFormLabel-asterisk{
+.MuiFormLabel-asterisk {
   display: none;
 }
 
@@ -422,11 +422,11 @@ ul {
   background-color: $primary-bg;
 }
 
-.rs-btn-link{
+.rs-btn-link {
   color: $soft-dark !important;
 }
 
-.form-divider{
+.form-divider {
   background-color: $main-bg;
   margin: 0 -8px;
   border-radius: 10px;
@@ -491,6 +491,11 @@ ul {
   .MuiInputBase-input {
     color: $soft-light !important;
     -webkit-text-fill-color: $soft-light !important;
+  }
+
+  .MuiPopper-root * {
+    background-color: $soft-bg !important;
+    color: $blue-magenta !important;
   }
 
   .MuiPaper-root {

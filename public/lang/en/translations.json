@@ -29,6 +29,14 @@
     "interest": "Interest",
     "withdrawal": "Withdrawal",
     "total": "Total",
+    "total_installment": "Total Installment",
+    "start_date": "Start Date",
+    "duration_date": "Duration Date",
+    "payable_deposit": "Payable Deposit",
+    "payable_installment": "Payable Installment",
+    "payable_interest": "Payable Interest",
+    "total_deposit_without_interest": "Total Deposit Without Interest",
+    "total_deposit_with_interest": "Total Deposit With Interest",
     "name": "Name",
     "email": "Email",
     "password": "Password",
@@ -115,7 +123,8 @@
     "open_signature_pad": "Open Signature Pad",
     "signature_pad": "Signature Pad",
     "signature": "Signature",
-    "approval": "approval"
+    "approval": "approval",
+    "saving_info": "Saving Info"
   },
 
   "common_validation": {

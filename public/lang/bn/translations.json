@@ -29,6 +29,14 @@
     "interest": "লাভ",
     "withdrawal": "উত্তোলন",
     "total": "মোট",
+    "total_installment": "মোট কিস্তি",
+    "start_date": "শুরু করার তারিখ",
+    "duration_date": "সময়কাল তারিখ",
+    "payable_deposit": "প্রদেয় জমা",
+    "payable_installment": "প্রদেয় কিস্তি",
+    "payable_interest": "প্রদেয় লাভ",
+    "total_deposit_without_interest": "লাভ ছাড়া মোট আমানত",
+    "total_deposit_with_interest": "লাভ সহ মোট আমানত",
     "name": "নাম",
     "email": "ইমেল",
     "password": "পাসওয়ার্ড",
@@ -115,7 +123,8 @@
     "open_signature_pad": "স্বাক্ষর প্যাড খুলুন",
     "signature_pad": "স্বাক্ষর প্যাড",
     "signature": "স্বাক্ষর",
-    "approval": "অনুমোদন"
+    "approval": "অনুমোদন",
+    "saving_info": "সঞ্চয় তথ্য"
   },
 
   "common_validation": {

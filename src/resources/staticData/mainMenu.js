@@ -1,11 +1,9 @@
 import { getRecoil } from 'recoil-nexus'
-import { appApprovalConfigsState } from '../../atoms/appApprovalConfigAtoms'
 import { authDataState } from '../../atoms/authAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 
 export const mainMenu = (t) => {
   const { permissions } = getRecoil(authDataState)
-  const { client_registration_approval } = getRecoil(appApprovalConfigsState)
 
   return {
     [t('menu.categories.Basic')]: [
@@ -25,17 +23,17 @@ export const mainMenu = (t) => {
           },
           {
             id: 'reg2',
-            label: t('menu.label.client_registration'),
-            path: '/create-saving-account',
+            label: t('menu.registration.saving_account_registration'),
+            path: '/registration/saving-account',
             icon: 'UserPlus',
-            view: checkPermission('', permissions)
+            view: checkPermission('saving_acc_registration', permissions)
           },
           {
             id: 'reg3',
-            label: 'Create Loan Account',
-            path: '/create-loan-account',
+            label: t('menu.registration.loan_account_registration'),
+            path: '/registration/loan-account',
             icon: 'UserPlus',
-            view: checkPermission('', permissions)
+            view: checkPermission('loan_acc_registration', permissions)
           }
         ]
       }
