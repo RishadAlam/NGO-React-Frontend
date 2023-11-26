@@ -1,5 +1,6 @@
-import React from 'react'
+import { useState } from 'react'
 import Camera from '../../icons/Camera'
+import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 
 export default function ImagePreview({
   label,
@@ -10,12 +11,18 @@ export default function ImagePreview({
   disabled = false,
   isRequired = false
 }) {
+  const [imageUri, setImageUri] = useState(profilePlaceholder)
   const requiredLabel = (
     <span>
       {label}
       <span className="text-danger">*</span>
     </span>
   )
+
+  const save = (val) => {
+    setImageUri(URL.createObjectURL(val))
+    setChange(val)
+  }
 
   return (
     <>
@@ -27,7 +34,7 @@ export default function ImagePreview({
           <img
             className="rounded-2"
             alt="image"
-            src={src}
+            src={imageUri}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
           />
         </div>
@@ -39,7 +46,7 @@ export default function ImagePreview({
             type="file"
             id="image"
             className="top-0 start-0 position-absolute opacity-0 cursor-pointer"
-            onChange={(event) => setChange(event.target.files[0])}
+            onChange={(event) => save(event.target.files[0])}
             accept="image/*"
             disabled={disabled}
           />

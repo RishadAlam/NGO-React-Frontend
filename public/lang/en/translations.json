@@ -48,6 +48,7 @@
     "nid": "Birth Reg.No/Voter ID No",
     "dob": "Date of Birth ",
     "occupation": "Occupation",
+    "relation": "Relation",
     "religion": "Religion",
     "gender": "Gender",
     "primary_phone": "Primary Phone",
@@ -56,6 +57,7 @@
     "annual_income": "Annual Income",
     "bank_acc_no": "Bank Account No.",
     "bank_check_no": "Check No.",
+    "address": "Address",
     "present_address": "Present Address",
     "permanent_address": "Permanent Address",
     "street_address": "House/Apartment/Road",
@@ -127,7 +129,8 @@
     "saving_info": "Saving Info",
     "nominee_info": "Nominee Info",
     "add_nominee": "Add Nominee",
-    "remove_nominee": "Remove Nominee"
+    "remove_nominee": "Remove Nominee",
+    "nominee": "Nominee"
   },
 
   "common_validation": {

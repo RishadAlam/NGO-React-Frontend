@@ -58,7 +58,6 @@ export default function SavingAccReg() {
           city: '',
           word_no: '',
           post_office: '',
-          post_code: '',
           police_station: '',
           district: '',
           division: ''
@@ -91,23 +90,17 @@ export default function SavingAccReg() {
       {
         name: '',
         father_name: '',
-        husband_name: '',
         mother_name: '',
         nid: '',
-        dob: dateFormat(new Date(), 'yyyy-MM-dd'),
         occupation: '',
         relation: '',
         gender: '',
         primary_phone: '',
-        secondary_phone: '',
         image: '',
-        signature: '',
         address: {
           street_address: '',
           city: '',
-          word_no: '',
           post_office: '',
-          post_code: '',
           police_station: '',
           district: '',
           division: ''

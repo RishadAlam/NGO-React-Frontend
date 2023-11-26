@@ -18,66 +18,68 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     }
     return total
   }
-
+  console.log(formData.nominees)
+  console.log(errors.nominees)
   const addNominee = () => {
-    setFormData((prevData) =>
-      create(prevData, (draftData) => {
-        draftData.nominees.splice(draftData.nominees.length, 0, {
-          name: '',
-          father_name: '',
-          husband_name: '',
-          mother_name: '',
-          nid: '',
-          dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-          occupation: '',
-          relation: '',
-          gender: '',
-          primary_phone: '',
-          secondary_phone: '',
-          image: '',
-          signature: '',
-          address: {
-            street_address: '',
-            city: '',
-            word_no: '',
-            post_office: '',
-            post_code: '',
-            police_station: '',
-            district: '',
-            division: ''
-          }
+    if (formData.nominees.length < 5) {
+      setFormData((prevData) =>
+        create(prevData, (draftData) => {
+          draftData.nominees.splice(draftData.nominees.length, 0, {
+            name: '',
+            father_name: '',
+            husband_name: '',
+            mother_name: '',
+            nid: '',
+            dob: dateFormat(new Date(), 'yyyy-MM-dd'),
+            occupation: '',
+            relation: '',
+            gender: '',
+            primary_phone: '',
+            secondary_phone: '',
+            image: '',
+            signature: '',
+            address: {
+              street_address: '',
+              city: '',
+              word_no: '',
+              post_office: '',
+              post_code: '',
+              police_station: '',
+              district: '',
+              division: ''
+            }
+          })
         })
-      })
-    )
-    setErrors((prevErr) =>
-      create(prevErr, (draftErr) => {
-        draftErr.nominees.splice(draftErr.nominees.length, 0, {
-          name: '',
-          father_name: '',
-          husband_name: '',
-          mother_name: '',
-          nid: '',
-          dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-          occupation: '',
-          relation: '',
-          gender: '',
-          primary_phone: '',
-          secondary_phone: '',
-          image: '',
-          signature: '',
-          address: {
-            street_address: '',
-            city: '',
-            word_no: '',
-            post_office: '',
-            post_code: '',
-            police_station: '',
-            district: '',
-            division: ''
-          }
+      )
+      setErrors((prevErr) =>
+        create(prevErr, (draftErr) => {
+          draftErr.nominees.splice(draftErr.nominees.length, 0, {
+            name: '',
+            father_name: '',
+            husband_name: '',
+            mother_name: '',
+            nid: '',
+            occupation: '',
+            relation: '',
+            gender: '',
+            primary_phone: '',
+            secondary_phone: '',
+            image: '',
+            signature: '',
+            address: {
+              street_address: '',
+              city: '',
+              word_no: '',
+              post_office: '',
+              post_code: '',
+              police_station: '',
+              district: '',
+              division: ''
+            }
+          })
         })
-      })
-    )
+      )
+    }
   }
 
   const removeNominee = () => {
@@ -95,37 +97,36 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     }
   }
 
-  const setChange = (val, name) => {
+  const setChange = (val, name, index) => {
     setFormData((prevData) =>
       create(prevData, (draftData) => {
-        draftData[name] = val
-        if (name !== 'start_date' && name !== 'duration_date') {
-          draftData.total_deposit_without_interest = total(
-            name === 'payable_deposit' ? val : formData.payable_deposit,
-            name === 'payable_installment' ? val : formData.payable_installment,
-            name === 'payable_interest' ? val : formData.payable_interest
-          )
-          draftData.total_deposit_with_interest = total(
-            name === 'payable_deposit' ? val : formData.payable_deposit,
-            name === 'payable_installment' ? val : formData.payable_installment,
-            name === 'payable_interest' ? val : formData.payable_interest,
-            true
-          )
-        }
+        draftData.nominees[index][name] = val
       })
     )
 
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        if (!Number(val)) {
-          draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
-          return
+
+        if (name !== 'husband_name' && name !== 'secondary_phone') {
+          const nominees = draftErr?.nominees || {}
+          nominees[index] = draftErr?.nominees[index] || {}
+
+          val === '' || val === null
+            ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+                `common_validation.is_required`
+              )}`)
+            : draftErr['nominees'][index] && delete draftErr['nominees'][index][name]
+
+          draftErr['nominees'] = nominees
         }
 
-        val === '' || val === null
-          ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-          : delete draftErr[name]
+        if (draftErr['nominees'][index] && !Object.keys(draftErr['nominees'][index]).length) {
+          delete draftErr['nominees'][index]
+        }
+        if (draftErr['nominees'] && !Object.keys(draftErr['nominees']).length) {
+          delete draftErr['nominees']
+        }
       })
     )
   }
@@ -136,9 +137,11 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
         <NomineeFields
           key={i}
           nomineeData={nominee}
+          setNomineeData={setFormData}
           i={i}
           setChange={setChange}
           errors={errors}
+          setErrors={setErrors}
           disabled={disabled}
         />
       ))}
@@ -146,7 +149,10 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
         <ActionBtnGroup>
           <Tooltip TransitionComponent={Zoom} title={t('common.add_nominee')} arrow followCursor>
             <span>
-              <IconButton className="text-success" onClick={addNominee}>
+              <IconButton
+                className="text-success"
+                onClick={addNominee}
+                disabled={formData.nominees.length < 5 ? false : true}>
                 {<PlusCircle size={24} />}
               </IconButton>
             </span>

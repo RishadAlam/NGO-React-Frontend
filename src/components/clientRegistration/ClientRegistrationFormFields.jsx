@@ -78,8 +78,7 @@ export default function ClientRegistrationFormFields({
           setOpen={setSignatureModal}
           imageURL={signatureUri}
           setImageURL={setSignatureUri}
-          setSignature={setClientData}
-          setErrors={setErrors}
+          setChange={(val) => setChange(val, 'signature')}
           error={errors?.signature}
           disabled={disabled}
           isRequired={client_reg_sign_is_required}

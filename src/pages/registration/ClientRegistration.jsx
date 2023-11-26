@@ -51,7 +51,6 @@ export default function ClientRegistration() {
       city: '',
       word_no: '',
       post_office: '',
-      post_code: '',
       police_station: '',
       district: '',
       division: ''
@@ -61,7 +60,6 @@ export default function ClientRegistration() {
       city: '',
       word_no: '',
       post_office: '',
-      post_code: '',
       police_station: '',
       district: '',
       division: ''

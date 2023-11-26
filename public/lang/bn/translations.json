@@ -48,6 +48,7 @@
     "nid": "জন্ম নিবন্ধন নং/ভোটার আইডি নং",
     "dob": "জন্ম তারিখ",
     "occupation": "পেশা",
+    "relation": "সম্পর্ক",
     "religion": "ধর্ম",
     "gender": "লিঙ্গ",
     "primary_phone": "প্রাথমিক ফোন নম্বর",
@@ -56,6 +57,7 @@
     "annual_income": "বাৎসরিক আয়",
     "bank_acc_no": "ব্যাংক একাউন্ট নম্বর",
     "bank_check_no": "চেক নম্বর",
+    "address": "ঠিকানা",
     "present_address": "বর্তমান ঠিকানা",
     "permanent_address": "স্থায়ী ঠিকানা",
     "street_address": "বাড়ি/অ্যাপার্টমেন্ট/রাস্তা",
@@ -127,7 +129,8 @@
     "saving_info": "সঞ্চয় তথ্য",
     "nominee_info": "নমিনির তথ্য",
     "add_nominee": "নমিনি যোগ করুন",
-    "remove_nominee": "নমিনি বিয়োগ দিন"
+    "remove_nominee": "নমিনি বিয়োগ দিন",
+    "nominee": "নমিনি"
   },
 
   "common_validation": {

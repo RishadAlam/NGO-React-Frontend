@@ -141,8 +141,6 @@ export default function SavingAccRegFormFields({
     )
   }
 
-  console.log(formData)
-
   return (
     <div className="row">
       <div className="col-md-12">

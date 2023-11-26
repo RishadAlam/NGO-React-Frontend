@@ -1,7 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { create } from 'mutative'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignaturePad from 'react-signature-canvas'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -9,6 +8,7 @@ import Pen from '../../icons/Pen'
 import Save from '../../icons/Save'
 import Trash from '../../icons/Trash'
 import XCircle from '../../icons/XCircle'
+import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import Button from './Button'
 import ModalPro from './ModalPro'
 
@@ -16,14 +16,12 @@ export default function SignaturePadField({
   label,
   open,
   setOpen,
-  imageURL,
-  setImageURL,
-  setSignature,
-  setErrors,
+  setChange,
   isRequired = false,
   error = false,
   disabled = false
 }) {
+  const [imageURL, setImageURL] = useState(SignaturePlaceholder)
   const { t } = useTranslation()
   const sigCanvas = useRef({})
 
@@ -37,18 +35,7 @@ export default function SignaturePadField({
     const signature = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png')
 
     setImageURL(signature)
-    setSignature((prev) =>
-      create(prev, (draft) => {
-        draft.signature = signature
-      })
-    )
-    setErrors((prevErr) =>
-      create(prevErr, (draftErr) => {
-        signature === '' || signature === null || signature === undefined
-          ? (draftErr.signature = `${t(`common.signature`)} ${t('common_validation.is_required')}`)
-          : delete draftErr.signature
-      })
-    )
+    setChange(signature)
     setOpen(false)
   }
 
