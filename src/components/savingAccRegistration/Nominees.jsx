@@ -19,7 +19,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     return total
   }
   console.log(formData.nominees)
-  console.log(errors.nominees)
+  console.log(errors)
   const addNominee = () => {
     if (formData.nominees.length < 5) {
       setFormData((prevData) =>
@@ -122,9 +122,9 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
         }
 
         if (draftErr['nominees'][index] && !Object.keys(draftErr['nominees'][index]).length) {
-          delete draftErr['nominees'][index]
+          draftErr['nominees'].splice(index, 1)
         }
-        if (draftErr['nominees'] && !Object.keys(draftErr['nominees']).length) {
+        if (draftErr['nominees'] && !draftErr['nominees'].length) {
           delete draftErr['nominees']
         }
       })

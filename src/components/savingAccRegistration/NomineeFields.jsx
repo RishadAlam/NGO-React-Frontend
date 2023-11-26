@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
-import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import DatePickerInputField from '../utilities/DatePickerInputField'
 import ImagePreview from '../utilities/ImagePreview'
 import RadioInputGroup from '../utilities/RadioInputGroup'
@@ -21,7 +20,6 @@ export default function NomineeFields({
   disabled
 }) {
   const { t } = useTranslation()
-  const [imageUri, setImageUri] = useState(profilePlaceholder)
   const [signatureModal, setSignatureModal] = useState(false)
 
   const { data: { data: occupations = [] } = [] } = useFetch({
@@ -44,10 +42,6 @@ export default function NomineeFields({
     onInputChange: (e, option) => setChange(option, 'relation', i)
   }
 
-  const setImages = (val, name) => {
-    name === 'image' ? setImageUri(URL.createObjectURL(val)) : setChange(val, name, i)
-  }
-
   return (
     <>
       {/* Present Address */}
@@ -61,7 +55,6 @@ export default function NomineeFields({
       <div className="col-md-6 mb-3">
         <ImagePreview
           label={t('common.image')}
-          src={imageUri}
           setChange={(val) => setChange(val, 'image', i)}
           error={errors?.image}
           disabled={disabled}
@@ -196,7 +189,7 @@ export default function NomineeFields({
         i={i}
         addressData={nomineeData.address}
         setAddressData={setNomineeData}
-        errors={errors?.nominees[i]?.address || null}
+        errors={(errors?.nominees && errors?.nominees[i]?.address) || {}}
         setErrors={setErrors}
         disabled={disabled}
       />
