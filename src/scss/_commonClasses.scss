@@ -493,9 +493,9 @@ ul {
     -webkit-text-fill-color: $soft-light !important;
   }
 
-  .MuiPopper-root * {
+  .MuiPopper-root.MuiAutocomplete-popper * {
     background-color: $soft-bg !important;
-    color: $blue-magenta !important;
+    color: $soft-light !important;
   }
 
   .MuiPaper-root {

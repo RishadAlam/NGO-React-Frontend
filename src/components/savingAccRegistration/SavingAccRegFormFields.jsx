@@ -1,27 +1,16 @@
 import { create } from 'mutative'
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
-import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import ImagePreview from '../utilities/ImagePreview'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
 import Nominees from './Nominees'
 import SavingFields from './SavingFields'
 
-export default function SavingAccRegFormFields({
-  imageUri,
-  signatureModal,
-  setSignatureModal,
-  signatureUri,
-  setSignatureUri,
-  formData,
-  setFormData,
-  errors,
-  setErrors,
-  disabled
-}) {
+function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disabled }) {
   const { id, permissions } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -58,7 +47,7 @@ export default function SavingAccRegFormFields({
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const categoryConfig = {
-    options: categories,
+    options: categories.sort((a, b) => (a.group > b.group ? 1 : -1)),
     value: formData?.category || null,
     getOptionLabel: (option) =>
       option.is_default ? t(`category.default.${option.name}`) : option.name,
@@ -79,7 +68,7 @@ export default function SavingAccRegFormFields({
     options: clients,
     value: formData.client || null,
     getOptionLabel: (option) => tsNumbers(option.acc_no),
-    onChange: (e, option) => setChange(option, 'client'),
+    onChange: (e, option) => setChange(option, 'acc_no'),
     filterOptions: (options, state) =>
       state.inputValue
         ? options.filter((option) => option.acc_no.includes(tsNumbers(state.inputValue, true)))
@@ -118,12 +107,16 @@ export default function SavingAccRegFormFields({
           draftData.category = val || null
           return
         }
-        if (name === 'client') {
+        if (name === 'acc_no') {
           draftData.client_registration_id = val?.id || ''
           draftData.acc_no = val?.acc_no || ''
           draftData.name = val?.name || ''
-          draftData.image_uri = val?.image_uri || ''
           draftData.client = val || null
+          return
+        }
+        if (name === 'creator') {
+          draftData.creator_id = val?.id || ''
+          draftData.creator = val || null
           return
         }
 
@@ -134,6 +127,7 @@ export default function SavingAccRegFormFields({
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
+
         val === '' || val === null
           ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`)
           : delete draftErr[name]
@@ -148,9 +142,8 @@ export default function SavingAccRegFormFields({
           <div className="col-md-5 mb-3">
             <ImagePreview
               label={t('common.image')}
-              src={formData?.client?.image_uri || profilePlaceholder}
-              setChange={false}
-              error={false}
+              src={formData?.client?.image_uri}
+              error={errors?.acc_no}
               disabled={true}
               style={{ width: 'max-content', margin: 'auto' }}
             />
@@ -198,7 +191,7 @@ export default function SavingAccRegFormFields({
                   label={t('common.acc_no')}
                   config={clientConfig}
                   isRequired={true}
-                  error={errors?.client}
+                  error={errors?.acc_no}
                   disabled={disabled}
                 />
               </div>
@@ -208,7 +201,7 @@ export default function SavingAccRegFormFields({
                   isRequired={true}
                   defaultValue={formData?.name || ''}
                   setChange={(val) => setChange(val, 'name')}
-                  error={errors?.name}
+                  error={errors?.acc_no}
                   disabled={true}
                 />
               </div>
@@ -233,3 +226,5 @@ export default function SavingAccRegFormFields({
     </div>
   )
 }
+
+export default memo(SavingAccRegFormFields)

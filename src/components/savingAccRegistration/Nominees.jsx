@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import PlusCircle from '../../icons/PlusCircle'
 import XCircle from '../../icons/XCircle'
 import dateFormat from '../../libs/dateFormat'
+import tsNumbers from '../../libs/tsNumbers'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import NomineeFields from './NomineeFields'
 
@@ -18,72 +19,26 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     }
     return total
   }
-  console.log(formData.nominees)
-  console.log(errors)
-  const addNominee = () => {
-    if (formData.nominees.length < 5) {
+
+  const addNominee = (length) => {
+    if (length < 5) {
       setFormData((prevData) =>
         create(prevData, (draftData) => {
-          draftData.nominees.splice(draftData.nominees.length, 0, {
-            name: '',
-            father_name: '',
-            husband_name: '',
-            mother_name: '',
-            nid: '',
-            dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-            occupation: '',
-            relation: '',
-            gender: '',
-            primary_phone: '',
-            secondary_phone: '',
-            image: '',
-            signature: '',
-            address: {
-              street_address: '',
-              city: '',
-              word_no: '',
-              post_office: '',
-              post_code: '',
-              police_station: '',
-              district: '',
-              division: ''
-            }
-          })
+          draftData.nominees.splice(length, 0, nomineeFields)
         })
       )
       setErrors((prevErr) =>
         create(prevErr, (draftErr) => {
-          draftErr.nominees.splice(draftErr.nominees.length, 0, {
-            name: '',
-            father_name: '',
-            husband_name: '',
-            mother_name: '',
-            nid: '',
-            occupation: '',
-            relation: '',
-            gender: '',
-            primary_phone: '',
-            secondary_phone: '',
-            image: '',
-            signature: '',
-            address: {
-              street_address: '',
-              city: '',
-              word_no: '',
-              post_office: '',
-              post_code: '',
-              police_station: '',
-              district: '',
-              division: ''
-            }
-          })
+          draftErr['nominees'] = draftErr?.nominees || []
+          // draftErr.nominees.splice(length, 0, nomineeFieldsErrs)
+          draftErr.nominees[length] = nomineeFieldsErrs
         })
       )
     }
   }
 
-  const removeNominee = () => {
-    if (formData.nominees.length > 1) {
+  const removeNominee = (length) => {
+    if (length > 1) {
       setFormData((prevData) =>
         create(prevData, (draftData) => {
           draftData.nominees.pop()
@@ -98,30 +53,72 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
   }
 
   const setChange = (val, name, index) => {
+    if (name === 'primary_phone' || name === 'secondary_phone' || name === 'nid') {
+      val = tsNumbers(val, true)
+    }
+
     setFormData((prevData) =>
       create(prevData, (draftData) => {
+        if (name === 'dob') {
+          draftData.nominees[index].dob = dateFormat(val, 'yyyy-MM-dd')
+          return
+        }
         draftData.nominees[index][name] = val
       })
     )
 
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
-        delete draftErr.message
+        delete draftErr?.message
 
-        if (name !== 'husband_name' && name !== 'secondary_phone') {
-          const nominees = draftErr?.nominees || {}
-          nominees[index] = draftErr?.nominees[index] || {}
+        if (name !== 'husband_name') {
+          const nominees = draftErr?.nominees || []
+          nominees[index] = (draftErr?.nominees && draftErr?.nominees[index]) || {}
 
-          val === '' || val === null
-            ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
-                `common_validation.is_required`
-              )}`)
-            : draftErr['nominees'][index] && delete draftErr['nominees'][index][name]
+          if (name === 'primary_phone' || name === 'secondary_phone') {
+            val.length !== 11 ||
+            !String(val).startsWith('01') ||
+            !Number(val) ||
+            val === '' ||
+            val === null
+              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+                  'common_validation.is_invalid'
+                )}`)
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
+
+            if (name === 'secondary_phone' && val === '') {
+              draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
+            }
+          } else if (name === 'nid') {
+            !Number(val) || val === '' || val === null
+              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+                  'common_validation.is_invalid'
+                )}`)
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
+          } else {
+            val === '' || val === null
+              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+                  `common_validation.is_required`
+                )}`)
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
+          }
 
           draftErr['nominees'] = nominees
         }
 
-        if (draftErr['nominees'][index] && !Object.keys(draftErr['nominees'][index]).length) {
+        if (
+          draftErr['nominees'] &&
+          draftErr['nominees'][index] &&
+          !Object.keys(draftErr['nominees'][index]).length
+        ) {
           draftErr['nominees'].splice(index, 1)
         }
         if (draftErr['nominees'] && !draftErr['nominees'].length) {
@@ -140,7 +137,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
           setNomineeData={setFormData}
           i={i}
           setChange={setChange}
-          errors={errors}
+          errors={(errors?.nominees && errors?.nominees[i]) || {}}
           setErrors={setErrors}
           disabled={disabled}
         />
@@ -151,7 +148,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
             <span>
               <IconButton
                 className="text-success"
-                onClick={addNominee}
+                onClick={() => addNominee(formData.nominees.length)}
                 disabled={formData.nominees.length < 5 ? false : true}>
                 {<PlusCircle size={24} />}
               </IconButton>
@@ -161,7 +158,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
             <span>
               <IconButton
                 className="text-danger"
-                onClick={removeNominee}
+                onClick={() => removeNominee(formData.nominees.length)}
                 disabled={formData.nominees.length > 1 ? false : true}>
                 {<XCircle size={24} />}
               </IconButton>
@@ -171,4 +168,48 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
       </div>
     </>
   )
+}
+
+const nomineeFields = {
+  name: '',
+  father_name: '',
+  husband_name: '',
+  mother_name: '',
+  nid: '',
+  dob: dateFormat(new Date(), 'yyyy-MM-dd'),
+  occupation: '',
+  relation: '',
+  gender: '',
+  primary_phone: '',
+  secondary_phone: '',
+  image: '',
+  signature: '',
+  address: {
+    street_address: '',
+    city: '',
+    word_no: '',
+    post_office: '',
+    police_station: '',
+    district: '',
+    division: ''
+  }
+}
+const nomineeFieldsErrs = {
+  name: '',
+  father_name: '',
+  mother_name: '',
+  nid: '',
+  occupation: '',
+  relation: '',
+  gender: '',
+  primary_phone: '',
+  image: '',
+  address: {
+    street_address: '',
+    city: '',
+    post_office: '',
+    police_station: '',
+    district: '',
+    division: ''
+  }
 }

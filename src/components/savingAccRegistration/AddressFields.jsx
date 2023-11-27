@@ -14,6 +14,10 @@ export default function AddressFields({
   const { t } = useTranslation()
 
   const setAddress = (val, name, index) => {
+    if (name === 'word_no') {
+      val = tsNumbers(val)
+    }
+
     setAddressData((prevData) =>
       create(prevData, (draftData) => {
         draftData.nominees[index].address[name] = val
@@ -22,18 +26,24 @@ export default function AddressFields({
 
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
-        delete draftErr.message
+        delete draftErr?.message
 
         if (name !== 'word_no') {
-          const nominees = draftErr?.nominees || {}
-          nominees[index] = draftErr?.nominees[index] || {}
-          nominees[index]['address'] = draftErr?.nominees[index]['address'] || {}
+          const nominees = draftErr?.nominees || []
+          nominees[index] = (draftErr?.nominees && draftErr?.nominees[index]) || {}
+          nominees[index]['address'] =
+            (draftErr?.nominees &&
+              draftErr?.nominees[index] &&
+              draftErr?.nominees[index]['address']) ||
+            {}
 
           val === '' || val === null
             ? (nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
                 `common_validation.is_required`
               )}`)
-            : draftErr['nominees'][index]['address'] &&
+            : draftErr['nominees'] &&
+              draftErr['nominees'][index] &&
+              draftErr['nominees'][index]['address'] &&
               delete draftErr['nominees'][index]['address'][name]
 
           draftErr['nominees'] = nominees
@@ -43,9 +53,18 @@ export default function AddressFields({
           draftErr['nominees'][index]['address'] &&
           !Object.keys(draftErr['nominees'][index]['address']).length
         ) {
-          delete draftErr['nominees'][index]['address']
+          draftErr['nominees'] &&
+            draftErr['nominees'][index] &&
+            delete draftErr['nominees'][index]['address']
         }
-        if (draftErr['nominees'] && !Object.keys(draftErr['nominees']).length) {
+        if (
+          draftErr['nominees'] &&
+          draftErr['nominees'][index] &&
+          !Object.keys(draftErr['nominees'][index]).length
+        ) {
+          draftErr['nominees'].splice(index, 1)
+        }
+        if (draftErr['nominees'] && !draftErr['nominees'].length) {
           delete draftErr['nominees']
         }
       })

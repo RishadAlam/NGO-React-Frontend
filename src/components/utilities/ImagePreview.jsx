@@ -4,8 +4,8 @@ import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 
 export default function ImagePreview({
   label,
-  src,
-  setChange,
+  src = null,
+  setChange = null,
   error,
   style = { width: 'max-content' },
   disabled = false,
@@ -21,7 +21,9 @@ export default function ImagePreview({
 
   const save = (val) => {
     setImageUri(URL.createObjectURL(val))
-    setChange(val)
+    if (setChange) {
+      setChange(val)
+    }
   }
 
   return (
@@ -34,8 +36,9 @@ export default function ImagePreview({
           <img
             className="rounded-2"
             alt="image"
-            src={imageUri}
+            src={src || imageUri}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
+            loading="lazy"
           />
         </div>
         <div className={`mx-auto position-relative mt-3 ${disabled ? 'd-none' : ''}`}>

@@ -1,5 +1,6 @@
 import { create } from 'mutative'
 import { useTranslation } from 'react-i18next'
+import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import DatePickerInputField from '../utilities/DatePickerInputField'
 import TextInputField from '../utilities/TextInputField'
@@ -17,10 +18,11 @@ export default function SavingFields({ formData, setFormData, errors, setErrors,
 
   const setChange = (val, name) => {
     val = tsNumbers(val, true)
+
     setFormData((prevData) =>
       create(prevData, (draftData) => {
         draftData[name] = val
-        if (name !== 'start_date' && name !== 'duration_date') {
+        if (name !== 'start_date' && name !== 'duration_date' && Number(val)) {
           draftData.total_deposit_without_interest = total(
             name === 'payable_deposit' ? val : formData.payable_deposit,
             name === 'payable_installment' ? val : formData.payable_installment,
@@ -32,6 +34,11 @@ export default function SavingFields({ formData, setFormData, errors, setErrors,
             name === 'payable_interest' ? val : formData.payable_interest,
             true
           )
+          return
+        }
+
+        if (name === 'start_date' || name === 'duration_date') {
+          draftData[name] = val !== 'null' ? dateFormat(val, 'yyyy-MM-dd') : ''
         }
       })
     )
@@ -39,8 +46,19 @@ export default function SavingFields({ formData, setFormData, errors, setErrors,
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        if (!Number(val)) {
-          draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
+
+        if (name !== 'start_date' && name !== 'duration_date') {
+          if (!Number(val)) {
+            draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
+            return
+          }
+          if (val === '' || val === null) {
+            draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`
+          } else {
+            delete draftErr[name]
+            delete draftErr?.total_deposit_with_interest
+            delete draftErr?.total_deposit_without_interest
+          }
           return
         }
 
