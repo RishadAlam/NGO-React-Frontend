@@ -59,9 +59,29 @@ export default function SavingAccReg() {
     formData.append('payable_interest', savingAccData.payable_interest)
     formData.append('total_deposit_without_interest', savingAccData.total_deposit_without_interest)
     formData.append('total_deposit_with_interest', savingAccData.total_deposit_with_interest)
-    formData.append('total_installment', savingAccData.total_installment)
     formData.append('creator_id', savingAccData.creator_id)
-    formData.append('nominees', JSON.stringify(savingAccData.nominees))
+    // for (let i = 0; i < savingAccData.nominees.length; i++) {
+    //   formData.append('nominee_images[]', savingAccData.nominees[i].image)
+    // }
+    savingAccData.nominees.forEach((nominee, index) => {
+      for (const key in nominee) {
+        if (key !== 'name') {
+          if (key !== 'address' && key !== 'image') {
+            formData.append(`nominees[${index}][${key}]`, nominee[key])
+          } else if (key !== 'address' && key === 'image') {
+            formData.append(`nominees[${index}][${key}]`, nominee[key], nominee[key].name)
+          } else {
+            for (const addressKey in nominee[key]) {
+              formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
+            }
+          }
+        }
+      }
+    })
+
+    // for (const pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1])
+    // }
 
     setLoading({ ...loading, SavingAccRegForm: true })
     xFetch('client/registration/saving', formData, null, accessToken, null, 'POST', true)
@@ -81,6 +101,15 @@ export default function SavingAccReg() {
               draftErr.message = response?.message
               return
             }
+            // if (response?.errors && typeof response?.errors === 'object') {
+            //   for (const errKey in response?.errors) {
+            //     const keyArr = errKey.split('.')
+            //     if (keyArr?.length) {
+            //     } else {
+            //       draftErr[keyArr] = response?.errors[keyArr]
+            //     }
+            //   }
+            // }
             return rawReturn(response?.errors || response)
           })
         )
@@ -143,7 +172,7 @@ export default function SavingAccReg() {
                   className={'btn-primary py-2 px-3'}
                   loading={loading?.SavingAccRegForm || false}
                   endIcon={<Save size={20} />}
-                  disabled={Object.keys(errors).length || loading?.SavingAccRegForm}
+                  // disabled={Object.keys(errors).length || loading?.SavingAccRegForm}
                 />
               </div>
             </form>
