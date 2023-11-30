@@ -36,14 +36,14 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
       : creators,
     value: formData?.creator || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'creator'),
+    onChange: (e, option) => setChange(option, 'creator_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const fieldConfig = {
     options: fields,
     value: formData?.field || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'field'),
+    onChange: (e, option) => setChange(option, 'field_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const categoryConfig = {
@@ -51,7 +51,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
     value: formData?.category || null,
     getOptionLabel: (option) =>
       option.is_default ? t(`category.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'category'),
+    onChange: (e, option) => setChange(option, 'category_id'),
     groupBy: (option) => option.group,
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
@@ -61,7 +61,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
       : [],
     value: formData?.center || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'center'),
+    onChange: (e, option) => setChange(option, 'center_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const clientConfig = {
@@ -82,7 +82,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
     }
     setFormData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'field') {
+        if (name === 'field_id') {
           draftData.field_id = val?.id || ''
           draftData.field = val || null
           draftData.center_id = ''
@@ -93,7 +93,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
           draftData.client = ''
           return
         }
-        if (name === 'center') {
+        if (name === 'center_id') {
           draftData.center_id = val?.id || ''
           draftData.center = val || null
           draftData.client_registration_id = ''
@@ -102,7 +102,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
           draftData.client = ''
           return
         }
-        if (name === 'category') {
+        if (name === 'category_id') {
           draftData.category_id = val?.id || ''
           draftData.category = val || null
           return
@@ -114,7 +114,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
           draftData.client = val || null
           return
         }
-        if (name === 'creator') {
+        if (name === 'creator_id') {
           draftData.creator_id = val?.id || ''
           draftData.creator = val || null
           return
@@ -155,7 +155,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   label={t('common.field')}
                   config={fieldConfig}
                   isRequired={true}
-                  error={errors?.field}
+                  error={errors?.field_id}
                   disabled={disabled}
                 />
               </div>
@@ -164,7 +164,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   label={t('common.center')}
                   config={centerConfig}
                   isRequired={true}
-                  error={errors?.center}
+                  error={errors?.center_id}
                   disabled={disabled}
                 />
               </div>
@@ -173,7 +173,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   label={t('common.category')}
                   config={categoryConfig}
                   isRequired={true}
-                  error={errors?.category}
+                  error={errors?.category_id}
                   disabled={disabled}
                 />
               </div>
@@ -182,7 +182,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   label={t('common.creator')}
                   config={creatorConfig}
                   isRequired={true}
-                  error={errors?.creator}
+                  error={errors?.creator_id}
                   disabled={disabled}
                 />
               </div>

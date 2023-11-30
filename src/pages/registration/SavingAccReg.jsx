@@ -22,25 +22,25 @@ export default function SavingAccReg() {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (
-      savingAccData.field_id === '' ||
-      savingAccData.center_id === '' ||
-      savingAccData.category_id === '' ||
-      savingAccData.creator_id === '' ||
-      savingAccData.acc_no === '' ||
-      savingAccData.client_registration_id === '' ||
-      savingAccData.start_date === '' ||
-      savingAccData.duration_date === '' ||
-      savingAccData.payable_deposit === '' ||
-      savingAccData.payable_installment === '' ||
-      savingAccData.payable_interest === '' ||
-      savingAccData.total_deposit_without_interest === '' ||
-      savingAccData.total_deposit_with_interest === '' ||
-      savingAccData.nominees === ''
-    ) {
-      toast.error(t('common_validation.required_fields_are_empty'))
-      return
-    }
+    // if (
+    //   savingAccData.field_id === '' ||
+    //   savingAccData.center_id === '' ||
+    //   savingAccData.category_id === '' ||
+    //   savingAccData.creator_id === '' ||
+    //   savingAccData.acc_no === '' ||
+    //   savingAccData.client_registration_id === '' ||
+    //   savingAccData.start_date === '' ||
+    //   savingAccData.duration_date === '' ||
+    //   savingAccData.payable_deposit === '' ||
+    //   savingAccData.payable_installment === '' ||
+    //   savingAccData.payable_interest === '' ||
+    //   savingAccData.total_deposit_without_interest === '' ||
+    //   savingAccData.total_deposit_with_interest === '' ||
+    //   savingAccData.nominees === ''
+    // ) {
+    //   toast.error(t('common_validation.required_fields_are_empty'))
+    //   return
+    // }
     // if (client_reg_sign_is_required && savingAccData.signature === '') {
     //   toast.error(`${t(`common.signature`)} ${t('common_validation.is_required')}`)
     //   return
@@ -60,28 +60,20 @@ export default function SavingAccReg() {
     formData.append('total_deposit_without_interest', savingAccData.total_deposit_without_interest)
     formData.append('total_deposit_with_interest', savingAccData.total_deposit_with_interest)
     formData.append('creator_id', savingAccData.creator_id)
-    // for (let i = 0; i < savingAccData.nominees.length; i++) {
-    //   formData.append('nominee_images[]', savingAccData.nominees[i].image)
-    // }
+
     savingAccData.nominees.forEach((nominee, index) => {
       for (const key in nominee) {
-        if (key !== 'address') {
-          if (key !== 'address' && key !== 'image') {
-            formData.append(`nominees[${index}][${key}]`, nominee[key])
-          } else if (key !== 'address' && key === 'image') {
-            formData.append(`nominees[${index}][${key}]`, nominee[key])
-          } else {
-            for (const addressKey in nominee[key]) {
-              formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
-            }
+        if (key !== 'address' && key !== 'image') {
+          formData.append(`nominees[${index}][${key}]`, nominee[key])
+        } else if (key !== 'address' && key === 'image') {
+          formData.append(`nominees[${index}][${key}]`, nominee[key])
+        } else {
+          for (const addressKey in nominee[key]) {
+            formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
           }
         }
       }
     })
-
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1])
-    // }
 
     setLoading({ ...loading, SavingAccRegForm: true })
     xFetch('client/registration/saving', formData, null, accessToken, null, 'POST', true)
@@ -127,7 +119,6 @@ export default function SavingAccReg() {
         )
       })
   }
-  console.log(errors.nominees[1].address)
 
   return (
     <section className="staff">
@@ -232,10 +223,10 @@ const savingAccFields = {
   ]
 }
 const savingAccErrs = {
-  field: '',
-  center: '',
-  creator: '',
-  category: '',
+  field_id: '',
+  center_id: '',
+  creator_id: '',
+  category_id: '',
   acc_no: '',
   duration_date: '',
   payable_deposit: '',
