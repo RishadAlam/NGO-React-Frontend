@@ -189,7 +189,7 @@ export default function NomineeFields({
         i={i}
         addressData={nomineeData.address}
         setAddressData={setNomineeData}
-        errors={(errors?.nominees && errors?.nominees[i]?.address) || {}}
+        errors={(errors && errors?.address) || {}}
         setErrors={setErrors}
         disabled={disabled}
       />

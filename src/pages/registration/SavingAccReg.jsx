@@ -65,11 +65,11 @@ export default function SavingAccReg() {
     // }
     savingAccData.nominees.forEach((nominee, index) => {
       for (const key in nominee) {
-        if (key !== 'name') {
+        if (key !== 'address') {
           if (key !== 'address' && key !== 'image') {
             formData.append(`nominees[${index}][${key}]`, nominee[key])
           } else if (key !== 'address' && key === 'image') {
-            formData.append(`nominees[${index}][${key}]`, nominee[key], nominee[key].name)
+            formData.append(`nominees[${index}][${key}]`, nominee[key])
           } else {
             for (const addressKey in nominee[key]) {
               formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
@@ -127,6 +127,7 @@ export default function SavingAccReg() {
         )
       })
   }
+  console.log(errors.nominees[1].address)
 
   return (
     <section className="staff">
