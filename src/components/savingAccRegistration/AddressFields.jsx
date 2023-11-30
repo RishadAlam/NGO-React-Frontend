@@ -15,7 +15,7 @@ export default function AddressFields({
 
   const setAddress = (val, name, index) => {
     if (name === 'word_no') {
-      val = tsNumbers(val)
+      val = tsNumbers(val, true)
     }
 
     setAddressData((prevData) =>

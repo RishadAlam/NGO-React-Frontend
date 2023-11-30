@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import tsNumbers from '../../libs/tsNumbers'
 import { bn_districts, en_districts } from '../../resources/staticData/districts'
 import { bn_divisions, en_divisions } from '../../resources/staticData/divisions'
 import { bn_police_stations, en_police_stations } from '../../resources/staticData/policeStations'
@@ -73,7 +74,7 @@ export default function AddressGrp({ addressData, setAddress, errors, disabled, 
       <div className="col-md-6 col-lg-4 mb-3">
         <TextInputField
           label={t('common.word_no')}
-          defaultValue={addressData?.word_no || ''}
+          defaultValue={tsNumbers(addressData?.word_no) || ''}
           setChange={(val) => setAddress(val, 'word_no', index)}
           error={errors?.word_no || ''}
           disabled={disabled}
