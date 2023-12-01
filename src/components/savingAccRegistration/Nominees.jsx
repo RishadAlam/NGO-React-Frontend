@@ -119,7 +119,9 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
           draftErr['nominees'][index] &&
           !Object.keys(draftErr['nominees'][index]).length
         ) {
-          draftErr['nominees'].splice(index, 1)
+          draftErr['nominees'].length > 1
+            ? draftErr['nominees'].splice(index, 1)
+            : draftErr['nominees'].splice(0, 1)
         }
         if (draftErr['nominees'] && !draftErr['nominees'].length) {
           delete draftErr['nominees']

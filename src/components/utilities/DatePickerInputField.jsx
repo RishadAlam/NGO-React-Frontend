@@ -26,9 +26,9 @@ export default function DatePickerInputField({
         format="dd/MM/yyyy"
         onChange={(newValue) => setChange(newValue)}
         error={error ? true : false}
-        helperText={typeof error === 'string' ? error : ''}
         disabled={disabled ? true : false}
       />
+      {error && <span className="text-danger my-3">{error}</span>}
     </LocalizationProvider>
   )
 }

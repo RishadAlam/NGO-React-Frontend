@@ -22,60 +22,15 @@ export default function SavingAccReg() {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    // if (
-    //   savingAccData.field_id === '' ||
-    //   savingAccData.center_id === '' ||
-    //   savingAccData.category_id === '' ||
-    //   savingAccData.creator_id === '' ||
-    //   savingAccData.acc_no === '' ||
-    //   savingAccData.client_registration_id === '' ||
-    //   savingAccData.start_date === '' ||
-    //   savingAccData.duration_date === '' ||
-    //   savingAccData.payable_deposit === '' ||
-    //   savingAccData.payable_installment === '' ||
-    //   savingAccData.payable_interest === '' ||
-    //   savingAccData.total_deposit_without_interest === '' ||
-    //   savingAccData.total_deposit_with_interest === '' ||
-    //   savingAccData.nominees === ''
-    // ) {
-    //   toast.error(t('common_validation.required_fields_are_empty'))
-    //   return
-    // }
-    // if (client_reg_sign_is_required && savingAccData.signature === '') {
-    //   toast.error(`${t(`common.signature`)} ${t('common_validation.is_required')}`)
-    //   return
-    // }
+    if (checkRequiredFields(savingAccData, t)) {
+      toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
 
     const formData = new FormData()
-    formData.append('field_id', savingAccData.field_id)
-    formData.append('center_id', savingAccData.center_id)
-    formData.append('category_id', savingAccData.category_id)
-    formData.append('client_registration_id', savingAccData.client_registration_id)
-    formData.append('acc_no', savingAccData.acc_no)
-    formData.append('start_date', savingAccData.start_date)
-    formData.append('duration_date', savingAccData.duration_date)
-    formData.append('payable_installment', savingAccData.payable_installment)
-    formData.append('payable_deposit', savingAccData.payable_deposit)
-    formData.append('payable_interest', savingAccData.payable_interest)
-    formData.append('total_deposit_without_interest', savingAccData.total_deposit_without_interest)
-    formData.append('total_deposit_with_interest', savingAccData.total_deposit_with_interest)
-    formData.append('creator_id', savingAccData.creator_id)
-
-    savingAccData.nominees.forEach((nominee, index) => {
-      for (const key in nominee) {
-        if (key !== 'address' && key !== 'image') {
-          formData.append(`nominees[${index}][${key}]`, nominee[key])
-        } else if (key !== 'address' && key === 'image') {
-          formData.append(`nominees[${index}][${key}]`, nominee[key])
-        } else {
-          for (const addressKey in nominee[key]) {
-            formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
-          }
-        }
-      }
-    })
-
+    setFormData(formData, savingAccData)
     setLoading({ ...loading, SavingAccRegForm: true })
+
     xFetch('client/registration/saving', formData, null, accessToken, null, 'POST', true)
       .then((response) => {
         setLoading({ ...loading, SavingAccRegForm: false })
@@ -119,6 +74,7 @@ export default function SavingAccReg() {
         )
       })
   }
+  console.log(errors)
 
   return (
     <section className="staff">
@@ -164,7 +120,7 @@ export default function SavingAccReg() {
                   className={'btn-primary py-2 px-3'}
                   loading={loading?.SavingAccRegForm || false}
                   endIcon={<Save size={20} />}
-                  // disabled={Object.keys(errors).length || loading?.SavingAccRegForm}
+                  disabled={Object.keys(errors).length || loading?.SavingAccRegForm}
                 />
               </div>
             </form>
@@ -173,6 +129,81 @@ export default function SavingAccReg() {
       </div>
     </section>
   )
+}
+
+const checkRequiredFields = (fields) => {
+  if (
+    fields.field_id === '' ||
+    fields.center_id === '' ||
+    fields.category_id === '' ||
+    fields.creator_id === '' ||
+    fields.acc_no === '' ||
+    fields.client_registration_id === '' ||
+    fields.start_date === '' ||
+    fields.duration_date === '' ||
+    fields.payable_deposit === '' ||
+    fields.payable_installment === '' ||
+    fields.payable_interest === '' ||
+    fields.total_deposit_without_interest === '' ||
+    fields.total_deposit_with_interest === '' ||
+    fields.nominees?.name === '' ||
+    fields.nominees?.father_name === '' ||
+    fields.nominees?.mother_name === '' ||
+    fields.nominees?.nid === '' ||
+    fields.nominees?.dob === '' ||
+    fields.nominees?.occupation === '' ||
+    fields.nominees?.relation === '' ||
+    fields.nominees?.gender === '' ||
+    fields.nominees?.primary_phone === '' ||
+    fields.nominees?.image === '' ||
+    fields.nominees?.address?.street_address === '' ||
+    fields.nominees?.address?.city === '' ||
+    fields.nominees?.address?.post_office === '' ||
+    fields.nominees?.address?.police_station === '' ||
+    fields.nominees?.address?.district === '' ||
+    fields.nominees?.address?.division === ''
+  ) {
+    return true
+  }
+  // if (client_reg_sign_is_required && fields.signature === '') {
+  //   toast.error(`${t(`common.signature`)} ${t('common_validation.is_required')}`)
+  //   return
+  // }
+  return false
+}
+
+const setFormData = (formData, fields) => {
+  formData.append('field_id', fields.field_id)
+  formData.append('center_id', fields.center_id)
+  formData.append('category_id', fields.category_id)
+  formData.append('client_registration_id', fields.client_registration_id)
+  formData.append('acc_no', fields.acc_no)
+  formData.append('start_date', fields.start_date)
+  formData.append('duration_date', fields.duration_date)
+  formData.append('payable_installment', fields.payable_installment)
+  formData.append('payable_deposit', fields.payable_deposit)
+  formData.append('payable_interest', fields.payable_interest)
+  formData.append('total_deposit_without_interest', fields.total_deposit_without_interest)
+  formData.append('total_deposit_with_interest', fields.total_deposit_with_interest)
+  formData.append('creator_id', fields.creator_id)
+
+  fields.nominees.forEach((nominee, index) => {
+    for (const key in nominee) {
+      if (key !== 'husband_name') {
+        if (key !== 'address' && key !== 'image') {
+          formData.append(`nominees[${index}][${key}]`, nominee[key])
+        } else if (key !== 'address' && key === 'image') {
+          formData.append(`nominees[${index}][${key}]`, nominee[key])
+        } else {
+          for (const addressKey in nominee[key]) {
+            formData.append(`nominees[${index}][${key}][${addressKey}]`, nominee[key][addressKey])
+          }
+        }
+      }
+    }
+  })
+
+  return formData
 }
 
 const savingAccFields = {

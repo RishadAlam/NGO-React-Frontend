@@ -48,8 +48,16 @@ export default function AddressFields({
 
           draftErr['nominees'] = nominees
         }
+        if (val !== '' || val !== null) {
+          draftErr['nominees'] &&
+            draftErr['nominees'][index] &&
+            draftErr['nominees'][index]['address'] &&
+            delete draftErr['nominees'][index]['address'][name]
+        }
 
         if (
+          draftErr['nominees'] &&
+          draftErr['nominees'][index] &&
           draftErr['nominees'][index]['address'] &&
           !Object.keys(draftErr['nominees'][index]['address']).length
         ) {
@@ -62,8 +70,11 @@ export default function AddressFields({
           draftErr['nominees'][index] &&
           !Object.keys(draftErr['nominees'][index]).length
         ) {
-          draftErr['nominees'].splice(index, 1)
+          draftErr['nominees'].length > 1
+            ? draftErr['nominees'].splice(index, 1)
+            : draftErr['nominees'].splice(0, 1)
         }
+
         if (draftErr['nominees'] && !draftErr['nominees'].length) {
           delete draftErr['nominees']
         }
