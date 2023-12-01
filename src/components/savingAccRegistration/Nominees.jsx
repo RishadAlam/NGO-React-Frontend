@@ -66,59 +66,33 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
         delete draftErr?.message
 
         if (name !== 'husband_name') {
-          const nominees = draftErr?.nominees || []
-          nominees[index] = (draftErr?.nominees && draftErr?.nominees[index]) || {}
-
           if (name === 'primary_phone' || name === 'secondary_phone') {
             val.length !== 11 ||
             !String(val).startsWith('01') ||
             !Number(val) ||
             val === '' ||
             val === null
-              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+              ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : draftErr['nominees'] &&
-                draftErr['nominees'][index] &&
-                delete draftErr['nominees'][index][name]
+              : delete draftErr['nominees'][index][name]
 
             if (name === 'secondary_phone' && val === '') {
-              draftErr['nominees'] &&
-                draftErr['nominees'][index] &&
-                delete draftErr['nominees'][index][name]
+              delete draftErr['nominees'][index][name]
             }
           } else if (name === 'nid') {
             !Number(val) || val === '' || val === null
-              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+              ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : draftErr['nominees'] &&
-                draftErr['nominees'][index] &&
-                delete draftErr['nominees'][index][name]
+              : delete draftErr['nominees'][index][name]
           } else {
             val === '' || val === null
-              ? (nominees[index][name] = `${t(`common.${name}`)} ${t(
+              ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   `common_validation.is_required`
                 )}`)
-              : draftErr['nominees'] &&
-                draftErr['nominees'][index] &&
-                delete draftErr['nominees'][index][name]
+              : delete draftErr['nominees'][index][name]
           }
-
-          draftErr['nominees'] = nominees
-        }
-
-        if (
-          draftErr['nominees'] &&
-          draftErr['nominees'][index] &&
-          !Object.keys(draftErr['nominees'][index]).length
-        ) {
-          draftErr['nominees'].length > 1
-            ? draftErr['nominees'].splice(index, 1)
-            : draftErr['nominees'].splice(0, 1)
-        }
-        if (draftErr['nominees'] && !draftErr['nominees'].length) {
-          delete draftErr['nominees']
         }
       })
     )

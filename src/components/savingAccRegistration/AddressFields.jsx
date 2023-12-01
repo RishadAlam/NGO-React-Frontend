@@ -29,54 +29,18 @@ export default function AddressFields({
         delete draftErr?.message
 
         if (name !== 'word_no') {
-          const nominees = draftErr?.nominees || []
-          nominees[index] = (draftErr?.nominees && draftErr?.nominees[index]) || {}
-          nominees[index]['address'] =
-            (draftErr?.nominees &&
-              draftErr?.nominees[index] &&
-              draftErr?.nominees[index]['address']) ||
-            {}
-
           val === '' || val === null
-            ? (nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
+            ? (draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
                 `common_validation.is_required`
               )}`)
-            : draftErr['nominees'] &&
-              draftErr['nominees'][index] &&
-              draftErr['nominees'][index]['address'] &&
-              delete draftErr['nominees'][index]['address'][name]
-
-          draftErr['nominees'] = nominees
+            : delete draftErr['nominees'][index]['address'][name]
+        } else if (name === 'word_no' && !Number(val)) {
+          draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
+            `common_validation.is_invalid`
+          )}`
         }
         if (val !== '' && val !== null) {
-          draftErr['nominees'] &&
-            draftErr['nominees'][index] &&
-            draftErr['nominees'][index]['address'] &&
-            delete draftErr['nominees'][index]['address'][name]
-        }
-
-        if (
-          draftErr['nominees'] &&
-          draftErr['nominees'][index] &&
-          draftErr['nominees'][index]['address'] &&
-          !Object.keys(draftErr['nominees'][index]['address']).length
-        ) {
-          draftErr['nominees'] &&
-            draftErr['nominees'][index] &&
-            delete draftErr['nominees'][index]['address']
-        }
-        if (
-          draftErr['nominees'] &&
-          draftErr['nominees'][index] &&
-          !Object.keys(draftErr['nominees'][index]).length
-        ) {
-          draftErr['nominees'].length > 1
-            ? draftErr['nominees'].splice(index, 1)
-            : draftErr['nominees'].splice(0, 1)
-        }
-
-        if (draftErr['nominees'] && !draftErr['nominees'].length) {
-          delete draftErr['nominees']
+          delete draftErr['nominees'][index]['address'][name]
         }
       })
     )
