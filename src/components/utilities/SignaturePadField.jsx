@@ -100,6 +100,7 @@ export default function SignaturePadField({
         }}
       />
       {error && <span className="text-danger my-3">{error}</span>}
+      <br />
       <Button
         type="button"
         name={t('common.open_signature_pad')}
