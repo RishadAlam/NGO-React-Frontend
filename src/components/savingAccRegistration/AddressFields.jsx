@@ -48,7 +48,7 @@ export default function AddressFields({
 
           draftErr['nominees'] = nominees
         }
-        if (val !== '' || val !== null) {
+        if (val !== '' && val !== null) {
           draftErr['nominees'] &&
             draftErr['nominees'][index] &&
             draftErr['nominees'][index]['address'] &&

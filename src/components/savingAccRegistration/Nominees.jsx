@@ -11,15 +11,6 @@ import NomineeFields from './NomineeFields'
 
 export default function Nominees({ formData, setFormData, errors, setErrors, disabled }) {
   const { t } = useTranslation()
-
-  const total = (deposit = 0, installment = 0, interest = 0, ints = false) => {
-    const total = Math.round(installment * deposit)
-    if (ints) {
-      return Math.ceil(parseFloat(total) + parseFloat((total / 100) * interest))
-    }
-    return total
-  }
-
   const addNominee = (length) => {
     if (length < 5) {
       setFormData((prevData) =>
@@ -47,6 +38,9 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
       setErrors((prevErr) =>
         create(prevErr, (draftErr) => {
           draftErr.nominees.pop()
+          if (!draftErr?.nominees.length) {
+            delete draftErr.nominees
+          }
         })
       )
     }
