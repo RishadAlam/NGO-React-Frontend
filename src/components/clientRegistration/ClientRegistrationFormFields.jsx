@@ -143,6 +143,7 @@ function ClientRegistrationFormFields({
           disabled={disabled}
           isRequired={true}
           style={{ width: 'max-content', margin: 'auto' }}
+          reset={clientData?.image ? false : true}
         />
       </div>
       <div className="col-md-6 mb-3">
@@ -154,6 +155,7 @@ function ClientRegistrationFormFields({
           error={errors?.signature}
           disabled={disabled}
           isRequired={client_reg_sign_is_required}
+          reset={clientData?.image ? false : true}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">

@@ -43,7 +43,7 @@ export default function ImagePreview({
           <img
             className="rounded-2"
             alt="image"
-            src={src || imageUri}
+            src={imageUri}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
             loading="lazy"
           />

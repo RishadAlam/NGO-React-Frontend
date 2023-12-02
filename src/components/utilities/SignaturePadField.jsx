@@ -16,13 +16,14 @@ export default function SignaturePadField({
   label,
   open,
   setOpen,
+  src = null,
   setChange,
   isRequired = false,
   error = false,
   disabled = false,
   reset = false
 }) {
-  const [imageURL, setImageURL] = useState(SignaturePlaceholder)
+  const [imageURL, setImageURL] = useState(src || SignaturePlaceholder)
   const { t } = useTranslation()
   const sigCanvas = useRef({})
 
