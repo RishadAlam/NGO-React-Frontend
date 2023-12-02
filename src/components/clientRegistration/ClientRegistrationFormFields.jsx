@@ -1,6 +1,9 @@
-import React from 'react'
+import { create } from 'mutative'
+import React, { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
+import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import DatePickerInputField from '../utilities/DatePickerInputField'
 import ImagePreview from '../utilities/ImagePreview'
@@ -10,22 +13,16 @@ import SignaturePadField from '../utilities/SignaturePadField'
 import TextInputField from '../utilities/TextInputField'
 import AddressFields from './AddressFields'
 
-export default function ClientRegistrationFormFields({
-  imageUri,
-  signatureModal,
-  setSignatureModal,
-  signatureUri,
-  setSignatureUri,
+function ClientRegistrationFormFields({
   clientData,
   setClientData,
   client_reg_sign_is_required,
-  setChange,
   errors,
   setErrors,
   disabled
 }) {
+  const [signatureModal, setSignatureModal] = useState(false)
   const { t } = useTranslation()
-
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: centers = [] } = [] } = useFetch({
     action: 'centers/active',
@@ -39,7 +36,7 @@ export default function ClientRegistrationFormFields({
     options: fields,
     value: clientData?.field || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'field'),
+    onChange: (e, option) => setChange(option, 'field_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const centerConfig = {
@@ -48,7 +45,7 @@ export default function ClientRegistrationFormFields({
       : [],
     value: clientData?.center || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'center'),
+    onChange: (e, option) => setChange(option, 'center_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const occupationConfig = {
@@ -58,12 +55,89 @@ export default function ClientRegistrationFormFields({
     onInputChange: (e, option) => setChange(option, 'occupation')
   }
 
+  const setChange = (val, name) => {
+    if (
+      name === 'acc_no' ||
+      name === 'nid' ||
+      name === 'primary_phone' ||
+      name === 'secondary_phone' ||
+      name === 'annual_income' ||
+      name === 'bank_acc_no' ||
+      name === 'bank_check_no' ||
+      name === 'share'
+    ) {
+      val = tsNumbers(val, true)
+    }
+    setClientData((prevData) =>
+      create(prevData, (draftData) => {
+        if (name === 'field_id') {
+          draftData.field_id = val?.id || ''
+          draftData.field = val || null
+          draftData.center_id = ''
+          draftData.center = ''
+          return
+        }
+        if (name === 'center_id') {
+          draftData.center_id = val?.id || ''
+          draftData.center = val || null
+          return
+        }
+        if (name === 'dob') {
+          draftData.dob = dateFormat(val, 'yyyy-MM-dd')
+          return
+        }
+
+        draftData[name] = val
+      })
+    )
+
+    setErrors((prevErr) =>
+      create(prevErr, (draftErr) => {
+        delete draftErr.message
+        if (
+          (name === 'nid' ||
+            name === 'primary_phone' ||
+            name === 'secondary_phone' ||
+            name === 'share' ||
+            name === 'annual_income' ||
+            name === 'bank_acc_no' ||
+            name === 'bank_check_no') &&
+          !Number(val) &&
+          !isEmpty(val)
+        ) {
+          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
+          return
+        }
+        if (
+          name !== 'husband_name' &&
+          name !== 'secondary_phone' &&
+          name !== 'annual_income' &&
+          name !== 'bank_acc_no' &&
+          name !== 'bank_check_no'
+        ) {
+          isEmpty(val)
+            ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
+            : delete draftErr[name]
+        } else if (isEmpty(val)) {
+          delete draftErr[name]
+        }
+        if (name === 'primary_phone' || name === 'secondary_phone') {
+          val.length !== 11 || !String(val).startsWith('01')
+            ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`)
+            : delete draftErr[name]
+          if (name === 'secondary_phone' && val === '') {
+            delete draftErr[name]
+          }
+        }
+      })
+    )
+  }
+
   return (
     <div className="row">
       <div className="col-md-6 mb-3">
         <ImagePreview
           label={t('common.image')}
-          src={imageUri}
           setChange={(val) => setChange(val, 'image')}
           error={errors?.image}
           disabled={disabled}
@@ -76,8 +150,6 @@ export default function ClientRegistrationFormFields({
           label={t('common.signature')}
           open={signatureModal}
           setOpen={setSignatureModal}
-          imageURL={signatureUri}
-          setImageURL={setSignatureUri}
           setChange={(val) => setChange(val, 'signature')}
           error={errors?.signature}
           disabled={disabled}
@@ -89,7 +161,7 @@ export default function ClientRegistrationFormFields({
           label={t('common.field')}
           config={fieldConfig}
           isRequired={true}
-          error={errors?.field}
+          error={errors?.field_id}
           disabled={disabled}
         />
       </div>
@@ -98,7 +170,7 @@ export default function ClientRegistrationFormFields({
           label={t('common.center')}
           config={centerConfig}
           isRequired={true}
-          error={errors?.center}
+          error={errors?.center_id}
           disabled={disabled}
         />
       </div>
@@ -279,3 +351,5 @@ export default function ClientRegistrationFormFields({
     </div>
   )
 }
+
+export default memo(ClientRegistrationFormFields)

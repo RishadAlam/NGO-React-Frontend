@@ -2,6 +2,7 @@ import { create } from 'mutative'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
 import ImagePreview from '../utilities/ImagePreview'
@@ -77,9 +78,6 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
   }
 
   const setChange = (val, name) => {
-    if (name === 'image') {
-      //   setImageUri(URL.createObjectURL(val))
-    }
     setFormData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'field_id') {
@@ -128,7 +126,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
       create(prevErr, (draftErr) => {
         delete draftErr.message
 
-        val === '' || val === null
+        isEmpty(val)
           ? (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`)
           : delete draftErr[name]
       })

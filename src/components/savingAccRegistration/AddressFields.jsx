@@ -1,5 +1,6 @@
 import { create } from 'mutative'
 import { useTranslation } from 'react-i18next'
+import { isEmpty } from '../../helper/isEmpty'
 import tsNumbers from '../../libs/tsNumbers'
 import AddressGrp from '../_helper/AddressGrp'
 
@@ -27,21 +28,30 @@ export default function AddressFields({
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr?.message
+        if (name === 'word_no' && !Number(val)) {
+          draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
+            `common_validation.is_invalid`
+          )}`
+          return
+        }
 
         if (name !== 'word_no') {
-          val === '' || val === null
+          isEmpty(val)
             ? (draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
                 `common_validation.is_required`
               )}`)
-            : delete draftErr['nominees'][index]['address'][name]
-        } else if (name === 'word_no' && !Number(val)) {
+            : draftErr['nominees'] &&
+              draftErr['nominees'][index] &&
+              draftErr['nominees'][index]['address'] &&
+              delete draftErr['nominees'][index]['address'][name]
+        } else if (isEmpty(val) || Number(val)) {
           draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
             `common_validation.is_invalid`
           )}`
         }
-        if (val !== '' && val !== null) {
-          delete draftErr['nominees'][index]['address'][name]
-        }
+        // if (isEmpty(val)) {
+        //   delete draftErr['nominees'][index]['address'][name]
+        // }
       })
     )
   }
