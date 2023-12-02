@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
+import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
+import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import DatePickerInputField from '../utilities/DatePickerInputField'
 import ImagePreview from '../utilities/ImagePreview'
 import RadioInputGroup from '../utilities/RadioInputGroup'
@@ -21,6 +23,8 @@ export default function NomineeFields({
 }) {
   const { t } = useTranslation()
   const [signatureModal, setSignatureModal] = useState(false)
+  const [imageUri, setImageUri] = useState(profilePlaceholder)
+  const [signatureURL, setSignatureURL] = useState(SignaturePlaceholder)
 
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/saving/nominee/occupations'
@@ -55,6 +59,8 @@ export default function NomineeFields({
       <div className="col-md-6 mb-3">
         <ImagePreview
           label={t('common.image')}
+          imageUri={imageUri}
+          setImageUri={setImageUri}
           setChange={(val) => setChange(val, 'image', i)}
           error={errors?.image}
           disabled={disabled}
@@ -68,6 +74,8 @@ export default function NomineeFields({
           label={t('common.signature')}
           open={signatureModal}
           setOpen={setSignatureModal}
+          signatureURL={signatureURL}
+          setSignatureURL={setSignatureURL}
           setChange={(val) => setChange(val, 'signature', i)}
           setErrors={setErrors}
           error={errors?.signature}

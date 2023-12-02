@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react'
 import Camera from '../../icons/Camera'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 
 export default function ImagePreview({
   label,
-  src = null,
+  imageUri = null,
+  setImageUri,
   setChange = null,
   error,
   style = { width: 'max-content' },
   disabled = false,
-  isRequired = false,
-  reset = false
+  isRequired = false
 }) {
-  const [imageUri, setImageUri] = useState(src || profilePlaceholder)
   const requiredLabel = (
     <span>
       {label}
@@ -27,12 +25,6 @@ export default function ImagePreview({
     }
   }
 
-  useEffect(() => {
-    if (reset) {
-      setImageUri(profilePlaceholder)
-    }
-  }, [reset])
-
   return (
     <>
       <label className="form-label mb-3">{isRequired ? requiredLabel : label}</label>
@@ -43,7 +35,7 @@ export default function ImagePreview({
           <img
             className="rounded-2"
             alt="image"
-            src={imageUri}
+            src={imageUri || profilePlaceholder}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
             loading="lazy"
           />

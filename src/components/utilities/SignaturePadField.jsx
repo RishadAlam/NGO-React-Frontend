@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignaturePad from 'react-signature-canvas'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -16,14 +16,13 @@ export default function SignaturePadField({
   label,
   open,
   setOpen,
-  src = null,
+  signatureURL = null,
+  setSignatureURL,
   setChange,
   isRequired = false,
   error = false,
-  disabled = false,
-  reset = false
+  disabled = false
 }) {
-  const [imageURL, setImageURL] = useState(src || SignaturePlaceholder)
   const { t } = useTranslation()
   const sigCanvas = useRef({})
 
@@ -36,16 +35,10 @@ export default function SignaturePadField({
     e.preventDefault()
     const signature = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png')
 
-    setImageURL(signature)
+    setSignatureURL(signature)
     setChange(signature)
     setOpen(false)
   }
-
-  useEffect(() => {
-    if (reset) {
-      setImageURL(SignaturePlaceholder)
-    }
-  }, [reset])
 
   const requiredLabel = (
     <span>
@@ -99,7 +92,7 @@ export default function SignaturePadField({
         </div>
       </ModalPro>
       <img
-        src={imageURL}
+        src={signatureURL || SignaturePlaceholder}
         alt="my signature"
         style={{
           border: '1px solid black',

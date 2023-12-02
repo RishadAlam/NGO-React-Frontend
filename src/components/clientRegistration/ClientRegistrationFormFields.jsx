@@ -14,6 +14,10 @@ import TextInputField from '../utilities/TextInputField'
 import AddressFields from './AddressFields'
 
 function ClientRegistrationFormFields({
+  imageUri,
+  setImageUri,
+  signatureURL,
+  setSignatureURL,
   clientData,
   setClientData,
   client_reg_sign_is_required,
@@ -138,12 +142,13 @@ function ClientRegistrationFormFields({
       <div className="col-md-6 mb-3">
         <ImagePreview
           label={t('common.image')}
+          imageUri={imageUri}
+          setImageUri={setImageUri}
           setChange={(val) => setChange(val, 'image')}
           error={errors?.image}
           disabled={disabled}
           isRequired={true}
           style={{ width: 'max-content', margin: 'auto' }}
-          reset={clientData?.image ? false : true}
         />
       </div>
       <div className="col-md-6 mb-3">
@@ -151,11 +156,12 @@ function ClientRegistrationFormFields({
           label={t('common.signature')}
           open={signatureModal}
           setOpen={setSignatureModal}
+          signatureURL={signatureURL}
+          setSignatureURL={setSignatureURL}
           setChange={(val) => setChange(val, 'signature')}
           error={errors?.signature}
           disabled={disabled}
           isRequired={client_reg_sign_is_required}
-          reset={clientData?.image ? false : true}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">

@@ -151,6 +151,7 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
     } else if (
       fieldName !== 'start_date' &&
       fieldName !== 'duration_date' &&
+      fieldName !== 'acc_no' &&
       !Number(formFields[fieldName])
     ) {
       validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(

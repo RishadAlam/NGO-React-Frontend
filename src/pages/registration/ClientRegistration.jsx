@@ -14,9 +14,13 @@ import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
 import dateFormat from '../../libs/dateFormat'
+import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
+import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
+  const [imageUri, setImageUri] = useState(profilePlaceholder)
+  const [signatureURL, setSignatureURL] = useState(SignaturePlaceholder)
   const [loading, setLoading] = useLoadingState({})
   const { accessToken } = useAuthDataValue()
   const { client_reg_sign_is_required } = useApprovalConfigsValue()
@@ -44,6 +48,8 @@ export default function ClientRegistration() {
         if (response?.success) {
           toast.success(response.message)
           setClientData(clientDataFields)
+          setImageUri(profilePlaceholder)
+          setSignatureURL(SignaturePlaceholder)
           setErrors(clientDataErrs)
           return
         }
@@ -99,6 +105,10 @@ export default function ClientRegistration() {
                   </div>
                 )}
                 <ClientRegistrationFormFields
+                  imageUri={imageUri}
+                  setImageUri={setImageUri}
+                  signatureURL={signatureURL}
+                  setSignatureURL={setSignatureURL}
                   clientData={clientData}
                   setClientData={setClientData}
                   client_reg_sign_is_required={client_reg_sign_is_required}

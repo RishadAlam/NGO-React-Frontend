@@ -140,7 +140,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
           <div className="col-md-5 mb-3">
             <ImagePreview
               label={t('common.image')}
-              src={formData?.client?.image_uri}
+              imageUri={formData?.client?.image_uri}
               error={errors?.acc_no}
               disabled={true}
               style={{ width: 'max-content', margin: 'auto' }}
