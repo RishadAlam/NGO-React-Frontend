@@ -22,7 +22,7 @@ export default function ClientRegistration() {
   const [signatureUri, setSignatureUri] = useState(SignaturePlaceholder)
   const [signatureModal, setSignatureModal] = useState(false)
   const [loading, setLoading] = useLoadingState({})
-  const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const { accessToken } = useAuthDataValue()
   const { client_reg_sign_is_required } = useApprovalConfigsValue()
   const { t } = useTranslation()
   const clientDataFields = {

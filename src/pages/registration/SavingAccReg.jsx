@@ -2,6 +2,7 @@ import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useApprovalConfigsValue } from '../../atoms/appApprovalConfigAtoms'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -19,12 +20,13 @@ export default function SavingAccReg() {
   const [loading, setLoading] = useLoadingState({})
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
+  const { nominee_reg_sign_is_required } = useApprovalConfigsValue()
   const [savingAccData, setSavingAccData] = useState(savingAccFields)
   const [errors, setErrors] = useState(savingAccErrs)
 
   const onSubmit = (event) => {
     event.preventDefault()
-    const validationErrors = checkRequiredFields(savingAccData, t)
+    const validationErrors = checkRequiredFields(savingAccData, t, nominee_reg_sign_is_required)
 
     if (!isEmptyObject(validationErrors)) {
       setErrors(validationErrors)
@@ -123,7 +125,7 @@ export default function SavingAccReg() {
   )
 }
 
-const checkRequiredFields = (formFields, t) => {
+const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   const validationErrors = {}
   const fieldValidations = [
     'field_id',
@@ -186,6 +188,12 @@ const checkRequiredFields = (formFields, t) => {
             'common_validation.is_required'
           )}`
         }
+      }
+
+      if (nominee_reg_sign_is_required && isEmpty(nominee['signature'])) {
+        nomineeErrors['signature'] = `${t('common.signature')} ${t(
+          'common_validation.is_required'
+        )}`
       }
 
       for (const addressField of addressFields) {

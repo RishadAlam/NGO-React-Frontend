@@ -60,6 +60,7 @@ export default function NomineeFields({
           disabled={disabled}
           isRequired={true}
           style={{ width: 'max-content', margin: 'auto' }}
+          reset={nomineeData?.image ? false : true}
         />
       </div>
       <div className="col-md-6 mb-3">
@@ -72,6 +73,7 @@ export default function NomineeFields({
           error={errors?.signature}
           disabled={disabled}
           isRequired={false}
+          reset={nomineeData?.signature ? false : true}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">

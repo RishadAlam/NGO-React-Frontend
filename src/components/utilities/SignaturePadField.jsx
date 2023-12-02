@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignaturePad from 'react-signature-canvas'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -19,7 +19,8 @@ export default function SignaturePadField({
   setChange,
   isRequired = false,
   error = false,
-  disabled = false
+  disabled = false,
+  reset = false
 }) {
   const [imageURL, setImageURL] = useState(SignaturePlaceholder)
   const { t } = useTranslation()
@@ -38,6 +39,12 @@ export default function SignaturePadField({
     setChange(signature)
     setOpen(false)
   }
+
+  useEffect(() => {
+    if (reset) {
+      setImageURL(SignaturePlaceholder)
+    }
+  }, [reset])
 
   const requiredLabel = (
     <span>
