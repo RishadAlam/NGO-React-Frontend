@@ -16,7 +16,9 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
-  const { data: { data: categories = [] } = [] } = useFetch({ action: 'categories/active' })
+  const { data: { data: categories = [] } = [] } = useFetch({
+    action: `categories/active?saving=${true}`
+  })
   const { data: { data: centers = [] } = [] } = useFetch({
     action: 'centers/active',
     queryParams: formData.field_id ? { field_id: formData.field_id } : null
