@@ -8,16 +8,16 @@ import tsNumbers from '../../libs/tsNumbers'
 import ImagePreview from '../utilities/ImagePreview'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
-import Nominees from './Nominees'
-import SavingFields from './SavingFields'
+import Guarantors from './Guarantors'
+import LoanFields from './LoanFields'
 
-function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disabled }) {
+function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabled }) {
   const { id, permissions } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const { data: { data: categories = [] } = [] } = useFetch({
-    action: `categories/active?saving=${true}`
+    action: `categories/active?loan=${true}`
   })
   const { data: { data: centers = [] } = [] } = useFetch({
     action: 'centers/active',
@@ -33,7 +33,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
   })
 
   const creatorConfig = {
-    options: permissions?.saving_acc_creator_selection
+    options: permissions?.loan_acc_creator_selection
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: formData?.creator || null,
@@ -208,14 +208,14 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
           </div>
         </div>
       </div>
-      <SavingFields
+      <LoanFields
         formData={formData}
         setFormData={setFormData}
         errors={errors}
         setErrors={setErrors}
         disabled={disabled}
       />
-      <Nominees
+      <Guarantors
         formData={formData}
         setFormData={setFormData}
         errors={errors}
@@ -226,4 +226,4 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
   )
 }
 
-export default memo(SavingAccRegFormFields)
+export default memo(LoanAccRegFormFields)

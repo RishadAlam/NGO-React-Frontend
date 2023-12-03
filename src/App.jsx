@@ -18,6 +18,7 @@ import Unauthorized from './pages/unauthorized/Unauthorized'
 const StaffProfile = lazy(() => import('./pages/staffProfile/StaffProfile'))
 const ClientRegistration = lazy(() => import('./pages/registration/ClientRegistration'))
 const SavingAccReg = lazy(() => import('./pages/registration/SavingAccReg'))
+const LoanAccReg = lazy(() => import('./pages/registration/LoanAccReg'))
 const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/PendingClientReg'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
@@ -107,7 +108,7 @@ export default function App() {
                   element={
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
-                        <SavingAccReg />
+                        <LoanAccReg />
                       </Suspense>
                     </ErrorBoundary>
                   }
