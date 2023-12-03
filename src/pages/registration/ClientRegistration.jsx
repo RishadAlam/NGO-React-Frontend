@@ -114,7 +114,7 @@ export default function ClientRegistration() {
                   client_reg_sign_is_required={client_reg_sign_is_required}
                   errors={errors}
                   setErrors={setErrors}
-                  disabled={loading.ClientRegistration}
+                  disabled={loading.clientRegistrationForm}
                 />
               </div>
               <div className="card-footer text-center">

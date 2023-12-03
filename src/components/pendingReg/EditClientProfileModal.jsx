@@ -1,13 +1,14 @@
 import { create, rawReturn } from 'mutative'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useApprovalConfigsValue } from '../../atoms/appApprovalConfigAtoms'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import { isEmpty } from '../../helper/isEmpty'
+import { isEmptyObject } from '../../helper/isEmptyObject'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
-import dateFormat from '../../libs/dateFormat'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
@@ -15,142 +16,43 @@ import ClientRegistrationFormFields from '../clientRegistration/ClientRegistrati
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditClientProfileModal({
-  open,
-  setOpen,
-  profileData,
-  setProfileData,
-  mutate
-}) {
+export default function EditClientProfileModal({ open, setOpen, profileData, mutate }) {
   const [imageUri, setImageUri] = useState(profileData?.image_uri || profilePlaceholder)
-  const [signatureUri, setSignatureUri] = useState(
+  const [signatureURL, setSignatureURL] = useState(
     profileData?.signature_uri || SignaturePlaceholder
   )
-  const [signatureModal, setSignatureModal] = useState(false)
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({ present_address: {}, permanent_address: {} })
+  const [clientData, setClientData] = useState(profileData)
   const { client_reg_sign_is_required } = useApprovalConfigsValue()
 
-  const setChange = (val, name) => {
-    if (name === 'image') {
-      setImageUri(URL.createObjectURL(val))
-    }
-    setProfileData((prevData) =>
-      create(prevData, (draftData) => {
-        if (name === 'field') {
-          draftData.field_id = val?.id || ''
-          draftData.field = val || null
-          return
-        }
-        if (name === 'center') {
-          draftData.center_id = val?.id || ''
-          draftData.center = val || null
-          return
-        }
-        if (name === 'dob') {
-          draftData.dob = dateFormat(val, 'yyyy-MM-dd')
-          return
-        }
-
-        draftData[name] = val
-      })
-    )
-
-    setErrors((prevErr) =>
-      create(prevErr, (draftErr) => {
-        delete draftErr.message
-        if (
-          name !== 'husband_name' &&
-          name !== 'secondary_phone' &&
-          name !== 'annual_income' &&
-          name !== 'bank_acc_no' &&
-          name !== 'bank_check_no'
-        ) {
-          val === '' || val === null
-            ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
-            : delete draftErr[name]
-        }
-        if (name === 'primary_phone' || name === 'secondary_phone') {
-          val.length === 11
-            ? delete draftErr[name]
-            : (draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`)
-          if (name === 'secondary_phone' && val === '') {
-            delete draftErr[name]
-          }
-        }
-      })
-    )
-  }
+  useEffect(() => {
+    setClientData(profileData)
+  }, [profileData])
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (
-      profileData.field_id === '' ||
-      profileData.center_id === '' ||
-      profileData.acc_no === '' ||
-      profileData.name === '' ||
-      profileData.father_name === '' ||
-      profileData.mother_name === '' ||
-      profileData.nid === '' ||
-      profileData.dob === '' ||
-      profileData.occupation === '' ||
-      profileData.religion === '' ||
-      profileData.gender === '' ||
-      profileData.primary_phone === '' ||
-      profileData.share === '' ||
-      profileData.present_address.street_address === '' ||
-      profileData.present_address.city === '' ||
-      profileData.present_address.post_office === '' ||
-      profileData.present_address.police_station === '' ||
-      profileData.present_address.district === '' ||
-      profileData.present_address.division === '' ||
-      profileData.permanent_address.street_address === '' ||
-      profileData.permanent_address.city === '' ||
-      profileData.permanent_address.post_office === '' ||
-      profileData.permanent_address.police_station === '' ||
-      profileData.permanent_address.district === '' ||
-      profileData.permanent_address.division === ''
-    ) {
+    const validationErrors = checkRequiredFields(clientData, t, client_reg_sign_is_required)
+
+    if (!isEmptyObject(validationErrors)) {
+      setErrors(validationErrors)
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
-    const formData = new FormData()
-    formData.append('_method', 'PUT')
-    formData.append('field_id', profileData.field_id)
-    formData.append('center_id', profileData.center_id)
-    formData.append('acc_no', profileData.acc_no)
-    formData.append('name', profileData.name)
-    formData.append('father_name', profileData.father_name)
-    formData.append('husband_name', profileData.husband_name)
-    formData.append('mother_name', profileData.mother_name)
-    formData.append('nid', profileData.nid)
-    formData.append('dob', profileData.dob)
-    formData.append('occupation', profileData.occupation)
-    formData.append('religion', profileData.religion)
-    formData.append('gender', profileData.gender)
-    formData.append('primary_phone', profileData.primary_phone)
-    formData.append('secondary_phone', profileData.secondary_phone)
-    formData.append('image', profileData.image)
-    formData.append('signature', profileData.signature)
-    formData.append('annual_income', profileData.annual_income)
-    formData.append('bank_acc_no', profileData.bank_acc_no)
-    formData.append('bank_check_no', profileData.bank_check_no)
-    formData.append('share', profileData.share)
-    formData.append('present_address', JSON.stringify(profileData.present_address))
-    formData.append('permanent_address', JSON.stringify(profileData.permanent_address))
+    const formData = setFormData(clientData)
+    setLoading({ ...loading, clientRegistrationForm: false })
 
-    setLoading({ ...loading, clientRegistrationForm: true })
     xFetch(`client/registration/${profileData.id}`, formData, null, accessToken, null, 'POST', true)
       .then((response) => {
         setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setProfileData(undefined)
+          setClientData({ present_address: {}, permanent_address: {} })
           setImageUri(profilePlaceholder)
-          setSignatureUri(SignaturePlaceholder)
+          setSignatureURL(SignaturePlaceholder)
           setErrors({})
           setOpen(false)
           mutate()
@@ -181,7 +83,7 @@ export default function EditClientProfileModal({
   }
 
   const closeModal = () => {
-    setProfileData(undefined)
+    setClientData({ present_address: {}, permanent_address: {} })
     setOpen(false)
   }
 
@@ -211,17 +113,15 @@ export default function EditClientProfileModal({
               {profileData && (
                 <ClientRegistrationFormFields
                   imageUri={imageUri}
-                  signatureModal={signatureModal}
-                  setSignatureModal={setSignatureModal}
-                  signatureUri={signatureUri}
-                  setSignatureUri={setSignatureUri}
-                  clientData={profileData}
-                  setClientData={setProfileData}
+                  setImageUri={setImageUri}
+                  signatureURL={signatureURL}
+                  setSignatureURL={setSignatureURL}
+                  clientData={clientData}
+                  setClientData={setClientData}
                   client_reg_sign_is_required={client_reg_sign_is_required}
-                  setChange={setChange}
                   errors={errors}
                   setErrors={setErrors}
-                  disabled={loading.ClientRegistration}
+                  disabled={loading.clientRegistrationForm}
                 />
               )}
             </div>
@@ -230,9 +130,9 @@ export default function EditClientProfileModal({
                 type="submit"
                 name={t('common.update')}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.clientRegUpdate || false}
+                loading={loading?.clientRegistrationForm || false}
                 endIcon={<Save size={20} />}
-                disabled={Object.keys(errors).length || loading?.clientRegUpdate}
+                disabled={loading?.clientRegistrationForm || false}
               />
             </div>
           </div>
@@ -241,3 +141,101 @@ export default function EditClientProfileModal({
     </>
   )
 }
+
+const checkRequiredFields = (formFields, t, client_reg_sign_is_required) => {
+  const validationErrors = {}
+
+  if (
+    client_reg_sign_is_required &&
+    isEmpty(formFields['signature']) &&
+    isEmpty(formFields['signature_uri'])
+  ) {
+    validationErrors['signature'] = `${t('common.signature')} ${t('common_validation.is_required')}`
+  }
+
+  for (const fieldName of fieldValidations) {
+    if (isEmpty(formFields[fieldName])) {
+      validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
+        'common_validation.is_required'
+      )}`
+    } else if (
+      fieldName === 'primary_phone' &&
+      (!Number(formFields[fieldName]) ||
+        formFields[fieldName].length !== 11 ||
+        !String(formFields[fieldName]).startsWith('01'))
+    ) {
+      validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
+        'common_validation.is_invalid'
+      )}`
+    } else if (fieldName === 'share' && !Number(formFields[fieldName])) {
+      validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
+        'common_validation.is_invalid'
+      )}`
+    }
+  }
+
+  for (const addressField of addressFields) {
+    if (isEmpty(formFields.present_address[addressField])) {
+      validationErrors['present_address'] = validationErrors['present_address'] || {}
+      validationErrors['present_address'][addressField] = `${t(`common.${addressField}`)} ${t(
+        'common_validation.is_required'
+      )}`
+    }
+    if (isEmpty(formFields.permanent_address[addressField])) {
+      validationErrors['permanent_address'] = validationErrors['permanent_address'] || {}
+      validationErrors['permanent_address'][addressField] = `${t(`common.${addressField}`)} ${t(
+        'common_validation.is_required'
+      )}`
+    }
+  }
+
+  return validationErrors
+}
+
+const setFormData = (fields) => {
+  const formData = new FormData()
+  formData.append('_method', 'PUT')
+
+  for (const key in fields) {
+    if (
+      key !== 'field' &&
+      key !== 'center' &&
+      key !== 'present_address' &&
+      key !== 'permanent_address'
+    ) {
+      formData.append(key, fields[key])
+    } else if (key === 'present_address' || key === 'permanent_address') {
+      for (const addressKey in fields[key]) {
+        key === 'present_address'
+          ? formData.append(`present_address[${addressKey}]`, fields[key][addressKey])
+          : formData.append(`permanent_address[${addressKey}]`, fields[key][addressKey])
+      }
+    }
+  }
+
+  return formData
+}
+
+const fieldValidations = [
+  'field_id',
+  'center_id',
+  'acc_no',
+  'name',
+  'father_name',
+  'mother_name',
+  'nid',
+  'dob',
+  'occupation',
+  'religion',
+  'gender',
+  'primary_phone',
+  'share'
+]
+const addressFields = [
+  'street_address',
+  'city',
+  'post_office',
+  'police_station',
+  'district',
+  'division'
+]
