@@ -23,7 +23,7 @@ export default function LoanAccReg() {
   const { guarantor_reg_sign_is_required } = useApprovalConfigsValue()
   const [loanAccData, setLoanAccData] = useState(loanAccFields)
   const [errors, setErrors] = useState(loanAccErrs)
-  console.log(loanAccData)
+
   const onSubmit = (event) => {
     event.preventDefault()
     const validationErrors = checkRequiredFields(loanAccData, t, guarantor_reg_sign_is_required)
@@ -132,7 +132,6 @@ const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
     'category_id',
     'client_registration_id',
     'acc_no',
-    'name',
     'start_date',
     'duration_date',
     'loan_given',

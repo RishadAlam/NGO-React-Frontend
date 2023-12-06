@@ -44,14 +44,12 @@ export default function AddressFields({
               draftErr['guarantors'][index] &&
               draftErr['guarantors'][index]['address'] &&
               delete draftErr['guarantors'][index]['address'][name]
-        } else if (isEmpty(val) || Number(val)) {
-          draftErr.guarantors[index]['address'][name] = `${t(`common.${name}`)} ${t(
-            `common_validation.is_invalid`
-          )}`
+        } else if (!isEmpty(val) && Number(val)) {
+          draftErr['guarantors'] &&
+            draftErr['guarantors'][index] &&
+            draftErr['guarantors'][index]['address'] &&
+            delete draftErr['guarantors'][index]['address'][name]
         }
-        // if (isEmpty(val)) {
-        //   delete draftErr['guarantors'][index]['address'][name]
-        // }
       })
     )
   }

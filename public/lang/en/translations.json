@@ -33,7 +33,7 @@
     "interest": "Interest",
     "withdrawal": "Withdrawal",
     "total": "Total",
-    "total_installment": "Total Installment",
+    "total_installment": "Total number of installments",
     "start_date": "Start Date",
     "duration_date": "Duration Date",
     "payable_deposit": "Payable Deposit",
