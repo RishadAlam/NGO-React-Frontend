@@ -107,7 +107,7 @@ export default function SignaturePadField({
         name={t('common.open_signature_pad')}
         className={`btn-primary py-2 mt-3 px-3 ${disabled ? 'd-none' : ''}`}
         onclick={() => setOpen(true)}
-        loading={error ? true : false}
+        loading={false}
         endIcon={<Pen size={20} />}
         disabled={disabled}
       />

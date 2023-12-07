@@ -21,7 +21,6 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
       setErrors((prevErr) =>
         create(prevErr, (draftErr) => {
           draftErr['nominees'] = draftErr?.nominees || []
-          // draftErr.nominees.splice(length, 0, nomineeFieldsErrs)
           draftErr.nominees[length] = nomineeFieldsErrs
         })
       )

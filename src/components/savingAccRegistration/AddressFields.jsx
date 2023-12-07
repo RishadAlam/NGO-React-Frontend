@@ -28,7 +28,7 @@ export default function AddressFields({
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr?.message
-        if (name === 'word_no' && !Number(val)) {
+        if (name === 'word_no' && !Number(val) && !isEmpty(val)) {
           draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
             `common_validation.is_invalid`
           )}`
@@ -44,10 +44,11 @@ export default function AddressFields({
               draftErr['nominees'][index] &&
               draftErr['nominees'][index]['address'] &&
               delete draftErr['nominees'][index]['address'][name]
-        } else if (isEmpty(val) || Number(val)) {
-          draftErr.nominees[index]['address'][name] = `${t(`common.${name}`)} ${t(
-            `common_validation.is_invalid`
-          )}`
+        } else if ((!isEmpty(val) && Number(val)) || isEmpty(val)) {
+          draftErr['nominees'] &&
+            draftErr['nominees'][index] &&
+            draftErr['nominees'][index]['address'] &&
+            delete draftErr['nominees'][index]['address'][name]
         }
         // if (isEmpty(val)) {
         //   delete draftErr['nominees'][index]['address'][name]

@@ -122,7 +122,10 @@ function ClientRegistrationFormFields({
           isEmpty(val)
             ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
             : delete draftErr[name]
-        } else if (isEmpty(val)) {
+        } else if (
+          ((name === 'bank_acc_no' || name === 'bank_check_no') && Number(val)) ||
+          isEmpty(val)
+        ) {
           delete draftErr[name]
         }
         if (name === 'primary_phone' || name === 'secondary_phone') {
