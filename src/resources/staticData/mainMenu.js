@@ -11,7 +11,7 @@ export const mainMenu = (t) => {
         id: 1,
         label: t('menu.label.registration'),
         path: '',
-        icon: 'UserPlus',
+        icon: 'Pen',
         view: checkPermissions(['client_registration'], permissions),
         subMenu: [
           {
@@ -25,14 +25,14 @@ export const mainMenu = (t) => {
             id: 'reg2',
             label: t('menu.registration.saving_account_registration'),
             path: '/registration/saving-account',
-            icon: 'UserPlus',
+            icon: 'BankTransferIn',
             view: checkPermission('saving_acc_registration', permissions)
           },
           {
             id: 'reg3',
             label: t('menu.registration.loan_account_registration'),
             path: '/registration/loan-account',
-            icon: 'UserPlus',
+            icon: 'BankTransferOut',
             view: checkPermission('loan_acc_registration', permissions)
           }
         ]
@@ -43,7 +43,7 @@ export const mainMenu = (t) => {
         id: 1,
         label: `${t('menu.categories.Pending_Approval')} ${t('menu.label.registration')}`,
         path: '',
-        icon: 'UserPlus',
+        icon: 'CheckPatch',
         view: checkPermissions(
           [
             'pending_client_registration_list_view',
@@ -73,7 +73,7 @@ export const mainMenu = (t) => {
             id: 'pndReg2',
             label: t('menu.registration.saving_account_registration'),
             path: '/pending/registration/saving-account',
-            icon: 'UserPlus',
+            icon: 'BankTransferIn',
             view: checkPermissions(
               ['pending_saving_acc_list_view', 'pending_saving_acc_list_view_as_admin'],
               permissions
@@ -83,7 +83,7 @@ export const mainMenu = (t) => {
             id: 'pndReg3',
             label: t('menu.registration.loan_account_registration'),
             path: '/pending/registration/loan-account',
-            icon: 'UserPlus',
+            icon: 'BankTransferOut',
             view: checkPermissions(
               ['pending_loan_acc_list_view', 'pending_loan_acc_list_view_as_admin'],
               permissions

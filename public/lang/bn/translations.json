@@ -349,8 +349,11 @@
     "saving_account_registration_approval": "সেভিংস অ্যাকাউন্ট নিবন্ধন অনুমোদন",
     "saving_account_closing_approval": "সেভিংস অ্যাকাউন্ট বন্ধ করার অনুমোদন",
     "loan_account_registration_approval": "ঋণ অ্যাকাউন্ট নিবন্ধন অনুমোদন",
+    "loan_approval": "ঋণ অনুমোদন",
     "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন",
-    "client_reg_sign_is_required": "ক্লায়েন্ট নিবন্ধন স্বাক্ষর প্রয়োজন?"
+    "client_reg_sign_is_required": "ক্লায়েন্ট নিবন্ধন স্বাক্ষর প্রয়োজন?",
+    "nominee_reg_sign_is_required": "নমিনি নিবন্ধন স্বাক্ষর প্রয়োজন?",
+    "guarantor_reg_sign_is_required": "গ্যারান্টার নিবন্ধন স্বাক্ষর প্রয়োজন?"
   },
   "categories_config": {
     "account_reg_closing_fees": "অ্যাকাউন্ট নিবন্ধন ও ক্লোজিং ফি",

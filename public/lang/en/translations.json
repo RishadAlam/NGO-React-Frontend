@@ -354,8 +354,11 @@
     "saving_account_registration_approval": "Saving Account Registration Approval",
     "saving_account_closing_approval": "Saving Account Closing Approval",
     "loan_account_registration_approval": "Loan Account Registration Approval",
+    "loan_approval": "Loan Approval",
     "loan_account_closing_approval": "Loan Account Closing Approval",
-    "client_reg_sign_is_required": "Client Registration Signature Field Required?"
+    "client_reg_sign_is_required": "Client Registration Signature Field Required?",
+    "nominee_reg_sign_is_required": "Nominee Registration Signature Field Required?",
+    "guarantor_reg_sign_is_required": "Guarantor Registration Signature Field Required?"
   },
   "categories_config": {
     "account_reg_closing_fees": "Account Registration & Closing fees",
