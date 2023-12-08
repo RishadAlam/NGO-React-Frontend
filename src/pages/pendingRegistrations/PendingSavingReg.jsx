@@ -8,36 +8,37 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
-import EditClientProfileModal from '../../components/pendingReg/EditClientProfileModal'
-import ViewClientProfileModal from '../../components/pendingReg/ViewClientProfileModal'
+import EditSavingAccountModal from '../../components/pendingReg/EditSavingAccountModal'
+import ViewSavingAccountModal from '../../components/pendingReg/ViewSavingAccountModal'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { setSavingFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
+import BankTransferIn from '../../icons/BankTransferIn'
+import CheckPatch from '../../icons/CheckPatch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
-import UserPlus from '../../icons/UserPlus'
-import dateFormat from '../../libs/dateFormat'
 import { PendingSavingRegTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
 export default function PendingSavingReg() {
-  const [viewProfileData, setViewProfileData] = useState()
-  const [viewProfileDataModal, setViewProfileDataModal] = useState(false)
-  const [editProfileData, setEditProfileData] = useState()
-  const [editProfileDataModal, setEditProfileDataModal] = useState(false)
+  const [viewSavingAccData, setViewSavingAccData] = useState()
+  const [viewSavingAccDataModal, setViewSavingAccDataModal] = useState(false)
+  const [editSavingAccData, setEditSavingAccData] = useState()
+  const [editSavingAccDataModal, setEditSavingAccDataModal] = useState(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const {
-    data: { data: clientProfiles } = [],
+    data: { data: savingAccounts } = [],
     mutate,
     isLoading,
     isError
@@ -56,7 +57,7 @@ export default function PendingSavingReg() {
       if (result.isConfirmed) {
         setLoading({ ...loading, approval: true })
         const toasterLoading = toast.loading(`${t('common.approval')}...`)
-        xFetch(`client/registration/approved/${id}`, null, null, accessToken, null, 'PUT')
+        xFetch(`client/registration/saving/approved/${id}`, null, null, accessToken, null, 'PUT')
           .then((response) => {
             setLoading({ ...loading, approval: false })
             toast.dismiss(toasterLoading)
@@ -74,25 +75,25 @@ export default function PendingSavingReg() {
       }
     })
   }
-  const actionBtnGroup = (id, profile) => (
+  const actionBtnGroup = (id, account) => (
     <ActionBtnGroup>
       {authPermissions.includes('pending_saving_acc_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
-          <IconButton className="text-primary" onClick={() => viewClientProfile(profile)}>
+          <IconButton className="text-primary" onClick={() => viewSavingAccount(account)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('pending_saving_acc_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => clientProfileEdit(profile)}>
+          <IconButton className="text-warning" onClick={() => savingAccountEdit(account)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('pending_saving_acc_permanently_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => clientProfileDelete(id)}>
+          <IconButton className="text-danger" onClick={() => savingAccountDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -106,22 +107,22 @@ export default function PendingSavingReg() {
     [t, windowWidth, loading]
   )
 
-  const viewClientProfile = (profile) => {
-    console.log(profile)
-    setViewProfileData(setProfileDataObj(profile))
-    setViewProfileDataModal(true)
+  const viewSavingAccount = (account) => {
+    console.log(setSavingFields(account))
+    setViewSavingAccData(setSavingFields(account))
+    setViewSavingAccDataModal(true)
   }
 
-  const clientProfileEdit = (profile) => {
-    setEditProfileData(setProfileDataObj(profile))
-    setEditProfileDataModal(true)
+  const savingAccountEdit = (account) => {
+    setEditSavingAccData(setSavingFields(account))
+    setEditSavingAccDataModal(true)
   }
 
-  const clientProfileDelete = (id) => {
+  const savingAccountDelete = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/registration/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`client/saving/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {
@@ -150,97 +151,47 @@ export default function PendingSavingReg() {
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
                   name: t('menu.categories.Pending_Approval'),
-                  icon: <UserPlus size={16} />,
+                  icon: <CheckPatch size={16} />,
                   active: false
                 },
                 {
-                  name: t('client.pending_client_reg_list'),
-                  icon: <UserPlus size={16} />,
+                  name: t('saving.pending_saving_acc_reg_list'),
+                  icon: <BankTransferIn />,
                   active: true
                 }
               ]}
             />
           </div>
         </div>
-        {viewProfileData && (
-          <ViewClientProfileModal
-            open={viewProfileDataModal}
-            setOpen={setViewProfileDataModal}
-            profileData={viewProfileData}
-            setProfileData={setViewProfileData}
+        {viewSavingAccData && (
+          <ViewSavingAccountModal
+            open={viewSavingAccDataModal}
+            setOpen={setViewSavingAccDataModal}
+            accountData={viewSavingAccData}
+            setAccountData={setViewSavingAccData}
           />
         )}
-        {editProfileData && authPermissions.includes('pending_client_registration_update') && (
-          <EditClientProfileModal
-            open={editProfileDataModal}
-            setOpen={setEditProfileDataModal}
-            profileData={editProfileData}
-            setProfileData={setEditProfileData}
+        {editSavingAccData && authPermissions.includes('pending_client_registration_update') && (
+          <EditSavingAccountModal
+            open={editSavingAccDataModal}
+            setOpen={setEditSavingAccDataModal}
+            accountData={editSavingAccData}
+            setAccountData={setEditSavingAccData}
             mutate={mutate}
           />
         )}
         <div className="staff-table">
-          {isLoading && !clientProfiles ? (
+          {isLoading && !savingAccounts ? (
             <ReactTableSkeleton />
           ) : (
             <ReactTable
-              title={t('client.pending_client_reg_list')}
+              title={t('saving.pending_saving_acc_reg_list')}
               columns={columns}
-              data={clientProfiles}
+              data={savingAccounts}
             />
           )}
         </div>
       </section>
     </>
   )
-}
-
-const setProfileDataObj = (profile) => {
-  return {
-    id: profile.id,
-    field_id: profile.field_id,
-    center_id: profile.center_id,
-    acc_no: profile.acc_no,
-    name: profile.name,
-    father_name: profile.father_name,
-    husband_name: profile.husband_name,
-    mother_name: profile.mother_name,
-    nid: profile.nid,
-    dob: dateFormat(profile.dob, 'yyyy-MM-dd'),
-    occupation: profile.occupation,
-    religion: profile.religion,
-    gender: profile.gender,
-    primary_phone: profile.primary_phone,
-    secondary_phone: profile.secondary_phone || '',
-    image: '',
-    image_uri: profile.image_uri,
-    signature: '',
-    signature_uri: profile.signature_uri || '',
-    share: profile.share,
-    annual_income: profile.annual_income || '',
-    bank_acc_no: profile.bank_acc_no || '',
-    bank_check_no: profile.bank_check_no || '',
-    present_address: {
-      street_address: profile.present_address.street_address,
-      city: profile.present_address.city,
-      word_no: profile.present_address.word_no || '',
-      post_office: profile.present_address.post_office,
-      post_code: profile.present_address.post_code,
-      police_station: profile.present_address.police_station,
-      district: profile.present_address.district,
-      division: profile.present_address.division
-    },
-    permanent_address: {
-      street_address: profile.permanent_address.street_address,
-      city: profile.permanent_address.city,
-      word_no: profile.permanent_address.word_no || '',
-      post_office: profile.permanent_address.post_office,
-      post_code: profile.permanent_address.post_code,
-      police_station: profile.permanent_address.police_station,
-      district: profile.permanent_address.district,
-      division: profile.permanent_address.division
-    },
-    field: profile.field,
-    center: profile.center
-  }
 }

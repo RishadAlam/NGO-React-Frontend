@@ -23,8 +23,10 @@ export default function NomineeFields({
 }) {
   const { t } = useTranslation()
   const [signatureModal, setSignatureModal] = useState(false)
-  const [imageUri, setImageUri] = useState(profilePlaceholder)
-  const [signatureURL, setSignatureURL] = useState(SignaturePlaceholder)
+  const [imageUri, setImageUri] = useState(nomineeData?.image_uri || profilePlaceholder)
+  const [signatureURL, setSignatureURL] = useState(
+    nomineeData?.signature_uri || SignaturePlaceholder
+  )
 
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/saving/nominee/occupations'

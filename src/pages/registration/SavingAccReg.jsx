@@ -8,12 +8,12 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import SavingAccRegFormFields from '../../components/savingAccRegistration/SavingAccRegFormFields'
 import Button from '../../components/utilities/Button'
+import { setSavingFields } from '../../helper/RegFormFieldsData'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
 import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import UserPlus from '../../icons/UserPlus'
-import dateFormat from '../../libs/dateFormat'
 import xFetch from '../../utilities/xFetch'
 
 export default function SavingAccReg() {
@@ -21,7 +21,7 @@ export default function SavingAccReg() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const { nominee_reg_sign_is_required } = useApprovalConfigsValue()
-  const [savingAccData, setSavingAccData] = useState(savingAccFields)
+  const [savingAccData, setSavingAccData] = useState(setSavingFields)
   const [errors, setErrors] = useState(savingAccErrs)
 
   const onSubmit = (event) => {
@@ -42,7 +42,7 @@ export default function SavingAccReg() {
         setLoading({ ...loading, SavingAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setSavingAccData(savingAccFields)
+          setSavingAccData(setSavingFields)
           setErrors(savingAccErrs)
           return
         }
@@ -248,53 +248,53 @@ const setFormData = (fields) => {
   return formData
 }
 
-const savingAccFields = {
-  field_id: '',
-  center_id: '',
-  creator_id: '',
-  category_id: '',
-  client_registration_id: '',
-  acc_no: '',
-  name: '',
-  start_date: dateFormat(new Date(), 'yyyy-MM-dd'),
-  duration_date: '',
-  payable_deposit: '',
-  payable_installment: '',
-  payable_interest: '',
-  total_deposit_without_interest: '',
-  total_deposit_with_interest: '',
-  field: '',
-  center: '',
-  category: '',
-  client: '',
-  creator: '',
-  nominees: [
-    {
-      name: '',
-      father_name: '',
-      husband_name: '',
-      mother_name: '',
-      nid: '',
-      dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-      occupation: '',
-      relation: '',
-      gender: '',
-      primary_phone: '',
-      secondary_phone: '',
-      image: '',
-      signature: '',
-      address: {
-        street_address: '',
-        city: '',
-        word_no: '',
-        post_office: '',
-        police_station: '',
-        district: '',
-        division: ''
-      }
-    }
-  ]
-}
+// const savingAccFields = {
+//   field_id: '',
+//   center_id: '',
+//   creator_id: '',
+//   category_id: '',
+//   client_registration_id: '',
+//   acc_no: '',
+//   name: '',
+//   start_date: dateFormat(new Date(), 'yyyy-MM-dd'),
+//   duration_date: '',
+//   payable_deposit: '',
+//   payable_installment: '',
+//   payable_interest: '',
+//   total_deposit_without_interest: '',
+//   total_deposit_with_interest: '',
+//   field: '',
+//   center: '',
+//   category: '',
+//   client: '',
+//   creator: '',
+//   nominees: [
+//     {
+//       name: '',
+//       father_name: '',
+//       husband_name: '',
+//       mother_name: '',
+//       nid: '',
+//       dob: dateFormat(new Date(), 'yyyy-MM-dd'),
+//       occupation: '',
+//       relation: '',
+//       gender: '',
+//       primary_phone: '',
+//       secondary_phone: '',
+//       image: '',
+//       signature: '',
+//       address: {
+//         street_address: '',
+//         city: '',
+//         word_no: '',
+//         post_office: '',
+//         police_station: '',
+//         district: '',
+//         division: ''
+//       }
+//     }
+//   ]
+// }
 
 const savingAccErrs = {
   field_id: '',

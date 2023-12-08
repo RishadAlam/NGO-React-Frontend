@@ -1,6 +1,8 @@
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 
+const lang = document.querySelector('html').lang
+
 export const DashSavingCollectionTableColumns = (t, windowWidth) => [
   {
     Header: '#',
@@ -898,7 +900,7 @@ export const PendingClientRegTableColumns = (
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
-    Header: t('common.status'),
+    Header: t('common.approval'),
     accessor: 'is_approved',
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
@@ -955,13 +957,13 @@ export const PendingSavingRegTableColumns = (
   {
     Header: t('common.category'),
     accessor: 'category',
-    Cell: ({ value }) => (value ? value.name : '')
+    Cell: ({ value }) => (value.is_default ? t(`category.default.${value.name}`) : value.name)
   },
   {
-    Header: t('common.payable_deposit'),
+    Header: t('common.deposit'),
     accessor: 'payable_deposit',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => '৳' + tsNumbers(value) + '/-'
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
   },
   {
     Header: t('common.total_installment'),
@@ -970,22 +972,22 @@ export const PendingSavingRegTableColumns = (
     Cell: ({ value }) => tsNumbers(value)
   },
   {
-    Header: t('common.payable_interest'),
+    Header: t('common.interest'),
     accessor: 'payable_interest',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => tsNumbers(value) + '%'
+    Cell: ({ value }) => tsNumbers(`${value}%`)
   },
   {
     Header: t('common.total_deposit_without_interest'),
     accessor: 'total_deposit_without_interest',
     show: false,
-    Cell: ({ value }) => '৳' + tsNumbers(value) + '/-'
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
   },
   {
     Header: t('common.total_deposit_with_interest'),
     accessor: 'total_deposit_with_interest',
     show: false,
-    Cell: ({ value }) => '৳' + tsNumbers(value) + '/-'
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
   },
   {
     Header: t('common.start_date'),
@@ -1003,7 +1005,7 @@ export const PendingSavingRegTableColumns = (
     Header: t('common.nominee'),
     accessor: 'nominee',
     show: false,
-    Cell: ({ value }) => tsNumbers(value?.length || 0)
+    Cell: ({ value }) => tsNumbers(value?.length || 0) + (lang === 'en' ? ' people' : ' জন')
   },
   {
     Header: t('common.created_at'),
@@ -1024,7 +1026,7 @@ export const PendingSavingRegTableColumns = (
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
-    Header: t('common.status'),
+    Header: t('common.approval'),
     accessor: 'is_approved',
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },

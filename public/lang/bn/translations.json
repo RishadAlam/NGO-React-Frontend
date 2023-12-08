@@ -258,7 +258,17 @@
   "client": {
     "pending_client_reg_list": "সদস্য নিবন্ধন অনুমোদন অপেক্ষারত তালিকা",
     "edit_client_profile": "সদস্য প্রোফাইল সম্পাদনা",
-    "view_client_profile": "সদস্য প্রোফাইল দেখুন"
+    "view_client_profile": "সদস্য প্রোফাইল বিস্তারিত দেখুন"
+  },
+  "saving": {
+    "pending_saving_acc_reg_list": "সঞ্চয় একাউন্ট নিবন্ধন অনুমোদন অপেক্ষারত তালিকা",
+    "edit_saving_acc": "সঞ্চয় একাউন্ট সম্পাদনা",
+    "view_saving_acc": "সঞ্চয় একাউন্ট বিস্তারিত দেখুন"
+  },
+  "loan": {
+    "pending_loan_acc_reg_list": "ঋণ একাউন্ট নিবন্ধন অনুমোদন অপেক্ষারত তালিকা",
+    "edit_loan_acc": "ঋণ একাউন্ট সম্পাদনা",
+    "view_loan_acc": "ঋণ একাউন্ট বিস্তারিত দেখুন"
   },
   "account": {
     "Account_List": "অ্যাকাউন্ট তালিকা",

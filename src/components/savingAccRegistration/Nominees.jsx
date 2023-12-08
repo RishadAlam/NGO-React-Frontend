@@ -111,30 +111,36 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
           disabled={disabled}
         />
       ))}
-      <div className="col-md-12 d-flex justify-content-center my-3">
-        <ActionBtnGroup>
-          <Tooltip TransitionComponent={Zoom} title={t('common.add_nominee')} arrow followCursor>
-            <span>
-              <IconButton
-                className="text-success"
-                onClick={() => addNominee(formData.nominees.length)}
-                disabled={formData.nominees.length < 5 ? false : true}>
-                {<PlusCircle size={24} />}
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip TransitionComponent={Zoom} title={t('common.remove_nominee')} arrow followCursor>
-            <span>
-              <IconButton
-                className="text-danger"
-                onClick={() => removeNominee(formData.nominees.length)}
-                disabled={formData.nominees.length > 1 ? false : true}>
-                {<XCircle size={24} />}
-              </IconButton>
-            </span>
-          </Tooltip>
-        </ActionBtnGroup>
-      </div>
+      {!disabled && (
+        <div className="col-md-12 d-flex justify-content-center my-3">
+          <ActionBtnGroup>
+            <Tooltip TransitionComponent={Zoom} title={t('common.add_nominee')} arrow followCursor>
+              <span>
+                <IconButton
+                  className="text-success"
+                  onClick={() => addNominee(formData.nominees.length)}
+                  disabled={formData.nominees.length < 5 ? false : true}>
+                  {<PlusCircle size={24} />}
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={t('common.remove_nominee')}
+              arrow
+              followCursor>
+              <span>
+                <IconButton
+                  className="text-danger"
+                  onClick={() => removeNominee(formData.nominees.length)}
+                  disabled={formData.nominees.length > 1 ? false : true}>
+                  {<XCircle size={24} />}
+                </IconButton>
+              </span>
+            </Tooltip>
+          </ActionBtnGroup>
+        </div>
+      )}
     </>
   )
 }

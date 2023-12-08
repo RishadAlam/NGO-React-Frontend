@@ -265,6 +265,16 @@
     "edit_client_profile": "Edit Client Profile",
     "view_client_profile": "View Client Profile"
   },
+  "saving": {
+    "pending_saving_acc_reg_list": "Saving Account registration approval pending list",
+    "edit_saving_acc": "Edit Saving Account",
+    "view_saving_acc": "View Saving Account"
+  },
+  "loan": {
+    "pending_loan_acc_reg_list": "Loan Account registration approval pending list",
+    "edit_loan_acc": "Edit Loan Account",
+    "view_loan_acc": "View Loan Account"
+  },
   "account": {
     "Account_List": "ACCOUNT LIST",
     "Account_Registration": "Account Registration",

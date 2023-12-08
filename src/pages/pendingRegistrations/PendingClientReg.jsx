@@ -18,6 +18,7 @@ import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
+import CheckPatch from '../../icons/CheckPatch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
 import Home from '../../icons/Home'
@@ -121,7 +122,7 @@ export default function PendingClientReg() {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/registration/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`client/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {
@@ -150,7 +151,7 @@ export default function PendingClientReg() {
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
                   name: t('menu.categories.Pending_Approval'),
-                  icon: <UserPlus size={16} />,
+                  icon: <CheckPatch size={16} />,
                   active: false
                 },
                 {
