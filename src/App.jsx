@@ -20,6 +20,8 @@ const ClientRegistration = lazy(() => import('./pages/registration/ClientRegistr
 const SavingAccReg = lazy(() => import('./pages/registration/SavingAccReg'))
 const LoanAccReg = lazy(() => import('./pages/registration/LoanAccReg'))
 const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/PendingClientReg'))
+const PendingSavingReg = lazy(() => import('./pages/pendingRegistrations/PendingSavingReg'))
+const PendingLoanReg = lazy(() => import('./pages/pendingRegistrations/PendingLoanReg'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -134,6 +136,48 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <PendingClientReg />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="saving-account"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_saving_acc_list_view',
+                      'pending_saving_acc_list_view_as_admin'
+                    ]}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingSavingReg />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="loan-account"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_loan_acc_list_view',
+                      'pending_loan_acc_list_view_as_admin'
+                    ]}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingLoanReg />
                       </Suspense>
                     </ErrorBoundary>
                   }
