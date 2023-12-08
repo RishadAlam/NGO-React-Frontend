@@ -37,14 +37,22 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
     }
 
     const formData = setFormData(savingAccData)
-    setLoading({ ...loading, clientRegistrationForm: false })
+    setLoading({ ...loading, SavingAccRegForm: false })
 
-    xFetch(`client/registration/${accountData.id}`, formData, null, accessToken, null, 'POST', true)
+    xFetch(
+      `client/registration/saving/${accountData.id}`,
+      formData,
+      null,
+      accessToken,
+      null,
+      'POST',
+      true
+    )
       .then((response) => {
-        setLoading({ ...loading, clientRegistrationForm: false })
+        setLoading({ ...loading, SavingAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setSavingAccData({ present_address: {}, permanent_address: {} })
+          setSavingAccData({})
           setErrors({})
           setOpen(false)
           mutate()
@@ -61,7 +69,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, clientRegistrationForm: false })
+        setLoading({ ...loading, SavingAccRegForm: false })
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -75,7 +83,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
   }
 
   const closeModal = () => {
-    setSavingAccData({ present_address: {}, permanent_address: {} })
+    setSavingAccData({})
     setOpen(false)
   }
 
@@ -117,9 +125,9 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
                 type="submit"
                 name={t('common.update')}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.clientRegistrationForm || false}
+                loading={loading?.SavingAccRegForm || false}
                 endIcon={<Save size={20} />}
-                disabled={loading?.clientRegistrationForm || false}
+                disabled={loading?.SavingAccRegForm || false}
               />
             </div>
           </div>
@@ -132,92 +140,94 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
 const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   const validationErrors = {}
 
-  if (
-    nominee_reg_sign_is_required &&
-    isEmpty(formFields['signature']) &&
-    isEmpty(formFields['signature_uri'])
-  ) {
-    validationErrors['signature'] = `${t('common.signature')} ${t('common_validation.is_required')}`
-  }
-
   for (const fieldName of fieldValidations) {
     if (isEmpty(formFields[fieldName])) {
       validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
         'common_validation.is_required'
       )}`
     } else if (
-      fieldName === 'primary_phone' &&
-      (!Number(formFields[fieldName]) ||
-        formFields[fieldName].length !== 11 ||
-        !String(formFields[fieldName]).startsWith('01'))
+      fieldName !== 'start_date' &&
+      fieldName !== 'duration_date' &&
+      fieldName !== 'acc_no' &&
+      !Number(formFields[fieldName])
     ) {
-      validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
-        'common_validation.is_invalid'
-      )}`
-    } else if (fieldName === 'share' && !Number(formFields[fieldName])) {
       validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
         'common_validation.is_invalid'
       )}`
     }
   }
 
-  for (const addressField of addressFields) {
-    if (isEmpty(formFields.present_address[addressField])) {
-      validationErrors['present_address'] = validationErrors['present_address'] || {}
-      validationErrors['present_address'][addressField] = `${t(`common.${addressField}`)} ${t(
-        'common_validation.is_required'
-      )}`
-    }
-    if (isEmpty(formFields.permanent_address[addressField])) {
-      validationErrors['permanent_address'] = validationErrors['permanent_address'] || {}
-      validationErrors['permanent_address'][addressField] = `${t(`common.${addressField}`)} ${t(
-        'common_validation.is_required'
-      )}`
+  if (formFields?.nominees && Array.isArray(formFields.nominees)) {
+    const nomineesErr = formFields.nominees.map((nominee, key) => {
+      const nomineeErrors = {}
+
+      for (const nomineeField of [
+        'id',
+        'name',
+        'father_name',
+        'mother_name',
+        'nid',
+        'dob',
+        'occupation',
+        'relation',
+        'gender',
+        'primary_phone'
+      ]) {
+        if (isEmpty(nominee[nomineeField])) {
+          nomineeErrors[nomineeField] = `${t(`common.${nomineeField}`)} ${t(
+            'common_validation.is_required'
+          )}`
+        }
+      }
+
+      if (
+        nominee_reg_sign_is_required &&
+        isEmpty(nominee['signature']) &&
+        isEmpty(nominee['signature_uri'])
+      ) {
+        nomineeErrors['signature'] = `${t('common.signature')} ${t(
+          'common_validation.is_required'
+        )}`
+      }
+
+      for (const addressField of addressFields) {
+        if (isEmpty(nominee.address[addressField])) {
+          nomineeErrors.address = nomineeErrors.address || {}
+          nomineeErrors.address[addressField] = `${t(`common.${addressField}`)} ${t(
+            'common_validation.is_required'
+          )}`
+        }
+      }
+
+      return nomineeErrors
+    })
+
+    for (let index = 0; index < nomineesErr.length; index++) {
+      if (!isEmptyObject(nomineesErr[index])) {
+        validationErrors.nominees = nomineesErr
+      }
     }
   }
 
   return validationErrors
 }
 
-const setFormData = (fields) => {
-  const formData = new FormData()
-  formData.append('_method', 'PUT')
-
-  for (const key in fields) {
-    if (
-      key !== 'field' &&
-      key !== 'center' &&
-      key !== 'present_address' &&
-      key !== 'permanent_address'
-    ) {
-      formData.append(key, fields[key])
-    } else if (key === 'present_address' || key === 'permanent_address') {
-      for (const addressKey in fields[key]) {
-        key === 'present_address'
-          ? formData.append(`present_address[${addressKey}]`, fields[key][addressKey])
-          : formData.append(`permanent_address[${addressKey}]`, fields[key][addressKey])
-      }
-    }
-  }
-
-  return formData
-}
-
 const fieldValidations = [
   'field_id',
   'center_id',
+  'category_id',
+  'creator_id',
   'acc_no',
-  'name',
-  'father_name',
-  'mother_name',
-  'nid',
-  'dob',
-  'occupation',
-  'religion',
-  'gender',
-  'primary_phone',
-  'share'
+  'client_registration_id',
+  'start_date',
+  'duration_date',
+  'payable_deposit',
+  'payable_installment',
+  'payable_interest',
+  'total_deposit_without_interest',
+  'total_deposit_with_interest'
 ]
+
 const addressFields = [
   'street_address',
   'city',
@@ -226,3 +236,31 @@ const addressFields = [
   'district',
   'division'
 ]
+
+const setFormData = (fields) => {
+  const formData = new FormData()
+  formData.append('_method', 'PUT')
+
+  for (const key in fields) {
+    if (key !== 'nominees') {
+      formData.append(key, fields[key])
+    } else {
+      fields[key].forEach((nominee, index) => {
+        for (const nomineeKey in nominee) {
+          if (nomineeKey !== 'address') {
+            formData.append(`nominees[${index}][${nomineeKey}]`, nominee[nomineeKey])
+          } else {
+            for (const addressKey in nominee[nomineeKey]) {
+              formData.append(
+                `nominees[${index}][${nomineeKey}][${addressKey}]`,
+                nominee[nomineeKey][addressKey]
+              )
+            }
+          }
+        }
+      })
+    }
+  }
+
+  return formData
+}

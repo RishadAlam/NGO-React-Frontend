@@ -1,6 +1,7 @@
 import dateFormat from '../libs/dateFormat'
 
 export const setSavingFields = ({
+  id = '',
   field_id = '',
   center_id = '',
   creator_id = '',
@@ -22,6 +23,7 @@ export const setSavingFields = ({
   nominees = []
 } = {}) => {
   return {
+    id,
     field_id,
     center_id,
     creator_id,
@@ -47,6 +49,7 @@ export const setSavingFields = ({
 
 const setNomineesFields = (nomineesData = []) => {
   const getDefaultNominee = () => ({
+    id: '',
     name: '',
     father_name: '',
     husband_name: '',

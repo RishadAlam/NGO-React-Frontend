@@ -108,7 +108,6 @@ export default function PendingSavingReg() {
   )
 
   const viewSavingAccount = (account) => {
-    console.log(setSavingFields(account))
     setViewSavingAccData(setSavingFields(account))
     setViewSavingAccDataModal(true)
   }

@@ -74,23 +74,31 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
               ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['nominees'][index][name]
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
 
             if (name === 'secondary_phone' && val === '') {
-              delete draftErr['nominees'][index][name]
+              draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
             }
           } else if (name === 'nid') {
             !Number(val) || val === '' || val === null
               ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['nominees'][index][name]
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
           } else {
             val === '' || val === null
               ? (draftErr.nominees[index][name] = `${t(`common.${name}`)} ${t(
                   `common_validation.is_required`
                 )}`)
-              : delete draftErr['nominees'][index][name]
+              : draftErr['nominees'] &&
+                draftErr['nominees'][index] &&
+                delete draftErr['nominees'][index][name]
           }
         }
       })
@@ -99,18 +107,19 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
 
   return (
     <>
-      {formData.nominees.map((nominee, i) => (
-        <NomineeFields
-          key={i}
-          nomineeData={nominee}
-          setNomineeData={setFormData}
-          i={i}
-          setChange={setChange}
-          errors={(errors?.nominees && errors?.nominees[i]) || {}}
-          setErrors={setErrors}
-          disabled={disabled}
-        />
-      ))}
+      {formData?.nominees &&
+        formData?.nominees.map((nominee, i) => (
+          <NomineeFields
+            key={i}
+            nomineeData={nominee}
+            setNomineeData={setFormData}
+            i={i}
+            setChange={setChange}
+            errors={(errors?.nominees && errors?.nominees[i]) || {}}
+            setErrors={setErrors}
+            disabled={disabled}
+          />
+        ))}
       {!disabled && (
         <div className="col-md-12 d-flex justify-content-center my-3">
           <ActionBtnGroup>
@@ -119,7 +128,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
                 <IconButton
                   className="text-success"
                   onClick={() => addNominee(formData.nominees.length)}
-                  disabled={formData.nominees.length < 5 ? false : true}>
+                  disabled={formData?.nominees && formData?.nominees?.length < 5 ? false : true}>
                   {<PlusCircle size={24} />}
                 </IconButton>
               </span>
@@ -133,7 +142,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
                 <IconButton
                   className="text-danger"
                   onClick={() => removeNominee(formData.nominees.length)}
-                  disabled={formData.nominees.length > 1 ? false : true}>
+                  disabled={formData?.nominees && formData?.nominees?.length > 1 ? false : true}>
                   {<XCircle size={24} />}
                 </IconButton>
               </span>

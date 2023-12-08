@@ -75,23 +75,31 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['guarantors'][index][name]
+              : delete draftErr['guarantors'] &&
+                delete draftErr['guarantors'][index] &&
+                delete draftErr['guarantors'][index][name]
 
             if (name === 'secondary_phone' && val === '') {
-              delete draftErr['guarantors'][index][name]
+              delete draftErr['guarantors'] &&
+                delete draftErr['guarantors'][index] &&
+                delete draftErr['guarantors'][index][name]
             }
           } else if (name === 'nid') {
             !Number(val) || val === '' || val === null
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['guarantors'][index][name]
+              : delete draftErr['guarantors'] &&
+                delete draftErr['guarantors'][index] &&
+                delete draftErr['guarantors'][index][name]
           } else {
             val === '' || val === null
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   `common_validation.is_required`
                 )}`)
-              : delete draftErr['guarantors'][index][name]
+              : delete draftErr['guarantors'] &&
+                delete draftErr['guarantors'][index] &&
+                delete draftErr['guarantors'][index][name]
           }
         }
       })
@@ -100,26 +108,27 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
 
   return (
     <>
-      {formData.guarantors.map((guarantor, i) => (
-        <GuarantorFields
-          key={i}
-          guarantorData={guarantor}
-          setGuarantorData={setFormData}
-          i={i}
-          setChange={setChange}
-          errors={(errors?.guarantors && errors?.guarantors[i]) || {}}
-          setErrors={setErrors}
-          disabled={disabled}
-        />
-      ))}
+      {formData?.guarantors &&
+        formData?.guarantors.map((guarantor, i) => (
+          <GuarantorFields
+            key={i}
+            guarantorData={guarantor}
+            setGuarantorData={setFormData}
+            i={i}
+            setChange={setChange}
+            errors={(errors?.guarantors && errors?.guarantors[i]) || {}}
+            setErrors={setErrors}
+            disabled={disabled}
+          />
+        ))}
       <div className="col-md-12 d-flex justify-content-center my-3">
         <ActionBtnGroup>
           <Tooltip TransitionComponent={Zoom} title={t('common.add_guarantor')} arrow followCursor>
             <span>
               <IconButton
                 className="text-success"
-                onClick={() => addGuarantor(formData.guarantors.length)}
-                disabled={formData.guarantors.length < 5 ? false : true}>
+                onClick={() => addGuarantor(formData?.guarantors?.length)}
+                disabled={formData?.guarantors && formData?.guarantors?.length < 5 ? false : true}>
                 {<PlusCircle size={24} />}
               </IconButton>
             </span>
@@ -132,8 +141,8 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
             <span>
               <IconButton
                 className="text-danger"
-                onClick={() => removeGuarantor(formData.guarantors.length)}
-                disabled={formData.guarantors.length > 1 ? false : true}>
+                onClick={() => removeGuarantor(formData?.guarantors?.length)}
+                disabled={formData?.guarantors && formData?.guarantors?.length > 1 ? false : true}>
                 {<XCircle size={24} />}
               </IconButton>
             </span>

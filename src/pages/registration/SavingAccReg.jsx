@@ -127,21 +127,6 @@ export default function SavingAccReg() {
 
 const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   const validationErrors = {}
-  const fieldValidations = [
-    'field_id',
-    'center_id',
-    'category_id',
-    'creator_id',
-    'acc_no',
-    'client_registration_id',
-    'start_date',
-    'duration_date',
-    'payable_deposit',
-    'payable_installment',
-    'payable_interest',
-    'total_deposit_without_interest',
-    'total_deposit_with_interest'
-  ]
 
   for (const fieldName of fieldValidations) {
     if (isEmpty(formFields[fieldName])) {
@@ -163,14 +148,6 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   if (formFields.nominees && Array.isArray(formFields.nominees)) {
     const nomineesErr = formFields.nominees.map((nominee, key) => {
       const nomineeErrors = {}
-      const addressFields = [
-        'street_address',
-        'city',
-        'post_office',
-        'police_station',
-        'district',
-        'division'
-      ]
 
       for (const nomineeField of [
         'name',
@@ -219,6 +196,31 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   return validationErrors
 }
 
+const fieldValidations = [
+  'field_id',
+  'center_id',
+  'category_id',
+  'creator_id',
+  'acc_no',
+  'client_registration_id',
+  'start_date',
+  'duration_date',
+  'payable_deposit',
+  'payable_installment',
+  'payable_interest',
+  'total_deposit_without_interest',
+  'total_deposit_with_interest'
+]
+
+const addressFields = [
+  'street_address',
+  'city',
+  'post_office',
+  'police_station',
+  'district',
+  'division'
+]
+
 const setFormData = (fields) => {
   const formData = new FormData()
 
@@ -228,9 +230,7 @@ const setFormData = (fields) => {
     } else {
       fields[key].forEach((nominee, index) => {
         for (const nomineeKey in nominee) {
-          if (nomineeKey !== 'address' && nomineeKey !== 'image') {
-            formData.append(`nominees[${index}][${nomineeKey}]`, nominee[nomineeKey])
-          } else if (nomineeKey !== 'address' && nomineeKey === 'image') {
+          if (nomineeKey !== 'address') {
             formData.append(`nominees[${index}][${nomineeKey}]`, nominee[nomineeKey])
           } else {
             for (const addressKey in nominee[nomineeKey]) {

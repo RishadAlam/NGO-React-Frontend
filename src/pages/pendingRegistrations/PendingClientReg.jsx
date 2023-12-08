@@ -108,7 +108,6 @@ export default function PendingClientReg() {
   )
 
   const viewClientProfile = (profile) => {
-    console.log(profile)
     setViewProfileData(setProfileDataObj(profile))
     setViewProfileDataModal(true)
   }
