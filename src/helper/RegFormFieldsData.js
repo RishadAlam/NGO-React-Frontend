@@ -49,7 +49,6 @@ export const setSavingFields = ({
 
 const setNomineesFields = (nomineesData = []) => {
   const getDefaultNominee = () => ({
-    id: '',
     name: '',
     father_name: '',
     husband_name: '',
@@ -76,6 +75,7 @@ const setNomineesFields = (nomineesData = []) => {
 
   return nomineesData.length
     ? nomineesData.map((nominee) => ({
+        id: nominee?.id || '',
         name: nominee?.name || '',
         father_name: nominee?.father_name || '',
         husband_name: nominee?.husband_name || '',
