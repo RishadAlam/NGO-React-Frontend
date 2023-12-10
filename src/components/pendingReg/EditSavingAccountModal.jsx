@@ -117,6 +117,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
                   errors={errors}
                   setErrors={setErrors}
                   disabled={loading.SavingAccRegForm}
+                  editForm={true}
                 />
               )}
             </div>

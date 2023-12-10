@@ -38,9 +38,9 @@ export default function ViewClientProfileModal({ open, setOpen, profileData, set
             <ClientRegistrationFormFields
               imageUri={imageUri}
               signatureModal={false}
-              setSignatureModal={() => {}}
-              signatureUri={signatureUri}
-              setSignatureUri={setSignatureUri}
+              setSignatureModal={setImageUri}
+              signatureURL={signatureUri}
+              setSignatureURL={setSignatureUri}
               clientData={profileData}
               setClientData={setProfileData}
               client_reg_sign_is_required={false}

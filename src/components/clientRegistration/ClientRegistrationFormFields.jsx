@@ -23,7 +23,8 @@ function ClientRegistrationFormFields({
   client_reg_sign_is_required,
   errors,
   setErrors,
-  disabled
+  disabled,
+  editForm = false
 }) {
   const [signatureModal, setSignatureModal] = useState(false)
   const { t } = useTranslation()
@@ -173,7 +174,7 @@ function ClientRegistrationFormFields({
           config={fieldConfig}
           isRequired={true}
           error={errors?.field_id}
-          disabled={disabled}
+          disabled={editForm || disabled}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">
@@ -182,7 +183,7 @@ function ClientRegistrationFormFields({
           config={centerConfig}
           isRequired={true}
           error={errors?.center_id}
-          disabled={disabled}
+          disabled={editForm || disabled}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">
@@ -193,7 +194,7 @@ function ClientRegistrationFormFields({
           setChange={(val) => setChange(val, 'acc_no')}
           error={errors?.acc_no}
           autoFocus={true}
-          disabled={disabled}
+          disabled={editForm || disabled}
         />
       </div>
       <div className="col-md-6 col-xl-4 mb-3">

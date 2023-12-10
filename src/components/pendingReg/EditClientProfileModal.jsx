@@ -122,6 +122,7 @@ export default function EditClientProfileModal({ open, setOpen, profileData, mut
                   errors={errors}
                   setErrors={setErrors}
                   disabled={loading.clientRegistrationForm}
+                  editForm={true}
                 />
               )}
             </div>

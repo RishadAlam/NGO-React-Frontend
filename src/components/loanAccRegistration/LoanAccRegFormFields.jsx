@@ -11,7 +11,14 @@ import TextInputField from '../utilities/TextInputField'
 import Guarantors from './Guarantors'
 import LoanFields from './LoanFields'
 
-function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabled }) {
+function LoanAccRegFormFields({
+  formData,
+  setFormData,
+  errors,
+  setErrors,
+  disabled,
+  editForm = false
+}) {
   const { id, permissions } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -155,7 +162,7 @@ function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabl
                   config={fieldConfig}
                   isRequired={true}
                   error={errors?.field_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -164,7 +171,7 @@ function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabl
                   config={centerConfig}
                   isRequired={true}
                   error={errors?.center_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -173,7 +180,7 @@ function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabl
                   config={categoryConfig}
                   isRequired={true}
                   error={errors?.category_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -182,7 +189,7 @@ function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabl
                   config={creatorConfig}
                   isRequired={true}
                   error={errors?.creator_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -191,7 +198,7 @@ function LoanAccRegFormFields({ formData, setFormData, errors, setErrors, disabl
                   config={clientConfig}
                   isRequired={true}
                   error={errors?.acc_no}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">

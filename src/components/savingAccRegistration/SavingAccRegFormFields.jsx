@@ -11,7 +11,14 @@ import TextInputField from '../utilities/TextInputField'
 import Nominees from './Nominees'
 import SavingFields from './SavingFields'
 
-function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disabled }) {
+function SavingAccRegFormFields({
+  formData,
+  setFormData,
+  errors,
+  setErrors,
+  disabled,
+  editForm = false
+}) {
   const { id, permissions } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -155,7 +162,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   config={fieldConfig}
                   isRequired={true}
                   error={errors?.field_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -164,7 +171,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   config={centerConfig}
                   isRequired={true}
                   error={errors?.center_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -173,7 +180,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   config={categoryConfig}
                   isRequired={true}
                   error={errors?.category_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -182,7 +189,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   config={creatorConfig}
                   isRequired={true}
                   error={errors?.creator_id}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">
@@ -191,7 +198,7 @@ function SavingAccRegFormFields({ formData, setFormData, errors, setErrors, disa
                   config={clientConfig}
                   isRequired={true}
                   error={errors?.acc_no}
-                  disabled={disabled}
+                  disabled={editForm || disabled}
                 />
               </div>
               <div className="col-md-12 col-xl-6 mb-3">

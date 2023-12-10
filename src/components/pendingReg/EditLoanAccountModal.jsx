@@ -117,6 +117,7 @@ export default function EditLoanAccountModal({ open, setOpen, accountData, mutat
                   errors={errors}
                   setErrors={setErrors}
                   disabled={loading.LoanAccRegForm}
+                  editForm={true}
                 />
               )}
             </div>
