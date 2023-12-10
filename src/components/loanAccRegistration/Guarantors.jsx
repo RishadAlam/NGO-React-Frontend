@@ -2,6 +2,7 @@ import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { create } from 'mutative'
 import { useTranslation } from 'react-i18next'
+import { setNomiGuarantorFields } from '../../helper/RegFormFieldsData'
 import PlusCircle from '../../icons/PlusCircle'
 import XCircle from '../../icons/XCircle'
 import dateFormat from '../../libs/dateFormat'
@@ -15,7 +16,7 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
     if (length < 5) {
       setFormData((prevData) =>
         create(prevData, (draftData) => {
-          draftData.guarantors.splice(length, 0, guarantorFields)
+          draftData.guarantors.splice(length, 0, setNomiGuarantorFields()[0])
         })
       )
       setErrors((prevErr) =>
@@ -64,6 +65,8 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr?.message
+        draftErr['guarantors'] = draftErr['guarantors'] || []
+        draftErr['guarantors'][index] = draftErr['guarantors'][index] || {}
 
         if (name !== 'husband_name') {
           if (name === 'primary_phone' || name === 'secondary_phone') {
@@ -75,13 +78,13 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['guarantors'] &&
-                delete draftErr['guarantors'][index] &&
+              : draftErr['guarantors'] &&
+                draftErr['guarantors'][index] &&
                 delete draftErr['guarantors'][index][name]
 
             if (name === 'secondary_phone' && val === '') {
-              delete draftErr['guarantors'] &&
-                delete draftErr['guarantors'][index] &&
+              draftErr['guarantors'] &&
+                draftErr['guarantors'][index] &&
                 delete draftErr['guarantors'][index][name]
             }
           } else if (name === 'nid') {
@@ -89,16 +92,16 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   'common_validation.is_invalid'
                 )}`)
-              : delete draftErr['guarantors'] &&
-                delete draftErr['guarantors'][index] &&
+              : draftErr['guarantors'] &&
+                draftErr['guarantors'][index] &&
                 delete draftErr['guarantors'][index][name]
           } else {
             val === '' || val === null
               ? (draftErr.guarantors[index][name] = `${t(`common.${name}`)} ${t(
                   `common_validation.is_required`
                 )}`)
-              : delete draftErr['guarantors'] &&
-                delete draftErr['guarantors'][index] &&
+              : draftErr['guarantors'] &&
+                draftErr['guarantors'][index] &&
                 delete draftErr['guarantors'][index][name]
           }
         }
@@ -121,62 +124,48 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
             disabled={disabled}
           />
         ))}
-      <div className="col-md-12 d-flex justify-content-center my-3">
-        <ActionBtnGroup>
-          <Tooltip TransitionComponent={Zoom} title={t('common.add_guarantor')} arrow followCursor>
-            <span>
-              <IconButton
-                className="text-success"
-                onClick={() => addGuarantor(formData?.guarantors?.length)}
-                disabled={formData?.guarantors && formData?.guarantors?.length < 5 ? false : true}>
-                {<PlusCircle size={24} />}
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip
-            TransitionComponent={Zoom}
-            title={t('common.remove_guarantor')}
-            arrow
-            followCursor>
-            <span>
-              <IconButton
-                className="text-danger"
-                onClick={() => removeGuarantor(formData?.guarantors?.length)}
-                disabled={formData?.guarantors && formData?.guarantors?.length > 1 ? false : true}>
-                {<XCircle size={24} />}
-              </IconButton>
-            </span>
-          </Tooltip>
-        </ActionBtnGroup>
-      </div>
+      {!disabled && (
+        <div className="col-md-12 d-flex justify-content-center my-3">
+          <ActionBtnGroup>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={t('common.add_guarantor')}
+              arrow
+              followCursor>
+              <span>
+                <IconButton
+                  className="text-success"
+                  onClick={() => addGuarantor(formData?.guarantors?.length)}
+                  disabled={
+                    formData?.guarantors && formData?.guarantors?.length < 5 ? false : true
+                  }>
+                  {<PlusCircle size={24} />}
+                </IconButton>
+              </span>
+            </Tooltip>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={t('common.remove_guarantor')}
+              arrow
+              followCursor>
+              <span>
+                <IconButton
+                  className="text-danger"
+                  onClick={() => removeGuarantor(formData?.guarantors?.length)}
+                  disabled={
+                    formData?.guarantors && formData?.guarantors?.length > 1 ? false : true
+                  }>
+                  {<XCircle size={24} />}
+                </IconButton>
+              </span>
+            </Tooltip>
+          </ActionBtnGroup>
+        </div>
+      )}
     </>
   )
 }
 
-const guarantorFields = {
-  name: '',
-  father_name: '',
-  husband_name: '',
-  mother_name: '',
-  nid: '',
-  dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-  occupation: '',
-  relation: '',
-  gender: '',
-  primary_phone: '',
-  secondary_phone: '',
-  image: '',
-  signature: '',
-  address: {
-    street_address: '',
-    city: '',
-    word_no: '',
-    post_office: '',
-    police_station: '',
-    district: '',
-    division: ''
-  }
-}
 const guarantorFieldsErrs = {
   name: '',
   father_name: '',

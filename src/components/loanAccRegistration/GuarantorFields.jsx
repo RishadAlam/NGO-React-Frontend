@@ -23,8 +23,10 @@ export default function GuarantorFields({
 }) {
   const { t } = useTranslation()
   const [signatureModal, setSignatureModal] = useState(false)
-  const [imageUri, setImageUri] = useState(profilePlaceholder)
-  const [signatureURL, setSignatureURL] = useState(SignaturePlaceholder)
+  const [imageUri, setImageUri] = useState(guarantorData?.image_uri || profilePlaceholder)
+  const [signatureURL, setSignatureURL] = useState(
+    guarantorData?.signature_uri || SignaturePlaceholder
+  )
 
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/loan/guarantor/occupations'

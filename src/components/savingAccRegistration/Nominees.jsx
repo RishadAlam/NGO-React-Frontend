@@ -2,6 +2,7 @@ import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { create } from 'mutative'
 import { useTranslation } from 'react-i18next'
+import { setNomiGuarantorFields } from '../../helper/RegFormFieldsData'
 import PlusCircle from '../../icons/PlusCircle'
 import XCircle from '../../icons/XCircle'
 import dateFormat from '../../libs/dateFormat'
@@ -15,7 +16,7 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     if (length < 5) {
       setFormData((prevData) =>
         create(prevData, (draftData) => {
-          draftData.nominees.splice(length, 0, nomineeFields)
+          draftData.nominees.splice(length, 0, setNomiGuarantorFields()[0])
         })
       )
       setErrors((prevErr) =>
@@ -63,6 +64,8 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr?.message
+        draftErr['nominees'] = draftErr['nominees'] || []
+        draftErr['nominees'][index] = draftErr['nominees'][index] || {}
 
         if (name !== 'husband_name') {
           if (name === 'primary_phone' || name === 'secondary_phone') {

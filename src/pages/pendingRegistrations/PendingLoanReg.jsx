@@ -8,55 +8,56 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
-import EditClientProfileModal from '../../components/pendingReg/EditClientProfileModal'
-import ViewClientProfileModal from '../../components/pendingReg/ViewClientProfileModal'
+import EditLoanAccountModal from '../../components/pendingReg/EditLoanAccountModal'
+import ViewLoanAccountModal from '../../components/pendingReg/ViewLoanAccountModal'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { setLoanAccFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
+import BankTransferOut from '../../icons/BankTransferOut'
+import CheckPatch from '../../icons/CheckPatch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
-import UserPlus from '../../icons/UserPlus'
-import dateFormat from '../../libs/dateFormat'
 import { PendingLoanRegTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
 export default function PendingLoanReg() {
-  const [viewProfileData, setViewProfileData] = useState()
-  const [viewProfileDataModal, setViewProfileDataModal] = useState(false)
-  const [editProfileData, setEditProfileData] = useState()
-  const [editProfileDataModal, setEditProfileDataModal] = useState(false)
+  const [viewLoanAccData, setViewLoanAccData] = useState()
+  const [viewLoanAccDataModal, setViewLoanAccDataModal] = useState(false)
+  const [editLoanAccData, setEditLoanAccData] = useState()
+  const [editLoanAccDataModal, setEditLoanAccDataModal] = useState(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const {
-    data: { data: clientProfiles } = [],
+    data: { data: loanAccounts } = [],
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'client/registration', queryParams: { fetch_pending: true } })
+  } = useFetch({ action: 'client/registration/loan', queryParams: { fetch_pending_forms: true } })
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const statusSwitch = (value, id) => (
     <AndroidSwitch
       value={value ? true : false}
-      toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      toggleStatus={(e) => loanApproved(id, e.target.checked)}
       disabled={loading?.approval || false}
     />
   )
-  const toggleStatus = (id) => {
+  const loanApproved = (id) => {
     clientRegApprovalAlert(t).then((result) => {
       if (result.isConfirmed) {
         setLoading({ ...loading, approval: true })
         const toasterLoading = toast.loading(`${t('common.approval')}...`)
-        xFetch(`client/registration/approved/${id}`, null, null, accessToken, null, 'PUT')
+        xFetch(`client/registration/loan/approved/${id}`, null, null, accessToken, null, 'PUT')
           .then((response) => {
             setLoading({ ...loading, approval: false })
             toast.dismiss(toasterLoading)
@@ -74,25 +75,25 @@ export default function PendingLoanReg() {
       }
     })
   }
-  const actionBtnGroup = (id, profile) => (
+  const actionBtnGroup = (id, account) => (
     <ActionBtnGroup>
-      {authPermissions.includes('pending_client_registration_list_view') && (
+      {authPermissions.includes('pending_loan_acc_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
-          <IconButton className="text-primary" onClick={() => viewClientProfile(profile)}>
+          <IconButton className="text-primary" onClick={() => viewLoanAccount(account)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_update') && (
+      {authPermissions.includes('pending_loan_acc_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => clientProfileEdit(profile)}>
+          <IconButton className="text-warning" onClick={() => loanAccountEdit(account)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_permanently_delete') && (
+      {authPermissions.includes('pending_loan_acc_permanently_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => clientProfileDelete(id)}>
+          <IconButton className="text-danger" onClick={() => loanAccountDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -106,22 +107,21 @@ export default function PendingLoanReg() {
     [t, windowWidth, loading]
   )
 
-  const viewClientProfile = (profile) => {
-    console.log(profile)
-    setViewProfileData(setProfileDataObj(profile))
-    setViewProfileDataModal(true)
+  const viewLoanAccount = (account) => {
+    setViewLoanAccData(setLoanAccFields(account))
+    setViewLoanAccDataModal(true)
   }
 
-  const clientProfileEdit = (profile) => {
-    setEditProfileData(setProfileDataObj(profile))
-    setEditProfileDataModal(true)
+  const loanAccountEdit = (account) => {
+    setEditLoanAccData(setLoanAccFields(account))
+    setEditLoanAccDataModal(true)
   }
 
-  const clientProfileDelete = (id) => {
+  const loanAccountDelete = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/registration/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(`client/loan/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             toast.dismiss(toasterLoading)
             if (response?.success) {
@@ -150,97 +150,47 @@ export default function PendingLoanReg() {
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
                   name: t('menu.categories.Pending_Approval'),
-                  icon: <UserPlus size={16} />,
+                  icon: <CheckPatch size={16} />,
                   active: false
                 },
                 {
-                  name: t('client.pending_client_reg_list'),
-                  icon: <UserPlus size={16} />,
+                  name: t('loan.pending_loan_acc_reg_list'),
+                  icon: <BankTransferOut />,
                   active: true
                 }
               ]}
             />
           </div>
         </div>
-        {viewProfileData && (
-          <ViewClientProfileModal
-            open={viewProfileDataModal}
-            setOpen={setViewProfileDataModal}
-            profileData={viewProfileData}
-            setProfileData={setViewProfileData}
+        {viewLoanAccData && (
+          <ViewLoanAccountModal
+            open={viewLoanAccDataModal}
+            setOpen={setViewLoanAccDataModal}
+            accountData={viewLoanAccData}
+            setAccountData={setViewLoanAccData}
           />
         )}
-        {editProfileData && authPermissions.includes('pending_client_registration_update') && (
-          <EditClientProfileModal
-            open={editProfileDataModal}
-            setOpen={setEditProfileDataModal}
-            profileData={editProfileData}
-            setProfileData={setEditProfileData}
+        {editLoanAccData && authPermissions.includes('pending_client_registration_update') && (
+          <EditLoanAccountModal
+            open={editLoanAccDataModal}
+            setOpen={setEditLoanAccDataModal}
+            accountData={editLoanAccData}
+            setAccountData={setEditLoanAccData}
             mutate={mutate}
           />
         )}
         <div className="staff-table">
-          {isLoading && !clientProfiles ? (
+          {isLoading && !loanAccounts ? (
             <ReactTableSkeleton />
           ) : (
             <ReactTable
-              title={t('client.pending_client_reg_list')}
+              title={t('loan.pending_loan_acc_reg_list')}
               columns={columns}
-              data={clientProfiles}
+              data={loanAccounts}
             />
           )}
         </div>
       </section>
     </>
   )
-}
-
-const setProfileDataObj = (profile) => {
-  return {
-    id: profile.id,
-    field_id: profile.field_id,
-    center_id: profile.center_id,
-    acc_no: profile.acc_no,
-    name: profile.name,
-    father_name: profile.father_name,
-    husband_name: profile.husband_name,
-    mother_name: profile.mother_name,
-    nid: profile.nid,
-    dob: dateFormat(profile.dob, 'yyyy-MM-dd'),
-    occupation: profile.occupation,
-    religion: profile.religion,
-    gender: profile.gender,
-    primary_phone: profile.primary_phone,
-    secondary_phone: profile.secondary_phone || '',
-    image: '',
-    image_uri: profile.image_uri,
-    signature: '',
-    signature_uri: profile.signature_uri || '',
-    share: profile.share,
-    annual_income: profile.annual_income || '',
-    bank_acc_no: profile.bank_acc_no || '',
-    bank_check_no: profile.bank_check_no || '',
-    present_address: {
-      street_address: profile.present_address.street_address,
-      city: profile.present_address.city,
-      word_no: profile.present_address.word_no || '',
-      post_office: profile.present_address.post_office,
-      post_code: profile.present_address.post_code,
-      police_station: profile.present_address.police_station,
-      district: profile.present_address.district,
-      division: profile.present_address.division
-    },
-    permanent_address: {
-      street_address: profile.permanent_address.street_address,
-      city: profile.permanent_address.city,
-      word_no: profile.permanent_address.word_no || '',
-      post_office: profile.permanent_address.post_office,
-      post_code: profile.permanent_address.post_code,
-      police_station: profile.permanent_address.police_station,
-      district: profile.permanent_address.district,
-      division: profile.permanent_address.division
-    },
-    field: profile.field,
-    center: profile.center
-  }
 }

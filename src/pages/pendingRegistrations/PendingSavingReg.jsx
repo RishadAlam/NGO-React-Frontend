@@ -48,11 +48,11 @@ export default function PendingSavingReg() {
   const statusSwitch = (value, id) => (
     <AndroidSwitch
       value={value ? true : false}
-      toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      toggleStatus={(e) => savingApproved(id, e.target.checked)}
       disabled={loading?.approval || false}
     />
   )
-  const toggleStatus = (id) => {
+  const savingApproved = (id) => {
     clientRegApprovalAlert(t).then((result) => {
       if (result.isConfirmed) {
         setLoading({ ...loading, approval: true })

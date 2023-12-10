@@ -10,25 +10,25 @@ import { isEmptyObject } from '../../helper/isEmptyObject'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import xFetch from '../../utilities/xFetch'
-import SavingAccRegFormFields from '../savingAccRegistration/SavingAccRegFormFields'
+import LoanAccRegFormFields from '../loanAccRegistration/LoanAccRegFormFields'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditSavingAccountModal({ open, setOpen, accountData, mutate }) {
+export default function EditLoanAccountModal({ open, setOpen, accountData, mutate }) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
-  const [savingAccData, setSavingAccData] = useState(accountData)
+  const [loanAccData, setLoanAccData] = useState(accountData)
   const [errors, setErrors] = useState({})
-  const { nominee_reg_sign_is_required } = useApprovalConfigsValue()
+  const { guarantor_reg_sign_is_required } = useApprovalConfigsValue()
 
   useEffect(() => {
-    setSavingAccData(accountData)
+    setLoanAccData(accountData)
   }, [accountData])
 
   const onSubmit = (event) => {
     event.preventDefault()
-    const validationErrors = checkRequiredFields(savingAccData, t, nominee_reg_sign_is_required)
+    const validationErrors = checkRequiredFields(loanAccData, t, guarantor_reg_sign_is_required)
 
     if (!isEmptyObject(validationErrors)) {
       setErrors(validationErrors)
@@ -36,11 +36,11 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
       return
     }
 
-    const formData = setFormData(savingAccData)
-    setLoading({ ...loading, SavingAccRegForm: false })
+    const formData = setFormData(loanAccData)
+    setLoading({ ...loading, LoanAccRegForm: false })
 
     xFetch(
-      `client/registration/saving/${accountData.id}`,
+      `client/registration/loan/${accountData.id}`,
       formData,
       null,
       accessToken,
@@ -49,10 +49,10 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
       true
     )
       .then((response) => {
-        setLoading({ ...loading, SavingAccRegForm: false })
+        setLoading({ ...loading, LoanAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setSavingAccData({})
+          setLoanAccData({})
           setErrors({})
           setOpen(false)
           mutate()
@@ -69,7 +69,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, SavingAccRegForm: false })
+        setLoading({ ...loading, LoanAccRegForm: false })
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -83,7 +83,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
   }
 
   const closeModal = () => {
-    setSavingAccData({})
+    setLoanAccData({})
     setOpen(false)
   }
 
@@ -94,7 +94,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
           <div className="card">
             <div className="card-header">
               <div className="d-flex align-items-center justify-content-between">
-                <b className="text-uppercase">{t('saving.edit_saving_acc')}</b>
+                <b className="text-uppercase">{t('loan.edit_loan_acc')}</b>
                 <Button
                   className={'text-danger p-0'}
                   loading={false}
@@ -111,12 +111,12 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
               )}
 
               {accountData && (
-                <SavingAccRegFormFields
-                  formData={savingAccData}
-                  setFormData={setSavingAccData}
+                <LoanAccRegFormFields
+                  formData={loanAccData}
+                  setFormData={setLoanAccData}
                   errors={errors}
                   setErrors={setErrors}
-                  disabled={loading.SavingAccRegForm}
+                  disabled={loading.LoanAccRegForm}
                 />
               )}
             </div>
@@ -125,9 +125,9 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
                 type="submit"
                 name={t('common.update')}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.SavingAccRegForm || false}
+                loading={loading?.LoanAccRegForm || false}
                 endIcon={<Save size={20} />}
-                disabled={loading?.SavingAccRegForm || false}
+                disabled={loading?.LoanAccRegForm || false}
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
   )
 }
 
-const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
+const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
   const validationErrors = {}
 
   for (const fieldName of fieldValidations) {
@@ -157,11 +157,11 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
     }
   }
 
-  if (formFields?.nominees && Array.isArray(formFields.nominees)) {
-    const nomineesErr = formFields.nominees.map((nominee, key) => {
-      const nomineeErrors = {}
+  if (formFields.guarantors && Array.isArray(formFields.guarantors)) {
+    const guarantorsErr = formFields.guarantors.map((guarantor, key) => {
+      const guarantorErrors = {}
 
-      for (const nomineeField of [
+      for (const guarantorField of [
         'id',
         'name',
         'father_name',
@@ -173,42 +173,42 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
         'gender',
         'primary_phone'
       ]) {
-        if (isEmpty(nominee[nomineeField])) {
-          nomineeErrors[nomineeField] = `${t(`common.${nomineeField}`)} ${t(
+        if (isEmpty(guarantor[guarantorField])) {
+          guarantorErrors[guarantorField] = `${t(`common.${guarantorField}`)} ${t(
             'common_validation.is_required'
           )}`
         }
       }
 
-      if (isEmpty(nominee['image']) && isEmpty(nominee['image_uri'])) {
-        nomineeErrors['image'] = `${t('common.image')} ${t('common_validation.is_required')}`
+      if (isEmpty(guarantor['image']) && isEmpty(guarantor['image_uri'])) {
+        guarantorErrors['image'] = `${t('common.image')} ${t('common_validation.is_required')}`
       }
 
       if (
-        nominee_reg_sign_is_required &&
-        isEmpty(nominee['signature']) &&
-        isEmpty(nominee['signature_uri'])
+        guarantor_reg_sign_is_required &&
+        isEmpty(guarantor['signature']) &&
+        isEmpty(guarantor['signature_uri'])
       ) {
-        nomineeErrors['signature'] = `${t('common.signature')} ${t(
+        guarantorErrors['signature'] = `${t('common.signature')} ${t(
           'common_validation.is_required'
         )}`
       }
 
       for (const addressField of addressFields) {
-        if (isEmpty(nominee.address[addressField])) {
-          nomineeErrors.address = nomineeErrors.address || {}
-          nomineeErrors.address[addressField] = `${t(`common.${addressField}`)} ${t(
+        if (isEmpty(guarantor.address[addressField])) {
+          guarantorErrors.address = guarantorErrors.address || {}
+          guarantorErrors.address[addressField] = `${t(`common.${addressField}`)} ${t(
             'common_validation.is_required'
           )}`
         }
       }
 
-      return nomineeErrors
+      return guarantorErrors
     })
 
-    for (let index = 0; index < nomineesErr.length; index++) {
-      if (!isEmptyObject(nomineesErr[index])) {
-        validationErrors.nominees = nomineesErr
+    for (let index = 0; index < guarantorsErr.length; index++) {
+      if (!isEmptyObject(guarantorsErr[index])) {
+        validationErrors.guarantors = guarantorsErr
       }
     }
   }
@@ -219,17 +219,21 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
 const fieldValidations = [
   'field_id',
   'center_id',
-  'category_id',
   'creator_id',
-  'acc_no',
+  'category_id',
   'client_registration_id',
+  'acc_no',
   'start_date',
   'duration_date',
+  'loan_given',
   'payable_deposit',
   'payable_installment',
   'payable_interest',
-  'total_deposit_without_interest',
-  'total_deposit_with_interest'
+  'total_payable_interest',
+  'total_payable_loan_with_interest',
+  'loan_installment',
+  'interest_installment',
+  'total_payable_loan_installment'
 ]
 
 const addressFields = [
@@ -246,18 +250,18 @@ const setFormData = (fields) => {
   formData.append('_method', 'PUT')
 
   for (const key in fields) {
-    if (key !== 'nominees') {
+    if (key !== 'guarantors') {
       formData.append(key, fields[key])
     } else {
-      fields[key].forEach((nominee, index) => {
-        for (const nomineeKey in nominee) {
-          if (nomineeKey !== 'address') {
-            formData.append(`nominees[${index}][${nomineeKey}]`, nominee[nomineeKey])
+      fields[key].forEach((guarantor, index) => {
+        for (const guarantorKey in guarantor) {
+          if (guarantorKey !== 'address') {
+            formData.append(`guarantors[${index}][${guarantorKey}]`, guarantor[guarantorKey])
           } else {
-            for (const addressKey in nominee[nomineeKey]) {
+            for (const addressKey in guarantor[guarantorKey]) {
               formData.append(
-                `nominees[${index}][${nomineeKey}][${addressKey}]`,
-                nominee[nomineeKey][addressKey]
+                `guarantors[${index}][${guarantorKey}][${addressKey}]`,
+                guarantor[guarantorKey][addressKey]
               )
             }
           }
