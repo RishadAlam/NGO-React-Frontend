@@ -13,6 +13,7 @@ import ViewLoanAccountModal from '../../components/pendingReg/ViewLoanAccountMod
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
+import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setLoanAccFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
@@ -33,16 +34,88 @@ export default function PendingLoanReg() {
   const [viewLoanAccDataModal, setViewLoanAccDataModal] = useState(false)
   const [editLoanAccData, setEditLoanAccData] = useState()
   const [editLoanAccDataModal, setEditLoanAccDataModal] = useState(false)
+  const [selectedField, setSelectedField] = useState()
+  const [selectedCenter, setSelectedCenter] = useState()
+  const [selectedCategory, setSelectedCategory] = useState()
+  const [selectedCreator, setSelectedCreator] = useState()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
+
+  const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
+  const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
     data: { data: loanAccounts } = [],
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'client/registration/loan', queryParams: { fetch_pending_forms: true } })
+  } = useFetch({
+    action: 'client/registration/loan',
+    queryParams: {
+      fetch_pending_forms: true,
+      field_id: selectedField?.id || '',
+      center_id: selectedCenter?.id || '',
+      category_id: selectedCategory?.id || '',
+      user_id: selectedCreator?.id || ''
+    }
+  })
+  const { data: { data: centers = [] } = [] } = useFetch({
+    action: 'centers/active',
+    queryParams: { field_id: selectedField?.id || '' }
+  })
+  const { data: { data: categories = [] } = [] } = useFetch({
+    action: 'categories/active',
+    queryParams: {
+      loan: true
+    }
+  })
+
+  const setParamsState = (option, name) => {
+    if (name === 'field') {
+      setSelectedField(option)
+      setSelectedCenter(null)
+    } else if (name === 'center') {
+      setSelectedCenter(option)
+    } else if (name === 'category') {
+      setSelectedCategory(option)
+    } else if (name === 'creator') {
+      setSelectedCreator(option)
+    }
+    mutate()
+  }
+
+  const fieldConfig = {
+    options: fields,
+    value: selectedField || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setParamsState(option, 'field'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const centerConfig = {
+    options: centers?.length
+      ? centers.filter((center) => center?.field_id === selectedField?.id || '')
+      : [],
+    value: selectedCenter || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setParamsState(option, 'center'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const categoryConfig = {
+    options: categories,
+    value: selectedCategory || null,
+    getOptionLabel: (option) =>
+      option.is_default ? t(`category.default.${option.name}`) : option.name,
+    onChange: (e, option) => setParamsState(option, 'category'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const creatorConfig = {
+    options: creators,
+    value: selectedCreator || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setParamsState(option, 'creator'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const statusSwitch = (value, id) => (
@@ -179,6 +252,20 @@ export default function PendingLoanReg() {
             mutate={mutate}
           />
         )}
+        <div className="row">
+          <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
+            {fields && <SelectBoxField label={t('common.field')} config={fieldConfig} />}
+          </div>
+          <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
+            {centers && <SelectBoxField label={t('common.center')} config={centerConfig} />}
+          </div>
+          <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
+            {categories && <SelectBoxField label={t('common.category')} config={categoryConfig} />}
+          </div>
+          <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
+            {creators && <SelectBoxField label={t('common.creator')} config={creatorConfig} />}
+          </div>
+        </div>
         <div className="staff-table">
           {isLoading && !loanAccounts ? (
             <ReactTableSkeleton />

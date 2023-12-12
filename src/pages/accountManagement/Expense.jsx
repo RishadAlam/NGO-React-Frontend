@@ -25,6 +25,7 @@ import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import getCurrentMonth from '../../libs/getCurrentMonth'
+import tsNumbers from '../../libs/tsNumbers'
 import { ExpenseTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
@@ -188,8 +189,20 @@ export default function Expense() {
             )}
           </div>
         </div>
-        <div className="text-end mb-3">
-          <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
+        <div className="row align-items-center">
+          <div className="col-md-3">
+            {expenses && (
+              <b>
+                {t('common.total')} {t('common.expense')}:{' '}
+                {tsNumbers(`৳${expenses?.reduce((sum, item) => sum + item.amount, 0)}/-`)}
+              </b>
+            )}
+          </div>
+          <div className="col-md-9 text-end">
+            <div className="mb-3">
+              <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
+            </div>
+          </div>
         </div>
         <div className="staff-table">
           {isLoading && !expenses ? (
