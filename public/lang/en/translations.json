@@ -181,6 +181,7 @@
     },
     "label": {
       "registration": "Registration",
+      "pending_loans": "Pending Loans",
       "field": "Fields",
       "center": "Centers",
       "category": "Categories",

@@ -22,6 +22,7 @@ const LoanAccReg = lazy(() => import('./pages/registration/LoanAccReg'))
 const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/PendingClientReg'))
 const PendingSavingReg = lazy(() => import('./pages/pendingRegistrations/PendingSavingReg'))
 const PendingLoanReg = lazy(() => import('./pages/pendingRegistrations/PendingLoanReg'))
+const PendingLoans = lazy(() => import('./pages/pendingLoans/PendingLoans'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -183,6 +184,25 @@ export default function App() {
                   }
                 />
               </Route>
+            </Route>
+            {/* Pending Loans */}
+            <Route
+              path="pending/loans"
+              element={
+                <RequirePermissions
+                  allowedPermissions={['pending_loan_view', 'pending_loan_view_as_admin']}
+                />
+              }>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <PendingLoans />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
             </Route>
 
             {/* Field, Center, Category */}

@@ -90,6 +90,13 @@ export const mainMenu = (t) => {
             )
           }
         ]
+      },
+      {
+        id: 2,
+        label: t('menu.label.pending_loans'),
+        path: '/pending/loans',
+        icon: 'BankTransferOut',
+        view: checkPermissions(['pending_loan_view', 'pending_loan_view_as_admin'], permissions)
       }
     ],
     [t('menu.categories.Control_Panel')]: [
@@ -118,7 +125,7 @@ export const mainMenu = (t) => {
         id: 4,
         label: t('menu.label.account_management'),
         path: '',
-        icon: 'Shield',
+        icon: 'BankTransfer',
         view: checkPermissions(['account_list_view'], permissions),
         subMenu: [
           {

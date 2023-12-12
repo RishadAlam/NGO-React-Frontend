@@ -176,6 +176,7 @@
     },
     "label": {
       "registration": "নিবন্ধন",
+      "pending_loans": "অনুমোদন অপেক্ষারত ঋণ",
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
