@@ -144,7 +144,8 @@
     "loan_installment": "ঋণের কিস্তি",
     "interest_installment": "লাভের কিস্তি",
     "total_payable_loan_installment": "মোট ঋণের কিস্তি",
-    "total_payable_interest": "মোট লাভ"
+    "total_payable_interest": "মোট লাভ",
+    "deduct_loan_msg": "ঋণ কাটার জন্য একটি অ্যাকাউন্ট নির্বাচন করুন অন্যথায় এড়িয়ে যান।"
   },
 
   "common_validation": {

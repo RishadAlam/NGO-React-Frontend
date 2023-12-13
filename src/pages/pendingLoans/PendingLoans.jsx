@@ -1,30 +1,18 @@
-import format from 'date-fns/format'
-import getDay from 'date-fns/getDay'
-import enUS from 'date-fns/locale/en-US'
-import parse from 'date-fns/parse'
-import startOfWeek from 'date-fns/startOfWeek'
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import PendingLoanApprovedModal from '../../components/pendingLoans/PendingLoanApprovedModal'
+import EventCalender from '../../components/utilities/EventCalender'
 import useFetch from '../../hooks/useFetch'
 import BankTransferOut from '../../icons/BankTransferOut'
 import CheckPatch from '../../icons/CheckPatch'
 import Home from '../../icons/Home'
+import tsNumbers from '../../libs/tsNumbers'
 
 export default function PendingLoans() {
   const { t } = useTranslation()
-
-  const locales = {
-    'en-US': enUS
-  }
-
-  const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales
-  })
+  const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false)
+  const [loanData, setLoanData] = useState()
 
   const {
     data: { data: loanAccounts = [] } = [],
@@ -38,18 +26,41 @@ export default function PendingLoans() {
     }
   })
 
-  const events = loanAccounts.map((loan) => ({
-    id: loan.id,
-    start: new Date(loan.start_date),
-    end: new Date(loan.start_date),
-    allDay: true,
-    title: loan.category.is_default
-      ? t(`category.default.${loan.category.name}`)
-      : loan.category.name,
-    resource: 'This is a test description of an event',
-    data: 'you can add what ever random data you may want to use later'
-  }))
-  console.log(events)
+  const events = useMemo(
+    () =>
+      loanAccounts.map((loan) => ({
+        id: loan.id,
+        start: new Date(loan.start_date),
+        end: new Date(loan.start_date),
+        allDay: true,
+        title: loan.category.is_default
+          ? t(`category.default.${loan.category.name}`)
+          : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
+        acc_no: loan.acc_no,
+        name: loan.client_registration.name,
+        field: loan.field.name,
+        center: loan.center.name,
+        category: loan.category.name,
+        start_date: loan.start_date,
+        duration_date: loan.duration_date,
+        loan_given: loan.loan_given,
+        total_installment: loan.payable_installment,
+        payable_deposit: loan.payable_deposit,
+        payable_installment: loan.payable_installment,
+        payable_interest: loan.payable_interest,
+        total_payable_interest: loan.payable_interest,
+        total_payable_loan_with_interest: loan.payable_interest,
+        loan_installment: loan.payable_interest,
+        interest_installment: loan.payable_interest
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [loanAccounts]
+  )
+
+  const viewLoan = (event) => {
+    setLoanData(event)
+    setIsApprovalModalOpen(true)
+  }
 
   return (
     <>
@@ -74,17 +85,26 @@ export default function PendingLoans() {
           </div>
         </div>
         <div>
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            tooltipAccessor={(event) => event.data}
-            titleAccessor={(event) => event.data}
-            onSelectEvent={(event) => console.log(event)}
-            showAllEvents={true}
-            style={{ height: '70vh' }}
-          />
+          <div className="card my-3 mx-auto">
+            <div className="card-header">
+              <b className="text-uppercase">{t('menu.label.pending_loans')}</b>
+            </div>
+            {isApprovalModalOpen && loanData && (
+              <PendingLoanApprovedModal
+                open={isApprovalModalOpen}
+                setOpen={setIsApprovalModalOpen}
+                data={loanData}
+                mutate={mutate}
+              />
+            )}
+            <div className="card-body">
+              <EventCalender
+                events={events}
+                onClick={viewLoan}
+                tooltipAccessor={(event) => `${event.name}  (${tsNumbers(event.acc_no)})`}
+              />
+            </div>
+          </div>
         </div>
       </section>
     </>
