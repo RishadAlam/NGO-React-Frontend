@@ -417,9 +417,14 @@ ul {
   display: none;
 }
 
+.rbc-event-content {
+  white-space: pre-wrap !important;
+}
+
+// .rbc-event,
 .rs-calendar-table-cell-selected .rs-calendar-table-cell-content,
 .rs-btn-primary {
-  background-color: $primary-bg;
+  background-color: $primary-bg !important;
 }
 
 .rs-btn-link {
@@ -437,6 +442,20 @@ ul {
 }
 
 .dark {
+  .rbc-agenda-view table.rbc-agenda-table,
+  .rbc-time-content > * + * > *,
+  .rbc-time-slot,
+  .rbc-timeslot-group,
+  .rbc-timeslot-group,
+  .rbc-time-content,
+  .rbc-time-header-content,
+  .rbc-time-header,
+  .rbc-time-view,
+  .rbc-month-row,
+  .rbc-day-bg,
+  .rbc-month-view,
+  .rbc-btn-group > button,
+  .rbc-header,
   .quill-text-editor .ql-toolbar,
   .quill-text-editor .ql-container,
   .table > :not(caption) > * > *,
@@ -529,6 +548,7 @@ ul {
     -o-border-radius: 1 0px !important;
   }
 
+  .rbc-btn-group *,
   .ql-formats * {
     color: $white-color !important;
     stroke: $white-color !important;
@@ -568,5 +588,23 @@ ul {
     .rs-calendar-table-cell-in-range::before {
       background-color: $main-bg !important;
     }
+  }
+
+  .rbc-off-range-bg {
+    background-color: $soft-bg !important;
+  }
+  .rbc-today {
+    background-color: $primary-soft-bg !important;
+  }
+
+  .rbc-toolbar button:active,
+  .rbc-toolbar button.rbc-active,
+  button.rbc-active,
+  .rbc-toolbar button:hover {
+    background-color: $primary-bg !important;
+  }
+  .rbc-event:focus,
+  .rbc-day-slot .rbc-background-event:focus {
+    outline: none !important;
   }
 }

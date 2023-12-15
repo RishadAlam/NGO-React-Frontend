@@ -34,7 +34,7 @@ export default function PendingLoans() {
         end: new Date(loan.start_date),
         allDay: true,
         title: loan.category.is_default
-          ? t(`category.default.${loan.category.name}`)
+          ? t(`category.default.${loan.category.name}`) + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`
           : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
         acc_no: loan.acc_no,
         name: loan.client_registration.name,
@@ -51,7 +51,8 @@ export default function PendingLoans() {
         total_payable_interest: loan.payable_interest,
         total_payable_loan_with_interest: loan.payable_interest,
         loan_installment: loan.payable_interest,
-        interest_installment: loan.payable_interest
+        interest_installment: loan.payable_interest,
+        is_loan_approved: loan.is_loan_approved
       })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [loanAccounts]

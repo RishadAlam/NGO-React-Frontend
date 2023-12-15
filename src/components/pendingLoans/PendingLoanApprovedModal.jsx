@@ -29,7 +29,10 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
     value: account || null,
     getOptionLabel: (option) =>
       option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setAccount(option),
+    onChange: (e, option) => {
+      setAccount(option)
+      setError({})
+    },
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const onSubmit = (event) => {
@@ -205,30 +208,34 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                     disabled={true}
                   />
                 </div>
-                <div className="col-md-6 mb-3">
-                  <SelectBoxField
-                    label={t('common.account')}
-                    config={accountSelectBoxConfig}
-                    isRequired={true}
-                    error={error?.account}
-                    disabled={loading?.loanApproval}
-                  />
-                  <span className="text-info">
-                    <Info size={15} /> {t('common.deduct_loan_msg')}
-                  </span>
-                </div>
+                {!data?.is_loan_approved && (
+                  <div className="col-md-6 mb-3">
+                    <SelectBoxField
+                      label={t('common.account')}
+                      config={accountSelectBoxConfig}
+                      isRequired={true}
+                      error={error?.account}
+                      disabled={loading?.loanApproval}
+                    />
+                    <span className="text-info">
+                      <Info size={15} /> {t('common.deduct_loan_msg')}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="card-footer text-end">
-              <Button
-                type="submit"
-                name={t('common.approval')}
-                className={'btn-primary py-2 px-3'}
-                loading={loading?.loanApproval || false}
-                endIcon={<Save size={20} />}
-                disabled={loading?.loanApproval || false}
-              />
-            </div>
+            {!data?.is_loan_approved && (
+              <div className="card-footer text-end">
+                <Button
+                  type="submit"
+                  name={t('common.approval')}
+                  className={'btn-primary py-2 px-3'}
+                  loading={loading?.loanApproval || false}
+                  endIcon={<Save size={20} />}
+                  disabled={loading?.loanApproval || false}
+                />
+              </div>
+            )}
           </form>
         </div>
       </ModalPro>
