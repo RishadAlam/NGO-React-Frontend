@@ -5,13 +5,16 @@ import parse from 'date-fns/parse'
 import startOfWeek from 'date-fns/startOfWeek'
 import { memo } from 'react'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import debounce from '../../libs/debounce'
 
 function EventCalender({
   events = [],
   onClick,
   titleAccessor = (e) => e.title,
   tooltipAccessor = (e) => e.title,
-  showAllEvents = true
+  showAllEvents = true,
+  mutate,
+  setDateRange
 }) {
   const lang = document.querySelector('html').lang
   const locales = lang === 'bn' ? { 'bn-BD': bn } : { 'en-US': enUS }
@@ -27,9 +30,7 @@ function EventCalender({
   })
 
   const eventStyleGetter = (event, start, end, isSelected) => {
-    // Add your conditional logic to determine the background color
     const backgroundColor = event?.is_loan_approved ? 'green' : 'red'
-
     const style = {
       backgroundColor,
       borderRadius: '5px',
@@ -44,12 +45,13 @@ function EventCalender({
     }
   }
 
-  const handleNavigate = (date, view) => {
-    // `date` is the new date range start, and `view` is the current calendar view
-    // For example, 'month', 'week', 'day', etc.
-    console.log(date)
-    console.log(view)
-  }
+  const handleNavigate = debounce((date, view) => {
+    if (view === 'month' || view === 'week' || view === 'day') {
+      const dateRange = new Date(date)
+      setDateRange(dateRange.toISOString())
+      mutate()
+    }
+  }, 500)
 
   return (
     <Calendar

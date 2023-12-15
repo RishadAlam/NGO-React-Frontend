@@ -13,6 +13,7 @@ export default function PendingLoans() {
   const { t } = useTranslation()
   const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false)
   const [loanData, setLoanData] = useState()
+  const [dateRange, setDateRange] = useState()
 
   const {
     data: { data: loanAccounts = [] } = [],
@@ -22,7 +23,8 @@ export default function PendingLoans() {
   } = useFetch({
     action: 'client/registration/loan',
     queryParams: {
-      fetch_pending_loans: true
+      fetch_pending_loans: true,
+      date_range: dateRange ? dateRange : ''
     }
   })
 
@@ -103,6 +105,8 @@ export default function PendingLoans() {
                 events={events}
                 onClick={viewLoan}
                 tooltipAccessor={(event) => `${event.name}  (${tsNumbers(event.acc_no)})`}
+                mutate={mutate}
+                setDateRange={setDateRange}
               />
             </div>
           </div>
