@@ -35,6 +35,7 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
     },
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
+
   const onSubmit = (event) => {
     event.preventDefault()
 

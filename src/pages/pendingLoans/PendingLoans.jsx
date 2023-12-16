@@ -29,33 +29,7 @@ export default function PendingLoans() {
   })
 
   const events = useMemo(
-    () =>
-      loanAccounts.map((loan) => ({
-        id: loan.id,
-        start: new Date(loan.start_date),
-        end: new Date(loan.start_date),
-        allDay: true,
-        title: loan.category.is_default
-          ? t(`category.default.${loan.category.name}`) + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`
-          : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
-        acc_no: loan.acc_no,
-        name: loan.client_registration.name,
-        field: loan.field.name,
-        center: loan.center.name,
-        category: loan.category.name,
-        start_date: loan.start_date,
-        duration_date: loan.duration_date,
-        loan_given: loan.loan_given,
-        total_installment: loan.payable_installment,
-        payable_deposit: loan.payable_deposit,
-        payable_installment: loan.payable_installment,
-        payable_interest: loan.payable_interest,
-        total_payable_interest: loan.payable_interest,
-        total_payable_loan_with_interest: loan.payable_interest,
-        loan_installment: loan.payable_interest,
-        interest_installment: loan.payable_interest,
-        is_loan_approved: loan.is_loan_approved
-      })),
+    () => loanAccounts.map((loan) => eventsMap(loan, t)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [loanAccounts]
   )
@@ -107,6 +81,7 @@ export default function PendingLoans() {
                 tooltipAccessor={(event) => `${event.name}  (${tsNumbers(event.acc_no)})`}
                 mutate={mutate}
                 setDateRange={setDateRange}
+                loading={isLoading}
               />
             </div>
           </div>
@@ -115,3 +90,30 @@ export default function PendingLoans() {
     </>
   )
 }
+
+const eventsMap = (loan, t) => ({
+  id: loan.id,
+  start: new Date(loan.start_date),
+  end: new Date(loan.start_date),
+  allDay: true,
+  title: loan.category.is_default
+    ? t(`category.default.${loan.category.name}`) + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`
+    : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
+  acc_no: loan.acc_no,
+  name: loan.client_registration.name,
+  field: loan.field.name,
+  center: loan.center.name,
+  category: loan.category.name,
+  start_date: loan.start_date,
+  duration_date: loan.duration_date,
+  loan_given: loan.loan_given,
+  total_installment: loan.payable_installment,
+  payable_deposit: loan.payable_deposit,
+  payable_installment: loan.payable_installment,
+  payable_interest: loan.payable_interest,
+  total_payable_interest: loan.payable_interest,
+  total_payable_loan_with_interest: loan.payable_interest,
+  loan_installment: loan.payable_interest,
+  interest_installment: loan.payable_interest,
+  is_loan_approved: loan.is_loan_approved
+})
