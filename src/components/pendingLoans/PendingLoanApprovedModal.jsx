@@ -19,10 +19,13 @@ import TextInputField from '../utilities/TextInputField'
 export default function PendingLoanApprovedModal({ open, setOpen, mutate, data = {} }) {
   const { t } = useTranslation()
   const [error, setError] = useState({})
-  const { accessToken } = useAuthDataValue()
   const [account, setAccount] = useState()
   const [loading, setLoading] = useLoadingState({})
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
+  const {
+    accessToken,
+    permissions: { pending_loan_approval }
+  } = useAuthDataValue()
 
   const accountSelectBoxConfig = {
     options: accounts,
@@ -209,7 +212,7 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                     disabled={true}
                   />
                 </div>
-                {!data?.is_loan_approved && (
+                {!data?.is_loan_approved && pending_loan_approval && (
                   <div className="col-md-6 mb-3">
                     <SelectBoxField
                       label={t('common.account')}
@@ -225,7 +228,7 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                 )}
               </div>
             </div>
-            {!data?.is_loan_approved && (
+            {!data?.is_loan_approved && pending_loan_approval && (
               <div className="card-footer text-end">
                 <Button
                   type="submit"

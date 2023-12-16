@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import LoaderSm from '../../components/loaders/LoaderSm'
 import PendingLoanApprovedModal from '../../components/pendingLoans/PendingLoanApprovedModal'
 import EventCalender from '../../components/utilities/EventCalender'
 import useFetch from '../../hooks/useFetch'
@@ -63,8 +64,9 @@ export default function PendingLoans() {
         </div>
         <div>
           <div className="card my-3 mx-auto">
-            <div className="card-header">
-              <b className="text-uppercase">{t('menu.label.pending_loans')}</b>
+            <div className="card-header d-flex align-items-center">
+              <b className="text-uppercase">{t('menu.label.pending_loans')}</b>{' '}
+              {isLoading && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
             </div>
             {isApprovalModalOpen && loanData && (
               <PendingLoanApprovedModal
@@ -81,7 +83,6 @@ export default function PendingLoans() {
                 tooltipAccessor={(event) => `${event.name}  (${tsNumbers(event.acc_no)})`}
                 mutate={mutate}
                 setDateRange={setDateRange}
-                loading={isLoading}
               />
             </div>
           </div>

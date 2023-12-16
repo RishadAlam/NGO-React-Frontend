@@ -6,7 +6,6 @@ import startOfWeek from 'date-fns/startOfWeek'
 import { memo } from 'react'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import debounce from '../../libs/debounce'
-import LoaderSm from '../loaders/LoaderSm'
 
 function EventCalender({
   events = [],
@@ -15,8 +14,7 @@ function EventCalender({
   tooltipAccessor = (e) => e.title,
   showAllEvents = false,
   mutate,
-  setDateRange,
-  loading = false
+  setDateRange
 }) {
   const lang = document.querySelector('html').lang
   const locales = lang === 'bn' ? { 'bn-BD': bn } : { 'en-US': enUS }
@@ -56,24 +54,21 @@ function EventCalender({
   }, 500)
 
   return (
-    <>
-      {loading && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
-      <Calendar
-        culture={culture}
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        tooltipAccessor={tooltipAccessor}
-        titleAccessor={titleAccessor}
-        onSelectEvent={onClick}
-        showAllEvents={showAllEvents}
-        style={{ height: '70vh' }}
-        messages={messages}
-        eventPropGetter={eventStyleGetter}
-        onNavigate={handleNavigate}
-      />
-    </>
+    <Calendar
+      culture={culture}
+      localizer={localizer}
+      events={events}
+      startAccessor="start"
+      endAccessor="end"
+      tooltipAccessor={tooltipAccessor}
+      titleAccessor={titleAccessor}
+      onSelectEvent={onClick}
+      showAllEvents={showAllEvents}
+      style={{ height: '70vh' }}
+      messages={messages}
+      eventPropGetter={eventStyleGetter}
+      onNavigate={handleNavigate}
+    />
   )
 }
 
