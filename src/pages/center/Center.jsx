@@ -48,7 +48,7 @@ export default function Center() {
 
   const statusSwitch = (value, id) => (
     <AndroidSwitch
-      value={value ? true : false}
+      value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={loading?.changeStatus || false}
     />

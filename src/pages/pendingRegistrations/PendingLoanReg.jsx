@@ -124,7 +124,7 @@ export default function PendingLoanReg() {
   const statusSwitch = (value, id) =>
     checkPermission('pending_loan_acc_approval', authPermissions) && (
       <AndroidSwitch
-        value={value ? true : false}
+        value={Number(value) ? true : false}
         toggleStatus={(e) => loanApproved(id, e.target.checked)}
         disabled={loading?.approval || false}
       />

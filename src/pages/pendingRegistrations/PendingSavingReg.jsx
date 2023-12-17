@@ -124,7 +124,7 @@ export default function PendingSavingReg() {
   const statusSwitch = (value, id) =>
     checkPermission('pending_saving_acc_approval', authPermissions) && (
       <AndroidSwitch
-        value={value ? true : false}
+        value={Number(value) ? true : false}
         toggleStatus={(e) => savingApproved(id, e.target.checked)}
         disabled={loading?.approval || false}
       />

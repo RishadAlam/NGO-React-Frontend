@@ -42,7 +42,7 @@ export default function IncomeCategories() {
 
   const statusSwitch = (value, id) => (
     <AndroidSwitch
-      value={value ? true : false}
+      value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
   )

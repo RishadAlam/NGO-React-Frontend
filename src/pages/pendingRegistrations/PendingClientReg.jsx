@@ -15,7 +15,6 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
-import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -46,14 +45,13 @@ export default function PendingClientReg() {
   } = useFetch({ action: 'client/registration', queryParams: { fetch_pending: true } })
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value, id) =>
-    checkPermission('pending_client_registration_approval', authPermissions) && (
-      <AndroidSwitch
-        value={value ? true : false}
-        toggleStatus={(e) => toggleStatus(id, e.target.checked)}
-        disabled={loading?.approval || false}
-      />
-    )
+  const statusSwitch = (value, id) => (
+    <AndroidSwitch
+      value={Number(value) ? true : false}
+      toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      disabled={loading?.approval || false}
+    />
+  )
   const toggleStatus = (id) => {
     clientRegApprovalAlert(t).then((result) => {
       if (result.isConfirmed) {
@@ -79,24 +77,21 @@ export default function PendingClientReg() {
   }
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
-      {checkPermissions(
-        ['pending_client_registration_list_view', 'pending_client_registration_list_view_as_admin'],
-        authPermissions
-      ) && (
+      {authPermissions.includes('pending_client_registration_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton className="text-primary" onClick={() => viewClientProfile(profile)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {checkPermission('pending_client_registration_update', authPermissions) && (
+      {authPermissions.includes('pending_client_registration_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => clientProfileEdit(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {checkPermission('pending_client_registration_permanently_delete', authPermissions) && (
+      {authPermissions.includes('pending_client_registration_permanently_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => clientProfileDelete(id)}>
             {<Trash size={20} />}
@@ -107,24 +102,7 @@ export default function PendingClientReg() {
   )
 
   const columns = useMemo(
-    () =>
-      PendingClientRegTableColumns(
-        t,
-        windowWidth,
-        avatar,
-        statusSwitch,
-        actionBtnGroup,
-        !checkPermission('pending_client_registration_approval', authPermissions),
-        !checkPermissions(
-          [
-            'pending_client_registration_list_view',
-            'pending_client_registration_list_view_as_admin',
-            'pending_client_registration_update',
-            'pending_client_registration_permanently_delete'
-          ],
-          authPermissions
-        )
-      ),
+    () => PendingClientRegTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth, loading]
   )
