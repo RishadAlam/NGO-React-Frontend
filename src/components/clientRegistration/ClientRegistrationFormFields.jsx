@@ -46,7 +46,7 @@ function ClientRegistrationFormFields({
   }
   const centerConfig = {
     options: centers?.length
-      ? centers.filter((center) => center?.field_id === clientData.field_id)
+      ? centers.filter((center) => Number(center?.field_id) === Number(clientData.field_id))
       : [],
     value: clientData?.center || null,
     getOptionLabel: (option) => option.name,

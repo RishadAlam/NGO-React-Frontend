@@ -95,7 +95,7 @@ export default function PendingLoanReg() {
   }
   const centerConfig = {
     options: centers?.length
-      ? centers.filter((center) => center?.field_id === selectedField?.id || '')
+      ? centers.filter((center) => Number(center?.field_id) === Number(selectedField?.id) || '')
       : [],
     value: selectedCenter || null,
     getOptionLabel: (option) => option.name,

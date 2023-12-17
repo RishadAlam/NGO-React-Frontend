@@ -66,7 +66,7 @@ function LoanAccRegFormFields({
   }
   const centerConfig = {
     options: centers?.length
-      ? centers.filter((center) => center?.field_id === formData.field_id)
+      ? centers.filter((center) => Number(center?.field_id) === Number(formData.field_id))
       : [],
     value: formData?.center || null,
     getOptionLabel: (option) => option.name,
