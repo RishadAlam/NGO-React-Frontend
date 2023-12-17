@@ -18,7 +18,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
     setOtp(val)
     setError((prevError) =>
       create(prevError, (draftErrors) => {
-        draftErrors?.message ? delete draftErrors.message : ''
+        delete draftErrors?.message
         val === '' ? (draftErrors.otp = 'OTP is required!') : delete draftErrors.otp
         if (val !== '') {
           val.length !== 6 ? (draftErrors.otp = 'OTP is invalid!') : delete draftErrors.otp

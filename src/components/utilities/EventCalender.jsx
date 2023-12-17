@@ -12,7 +12,7 @@ function EventCalender({
   onClick,
   titleAccessor = (e) => e.title,
   tooltipAccessor = (e) => e.title,
-  showAllEvents = false,
+  showAllEvents = true,
   mutate,
   setDateRange
 }) {
