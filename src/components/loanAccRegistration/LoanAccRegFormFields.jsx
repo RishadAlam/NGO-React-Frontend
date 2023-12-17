@@ -40,7 +40,7 @@ function LoanAccRegFormFields({
   })
 
   const creatorConfig = {
-    options: permissions?.loan_acc_creator_selection
+    options: !permissions.includes('loan_acc_creator_selection')
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: formData?.creator || null,

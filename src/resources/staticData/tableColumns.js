@@ -855,7 +855,9 @@ export const PendingClientRegTableColumns = (
   windowWidth,
   avatar,
   statusSwitch,
-  actionBtnGroup
+  actionBtnGroup,
+  isApprovalHide,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -902,12 +904,17 @@ export const PendingClientRegTableColumns = (
   {
     Header: t('common.approval'),
     accessor: 'is_approved',
+    show: isApprovalHide ? false : true,
+    disable: isApprovalHide,
+    isActionHide: isApprovalHide,
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
@@ -917,7 +924,9 @@ export const PendingSavingRegTableColumns = (
   windowWidth,
   avatar,
   statusSwitch,
-  actionBtnGroup
+  actionBtnGroup,
+  isApprovalHide,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -1028,12 +1037,17 @@ export const PendingSavingRegTableColumns = (
   {
     Header: t('common.approval'),
     accessor: 'is_approved',
+    show: isApprovalHide ? false : true,
+    disable: isApprovalHide,
+    isActionHide: isApprovalHide,
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
@@ -1043,7 +1057,9 @@ export const PendingLoanRegTableColumns = (
   windowWidth,
   avatar,
   statusSwitch,
-  actionBtnGroup
+  actionBtnGroup,
+  isApprovalHide,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -1171,12 +1187,17 @@ export const PendingLoanRegTableColumns = (
   {
     Header: t('common.approval'),
     accessor: 'is_approved',
+    show: isApprovalHide ? false : true,
+    disable: isApprovalHide,
+    isActionHide: isApprovalHide,
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]

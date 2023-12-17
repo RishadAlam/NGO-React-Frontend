@@ -40,7 +40,7 @@ function SavingAccRegFormFields({
   })
 
   const creatorConfig = {
-    options: permissions?.saving_acc_creator_selection
+    options: !permissions.includes('saving_acc_creator_selection')
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: formData?.creator || null,

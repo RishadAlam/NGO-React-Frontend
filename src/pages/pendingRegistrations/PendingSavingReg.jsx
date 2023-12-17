@@ -17,6 +17,7 @@ import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setSavingFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
+import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -40,7 +41,7 @@ export default function PendingSavingReg() {
   const [selectedCreator, setSelectedCreator] = useState()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const { id, accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -110,7 +111,9 @@ export default function PendingSavingReg() {
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const creatorConfig = {
-    options: creators,
+    options: !checkPermission('pending_saving_acc_list_view_as_admin', authPermissions)
+      ? creators.filter((creator) => creator?.id === id)
+      : creators,
     value: selectedCreator || null,
     getOptionLabel: (option) => option.name,
     onChange: (e, option) => setParamsState(option, 'creator'),
@@ -118,13 +121,14 @@ export default function PendingSavingReg() {
   }
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value, id) => (
-    <AndroidSwitch
-      value={value ? true : false}
-      toggleStatus={(e) => savingApproved(id, e.target.checked)}
-      disabled={loading?.approval || false}
-    />
-  )
+  const statusSwitch = (value, id) =>
+    checkPermission('pending_saving_acc_approval', authPermissions) && (
+      <AndroidSwitch
+        value={value ? true : false}
+        toggleStatus={(e) => savingApproved(id, e.target.checked)}
+        disabled={loading?.approval || false}
+      />
+    )
   const savingApproved = (id) => {
     clientRegApprovalAlert(t).then((result) => {
       if (result.isConfirmed) {
@@ -150,21 +154,24 @@ export default function PendingSavingReg() {
   }
   const actionBtnGroup = (id, account) => (
     <ActionBtnGroup>
-      {authPermissions.includes('pending_saving_acc_list_view') && (
+      {checkPermissions(
+        ['pending_saving_acc_list_view', 'pending_saving_acc_list_view_as_admin'],
+        authPermissions
+      ) && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton className="text-primary" onClick={() => viewSavingAccount(account)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_saving_acc_update') && (
+      {checkPermission('pending_saving_acc_update', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => savingAccountEdit(account)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_saving_acc_permanently_delete') && (
+      {checkPermission('pending_saving_acc_permanently_delete', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => savingAccountDelete(id)}>
             {<Trash size={20} />}
@@ -175,7 +182,24 @@ export default function PendingSavingReg() {
   )
 
   const columns = useMemo(
-    () => PendingSavingRegTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
+    () =>
+      PendingSavingRegTableColumns(
+        t,
+        windowWidth,
+        avatar,
+        statusSwitch,
+        actionBtnGroup,
+        !checkPermission('pending_saving_acc_approval', authPermissions),
+        !checkPermissions(
+          [
+            'pending_saving_acc_list_view',
+            'pending_saving_acc_list_view_as_admin',
+            'pending_saving_acc_update',
+            'pending_saving_acc_permanently_delete'
+          ],
+          authPermissions
+        )
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth, loading]
   )

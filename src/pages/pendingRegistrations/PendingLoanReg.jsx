@@ -17,6 +17,7 @@ import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setLoanAccFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
+import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -40,7 +41,7 @@ export default function PendingLoanReg() {
   const [selectedCreator, setSelectedCreator] = useState()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const { id, accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -110,7 +111,9 @@ export default function PendingLoanReg() {
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const creatorConfig = {
-    options: creators,
+    options: !checkPermission('pending_loan_acc_list_view_as_admin', authPermissions)
+      ? creators.filter((creator) => creator?.id === id)
+      : creators,
     value: selectedCreator || null,
     getOptionLabel: (option) => option.name,
     onChange: (e, option) => setParamsState(option, 'creator'),
@@ -118,13 +121,15 @@ export default function PendingLoanReg() {
   }
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value, id) => (
-    <AndroidSwitch
-      value={value ? true : false}
-      toggleStatus={(e) => loanApproved(id, e.target.checked)}
-      disabled={loading?.approval || false}
-    />
-  )
+  const statusSwitch = (value, id) =>
+    checkPermission('pending_loan_acc_approval', authPermissions) && (
+      <AndroidSwitch
+        value={value ? true : false}
+        toggleStatus={(e) => loanApproved(id, e.target.checked)}
+        disabled={loading?.approval || false}
+      />
+    )
+
   const loanApproved = (id) => {
     clientRegApprovalAlert(t).then((result) => {
       if (result.isConfirmed) {
@@ -150,21 +155,24 @@ export default function PendingLoanReg() {
   }
   const actionBtnGroup = (id, account) => (
     <ActionBtnGroup>
-      {authPermissions.includes('pending_loan_acc_list_view') && (
+      {checkPermissions(
+        ['pending_loan_acc_list_view', 'pending_loan_acc_list_view_as_admin'],
+        authPermissions
+      ) && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton className="text-primary" onClick={() => viewLoanAccount(account)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_loan_acc_update') && (
+      {checkPermission('pending_loan_acc_update', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => loanAccountEdit(account)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_loan_acc_permanently_delete') && (
+      {checkPermission('pending_loan_acc_permanently_delete', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => loanAccountDelete(id)}>
             {<Trash size={20} />}
@@ -175,7 +183,24 @@ export default function PendingLoanReg() {
   )
 
   const columns = useMemo(
-    () => PendingLoanRegTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
+    () =>
+      PendingLoanRegTableColumns(
+        t,
+        windowWidth,
+        avatar,
+        statusSwitch,
+        actionBtnGroup,
+        !checkPermission('pending_loan_acc_approval', authPermissions),
+        !checkPermissions(
+          [
+            'pending_loan_acc_list_view',
+            'pending_loan_acc_list_view_as_admin',
+            'pending_loan_acc_update',
+            'pending_loan_acc_permanently_delete'
+          ],
+          authPermissions
+        )
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth, loading]
   )
