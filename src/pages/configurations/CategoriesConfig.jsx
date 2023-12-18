@@ -30,41 +30,41 @@ export default function CategoriesConfig() {
     categories.length && setAllConfigurations(categories)
   }, [categories])
 
-  const setChange = (val, name, index) => {
-    setAllConfigurations((prevConfig) =>
-      create(prevConfig, (draftConfig) => {
-        if (
-          name === 's_reg_fee_acc_id' ||
-          name === 's_col_fee_acc_id' ||
-          name === 'l_reg_fee_acc_id' ||
-          name === 'l_col_fee_acc_id' ||
-          name === 's_with_fee_acc_id' ||
-          name === 'ls_with_fee_acc_id'
-        ) {
-          const tmp = `${name.slice(0, name.indexOf('acc_id'))}account`
-          draftConfig[index][tmp] = val
-          draftConfig[index][name] = val?.id || 0
-          return
-        }
+  // const setChange = (val, name, index) => {
+  //   setAllConfigurations((prevConfig) =>
+  //     create(prevConfig, (draftConfig) => {
+  //       if (
+  //         name === 's_reg_fee_acc_id' ||
+  //         name === 's_col_fee_acc_id' ||
+  //         name === 'l_reg_fee_acc_id' ||
+  //         name === 'l_col_fee_acc_id' ||
+  //         name === 's_with_fee_acc_id' ||
+  //         name === 'ls_with_fee_acc_id'
+  //       ) {
+  //         const tmp = `${name.slice(0, name.indexOf('acc_id'))}account`
+  //         draftConfig[index][tmp] = val
+  //         draftConfig[index][name] = val?.id || 0
+  //         return
+  //       }
 
-        if ((val !== '' && Number(val) === 0) || val === false || val.length > 8) {
-          val = 0
-        }
+  //       if ((val !== '' && Number(val) === 0) || val === false || val.length > 8) {
+  //         val = 0
+  //       }
 
-        draftConfig[index][name] = val
-      })
-    )
+  //       draftConfig[index][name] = val
+  //     })
+  //   )
 
-    setError((prevErr) =>
-      create(prevErr, (draftErr) => {
-        if (val === '') {
-          draftErr[name] = true
-        } else {
-          delete draftErr[name]
-        }
-      })
-    )
-  }
+  //   setError((prevErr) =>
+  //     create(prevErr, (draftErr) => {
+  //       if (val === '') {
+  //         draftErr[name] = true
+  //       } else {
+  //         delete draftErr[name]
+  //       }
+  //     })
+  //   )
+  // }
 
   const updateConfig = (event) => {
     event.preventDefault()
@@ -133,8 +133,9 @@ export default function CategoriesConfig() {
         ) : (
           <CategoryConfig
             allConfigurations={allConfigurations}
+            setAllConfigurations={setAllConfigurations}
             error={error}
-            setChange={setChange}
+            setError={setError}
             update={updateConfig}
             loading={loading?.CategoriesConfig || false}
           />

@@ -1,84 +1,46 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { getFilteredAccount } from '../../helper/getFilteredAccount'
+import { isEmptyArray } from '../../helper/isEmptyObject'
 import InputFieldSetup from '../_helper/InputFieldSetup'
 import AndroidSwitch from '../utilities/AndroidSwitch'
 import SelectBoxField from '../utilities/SelectBoxField'
 
-export default function CategoryConfigRow({ config, index, accounts, setChange, loading, error }) {
+function CategoryConfigRow({ config, index, accounts, setChange, loading, error }) {
   const { t } = useTranslation()
 
-  if (!config?.s_reg_fee_account) {
-    config['s_reg_fee_account'] =
-      accounts?.filter((account) => account.id === config.s_reg_fee_acc_id)[0] || null
-  }
-  if (!config?.s_col_fee_account) {
-    config['s_col_fee_account'] =
-      accounts?.filter((account) => account.id === config.s_col_fee_acc_id)[0] || null
-  }
-  if (!config?.l_reg_fee_account) {
-    config['l_reg_fee_account'] =
-      accounts?.filter((account) => account.id === config.l_reg_fee_acc_id)[0] || null
-  }
-  if (!config?.l_col_fee_account) {
-    config['l_col_fee_account'] =
-      accounts?.filter((account) => account.id === config.l_col_fee_acc_id)[0] || null
-  }
-  if (!config?.s_with_fee_account) {
-    config['s_with_fee_account'] =
-      accounts?.filter((account) => account.id === config.s_with_fee_acc_id)[0] || null
-  }
-  if (!config?.ls_with_fee_account) {
-    config['ls_with_fee_account'] =
-      accounts?.filter((account) => account.id === config.ls_with_fee_acc_id)[0] || null
+  // Define select box configurations
+  const selectBoxConfig = (key, accIdKey) => ({
+    options: accounts,
+    value: config[key],
+    getOptionLabel: (option) =>
+      option.is_default ? t(`account.default.${option.name}`) : option.name,
+    onChange: (e, option) => setChange(option, accIdKey, index),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  })
+
+  // Update the config properties if they are empty arrays
+  const updateConfigIfEmpty = (key, accIdKey) => {
+    if (isEmptyArray(config[key] || [])) {
+      config[key] = getFilteredAccount(accounts, config[accIdKey]) || null
+    }
   }
 
-  const s_reg_fee_select_box_config = {
-    options: accounts,
-    value: config.s_reg_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 's_reg_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const s_col_fee_select_box_config = {
-    options: accounts,
-    value: config.s_col_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 's_col_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const l_reg_fee_select_box_config = {
-    options: accounts,
-    value: config.l_reg_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'l_reg_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const l_col_fee_select_box_config = {
-    options: accounts,
-    value: config.l_col_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'l_col_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const s_with_fee_select_box_config = {
-    options: accounts,
-    value: config.s_with_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 's_with_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
-  const ls_with_fee_select_box_config = {
-    options: accounts,
-    value: config.ls_with_fee_account,
-    getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
-    onChange: (e, option) => setChange(option, 'ls_with_fee_acc_id', index),
-    isOptionEqualToValue: (option, value) => option.id === value.id
-  }
+  // Update the configuration properties
+  updateConfigIfEmpty('s_reg_fee_account', 's_reg_fee_acc_id')
+  updateConfigIfEmpty('s_col_fee_account', 's_col_fee_acc_id')
+  updateConfigIfEmpty('l_reg_fee_account', 'l_reg_fee_acc_id')
+  updateConfigIfEmpty('l_col_fee_account', 'l_col_fee_acc_id')
+  updateConfigIfEmpty('s_with_fee_account', 's_with_fee_acc_id')
+  updateConfigIfEmpty('ls_with_fee_account', 'ls_with_fee_acc_id')
+
+  // Define select box configurations using the helper function
+  const s_reg_fee_select_box_config = selectBoxConfig('s_reg_fee_account', 's_reg_fee_acc_id')
+  const s_col_fee_select_box_config = selectBoxConfig('s_col_fee_account', 's_col_fee_acc_id')
+  const l_reg_fee_select_box_config = selectBoxConfig('l_reg_fee_account', 'l_reg_fee_acc_id')
+  const l_col_fee_select_box_config = selectBoxConfig('l_col_fee_account', 'l_col_fee_acc_id')
+  const s_with_fee_select_box_config = selectBoxConfig('s_with_fee_account', 's_with_fee_acc_id')
+  const ls_with_fee_select_box_config = selectBoxConfig('ls_with_fee_account', 'ls_with_fee_acc_id')
 
   return (
     <tr>
@@ -279,3 +241,5 @@ export default function CategoryConfigRow({ config, index, accounts, setChange, 
     </tr>
   )
 }
+
+export default memo(CategoryConfigRow)
