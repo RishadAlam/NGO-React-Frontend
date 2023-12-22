@@ -106,7 +106,7 @@ export default function PendingSavingReg() {
     options: categories,
     value: selectedCategory || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`category.default.${option.name}`) : option.name,
+      Number(option.is_default) ? t(`category.default.${option.name}`) : option.name,
     onChange: (e, option) => setParamsState(option, 'category'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

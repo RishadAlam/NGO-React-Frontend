@@ -90,7 +90,7 @@ export default function Category() {
     <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: value }}></div>
   )
   const savingLoanStatus = (value) =>
-    value ? (
+    Number(value) ? (
       <span className="text-success">
         <CheckCircle />
       </span>
@@ -144,8 +144,8 @@ export default function Category() {
       name: category?.name,
       group: category?.group,
       description: category?.description,
-      saving: category?.saving ? true : false,
-      loan: category?.loan ? true : false
+      saving: Number(category?.saving) ? true : false,
+      loan: Number(category?.loan) ? true : false
     })
     setIsCategoryUpdateModalOpen(true)
   }

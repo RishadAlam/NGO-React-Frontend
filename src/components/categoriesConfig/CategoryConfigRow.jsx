@@ -14,7 +14,7 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
     options: accounts,
     value: config[key],
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      Number(option.is_default) ? t(`account.default.${option.name}`) : option.name,
     onChange: (e, option) => setChange(option, accIdKey, index),
     isOptionEqualToValue: (option, value) => option.id === value.id
   })
@@ -46,7 +46,7 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
     <tr>
       <td>{index + 1}</td>
       <td>
-        {config?.category?.is_default
+        {Number(config?.category?.is_default)
           ? t(`category.default.${config?.category?.name}`)
           : config?.category?.name}
       </td>
