@@ -97,7 +97,7 @@ const eventsMap = (loan, t) => ({
   start: new Date(loan.start_date),
   end: new Date(loan.start_date),
   allDay: true,
-  title: loan.category.is_default
+  title: Number(loan.category.is_default)
     ? t(`category.default.${loan.category.name}`) + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`
     : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
   acc_no: loan.acc_no,

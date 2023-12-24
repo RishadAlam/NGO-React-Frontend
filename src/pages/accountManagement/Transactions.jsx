@@ -7,6 +7,7 @@ import Badge from '../../components/utilities/Badge'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Dollar from '../../icons/Dollar'
 import Home from '../../icons/Home'
@@ -35,7 +36,7 @@ export default function Transactions() {
     options: accounts,
     value: selectedAcc || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setSelectAccount(option),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

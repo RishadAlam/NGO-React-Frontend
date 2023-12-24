@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -30,7 +31,7 @@ export default function IncomeCategoriesFormModal({
     options: accounts,
     value: defaultValues?.account || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setChange(option, 'account_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
@@ -39,7 +40,7 @@ export default function IncomeCategoriesFormModal({
     options: categories,
     value: defaultValues?.category || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`income_categories.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'income_categories.default.', option.name),
     onChange: (e, option) => setChange(option, 'income_category_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

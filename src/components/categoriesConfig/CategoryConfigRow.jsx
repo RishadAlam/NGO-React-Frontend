@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { getFilteredAccount } from '../../helper/getFilteredAccount'
 import { isEmptyArray } from '../../helper/isEmptyObject'
 import InputFieldSetup from '../_helper/InputFieldSetup'
@@ -14,7 +15,7 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
     options: accounts,
     value: config[key],
     getOptionLabel: (option) =>
-      Number(option.is_default) ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setChange(option, accIdKey, index),
     isOptionEqualToValue: (option, value) => option.id === value.id
   })
@@ -46,9 +47,12 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
     <tr>
       <td>{index + 1}</td>
       <td>
-        {Number(config?.category?.is_default)
-          ? t(`category.default.${config?.category?.name}`)
-          : config?.category?.name}
+        {defaultNameCheck(
+          t,
+          config?.category?.is_default,
+          'category.default.',
+          config?.category?.name
+        )}
       </td>
       <td>
         <InputFieldSetup

@@ -18,6 +18,7 @@ import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setSavingFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -106,7 +107,7 @@ export default function PendingSavingReg() {
     options: categories,
     value: selectedCategory || null,
     getOptionLabel: (option) =>
-      Number(option.is_default) ? t(`category.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'category.default.', option.name),
     onChange: (e, option) => setParamsState(option, 'category'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

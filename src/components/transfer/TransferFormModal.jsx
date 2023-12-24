@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -27,7 +28,7 @@ export default function TransferFormModal({
     options: accounts,
     value: defaultValues?.tx_account || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setChange(option, 'tx_acc_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
@@ -37,7 +38,7 @@ export default function TransferFormModal({
       : accounts,
     value: defaultValues?.rx_account || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setChange(option, 'rx_acc_id'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

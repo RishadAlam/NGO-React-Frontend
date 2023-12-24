@@ -1,3 +1,4 @@
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -24,7 +25,7 @@ export default function StaffFormModal({
     roles &&
     roles?.map((role) => ({
       value: role.id,
-      label: role.is_default ? t(`staff_roles.default.${role.name}`) : role.name
+      label: defaultNameCheck(t, role.is_default, 'staff_roles.default.', role.name)
     }))
 
   return (

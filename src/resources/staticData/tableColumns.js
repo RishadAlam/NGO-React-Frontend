@@ -1,3 +1,4 @@
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 
@@ -186,7 +187,7 @@ export const CategoryTableColumns = (
     Header: t('common.name'),
     accessor: 'name',
     Cell: ({ row, value }) =>
-      Number(row.original.is_default) ? t(`category.default.${value}`) : value
+      defaultNameCheck(t, row.original.is_default, 'category.default.', value)
   },
   { Header: t('common.group'), accessor: 'group' },
   {
@@ -266,7 +267,7 @@ export const StaffTableColumns = (
     Header: t('common.role'),
     accessor: 'role_name',
     Cell: ({ row, value }) =>
-      row.original.role_is_default ? t(`staff_roles.default.${value}`) : value
+      defaultNameCheck(t, row.original.role_is_default, 'staff_roles.default.', value)
   },
   { Header: t('common.phone'), accessor: 'phone', show: windowWidth < 576 ? false : true },
   {
@@ -301,7 +302,7 @@ export const RolesTableColumns = (t, windowWidth, actionBtnGroup) => [
     Header: t('common.role'),
     accessor: 'name',
     Cell: ({ row, value }) =>
-      Number(row.original.is_default) ? t(`staff_roles.default.${value}`) : value
+      defaultNameCheck(t, row.original.is_default, 'staff_roles.default.', value)
   },
   {
     Header: t('common.action'),
@@ -330,9 +331,7 @@ export const AccountTableColumns = (
     accessor: 'Account_Info',
     Cell: ({ row }) =>
       accInfo(
-        Number(row.original.is_default)
-          ? t(`account.default.${row.original.name}`)
-          : row.original.name,
+        defaultNameCheck(t, row.original.is_default, 'account.default.', row.original.name),
         tsNumbers(row.original.acc_no),
         row.original.acc_details
       )
@@ -405,7 +404,7 @@ export const IncomeCategoriesTableColumns = (
     Header: t('common.name'),
     accessor: 'name',
     Cell: ({ row, value }) =>
-      Number(row.original.is_default) ? t(`income_categories.default.${value}`) : value
+      defaultNameCheck(t, row.original.is_default, 'income_categories.default.', value)
   },
   {
     Header: t('common.description'),
@@ -463,7 +462,7 @@ export const ExpenseCategoriesTableColumns = (
     Header: t('common.name'),
     accessor: 'name',
     Cell: ({ row, value }) =>
-      Number(row.original.is_default) ? t(`expense_categories.default.${value}`) : value
+      defaultNameCheck(t, row.original.is_default, 'expense_categories.default.', value)
   },
   {
     Header: t('common.description'),
@@ -520,18 +519,14 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Header: t('common.account'),
     accessor: 'account',
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: t('common.category'),
     accessor: 'income_category',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
-      value
-        ? Number(value.is_default)
-          ? t(`income_categories.default.${value.name}`)
-          : value.name
-        : ''
+      value ? defaultNameCheck(t, value.is_default, 'category.default.', value.name) : ''
   },
   {
     Header: t('common.description'),
@@ -599,18 +594,14 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Header: t('common.account'),
     accessor: 'account',
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: t('common.category'),
     accessor: 'expense_category',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
-      value
-        ? Number(value.is_default)
-          ? t(`expense_categories.default.${value.name}`)
-          : value.name
-        : ''
+      value ? defaultNameCheck(t, value.is_default, 'category.default.', value.name) : ''
   },
   {
     Header: t('common.description'),
@@ -678,7 +669,7 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
     Header: t('common.account'),
     accessor: 'account',
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: t('common.description'),
@@ -746,14 +737,14 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
     Header: t('common.account'),
     accessor: 'account',
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: `${t('common.transaction')} ${t('common.account')}`,
     accessor: 'transaction_account',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: t('common.type'),
@@ -818,7 +809,7 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
     Header: t('common.account'),
     accessor: 'account',
     Cell: ({ value }) =>
-      value ? (Number(value.is_default) ? t(`account.default.${value.name}`) : value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
   },
   {
     Header: t('common.type'),
@@ -983,8 +974,7 @@ export const PendingSavingRegTableColumns = (
   {
     Header: t('common.category'),
     accessor: 'category',
-    Cell: ({ value }) =>
-      Number(value.is_default) ? t(`category.default.${value.name}`) : value.name
+    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
     Header: t('common.deposit'),
@@ -1117,8 +1107,7 @@ export const PendingLoanRegTableColumns = (
   {
     Header: t('common.category'),
     accessor: 'category',
-    Cell: ({ value }) =>
-      Number(value.is_default) ? t(`category.default.${value.name}`) : value.name
+    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
     Header: t('common.deposit'),

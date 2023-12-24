@@ -2,6 +2,7 @@ import { create } from 'mutative'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
@@ -59,7 +60,7 @@ function LoanAccRegFormFields({
     options: categories.sort((a, b) => (a.group > b.group ? 1 : -1)),
     value: formData?.category || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`category.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'category.default.', option.name),
     onChange: (e, option) => setChange(option, 'category_id'),
     groupBy: (option) => option.group,
     isOptionEqualToValue: (option, value) => option.id === value.id

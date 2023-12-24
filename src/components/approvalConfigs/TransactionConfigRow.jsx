@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import InputFieldSetup from '../_helper/InputFieldSetup'
 import SelectBoxField from '../utilities/SelectBoxField'
 
@@ -21,7 +22,7 @@ export default function TransactionConfigRow({
     options: accounts,
     value: config[data_key]?.account,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => setChange(option, 'fee_store_acc_id', data_key),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }

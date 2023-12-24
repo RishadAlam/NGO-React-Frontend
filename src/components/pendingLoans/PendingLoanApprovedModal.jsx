@@ -15,6 +15,7 @@ import DatePickerInputField from '../utilities/DatePickerInputField'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 
 export default function PendingLoanApprovedModal({ open, setOpen, mutate, data = {} }) {
   const { t } = useTranslation()
@@ -28,7 +29,7 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
     options: accounts,
     value: account || null,
     getOptionLabel: (option) =>
-      option.is_default ? t(`account.default.${option.name}`) : option.name,
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
     onChange: (e, option) => {
       setAccount(option)
       setError({})
