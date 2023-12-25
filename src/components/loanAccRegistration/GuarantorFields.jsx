@@ -48,7 +48,6 @@ export default function GuarantorFields({
     action: 'client/registration/loan/guarantor/relations'
   })
   const setStateObj = (option, name) => {
-    const address = option?.present_address ? JSON.parse(option?.present_address) : {}
     switch (name) {
       case 'field':
         setSelectedField(option)
@@ -91,13 +90,13 @@ export default function GuarantorFields({
             draftData.guarantors[i].secondary_phone = option?.secondary_phone
             draftData.guarantors[i].image_uri = option?.image_uri
             draftData.guarantors[i].signature_uri = option?.signature_uri
-            draftData.guarantors[i].address.street_address = address?.street_address
-            draftData.guarantors[i].address.city = address?.city
-            draftData.guarantors[i].address.word_no = address?.word_no
-            draftData.guarantors[i].address.post_office = address?.post_office
-            draftData.guarantors[i].address.police_station = address?.police_station
-            draftData.guarantors[i].address.district = address?.district
-            draftData.guarantors[i].address.division = address?.division
+            draftData.guarantors[i].address.street_address = option?.present_address?.street_address
+            draftData.guarantors[i].address.city = option?.present_address?.city
+            draftData.guarantors[i].address.word_no = option?.present_address?.word_no
+            draftData.guarantors[i].address.post_office = option?.present_address?.post_office
+            draftData.guarantors[i].address.police_station = option?.present_address?.police_station
+            draftData.guarantors[i].address.district = option?.present_address?.district
+            draftData.guarantors[i].address.division = option?.present_address?.division
           })
         )
         option?.image_uri && setImageUri(option?.image_uri)

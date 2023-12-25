@@ -50,7 +50,6 @@ export default function NomineeFields({
   })
 
   const setStateObj = (option, name) => {
-    const address = option?.present_address ? JSON.parse(option?.present_address) : {}
     switch (name) {
       case 'field':
         setSelectedField(option)
@@ -93,13 +92,13 @@ export default function NomineeFields({
             draftData.nominees[i].secondary_phone = option?.secondary_phone
             draftData.nominees[i].image_uri = option?.image_uri
             draftData.nominees[i].signature_uri = option?.signature_uri
-            draftData.nominees[i].address.street_address = address?.street_address
-            draftData.nominees[i].address.city = address?.city
-            draftData.nominees[i].address.word_no = address?.word_no
-            draftData.nominees[i].address.post_office = address?.post_office
-            draftData.nominees[i].address.police_station = address?.police_station
-            draftData.nominees[i].address.district = address?.district
-            draftData.nominees[i].address.division = address?.division
+            draftData.nominees[i].address.street_address = option?.present_address?.street_address
+            draftData.nominees[i].address.city = option?.present_address?.city
+            draftData.nominees[i].address.word_no = option?.present_address?.word_no
+            draftData.nominees[i].address.post_office = option?.present_address?.post_office
+            draftData.nominees[i].address.police_station = option?.present_address?.police_station
+            draftData.nominees[i].address.district = option?.present_address?.district
+            draftData.nominees[i].address.division = option?.present_address?.division
           })
         )
         option?.image_uri && setImageUri(option?.image_uri)
