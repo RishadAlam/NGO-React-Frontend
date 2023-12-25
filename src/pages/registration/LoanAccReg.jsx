@@ -183,8 +183,7 @@ const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
         'occupation',
         'relation',
         'gender',
-        'primary_phone',
-        'image'
+        'primary_phone'
       ]) {
         if (isEmpty(guarantor[guarantorField])) {
           guarantorErrors[guarantorField] = `${t(`common.${guarantorField}`)} ${t(
@@ -193,7 +192,15 @@ const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
         }
       }
 
-      if (guarantor_reg_sign_is_required && isEmpty(guarantor['signature'])) {
+      if (isEmpty(guarantor['image']) && isEmpty(guarantor['image_uri'])) {
+        guarantorErrors['image'] = `${t('common.image')} ${t('common_validation.is_required')}`
+      }
+
+      if (
+        guarantor_reg_sign_is_required &&
+        isEmpty(guarantor['signature']) &&
+        isEmpty(guarantor['signature_uri'])
+      ) {
         guarantorErrors['signature'] = `${t('common.signature')} ${t(
           'common_validation.is_required'
         )}`

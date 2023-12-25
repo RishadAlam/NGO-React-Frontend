@@ -226,6 +226,8 @@ function SavingAccRegFormFields({
       <Nominees
         formData={formData}
         setFormData={setFormData}
+        fields={fields}
+        centers={centers}
         errors={errors}
         setErrors={setErrors}
         disabled={disabled}

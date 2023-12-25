@@ -158,8 +158,7 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
         'occupation',
         'relation',
         'gender',
-        'primary_phone',
-        'image'
+        'primary_phone'
       ]) {
         if (isEmpty(nominee[nomineeField])) {
           nomineeErrors[nomineeField] = `${t(`common.${nomineeField}`)} ${t(
@@ -168,7 +167,15 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
         }
       }
 
-      if (nominee_reg_sign_is_required && isEmpty(nominee['signature'])) {
+      if (isEmpty(nominee['image']) && isEmpty(nominee['image_uri'])) {
+        nomineeErrors['image'] = `${t('common.image')} ${t('common_validation.is_required')}`
+      }
+
+      if (
+        nominee_reg_sign_is_required &&
+        isEmpty(nominee['signature']) &&
+        isEmpty(nominee['signature_uri'])
+      ) {
         nomineeErrors['signature'] = `${t('common.signature')} ${t(
           'common_validation.is_required'
         )}`
@@ -247,55 +254,6 @@ const setFormData = (fields) => {
 
   return formData
 }
-
-// const savingAccFields = {
-//   field_id: '',
-//   center_id: '',
-//   creator_id: '',
-//   category_id: '',
-//   client_registration_id: '',
-//   acc_no: '',
-//   name: '',
-//   start_date: dateFormat(new Date(), 'yyyy-MM-dd'),
-//   duration_date: '',
-//   payable_deposit: '',
-//   payable_installment: '',
-//   payable_interest: '',
-//   total_deposit_without_interest: '',
-//   total_deposit_with_interest: '',
-//   field: '',
-//   center: '',
-//   category: '',
-//   client: '',
-//   creator: '',
-//   nominees: [
-//     {
-//       name: '',
-//       father_name: '',
-//       husband_name: '',
-//       mother_name: '',
-//       nid: '',
-//       dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-//       occupation: '',
-//       relation: '',
-//       gender: '',
-//       primary_phone: '',
-//       secondary_phone: '',
-//       image: '',
-//       signature: '',
-//       address: {
-//         street_address: '',
-//         city: '',
-//         word_no: '',
-//         post_office: '',
-//         police_station: '',
-//         district: '',
-//         division: ''
-//       }
-//     }
-//   ]
-// }
-
 const savingAccErrs = {
   field_id: '',
   center_id: '',

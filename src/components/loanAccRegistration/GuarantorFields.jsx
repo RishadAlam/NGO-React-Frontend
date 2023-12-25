@@ -1,3 +1,4 @@
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
@@ -16,25 +17,125 @@ export default function GuarantorFields({
   i,
   guarantorData,
   setGuarantorData,
+  fields,
+  centers,
   setChange,
   errors,
   setErrors,
   disabled
 }) {
   const { t } = useTranslation()
+  const [selectedField, setSelectedField] = useState(null)
+  const [selectedCenter, setSelectedCenter] = useState(null)
+  const [selectedClient, setSelectedClient] = useState(null)
   const [signatureModal, setSignatureModal] = useState(false)
   const [imageUri, setImageUri] = useState(guarantorData?.image_uri || profilePlaceholder)
   const [signatureURL, setSignatureURL] = useState(
     guarantorData?.signature_uri || SignaturePlaceholder
   )
 
+  const { data: { data: clients = [] } = [] } = useFetch({
+    action: 'client/registration',
+    queryParams: {
+      field_id: selectedField?.id || null,
+      center_id: selectedCenter?.id || null
+    }
+  })
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/loan/guarantor/occupations'
   })
   const { data: { data: relations = [] } = [] } = useFetch({
     action: 'client/registration/loan/guarantor/relations'
   })
+  const setStateObj = (option, name) => {
+    const address = option?.present_address ? JSON.parse(option?.present_address) : {}
+    switch (name) {
+      case 'field':
+        setSelectedField(option)
+        setSelectedCenter(null)
+        setSelectedClient(null)
+        setGuarantorData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.guarantors[i] = guarantorFieldsErrs
+          })
+        )
+        setImageUri(profilePlaceholder)
+        setSignatureURL(SignaturePlaceholder)
+        break
 
+      case 'center':
+        setSelectedCenter(option)
+        setSelectedClient(null)
+        setGuarantorData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.guarantors[i] = guarantorFieldsErrs
+          })
+        )
+        setImageUri(profilePlaceholder)
+        setSignatureURL(SignaturePlaceholder)
+        break
+
+      case 'client':
+        setSelectedClient(option)
+        setGuarantorData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.guarantors[i].name = option?.name
+            draftData.guarantors[i].father_name = option?.father_name
+            draftData.guarantors[i].husband_name = option?.husband_name
+            draftData.guarantors[i].mother_name = option?.mother_name
+            draftData.guarantors[i].nid = option?.nid
+            draftData.guarantors[i].dob = option?.dob
+            draftData.guarantors[i].occupation = option?.occupation
+            draftData.guarantors[i].gender = option?.gender
+            draftData.guarantors[i].primary_phone = option?.primary_phone
+            draftData.guarantors[i].secondary_phone = option?.secondary_phone
+            draftData.guarantors[i].image_uri = option?.image_uri
+            draftData.guarantors[i].signature_uri = option?.signature_uri
+            draftData.guarantors[i].address.street_address = address?.street_address
+            draftData.guarantors[i].address.city = address?.city
+            draftData.guarantors[i].address.word_no = address?.word_no
+            draftData.guarantors[i].address.post_office = address?.post_office
+            draftData.guarantors[i].address.police_station = address?.police_station
+            draftData.guarantors[i].address.district = address?.district
+            draftData.guarantors[i].address.division = address?.division
+          })
+        )
+        option?.image_uri && setImageUri(option?.image_uri)
+        option?.signature_uri && setSignatureURL(option?.signature_uri)
+        break
+
+      default:
+        break
+    }
+  }
+
+  const fieldConfig = {
+    options: fields,
+    value: selectedField || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setStateObj(option, 'field'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const centerConfig = {
+    options: centers?.length
+      ? centers.filter((center) => Number(center?.field_id) === Number(selectedField?.id))
+      : [],
+    value: selectedCenter || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setStateObj(option, 'center'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const clientConfig = {
+    options: clients,
+    value: selectedClient || null,
+    getOptionLabel: (option) => tsNumbers(option.acc_no),
+    onChange: (e, option) => setStateObj(option, 'client'),
+    filterOptions: (options, state) =>
+      state.inputValue
+        ? options.filter((option) => option.acc_no.includes(tsNumbers(state.inputValue, true)))
+        : options,
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
   const occupationConfig = {
     options: occupations,
     value: guarantorData?.occupation || null,
@@ -57,6 +158,15 @@ export default function GuarantorFields({
             (i + 1).toString().padStart(2, '0')
           )}`}</h5>
         </div>
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.field')} config={fieldConfig} disabled={disabled} />
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.center')} config={centerConfig} disabled={disabled} />
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.acc_no')} config={clientConfig} disabled={disabled} />
       </div>
       <div className="col-md-6 mb-3">
         <ImagePreview
@@ -207,4 +317,24 @@ export default function GuarantorFields({
       />
     </>
   )
+}
+
+const guarantorFieldsErrs = {
+  name: '',
+  father_name: '',
+  mother_name: '',
+  nid: '',
+  occupation: '',
+  relation: '',
+  gender: '',
+  primary_phone: '',
+  image: '',
+  address: {
+    street_address: '',
+    city: '',
+    post_office: '',
+    police_station: '',
+    district: '',
+    division: ''
+  }
 }

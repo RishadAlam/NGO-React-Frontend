@@ -1,6 +1,8 @@
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
+import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
@@ -17,17 +19,29 @@ export default function NomineeFields({
   nomineeData,
   setNomineeData,
   setChange,
+  fields,
+  centers,
   errors,
   setErrors,
   disabled
 }) {
   const { t } = useTranslation()
+  const [selectedField, setSelectedField] = useState(null)
+  const [selectedCenter, setSelectedCenter] = useState(null)
+  const [selectedClient, setSelectedClient] = useState(null)
   const [signatureModal, setSignatureModal] = useState(false)
   const [imageUri, setImageUri] = useState(nomineeData?.image_uri || profilePlaceholder)
   const [signatureURL, setSignatureURL] = useState(
     nomineeData?.signature_uri || SignaturePlaceholder
   )
 
+  const { data: { data: clients = [] } = [] } = useFetch({
+    action: 'client/registration',
+    queryParams: {
+      field_id: selectedField?.id || null,
+      center_id: selectedCenter?.id || null
+    }
+  })
   const { data: { data: occupations = [] } = [] } = useFetch({
     action: 'client/registration/saving/nominee/occupations'
   })
@@ -35,6 +49,95 @@ export default function NomineeFields({
     action: 'client/registration/saving/nominee/relations'
   })
 
+  const setStateObj = (option, name) => {
+    const address = option?.present_address ? JSON.parse(option?.present_address) : {}
+    switch (name) {
+      case 'field':
+        setSelectedField(option)
+        setSelectedCenter(null)
+        setSelectedClient(null)
+        setNomineeData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.nominees[i] = nomineeFields
+          })
+        )
+        setImageUri(profilePlaceholder)
+        setSignatureURL(SignaturePlaceholder)
+        break
+
+      case 'center':
+        setSelectedCenter(option)
+        setSelectedClient(null)
+        setNomineeData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.nominees[i] = nomineeFields
+          })
+        )
+        setImageUri(profilePlaceholder)
+        setSignatureURL(SignaturePlaceholder)
+        break
+
+      case 'client':
+        setSelectedClient(option)
+        setNomineeData((prevData) =>
+          create(prevData, (draftData) => {
+            draftData.nominees[i].name = option?.name
+            draftData.nominees[i].father_name = option?.father_name
+            draftData.nominees[i].husband_name = option?.husband_name
+            draftData.nominees[i].mother_name = option?.mother_name
+            draftData.nominees[i].nid = option?.nid
+            draftData.nominees[i].dob = option?.dob
+            draftData.nominees[i].occupation = option?.occupation
+            draftData.nominees[i].gender = option?.gender
+            draftData.nominees[i].primary_phone = option?.primary_phone
+            draftData.nominees[i].secondary_phone = option?.secondary_phone
+            draftData.nominees[i].image_uri = option?.image_uri
+            draftData.nominees[i].signature_uri = option?.signature_uri
+            draftData.nominees[i].address.street_address = address?.street_address
+            draftData.nominees[i].address.city = address?.city
+            draftData.nominees[i].address.word_no = address?.word_no
+            draftData.nominees[i].address.post_office = address?.post_office
+            draftData.nominees[i].address.police_station = address?.police_station
+            draftData.nominees[i].address.district = address?.district
+            draftData.nominees[i].address.division = address?.division
+          })
+        )
+        option?.image_uri && setImageUri(option?.image_uri)
+        option?.signature_uri && setSignatureURL(option?.signature_uri)
+        break
+
+      default:
+        break
+    }
+  }
+
+  const fieldConfig = {
+    options: fields,
+    value: selectedField || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setStateObj(option, 'field'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const centerConfig = {
+    options: centers?.length
+      ? centers.filter((center) => Number(center?.field_id) === Number(selectedField?.id))
+      : [],
+    value: selectedCenter || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setStateObj(option, 'center'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const clientConfig = {
+    options: clients,
+    value: selectedClient || null,
+    getOptionLabel: (option) => tsNumbers(option.acc_no),
+    onChange: (e, option) => setStateObj(option, 'client'),
+    filterOptions: (options, state) =>
+      state.inputValue
+        ? options.filter((option) => option.acc_no.includes(tsNumbers(state.inputValue, true)))
+        : options,
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
   const occupationConfig = {
     options: occupations,
     value: nomineeData?.occupation || null,
@@ -57,6 +160,15 @@ export default function NomineeFields({
             (i + 1).toString().padStart(2, '0')
           )}`}</h5>
         </div>
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.field')} config={fieldConfig} disabled={disabled} />
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.center')} config={centerConfig} disabled={disabled} />
+      </div>
+      <div className="col-md-4 mb-3">
+        <SelectBoxField label={t('common.acc_no')} config={clientConfig} disabled={disabled} />
       </div>
       <div className="col-md-6 mb-3">
         <ImagePreview
@@ -207,4 +319,29 @@ export default function NomineeFields({
       />
     </>
   )
+}
+
+const nomineeFields = {
+  name: '',
+  father_name: '',
+  husband_name: '',
+  mother_name: '',
+  nid: '',
+  dob: dateFormat(new Date(), 'yyyy-MM-dd'),
+  occupation: '',
+  relation: '',
+  gender: '',
+  primary_phone: '',
+  secondary_phone: '',
+  image: '',
+  signature: '',
+  address: {
+    street_address: '',
+    city: '',
+    word_no: '',
+    post_office: '',
+    police_station: '',
+    district: '',
+    division: ''
+  }
 }

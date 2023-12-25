@@ -226,6 +226,8 @@ function LoanAccRegFormFields({
       <Guarantors
         formData={formData}
         setFormData={setFormData}
+        fields={fields}
+        centers={centers}
         errors={errors}
         setErrors={setErrors}
         disabled={disabled}

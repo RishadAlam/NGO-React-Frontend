@@ -10,7 +10,15 @@ import tsNumbers from '../../libs/tsNumbers'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import NomineeFields from './NomineeFields'
 
-export default function Nominees({ formData, setFormData, errors, setErrors, disabled }) {
+export default function Nominees({
+  formData,
+  setFormData,
+  fields,
+  centers,
+  errors,
+  setErrors,
+  disabled
+}) {
   const { t } = useTranslation()
   const addNominee = (length) => {
     if (length < 5) {
@@ -55,6 +63,14 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
       create(prevData, (draftData) => {
         if (name === 'dob') {
           draftData.nominees[index].dob = dateFormat(val, 'yyyy-MM-dd')
+          return
+        } else if (name === 'image') {
+          draftData.nominees[index].image = val
+          draftData.nominees[index].image_uri = null
+          return
+        } else if (name === 'signature') {
+          draftData.nominees[index].signature = val
+          draftData.nominees[index].signature_uri = null
           return
         }
         draftData.nominees[index][name] = val
@@ -118,6 +134,8 @@ export default function Nominees({ formData, setFormData, errors, setErrors, dis
             setNomineeData={setFormData}
             i={i}
             setChange={setChange}
+            fields={fields}
+            centers={centers}
             errors={(errors?.nominees && errors?.nominees[i]) || {}}
             setErrors={setErrors}
             disabled={disabled}

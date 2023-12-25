@@ -10,7 +10,15 @@ import tsNumbers from '../../libs/tsNumbers'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import GuarantorFields from './GuarantorFields'
 
-export default function Guarantors({ formData, setFormData, errors, setErrors, disabled }) {
+export default function Guarantors({
+  formData,
+  setFormData,
+  fields,
+  centers,
+  errors,
+  setErrors,
+  disabled
+}) {
   const { t } = useTranslation()
   const addGuarantor = (length) => {
     if (length < 5) {
@@ -56,6 +64,14 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
       create(prevData, (draftData) => {
         if (name === 'dob') {
           draftData.guarantors[index].dob = dateFormat(val, 'yyyy-MM-dd')
+          return
+        } else if (name === 'image') {
+          draftData.guarantors[index].image = val
+          draftData.guarantors[index].image_uri = null
+          return
+        } else if (name === 'signature') {
+          draftData.guarantors[index].signature = val
+          draftData.guarantors[index].signature_uri = null
           return
         }
         draftData.guarantors[index][name] = val
@@ -117,6 +133,8 @@ export default function Guarantors({ formData, setFormData, errors, setErrors, d
             key={i}
             guarantorData={guarantor}
             setGuarantorData={setFormData}
+            fields={fields}
+            centers={centers}
             i={i}
             setChange={setChange}
             errors={(errors?.guarantors && errors?.guarantors[i]) || {}}
