@@ -25,7 +25,6 @@ import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import getCurrentMonth from '../../libs/getCurrentMonth'
-import tsNumbers from '../../libs/tsNumbers'
 import { IncomeTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
@@ -189,26 +188,19 @@ export default function Income() {
             )}
           </div>
         </div>
-        <div className="row align-items-center">
-          <div className="col-md-3">
-            {incomes && (
-              <b>
-                {t('common.total')} {t('common.income')}:{' '}
-                {tsNumbers(`৳${incomes?.reduce((sum, item) => sum + item.amount, 0)}/-`)}
-              </b>
-            )}
-          </div>
-          <div className="col-md-9 text-end">
-            <div className="mb-3">
-              <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
-            </div>
-          </div>
+        <div className="mb-3 text-end">
+          <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
         <div className="staff-table">
           {isLoading && !incomes ? (
             <ReactTableSkeleton />
           ) : (
-            <ReactTable title={t('income.Income_List')} columns={columns} data={incomes} />
+            <ReactTable
+              title={t('income.Income_List')}
+              columns={columns}
+              data={incomes}
+              footer={true}
+            />
           )}
         </div>
       </section>

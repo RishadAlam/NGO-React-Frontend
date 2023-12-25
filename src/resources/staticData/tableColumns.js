@@ -530,13 +530,21 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
   },
   {
     Header: t('common.description'),
+    Footer: t('common.total'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + transaction.amount
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
   },
   {
     Header: t('common.previous_balance'),
@@ -605,13 +613,21 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
   },
   {
     Header: t('common.description'),
+    Footer: t('common.total'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + transaction.amount
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
   },
   {
     Header: t('common.previous_balance'),
@@ -673,13 +689,21 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
   },
   {
     Header: t('common.description'),
+    Footer: t('common.total'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + transaction.amount
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
   },
   {
     Header: t('common.previous_balance'),
@@ -753,13 +777,21 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   },
   {
     Header: t('common.description'),
+    Footer: t('common.total'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + transaction.amount
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
   },
   {
     Header: t('common.previous_balance'),
@@ -818,13 +850,21 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
   },
   {
     Header: t('common.description'),
+    Footer: t('common.total'),
     accessor: 'description',
     show: windowWidth < 576 ? false : true
   },
   {
     Header: t('common.amount'),
     accessor: 'amount',
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + transaction.amount
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
   },
   {
     Header: t('common.previous_balance'),

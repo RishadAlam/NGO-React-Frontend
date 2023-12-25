@@ -112,6 +112,7 @@ export default function Transactions() {
               title={t('account_transaction.Transaction_List')}
               columns={columns}
               data={transactions}
+              footer={true}
             />
           )}
         </div>

@@ -91,6 +91,7 @@ export default function Transfers() {
               title={t('account_transfer.Transfer_List')}
               columns={columns}
               data={transfers}
+              footer={true}
             />
           )}
         </div>

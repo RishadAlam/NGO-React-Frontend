@@ -15,7 +15,7 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import './table.scss'
 
-function ReactTable({ title, columns, data }) {
+function ReactTable({ title, columns, data, footer = false }) {
   const { t } = useTranslation()
   const lang = Cookies.get('i18next')
   const [anchorEl, setAnchorEl] = useState(null)
@@ -26,11 +26,15 @@ function ReactTable({ title, columns, data }) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const setFooterColSpan = (totalCol, colIndex, colSpan = null, isAfterSpan = false) => {
+    return colSpan ? colSpan : isAfterSpan ? totalCol - colIndex : 1
+  }
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    footerGroups,
     page,
     prepareRow,
     state,
@@ -177,6 +181,29 @@ function ReactTable({ title, columns, data }) {
                   </tr>
                 )}
               </tbody>
+              {footer && (
+                <tfoot>
+                  {footerGroups.map((footerGroup, groupIndex) => (
+                    <tr key={groupIndex} {...footerGroup.getFooterGroupProps()}>
+                      {footerGroup.headers.map((column, columnIndex) => (
+                        <td
+                          key={columnIndex}
+                          {...column.getFooterProps()}
+                          colSpan={
+                            setFooterColSpan(
+                              footerGroup.headers.length,
+                              columnIndex,
+                              column?.footerColSpan,
+                              column?.isAfterFooterSpan
+                            ) || 1
+                          }>
+                          {column.render('Footer')}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tfoot>
+              )}
             </table>
           </div>
 
