@@ -1061,8 +1061,8 @@ export const PendingSavingRegTableColumns = (
   {
     Header: t('common.nominee'),
     accessor: 'nominees',
-    show: false,
-    Cell: ({ value }) => tsNumbers(value?.length || 0) + (lang === 'en' ? ' people' : ' জন')
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value?.length ? tsNumbers(value?.length || 0) : '')
   },
   {
     Header: t('common.created_at'),
