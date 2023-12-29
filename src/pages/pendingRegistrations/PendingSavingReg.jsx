@@ -53,9 +53,8 @@ export default function PendingSavingReg() {
     isLoading,
     isError
   } = useFetch({
-    action: 'client/registration/saving',
+    action: 'client/registration/saving/pending-forms',
     queryParams: {
-      fetch_pending_forms: true,
       field_id: selectedField?.id || '',
       center_id: selectedCenter?.id || '',
       category_id: selectedCategory?.id || '',

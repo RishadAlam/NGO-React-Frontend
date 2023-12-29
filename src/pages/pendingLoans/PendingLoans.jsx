@@ -22,9 +22,8 @@ export default function PendingLoans() {
     isLoading,
     isError
   } = useFetch({
-    action: 'client/registration/loan',
+    action: 'client/registration/loan/pending-loans',
     queryParams: {
-      fetch_pending_loans: true,
       date_range: dateRange ? dateRange : ''
     }
   })
@@ -105,6 +104,7 @@ const eventsMap = (loan, t) => ({
   field: loan.field.name,
   center: loan.center.name,
   category: loan.category.name,
+  creator: loan.author.name,
   start_date: loan.start_date,
   duration_date: loan.duration_date,
   loan_given: loan.loan_given,
@@ -116,5 +116,6 @@ const eventsMap = (loan, t) => ({
   total_payable_loan_with_interest: loan.payable_interest,
   loan_installment: loan.payable_interest,
   interest_installment: loan.payable_interest,
-  is_loan_approved: loan.is_loan_approved
+  is_loan_approved: loan.is_loan_approved,
+  created_at: loan.created_at
 })

@@ -42,7 +42,9 @@ export default function PendingClientReg() {
     mutate,
     isLoading,
     isError
-  } = useFetch({ action: 'client/registration', queryParams: { fetch_pending: true } })
+  } = useFetch({
+    action: 'client/registration/pending-forms'
+  })
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const statusSwitch = (value, id) => (

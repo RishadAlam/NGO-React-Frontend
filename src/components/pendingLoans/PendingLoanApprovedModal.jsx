@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Info from '../../icons/Info'
 import Save from '../../icons/Save'
@@ -15,7 +16,6 @@ import DatePickerInputField from '../utilities/DatePickerInputField'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
-import { defaultNameCheck } from '../../helper/defaultNameCheck'
 
 export default function PendingLoanApprovedModal({ open, setOpen, mutate, data = {} }) {
   const { t } = useTranslation()
@@ -128,6 +128,13 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                 </div>
                 <div className="col-md-6 col-xl-4 mb-3">
                   <TextInputField
+                    label={t('common.creator')}
+                    defaultValue={data?.creator || ''}
+                    disabled={true}
+                  />
+                </div>
+                <div className="col-md-6 col-xl-4 mb-3">
+                  <TextInputField
                     label={t('common.acc_no')}
                     defaultValue={tsNumbers(data?.acc_no) || ''}
                     disabled={true}
@@ -137,6 +144,13 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                   <TextInputField
                     label={t('common.name')}
                     defaultValue={data?.name || ''}
+                    disabled={true}
+                  />
+                </div>
+                <div className="col-md-6 col-xl-4 mb-3">
+                  <DatePickerInputField
+                    label={t('common.created_at')}
+                    defaultValue={data?.created_at || ''}
                     disabled={true}
                   />
                 </div>
