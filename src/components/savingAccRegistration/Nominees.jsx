@@ -17,7 +17,8 @@ export default function Nominees({
   centers,
   errors,
   setErrors,
-  disabled
+  disabled,
+  editForm
 }) {
   const { t } = useTranslation()
   const addNominee = (length) => {
@@ -139,6 +140,7 @@ export default function Nominees({
             errors={(errors?.nominees && errors?.nominees[i]) || {}}
             setErrors={setErrors}
             disabled={disabled}
+            editForm={editForm}
           />
         ))}
       {!disabled && (

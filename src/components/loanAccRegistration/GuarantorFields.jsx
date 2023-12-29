@@ -22,7 +22,8 @@ export default function GuarantorFields({
   setChange,
   errors,
   setErrors,
-  disabled
+  disabled,
+  editForm
 }) {
   const { t } = useTranslation()
   const [selectedField, setSelectedField] = useState(null)
@@ -158,15 +159,19 @@ export default function GuarantorFields({
           )}`}</h5>
         </div>
       </div>
-      <div className="col-md-4 mb-3">
-        <SelectBoxField label={t('common.field')} config={fieldConfig} disabled={disabled} />
-      </div>
-      <div className="col-md-4 mb-3">
-        <SelectBoxField label={t('common.center')} config={centerConfig} disabled={disabled} />
-      </div>
-      <div className="col-md-4 mb-3">
-        <SelectBoxField label={t('common.acc_no')} config={clientConfig} disabled={disabled} />
-      </div>
+      {!editForm && (
+        <>
+          <div className="col-md-4 mb-3">
+            <SelectBoxField label={t('common.field')} config={fieldConfig} disabled={disabled} />
+          </div>
+          <div className="col-md-4 mb-3">
+            <SelectBoxField label={t('common.center')} config={centerConfig} disabled={disabled} />
+          </div>
+          <div className="col-md-4 mb-3">
+            <SelectBoxField label={t('common.acc_no')} config={clientConfig} disabled={disabled} />
+          </div>
+        </>
+      )}
       <div className="col-md-6 mb-3">
         <ImagePreview
           label={t('common.image')}

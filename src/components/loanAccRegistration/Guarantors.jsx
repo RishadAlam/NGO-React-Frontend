@@ -17,7 +17,8 @@ export default function Guarantors({
   centers,
   errors,
   setErrors,
-  disabled
+  disabled,
+  editForm
 }) {
   const { t } = useTranslation()
   const addGuarantor = (length) => {
@@ -140,6 +141,7 @@ export default function Guarantors({
             errors={(errors?.guarantors && errors?.guarantors[i]) || {}}
             setErrors={setErrors}
             disabled={disabled}
+            editForm={editForm}
           />
         ))}
       {!disabled && (

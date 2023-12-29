@@ -231,6 +231,7 @@ function LoanAccRegFormFields({
         errors={errors}
         setErrors={setErrors}
         disabled={disabled}
+        editForm={editForm}
       />
     </div>
   )

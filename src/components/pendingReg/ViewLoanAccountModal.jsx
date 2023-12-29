@@ -34,6 +34,7 @@ export default function ViewLoanAccountModal({ open, setOpen, accountData, setAc
               errors={false}
               setErrors={() => {}}
               disabled={true}
+              editForm={true}
             />
           )}
         </div>

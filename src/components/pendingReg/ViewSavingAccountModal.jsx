@@ -34,6 +34,7 @@ export default function ViewSavingAccountModal({ open, setOpen, accountData, set
               errors={false}
               setErrors={() => {}}
               disabled={true}
+              editForm={true}
             />
           )}
         </div>
