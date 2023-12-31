@@ -36,7 +36,7 @@ export default function GuarantorFields({
   )
 
   const { data: { data: clients = [] } = [] } = useFetch({
-    action: 'client/registration',
+    action: 'client/registration/info',
     queryParams: {
       field_id: selectedField?.id || null,
       center_id: selectedCenter?.id || null

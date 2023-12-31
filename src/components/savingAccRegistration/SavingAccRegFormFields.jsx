@@ -32,12 +32,7 @@ function SavingAccRegFormFields({
     queryParams: formData.field_id ? { field_id: formData.field_id } : null
   })
   const { data: { data: clients = [] } = [] } = useFetch({
-    action: 'client/registration',
-    queryParams: {
-      form: true,
-      field_id: formData?.field_id || null,
-      center_id: formData?.center_id || null
-    }
+    action: `client/registration/accounts/${formData?.field_id || ''}/${formData?.center_id || ''}`
   })
 
   const creatorConfig = {
