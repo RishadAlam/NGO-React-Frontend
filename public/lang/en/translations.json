@@ -183,6 +183,8 @@
     "label": {
       "registration": "Registration",
       "pending_loans": "Pending Loans",
+      "regular_collection": "Regular Collection",
+      "pending_collection": "Pending Collection",
       "field": "Fields",
       "center": "Centers",
       "category": "Categories",
@@ -194,6 +196,10 @@
       "Client_Registration": "Client Registration",
       "saving_account_registration": "Saving Account Registration",
       "loan_account_registration": "Loan Account Registration"
+    },
+    "collection": {
+      "Saving_Collection": "Saving Collection",
+      "Loan_Collection": "Loan Collection"
     },
     "account_management": {
       "Accounts": "Accounts",

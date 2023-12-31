@@ -178,6 +178,8 @@
     "label": {
       "registration": "নিবন্ধন",
       "pending_loans": "অনুমোদন অপেক্ষারত ঋণ",
+      "regular_collection": "দৈনিক কালেকশন",
+      "pending_collection": "অনুমোদন অপেক্ষারত কালেকশন",
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
@@ -189,6 +191,10 @@
       "Client_Registration": "সদস্য নিবন্ধন",
       "saving_account_registration": "সঞ্চয় একাউন্ট নিবন্ধন",
       "loan_account_registration": "ঋণ একাউন্ট নিবন্ধন"
+    },
+    "collection": {
+      "Saving_Collection": "সঞ্চয় কালেকশন",
+      "Loan_Collection": "ঋণ কালেকশন"
     },
     "account_management": {
       "Accounts": "অ্যাকাউন্ট",

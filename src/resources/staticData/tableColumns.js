@@ -1249,3 +1249,36 @@ export const PendingLoanRegTableColumns = (
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
+
+export const CategoryCollectionReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.name'),
+    Footer: t('common.total'),
+    accessor: 'name',
+    Cell: ({ row, value }) =>
+      defaultNameCheck(t, row.original.is_default, 'category.default.', value)
+  },
+  {
+    Header: t('common.saving'),
+    accessor: 'saving_collection',
+    Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.saving_collection[0]?.deposit) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    Cell: ({ row }) => actionBtnGroup(row.original.id)
+  }
+]

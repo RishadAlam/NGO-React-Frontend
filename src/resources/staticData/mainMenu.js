@@ -36,6 +36,46 @@ export const mainMenu = (t) => {
             view: checkPermission('loan_acc_registration', permissions)
           }
         ]
+      },
+      {
+        id: 2,
+        label: t('menu.label.regular_collection'),
+        path: '',
+        icon: 'BusinessOpportunity',
+        view: checkPermissions(
+          [
+            'regular_saving_collection_list_view',
+            'regular_saving_collection_list_view_as_admin',
+            'regular_loan_collection_list_view',
+            'regular_loan_collection_list_view_as_admin'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'regularCollection1',
+            label: t('menu.collection.Saving_Collection'),
+            path: '/collection/regular/saving',
+            icon: 'SaveEnergy',
+            view: checkPermissions(
+              [
+                'regular_saving_collection_list_view',
+                'regular_saving_collection_list_view_as_admin'
+              ],
+              permissions
+            )
+          },
+          {
+            id: 'regularCollection1',
+            label: t('menu.collection.Loan_Collection'),
+            path: '/collection/regular/loan',
+            icon: 'Loan',
+            view: checkPermissions(
+              ['regular_loan_collection_list_view', 'regular_loan_collection_list_view_as_admin'],
+              permissions
+            )
+          }
+        ]
       }
     ],
     [t('menu.categories.Pending_Approval')]: [

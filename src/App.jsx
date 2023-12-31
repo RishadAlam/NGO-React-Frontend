@@ -23,6 +23,8 @@ const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/Pending
 const PendingSavingReg = lazy(() => import('./pages/pendingRegistrations/PendingSavingReg'))
 const PendingLoanReg = lazy(() => import('./pages/pendingRegistrations/PendingLoanReg'))
 const PendingLoans = lazy(() => import('./pages/pendingLoans/PendingLoans'))
+const SavingCategoryReport = lazy(() => import('./pages/regularCollection/SavingCategoryReport'))
+const LoanCategoryReport = lazy(() => import('./pages/regularCollection/LoanCategoryReport'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -116,6 +118,54 @@ export default function App() {
                     </ErrorBoundary>
                   }
                 />
+              </Route>
+            </Route>
+
+            {/* Regular Collection Routes */}
+            <Route path="collection">
+              <Route path="regular">
+                <Route
+                  path="saving"
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={[
+                        'regular_saving_collection_list_view',
+                        'regular_saving_collection_list_view_as_admin'
+                      ]}
+                    />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <SavingCategoryReport />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
+                <Route
+                  path="loan"
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={[
+                        'regular_loan_collection_list_view',
+                        'regular_loan_collection_list_view_as_admin'
+                      ]}
+                    />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <LoanCategoryReport />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
               </Route>
             </Route>
 
