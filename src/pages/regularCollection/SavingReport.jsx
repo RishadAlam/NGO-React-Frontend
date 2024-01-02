@@ -1,18 +1,24 @@
 import { useTranslation } from 'react-i18next'
-import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useParams } from 'react-router-dom'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
-import SavingCategoryCollection from '../../components/collection/SavingCategoryCollection'
+import SavingCollectionReport from '../../components/collection/SavingCollectionReport'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import BusinessOpportunity from '../../icons/BusinessOpportunity'
+import Chrome from '../../icons/Chrome'
+import Globe from '../../icons/Globe'
 import Home from '../../icons/Home'
 import SaveEnergy from '../../icons/SaveEnergy'
 
-export default function SavingCategoryReport() {
-  const { accessToken, permissions: authPermissions } = useAuthDataValue()
+export default function SavingReport() {
+  const { category_id } = useParams()
   const { t } = useTranslation()
+  const endpoint = isEmpty(category_id)
+    ? 'collection/saving/regular/collection-sheet'
+    : `collection/saving/regular/collection-sheet/${category_id}`
 
   const { data: { data: regularCollections = [] } = [], isLoading } = useFetch({
-    action: 'collection/saving/regular/collection-sheet'
+    action: endpoint
   })
 
   return (
@@ -32,13 +38,28 @@ export default function SavingCategoryReport() {
                   name: t('menu.collection.Saving_Collection'),
                   icon: <SaveEnergy size={16} />,
                   active: true
-                }
+                },
+                isEmpty(category_id)
+                  ? {
+                      name: t('common.category'),
+                      icon: <Chrome size={16} />,
+                      active: true
+                    }
+                  : {
+                      name: t('common.field'),
+                      icon: <Globe size={16} />,
+                      active: true
+                    }
               ]}
             />
           </div>
         </div>
         <div className="staff-table">
-          <SavingCategoryCollection data={regularCollections} loading={false} />
+          <SavingCollectionReport
+            data={regularCollections}
+            loading={isLoading}
+            step={isEmpty(category_id) ? 1 : 2}
+          />
         </div>
       </section>
     </>

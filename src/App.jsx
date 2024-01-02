@@ -23,7 +23,7 @@ const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/Pending
 const PendingSavingReg = lazy(() => import('./pages/pendingRegistrations/PendingSavingReg'))
 const PendingLoanReg = lazy(() => import('./pages/pendingRegistrations/PendingLoanReg'))
 const PendingLoans = lazy(() => import('./pages/pendingLoans/PendingLoans'))
-const SavingCategoryReport = lazy(() => import('./pages/regularCollection/SavingCategoryReport'))
+const SavingReport = lazy(() => import('./pages/regularCollection/SavingReport'))
 const LoanCategoryReport = lazy(() => import('./pages/regularCollection/LoanCategoryReport'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
@@ -139,7 +139,17 @@ export default function App() {
                     element={
                       <ErrorBoundary FallbackComponent={ErrorFallback}>
                         <Suspense fallback={<Loader />}>
-                          <SavingCategoryReport />
+                          <SavingReport />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <SavingReport />
                         </Suspense>
                       </ErrorBoundary>
                     }
