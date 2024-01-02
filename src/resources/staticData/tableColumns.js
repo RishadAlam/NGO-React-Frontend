@@ -1250,7 +1250,7 @@ export const PendingLoanRegTableColumns = (
   }
 ]
 
-export const CategoryCollectionReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const CategoryCollectionSavingReportTableColumns = (t, windowWidth, actionBtnGroup) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1265,7 +1265,7 @@ export const CategoryCollectionReportTableColumns = (t, windowWidth, actionBtnGr
       defaultNameCheck(t, row.original.is_default, 'category.default.', value)
   },
   {
-    Header: t('common.saving'),
+    Header: t('common.deposit'),
     accessor: 'saving_collection',
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
@@ -1283,7 +1283,7 @@ export const CategoryCollectionReportTableColumns = (t, windowWidth, actionBtnGr
   }
 ]
 
-export const FieldCollectionReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const FieldCollectionSavingReportTableColumns = (t, windowWidth, actionBtnGroup) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1296,12 +1296,148 @@ export const FieldCollectionReportTableColumns = (t, windowWidth, actionBtnGroup
     accessor: 'name'
   },
   {
-    Header: t('common.saving'),
+    Header: t('common.deposit'),
     accessor: 'saving_collection',
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
         return sum + parseInt(transaction.saving_collection[0]?.deposit) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    Cell: ({ row }) => actionBtnGroup(row.original.id)
+  }
+]
+
+export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.name'),
+    Footer: t('common.total'),
+    accessor: 'name',
+    Cell: ({ row, value }) =>
+      defaultNameCheck(t, row.original.is_default, 'category.default.', value)
+  },
+  {
+    Header: t('common.deposit'),
+    accessor: 'deposit',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.deposit) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.loan'),
+    accessor: 'loan',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.loan) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.interest'),
+    accessor: 'interest',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.interest) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.total'),
+    accessor: 'total',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.total) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    Cell: ({ row }) => actionBtnGroup(row.original.id)
+  }
+]
+
+export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.name'),
+    Footer: t('common.total'),
+    accessor: 'name'
+  },
+  {
+    Header: t('common.deposit'),
+    accessor: 'deposit',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.deposit) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.loan'),
+    accessor: 'loan',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.loan) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.interest'),
+    accessor: 'interest',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.interest) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.total'),
+    accessor: 'total',
+    Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return sum + parseInt(transaction.loan_collection[0]?.total) || 0
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)

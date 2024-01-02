@@ -7,14 +7,14 @@ import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Folder from '../../icons/Folder'
 import '../../pages/staffs/staffs.scss'
 import {
-  CategoryCollectionSavingReportTableColumns,
-  FieldCollectionSavingReportTableColumns
+  CategoryCollectionLoanReportTableColumns,
+  FieldCollectionLoanReportTableColumns
 } from '../../resources/staticData/tableColumns'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import ReactTable from '../utilities/tables/ReactTable'
 
-export default function SavingCollectionReport({ data = [], loading, step = 1 }) {
+export default function LoanCollectionReport({ data = [], loading, step = 1 }) {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const navigate = useNavigate()
@@ -32,8 +32,8 @@ export default function SavingCollectionReport({ data = [], loading, step = 1 })
   const columns = useMemo(
     () =>
       step === 1
-        ? CategoryCollectionSavingReportTableColumns(t, windowWidth, actionBtnGroup)
-        : FieldCollectionSavingReportTableColumns(t, windowWidth, actionBtnGroup),
+        ? CategoryCollectionLoanReportTableColumns(t, windowWidth, actionBtnGroup)
+        : FieldCollectionLoanReportTableColumns(t, windowWidth, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, step, windowWidth, loading]
   )
@@ -48,7 +48,7 @@ export default function SavingCollectionReport({ data = [], loading, step = 1 })
             title={
               (step === 1 ? t('common.category') : t('common.field')) +
               ' ' +
-              t('menu.collection.Saving_Collection')
+              t('menu.collection.Loan_Collection')
             }
             columns={columns}
             data={data}
