@@ -54,13 +54,11 @@ export default function LoanReport() {
             />
           </div>
         </div>
-        <div className="staff-table">
-          <LoanCollectionReport
-            data={regularCollections}
-            loading={isLoading}
-            step={isEmpty(category_id) ? 1 : 2}
-          />
-        </div>
+        <LoanCollectionReport
+          data={regularCollections}
+          loading={isLoading}
+          step={isEmpty(category_id) ? 1 : 2}
+        />
       </section>
     </>
   )

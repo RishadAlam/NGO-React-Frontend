@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
-import SavingCollectionReport from '../../components/collection/SavingCollectionReport'
+import SavingCollectionSheet from '../../components/collection/SavingCollectionSheet'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import BusinessOpportunity from '../../icons/BusinessOpportunity'
@@ -10,15 +10,12 @@ import Globe from '../../icons/Globe'
 import Home from '../../icons/Home'
 import SaveEnergy from '../../icons/SaveEnergy'
 
-export default function SavingReport() {
-  const { category_id } = useParams()
+export default function SavingReportSheet() {
+  const { category_id, field_id } = useParams()
   const { t } = useTranslation()
-  const endpoint = isEmpty(category_id)
-    ? 'collection/saving/regular/collection-sheet'
-    : `collection/saving/regular/collection-sheet/${category_id}`
 
   const { data: { data: regularCollections = [] } = [], isLoading } = useFetch({
-    action: endpoint
+    action: `collection/saving/regular/collection-sheet/${category_id}/${field_id}`
   })
 
   return (
@@ -39,22 +36,21 @@ export default function SavingReport() {
                   icon: <SaveEnergy size={16} />,
                   active: true
                 },
-                isEmpty(category_id)
-                  ? {
-                      name: t('common.category'),
-                      icon: <Chrome size={16} />,
-                      active: true
-                    }
-                  : {
-                      name: t('common.field'),
-                      icon: <Globe size={16} />,
-                      active: true
-                    }
+                {
+                  name: t('common.category'),
+                  icon: <Chrome size={16} />,
+                  active: true
+                },
+                {
+                  name: t('common.field'),
+                  icon: <Globe size={16} />,
+                  active: true
+                }
               ]}
             />
           </div>
         </div>
-        <SavingCollectionReport
+        <SavingCollectionSheet
           data={regularCollections}
           loading={isLoading}
           step={isEmpty(category_id) ? 1 : 2}

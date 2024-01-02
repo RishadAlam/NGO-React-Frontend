@@ -1,5 +1,6 @@
 {
   "common": {
+    "#": "#",
     "action_history": {
       "action_history": "Action History",
       "update": "Updated at",
