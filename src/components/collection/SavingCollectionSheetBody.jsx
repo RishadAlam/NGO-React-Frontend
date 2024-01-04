@@ -14,6 +14,7 @@ export default function SavingCollectionSheetBody({ center, columnList, mutate }
                 key={collection_key}
                 columnList={columnList}
                 index={acc_key}
+                collectionIndex={collection_key}
                 account={account}
                 collection={collection}
                 mutate={mutate}
@@ -25,6 +26,7 @@ export default function SavingCollectionSheetBody({ center, columnList, mutate }
               columnList={columnList}
               index={acc_key}
               account={account}
+              mutate={mutate}
             />
           )
         )

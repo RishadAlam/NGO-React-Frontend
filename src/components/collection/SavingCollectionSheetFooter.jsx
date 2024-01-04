@@ -13,6 +13,8 @@ export default function SavingCollectionSheetFooter({ columnList, center }) {
         <th className={`${!columnList.image ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.name ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.acc_no ? 'd-none' : ''}`}></th>
+        <th className={`${!columnList.account ? 'd-none' : ''}`}></th>
+        <th className={`${!columnList.installment ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.description ? 'd-none' : ''} text-end`}>
           {t('common.total')}
         </th>

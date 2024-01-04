@@ -4,14 +4,17 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
+import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
+import SelectBoxField from '../utilities/SelectBoxField'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
@@ -21,10 +24,21 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
   const [loading, setLoading] = useLoadingState({})
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
+  const [account, setAccount] = useState()
+  const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
     setCollection(collectionData)
   }, [collectionData])
+
+  const accountSelectBoxConfig = {
+    options: accounts,
+    value: accounts.filter((account) => account.id === collection?.account_id)[0] || null,
+    getOptionLabel: (option) =>
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
+    onChange: (e, option) => setChange(option, 'account_id'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -47,10 +61,10 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
         setLoading({ ...loading, collectionForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setCollection({ present_address: {}, permanent_address: {} })
+          setCollection(collectionData)
           setErrors({})
-          setOpen(false)
           mutate()
+          setOpen(false)
           return
         }
         setErrors((prevErr) =>
@@ -81,8 +95,15 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
     if (name === 'deposit' || name === 'installment') {
       val = tsNumbers(val, true)
     }
+    if (name === 'account_id') {
+      setAccount(val)
+    }
     setCollection((prevData) =>
       create(prevData, (draftData) => {
+        if (name === 'account_id') {
+          draftData[name] = val.id
+          return
+        }
         draftData[name] = val
       })
     )
@@ -92,6 +113,9 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
         if ((name === 'deposit' || name === 'installment') && !Number(val) && !isEmpty(val)) {
           draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
           return
+        } else if (name === 'account_id' && isEmpty(val)) {
+          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
+          return
         }
         delete draftErr[name]
       })
@@ -99,7 +123,6 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
   }
 
   const closeModal = () => {
-    setCollection({})
     setOpen(false)
   }
 
@@ -126,13 +149,32 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
                 </div>
               )}
               <div className="row">
-                <div className="col-md-12 mb-3">
+                <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.name')}
                     isRequired={true}
                     defaultValue={collection?.name || ''}
-                    setChange={(val) => setChange(val, 'name')}
                     error={errors?.name}
+                    autoFocus={false}
+                    disabled={true}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <SelectBoxField
+                    label={t('common.account')}
+                    config={accountSelectBoxConfig}
+                    isRequired={true}
+                    error={errors?.account}
+                    disabled={loading?.loanApproval}
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.installment')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(collection?.installment) || ''}
+                    setChange={(val) => setChange(val, 'installment')}
+                    error={errors?.installment}
                     autoFocus={true}
                     disabled={loading?.collectionForm}
                   />
@@ -144,22 +186,6 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
                     defaultValue={tsNumbers(collection?.deposit) || ''}
                     setChange={(val) => setChange(val, 'deposit')}
                     error={errors?.deposit}
-                    autoFocus={true}
-                    disabled={loading?.collectionForm}
-                  />
-                  <span className="text-info d-block mt-2">
-                    {`${t('common.note')}: ${t('common.deposit')} ${tsNumbers(
-                      `$${collection?.payable_deposit || 0}/-`
-                    )}`}
-                  </span>
-                </div>
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.installment')}
-                    isRequired={true}
-                    defaultValue={tsNumbers(collection?.installment) || ''}
-                    setChange={(val) => setChange(val, 'installment')}
-                    error={errors?.installment}
                     autoFocus={true}
                     disabled={loading?.collectionForm}
                   />
@@ -240,6 +266,7 @@ const fieldValidations = [
   'center_id',
   'category_id',
   'client_registration_id',
+  'account_id',
   'acc_no',
   'installment',
   'deposit'

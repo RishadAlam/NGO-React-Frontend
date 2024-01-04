@@ -7,19 +7,34 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import { isEmptyObject } from '../../helper/isEmptyObject'
 import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import dateFormat from '../../libs/dateFormat'
+import decodeHTMLs from '../../libs/decodeHTMLs'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import Avatar from '../utilities/Avatar'
 import SavingCollectionModal from './SavingCollectionModal'
 
-function SavingCollectionSheetRow({ columnList, index, account, mutate, collection = {} }) {
+function SavingCollectionSheetRow({
+  columnList,
+  index,
+  collectionIndex,
+  account,
+  mutate,
+  collection = {}
+}) {
   const { t } = useTranslation()
+  const isSingleCollection =
+    (account?.saving_collection?.length > 1 && !collectionIndex) ||
+    account?.saving_collection?.length === 1 ||
+    !account?.saving_collection?.length
+      ? true
+      : false
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const [openCollectionModal, setOpenCollectionModal] = useState(false)
@@ -31,6 +46,7 @@ function SavingCollectionSheetRow({ columnList, index, account, mutate, collecti
     center_id: '',
     category_id: '',
     client_registration_id: '',
+    account_id: 1,
     acc_no: '',
     name: '',
     payable_deposit: '',
@@ -79,11 +95,12 @@ function SavingCollectionSheetRow({ columnList, index, account, mutate, collecti
         draftData.client_registration_id = account.client_registration_id
         draftData.acc_no = account.acc_no
         draftData.name = account.client_registration.name
-        draftData.payable_deposit = account.payable_deposit
+        draftData.deposit = account.payable_deposit
 
         if (!isEmptyObject(collection)) {
           draftData.newCollection = false
           draftData.collection_id = collection.id
+          draftData.account_id = collection.account_id
           draftData.deposit = collection.deposit
           draftData.description = collection.description
         }
@@ -116,22 +133,48 @@ function SavingCollectionSheetRow({ columnList, index, account, mutate, collecti
     })
   }
 
+  const collectionModal = () => (
+    <SavingCollectionModal
+      open={openCollectionModal}
+      setOpen={setOpenCollectionModal}
+      collectionData={collectionData}
+      mutate={mutate}
+    />
+  )
+
   return (
     <tr>
       <td className={`${!columnList['#'] ? 'd-none' : ''}`}>
-        {tsNumbers((index + 1).toString().padStart(2, '0'))}
+        {isSingleCollection && tsNumbers((index + 1).toString().padStart(2, '0'))}
       </td>
       <td className={`${!columnList.image ? 'd-none' : ''}`}>
-        <Avatar
-          name={account?.client_registration?.name}
-          img={account?.client_registration?.image_uri}
-        />
+        {isSingleCollection && (
+          <Avatar
+            name={account?.client_registration?.name}
+            img={account?.client_registration?.image_uri}
+          />
+        )}
       </td>
       <td className={`${!columnList.name ? 'd-none' : ''}`}>
-        {account?.client_registration?.name}
+        {isSingleCollection && account?.client_registration?.name}
       </td>
-      <td className={`${!columnList.acc_no ? 'd-none' : ''}`}>{tsNumbers(account?.acc_no)}</td>
-      <td className={`${!columnList.description ? 'd-none' : ''}`}>{collection?.description}</td>
+      <td className={`${!columnList.acc_no ? 'd-none' : ''}`}>
+        {isSingleCollection && tsNumbers(account?.acc_no)}
+      </td>
+      <td className={`${!columnList.account ? 'd-none' : ''}`}>
+        {defaultNameCheck(
+          t,
+          collection?.account?.is_default,
+          'account.default.',
+          collection?.account?.name
+        )}
+      </td>
+      <td className={`${!columnList.installment ? 'd-none' : ''}`}>
+        {collection?.installment && tsNumbers(collection?.installment)}
+      </td>
+      <td className={`${!columnList.description ? 'd-none' : ''}`}>
+        <span>{decodeHTMLs(collection?.description)}</span>
+      </td>
       <td className={`${!columnList.deposit ? 'd-none' : ''}`}>
         {collection?.deposit && tsNumbers(`$${collection?.deposit}/-`)}
       </td>
@@ -145,14 +188,7 @@ function SavingCollectionSheetRow({ columnList, index, account, mutate, collecti
         {checkPermissions(
           ['permission_to_do_saving_collection', 'regular_saving_collection_update'],
           authPermissions
-        ) && (
-          <SavingCollectionModal
-            open={openCollectionModal}
-            setOpen={setOpenCollectionModal}
-            collectionData={collectionData}
-            mutate={mutate}
-          />
-        )}
+        ) && collectionModal()}
       </td>
     </tr>
   )
