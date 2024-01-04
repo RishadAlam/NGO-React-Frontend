@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import SavingCollectionSheetRow from './SavingCollectionSheetRow'
 
-export default function SavingCollectionSheetBody({ center, columnList }) {
+export default function SavingCollectionSheetBody({ center, columnList, mutate }) {
   const { t } = useTranslation()
 
   return (
@@ -16,6 +16,7 @@ export default function SavingCollectionSheetBody({ center, columnList }) {
                 index={acc_key}
                 account={account}
                 collection={collection}
+                mutate={mutate}
               />
             ))
           ) : (

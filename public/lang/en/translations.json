@@ -147,7 +147,9 @@
     "interest_installment": "Interest Installment",
     "total_payable_loan_installment": "Total Loan Installment",
     "total_payable_interest": "Total Payable Interest",
-    "deduct_loan_msg": "Select an account for deduct the loan otherwise avoid."
+    "deduct_loan_msg": "Select an account for deduct the loan otherwise avoid.",
+    "note": "Note",
+    "installment": "Installment"
   },
 
   "common_validation": {

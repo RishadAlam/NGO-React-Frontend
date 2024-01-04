@@ -7,7 +7,7 @@ import SavingCollectionSheetFooter from './SavingCollectionSheetFooter'
 import SavingCollectionSheetHead from './SavingCollectionSheetHead'
 import SavingCollectionSheetHeader from './SavingCollectionSheetHeader'
 
-function SavingCollectionSheet({ data = [], loading }) {
+function SavingCollectionSheet({ data = [], mutate, loading }) {
   const windowWidth = useWindowInnerWidthValue()
   const [columnList, setColumnList] = useState({
     '#': windowWidth < 576 ? false : true,
@@ -36,7 +36,11 @@ function SavingCollectionSheet({ data = [], loading }) {
                   <div className="table-responsive" style={{ minHeight: 'unset' }}>
                     <table className="table table-hover table-report">
                       <SavingCollectionSheetHead columnList={columnList} />
-                      <SavingCollectionSheetBody center={center} columnList={columnList} />
+                      <SavingCollectionSheetBody
+                        center={center}
+                        columnList={columnList}
+                        mutate={mutate}
+                      />
                       <SavingCollectionSheetFooter columnList={columnList} center={center} />
                     </table>
                   </div>
