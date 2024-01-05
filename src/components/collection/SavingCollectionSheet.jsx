@@ -1,13 +1,14 @@
-import { Fragment, memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import { checkPermission } from '../../helper/checkPermission'
 import '../../pages/staffs/staffs.scss'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
-import SavingCollectionSheetBody from './SavingCollectionSheetBody'
-import SavingCollectionSheetFooter from './SavingCollectionSheetFooter'
-import SavingCollectionSheetHead from './SavingCollectionSheetHead'
 import SavingCollectionSheetHeader from './SavingCollectionSheetHeader'
+import SavingCollectionTable from './SavingCollectionTable'
 
 function SavingCollectionSheet({ data = [], mutate, loading }) {
+  const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const [columnList, setColumnList] = useState({
     '#': windowWidth < 576 ? false : true,
@@ -23,6 +24,13 @@ function SavingCollectionSheet({ data = [], mutate, loading }) {
     action: true
   })
 
+  useEffect(() => {
+    if (checkPermission('regular_saving_collection_approval', authPermissions)) {
+      setColumnList({ ...columnList, approval: true })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <div className="staff-table">
@@ -33,20 +41,12 @@ function SavingCollectionSheet({ data = [], mutate, loading }) {
             <SavingCollectionSheetHeader columnList={columnList} setColumnList={setColumnList} />
             <div className="card-body">
               {data.map((center, index) => (
-                <Fragment key={index}>
-                  <h2 className="heading">{center?.name}</h2>
-                  <div className="table-responsive" style={{ minHeight: 'unset' }}>
-                    <table className="table table-hover table-report">
-                      <SavingCollectionSheetHead columnList={columnList} />
-                      <SavingCollectionSheetBody
-                        center={center}
-                        columnList={columnList}
-                        mutate={mutate}
-                      />
-                      <SavingCollectionSheetFooter columnList={columnList} center={center} />
-                    </table>
-                  </div>
-                </Fragment>
+                <SavingCollectionTable
+                  key={index}
+                  center={center}
+                  columnList={columnList}
+                  mutate={mutate}
+                />
               ))}
             </div>
           </div>

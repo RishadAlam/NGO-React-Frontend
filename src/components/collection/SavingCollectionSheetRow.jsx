@@ -9,6 +9,7 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
+import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
 import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
@@ -17,6 +18,7 @@ import decodeHTMLs from '../../libs/decodeHTMLs'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
+import AndroidSwitch from '../utilities/AndroidSwitch'
 import Avatar from '../utilities/Avatar'
 import SavingCollectionModal from './SavingCollectionModal'
 
@@ -26,7 +28,9 @@ function SavingCollectionSheetRow({
   collectionIndex,
   account,
   mutate,
-  collection = {}
+  collection = {},
+  approvedList,
+  setApprovedList
 }) {
   const { t } = useTranslation()
   const isSingleCollection =
@@ -135,6 +139,14 @@ function SavingCollectionSheetRow({
     })
   }
 
+  const setApproved = (id, val) => {
+    setApprovedList((prevList) =>
+      create(prevList, (draftList) => {
+        val ? draftList.push(id) : draftList.splice(draftList.indexOf(id), 1)
+      })
+    )
+  }
+
   const collectionModal = () => (
     <SavingCollectionModal
       open={openCollectionModal}
@@ -185,6 +197,17 @@ function SavingCollectionSheetRow({
         {collection?.created_at &&
           tsNumbers(dateFormat(collection?.created_at, 'dd/MM/yyyy hh:mm a'))}
       </td>
+      {checkPermission('regular_saving_collection_approval', authPermissions) && (
+        <td className={`${!columnList.approval ? 'd-none' : ''}`}>
+          {!isEmpty(collection?.is_approved) && (
+            <AndroidSwitch
+              value={approvedList.includes(collection?.id)}
+              toggleStatus={(e) => setApproved(collection.id, e.target.checked)}
+              disabled={loading?.collectionForm}
+            />
+          )}
+        </td>
+      )}
       <td className={`${!columnList.action ? 'd-none' : ''}`}>
         {actionBtnGroup(collection, account)}
         {checkPermissions(

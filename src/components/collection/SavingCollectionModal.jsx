@@ -24,7 +24,6 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
   const [loading, setLoading] = useLoadingState({})
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
-  const [account, setAccount] = useState()
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
@@ -94,9 +93,6 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
   const setChange = (val, name) => {
     if (name === 'deposit' || name === 'installment') {
       val = tsNumbers(val, true)
-    }
-    if (name === 'account_id') {
-      setAccount(val)
     }
     setCollection((prevData) =>
       create(prevData, (draftData) => {

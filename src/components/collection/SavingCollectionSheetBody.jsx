@@ -1,7 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import SavingCollectionSheetRow from './SavingCollectionSheetRow'
 
-export default function SavingCollectionSheetBody({ center, columnList, mutate }) {
+export default function SavingCollectionSheetBody({
+  center,
+  columnList,
+  mutate,
+  approvedList,
+  setApprovedList
+}) {
   const { t } = useTranslation()
 
   return (
@@ -18,6 +24,8 @@ export default function SavingCollectionSheetBody({ center, columnList, mutate }
                 account={account}
                 collection={collection}
                 mutate={mutate}
+                approvedList={approvedList}
+                setApprovedList={setApprovedList}
               />
             ))
           ) : (
@@ -27,6 +35,8 @@ export default function SavingCollectionSheetBody({ center, columnList, mutate }
               index={acc_key}
               account={account}
               mutate={mutate}
+              approvedList={approvedList}
+              setApprovedList={setApprovedList}
             />
           )
         )
