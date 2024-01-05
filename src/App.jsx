@@ -26,6 +26,7 @@ const PendingLoans = lazy(() => import('./pages/pendingLoans/PendingLoans'))
 const SavingReport = lazy(() => import('./pages/regularCollection/SavingReport'))
 const SavingReportSheet = lazy(() => import('./pages/regularCollection/SavingReportSheet'))
 const LoanReport = lazy(() => import('./pages/regularCollection/LoanReport'))
+const LoanReportSheet = lazy(() => import('./pages/regularCollection/LoanReportSheet'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -192,6 +193,16 @@ export default function App() {
                       <ErrorBoundary FallbackComponent={ErrorFallback}>
                         <Suspense fallback={<Loader />}>
                           <LoanReport />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id/:field_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <LoanReportSheet />
                         </Suspense>
                       </ErrorBoundary>
                     }
