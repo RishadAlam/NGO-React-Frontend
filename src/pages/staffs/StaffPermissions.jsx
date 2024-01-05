@@ -170,7 +170,7 @@ export default function StaffPermissions() {
                                   <li>
                                     <div className="row mb-2 align-items-center">
                                       <div className="col-10">
-                                        <h6>{t(`staff_permissions.permissions.${permission}`)}</h6>
+                                        <p>{t(`staff_permissions.permissions.${permission}`)}</p>
                                       </div>
                                       <div className="col-2 text-end text-success">
                                         <AndroidSwitch
