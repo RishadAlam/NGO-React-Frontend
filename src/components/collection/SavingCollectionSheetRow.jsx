@@ -96,11 +96,13 @@ function SavingCollectionSheetRow({
         draftData.acc_no = account.acc_no
         draftData.name = account.client_registration.name
         draftData.deposit = account.payable_deposit
+        draftData.payable_deposit = account.payable_deposit
 
         if (!isEmptyObject(collection)) {
           draftData.newCollection = false
           draftData.collection_id = collection.id
           draftData.account_id = collection.account_id
+          draftData.installment = collection.installment
           draftData.deposit = collection.deposit
           draftData.description = collection.description
         }

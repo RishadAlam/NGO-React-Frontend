@@ -104,6 +104,9 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
           draftData[name] = val.id
           return
         }
+        if (name === 'installment') {
+          draftData.deposit = draftData.payable_deposit * val
+        }
         draftData[name] = val
       })
     )
