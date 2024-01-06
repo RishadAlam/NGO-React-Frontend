@@ -30,7 +30,8 @@ function SavingCollectionSheetRow({
   mutate,
   collection = {},
   approvedList,
-  setApprovedList
+  setApprovedList,
+  isRegular = true
 }) {
   const { t } = useTranslation()
   const isSingleCollection =
@@ -61,10 +62,14 @@ function SavingCollectionSheetRow({
 
   const actionBtnGroup = (collection, account) => (
     <ActionBtnGroup>
-      {((!isEmptyObject(collection) &&
+      {((isRegular &&
+        isEmptyObject(collection) &&
         checkPermission('permission_to_do_saving_collection', authPermissions)) ||
-        (isEmptyObject(collection) &&
-          checkPermission('regular_saving_collection_update', authPermissions))) && (
+        (!isEmptyObject(collection) &&
+          checkPermission(
+            `${isRegular ? 'regular' : 'pending'}_saving_collection_update`,
+            authPermissions
+          ))) && (
         <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => collectionEdit(collection, account)}>
             {<Edit size={20} />}
@@ -72,7 +77,10 @@ function SavingCollectionSheetRow({
         </Tooltip>
       )}
       {!isEmptyObject(collection) &&
-        checkPermission('regular_saving_collection_permanently_delete', authPermissions) && (
+        checkPermission(
+          `${isRegular ? 'regular' : 'pending'}_saving_collection_permanently_delete`,
+          authPermissions
+        ) && (
           <Tooltip
             TransitionComponent={Zoom}
             title={t('common.delete')}
@@ -153,6 +161,7 @@ function SavingCollectionSheetRow({
       setOpen={setOpenCollectionModal}
       collectionData={collectionData}
       mutate={mutate}
+      isRegular={isRegular}
     />
   )
 
@@ -197,7 +206,10 @@ function SavingCollectionSheetRow({
         {collection?.created_at &&
           tsNumbers(dateFormat(collection?.created_at, 'dd/MM/yyyy hh:mm a'))}
       </td>
-      {checkPermission('regular_saving_collection_approval', authPermissions) && (
+      {checkPermission(
+        `${isRegular ? 'regular' : 'pending'}_saving_collection_approval`,
+        authPermissions
+      ) && (
         <td className={`${!columnList.approval ? 'd-none' : ''}`}>
           {!isEmpty(collection?.is_approved) && (
             <AndroidSwitch
@@ -211,7 +223,10 @@ function SavingCollectionSheetRow({
       <td className={`${!columnList.action ? 'd-none' : ''}`}>
         {actionBtnGroup(collection, account)}
         {checkPermissions(
-          ['permission_to_do_saving_collection', 'regular_saving_collection_update'],
+          [
+            isRegular && 'permission_to_do_saving_collection',
+            `${isRegular ? 'regular' : 'pending'}_saving_collection_update`
+          ],
           authPermissions
         ) && collectionModal()}
       </td>

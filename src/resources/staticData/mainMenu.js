@@ -137,6 +137,46 @@ export const mainMenu = (t) => {
         path: '/pending/loans',
         icon: 'BankTransferOut',
         view: checkPermissions(['pending_loan_view', 'pending_loan_view_as_admin'], permissions)
+      },
+      {
+        id: 3,
+        label: t('menu.label.pending_collection'),
+        path: '',
+        icon: 'CheckPatch',
+        view: checkPermissions(
+          [
+            'pending_saving_collection_list_view',
+            'pending_saving_collection_list_view_as_admin',
+            'pending_loan_collection_list_view',
+            'pending_loan_collection_list_view_as_admin'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'pendingCollection1',
+            label: t('menu.collection.Saving_Collection'),
+            path: '/collection/pending/saving',
+            icon: 'SaveEnergy',
+            view: checkPermissions(
+              [
+                'pending_saving_collection_list_view',
+                'pending_saving_collection_list_view_as_admin'
+              ],
+              permissions
+            )
+          },
+          {
+            id: 'pendingCollection1',
+            label: t('menu.collection.Loan_Collection'),
+            path: '/collection/pending/loan',
+            icon: 'Loan',
+            view: checkPermissions(
+              ['pending_loan_collection_list_view', 'pending_loan_collection_list_view_as_admin'],
+              permissions
+            )
+          }
+        ]
       }
     ],
     [t('menu.categories.Control_Panel')]: [

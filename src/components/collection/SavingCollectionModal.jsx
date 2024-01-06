@@ -18,7 +18,13 @@ import SelectBoxField from '../utilities/SelectBoxField'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
-export default function SavingCollectionModal({ open, setOpen, collectionData, mutate }) {
+export default function SavingCollectionModal({
+  open,
+  setOpen,
+  collectionData,
+  mutate,
+  isRegular = true
+}) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
@@ -41,19 +47,20 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
 
   const onSubmit = (event) => {
     event.preventDefault()
-    const validationErrors = checkRequiredFields(collection, t)
+    if (!isRegular && !collection.newCollection) closeModal()
 
+    const validationErrors = checkRequiredFields(collection, t)
     if (!isEmptyObject(validationErrors)) {
       setErrors(validationErrors)
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
+    const formData = setFormData(collection)
+    setLoading({ ...loading, collectionForm: true })
     const endpoint = collection.newCollection
       ? 'collection/saving'
       : `collection/saving/${collection.collection_id}`
-    const formData = setFormData(collection)
-    setLoading({ ...loading, collectionForm: true })
 
     xFetch(endpoint, formData, null, accessToken, null, 'POST', true)
       .then((response) => {

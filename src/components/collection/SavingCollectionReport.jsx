@@ -14,14 +14,18 @@ import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import ReactTable from '../utilities/tables/ReactTable'
 
-export default function SavingCollectionReport({ data = [], loading, step = 1 }) {
+export default function SavingCollectionReport({ data = [], loading, hasCategoryId = false }) {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const navigate = useNavigate()
 
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+      <Tooltip
+        TransitionComponent={Zoom}
+        title={t('menu.collection.Saving_Collection')}
+        arrow
+        followCursor>
         <IconButton className="text-warning" onClick={() => navigate(`${id}`)}>
           {<Folder size={20} />}
         </IconButton>
@@ -31,11 +35,11 @@ export default function SavingCollectionReport({ data = [], loading, step = 1 })
 
   const columns = useMemo(
     () =>
-      step === 1
+      !hasCategoryId
         ? CategoryCollectionSavingReportTableColumns(t, windowWidth, actionBtnGroup)
         : FieldCollectionSavingReportTableColumns(t, windowWidth, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, step, windowWidth, loading]
+    [t, hasCategoryId, windowWidth, loading]
   )
 
   return (
@@ -46,7 +50,7 @@ export default function SavingCollectionReport({ data = [], loading, step = 1 })
         ) : (
           <ReactTable
             title={
-              (step === 1 ? t('common.category') : t('common.field')) +
+              t(`common.${!hasCategoryId ? 'category' : 'field'}`) +
               ' ' +
               t('menu.collection.Saving_Collection')
             }

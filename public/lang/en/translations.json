@@ -403,6 +403,8 @@
       "pending_loan": "Pending Loans",
       "regular_saving_collection": "Regular Saving Collection",
       "regular_loan_collection": "Regular Loan Collection",
+      "pending_saving_collection": "Pending Saving Collection",
+      "pending_loan_collection": "Pending Loan Collection",
       "account_management": "Account Management",
       "account_transfer": "Account Transfer",
       "income": "Income",

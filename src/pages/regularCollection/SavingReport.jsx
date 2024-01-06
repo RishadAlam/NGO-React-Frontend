@@ -5,19 +5,25 @@ import SavingCollectionReport from '../../components/collection/SavingCollection
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import BusinessOpportunity from '../../icons/BusinessOpportunity'
+import CheckPatch from '../../icons/CheckPatch'
 import Chrome from '../../icons/Chrome'
 import Globe from '../../icons/Globe'
 import Home from '../../icons/Home'
 import SaveEnergy from '../../icons/SaveEnergy'
 
-export default function SavingReport() {
+export default function SavingReport({ isRegular = true }) {
   const { category_id } = useParams()
   const { t } = useTranslation()
-  const endpoint = isEmpty(category_id)
-    ? 'collection/saving/regular/collection-sheet'
-    : `collection/saving/regular/collection-sheet/${category_id}`
 
-  const { data: { data: regularCollections = [] } = [], isLoading } = useFetch({
+  const endpoint = isRegular
+    ? isEmpty(category_id)
+      ? 'collection/saving/regular/collection-sheet'
+      : `collection/saving/regular/collection-sheet/${category_id}`
+    : isEmpty(category_id)
+    ? 'collection/saving/pending/collection-sheet'
+    : `collection/saving/pending/collection-sheet/${category_id}`
+
+  const { data: { data: collections = [] } = [], isLoading } = useFetch({
     action: endpoint
   })
 
@@ -30,8 +36,8 @@ export default function SavingReport() {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.label.regular_collection'),
-                  icon: <BusinessOpportunity size={16} />,
+                  name: t(`menu.label.${isRegular ? 'regular' : 'pending'}_collection`),
+                  icon: isRegular ? <BusinessOpportunity size={16} /> : <CheckPatch size={16} />,
                   active: false
                 },
                 {
@@ -55,9 +61,9 @@ export default function SavingReport() {
           </div>
         </div>
         <SavingCollectionReport
-          data={regularCollections}
+          data={collections}
           loading={isLoading}
-          step={isEmpty(category_id) ? 1 : 2}
+          hasCategoryId={!isEmpty(category_id)}
         />
       </section>
     </>

@@ -10,7 +10,8 @@ export default function SavingCollectionSheetHead({
   setApprovedList,
   accounts,
   totalCollection,
-  approvedList
+  approvedList,
+  isRegular = true
 }) {
   const loading = useLoadingValue()
   const { permissions: authPermissions } = useAuthDataValue()
@@ -29,7 +30,10 @@ export default function SavingCollectionSheetHead({
         <th className={`${!columnList.deposit ? 'd-none' : ''}`}>{t('common.deposit')}</th>
         <th className={`${!columnList.creator ? 'd-none' : ''}`}>{t('common.creator')}</th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}>{t('common.time')}</th>
-        {checkPermission('regular_saving_collection_approval', authPermissions) && (
+        {checkPermission(
+          `${isRegular ? 'regular' : 'pending'}_saving_collection_approval`,
+          authPermissions
+        ) && (
           <th className={`${!columnList.approval ? 'd-none' : ''}`}>
             {t('common.approval')}
             &nbsp;&nbsp;

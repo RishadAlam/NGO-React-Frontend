@@ -6,7 +6,8 @@ export default function SavingCollectionSheetBody({
   columnList,
   mutate,
   approvedList,
-  setApprovedList
+  setApprovedList,
+  isRegular = true
 }) {
   const { t } = useTranslation()
 
@@ -26,6 +27,7 @@ export default function SavingCollectionSheetBody({
                 mutate={mutate}
                 approvedList={approvedList}
                 setApprovedList={setApprovedList}
+                isRegular={isRegular}
               />
             ))
           ) : (
@@ -37,6 +39,7 @@ export default function SavingCollectionSheetBody({
               mutate={mutate}
               approvedList={approvedList}
               setApprovedList={setApprovedList}
+              isRegular={isRegular}
             />
           )
         )

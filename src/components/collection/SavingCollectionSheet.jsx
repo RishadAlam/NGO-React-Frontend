@@ -7,7 +7,7 @@ import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import SavingCollectionSheetHeader from './SavingCollectionSheetHeader'
 import SavingCollectionTable from './SavingCollectionTable'
 
-function SavingCollectionSheet({ data = [], mutate, loading }) {
+function SavingCollectionSheet({ data = [], mutate, loading, isRegular = true }) {
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const [columnList, setColumnList] = useState({
@@ -25,7 +25,12 @@ function SavingCollectionSheet({ data = [], mutate, loading }) {
   })
 
   useEffect(() => {
-    if (checkPermission('regular_saving_collection_approval', authPermissions)) {
+    if (
+      checkPermission(
+        `${isRegular ? 'regular' : 'pending'}_saving_collection_approval`,
+        authPermissions
+      )
+    ) {
       setColumnList({ ...columnList, approval: true })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +51,7 @@ function SavingCollectionSheet({ data = [], mutate, loading }) {
                   center={center}
                   columnList={columnList}
                   mutate={mutate}
+                  isRegular={isRegular}
                 />
               ))}
             </div>

@@ -3,7 +3,7 @@ import SavingCollectionSheetBody from './SavingCollectionSheetBody'
 import SavingCollectionSheetFooter from './SavingCollectionSheetFooter'
 import SavingCollectionSheetHead from './SavingCollectionSheetHead'
 
-export default function SavingCollectionTable({ center, columnList, mutate }) {
+export default function SavingCollectionTable({ center, columnList, mutate, isRegular = true }) {
   const [approvedList, setApprovedList] = useState([])
 
   const totalCollection = useMemo(
@@ -22,6 +22,7 @@ export default function SavingCollectionTable({ center, columnList, mutate }) {
             accounts={center?.saving_account}
             totalCollection={totalCollection}
             approvedList={approvedList}
+            isRegular={isRegular}
           />
           <SavingCollectionSheetBody
             center={center}
@@ -29,6 +30,7 @@ export default function SavingCollectionTable({ center, columnList, mutate }) {
             mutate={mutate}
             approvedList={approvedList}
             setApprovedList={setApprovedList}
+            isRegular={isRegular}
           />
           <SavingCollectionSheetFooter
             columnList={columnList}
@@ -36,6 +38,7 @@ export default function SavingCollectionTable({ center, columnList, mutate }) {
             approvedList={approvedList}
             setApprovedList={setApprovedList}
             mutate={mutate}
+            isRegular={isRegular}
           />
         </table>
       </div>

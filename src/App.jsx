@@ -123,8 +123,9 @@ export default function App() {
               </Route>
             </Route>
 
-            {/* Regular Collection Routes */}
+            {/* Collection Routes */}
             <Route path="collection">
+              {/* Regular Collection Routes */}
               <Route path="regular">
                 <Route
                   path="saving"
@@ -203,6 +204,92 @@ export default function App() {
                       <ErrorBoundary FallbackComponent={ErrorFallback}>
                         <Suspense fallback={<Loader />}>
                           <LoanReportSheet />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
+              </Route>
+
+              {/* Pending Collection Routes */}
+              <Route path="pending">
+                <Route
+                  path="saving"
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={[
+                        'pending_saving_collection_list_view',
+                        'pending_saving_collection_list_view_as_admin'
+                      ]}
+                    />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <SavingReport isRegular={false} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <SavingReport isRegular={false} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id/:field_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <SavingReportSheet isRegular={false} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                </Route>
+                <Route
+                  path="loan"
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={[
+                        'pending_loan_collection_list_view',
+                        'pending_loan_collection_list_view_as_admin'
+                      ]}
+                    />
+                  }>
+                  <Route
+                    index
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <LoanReport isRegular={false} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <LoanReport isRegular={false} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path=":category_id/:field_id"
+                    element={
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Suspense fallback={<Loader />}>
+                          <LoanReportSheet isRegular={false} />
                         </Suspense>
                       </ErrorBoundary>
                     }
