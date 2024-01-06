@@ -3,7 +3,7 @@ import LoanCollectionSheetBody from './LoanCollectionSheetBody'
 import LoanCollectionSheetFooter from './LoanCollectionSheetFooter'
 import LoanCollectionSheetHead from './LoanCollectionSheetHead'
 
-export default function LoanCollectionTable({ center, columnList, mutate }) {
+export default function LoanCollectionTable({ center, columnList, mutate, isRegular = true }) {
   const [approvedList, setApprovedList] = useState([])
 
   const totalCollection = useMemo(() => countTotalCollections(center?.loan_account || []), [center])
@@ -19,6 +19,7 @@ export default function LoanCollectionTable({ center, columnList, mutate }) {
             accounts={center?.loan_account}
             totalCollection={totalCollection}
             approvedList={approvedList}
+            isRegular={isRegular}
           />
           <LoanCollectionSheetBody
             center={center}
@@ -26,6 +27,7 @@ export default function LoanCollectionTable({ center, columnList, mutate }) {
             mutate={mutate}
             approvedList={approvedList}
             setApprovedList={setApprovedList}
+            isRegular={isRegular}
           />
           <LoanCollectionSheetFooter
             columnList={columnList}
@@ -33,6 +35,7 @@ export default function LoanCollectionTable({ center, columnList, mutate }) {
             approvedList={approvedList}
             setApprovedList={setApprovedList}
             mutate={mutate}
+            isRegular={isRegular}
           />
         </table>
       </div>

@@ -52,7 +52,6 @@ export default function SavingReportSheet({ isRegular = true }) {
   const setParamsState = (val, name) => {
     if (name === 'dateRange') {
       setDateRange(new Date(val))
-      mutate()
     } else if (name === 'creator') {
       setSelectedCreator(val)
     }

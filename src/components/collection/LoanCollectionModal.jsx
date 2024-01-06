@@ -19,7 +19,13 @@ import SelectBoxField from '../utilities/SelectBoxField'
 import TextAreaInputField from '../utilities/TextAreaInputField'
 import TextInputField from '../utilities/TextInputField'
 
-export default function LoanCollectionModal({ open, setOpen, collectionData, mutate }) {
+export default function LoanCollectionModal({
+  open,
+  setOpen,
+  collectionData,
+  mutate,
+  isRegular = true
+}) {
   const { t } = useTranslation()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
@@ -42,8 +48,9 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
 
   const onSubmit = (event) => {
     event.preventDefault()
-    const validationErrors = checkRequiredFields(collection, t)
+    if (!isRegular && !collection.newCollection) closeModal()
 
+    const validationErrors = checkRequiredFields(collection, t)
     if (!isEmptyObject(validationErrors)) {
       setErrors(validationErrors)
       toast.error(t('common_validation.required_fields_are_empty'))
@@ -53,7 +60,7 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
     const endpoint = collection.newCollection
       ? 'collection/loan'
       : `collection/loan/${collection.collection_id}`
-    const formData = setFormData(collection)
+    const formData = setFormData(collection, isRegular)
     setLoading({ ...loading, collectionForm: true })
 
     xFetch(endpoint, formData, null, accessToken, null, 'POST', true)
@@ -272,9 +279,9 @@ const checkRequiredFields = (formFields, t) => {
   return validationErrors
 }
 
-const setFormData = (fields) => {
+const setFormData = (fields, isRegular) => {
   const formData = new FormData()
-  if (!fields?.newCollection) {
+  if (!fields?.newCollection || !isRegular) {
     formData.append('_method', 'PUT')
   }
 

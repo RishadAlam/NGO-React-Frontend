@@ -56,7 +56,7 @@ export default function SavingCollectionModal({
       return
     }
 
-    const formData = setFormData(collection)
+    const formData = setFormData(collection, isRegular)
     setLoading({ ...loading, collectionForm: true })
     const endpoint = collection.newCollection
       ? 'collection/saving'
@@ -245,9 +245,9 @@ const checkRequiredFields = (formFields, t) => {
   return validationErrors
 }
 
-const setFormData = (fields) => {
+const setFormData = (fields, isRegular) => {
   const formData = new FormData()
-  if (!fields?.newCollection) {
+  if (!fields?.newCollection || !isRegular) {
     formData.append('_method', 'PUT')
   }
 

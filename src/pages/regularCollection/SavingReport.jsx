@@ -14,14 +14,10 @@ import SaveEnergy from '../../icons/SaveEnergy'
 export default function SavingReport({ isRegular = true }) {
   const { category_id } = useParams()
   const { t } = useTranslation()
-
-  const endpoint = isRegular
-    ? isEmpty(category_id)
-      ? 'collection/saving/regular/collection-sheet'
-      : `collection/saving/regular/collection-sheet/${category_id}`
-    : isEmpty(category_id)
-    ? 'collection/saving/pending/collection-sheet'
-    : `collection/saving/pending/collection-sheet/${category_id}`
+  const prefix = isRegular ? 'regular' : 'pending'
+  const endpoint = isEmpty(category_id)
+    ? `collection/saving/${prefix}/collection-sheet`
+    : `collection/saving/${prefix}/collection-sheet/${category_id}`
 
   const { data: { data: collections = [] } = [], isLoading } = useFetch({
     action: endpoint

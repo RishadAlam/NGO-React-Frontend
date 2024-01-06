@@ -10,7 +10,8 @@ export default function LoanCollectionSheetHead({
   setApprovedList,
   accounts,
   totalCollection,
-  approvedList
+  approvedList,
+  isRegular = true
 }) {
   const loading = useLoadingValue()
   const { permissions: authPermissions } = useAuthDataValue()
@@ -32,7 +33,10 @@ export default function LoanCollectionSheetHead({
         <th className={`${!columnList.total ? 'd-none' : ''}`}>{t('common.total')}</th>
         <th className={`${!columnList.creator ? 'd-none' : ''}`}>{t('common.creator')}</th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}>{t('common.time')}</th>
-        {checkPermission('regular_loan_collection_approval', authPermissions) && (
+        {checkPermission(
+          `${isRegular ? 'regular' : 'pending'}_loan_collection_approval`,
+          authPermissions
+        ) && (
           <th className={`${!columnList.approval ? 'd-none' : ''}`}>
             {t('common.approval')}
             &nbsp;&nbsp;

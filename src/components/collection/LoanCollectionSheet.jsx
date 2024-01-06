@@ -7,7 +7,7 @@ import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import LoanCollectionSheetHeader from './LoanCollectionSheetHeader'
 import LoanCollectionTable from './LoanCollectionTable'
 
-function LoanCollectionSheet({ data = [], mutate, loading }) {
+function LoanCollectionSheet({ data = [], mutate, loading, isRegular = true }) {
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const [columnList, setColumnList] = useState({
@@ -28,7 +28,12 @@ function LoanCollectionSheet({ data = [], mutate, loading }) {
   })
 
   useEffect(() => {
-    if (checkPermission('regular_loan_collection_approval', authPermissions)) {
+    if (
+      checkPermission(
+        `${isRegular ? 'regular' : 'pending'}_loan_collection_approval`,
+        authPermissions
+      )
+    ) {
       setColumnList({ ...columnList, approval: true })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,6 +54,7 @@ function LoanCollectionSheet({ data = [], mutate, loading }) {
                   center={center}
                   columnList={columnList}
                   mutate={mutate}
+                  isRegular={isRegular}
                 />
               ))}
             </div>

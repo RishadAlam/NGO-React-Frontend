@@ -14,7 +14,7 @@ import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import ReactTable from '../utilities/tables/ReactTable'
 
-export default function LoanCollectionReport({ data = [], loading, step = 1 }) {
+export default function LoanCollectionReport({ data = [], loading, hasCategoryId = false }) {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const navigate = useNavigate()
@@ -31,11 +31,11 @@ export default function LoanCollectionReport({ data = [], loading, step = 1 }) {
 
   const columns = useMemo(
     () =>
-      step === 1
+      !hasCategoryId
         ? CategoryCollectionLoanReportTableColumns(t, windowWidth, actionBtnGroup)
         : FieldCollectionLoanReportTableColumns(t, windowWidth, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, step, windowWidth, loading]
+    [t, hasCategoryId, windowWidth, loading]
   )
 
   return (
@@ -46,7 +46,7 @@ export default function LoanCollectionReport({ data = [], loading, step = 1 }) {
         ) : (
           <ReactTable
             title={
-              (step === 1 ? t('common.category') : t('common.field')) +
+              t(`common.${!hasCategoryId ? 'category' : 'field'}`) +
               ' ' +
               t('menu.collection.Loan_Collection')
             }

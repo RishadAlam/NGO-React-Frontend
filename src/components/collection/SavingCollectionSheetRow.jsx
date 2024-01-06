@@ -40,6 +40,7 @@ function SavingCollectionSheetRow({
     !account?.saving_collection?.length
       ? true
       : false
+
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const [openCollectionModal, setOpenCollectionModal] = useState(false)
