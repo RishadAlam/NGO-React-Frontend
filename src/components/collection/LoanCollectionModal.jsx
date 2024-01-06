@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import { checkPermission } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
@@ -20,7 +21,7 @@ import TextInputField from '../utilities/TextInputField'
 
 export default function LoanCollectionModal({ open, setOpen, collectionData, mutate }) {
   const { t } = useTranslation()
-  const { accessToken } = useAuthDataValue()
+  const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
@@ -115,8 +116,8 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        if ((name === 'deposit' || name === 'installment') && !Number(val) && !isEmpty(val)) {
-          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
+        if (name !== 'description' && (val === null || val === '')) {
+          draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_required')}`
           return
         } else if (name === 'account_id' && isEmpty(val)) {
           draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
@@ -160,7 +161,6 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                     isRequired={true}
                     defaultValue={collection?.name || ''}
                     error={errors?.name}
-                    autoFocus={false}
                     disabled={true}
                   />
                 </div>
@@ -180,7 +180,6 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                     defaultValue={tsNumbers(collection?.installment) || ''}
                     setChange={(val) => setChange(val, 'installment')}
                     error={errors?.installment}
-                    autoFocus={true}
                     disabled={loading?.collectionForm}
                   />
                 </div>
@@ -202,7 +201,6 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                     defaultValue={tsNumbers(collection?.loan) || ''}
                     setChange={(val) => setChange(val, 'loan')}
                     error={errors?.loan}
-                    autoFocus={true}
                     disabled={loading?.collectionForm}
                   />
                 </div>
@@ -213,8 +211,9 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                     defaultValue={tsNumbers(collection?.interest) || ''}
                     setChange={(val) => setChange(val, 'interest')}
                     error={errors?.interest}
-                    autoFocus={true}
-                    disabled={loading?.collectionForm}
+                    disabled={
+                      !checkPermission('permission_to_do_edit_loan_interest', authPermissions)
+                    }
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -224,8 +223,7 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                     defaultValue={tsNumbers(collection?.total) || ''}
                     setChange={(val) => setChange(val, 'total')}
                     error={errors?.total}
-                    autoFocus={true}
-                    disabled={loading?.collectionForm}
+                    disabled={true}
                   />
                 </div>
               </div>
@@ -246,7 +244,7 @@ export default function LoanCollectionModal({ open, setOpen, collectionData, mut
                 className={'btn-primary py-2 px-3'}
                 loading={loading?.collectionForm || false}
                 endIcon={<Save size={20} />}
-                disabled={loading?.collectionForm || false}
+                disabled={Object.keys(errors).length || loading?.collectionForm || false}
               />
             </div>
           </div>
@@ -260,16 +258,13 @@ const checkRequiredFields = (formFields, t) => {
   const validationErrors = {}
 
   for (const fieldName of fieldValidations) {
-    if (isEmpty(formFields[fieldName])) {
-      validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
-        'common_validation.is_required'
-      )}`
-    } else if (
-      (fieldName === 'deposit' || fieldName === 'installment') &&
-      !Number(formFields[fieldName])
+    if (
+      formFields[fieldName] === null ||
+      formFields[fieldName] === undefined ||
+      formFields[fieldName] === ''
     ) {
       validationErrors[fieldName] = `${t(`common.${fieldName}`)} ${t(
-        'common_validation.is_invalid'
+        'common_validation.is_required'
       )}`
     }
   }

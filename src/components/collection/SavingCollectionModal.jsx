@@ -109,7 +109,7 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
-        if ((name === 'deposit' || name === 'installment') && !Number(val) && !isEmpty(val)) {
+        if ((name === 'deposit' || name === 'installment') && (!Number(val) || isEmpty(val))) {
           draftErr[name] = `${t(`common.${name}`)} ${t('common_validation.is_invalid')}`
           return
         } else if (name === 'account_id' && isEmpty(val)) {
@@ -207,7 +207,7 @@ export default function SavingCollectionModal({ open, setOpen, collectionData, m
                 className={'btn-primary py-2 px-3'}
                 loading={loading?.collectionForm || false}
                 endIcon={<Save size={20} />}
-                disabled={loading?.collectionForm || false}
+                disabled={Object.keys(errors).length || loading?.collectionForm || false}
               />
             </div>
           </div>
