@@ -11,7 +11,7 @@
     "search_placeholder": "অনুসন্ধান করুন...",
     "No_Records_Found": "কোন তথ্য পাওয়া যায়নি!",
     "Showing_Up": "প্রদর্শন",
-    "client_name": "সদস্য",
+    "client_name": "সদস্যের নাম",
     "acc_no": "অ্যাকাউন্ট নং",
     "acc_details": "অ্যাকাউন্টের বিবরণ",
     "initial_balance": "প্রাথমিক ব্যালেন্স",
@@ -149,7 +149,8 @@
     "deduct_loan_msg": "ঋণ কাটার জন্য একটি অ্যাকাউন্ট নির্বাচন করুন অন্যথায় এড়িয়ে যান।",
     "note": "বিঃদ্রঃ",
     "installment": "কিস্তি সংখ্যা",
-    "save": "সেভ"
+    "save": "সেভ",
+    "client_register": "নিবন্ধিত সদস্য"
   },
 
   "common_validation": {

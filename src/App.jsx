@@ -44,6 +44,7 @@ const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
 const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfig'))
 const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
+const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
 
 export default function App() {
   return (
@@ -72,6 +73,18 @@ export default function App() {
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                   <Suspense fallback={<Loader />}>
                     <StaffProfile />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+
+            {/* Client Account Routes */}
+            <Route
+              path="client-register/:id"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <ClientRegisterAccount />
                   </Suspense>
                 </ErrorBoundary>
               }

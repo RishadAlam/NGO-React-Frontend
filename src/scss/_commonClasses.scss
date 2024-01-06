@@ -117,6 +117,16 @@ a {
   background-color: $primary-bg;
 }
 
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ln-hight {
+  line-height: 1.75rem !important;
+}
+
 a:active,
 .btn:active {
   transform: scale(0.95);

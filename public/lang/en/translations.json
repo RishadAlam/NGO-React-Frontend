@@ -150,7 +150,8 @@
     "deduct_loan_msg": "Select an account for deduct the loan otherwise avoid.",
     "note": "Note",
     "installment": "Installment",
-    "save": "Save"
+    "save": "Save",
+    "client_register": "Client Register"
   },
 
   "common_validation": {

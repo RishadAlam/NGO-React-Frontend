@@ -1,0 +1,30 @@
+@import '../../scss/responsive';
+@import '../../scss/variables';
+
+.register-box {
+  & * {
+    border-color: $blue-magenta !important;
+  }
+
+  .middle-column {
+    border-left: 1px solid;
+    border-right: 1px solid;
+
+    @include md {
+      border-left: none;
+      border-right: none;
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+      padding: 15px 0;
+      margin: 15px 0;
+    }
+  }
+}
+
+.dark .register-box {
+  background-color: $dark-bg;
+}
+
+.light .register-box {
+  background-color: $main-bg;
+}
