@@ -402,6 +402,25 @@ ul {
   }
 }
 
+.MuiTab-root.Mui-selected {
+  color: $blue-magenta !important;
+}
+.MuiTabs-indicator {
+  background-color: $blue-magenta !important;
+}
+.MuiTabs-flexContainer {
+  button {
+    min-height: unset !important;
+    min-width: unset !important;
+    font-size: 12px !important;
+    padding: 15px 15px;
+  }
+}
+
+.MuiTabs-scrollButtons.Mui-disabled {
+  display: none !important;
+}
+
 .MuiOutlinedInput-notchedOutline {
   border: none !important;
   border-bottom: 1px solid !important;
@@ -509,6 +528,7 @@ ul {
     -webkit-text-fill-color: $gray-500 !important;
   }
 
+  .MuiTab-root,
   .MuiDayCalendar-weekDayLabel,
   .MuiPickersCalendarHeader-label,
   .MuiPickersDay-dayWithMargin,
