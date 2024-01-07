@@ -151,7 +151,16 @@
     "note": "Note",
     "installment": "Installment",
     "save": "Save",
-    "client_register": "Client Register"
+    "client_register": "Client Register",
+    "approver": "Approver",
+    "details_summary": "Details Summary",
+    "running": "Running",
+    "active": "Active",
+    "hold": "Hold",
+    "closed": "Closed",
+    "register_account": "Register Account",
+    "saving_account": "Saving Account",
+    "loan_account": "Loan Account"
   },
 
   "common_validation": {

@@ -1,5 +1,6 @@
 import { Tabs } from '@mui/material'
 import Tab from '@mui/material/Tab'
+import { useTranslation } from 'react-i18next'
 import CheckPatch from '../../icons/CheckPatch'
 import Clock from '../../icons/Clock'
 import Dollar from '../../icons/Dollar'
@@ -7,6 +8,8 @@ import Trash from '../../icons/Trash'
 import UserCheck from '../../icons/UserCheck'
 
 export default function RegisterTabNav({ registerTabValue, setRegisterTabValue }) {
+  const { t } = useTranslation()
+
   return (
     <div className="border-top">
       <Tabs
@@ -15,30 +18,96 @@ export default function RegisterTabNav({ registerTabValue, setRegisterTabValue }
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile>
-        <Tab label="&nbsp; Register Account" value={1} icon={<UserCheck />} iconPosition="start" />
         <Tab
-          label="&nbsp; Running Savings Account"
+          label={`${t('common.register_account')}`}
+          value={1}
+          icon={
+            <span className="me-2">
+              <UserCheck />
+            </span>
+          }
+          iconPosition="start"
+        />
+        <Tab
+          label={`${t('common.running')} ${t('common.saving_account')}`}
           value={2}
-          icon={<Dollar />}
+          icon={
+            <span className="me-2">
+              <Dollar />
+            </span>
+          }
           iconPosition="start"
         />
         <Tab
-          label="&nbsp; Pending Savings Account"
+          label={`${t('common.pending')} ${t('common.saving_account')}`}
           value={3}
-          icon={<CheckPatch />}
+          icon={
+            <span className="me-2">
+              <CheckPatch />
+            </span>
+          }
           iconPosition="start"
         />
-        <Tab label="&nbsp; Hold Savings Account" value={4} icon={<Clock />} iconPosition="start" />
-        <Tab label="&nbsp; Closed Saving Account" value={5} icon={<Trash />} iconPosition="start" />
-        <Tab label="&nbsp; Running Loan Account" value={6} icon={<Dollar />} iconPosition="start" />
         <Tab
-          label="&nbsp; Pending Loan Account"
-          value={7}
-          icon={<CheckPatch />}
+          label={`${t('common.hold')} ${t('common.saving_account')}`}
+          value={4}
+          icon={
+            <span className="me-2">
+              <Clock />
+            </span>
+          }
           iconPosition="start"
         />
-        <Tab label="&nbsp; Hold Loan Account" value={8} icon={<Clock />} iconPosition="start" />
-        <Tab label="&nbsp; Closed Loan Account" value={8} icon={<Trash />} iconPosition="start" />
+        <Tab
+          label={`${t('common.closed')} ${t('common.saving_account')}`}
+          value={5}
+          icon={
+            <span className="me-2">
+              <Trash />
+            </span>
+          }
+          iconPosition="start"
+        />
+        <Tab
+          label={`${t('common.running')} ${t('common.loan_account')}`}
+          value={6}
+          icon={
+            <span className="me-2">
+              <Dollar />
+            </span>
+          }
+          iconPosition="start"
+        />
+        <Tab
+          label={`${t('common.pending')} ${t('common.loan_account')}`}
+          value={7}
+          icon={
+            <span className="me-2">
+              <CheckPatch />
+            </span>
+          }
+          iconPosition="start"
+        />
+        <Tab
+          label={`${t('common.hold')} ${t('common.loan_account')}`}
+          value={8}
+          icon={
+            <span className="me-2">
+              <Clock />
+            </span>
+          }
+          iconPosition="start"
+        />
+        <Tab
+          label={`${t('common.hold')} ${t('common.loan_account')}`}
+          value={8}
+          icon={
+            <span className="me-2">
+              <Trash />
+            </span>
+          }
+          iconPosition="start"
+        />
       </Tabs>
     </div>
   )

@@ -150,7 +150,16 @@
     "note": "বিঃদ্রঃ",
     "installment": "কিস্তি সংখ্যা",
     "save": "সেভ",
-    "client_register": "নিবন্ধিত সদস্য"
+    "client_register": "নিবন্ধিত সদস্য",
+    "approver": "অনুমোদনকারী",
+    "details_summary": "বিস্তারিত সারাংশ",
+    "running": "চলমান",
+    "active": "সক্রিয়",
+    "hold": "তামাদি",
+    "closed": "বন্ধ",
+    "register_account": "নিবন্ধন অ্যাকাউন্ট",
+    "saving_account": "সঞ্চয় অ্যাকাউন্ট",
+    "loan_account": "ঋণ অ্যাকাউন্ট"
   },
 
   "common_validation": {
