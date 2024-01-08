@@ -41,7 +41,7 @@ export default function AccountSummary({ data }) {
       },
       { key: 'share', value: `৳${tsNumbers(data?.share || 0)}/-`, icon: <Dollar size={18} /> }
     ])
-  }, [data])
+  }, [data, t])
 
   return (
     <div className="row pb-3 mt-2">

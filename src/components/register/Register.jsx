@@ -11,7 +11,7 @@ export default function Register() {
   const { id } = useParams()
   const [registerTabValue, setRegisterTabValue] = useState(1)
   const { data: { data = [] } = [], isLoading } = useFetch({ action: `client/registration/${id}` })
-  console.log(data)
+
   return (
     <>
       <RegisterBox className="rounded-bottom-2 pb-0">
@@ -21,7 +21,7 @@ export default function Register() {
           setRegisterTabValue={setRegisterTabValue}
         />
       </RegisterBox>
-      <RegisterTabPanel registerTabValue={registerTabValue} />
+      <RegisterTabPanel registerTabValue={registerTabValue} data={data} />
     </>
   )
 }

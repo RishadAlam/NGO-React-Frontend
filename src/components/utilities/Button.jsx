@@ -19,7 +19,7 @@ export default function Button({
         disabled={disabled}
         style={style}
         onClick={onclick}>
-        <div className="d-flex">
+        <div className="d-flex justify-content-center">
           {name}
           &nbsp;
           {loading ? <LoaderSm size={20} clr="#1c3faa" className="ms-2" /> : endIcon}

@@ -33,7 +33,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(activeSavings || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(activeSavings || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -44,7 +48,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(pendingSavings || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(pendingSavings || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -55,7 +63,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(holdSavings || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(holdSavings || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -66,7 +78,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(closedSavings || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(closedSavings || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -77,7 +93,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(activeLoans || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(activeLoans || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -88,7 +108,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(pendingLoans || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(pendingLoans || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -99,7 +123,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(holdLoans || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(holdLoans || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
@@ -110,7 +138,11 @@ export default function CountedAccount() {
       <div className="col-lg-4 col-sm-3 col-6 text-center rounded-2 py-3">
         <div className="blue-magenta">
           {' '}
-          <h5 style={{ fontSize: '24px' }}>{tsNumbers(closedLoans || 0)}</h5>{' '}
+          <h5 style={{ fontSize: '24px' }}>
+            {tsNumbers(closedLoans || 0)
+              .toString()
+              .padStart(2, tsNumbers(0))}
+          </h5>{' '}
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <small>
