@@ -92,6 +92,7 @@
     "select": "Select",
     "creator": "Creator",
     "created_at": "Created at",
+    "approved_at": "Approved at",
     "updated_at": "Updated at",
     "min": "Min",
     "max": "Max",
