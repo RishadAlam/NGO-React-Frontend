@@ -1,12 +1,30 @@
 import { useTranslation } from 'react-i18next'
 import Edit from '../../icons/Edit'
+import Folder from '../../icons/Folder'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
+import Badge from '../utilities/Badge'
 import Button from '../utilities/Button'
 import NomsDetails from './NomiesDetails'
 
-export default function SavingAccountDetails({ data }) {
+export default function SavingAccountDetails({ data = {} }) {
   const { t } = useTranslation()
+  let statusName = ''
+  let statusClass = ''
+  let isEditable = false
+
+  if (data?.deleted_at) {
+    statusName = t('common.closed')
+    statusClass = 'bg-secondary'
+  } else {
+    statusName = data?.is_approved
+      ? data?.status
+        ? t('common.running')
+        : t('common.hold')
+      : t('common.pending')
+    statusClass = data?.is_approved ? (data?.status ? 'bg-success' : 'bg-warning') : 'bg-danger'
+    isEditable = data?.is_approved && data?.status && true
+  }
 
   return (
     <div>
@@ -24,10 +42,14 @@ export default function SavingAccountDetails({ data }) {
           <div className="row">
             <div className="col-md-4">
               <p className="truncate mb-3">
-                {t('common.status')}:<span className="float-end fw-medium">{data?.status}</span>
+                {t('common.status')}:
+                <span className="float-end fw-medium">
+                  {<Badge name={statusName} className={statusClass} />}
+                </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.account')}:<span className="float-end fw-medium">{data?.acc_no}</span>
+                {t('common.account')}:
+                <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
               </p>
               <p className="truncate mb-3">
                 {t('common.balance')}:
@@ -145,7 +167,7 @@ export default function SavingAccountDetails({ data }) {
           <NomsDetails key={index} data={nominee} index={index} />
         ))}
       </div>
-      {data?.status && (
+      {isEditable && (
         <div className="pt-3">
           <div className="px-2">
             <div className="row">
