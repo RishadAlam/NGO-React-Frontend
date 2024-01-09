@@ -9,13 +9,14 @@ import TabsGroup from '../utilities/TabsGroup'
 import RegisterBox from './RegisterBox'
 import SavingAccountDetails from './SavingAccountDetails'
 
-export default function SavingAccounts() {
+export default function SavingAccounts({ prefix = null }) {
   const { t } = useTranslation()
   const { id } = useParams()
   const [savingTabValue, setSavingTabValue] = useState(1)
   const [categories, setCategories] = useState([])
+
   const { data: { data = [] } = [], isLoading } = useFetch({
-    action: `client/registration/saving/${id}`
+    action: `client/registration/saving/${prefix}/${id}`
   })
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function SavingAccounts() {
       setCategories(
         data.map((saving) => ({
           label: saving.category.is_default
-            ? t(`common.category.${saving.category.name}`)
+            ? t(`category.default.${saving.category.name}`)
             : saving.category.name,
           value: saving.id,
           icon: (

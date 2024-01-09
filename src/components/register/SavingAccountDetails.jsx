@@ -23,7 +23,7 @@ export default function SavingAccountDetails({ data = {} }) {
         : t('common.hold')
       : t('common.pending')
     statusClass = data?.is_approved ? (data?.status ? 'bg-success' : 'bg-warning') : 'bg-danger'
-    isEditable = data?.is_approved && data?.status && true
+    isEditable = data?.is_approved ? data?.status && true : false
   }
 
   return (
@@ -32,7 +32,7 @@ export default function SavingAccountDetails({ data = {} }) {
         <h5 className="fw-medium">
           <b>
             {data.category.is_default
-              ? t(`common.category.${data.category.name}`)
+              ? t(`category.default.${data.category.name}`)
               : data.category.name}
           </b>
         </h5>
@@ -162,11 +162,13 @@ export default function SavingAccountDetails({ data = {} }) {
           </div>
         </div>
       </div>
-      <div className="py-4 pb-0 border-bottom">
-        {data.nominees.map((nominee, index) => (
-          <NomsDetails key={index} data={nominee} index={index} />
-        ))}
-      </div>
+      {data.nominees.length > 0 && (
+        <div className="py-4 pb-0 border-bottom">
+          {data.nominees.map((nominee, index) => (
+            <NomsDetails key={index} data={nominee} index={index} />
+          ))}
+        </div>
+      )}
       {isEditable && (
         <div className="pt-3">
           <div className="px-2">
@@ -176,7 +178,7 @@ export default function SavingAccountDetails({ data = {} }) {
                   type="submit"
                   name={`${
                     data.category.is_default
-                      ? t(`common.category.${data.category.name}`)
+                      ? t(`category.default.${data.category.name}`)
                       : data.category.name
                   } ${t('common.saving_account')} ${t('common.edit')}`}
                   className={'btn-warning text-black py-2 px-3 form-control'}
