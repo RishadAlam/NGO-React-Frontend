@@ -1,15 +1,18 @@
 import { useTranslation } from 'react-i18next'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
+import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
+import UserPlaceholder from '../../resources/img/UserPlaceholder.jpg'
+import Address from './Address'
 
-export default function NomsDetails({ data = [], index = 1 }) {
+export default function NomsDetails({ data = [], index = 0 }) {
   const { t } = useTranslation()
 
   return (
     <div>
       <div className="p-2 pt-0 border-bottom">
         <h5 className="fw-medium">
-          <b>{`${data?.name || ''} ${tsNumbers(index.toString().padStart(2, '0'))}`}</b>
+          <b>{`${t('common.nominee')} - ${tsNumbers((index + 1).toString().padStart(2, '0'))}`}</b>
         </h5>
       </div>
       <div className="py-4 border-bottom">
@@ -30,6 +33,12 @@ export default function NomsDetails({ data = [], index = 1 }) {
               <p className="truncate mb-3">
                 {t('common.mother_name')}:
                 <span className="float-end fw-medium">{data?.mother_name}</span>
+              </p>
+              <p className="truncate mb-3">
+                {t('common.primary_phone')}:
+                <span className="float-end fw-medium">
+                  {data?.primary_phone && tsNumbers(data?.primary_phone)}
+                </span>
               </p>
               <p className="truncate mb-3">
                 {t('common.secondary_phone')}:
@@ -53,9 +62,6 @@ export default function NomsDetails({ data = [], index = 1 }) {
                 {t('common.gender')}:<span className="float-end fw-medium">{data?.gender}</span>
               </p>
               <p className="truncate mb-3">
-                {t('common.religion')}:<span className="float-end fw-medium">{data?.religion}</span>
-              </p>
-              <p className="truncate mb-3">
                 {t('common.occupation')}:
                 <span className="float-end fw-medium">{data?.occupation}</span>
               </p>
@@ -64,170 +70,56 @@ export default function NomsDetails({ data = [], index = 1 }) {
               </p>
             </div>
             <div className="col-md-4">
-              {/* <p className="truncate mb-3">
-                {t('common.annual_income')}:
-                <span className="float-end fw-medium">
-                  {data?.annual_income && tsNumbers(data?.annual_income)}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.bank_acc_no')}:
-                <span className="float-end fw-medium">
-                  {data?.bank_acc_no && tsNumbers(data?.bank_acc_no)}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.bank_check_no')}:
-                <span className="float-end fw-medium">
-                  {data?.bank_check_no && tsNumbers(data?.bank_check_no)}
-                </span>
-              </p> */}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="py-4 border-bottom">
-        <div className="px-2">
-          <div className="row">
-            <div className="col-md-4">
-              <h5 className="pb-3 fw-medium">
-                <b>{t('common.present_address')}</b>
-              </h5>
-              <p className="truncate mb-3">
-                {t('common.street_address')}:
-                <span className="float-end fw-medium">{data?.present_address?.street_address}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.city')}:
-                <span className="float-end fw-medium">{data?.present_address?.city}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.word_no')}:
-                <span className="float-end fw-medium">
-                  {data?.present_address?.word_no && tsNumbers(data?.present_address?.word_no)}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.post_office')}:
-                <span className="float-end fw-medium">{data?.present_address?.post_office}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.police_station')}:
-                <span className="float-end fw-medium">{data?.present_address?.police_station}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.district')}:
-                <span className="float-end fw-medium">{data?.present_address?.district}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.division')}:
-                <span className="float-end fw-medium">{data?.present_address?.division}</span>
-              </p>
-            </div>
-            <div className="col-md-4 middle-column">
-              <h5 className="pb-3 fw-medium">
-                <b>{t('common.permanent_address')}</b>
-              </h5>
-              <p className="truncate mb-3">
-                {t('common.street_address')}:
-                <span className="float-end fw-medium">
-                  {data?.permanent_address?.street_address}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.city')}:
-                <span className="float-end fw-medium">{data?.permanent_address?.city}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.word_no')}:
-                <span className="float-end fw-medium">
-                  {data?.permanent_address?.word_no && tsNumbers(data?.permanent_address?.word_no)}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.post_office')}:
-                <span className="float-end fw-medium">{data?.permanent_address?.post_office}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.police_station')}:
-                <span className="float-end fw-medium">
-                  {data?.permanent_address?.police_station}
-                </span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.district')}:
-                <span className="float-end fw-medium">{data?.permanent_address?.district}</span>
-              </p>
-              <p className="truncate mb-3">
-                {t('common.division')}:
-                <span className="float-end fw-medium">{data?.permanent_address?.division}</span>
-              </p>
-            </div>
-            <div className="col-md-4">
-              <h5 className="pb-3 fw-medium">
-                <b>{t('common.signature')}</b>
-              </h5>
-              <div
-                className="border shadow rounded-4 p-2 img"
-                style={{ width: '350px', height: '250px', display: 'table' }}>
-                <img
-                  className="rounded-2"
-                  alt="image"
-                  src={data?.signature_uri || SignaturePlaceholder}
-                  style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
-                  loading="lazy"
-                />
+              <div className="d-flex h-100 w-100 align-items-center justify-content-center">
+                <div className="image-preview border shadow rounded-4 p-2">
+                  <div className="img" style={{ width: '180px', height: '180px' }}>
+                    <img
+                      className="rounded-2"
+                      alt="image"
+                      src={data?.image_uri || UserPlaceholder}
+                      style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="pt-3">
+      <div className="py-4">
         <div className="px-2">
           <div className="row">
-            <div className="col-md-3">
-              <Button
-                type="submit"
-                name={`${t('common.register_account')} ${t('common.edit')}`}
-                className={'btn-warning text-black py-2 px-3 form-control'}
-                loading={false}
-                endIcon={<Edit size={20} />}
-                disabled={false}
-              />
+            <div className="col-md-4">
+              <h5 className="pb-3 fw-medium">
+                <b>{t('common.address')}</b>
+              </h5>
+              <Address address={data?.address} />
             </div>
-            <div className="col-md-3">
-              <Button
-                type="submit"
-                name={`${t('common.field')} ${t('common.edit')}`}
-                className={'btn-warning text-black py-2 px-3 form-control'}
-                loading={false}
-                endIcon={<Edit size={20} />}
-                disabled={false}
-              />
-            </div>
-            <div className="col-md-3">
-              <Button
-                type="submit"
-                name={`${t('common.center')} ${t('common.edit')}`}
-                className={'btn-warning text-black py-2 px-3 form-control'}
-                loading={false}
-                endIcon={<Edit size={20} />}
-                disabled={false}
-              />
-            </div>
-            <div className="col-md-3">
-              <Button
-                type="submit"
-                name={`${t('common.acc_no')} ${t('common.edit')}`}
-                className={'btn-warning text-black py-2 px-3 form-control'}
-                loading={false}
-                endIcon={<Edit size={20} />}
-                disabled={false}
-              />
+            <div className="col-md-4 middle-column"></div>
+            <div className="col-md-4">
+              <h5 className="fw-medium">
+                <b>{t('common.signature')}</b>
+              </h5>
+              <div className="d-flex h-100 w-100 align-items-center justify-content-center">
+                <div className="image-preview border shadow rounded-4 p-2">
+                  <div
+                    className="img"
+                    style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
+                    <img
+                      className="rounded-2"
+                      alt="image"
+                      src={data?.signature_uri || SignaturePlaceholder}
+                      style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

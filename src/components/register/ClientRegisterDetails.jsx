@@ -4,6 +4,7 @@ import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import Button from '../utilities/Button'
+import Address from './Address'
 import RegisterBox from './RegisterBox'
 
 export default function ClientRegisterDetails({ data = {} }) {
@@ -96,97 +97,32 @@ export default function ClientRegisterDetails({ data = {} }) {
                 <h5 className="pb-3 fw-medium">
                   <b>{t('common.present_address')}</b>
                 </h5>
-                <p className="truncate mb-3">
-                  {t('common.street_address')}:
-                  <span className="float-end fw-medium">
-                    {data?.present_address?.street_address}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.city')}:
-                  <span className="float-end fw-medium">{data?.present_address?.city}</span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.word_no')}:
-                  <span className="float-end fw-medium">
-                    {data?.present_address?.word_no && tsNumbers(data?.present_address?.word_no)}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.post_office')}:
-                  <span className="float-end fw-medium">{data?.present_address?.post_office}</span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.police_station')}:
-                  <span className="float-end fw-medium">
-                    {data?.present_address?.police_station}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.district')}:
-                  <span className="float-end fw-medium">{data?.present_address?.district}</span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.division')}:
-                  <span className="float-end fw-medium">{data?.present_address?.division}</span>
-                </p>
+                <Address address={data?.present_address} />
               </div>
               <div className="col-md-4 middle-column">
                 <h5 className="pb-3 fw-medium">
                   <b>{t('common.permanent_address')}</b>
                 </h5>
-                <p className="truncate mb-3">
-                  {t('common.street_address')}:
-                  <span className="float-end fw-medium">
-                    {data?.permanent_address?.street_address}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.city')}:
-                  <span className="float-end fw-medium">{data?.permanent_address?.city}</span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.word_no')}:
-                  <span className="float-end fw-medium">
-                    {data?.permanent_address?.word_no &&
-                      tsNumbers(data?.permanent_address?.word_no)}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.post_office')}:
-                  <span className="float-end fw-medium">
-                    {data?.permanent_address?.post_office}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.police_station')}:
-                  <span className="float-end fw-medium">
-                    {data?.permanent_address?.police_station}
-                  </span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.district')}:
-                  <span className="float-end fw-medium">{data?.permanent_address?.district}</span>
-                </p>
-                <p className="truncate mb-3">
-                  {t('common.division')}:
-                  <span className="float-end fw-medium">{data?.permanent_address?.division}</span>
-                </p>
+                <Address address={data?.permanent_address} />
               </div>
               <div className="col-md-4">
-                <h5 className="pb-3 fw-medium">
+                <h5 className="fw-medium">
                   <b>{t('common.signature')}</b>
                 </h5>
-                <div
-                  className="border shadow rounded-4 p-2 img"
-                  style={{ width: '350px', height: '250px', display: 'table' }}>
-                  <img
-                    className="rounded-2"
-                    alt="image"
-                    src={data?.signature_uri || SignaturePlaceholder}
-                    style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
-                    loading="lazy"
-                  />
+                <div className="d-flex h-100 w-100 align-items-center justify-content-center">
+                  <div className="image-preview border shadow rounded-4 p-2">
+                    <div
+                      className="img"
+                      style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
+                      <img
+                        className="rounded-2"
+                        alt="image"
+                        src={data?.signature_uri || SignaturePlaceholder}
+                        style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

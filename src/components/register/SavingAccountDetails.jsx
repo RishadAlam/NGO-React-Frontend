@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import Edit from '../../icons/Edit'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
+import Button from '../utilities/Button'
 import NomsDetails from './NomiesDetails'
 
 export default function SavingAccountDetails({ data }) {
@@ -138,11 +140,33 @@ export default function SavingAccountDetails({ data }) {
           </div>
         </div>
       </div>
-      <div className="py-4 border-bottom">
+      <div className="py-4 pb-0 border-bottom">
         {data.nominees.map((nominee, index) => (
           <NomsDetails key={index} data={nominee} index={index} />
         ))}
       </div>
+      {data?.status && (
+        <div className="pt-3">
+          <div className="px-2">
+            <div className="row">
+              <div className="col-md-12">
+                <Button
+                  type="submit"
+                  name={`${
+                    data.category.is_default
+                      ? t(`common.category.${data.category.name}`)
+                      : data.category.name
+                  } ${t('common.saving_account')} ${t('common.edit')}`}
+                  className={'btn-warning text-black py-2 px-3 form-control'}
+                  loading={false}
+                  endIcon={<Edit size={20} />}
+                  disabled={false}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
