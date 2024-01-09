@@ -28,6 +28,13 @@ export default function RegisterTabPanel({ registerTabValue, data }) {
             </Suspense>
           </ErrorBoundary>
         </TabPanel>
+        <TabPanel value={registerTabValue} index={4}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loader />}>
+              <SavingAccounts prefix="hold" />
+            </Suspense>
+          </ErrorBoundary>
+        </TabPanel>
       </div>
     </>
   )

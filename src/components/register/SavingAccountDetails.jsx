@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { isEmpty } from '../../helper/isEmpty'
 import Edit from '../../icons/Edit'
 import Folder from '../../icons/Folder'
 import dateFormat from '../../libs/dateFormat'
@@ -59,10 +60,12 @@ export default function SavingAccountDetails({ data = {} }) {
                 {t('common.creator')}:
                 <span className="float-end fw-medium">{data?.author?.name}</span>
               </p>
-              <p className="truncate mb-3">
-                {t('common.approver')}:
-                <span className="float-end fw-medium">{data?.approver?.name}</span>
-              </p>
+              {!isEmpty(data?.approver?.name) && (
+                <p className="truncate mb-3">
+                  {t('common.approver')}:
+                  <span className="float-end fw-medium">{data?.approver?.name}</span>
+                </p>
+              )}
               <p className="truncate mb-3">
                 {t('common.created_at')}:
                 <span className="float-end fw-medium">
@@ -70,13 +73,15 @@ export default function SavingAccountDetails({ data = {} }) {
                     tsNumbers(dateFormat(data?.created_at, 'dd/MM/yyyy hh:mm a'))}
                 </span>
               </p>
-              <p className="truncate mb-3">
-                {t('common.approved_at')}:
-                <span className="float-end fw-medium">
-                  {data?.approved_at &&
-                    tsNumbers(dateFormat(data?.approved_at, 'dd/MM/yyyy hh:mm a'))}
-                </span>
-              </p>
+              {!isEmpty(data?.approved_at) && (
+                <p className="truncate mb-3">
+                  {t('common.approved_at')}:
+                  <span className="float-end fw-medium">
+                    {data?.approved_at &&
+                      tsNumbers(dateFormat(data?.approved_at, 'dd/MM/yyyy hh:mm a'))}
+                  </span>
+                </p>
+              )}
             </div>
             <div className="col-md-4 middle-column">
               <p className="truncate mb-3">

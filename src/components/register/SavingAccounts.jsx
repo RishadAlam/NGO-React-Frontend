@@ -38,7 +38,11 @@ export default function SavingAccounts({ prefix = null }) {
     }
   }, [data, t])
 
-  return (
+  return isEmptyArray(data) ? (
+    <RegisterBox className="rounded-top-2">
+      <p className="text-center">{t('common.No_Records_Found')}</p>
+    </RegisterBox>
+  ) : (
     <>
       <RegisterBox className="rounded-top-2 rounded-bottom-2 py-0">
         <TabsGroup defaultValue={savingTabValue} setValue={setSavingTabValue} data={categories} />
