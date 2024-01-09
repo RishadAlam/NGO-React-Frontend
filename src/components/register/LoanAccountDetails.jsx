@@ -8,7 +8,7 @@ import Badge from '../utilities/Badge'
 import Button from '../utilities/Button'
 import NomsDetails from './NomiesDetails'
 
-export default function SavingAccountDetails({ data = {} }) {
+export default function LoanAccountDetails({ data = {} }) {
   const { t } = useTranslation()
   let statusName = ''
   let statusClass = ''
@@ -53,8 +53,26 @@ export default function SavingAccountDetails({ data = {} }) {
                 <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
               </p>
               <p className="truncate mb-3">
+                {t('common.installment')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(data?.total_rec_installment || 0)}
+                </span>
+              </p>
+              <p className="truncate mb-3">
                 {t('common.balance')}:
                 <span className="float-end fw-medium">{tsNumbers(`$${data?.balance || 0}/-`)}</span>
+              </p>
+              <p className="truncate mb-3">
+                {t('common.total_loan_rec')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(`$${data?.total_loan_rec || 0}/-`)}
+                </span>
+              </p>
+              <p className="truncate mb-3">
+                {t('common.total_interest_rec')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(`$${data?.total_interest_rec || 0}/-`)}
+                </span>
               </p>
               <p className="truncate mb-3">
                 {t('common.creator')}:
@@ -99,37 +117,55 @@ export default function SavingAccountDetails({ data = {} }) {
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.installment')}:
+                {t('common.loan_given')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(`$${data?.loan_given || 0}/-`)}
+                </span>
+              </p>
+              <p className="truncate mb-3">
+                {t('common.total_installment')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(data?.payable_installment || 0)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.payable_deposit')}:
+                {t('common.deposit')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(`$${data?.payable_deposit || 0}/-`)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.payable_interest')}:
+                {t('common.interest')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(`${data?.payable_interest || 0}%`)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.total_deposit_without_interest')}:
+                {t('common.total_payable_interest')}:
                 <span className="float-end fw-medium">
-                  {tsNumbers(`$${data?.total_deposit_without_interest || 0}/-`)}
+                  {tsNumbers(`$${data?.total_payable_interest || 0}/-`)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.total_deposit_with_interest')}:
+                {t('common.total_payable_loan_with_interest')}:
                 <span className="float-end fw-medium">
-                  {tsNumbers(`$${data?.total_deposit_with_interest || 0}/-`)}
+                  {tsNumbers(`$${data?.total_payable_loan_with_interest || 0}/-`)}
                 </span>
               </p>
             </div>
             <div className="col-md-4">
+              <p className="truncate mb-3">
+                {t('common.loan_installment')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(`$${data?.loan_installment || 0}/-`)}
+                </span>
+              </p>
+              <p className="truncate mb-3">
+                {t('common.interest_installment')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(`$${data?.interest_installment || 0}/-`)}
+                </span>
+              </p>
               {data?.closing_balance && (
                 <p className="truncate mb-3">
                   {t('common.closing_balance')}:
@@ -167,10 +203,10 @@ export default function SavingAccountDetails({ data = {} }) {
           </div>
         </div>
       </div>
-      {data.nominees.length > 0 && (
+      {data.guarantors.length > 0 && (
         <div className="py-4 pb-0 border-bottom">
-          {data.nominees.map((nominee, index) => (
-            <NomsDetails key={index} data={nominee} index={index} status="saving" />
+          {data.guarantors.map((nomsData, index) => (
+            <NomsDetails key={index} data={nomsData} index={index} status="loan" />
           ))}
         </div>
       )}
@@ -185,7 +221,7 @@ export default function SavingAccountDetails({ data = {} }) {
                     data.category.is_default
                       ? t(`category.default.${data.category.name}`)
                       : data.category.name
-                  } ${t('common.saving_account')} ${t('common.edit')}`}
+                  } ${t('common.loan_account')} ${t('common.edit')}`}
                   className={'btn-warning text-black py-2 px-3 form-control'}
                   loading={false}
                   endIcon={<Edit size={20} />}

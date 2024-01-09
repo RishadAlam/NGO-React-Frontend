@@ -160,7 +160,9 @@
     "closed": "বন্ধ",
     "register_account": "নিবন্ধন অ্যাকাউন্ট",
     "saving_account": "সঞ্চয় অ্যাকাউন্ট",
-    "loan_account": "ঋণ অ্যাকাউন্ট"
+    "loan_account": "ঋণ অ্যাকাউন্ট",
+    "total_loan_rec": "সর্বমোট ঋণ সংগ্রহ",
+    "total_interest_rec": "সর্বমোট লাভ সংগ্রহ"
   },
 
   "common_validation": {

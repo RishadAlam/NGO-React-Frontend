@@ -161,7 +161,9 @@
     "closed": "Closed",
     "register_account": "Register Account",
     "saving_account": "Saving Account",
-    "loan_account": "Loan Account"
+    "loan_account": "Loan Account",
+    "total_loan_rec": "Total Loan Collections",
+    "total_interest_rec": "Total Interest Collections"
   },
 
   "common_validation": {

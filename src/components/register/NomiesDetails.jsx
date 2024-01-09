@@ -5,14 +5,16 @@ import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
 import UserPlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import Address from './Address'
 
-export default function NomsDetails({ data = [], index = 0 }) {
+export default function NomsDetails({ data = [], index = 0, status }) {
   const { t } = useTranslation()
 
   return (
     <div>
       <div className="p-2 pt-0 border-bottom">
         <h5 className="fw-medium">
-          <b>{`${t('common.nominee')} - ${tsNumbers((index + 1).toString().padStart(2, '0'))}`}</b>
+          <b>{`${t(`common.${status === 'saving' ? 'nominee' : 'guarantor'}`)} - ${tsNumbers(
+            (index + 1).toString().padStart(2, '0')
+          )}`}</b>
         </h5>
       </div>
       <div className="py-4 border-bottom">
