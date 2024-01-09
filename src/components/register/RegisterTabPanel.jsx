@@ -50,6 +50,27 @@ export default function RegisterTabPanel({ registerTabValue, data }) {
             </Suspense>
           </ErrorBoundary>
         </TabPanel>
+        <TabPanel value={registerTabValue} index={7}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loader />}>
+              <LoanAccounts prefix="pending" />
+            </Suspense>
+          </ErrorBoundary>
+        </TabPanel>
+        <TabPanel value={registerTabValue} index={8}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loader />}>
+              <LoanAccounts prefix="hold" />
+            </Suspense>
+          </ErrorBoundary>
+        </TabPanel>
+        <TabPanel value={registerTabValue} index={9}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loader />}>
+              <LoanAccounts prefix="closed" />
+            </Suspense>
+          </ErrorBoundary>
+        </TabPanel>
       </div>
     </>
   )
