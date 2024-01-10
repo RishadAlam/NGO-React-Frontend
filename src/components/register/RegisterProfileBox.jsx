@@ -1,7 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import tsNumbers from '../../libs/tsNumbers'
+import Badge from '../utilities/Badge'
 
-export default function RegisterProfileBox({ image_uri, name, acc_no }) {
+export default function RegisterProfileBox({
+  image_uri,
+  name,
+  acc_no,
+  status = null,
+  classNames = null
+}) {
   const { t } = useTranslation()
 
   return (
@@ -24,6 +31,11 @@ export default function RegisterProfileBox({ image_uri, name, acc_no }) {
         <div className="truncate text-wrap fw-medium ln-hight">
           <b>{t('common.acc_no')}:</b> {tsNumbers(acc_no)}
         </div>
+        {status && (
+          <div className="truncate text-wrap fw-medium ln-hight">
+            <Badge name={status} className={classNames} style={{ padding: 0 }} />
+          </div>
+        )}
       </div>
     </div>
   )

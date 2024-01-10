@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export default function DetailsSummary({ data = [] }) {
+export default function DetailsSummary({ data = [], isMiddle = false }) {
   const { t } = useTranslation()
 
   return (
-    <div className="px-3 middle-column">
+    <div className={`px-3 ${isMiddle && 'middle-column'}`}>
       <div className="truncate fw-medium">
         <b>{t('common.details_summary')}</b>
       </div>

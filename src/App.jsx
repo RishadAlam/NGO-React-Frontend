@@ -89,6 +89,26 @@ export default function App() {
                 </ErrorBoundary>
               }
             />
+            <Route
+              path="saving-account/:id"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <ClientRegisterAccount module="saving" />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="loan-account/:id"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <ClientRegisterAccount module="loan" />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
 
             {/* Client Registrations Routes */}
             <Route path="registration">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import CheckCircle from '../../icons/CheckCircle'
+import CheckPatch from '../../icons/CheckPatch'
 import Chrome from '../../icons/Chrome'
 import Dollar from '../../icons/Dollar'
 import Edit from '../../icons/Edit'
@@ -30,6 +31,11 @@ export default function AccountSummary({ data }) {
       },
       { key: 'approver', value: data?.approver?.name, icon: <CheckCircle size={18} /> },
       {
+        key: 'approved_at',
+        value: data?.approved_at && tsNumbers(dateFormat(data?.approved_at, 'dd/MM/yyyy hh:mm a')),
+        icon: <CheckPatch size={18} />
+      },
+      {
         key: 'nid',
         value: data?.nid && tsNumbers(data?.nid),
         icon: <Edit size={18} />
@@ -49,7 +55,7 @@ export default function AccountSummary({ data }) {
         <RegisterProfileBox image_uri={data?.image_uri} name={data?.name} acc_no={data?.acc_no} />
       </div>
       <div className="col-md-4">
-        <DetailsSummary data={detailsSummary} />
+        <DetailsSummary data={detailsSummary} isMiddle={true} />
       </div>
       <div className="col-md-4 d-flex">
         <CountedAccount />

@@ -55,6 +55,12 @@ export default function SavingAccountDetails({ data = {} }) {
                 </p>
               )}
               <p className="truncate mb-3">
+                {t('common.installment')}:
+                <span className="float-end fw-medium">
+                  {tsNumbers(data?.total_installment || 0)}
+                </span>
+              </p>
+              <p className="truncate mb-3">
                 {t('common.balance')}:
                 <span className="float-end fw-medium">{tsNumbers(`$${data?.balance || 0}/-`)}</span>
               </p>
@@ -89,31 +95,29 @@ export default function SavingAccountDetails({ data = {} }) {
               <p className="truncate mb-3">
                 {t('common.start_date')}:
                 <span className="float-end fw-medium">
-                  {data?.start_date &&
-                    tsNumbers(dateFormat(data?.start_date, 'dd/MM/yyyy hh:mm a'))}
+                  {data?.start_date && tsNumbers(dateFormat(data?.start_date, 'dd/MM/yyyy'))}
                 </span>
               </p>
               <p className="truncate mb-3">
                 {t('common.duration_date')}:
                 <span className="float-end fw-medium">
-                  {data?.duration_date &&
-                    tsNumbers(dateFormat(data?.duration_date, 'dd/MM/yyyy hh:mm a'))}
+                  {data?.duration_date && tsNumbers(dateFormat(data?.duration_date, 'dd/MM/yyyy'))}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.installment')}:
+                {t('common.total_installment')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(data?.payable_installment || 0)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.payable_deposit')}:
+                {t('common.deposit')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(`$${data?.payable_deposit || 0}/-`)}
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.payable_interest')}:
+                {t('common.interest')}:
                 <span className="float-end fw-medium">
                   {tsNumbers(`${data?.payable_interest || 0}%`)}
                 </span>

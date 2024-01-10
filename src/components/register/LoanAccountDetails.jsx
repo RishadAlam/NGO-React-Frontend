@@ -107,15 +107,13 @@ export default function LoanAccountDetails({ data = {} }) {
               <p className="truncate mb-3">
                 {t('common.start_date')}:
                 <span className="float-end fw-medium">
-                  {data?.start_date &&
-                    tsNumbers(dateFormat(data?.start_date, 'dd/MM/yyyy hh:mm a'))}
+                  {data?.start_date && tsNumbers(dateFormat(data?.start_date, 'dd/MM/yyyy'))}
                 </span>
               </p>
               <p className="truncate mb-3">
                 {t('common.duration_date')}:
                 <span className="float-end fw-medium">
-                  {data?.duration_date &&
-                    tsNumbers(dateFormat(data?.duration_date, 'dd/MM/yyyy hh:mm a'))}
+                  {data?.duration_date && tsNumbers(dateFormat(data?.duration_date, 'dd/MM/yyyy'))}
                 </span>
               </p>
               <p className="truncate mb-3">
