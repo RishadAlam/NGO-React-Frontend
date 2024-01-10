@@ -48,10 +48,12 @@ export default function SavingAccountDetails({ data = {} }) {
                   {<Badge name={statusName} className={statusClass} />}
                 </span>
               </p>
-              <p className="truncate mb-3">
-                {t('common.account')}:
-                <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
-              </p>
+              {Boolean(data?.is_approved) && (
+                <p className="truncate mb-3">
+                  {t('common.account')}:
+                  <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
+                </p>
+              )}
               <p className="truncate mb-3">
                 {t('common.balance')}:
                 <span className="float-end fw-medium">{tsNumbers(`$${data?.balance || 0}/-`)}</span>
