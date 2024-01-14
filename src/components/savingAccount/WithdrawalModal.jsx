@@ -1,13 +1,16 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import tsNumbers from '../../libs/tsNumbers'
+import xFetch from '../../utilities/xFetch'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import TextAreaInputField from '../utilities/TextAreaInputField'
@@ -16,6 +19,7 @@ import TextInputField from '../utilities/TextInputField'
 export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnTitle }) {
   const { id } = useParams()
   const { t } = useTranslation()
+  const { accessToken } = useAuthDataValue()
   const [errors, setErrors] = useState({ amount: '', description: '' })
   const [loading, setLoading] = useLoadingState({})
   const [withdrawData, setWithdrawData] = useState({
@@ -93,47 +97,43 @@ export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnT
   }
 
   const onSubmit = (event) => {
-    // event.preventDefault()
-    // if (fieldData.name === '') {
-    //   toast.error(t('common_validation.required_fields_are_empty'))
-    //   return
-    // }
-    // setLoading({ ...loading, fieldForm: true })
-    // xFetch('fields', fieldData, null, accessToken, null, 'POST')
-    //   .then((response) => {
-    //     setLoading({ ...loading, fieldForm: false })
-    //     if (response?.success) {
-    //       toast.success(response.message)
-    //       mutate()
-    //       setIsOpen(false)
-    //       setFieldData({
-    //         name: '',
-    //         description: ''
-    //       })
-    //       return
-    //     }
-    //     setErrors((prevErr) =>
-    //       create(prevErr, (draftErr) => {
-    //         if (!response?.errors) {
-    //           draftErr.message = response?.message
-    //           return
-    //         }
-    //         return rawReturn(response?.errors || response)
-    //       })
-    //     )
-    //   })
-    //   .catch((errResponse) => {
-    //     setLoading({ ...loading, fieldForm: false })
-    //     setErrors((prevErr) =>
-    //       create(prevErr, (draftErr) => {
-    //         if (!errResponse?.errors) {
-    //           draftErr.message = errResponse?.message
-    //           return
-    //         }
-    //         return rawReturn(errResponse?.errors || errResponse)
-    //       })
-    //     )
-    //   })
+    event.preventDefault()
+    if (withdrawData.amount === '' || withdrawData.description === '') {
+      toast.error(t('common_validation.required_fields_are_empty'))
+      return
+    }
+    setLoading({ ...loading, withdrawForm: true })
+    xFetch('collection/withdrawal/saving', withdrawData, null, accessToken, null, 'POST')
+      .then((response) => {
+        setLoading({ ...loading, withdrawForm: false })
+        if (response?.success) {
+          toast.success(response.message)
+          setOpen(false)
+          setWithdrawData({})
+          return
+        }
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!response?.errors) {
+              draftErr.message = response?.message
+              return
+            }
+            return rawReturn(response?.errors || response)
+          })
+        )
+      })
+      .catch((errResponse) => {
+        setLoading({ ...loading, withdrawForm: false })
+        setErrors((prevErr) =>
+          create(prevErr, (draftErr) => {
+            if (!errResponse?.errors) {
+              draftErr.message = errResponse?.message
+              return
+            }
+            return rawReturn(errResponse?.errors || errResponse)
+          })
+        )
+      })
   }
 
   return (
@@ -167,7 +167,7 @@ export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnT
                     setChange={(val) => setChange(val, 'name')}
                     error={errors?.name}
                     autoFocus={true}
-                    disabled={loading?.fieldForm}
+                    disabled={loading?.withdrawForm}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -188,7 +188,7 @@ export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnT
                     setChange={(val) => setChange(val, 'amount')}
                     error={errors?.amount}
                     autoFocus={true}
-                    disabled={loading?.fieldForm}
+                    disabled={loading?.withdrawForm}
                   />
                   {data?.max > 0 && (
                     <span className="text-info d-block mt-1">
@@ -216,7 +216,7 @@ export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnT
                     defaultValue={withdrawData?.description}
                     setChange={(val) => setChange(val, 'description')}
                     error={errors?.description}
-                    disabled={loading?.fieldForm}
+                    disabled={loading?.withdrawForm}
                   />
                 </div>
               </div>
@@ -226,9 +226,9 @@ export default function WithdrawalModal({ open, setOpen, error, modalTitle, btnT
                 type="submit"
                 name={btnTitle}
                 className={'btn-primary py-2 px-3'}
-                loading={loading?.fieldForm || false}
+                loading={loading?.withdrawForm || false}
                 endIcon={<Save size={20} />}
-                disabled={Object.keys(errors).length || loading?.fieldForm}
+                disabled={Object.keys(errors).length || loading?.withdrawForm}
               />
             </div>
           </form>
