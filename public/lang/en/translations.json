@@ -163,7 +163,9 @@
     "saving_account": "Saving Account",
     "loan_account": "Loan Account",
     "total_loan_rec": "Total Loan Collections",
-    "total_interest_rec": "Total Interest Collections"
+    "total_interest_rec": "Total Interest Collections",
+    "account_check": "Account Check",
+    "remaining_balance": "Remaining Balance"
   },
 
   "common_validation": {
@@ -179,7 +181,9 @@
     "is_required": "is required!",
     "is_invalid": "is invalid!",
     "week": "Week",
-    "confirm_password_not_match": "Make sure the passwords do not match"
+    "confirm_password_not_match": "Make sure the passwords do not match",
+    "crossed_the_limitations": "crossed the limitations.",
+    "insufficient_balance": "Insufficient Balance"
   },
 
   "react_table": {

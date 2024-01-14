@@ -162,7 +162,9 @@
     "saving_account": "সঞ্চয় অ্যাকাউন্ট",
     "loan_account": "ঋণ অ্যাকাউন্ট",
     "total_loan_rec": "সর্বমোট ঋণ সংগ্রহ",
-    "total_interest_rec": "সর্বমোট লাভ সংগ্রহ"
+    "total_interest_rec": "সর্বমোট লাভ সংগ্রহ",
+    "account_check": "একাউন্ট চেক",
+    "remaining_balance": "অবশিষ্ট ব্যালেন্স"
   },
 
   "common_validation": {
@@ -178,7 +180,9 @@
     "is_required": "প্রয়োজন।",
     "is_invalid": "অবৈধ।",
     "week": "দুর্বল",
-    "confirm_password_not_match": "পাসওয়ার্ড মেলে না তা নিশ্চিত করুন"
+    "confirm_password_not_match": "পাসওয়ার্ড মেলে না তা নিশ্চিত করুন",
+    "crossed_the_limitations": "সীমাবদ্ধতা অতিক্রম করেছে",
+    "insufficient_balance": "পর্যাপ্ত পরিমাণ টাকা জমা নেই।"
   },
 
   "app_config": {
