@@ -1,13 +1,11 @@
 import { Check, CurrencyExchange } from '@mui/icons-material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import '../register/RegisterBox.scss'
-import PrimaryBtn from '../utilities/PrimaryBtn'
-import WithdrawalModal from './WithdrawalModal'
+import '../../register/RegisterBox.scss'
+import PrimaryBtn from '../../utilities/PrimaryBtn'
+import StoreWithdrawal from './StoreWithdrawal'
 
-export default function AdditionalOP() {
-  const { id } = useParams()
+export default function AccountTopMenus({ prefix }) {
   const { t } = useTranslation()
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [accountCheckModalOpen, setAccountCheckModalOpen] = useState(false)
@@ -25,14 +23,13 @@ export default function AdditionalOP() {
         name={t('common.account_check')}
         loading={false}
         endIcon={<Check />}
-        onclick={() => setIsFieldModalOpen(true)}
+        // onclick={() => setAccountCheckModalOpen(true)}
       />
       {withdrawalModalOpen && (
-        <WithdrawalModal
+        <StoreWithdrawal
           open={withdrawalModalOpen}
           setOpen={setWithdrawalModalOpen}
-          modalTitle={t('common.withdrawal')}
-          btnTitle={t('common.withdrawal')}
+          prefix={prefix}
         />
       )}
     </div>

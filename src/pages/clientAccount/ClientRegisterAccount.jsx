@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import LoanAccount from '../../components/loanAccount/LoanAccount'
 import Register from '../../components/register/Register'
 import SavingAccount from '../../components/savingAccount/SavingAccount'
 import Dollar from '../../icons/Dollar'
@@ -38,7 +39,7 @@ export default function ClientRegisterAccount({ module = 'register' }) {
       ) : module === 'saving' ? (
         <SavingAccount />
       ) : (
-        'loan_account'
+        <LoanAccount />
       )}
     </section>
   )
