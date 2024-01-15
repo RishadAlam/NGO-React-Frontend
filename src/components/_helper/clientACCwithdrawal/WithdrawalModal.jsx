@@ -215,6 +215,7 @@ export default function WithdrawalModal({
                   <TextAreaInputField
                     label={t('common.description')}
                     defaultValue={withdrawData?.description}
+                    isRequired={true}
                     setChange={(val) => setChange(val, 'description')}
                     error={errors?.description}
                     disabled={loading?.withdrawForm}

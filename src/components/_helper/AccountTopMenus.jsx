@@ -37,7 +37,7 @@ export default function AccountTopMenus({ prefix }) {
         <StoreAccountCheck
           open={accountCheckModalOpen}
           setOpen={setAccountCheckModalOpen}
-          prefix={prefix}
+          prefix={prefix === 'loan-saving' ? 'loan' : prefix}
         />
       )}
     </div>

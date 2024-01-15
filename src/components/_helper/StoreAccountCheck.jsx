@@ -22,7 +22,7 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
   const { t } = useTranslation()
   const endpoint = `${prefix}/check`
   const { accessToken } = useAuthDataValue()
-  const [errors, setErrors] = useState({ next_check_in_at: '', description: '' })
+  const [errors, setErrors] = useState({})
   const [loading, setLoading] = useLoadingState({})
   const [withdrawData, setWithdrawData] = useState({
     account_id: id,
@@ -49,6 +49,13 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
           draftData.balance = data?.balance || 0
           draftData.installment = data?.total_installment || 0
           draftData.next_check_in_at = new Date(data?.next_check_in_at)
+
+          if (prefix !== 'saving') {
+            draftData['total_loan_rec'] = data?.total_loan_rec || 0
+            draftData['total_loan_remaining'] = data?.total_loan_remaining || 0
+            draftData['total_interest_rec'] = data?.total_interest_rec || 0
+            draftData['total_interest_remaining'] = data?.total_interest_remaining || 0
+          }
         })
       )
     !isEmpty(isError) && setErrors(isError)
@@ -116,21 +123,6 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
       })
   }
 
-  // return (
-  //   <WithdrawalModal
-  //     open={open}
-  //     setOpen={setOpen}
-  //     withdrawData={withdrawData}
-  //     min={data?.min || 0}
-  //     max={data?.max || 0}
-  //     setChange={setChange}
-  //     onSubmit={onSubmit}
-  //     errors={errors}
-  //     loading={loading}
-  //     modalTitle={t('common.withdrawal')}
-  //     btnTitle={t('common.withdrawal')}
-  //   />
-  // )
   return (
     <ModalPro open={open} handleClose={() => setOpen(false)}>
       <div className="card">
@@ -185,6 +177,56 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
                   disabled={true}
                 />
               </div>
+              {!isEmpty(withdrawData?.total_loan_rec) && (
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.total_loan_rec')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(`$${withdrawData?.total_loan_rec || 0}/-`) || ''}
+                    setChange={(val) => setChange(val, 'total_loan_rec')}
+                    error={errors?.total_loan_rec}
+                    disabled={true}
+                  />
+                </div>
+              )}
+              {!isEmpty(withdrawData?.total_loan_remaining) && (
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.total_loan_remaining')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(`$${withdrawData?.total_loan_remaining || 0}/-`) || ''}
+                    setChange={(val) => setChange(val, 'total_loan_remaining')}
+                    error={errors?.total_loan_remaining}
+                    disabled={true}
+                  />
+                </div>
+              )}
+              {!isEmpty(withdrawData?.total_interest_rec) && (
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.total_interest_rec')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(`$${withdrawData?.total_interest_rec || 0}/-`) || ''}
+                    setChange={(val) => setChange(val, 'total_interest_rec')}
+                    error={errors?.total_interest_rec}
+                    disabled={true}
+                  />
+                </div>
+              )}
+              {!isEmpty(withdrawData?.total_interest_remaining) && (
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.total_interest_remaining')}
+                    isRequired={true}
+                    defaultValue={
+                      tsNumbers(`$${withdrawData?.total_interest_remaining || 0}/-`) || ''
+                    }
+                    setChange={(val) => setChange(val, 'total_interest_remaining')}
+                    error={errors?.total_interest_remaining}
+                    disabled={true}
+                  />
+                </div>
+              )}
               <div className="col-md-6 mb-3">
                 <DatePickerInputField
                   label={t('common.next_check_in_at')}
@@ -201,7 +243,6 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
                   defaultValue={withdrawData?.description}
                   setChange={(val) => setChange(val, 'description')}
                   error={errors?.description}
-                  isRequired={true}
                   disabled={loading?.accountCheckForm}
                 />
               </div>
