@@ -1,9 +1,10 @@
 import { Check, CurrencyExchange } from '@mui/icons-material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import '../../register/RegisterBox.scss'
-import PrimaryBtn from '../../utilities/PrimaryBtn'
-import StoreWithdrawal from './StoreWithdrawal'
+import '../register/RegisterBox.scss'
+import PrimaryBtn from '../utilities/PrimaryBtn'
+import StoreAccountCheck from './StoreAccountCheck'
+import StoreWithdrawal from './clientACCwithdrawal/StoreWithdrawal'
 
 export default function AccountTopMenus({ prefix }) {
   const { t } = useTranslation()
@@ -23,12 +24,19 @@ export default function AccountTopMenus({ prefix }) {
         name={t('common.account_check')}
         loading={false}
         endIcon={<Check />}
-        // onclick={() => setAccountCheckModalOpen(true)}
+        onclick={() => setAccountCheckModalOpen(true)}
       />
       {withdrawalModalOpen && (
         <StoreWithdrawal
           open={withdrawalModalOpen}
           setOpen={setWithdrawalModalOpen}
+          prefix={prefix}
+        />
+      )}
+      {accountCheckModalOpen && (
+        <StoreAccountCheck
+          open={accountCheckModalOpen}
+          setOpen={setAccountCheckModalOpen}
           prefix={prefix}
         />
       )}

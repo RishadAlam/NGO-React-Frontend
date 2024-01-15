@@ -165,7 +165,8 @@
     "total_loan_rec": "Total Loan Collections",
     "total_interest_rec": "Total Interest Collections",
     "account_check": "Account Check",
-    "remaining_balance": "Remaining Balance"
+    "remaining_balance": "Remaining Balance",
+    "next_check_in_at": "Next check in at"
   },
 
   "common_validation": {

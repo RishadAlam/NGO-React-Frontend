@@ -150,7 +150,7 @@
     "deduct_loan_msg": "ঋণ কাটার জন্য একটি অ্যাকাউন্ট নির্বাচন করুন অন্যথায় এড়িয়ে যান।",
     "note": "বিঃদ্রঃ",
     "installment": "কিস্তি সংখ্যা",
-    "save": "সেভ",
+    "save": "সংরক্ষণ",
     "client_register": "নিবন্ধিত সদস্য",
     "approver": "অনুমোদনকারী",
     "details_summary": "বিস্তারিত সারাংশ",
@@ -164,7 +164,8 @@
     "total_loan_rec": "সর্বমোট ঋণ সংগ্রহ",
     "total_interest_rec": "সর্বমোট লাভ সংগ্রহ",
     "account_check": "একাউন্ট চেক",
-    "remaining_balance": "অবশিষ্ট ব্যালেন্স"
+    "remaining_balance": "অবশিষ্ট ব্যালেন্স",
+    "next_check_in_at": "পরবর্তী চেক"
   },
 
   "common_validation": {
