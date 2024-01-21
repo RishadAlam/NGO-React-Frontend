@@ -14,7 +14,7 @@ import WithdrawalModal from './WithdrawalModal'
 export default function StoreWithdrawal({ open, setOpen, prefix }) {
   const { id } = useParams()
   const { t } = useTranslation()
-  const endpoint = `collection/withdrawal/${prefix}`
+  const endpoint = `withdrawal/${prefix}`
   const { accessToken } = useAuthDataValue()
   const [errors, setErrors] = useState({ amount: '', description: '' })
   const [loading, setLoading] = useLoadingState({})
@@ -23,7 +23,7 @@ export default function StoreWithdrawal({ open, setOpen, prefix }) {
     name: '',
     amount: 0,
     balance: 0,
-    remaining_balance: 0,
+    balance_remaining: 0,
     description: ''
   })
 
@@ -41,7 +41,7 @@ export default function StoreWithdrawal({ open, setOpen, prefix }) {
         create(prevData, (draftData) => {
           draftData.name = data?.name || ''
           draftData.balance = data?.balance || 0
-          draftData.remaining_balance = data?.balance || 0
+          draftData.balance_remaining = data?.balance || 0
         })
       )
     !isEmpty(isError) && setErrors(isError)
@@ -56,7 +56,7 @@ export default function StoreWithdrawal({ open, setOpen, prefix }) {
       create(prevData, (draftData) => {
         if (name === 'amount') {
           draftData[name] = val
-          draftData.remaining_balance = draftData.balance - val
+          draftData.balance_remaining = draftData.balance - val
           return
         }
 

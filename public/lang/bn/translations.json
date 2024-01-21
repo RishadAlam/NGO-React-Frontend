@@ -164,7 +164,7 @@
     "total_loan_rec": "সর্বমোট ঋণ সংগ্রহ",
     "total_interest_rec": "সর্বমোট লাভ সংগ্রহ",
     "account_check": "একাউন্ট চেক",
-    "remaining_balance": "অবশিষ্ট ব্যালেন্স",
+    "balance_remaining": "অবশিষ্ট ব্যালেন্স",
     "next_check_in_at": "পরবর্তী চেক"
   },
 
@@ -200,6 +200,7 @@
     "label": {
       "registration": "নিবন্ধন",
       "pending_loans": "অনুমোদন অপেক্ষারত ঋণ",
+      "pending_withdrawals": "অনুমোদন অপেক্ষারত উত্তোলন",
       "regular_collection": "দৈনিক সংগ্রহ",
       "pending_collection": "অনুমোদন অপেক্ষারত সংগ্রহ",
       "field": "ফিল্ড",
@@ -217,6 +218,10 @@
     "collection": {
       "Saving_Collection": "সঞ্চয় সংগ্রহ",
       "Loan_Collection": "ঋণ সংগ্রহ"
+    },
+    "withdrawal": {
+      "Saving_Withdrawal": "সঞ্চয় উত্তোলন",
+      "Loan_Saving_Withdrawal": "ঋণ সঞ্চয় উত্তোলন"
     },
     "account_management": {
       "Accounts": "অ্যাকাউন্ট",

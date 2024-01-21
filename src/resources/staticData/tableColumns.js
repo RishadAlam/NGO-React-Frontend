@@ -1449,3 +1449,124 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
     Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
+
+export const PendingSavingWithdrawalTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  statusSwitch,
+  descParser,
+  actionBtnGroup,
+  isApprovalHide,
+  isActionHide
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.image'),
+    accessor: 'image_uri',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) =>
+      avatar(
+        row.original.saving_account.client_registration.name,
+        row.original.saving_account.client_registration.image_uri
+      )
+  },
+  {
+    Header: t('common.name'),
+    accessor: 'name',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => row.original.saving_account.client_registration.name
+  },
+  {
+    Header: t('common.acc_no'),
+    accessor: 'acc_no',
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.field'),
+    accessor: 'field',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.center'),
+    accessor: 'center',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.category'),
+    Footer: t('common.total'),
+    accessor: 'category',
+    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => descParser(value)
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.balance_remaining'),
+    accessor: 'balance_remaining',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, withdrawal) => {
+        return sum + parseInt(withdrawal.amount) || 0
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.approval'),
+    accessor: 'is_approved',
+    show: isApprovalHide ? false : true,
+    disable: isApprovalHide,
+    isActionHide: isApprovalHide,
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]

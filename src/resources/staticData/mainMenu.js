@@ -81,6 +81,13 @@ export const mainMenu = (t) => {
     [t('menu.categories.Pending_Approval')]: [
       {
         id: 1,
+        label: t('menu.label.pending_loans'),
+        path: '/pending/loans',
+        icon: 'BankTransferOut',
+        view: checkPermissions(['pending_loan_view', 'pending_loan_view_as_admin'], permissions)
+      },
+      {
+        id: 2,
         label: `${t('menu.categories.Pending_Approval')} ${t('menu.label.registration')}`,
         path: '',
         icon: 'CheckPatch',
@@ -132,13 +139,6 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 2,
-        label: t('menu.label.pending_loans'),
-        path: '/pending/loans',
-        icon: 'BankTransferOut',
-        view: checkPermissions(['pending_loan_view', 'pending_loan_view_as_admin'], permissions)
-      },
-      {
         id: 3,
         label: t('menu.label.pending_collection'),
         path: '',
@@ -167,12 +167,55 @@ export const mainMenu = (t) => {
             )
           },
           {
-            id: 'pendingCollection1',
+            id: 'pendingCollection2',
             label: t('menu.collection.Loan_Collection'),
             path: '/collection/pending/loan',
             icon: 'Loan',
             view: checkPermissions(
               ['pending_loan_collection_list_view', 'pending_loan_collection_list_view_as_admin'],
+              permissions
+            )
+          }
+        ]
+      },
+      {
+        id: 4,
+        label: t('menu.label.pending_withdrawals'),
+        path: '',
+        icon: 'CheckPatch',
+        view: checkPermissions(
+          [
+            'pending_saving_withdrawal_list_view',
+            'pending_saving_withdrawal_list_view_as_admin',
+            'pending_loan_saving_withdrawal_list_view',
+            'pending_loan_saving_withdrawal_list_view_as_admin'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'pendingWithdrawal1',
+            label: t('menu.withdrawal.Saving_Withdrawal'),
+            path: '/pending/withdrawal/saving',
+            icon: 'CashWithdrawal',
+            view: checkPermissions(
+              [
+                'pending_saving_withdrawal_list_view',
+                'pending_saving_withdrawal_list_view_as_admin'
+              ],
+              permissions
+            )
+          },
+          {
+            id: 'pendingWithdrawal2',
+            label: t('menu.withdrawal.Loan_Saving_Withdrawal'),
+            path: '/pending/withdrawal/loan-saving',
+            icon: 'CashWithdrawal',
+            view: checkPermissions(
+              [
+                'pending_loan_saving_withdrawal_list_view',
+                'pending_loan_saving_withdrawal_list_view_as_admin'
+              ],
               permissions
             )
           }

@@ -45,6 +45,12 @@ const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfig'))
 const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
 const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
+const PendingSavingWithdrawal = lazy(() =>
+  import('./pages/pendingWithdrawals/PendingSavingWithdrawal')
+)
+const PendingLoanSavingWithdrawal = lazy(() =>
+  import('./pages/pendingWithdrawals/PendingLoanSavingWithdrawal')
+)
 
 export default function App() {
   return (
@@ -397,6 +403,7 @@ export default function App() {
                 />
               </Route>
             </Route>
+
             {/* Pending Loans */}
             <Route
               path="pending/loans"
@@ -415,6 +422,52 @@ export default function App() {
                   </ErrorBoundary>
                 }
               />
+            </Route>
+
+            {/* Pending Withdrawal Routes */}
+            <Route path="pending/withdrawal">
+              <Route
+                path="saving"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_saving_withdrawal_list_view',
+                      'pending_saving_withdrawal_list_view_as_admin'
+                    ]}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingSavingWithdrawal />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="loan-saving"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_loan_saving_withdrawal_list_view',
+                      'pending_loan_saving_withdrawal_list_view_as_admin'
+                    ]}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingLoanSavingWithdrawal />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
             </Route>
 
             {/* Field, Center, Category */}

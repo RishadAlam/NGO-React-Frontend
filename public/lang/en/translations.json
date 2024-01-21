@@ -165,7 +165,7 @@
     "total_loan_rec": "Total Loan Collections",
     "total_interest_rec": "Total Interest Collections",
     "account_check": "Account Check",
-    "remaining_balance": "Remaining Balance",
+    "balance_remaining": "Remaining Balance",
     "next_check_in_at": "Next check in at"
   },
 
@@ -205,6 +205,7 @@
     "label": {
       "registration": "Registration",
       "pending_loans": "Pending Loans",
+      "pending_withdrawals": "Pending Withdrawals",
       "regular_collection": "Regular Collection",
       "pending_collection": "Pending Collection",
       "field": "Fields",
@@ -222,6 +223,10 @@
     "collection": {
       "Saving_Collection": "Saving Collection",
       "Loan_Collection": "Loan Collection"
+    },
+    "withdrawal": {
+      "Saving_Withdrawal": "Saving Withdrawal",
+      "Loan_Saving_Withdrawal": "Loan Saving Withdrawal"
     },
     "account_management": {
       "Accounts": "Accounts",
