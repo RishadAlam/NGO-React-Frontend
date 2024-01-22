@@ -157,3 +157,18 @@ export const setLoanAccFields = ({
     guarantors: setNomiGuarantorFields(guarantors)
   }
 }
+
+export const setApprovalWithdrawalModalData = (data) => {
+  return {
+    id: data.id,
+    category: data?.category,
+    name: data?.saving_account?.client_registration?.name,
+    acc_no: data?.acc_no,
+    fee: data?.category?.category_config?.saving_withdrawal_fee,
+    amount: data?.amount,
+    balance: data?.saving_account?.balance,
+    description: data?.description,
+    created_at: data?.created_at,
+    creator: data?.author?.name
+  }
+}

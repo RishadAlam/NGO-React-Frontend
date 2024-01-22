@@ -1559,7 +1559,7 @@ export const PendingSavingWithdrawalTableColumns = (
     show: isApprovalHide ? false : true,
     disable: isApprovalHide,
     isActionHide: isApprovalHide,
-    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
+    Cell: ({ value, row }) => statusSwitch(value, row.original)
   },
   {
     Header: t('common.action'),

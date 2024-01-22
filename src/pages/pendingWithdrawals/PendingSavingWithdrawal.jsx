@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import ApproveWithdrawalModal from '../../components/_helper/clientACCwithdrawal/ApproveWithdrawalModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import EditSavingAccountModal from '../../components/pendingReg/EditSavingAccountModal'
@@ -14,8 +15,7 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import { setSavingFields } from '../../helper/RegFormFieldsData'
-import { clientRegApprovalAlert } from '../../helper/approvalAlert'
+import { setApprovalWithdrawalModalData, setSavingFields } from '../../helper/RegFormFieldsData'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
@@ -32,6 +32,8 @@ import xFetch from '../../utilities/xFetch'
 export default function PendingSavingWithdrawal() {
   const [editWithdrawalAccData, setEditWithdrawalAccData] = useState()
   const [editWithdrawalAccDataModal, setEditWithdrawalAccDataModal] = useState(false)
+  const [withdrawalAppData, setWithdrawalAppData] = useState()
+  const [withdrawalAppModal, setWithdrawalAppModal] = useState(false)
   const [selectedField, setSelectedField] = useState()
   const [selectedCenter, setSelectedCenter] = useState()
   const [selectedCategory, setSelectedCategory] = useState()
@@ -117,37 +119,15 @@ export default function PendingSavingWithdrawal() {
   }
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value, id) =>
-    checkPermission('pending_saving_acc_approval', authPermissions) && (
+  const statusSwitch = (value, data) =>
+    checkPermission('pending_saving_withdrawal_approval', authPermissions) && (
       <AndroidSwitch
         value={Number(value) ? true : false}
-        toggleStatus={(e) => savingApproved(id, e.target.checked)}
+        toggleStatus={() => setApprovalData(data)}
         disabled={loading?.approval || false}
       />
     )
-  const savingApproved = (id) => {
-    clientRegApprovalAlert(t).then((result) => {
-      if (result.isConfirmed) {
-        setLoading({ ...loading, approval: true })
-        const toasterLoading = toast.loading(`${t('common.approval')}...`)
-        xFetch(`client/registration/saving/approved/${id}`, null, null, accessToken, null, 'PUT')
-          .then((response) => {
-            setLoading({ ...loading, approval: false })
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              toast.success(response?.message)
-              mutate()
-              return
-            }
-            toast.error(response?.message)
-          })
-          .catch((errResponse) => {
-            setLoading({ ...loading, approval: false })
-            toast.error(errResponse?.message)
-          })
-      }
-    })
-  }
+
   const actionBtnGroup = (id, account) => (
     <ActionBtnGroup>
       {checkPermission('pending_saving_withdrawal_update', authPermissions) && (
@@ -200,6 +180,11 @@ export default function PendingSavingWithdrawal() {
     setEditWithdrawalAccDataModal(true)
   }
 
+  const setApprovalData = (data) => {
+    setWithdrawalAppData(setApprovalWithdrawalModalData(data))
+    setWithdrawalAppModal(true)
+  }
+
   const deleteWithdrawal = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
@@ -232,7 +217,7 @@ export default function PendingSavingWithdrawal() {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.categories.pending_withdrawals'),
+                  name: t('menu.label.pending_withdrawals'),
                   icon: <CheckPatch size={16} />,
                   active: false
                 },
@@ -255,6 +240,14 @@ export default function PendingSavingWithdrawal() {
               mutate={mutate}
             />
           )}
+        {withdrawalAppData && authPermissions.includes('pending_saving_withdrawal_approval') && (
+          <ApproveWithdrawalModal
+            open={withdrawalAppModal}
+            setOpen={setWithdrawalAppModal}
+            data={withdrawalAppData}
+            mutate={mutate}
+          />
+        )}
         <div className="row">
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
             {fields && <SelectBoxField label={t('common.field')} config={fieldConfig} />}
@@ -266,7 +259,8 @@ export default function PendingSavingWithdrawal() {
             {categories && <SelectBoxField label={t('common.category')} config={categoryConfig} />}
           </div>
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
-            {creators && <SelectBoxField label={t('common.creator')} config={creatorConfig} />}
+            {checkPermission('pending_saving_acc_list_view_as_admin', authPermissions) &&
+              creators && <SelectBoxField label={t('common.creator')} config={creatorConfig} />}
           </div>
         </div>
         <div className="staff-table">
@@ -274,7 +268,7 @@ export default function PendingSavingWithdrawal() {
             <ReactTableSkeleton />
           ) : (
             <ReactTable
-              title={t('saving.pending_saving_acc_reg_list')}
+              title={t('menu.withdrawal.Saving_Withdrawal')}
               columns={columns}
               data={withdrawal}
               footer={true}
