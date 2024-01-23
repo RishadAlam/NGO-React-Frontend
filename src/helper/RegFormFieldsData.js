@@ -167,6 +167,7 @@ export const setApprovalWithdrawalModalData = (data) => {
     fee: data?.category?.category_config?.saving_withdrawal_fee,
     amount: data?.amount,
     balance: data?.saving_account?.balance,
+    balance_remaining: data?.saving_account?.balance - data?.amount,
     description: data?.description,
     created_at: data?.created_at,
     creator: data?.author?.name

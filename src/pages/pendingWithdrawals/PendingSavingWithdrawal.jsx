@@ -7,15 +7,15 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ApproveWithdrawalModal from '../../components/_helper/clientACCwithdrawal/ApproveWithdrawalModal'
+import EditWithdrawalModal from '../../components/_helper/clientACCwithdrawal/EditWithdrawalModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
-import EditSavingAccountModal from '../../components/pendingReg/EditSavingAccountModal'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import { setApprovalWithdrawalModalData, setSavingFields } from '../../helper/RegFormFieldsData'
+import { setApprovalWithdrawalModalData } from '../../helper/RegFormFieldsData'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
@@ -128,11 +128,11 @@ export default function PendingSavingWithdrawal() {
       />
     )
 
-  const actionBtnGroup = (id, account) => (
+  const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
       {checkPermission('pending_saving_withdrawal_update', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => savingAccountEdit(account)}>
+          <IconButton className="text-warning" onClick={() => setWithdrawalEdit(withdrawal)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -175,8 +175,8 @@ export default function PendingSavingWithdrawal() {
     [t, windowWidth, loading]
   )
 
-  const savingAccountEdit = (account) => {
-    setEditWithdrawalAccData(setSavingFields(account))
+  const setWithdrawalEdit = (account) => {
+    setEditWithdrawalAccData(setApprovalWithdrawalModalData(account))
     setEditWithdrawalAccDataModal(true)
   }
 
@@ -232,12 +232,14 @@ export default function PendingSavingWithdrawal() {
         </div>
         {editWithdrawalAccData &&
           authPermissions.includes('pending_client_registration_update') && (
-            <EditSavingAccountModal
+            <EditWithdrawalModal
               open={editWithdrawalAccDataModal}
               setOpen={setEditWithdrawalAccDataModal}
-              accountData={editWithdrawalAccData}
+              withdrawal={editWithdrawalAccData}
               setAccountData={setEditWithdrawalAccData}
+              prefix="saving"
               mutate={mutate}
+              category_id={editWithdrawalAccData?.category?.id}
             />
           )}
         {withdrawalAppData && authPermissions.includes('pending_saving_withdrawal_approval') && (
