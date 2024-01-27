@@ -45,12 +45,7 @@ const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfig'))
 const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
 const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
-const PendingSavingWithdrawal = lazy(() =>
-  import('./pages/pendingWithdrawals/PendingSavingWithdrawal')
-)
-const PendingLoanSavingWithdrawal = lazy(() =>
-  import('./pages/pendingWithdrawals/PendingLoanSavingWithdrawal')
-)
+const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
 
 export default function App() {
   return (
@@ -441,7 +436,7 @@ export default function App() {
                   element={
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
-                        <PendingSavingWithdrawal />
+                        <PendingWithdrawal prefix="saving" />
                       </Suspense>
                     </ErrorBoundary>
                   }
@@ -462,7 +457,7 @@ export default function App() {
                   element={
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
-                        <PendingLoanSavingWithdrawal />
+                        <PendingWithdrawal prefix="loan-saving" />
                       </Suspense>
                     </ErrorBoundary>
                   }
