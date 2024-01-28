@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { isEmpty } from '../../helper/isEmpty'
 import Edit from '../../icons/Edit'
 import Folder from '../../icons/Folder'
@@ -51,7 +52,9 @@ export default function LoanAccountDetails({ data = {} }) {
               {Boolean(data?.is_approved) && (
                 <p className="truncate mb-3">
                   {t('common.account')}:
-                  <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
+                  <Link to={`/loan-account/${data?.id}`}>
+                    <span className="float-end fw-medium text-primary">{<Folder size={30} />}</span>
+                  </Link>
                 </p>
               )}
               <p className="truncate mb-3">
