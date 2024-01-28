@@ -18,13 +18,15 @@ import ModalPro from '../../utilities/ModalPro'
 import SelectBoxField from '../../utilities/SelectBoxField'
 import TextInputField from '../../utilities/TextInputField'
 
-export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {} }) {
+export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {}, prefix }) {
   const { t } = useTranslation()
   const [error, setError] = useState({})
   const [account, setAccount] = useState()
   const [loading, setLoading] = useLoadingState({})
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
   const { accessToken, permissions } = useAuthDataValue()
+  const endpoint = `withdrawal/${prefix}`
+  const permissionPrefix = prefix === 'saving' ? 'saving' : 'loan_saving'
 
   const accountSelectBoxConfig = {
     options: accounts,
@@ -42,9 +44,9 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
     event.preventDefault()
     if (!checkValidation(data, account, setError, t)) return
 
-    setLoading({ ...loading, loanApproval: true })
+    setLoading({ ...loading, withdrawal: true })
     xFetch(
-      `withdrawal/saving/approved/${data?.id}`,
+      `${endpoint}/approved/${data?.id}`,
       { account: account?.id },
       null,
       accessToken,
@@ -52,7 +54,7 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
       'PUT'
     )
       .then((response) => {
-        setLoading({ ...loading, loanApproval: false })
+        setLoading({ ...loading, withdrawal: false })
         if (response?.success) {
           toast.success(response.message)
           mutate()
@@ -71,7 +73,7 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, loanApproval: false })
+        setLoading({ ...loading, withdrawal: false })
         setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
@@ -91,7 +93,11 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
           <form onSubmit={onSubmit}>
             <div className="card-header">
               <div className="d-flex align-items-center justify-content-between">
-                <b className="text-uppercase">{t('menu.withdrawal.Saving_Withdrawal')}</b>
+                <b className="text-uppercase">
+                  {prefix === 'saving'
+                    ? t('menu.withdrawal.Saving_Withdrawal')
+                    : t('menu.withdrawal.Loan_Saving_Withdrawal')}
+                </b>
                 <Button
                   className={'text-danger p-0'}
                   loading={false}
@@ -176,36 +182,34 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
                     />
                   </div>
                 )}
-                {!data?.is_loan_approved &&
-                  permissions.includes('pending_saving_withdrawal_approval') && (
-                    <div className="col-md-6 mb-3">
-                      <SelectBoxField
-                        label={t('common.account')}
-                        config={accountSelectBoxConfig}
-                        isRequired={true}
-                        error={error?.account}
-                        disabled={loading?.loanApproval}
-                      />
-                      <span className="text-info">
-                        <Info size={15} /> {t('common.deduct_withdrawal_msg')}
-                      </span>
-                    </div>
-                  )}
+                {permissions.includes(`pending_${permissionPrefix}_withdrawal_approval`) && (
+                  <div className="col-md-6 mb-3">
+                    <SelectBoxField
+                      label={t('common.account')}
+                      config={accountSelectBoxConfig}
+                      isRequired={true}
+                      error={error?.account}
+                      disabled={loading?.withdrawal}
+                    />
+                    <span className="text-info">
+                      <Info size={15} /> {t('common.deduct_withdrawal_msg')}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-            {!data?.is_loan_approved &&
-              permissions.includes('pending_saving_withdrawal_approval') && (
-                <div className="card-footer text-end">
-                  <Button
-                    type="submit"
-                    name={t('common.approval')}
-                    className={'btn-primary py-2 px-3'}
-                    loading={loading?.loanApproval || false}
-                    endIcon={<Save size={20} />}
-                    disabled={loading?.loanApproval || !isEmptyObject(error) || false}
-                  />
-                </div>
-              )}
+            {permissions.includes(`pending_${permissionPrefix}_withdrawal_approval`) && (
+              <div className="card-footer text-end">
+                <Button
+                  type="submit"
+                  name={t('common.approval')}
+                  className={'btn-primary py-2 px-3'}
+                  loading={loading?.withdrawal || false}
+                  endIcon={<Save size={20} />}
+                  disabled={loading?.withdrawal || !isEmptyObject(error) || false}
+                />
+              </div>
+            )}
           </form>
         </div>
       </ModalPro>

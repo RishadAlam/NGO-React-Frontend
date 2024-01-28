@@ -26,7 +26,7 @@ import CheckPatch from '../../icons/CheckPatch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
-import { PendingSavingWithdrawalTableColumns } from '../../resources/staticData/tableColumns'
+import { PendingWithdrawalTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
 export default function PendingSavingWithdrawal({ prefix }) {
@@ -155,7 +155,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
 
   const columns = useMemo(
     () =>
-      PendingSavingWithdrawalTableColumns(
+      PendingWithdrawalTableColumns(
         t,
         windowWidth,
         avatar,

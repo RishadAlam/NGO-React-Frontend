@@ -159,15 +159,23 @@ export const setLoanAccFields = ({
 }
 
 export const setApprovalWithdrawalModalData = (data) => {
+  const name =
+    data?.saving_account?.client_registration?.name || data?.loan_account?.client_registration?.name
+  const balance = data?.saving_account?.balance || data?.loan_account?.balance
+  const balance_remaining = balance - data?.amount
+  const fee =
+    data?.category?.category_config?.saving_withdrawal_fee ||
+    data?.category?.category_config?.loan_saving_withdrawal_fee
+
   return {
     id: data.id,
     category: data?.category,
-    name: data?.saving_account?.client_registration?.name,
+    name: name,
     acc_no: data?.acc_no,
-    fee: data?.category?.category_config?.saving_withdrawal_fee,
+    fee: fee,
     amount: data?.amount,
-    balance: data?.saving_account?.balance,
-    balance_remaining: data?.saving_account?.balance - data?.amount,
+    balance: balance,
+    balance_remaining: balance_remaining,
     description: data?.description,
     created_at: data?.created_at,
     creator: data?.author?.name

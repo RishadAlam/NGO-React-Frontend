@@ -1450,7 +1450,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
   }
 ]
 
-export const PendingSavingWithdrawalTableColumns = (
+export const PendingWithdrawalTableColumns = (
   t,
   windowWidth,
   avatar,
@@ -1472,15 +1472,19 @@ export const PendingSavingWithdrawalTableColumns = (
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) =>
       avatar(
-        row.original.saving_account.client_registration.name,
-        row.original.saving_account.client_registration.image_uri
+        row?.original?.saving_account?.client_registration?.name ||
+          row?.original?.loan_account?.client_registration?.name,
+        row?.original?.saving_account?.client_registration?.image_uri ||
+          row?.original?.loan_account?.client_registration?.image_uri
       )
   },
   {
     Header: t('common.name'),
     accessor: 'name',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ row }) => row.original.saving_account.client_registration.name
+    Cell: ({ row }) =>
+      row?.original?.saving_account?.client_registration?.name ||
+      row?.original?.loan_account?.client_registration?.name
   },
   {
     Header: t('common.acc_no'),
