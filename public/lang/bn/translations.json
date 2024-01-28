@@ -166,7 +166,8 @@
     "total_interest_rec": "সর্বমোট লাভ সংগ্রহ",
     "account_check": "একাউন্ট চেক",
     "balance_remaining": "অবশিষ্ট ব্যালেন্স",
-    "next_check_in_at": "পরবর্তী চেক"
+    "next_check_in_at": "পরবর্তী চেক",
+    "present": "বর্তমান"
   },
 
   "common_validation": {

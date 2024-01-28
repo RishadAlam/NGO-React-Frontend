@@ -25,13 +25,19 @@ export default function EditWithdrawalModal({
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useLoadingState({})
   const [withdrawData, setWithdrawData] = useState({ ...withdrawal })
+  const requestData =
+    prefix === 'saving'
+      ? ['min_saving_withdrawal', 'max_saving_withdrawal']
+      : ['min_loan_saving_withdrawal', 'max_loan_saving_withdrawal']
 
-  const { data: { data: { min_saving_withdrawal: min, max_saving_withdrawal: max } = [] } = [] } =
-    useFetch({
-      method: 'POST',
-      action: `categories-config/element/${category_id}`,
-      requestData: ['min_saving_withdrawal', 'max_saving_withdrawal']
-    })
+  const { data: { data = {} } = [] } = useFetch({
+    method: 'POST',
+    action: `categories-config/element/${category_id}`,
+    requestData: requestData
+  })
+
+  const min = data?.min_saving_withdrawal || data?.min_loan_saving_withdrawal
+  const max = data?.max_saving_withdrawal || data?.max_loan_saving_withdrawal
 
   const setChange = (val, name) => {
     if (name === 'amount') {

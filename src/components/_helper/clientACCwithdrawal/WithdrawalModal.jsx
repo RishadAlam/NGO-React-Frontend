@@ -57,7 +57,7 @@ export default function WithdrawalModal({
                 </div>
                 <div className="col-md-6 mb-3">
                   <TextInputField
-                    label={t('common.balance')}
+                    label={`${t('common.present')} ${t('common.balance')}`}
                     isRequired={true}
                     defaultValue={tsNumbers(`$${withdrawData?.balance || 0}/-`) || ''}
                     setChange={(val) => setChange(val, 'balance')}

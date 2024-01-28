@@ -167,7 +167,8 @@
     "total_interest_rec": "Total Interest Collections",
     "account_check": "Account Check",
     "balance_remaining": "Remaining Balance",
-    "next_check_in_at": "Next check in at"
+    "next_check_in_at": "Next check in at",
+    "present": "Present"
   },
 
   "common_validation": {
