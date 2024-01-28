@@ -526,7 +526,7 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     accessor: 'income_category',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
-      value ? defaultNameCheck(t, value.is_default, 'category.default.', value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'income_categories.default.', value.name) : ''
   },
   {
     Header: t('common.description'),
@@ -609,7 +609,7 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     accessor: 'expense_category',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) =>
-      value ? defaultNameCheck(t, value.is_default, 'category.default.', value.name) : ''
+      value ? defaultNameCheck(t, value.is_default, 'expense_categories.default.', value.name) : ''
   },
   {
     Header: t('common.description'),

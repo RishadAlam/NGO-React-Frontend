@@ -351,6 +351,8 @@
 
     "default": {
       "registration_fee": "Registration Fee",
+      "saving_form_fee": "Saving Form Fee",
+      "loan_form_fee": "Loan Form Fee",
       "closing_fee": "Closing Fee",
       "withdrawal_fee": "Withdrawal Fee",
       "money_transfer_transaction_fee": "Money Transfer Fee"
@@ -364,7 +366,15 @@
     "default": {
       "electricity_bill": "Electricity Bill",
       "office_rent": "Office Rent",
-      "daily_expense": "Daily Expense"
+      "daily_expense": "Daily Expense",
+      "loan_given": "Loan Given",
+      "saving_withdrawal": "Savings Withdrawal",
+      "loan_saving_withdrawal": "Loan Savings Withdrawal",
+      "stationary": "Stationary",
+      "account_closing_interest": "Account Closing interest",
+      "employee_salary": "Employee Salary",
+      "transportation_allowance": "Transportation Allowance",
+      "hospitality": "Hospitality"
     }
   },
   "staffs": {

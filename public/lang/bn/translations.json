@@ -21,6 +21,7 @@
     "center_id": "কেন্দ্র",
     "creator_id": "নির্মাতা",
     "category_id": "ক্যাটাগরি",
+    "type": "টাইপ",
     "group": "গ্রুপ",
     "officer": "অফিসার",
     "time": "সময়",
@@ -345,7 +346,9 @@
     "Income_Categories_Edit": "আয় ক্যাটাগরি ইডিট",
 
     "default": {
-      "registration_fee": "নিবন্ধন ফি",
+      "registration_fee": "ভর্তি ফি",
+      "saving_form_fee": "সঞ্চয় ফরম ফি",
+      "loan_form_fee": "ঋণ ফরম ফি",
       "closing_fee": "ক্লোজিং ফি",
       "withdrawal_fee": "উত্তোলন ফি",
       "money_transfer_transaction_fee": "টাকা স্থানান্তর ফি"
@@ -359,7 +362,15 @@
     "default": {
       "electricity_bill": "বিদ্যুৎ বিল",
       "office_rent": "অফিস ভাড়া",
-      "daily_expense": "দৈনিক খরচ"
+      "daily_expense": "দৈনিক খরচ",
+      "loan_given": "ঋণ দেওয়া হয়েছে",
+      "saving_withdrawal": "সঞ্চয় উত্তোলন",
+      "loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলন",
+      "stationary": "ষ্টেশনারী",
+      "account_closing_interest": "একাউন্ট ক্লোজিং লাভ",
+      "employee_salary": "কর্মচারীর বেতন",
+      "transportation_allowance": "যাতায়াত",
+      "hospitality": "আপ্যায়ন"
     }
   },
   "staffs": {
