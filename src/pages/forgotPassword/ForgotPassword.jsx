@@ -8,7 +8,6 @@ import xFetch from '../../utilities/xFetch'
 import '../login/login.scss'
 
 export default function ForgotPassword() {
-  // States
   const navigate = useNavigate()
   const [loading, setLoading] = useLoadingState({})
   const [email, setEmail] = useState('')

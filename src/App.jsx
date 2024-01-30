@@ -46,6 +46,7 @@ const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfi
 const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
 const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
+const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 
 export default function App() {
   return (
@@ -74,6 +75,18 @@ export default function App() {
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                   <Suspense fallback={<Loader />}>
                     <StaffProfile />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+
+            {/* Search Routes */}
+            <Route
+              path="search"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <Search />
                   </Suspense>
                 </ErrorBoundary>
               }

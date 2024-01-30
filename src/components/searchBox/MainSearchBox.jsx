@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyArray } from '../../helper/isEmptyObject'
@@ -12,8 +12,8 @@ import Button from '../utilities/Button'
 import './searchBox.scss'
 
 export default function MainSearchBox({ t }) {
+  const navigate = useNavigate()
   const { accessToken } = useAuthDataValue()
-  const [searchKey, setSearchKey] = useState()
   const [searchData, setSearchData] = useState([])
 
   const liveSearch = debounce((e) => {
@@ -22,7 +22,10 @@ export default function MainSearchBox({ t }) {
       return
     }
 
-    xFetch('client/registration', null, null, accessToken, { search: e.target.value })
+    xFetch('client/registration', null, null, accessToken, {
+      search: tsNumbers(e.target.value, true),
+      limit: 10
+    })
       .then((response) => {
         if (response?.success) {
           setSearchData(response.data)
@@ -36,18 +39,24 @@ export default function MainSearchBox({ t }) {
       })
   }, 500)
 
+  const submit = (e) => {
+    e.preventDefault()
+    navigate('/search', { state: { searchData } })
+  }
+
   return (
     <>
       <div className="mainSearchBox position-relative">
-        <form>
+        <form onSubmit={submit}>
           <input
             type="text"
             className="form-control form-input"
             placeholder={t('common.search_placeholder')}
+            name="search"
             onKeyUp={liveSearch}
           />
           <span className="left-pan">
-            <Button name={<Search size={20} />} disabled={false} loading={false} type="button" />
+            <Button name={<Search size={20} />} disabled={false} loading={false} type="submit" />
           </span>
         </form>
         {!isEmptyArray(searchData) && (
