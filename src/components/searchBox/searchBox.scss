@@ -46,36 +46,81 @@
       background-color: transparent;
     }
   }
+
+  .search-box-dropdown {
+    min-width: 100%;
+    height: auto;
+    top: 120%;
+    z-index: 99999;
+
+    ul {
+      background-color: $primary-bg;
+      @include transition;
+
+      li {
+        margin-bottom: 10px;
+        letter-spacing: 0;
+        color: $white-color;
+        @include transition;
+
+        &:hover > button,
+        &:hover {
+          letter-spacing: 2px;
+          color: $primary-soft-bg;
+        }
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        .dropdown-info {
+          & > b {
+            font-size: 18px;
+            // font-weight: 600;
+          }
+          & > small {
+            font-size: 12px;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
 }
 
-body.dark .mainSearchBox .form-input {
-  color: $soft-light !important;
-  background-color: transparent !important;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-
-  &::-webkit-input-placeholder {
-    /* WebKit, Blink, Edge */
-    color: $soft-light;
-  }
-  :-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: $soft-light;
-  }
-  &::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: $soft-light;
-  }
-  :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: $soft-light;
-  }
-  &::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: $soft-light;
+body.dark .mainSearchBox {
+  .search-box-dropdown ul {
+    background-color: $secondary-color;
   }
 
-  &::placeholder {
-    /* Most modern browsers support this now. */
-    color: $soft-light;
+  .form-input {
+    color: $soft-light !important;
+    background-color: transparent !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+
+    &::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      color: $soft-light;
+    }
+    :-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: $soft-light;
+    }
+    &::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: $soft-light;
+    }
+    :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: $soft-light;
+    }
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: $soft-light;
+    }
+
+    &::placeholder {
+      /* Most modern browsers support this now. */
+      color: $soft-light;
+    }
   }
 }
