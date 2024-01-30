@@ -41,7 +41,9 @@ export default function MainSearchBox({ t }) {
 
   const submit = (e) => {
     e.preventDefault()
-    navigate('/search', { state: { searchData } })
+    const data = searchData
+    setSearchData([])
+    navigate('/search', { state: { searchData: data } })
   }
 
   return (
