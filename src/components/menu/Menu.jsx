@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import Home from '../../icons/Home'
@@ -9,6 +9,11 @@ import NavItem from './NavItem'
 function Menu({ setMobileMenuClosed }) {
   const { t } = useTranslation()
   const menu = useMemo(() => mainMenu(t), [t])
+  const [dropDowns, setDropDowns] = useState({})
+  const toggleSideMenu = (e, id) => {
+    e.preventDefault()
+    setDropDowns({ [id]: !dropDowns[id] })
+  }
 
   return (
     <nav className="menu mt-md-5">
@@ -26,7 +31,15 @@ function Menu({ setMobileMenuClosed }) {
           </NavLink>
         </li>
         {Object.keys(menu).map((key, i) => (
-          <NavItem key={i} menu={menu} menuKey={key} setMobileMenuClosed={setMobileMenuClosed} />
+          <NavItem
+            key={i}
+            menu={menu}
+            menuKey={key}
+            setMobileMenuClosed={setMobileMenuClosed}
+            dropDowns={dropDowns}
+            setDropDowns={setDropDowns}
+            toggleSideMenu={toggleSideMenu}
+          />
         ))}
       </ul>
     </nav>
