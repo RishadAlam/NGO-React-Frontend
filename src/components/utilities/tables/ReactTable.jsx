@@ -15,7 +15,7 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import './table.scss'
 
-function ReactTable({ title, columns, data, footer = false }) {
+function ReactTable({ title, columns, data = [], footer = false }) {
   const { t } = useTranslation()
   const lang = Cookies.get('i18next')
   const [anchorEl, setAnchorEl] = useState(null)
