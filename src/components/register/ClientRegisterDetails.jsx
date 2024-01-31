@@ -11,7 +11,7 @@ export default function ClientRegisterDetails({ data = {} }) {
   const { t } = useTranslation()
 
   return (
-    <RegisterBox className="rounded-top-2">
+    <RegisterBox className="rounded-top-2 shadow rounded-4">
       <div>
         <div className="p-2 pt-0 border-bottom">
           <h5 className="fw-medium">

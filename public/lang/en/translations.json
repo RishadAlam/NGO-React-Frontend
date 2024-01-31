@@ -169,6 +169,8 @@
     "account_check": "Account Check",
     "balance_remaining": "Remaining Balance",
     "next_check_in_at": "Next check in at",
+    "last_check": "Last check",
+    "next_check": "Next check",
     "present": "Present"
   },
 

@@ -1,3 +1,4 @@
+import AccountShortSummery from '../_helper/accountShortSummery/AccountShortSummery'
 import AccountTopMenus from '../_helper/AccountTopMenus'
 import RegisterBox from '../register/RegisterBox'
 import '../register/RegisterBox.scss'
@@ -7,9 +8,10 @@ export default function SavingAccount() {
   return (
     <>
       <AccountTopMenus prefix="saving" />
-      <RegisterBox>
+      <RegisterBox className="shadow rounded-4">
         <AccountSummary />
       </RegisterBox>
+      <AccountShortSummery prefix="saving" />
     </>
   )
 }

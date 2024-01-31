@@ -1,0 +1,14 @@
+@import '../../../scss/variables';
+
+.stm-summery {
+  .zoom-in {
+    @include transition;
+  }
+
+  p {
+    font-size: 18px;
+  }
+  b {
+    font-size: 16px;
+  }
+}

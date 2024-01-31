@@ -1,7 +1,7 @@
-export default function RegisterBox({ children, className }) {
+export default function RegisterBox({ children, className, style }) {
   return (
     <>
-      <div className={`register-box shadow rounded-4 p-3 overflow-hidden ${className}`}>
+      <div className={`${className} register-box p-3 overflow-hidden`} style={style}>
         {children}
       </div>
     </>

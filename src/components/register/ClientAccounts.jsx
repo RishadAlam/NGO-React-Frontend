@@ -40,15 +40,15 @@ export default function ClientAccounts({ module = null, prefix = null }) {
   }, [data, t])
 
   return isEmptyArray(data) ? (
-    <RegisterBox className="rounded-top-2">
+    <RegisterBox className="rounded-top-2 shadow rounded-4">
       <p className="text-center">{t('common.No_Records_Found')}</p>
     </RegisterBox>
   ) : (
     <>
-      <RegisterBox className="rounded-top-2 rounded-bottom-2 py-0">
+      <RegisterBox className="rounded-top-2 rounded-bottom-2 shadow rounded-4 py-0">
         <TabsGroup defaultValue={tabValue} setValue={setTabValue} data={categories} />
       </RegisterBox>
-      <RegisterBox className="rounded-top-2 mt-3">
+      <RegisterBox className="rounded-top-2 shadow rounded-4 mt-3">
         {data.map((value, index) => (
           <TabPanel key={index} value={tabValue} index={value.id}>
             {module === 'saving' ? (

@@ -14,7 +14,7 @@ export default function Register() {
 
   return (
     <>
-      <RegisterBox className="rounded-bottom-2 pb-0">
+      <RegisterBox className="rounded-bottom-2 pb-0 shadow rounded-4">
         <AccountSummary data={data} />
         <RegisterTabNav
           registerTabValue={registerTabValue}

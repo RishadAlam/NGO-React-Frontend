@@ -169,6 +169,8 @@
     "account_check": "একাউন্ট চেক",
     "balance_remaining": "অবশিষ্ট ব্যালেন্স",
     "next_check_in_at": "পরবর্তী চেক",
+    "last_check": "পূর্ববর্তী চেক",
+    "next_check": "পরবর্তী চেক",
     "present": "বর্তমান"
   },
 

@@ -7,7 +7,7 @@ export default function LoanAccount() {
   return (
     <>
       <AccountTopMenus prefix="loan-saving" />
-      <RegisterBox>
+      <RegisterBox className="shadow rounded-4">
         <AccountSummary />
       </RegisterBox>
     </>

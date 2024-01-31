@@ -117,6 +117,13 @@ a {
   background-color: $primary-bg;
 }
 
+.zoom-in:hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  transform: scale(1.05) !important;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -371,9 +378,9 @@ ul {
   min-width: 80px;
   padding: 5px 10px;
 
-  @include sm {
-    min-width: max-content;
-  }
+  // @include sm {
+  //   min-width: max-content;
+  // }
 }
 
 .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
