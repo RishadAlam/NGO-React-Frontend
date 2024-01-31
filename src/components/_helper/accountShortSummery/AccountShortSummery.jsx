@@ -31,8 +31,10 @@ export default function AccountShortSummery({ prefix }) {
 
 const setItem = (value, name) => {
   if (name === 'last_check' || name === 'next_check') {
-    return tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+    return value ? tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a')) : '---'
+  } else if (name === 'installment') {
+    return value ? tsNumbers(value) : '---'
   } else {
-    return tsNumbers(`৳${value}/-`)
+    return value ? tsNumbers(`৳${value}/-`) : '---'
   }
 }

@@ -169,9 +169,16 @@
     "account_check": "একাউন্ট চেক",
     "balance_remaining": "অবশিষ্ট ব্যালেন্স",
     "next_check_in_at": "পরবর্তী চেক",
-    "last_check": "পূর্ববর্তী চেক",
+    "last_check": "সর্বশেষ চেক",
     "next_check": "পরবর্তী চেক",
-    "present": "বর্তমান"
+    "present": "বর্তমান",
+    "loan_recovered": "ঋণ পুনরুদ্ধার হয়েছে",
+    "loan_remaining": "ঋণ অবশিষ্ট রয়েছে",
+    "interest_recovered": "লাভ পুনরুদ্ধার হয়েছে",
+    "interest_remaining": "লাভ অবশিষ্ট রয়েছে",
+    "total_recovered": "মোট আদায়কৃত (ঋণ + লাভ)",
+    "total_remaining": "মোট অবশিষ্ট (ঋণ + লাভ)",
+    "total_payable": "মোট প্রদেয় (ঋণ + লাভ)"
   },
 
   "common_validation": {

@@ -171,7 +171,14 @@
     "next_check_in_at": "Next check in at",
     "last_check": "Last check",
     "next_check": "Next check",
-    "present": "Present"
+    "present": "Present",
+    "loan_recovered": "Loan Recovered",
+    "loan_remaining": "Loan Remaining",
+    "interest_recovered": "Interest Recovered",
+    "interest_remaining": "Interest Remaining",
+    "total_recovered": "Total Recovered (Loan + Interest)",
+    "total_remaining": "Total Remaining (Loan + Interest)",
+    "total_payable": "Total Payable (Loan + Interest)"
   },
 
   "common_validation": {
