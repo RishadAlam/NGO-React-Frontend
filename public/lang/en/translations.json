@@ -559,7 +559,7 @@
       "expense_category_soft_delete": "Permission To Do Expense Category Soft Delete",
       "expense_category_permanently_delete": "Permission To Do Expense Category Permanently Delete",
       "staff_list_view": "Permission To Do Staff List View",
-      "staff_permissions_view": "Permission To Do Staff Permissions View",
+      "staff_permission_view": "Permission To Do Staff Permissions View",
       "staff_registration": "Permission To Do Staff Registration",
       "staff_data_update": "Permission To Do Staff Data Update",
       "staff_soft_delete": "Permission To Do Staff Soft Delete",

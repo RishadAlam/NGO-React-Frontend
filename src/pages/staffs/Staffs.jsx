@@ -60,7 +60,7 @@ export default function Staffs() {
   )
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
-      {authPermissions.includes('staff_permissions_view') && (
+      {authPermissions.includes('staff_permission_view') && (
         <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
           <IconButton
             className="text-success"
@@ -106,7 +106,7 @@ export default function Staffs() {
         actionBtnGroup,
         !checkPermissions(
           [
-            'staff_permissions_view',
+            'staff_permission_view',
             'staff_data_update',
             'staff_soft_delete',
             'staff_action_history',
