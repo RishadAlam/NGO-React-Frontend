@@ -14,8 +14,8 @@ export default function AccountShortSummery({ prefix }) {
   })
 
   return (
-    <div className="stm-summery my-3">
-      <div className="row">
+    <div className="stm-summery text-center my-3">
+      <div className="row w-100 mx-auto">
         {Object.keys(data).map((item, key) => (
           <div className="col-sm-4 col-xxl-3 my-2 px-2" key={key}>
             <RegisterBox className="cursor-pointer zoom-in rounded shadow rounded-2">
