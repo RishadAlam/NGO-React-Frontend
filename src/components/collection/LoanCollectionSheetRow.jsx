@@ -11,6 +11,7 @@ import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
+import { setCollectionBG } from '../../helper/setCollectionBG'
 import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import dateFormat from '../../libs/dateFormat'
@@ -214,16 +215,30 @@ function LoanCollectionSheetRow({
       <td className={`${!columnList.description ? 'd-none' : ''}`}>
         <span>{decodeHTMLs(collection?.description)}</span>
       </td>
-      <td className={`${!columnList.deposit ? 'd-none' : ''}`}>
+      <td
+        className={`${!columnList.deposit ? 'd-none' : ''}`}
+        ref={(e) => setCollectionBG(e, account.payable_deposit, collection?.deposit)}>
         {collection?.deposit && tsNumbers(`$${collection?.deposit}/-`)}
       </td>
-      <td className={`${!columnList.loan ? 'd-none' : ''}`}>
+      <td
+        className={`${!columnList.loan ? 'd-none' : ''}`}
+        ref={(e) => setCollectionBG(e, account.loan_installment, collection?.loan)}>
         {collection?.loan && tsNumbers(`$${collection?.loan}/-`)}
       </td>
-      <td className={`${!columnList.interest ? 'd-none' : ''}`}>
+      <td
+        className={`${!columnList.interest ? 'd-none' : ''}`}
+        ref={(e) => setCollectionBG(e, account.interest_installment, collection?.interest)}>
         {collection?.interest && tsNumbers(`$${collection?.interest}/-`)}
       </td>
-      <td className={`${!columnList.total ? 'd-none' : ''}`}>
+      <td
+        className={`${!columnList.total ? 'd-none' : ''}`}
+        ref={(e) =>
+          setCollectionBG(
+            e,
+            account.payable_deposit + account.loan_installment + account.interest_installment,
+            collection?.total
+          )
+        }>
         {collection?.total && tsNumbers(`$${collection?.total}/-`)}
       </td>
       <td className={`${!columnList.creator ? 'd-none' : ''}`}>{collection?.author?.name}</td>

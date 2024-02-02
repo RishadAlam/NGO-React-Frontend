@@ -11,6 +11,7 @@ import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
+import { setCollectionBG } from '../../helper/setCollectionBG'
 import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import dateFormat from '../../libs/dateFormat'
@@ -199,7 +200,9 @@ function SavingCollectionSheetRow({
       <td className={`${!columnList.description ? 'd-none' : ''}`}>
         <span>{decodeHTMLs(collection?.description)}</span>
       </td>
-      <td className={`${!columnList.deposit ? 'd-none' : ''}`}>
+      <td
+        className={`${!columnList.deposit ? 'd-none' : ''}`}
+        ref={(e) => setCollectionBG(e, account.payable_deposit, collection?.deposit)}>
         {collection?.deposit && tsNumbers(`$${collection?.deposit}/-`)}
       </td>
       <td className={`${!columnList.creator ? 'd-none' : ''}`}>{collection?.author?.name}</td>
