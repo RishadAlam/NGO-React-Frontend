@@ -134,7 +134,8 @@ export default function AppSettings() {
                     <div className="col-md-12 mb-3 text-center">
                       <ImagePreview
                         label={t('app_settings.company_logo')}
-                        src={companyLogo || ''}
+                        imageUri={companyLogo || ''}
+                        setImageUri={setCompanyLogo}
                         setChange={(val) => setChange(val, 'company_logo')}
                         error={errors?.company_logo}
                         disabled={loading?.appSettings}
