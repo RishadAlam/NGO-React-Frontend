@@ -19,13 +19,17 @@ export default function SavingAccountDetails({ data = {} }) {
     statusName = t('common.closed')
     statusClass = 'bg-secondary'
   } else {
-    statusName = data?.is_approved
+    statusName = Number(data?.is_approved)
       ? data?.status
         ? t('common.running')
         : t('common.hold')
       : t('common.pending')
-    statusClass = data?.is_approved ? (data?.status ? 'bg-success' : 'bg-warning') : 'bg-danger'
-    isEditable = data?.is_approved ? data?.status && true : false
+    statusClass = Number(data?.is_approved)
+      ? data?.status
+        ? 'bg-success'
+        : 'bg-warning'
+      : 'bg-danger'
+    isEditable = Number(data?.is_approved) && Number(data?.status) ? true : false
   }
 
   return (
@@ -49,7 +53,7 @@ export default function SavingAccountDetails({ data = {} }) {
                   {<Badge name={statusName} className={statusClass} />}
                 </span>
               </p>
-              {Boolean(data?.is_approved) && (
+              {Number(data?.is_approved) > 0 && (
                 <p className="truncate mb-3">
                   {t('common.account')}:
                   <Link to={`/saving-account/${data?.id}`}>
