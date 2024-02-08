@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
+import { checkPermission } from '../../helper/checkPermission'
 import CheckCircle from '../../icons/CheckCircle'
 import ExternalLink from '../../icons/ExternalLink'
 import XCircle from '../../icons/XCircle'
@@ -15,6 +17,7 @@ export default function StaffPermissions({
   modalTitle,
   btnTitle
 }) {
+  const { permissions: authPermissions } = useAuthDataValue()
   const { staff_id, staff_permissions } = data
   // eslint-disable-next-line no-unused-vars
   const [permissions, setPermissions] = useState((permissions = {}) => {
@@ -93,7 +96,7 @@ export default function StaffPermissions({
               )}
             </div>
           </div>
-          {authId !== staff_id && (
+          {authId !== staff_id && checkPermission('staff_permission_update', authPermissions) && (
             <div className="card-footer text-end">
               <Link
                 to={`/staff-permissions/${staff_id}`}

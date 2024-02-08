@@ -17,7 +17,7 @@ import Avatar from '../../components/utilities/Avatar'
 import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import { checkPermissions } from '../../helper/checkPermission'
+import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import deleteAlert from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -56,11 +56,12 @@ export default function Staffs() {
     <AndroidSwitch
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
+      disabled={!checkPermission('staff_status_update', authPermissions)}
     />
   )
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
-      {authPermissions.includes('staff_permission_view') && (
+      {checkPermission('staff_permission_view', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
           <IconButton
             className="text-success"
@@ -69,21 +70,21 @@ export default function Staffs() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('staff_data_update') && (
+      {checkPermission('staff_data_update', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authId !== id && authPermissions.includes('staff_soft_delete') && (
+      {authId !== id && checkPermission('staff_soft_delete', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => staffDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('staff_action_history') && (
+      {checkPermission('staff_action_history', authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
           <IconButton
             className="text-info"
@@ -120,6 +121,8 @@ export default function Staffs() {
   )
 
   const toggleStatus = (id, isChecked) => {
+    if (!checkPermission('staff_status_update', authPermissions)) return
+
     const toasterLoading = toast.loading(`${t('common.status')}...`)
     xFetch(`users/change-status/${id}`, { status: isChecked }, null, accessToken, null, 'PUT')
       .then((response) => {
@@ -135,6 +138,8 @@ export default function Staffs() {
   }
 
   const staffEdit = (staff) => {
+    if (!checkPermission('staff_data_update', authPermissions)) return
+
     setEditableStaff({
       id: staff?.id,
       name: staff?.name,
@@ -148,16 +153,22 @@ export default function Staffs() {
   }
 
   const staffActionHistory = (actionHistory) => {
+    if (!checkPermission('staff_action_history', authPermissions)) return
+
     setActionHistory(actionHistory)
     setIsActionHistoryModalOpen(true)
   }
 
   const viewUserPermissions = (id, permissions) => {
+    if (!checkPermission('staff_permission_view', authPermissions)) return
+
     setUserPermissions({ staff_id: id, staff_permissions: permissions })
     setIsUserPermissionsModalOpen(true)
   }
 
   const staffDelete = (id) => {
+    if (!checkPermission('staff_soft_delete', authPermissions)) return
+
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         const toasterLoading = toast.loading(`${t('common.delete')}...`)

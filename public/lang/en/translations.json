@@ -588,6 +588,7 @@
       "staff_permission_update": "Permission To Do Staff Permissions Update",
       "staff_registration": "Permission To Do Staff Registration",
       "staff_data_update": "Permission To Do Staff Data Update",
+      "staff_status_update": "Permission To Do Staff Status Update",
       "staff_soft_delete": "Permission To Do Staff Soft Delete",
       "staff_action_history": "Permission To Do Staff Action History",
       "staff_reset_password": "Permission To Do Staff Reset Password",
