@@ -42,7 +42,7 @@ export default function LoanAccReg() {
         setLoading({ ...loading, LoanAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setLoanAccData(loanAccFields)
+          setLoanAccData(() => loanAccFields())
           setErrors(loanAccErrs)
           return
         }

@@ -42,7 +42,7 @@ export default function SavingAccReg() {
         setLoading({ ...loading, SavingAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setSavingAccData(setSavingFields)
+          setSavingAccData(() => setSavingFields())
           setErrors(savingAccErrs)
           return
         }

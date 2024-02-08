@@ -47,9 +47,9 @@ export default function ClientRegistration() {
         setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setClientData(clientDataFields)
-          setImageUri(profilePlaceholder)
-          setSignatureURL(SignaturePlaceholder)
+          setClientData(() => clientDataFields())
+          setImageUri(() => profilePlaceholder())
+          setSignatureURL(() => SignaturePlaceholder())
           setErrors(clientDataErrs)
           return
         }
