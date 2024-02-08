@@ -682,7 +682,7 @@ export default function App() {
             </Route>
             <Route
               path="staff-permissions/:id"
-              element={<RequirePermissions allowedPermissions={['staff_registration']} />}>
+              element={<RequirePermissions allowedPermissions={['staff_permission_update']} />}>
               <Route
                 index
                 element={
