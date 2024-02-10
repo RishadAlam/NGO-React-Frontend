@@ -5,6 +5,8 @@ import parse from 'date-fns/parse'
 import startOfWeek from 'date-fns/startOfWeek'
 import { memo } from 'react'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import debounce from '../../libs/debounce'
 
 function EventCalender({
@@ -16,6 +18,7 @@ function EventCalender({
   mutate,
   setDateRange
 }) {
+  const { t } = useTranslation()
   const lang = document.querySelector('html').lang
   const locales = lang === 'bn' ? { 'bn-BD': bn } : { 'en-US': enUS }
   const culture = lang === 'bn' ? 'bn-BD' : 'en-US'
@@ -49,6 +52,7 @@ function EventCalender({
     if (view === 'month' || view === 'week' || view === 'day') {
       const dateRange = new Date(date)
       setDateRange(dateRange.toISOString())
+      toast.loading(`${t('loading')}...`)
       mutate()
     }
   }, 500)
