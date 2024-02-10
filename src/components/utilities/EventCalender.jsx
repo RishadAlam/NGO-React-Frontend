@@ -30,7 +30,7 @@ function EventCalender({
   })
 
   const eventStyleGetter = (event, start, end, isSelected) => {
-    const backgroundColor = event?.is_loan_approved ? 'green' : 'red'
+    const backgroundColor = Number(event?.is_loan_approved) ? 'green' : 'red'
     const style = {
       backgroundColor,
       borderRadius: '5px',

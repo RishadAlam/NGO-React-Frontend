@@ -224,23 +224,24 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                     disabled={true}
                   />
                 </div>
-                {!data?.is_loan_approved && permissions.includes('pending_loan_approval') && (
-                  <div className="col-md-6 mb-3">
-                    <SelectBoxField
-                      label={t('common.account')}
-                      config={accountSelectBoxConfig}
-                      isRequired={true}
-                      error={error?.account}
-                      disabled={loading?.loanApproval}
-                    />
-                    <span className="text-info">
-                      <Info size={15} /> {t('common.deduct_loan_msg')}
-                    </span>
-                  </div>
-                )}
+                {!Number(data?.is_loan_approved) &&
+                  permissions.includes('pending_loan_approval') && (
+                    <div className="col-md-6 mb-3">
+                      <SelectBoxField
+                        label={t('common.account')}
+                        config={accountSelectBoxConfig}
+                        isRequired={true}
+                        error={error?.account}
+                        disabled={loading?.loanApproval}
+                      />
+                      <span className="text-info">
+                        <Info size={15} /> {t('common.deduct_loan_msg')}
+                      </span>
+                    </div>
+                  )}
               </div>
             </div>
-            {!data?.is_loan_approved && permissions.includes('pending_loan_approval') && (
+            {!Number(data?.is_loan_approved) && permissions.includes('pending_loan_approval') && (
               <div className="card-footer text-end">
                 <Button
                   type="submit"

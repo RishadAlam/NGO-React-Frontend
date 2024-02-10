@@ -42,7 +42,7 @@ export default function LoanAccReg() {
         setLoading({ ...loading, LoanAccRegForm: false })
         if (response?.success) {
           toast.success(response.message)
-          setLoanAccData(() => loanAccFields())
+          setLoanAccData(() => loanAccFields)
           setErrors(loanAccErrs)
           return
         }
@@ -135,7 +135,6 @@ const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
     'start_date',
     'duration_date',
     'loan_given',
-    'payable_deposit',
     'payable_installment',
     'payable_interest',
     'total_payable_interest',
