@@ -109,11 +109,20 @@
   }
 
   .footer {
-    background-color: tomato;
+    background-color: $main-bg;
     padding: 0 20px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    p,
+    small {
+      font-family: 'Poppins', 'Tiro Bangla', sans-serif !important;
+    }
+
+    small {
+      font-size: 11px;
+    }
   }
 }

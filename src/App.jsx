@@ -1,12 +1,12 @@
-import { lazy } from 'react'
+import { Suspense, lazy } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { Helmet } from 'react-helmet-async'
 import { Route, Routes } from 'react-router-dom'
+import { useAppSettingsValue } from './atoms/appSettingsAtoms'
+import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
 import RequirePermissions from './components/layouts/RequirePermissions'
-// import ClientRegistration from './components/registrations/ClientRegistration'
-import { Suspense } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
-import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Loader from './components/loaders/Loader'
 import AccountVerification from './pages/accountVerification/AccountVerification'
 import Dashboard from './pages/dashboard/Dashboard'
@@ -49,8 +49,15 @@ const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingW
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 
 export default function App() {
+  const { company_logo_uri } = useAppSettingsValue()
+
   return (
     <>
+      {company_logo_uri && (
+        <Helmet>
+          <link rel="icon" type="image/x-icon" href={company_logo_uri} />
+        </Helmet>
+      )}
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* UnAuthenticate Routes */}

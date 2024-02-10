@@ -43,7 +43,12 @@ export default function MainLayout() {
               </div>
             </div>
           </div>
-          <div className="footer">footer</div>
+          <div className="footer">
+            <p>v 1.0.0</p>
+            <p>
+              <small>Developed By</small> RISHAD ALAM
+            </p>
+          </div>
         </section>
       )}
     </>

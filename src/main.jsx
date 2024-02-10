@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
+import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import RecoilNexus from 'recoil-nexus'
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <AuthProvider>
-            <App />
+            <HelmetProvider>
+              <App />
+            </HelmetProvider>
           </AuthProvider>
         </ErrorBoundary>
       </BrowserRouter>
