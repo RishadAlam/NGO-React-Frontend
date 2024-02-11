@@ -1,16 +1,19 @@
 import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAppSettingsValue } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
 import { useIsLoadingValue } from '../../atoms/loaderAtoms'
 import Illustration from '../../icons/Illustration'
 import './layout.scss'
 
-export default function Layout() {
+export default function Layout({ pageTitle = '' }) {
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
   const navigate = useNavigate()
   const isAutorized = useIsAuthorizedValue()
   const isLoading = useIsLoadingValue()
+  const { company_name = '' } = useAppSettingsValue()
 
   useEffect(() => {
     if (isAutorized) navigate(from, { replace: true })
@@ -22,6 +25,9 @@ export default function Layout() {
 
   return (
     <>
+      <Helmet>
+        <title>{`${pageTitle ? pageTitle + ' | ' : ''}${company_name}`}</title>
+      </Helmet>
       {!isAutorized && (
         <div className="layout">
           <div className="container pt-5">

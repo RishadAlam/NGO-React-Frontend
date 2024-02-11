@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router-dom'
 import { useAppSettingsValue } from './atoms/appSettingsAtoms'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
@@ -50,6 +51,7 @@ const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 
 export default function App() {
   const { company_logo_uri } = useAppSettingsValue()
+  const { t } = useTranslation()
 
   return (
     <>
@@ -63,13 +65,17 @@ export default function App() {
           {/* UnAuthenticate Routes */}
           <Route path="/*" element={<NotFound />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/login" element={<Layout />}>
+          <Route path="/login" element={<Layout pageTitle={t('page_name.login')} />}>
             <Route index element={<Login />} />
           </Route>
-          <Route path="/forgot-password" element={<Layout />}>
+          <Route
+            path="/forgot-password"
+            element={<Layout pageTitle={t('page_name.forgot_password')} />}>
             <Route index element={<ForgotPassword />} />
           </Route>
-          <Route path="/account-verification" element={<Layout />}>
+          <Route
+            path="/account-verification"
+            element={<Layout pageTitle={t('page_name.account_verification')} />}>
             <Route index element={<AccountVerification />} />
           </Route>
 
@@ -135,7 +141,12 @@ export default function App() {
             <Route path="registration">
               <Route
                 path="client"
-                element={<RequirePermissions allowedPermissions={['client_registration']} />}>
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['client_registration']}
+                    pageTitle={t('menu.registration.Client_Registration')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -149,7 +160,12 @@ export default function App() {
               </Route>
               <Route
                 path="saving-account"
-                element={<RequirePermissions allowedPermissions={['saving_acc_registration']} />}>
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['saving_acc_registration']}
+                    pageTitle={t('menu.registration.saving_account_registration')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -163,7 +179,12 @@ export default function App() {
               </Route>
               <Route
                 path="loan-account"
-                element={<RequirePermissions allowedPermissions={['loan_acc_registration']} />}>
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['loan_acc_registration']}
+                    pageTitle={t('menu.registration.loan_account_registration')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -189,6 +210,7 @@ export default function App() {
                         'regular_saving_collection_list_view',
                         'regular_saving_collection_list_view_as_admin'
                       ]}
+                      pageTitle={t('menu.collection.Saving_Collection')}
                     />
                   }>
                   <Route
@@ -230,6 +252,7 @@ export default function App() {
                         'regular_loan_collection_list_view',
                         'regular_loan_collection_list_view_as_admin'
                       ]}
+                      pageTitle={t('menu.collection.Loan_Collection')}
                     />
                   }>
                   <Route
@@ -275,6 +298,7 @@ export default function App() {
                         'pending_saving_collection_list_view',
                         'pending_saving_collection_list_view_as_admin'
                       ]}
+                      pageTitle={`${t('common.pending')} ${t('menu.collection.Saving_Collection')}`}
                     />
                   }>
                   <Route
@@ -316,6 +340,7 @@ export default function App() {
                         'pending_loan_collection_list_view',
                         'pending_loan_collection_list_view_as_admin'
                       ]}
+                      pageTitle={`${t('common.pending')} ${t('menu.collection.Loan_Collection')}`}
                     />
                   }>
                   <Route
@@ -362,6 +387,9 @@ export default function App() {
                       'pending_client_registration_list_view',
                       'pending_client_registration_list_view_as_admin'
                     ]}
+                    pageTitle={`${t('common.pending')} ${t(
+                      'menu.registration.Client_Registration'
+                    )}`}
                   />
                 }>
                 <Route
@@ -383,6 +411,9 @@ export default function App() {
                       'pending_saving_acc_list_view',
                       'pending_saving_acc_list_view_as_admin'
                     ]}
+                    pageTitle={`${t('common.pending')} ${t(
+                      'menu.registration.saving_account_registration'
+                    )}`}
                   />
                 }>
                 <Route
@@ -404,6 +435,9 @@ export default function App() {
                       'pending_loan_acc_list_view',
                       'pending_loan_acc_list_view_as_admin'
                     ]}
+                    pageTitle={`${t('common.pending')} ${t(
+                      'menu.registration.loan_account_registration'
+                    )}`}
                   />
                 }>
                 <Route
@@ -425,6 +459,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['pending_loan_view', 'pending_loan_view_as_admin']}
+                  pageTitle={t('menu.label.pending_loans')}
                 />
               }>
               <Route
@@ -449,6 +484,7 @@ export default function App() {
                       'pending_saving_withdrawal_list_view',
                       'pending_saving_withdrawal_list_view_as_admin'
                     ]}
+                    pageTitle={`${t('common.pending')} ${t('menu.withdrawal.Saving_Withdrawal')}`}
                   />
                 }>
                 <Route
@@ -470,6 +506,9 @@ export default function App() {
                       'pending_loan_saving_withdrawal_list_view',
                       'pending_loan_saving_withdrawal_list_view_as_admin'
                     ]}
+                    pageTitle={`${t('common.pending')} ${t(
+                      'menu.withdrawal.Loan_Saving_Withdrawal'
+                    )}`}
                   />
                 }>
                 <Route
@@ -488,7 +527,12 @@ export default function App() {
             {/* Field, Center, Category */}
             <Route
               path="fields"
-              element={<RequirePermissions allowedPermissions={['field_list_view']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['field_list_view']}
+                  pageTitle={t('menu.label.field')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -502,7 +546,12 @@ export default function App() {
             </Route>
             <Route
               path="centers"
-              element={<RequirePermissions allowedPermissions={['center_list_view']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['center_list_view']}
+                  pageTitle={t('menu.label.center')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -516,7 +565,12 @@ export default function App() {
             </Route>
             <Route
               path="categories"
-              element={<RequirePermissions allowedPermissions={['category_list_view']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['category_list_view']}
+                  pageTitle={t('menu.label.category')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -531,7 +585,13 @@ export default function App() {
 
             {/* Account Management Routes */}
             <Route path="accounts">
-              <Route element={<RequirePermissions allowedPermissions={['account_list_view']} />}>
+              <Route
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['account_list_view']}
+                    pageTitle={t('menu.account_management.Accounts')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -547,7 +607,10 @@ export default function App() {
               <Route
                 path="transfers"
                 element={
-                  <RequirePermissions allowedPermissions={['account_transfer_list_view']} />
+                  <RequirePermissions
+                    allowedPermissions={['account_transfer_list_view']}
+                    pageTitle={t('menu.account_management.Transfers')}
+                  />
                 }>
                 <Route
                   index
@@ -564,7 +627,10 @@ export default function App() {
               <Route
                 path="transactions"
                 element={
-                  <RequirePermissions allowedPermissions={['account_transfer_list_view']} />
+                  <RequirePermissions
+                    allowedPermissions={['account_transaction_list_view']}
+                    pageTitle={t('menu.account_management.Transactions')}
+                  />
                 }>
                 <Route
                   index
@@ -581,7 +647,10 @@ export default function App() {
               <Route
                 path="withdrawals"
                 element={
-                  <RequirePermissions allowedPermissions={['account_withdrawal_list_view']} />
+                  <RequirePermissions
+                    allowedPermissions={['account_withdrawal_list_view']}
+                    pageTitle={t('menu.account_management.Withdrawals')}
+                  />
                 }>
                 <Route
                   index
@@ -596,7 +665,13 @@ export default function App() {
               </Route>
               {/* Income */}
               <Route path="incomes">
-                <Route element={<RequirePermissions allowedPermissions={['income_list_view']} />}>
+                <Route
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={['income_list_view']}
+                      pageTitle={t('menu.account_management.Incomes')}
+                    />
+                  }>
                   <Route
                     index
                     element={
@@ -611,7 +686,10 @@ export default function App() {
                 <Route
                   path="categories"
                   element={
-                    <RequirePermissions allowedPermissions={['income_category_list_view']} />
+                    <RequirePermissions
+                      allowedPermissions={['income_category_list_view']}
+                      pageTitle={t('menu.account_management.Income_Categories')}
+                    />
                   }>
                   <Route
                     index
@@ -627,7 +705,13 @@ export default function App() {
               </Route>
               {/* Expense */}
               <Route path="expenses">
-                <Route element={<RequirePermissions allowedPermissions={['expense_list_view']} />}>
+                <Route
+                  element={
+                    <RequirePermissions
+                      allowedPermissions={['expense_list_view']}
+                      pageTitle={t('menu.account_management.Expenses')}
+                    />
+                  }>
                   <Route
                     index
                     element={
@@ -642,7 +726,10 @@ export default function App() {
                 <Route
                   path="categories"
                   element={
-                    <RequirePermissions allowedPermissions={['income_category_list_view']} />
+                    <RequirePermissions
+                      allowedPermissions={['expense_category_list_view']}
+                      pageTitle={t('menu.account_management.Expense_Categories')}
+                    />
                   }>
                   <Route
                     index
@@ -661,7 +748,12 @@ export default function App() {
             {/* Staffs */}
             <Route
               path="staffs"
-              element={<RequirePermissions allowedPermissions={['staff_list_view']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['staff_list_view']}
+                  pageTitle={t('menu.staffs.Staffs')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -675,7 +767,12 @@ export default function App() {
             </Route>
             <Route
               path="staff-roles"
-              element={<RequirePermissions allowedPermissions={['role_list_view']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['role_list_view']}
+                  pageTitle={t('menu.staffs.Staff_Roles')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -689,7 +786,12 @@ export default function App() {
             </Route>
             <Route
               path="staff-permissions/:id"
-              element={<RequirePermissions allowedPermissions={['staff_permission_update']} />}>
+              element={
+                <RequirePermissions
+                  allowedPermissions={['staff_permission_update']}
+                  pageTitle={t('menu.staffs.Staff_Permissions')}
+                />
+              }>
               <Route
                 index
                 element={
@@ -704,7 +806,13 @@ export default function App() {
 
             {/* App Configurations Routes */}
             <Route path="settings-and-privacy">
-              <Route element={<RequirePermissions allowedPermissions={['app_settings']} />}>
+              <Route
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['app_settings']}
+                    pageTitle={t('menu.settings_and_privacy.app_settings')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -718,7 +826,12 @@ export default function App() {
               </Route>
               <Route
                 path="approvals"
-                element={<RequirePermissions allowedPermissions={['approvals_config']} />}>
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['approvals_config']}
+                    pageTitle={t('menu.settings_and_privacy.approvals_config')}
+                  />
+                }>
                 <Route
                   index
                   element={
@@ -732,7 +845,12 @@ export default function App() {
               </Route>
               <Route
                 path="categories-config"
-                element={<RequirePermissions allowedPermissions={['categories_config']} />}>
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['categories_config']}
+                    pageTitle={t('menu.settings_and_privacy.categories_config')}
+                  />
+                }>
                 <Route
                   index
                   element={

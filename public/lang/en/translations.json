@@ -207,6 +207,14 @@
     "app_name": "Jonokollan Kormojibi Co-operative Society LTD"
   },
 
+  "page_name": {
+    "login": "Login",
+    "forgot_password": "Forgot Password",
+    "account_verification": "Account Verification",
+    "profile": "Profile",
+    "client_registration_account": "Client Registration Account"
+  },
+
   "menu": {
     "dashboard": "Dashboard",
     "categories": {
