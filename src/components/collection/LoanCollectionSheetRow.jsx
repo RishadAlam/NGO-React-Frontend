@@ -108,6 +108,7 @@ function LoanCollectionSheetRow({
     setCollectionData((prevData) =>
       create(prevData, (draftData) => {
         draftData.loan_account_id = account.id
+        draftData.is_loan_approved = account.is_loan_approved
         draftData.field_id = account.field_id
         draftData.center_id = account.center_id
         draftData.category_id = account.category_id
@@ -125,6 +126,17 @@ function LoanCollectionSheetRow({
         draftData.loan_installment = account.loan_installment
         draftData.interest_installment = account.interest_installment
         draftData.total_installment = draftData.total
+
+        if (Number(account.is_loan_approved === 0)) {
+          draftData.installment = 0
+          draftData.loan = 0
+          draftData.interest = 0
+          draftData.total = parseInt(account.payable_deposit || 0)
+          draftData.payable_deposit = account.payable_deposit
+          draftData.loan_installment = 0
+          draftData.interest_installment = 0
+          draftData.total_installment = draftData.total
+        }
 
         if (!isEmptyObject(collection)) {
           draftData.newCollection = false

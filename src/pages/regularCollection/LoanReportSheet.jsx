@@ -22,6 +22,9 @@ export default function LoanReportSheet({ isRegular = true }) {
   const [selectedCreator, setSelectedCreator] = useState()
   const { t } = useTranslation()
   const prefix = isRegular ? 'regular' : 'pending'
+  const queryParams = isRegular
+    ? { user_id: selectedCreator?.id || '' }
+    : { user_id: selectedCreator?.id || '', date: !isRegular ? dateRange.toISOString() || '' : '' }
 
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
@@ -30,10 +33,7 @@ export default function LoanReportSheet({ isRegular = true }) {
     isLoading
   } = useFetch({
     action: `collection/loan/${prefix}/collection-sheet/${category_id}/${field_id}`,
-    queryParams: {
-      user_id: selectedCreator?.id || '',
-      date: !isRegular ? dateRange.toISOString() || '' : ''
-    }
+    queryParams: queryParams
   })
 
   const creatorConfig = {

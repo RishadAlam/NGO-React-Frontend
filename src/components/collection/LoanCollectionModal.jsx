@@ -180,16 +180,18 @@ export default function LoanCollectionModal({
                     disabled={loading?.loanApproval}
                   />
                 </div>
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.installment')}
-                    isRequired={true}
-                    defaultValue={tsNumbers(collection?.installment) || ''}
-                    setChange={(val) => setChange(val, 'installment')}
-                    error={errors?.installment}
-                    disabled={loading?.collectionForm}
-                  />
-                </div>
+                {Number(collection?.is_loan_approved) === 1 && (
+                  <div className="col-md-6 mb-3">
+                    <TextInputField
+                      label={t('common.installment')}
+                      isRequired={true}
+                      defaultValue={tsNumbers(collection?.installment) || ''}
+                      setChange={(val) => setChange(val, 'installment')}
+                      error={errors?.installment}
+                      disabled={loading?.collectionForm}
+                    />
+                  </div>
+                )}
                 <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.deposit')}
@@ -201,28 +203,32 @@ export default function LoanCollectionModal({
                     disabled={loading?.collectionForm}
                   />
                 </div>
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.loan')}
-                    isRequired={true}
-                    defaultValue={tsNumbers(collection?.loan) || ''}
-                    setChange={(val) => setChange(val, 'loan')}
-                    error={errors?.loan}
-                    disabled={loading?.collectionForm}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.interest')}
-                    isRequired={true}
-                    defaultValue={tsNumbers(collection?.interest) || ''}
-                    setChange={(val) => setChange(val, 'interest')}
-                    error={errors?.interest}
-                    disabled={
-                      !checkPermission('permission_to_do_edit_loan_interest', authPermissions)
-                    }
-                  />
-                </div>
+                {Number(collection?.is_loan_approved) === 1 && (
+                  <>
+                    <div className="col-md-6 mb-3">
+                      <TextInputField
+                        label={t('common.loan')}
+                        isRequired={true}
+                        defaultValue={tsNumbers(collection?.loan) || ''}
+                        setChange={(val) => setChange(val, 'loan')}
+                        error={errors?.loan}
+                        disabled={loading?.collectionForm}
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <TextInputField
+                        label={t('common.interest')}
+                        isRequired={true}
+                        defaultValue={tsNumbers(collection?.interest) || ''}
+                        setChange={(val) => setChange(val, 'interest')}
+                        error={errors?.interest}
+                        disabled={
+                          !checkPermission('permission_to_do_edit_loan_interest', authPermissions)
+                        }
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.total')}
