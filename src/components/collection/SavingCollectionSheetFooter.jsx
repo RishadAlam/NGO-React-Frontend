@@ -64,7 +64,7 @@ export default function SavingCollectionSheetFooter({
         <th className={`${!columnList.creator ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}></th>
         {checkPermission('regular_saving_collection_approval', authPermissions) && (
-          <th className={`${!columnList.time ? 'd-none' : ''}`}>
+          <th className={`${!columnList.approval ? 'd-none' : ''}`}>
             {approvedList.length > 0 && (
               <Button
                 type="submit"

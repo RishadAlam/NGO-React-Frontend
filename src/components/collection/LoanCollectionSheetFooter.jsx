@@ -76,7 +76,7 @@ export default function LoanCollectionSheetFooter({
         <th className={`${!columnList.creator ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}></th>
         {checkPermission('regular_loan_collection_approval', authPermissions) && (
-          <th className={`${!columnList.time ? 'd-none' : ''}`}>
+          <th className={`${!columnList.approval ? 'd-none' : ''}`}>
             {approvedList.length > 0 && (
               <Button
                 type="submit"

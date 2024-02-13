@@ -99,12 +99,14 @@ export default function LoanReportSheet({ isRegular = true }) {
               ) && <SelectBoxField label={t('common.creator')} config={creatorConfig} />}
           </div>
           <div className="col-lg-4 col-xxl-6 d-md-none d-lg-block"></div>
-          <div className="col-sm-6 col-lg-4 col-xxl-3 text-end mb-3">
-            <DatePickerInputField
-              defaultValue={dateRange}
-              setChange={(val) => setParamsState(val, 'dateRange')}
-            />
-          </div>
+          {!isRegular && (
+            <div className="col-sm-6 col-lg-4 col-xxl-3 text-end mb-3">
+              <DatePickerInputField
+                defaultValue={dateRange}
+                setChange={(val) => setParamsState(val, 'dateRange')}
+              />
+            </div>
+          )}
         </div>
         <LoanCollectionSheet
           data={regularCollections}
