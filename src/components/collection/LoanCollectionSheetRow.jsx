@@ -118,7 +118,9 @@ function LoanCollectionSheetRow({
         draftData.loan = account.loan_installment
         draftData.interest = account.interest_installment
         draftData.total =
-          account.payable_deposit + account.loan_installment + account.interest_installment
+          parseInt(account.payable_deposit || 0) +
+          parseInt(account.loan_installment || 0) +
+          parseInt(account.interest_installment || 0)
         draftData.payable_deposit = account.payable_deposit
         draftData.loan_installment = account.loan_installment
         draftData.interest_installment = account.interest_installment

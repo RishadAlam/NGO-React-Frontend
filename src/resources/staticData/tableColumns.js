@@ -540,7 +540,7 @@ export const IncomeTableColumns = (t, windowWidth, actionBtnGroup, isActionHide)
     Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + transaction.amount
+        return parseInt(sum) + parseInt(transaction.amount)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -623,7 +623,7 @@ export const ExpenseTableColumns = (t, windowWidth, actionBtnGroup, isActionHide
     Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + transaction.amount
+        return parseInt(sum) + parseInt(transaction.amount)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -699,7 +699,7 @@ export const WithdrawalTableColumns = (t, windowWidth, actionBtnGroup, isActionH
     Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + transaction.amount
+        return parseInt(sum) + parseInt(transaction.amount)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -787,7 +787,7 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
     Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + transaction.amount
+        return parseInt(sum) + parseInt(transaction.amount)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -860,7 +860,7 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
     Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + transaction.amount
+        return parseInt(sum) + parseInt(transaction.amount)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1270,7 +1270,7 @@ export const CategoryCollectionSavingReportTableColumns = (t, windowWidth, actio
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.saving_collection[0]?.deposit) || 0
+        return parseInt(sum) + parseInt(transaction.saving_collection[0]?.deposit || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1301,7 +1301,7 @@ export const FieldCollectionSavingReportTableColumns = (t, windowWidth, actionBt
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.saving_collection[0]?.deposit) || 0
+        return parseInt(sum) + parseInt(transaction.saving_collection[0]?.deposit || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1334,7 +1334,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionB
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.deposit) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.deposit || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1346,7 +1346,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionB
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.loan) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.loan || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1358,7 +1358,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionB
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.interest) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.interest || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1370,7 +1370,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionB
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.total) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.total || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1401,7 +1401,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.deposit) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.deposit || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1413,7 +1413,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.loan) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.loan || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1425,7 +1425,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.interest) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.interest || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1437,7 +1437,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
-        return sum + parseInt(transaction.loan_collection[0]?.total) || 0
+        return parseInt(sum) + parseInt(transaction.loan_collection[0]?.total || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
@@ -1533,7 +1533,7 @@ export const PendingWithdrawalTableColumns = (
     Cell: ({ value }) => tsNumbers(`$${value}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, withdrawal) => {
-        return sum + parseInt(withdrawal.amount) || 0
+        return parseInt(sum) + parseInt(withdrawal?.amount || 0)
       }, 0)
 
       return tsNumbers(`৳${totalAmount}/-`)
