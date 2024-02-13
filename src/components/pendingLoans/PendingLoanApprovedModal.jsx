@@ -85,8 +85,8 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
-        <div className="card">
-          <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
+          <div className="card">
             <div className="card-header">
               <div className="d-flex align-items-center justify-content-between">
                 <b className="text-uppercase">{`${t('common.loan')} ${t('common.approval')}`}</b>
@@ -253,8 +253,8 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                 />
               </div>
             )}
-          </form>
-        </div>
+          </div>
+        </form>
       </ModalPro>
     </>
   )
