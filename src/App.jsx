@@ -48,6 +48,7 @@ const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesCon
 const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
+const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
 
 export default function App() {
   const { company_logo_uri } = useAppSettingsValue()
@@ -862,6 +863,27 @@ export default function App() {
                   }
                 />
               </Route>
+            </Route>
+
+            {/* Audit Routes */}
+            <Route
+              path="audit-report-meta"
+              element={
+                <RequirePermissions
+                  allowedPermissions={['audit_report_meta_list_view']}
+                  pageTitle={t('menu.audit.report_meta')}
+                />
+              }>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <AuditReportMeta />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
             </Route>
           </Route>
         </Routes>
