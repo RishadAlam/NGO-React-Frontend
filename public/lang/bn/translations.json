@@ -181,7 +181,9 @@
     "total_payable": "মোট প্রদেয় (ঋণ + লাভ)",
     "page": "পৃষ্ঠা",
     "column": "কলাম",
-    "value": "মান"
+    "value": "মান",
+    "meta_key": "মেটা কী",
+    "meta_value": "মেটা মান"
   },
 
   "common_validation": {
@@ -442,6 +444,7 @@
   },
   "audit_report_meta": {
     "create_meta": "মেটা তৈরি করুন",
+    "edit_meta": "মেটা সম্পাদনা করুন",
     "audit_report_meta_list": "অডিট রিপোর্ট মেটা তালিকা",
 
     "default": {}

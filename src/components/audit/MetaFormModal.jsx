@@ -50,7 +50,7 @@ export default function MetaFormModal({
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <TextInputField
-                    label={t('common.name')}
+                    label={t('common.meta_key')}
                     isRequired={true}
                     defaultValue={defaultValues?.meta_key || ''}
                     setChange={(val) => setChange(val, 'meta_key')}
@@ -61,7 +61,7 @@ export default function MetaFormModal({
                 </div>
                 <div className="col-md-6 mb-3">
                   <TextInputField
-                    label={t('common.value')}
+                    label={t('common.meta_value')}
                     defaultValue={defaultValues?.meta_value || ''}
                     setChange={(val) => setChange(val, 'meta_value')}
                     error={error?.meta_value}

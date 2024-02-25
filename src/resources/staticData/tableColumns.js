@@ -1627,12 +1627,16 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
     Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
   },
   {
-    Header: t('common.name'),
+    Header: t('common.meta_key'),
     accessor: 'meta_key',
     Cell: ({ row, value }) =>
       defaultNameCheck(t, row.original.is_default, 'audit_report_meta.default.', value)
   },
-  { Header: t('common.value'), accessor: 'meta_value', show: windowWidth < 576 ? false : true },
+  {
+    Header: t('common.meta_value'),
+    accessor: 'meta_value',
+    show: windowWidth < 576 ? false : true
+  },
   { Header: t('common.page'), accessor: 'page_no', Cell: ({ value }) => tsNumbers(value || 0) },
   {
     Header: t('common.column'),

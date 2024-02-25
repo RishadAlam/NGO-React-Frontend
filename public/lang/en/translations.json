@@ -181,7 +181,9 @@
     "total_payable": "Total Payable (Loan + Interest)",
     "page": "Page",
     "column": "Column",
-    "value": "Value"
+    "value": "Value",
+    "meta_key": "Meta Key",
+    "meta_value": "Meta Value"
   },
 
   "common_validation": {
@@ -452,7 +454,8 @@
     "period_of_inactive_account_disable": "Period of Inactive Account Disable"
   },
   "audit_report_meta": {
-    "create_meta": "Create Meta",
+    "create_meta": "Edit Meta",
+    "edit_meta": "Edit Meta",
     "audit_report_meta_list": "Audit Report Meta List",
 
     "default": {}

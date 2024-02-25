@@ -8,6 +8,7 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import CreateAuditReportMeta from '../../components/audit/CreateAuditReportMeta'
+import MetaUpdate from '../../components/audit/MetaUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -29,9 +30,9 @@ import '../staffs/staffs.scss'
 
 export default function AuditReportMeta() {
   const [isMetaModalOpen, setIsMetaModalOpen] = useState(false)
-  const [isCenterUpdateModalOpen, setIsCenterUpdateModalOpen] = useState(false)
+  const [isMetaUpdateModalOpen, setIsMetaUpdateModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-  const [editableCenter, setEditableCenter] = useState(false)
+  const [editableMeta, setEditableMeta] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
@@ -44,11 +45,11 @@ export default function AuditReportMeta() {
     isError
   } = useFetch({ action: 'audit/meta' })
 
-  const actionBtnGroup = (id, center) => (
+  const actionBtnGroup = (id, metaData) => (
     <ActionBtnGroup>
       {authPermissions.includes('audit_report_meta_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => centerEdit(center)}>
+          <IconButton className="text-warning" onClick={() => metaEdit(metaData)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -67,7 +68,7 @@ export default function AuditReportMeta() {
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
           <IconButton
             className="text-info"
-            onClick={() => metaActionHistory(center.audit_report_meta_action_history)}>
+            onClick={() => metaActionHistory(metaData.audit_report_meta_action_history)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -94,16 +95,16 @@ export default function AuditReportMeta() {
     [t, windowWidth, loading]
   )
 
-  //   const centerEdit = (center) => {
-  //     setEditableCenter({
-  //       id: center?.id,
-  //       name: center?.name,
-  //       field_id: center?.field_id,
-  //       field: center?.field,
-  //       description: center?.description
-  //     })
-  //     setIsCenterUpdateModalOpen(true)
-  //   }
+  const metaEdit = (metaData) => {
+    setEditableMeta({
+      id: metaData?.id,
+      meta_key: metaData?.meta_key,
+      meta_value: metaData?.meta_value,
+      page_no: metaData?.page_no,
+      column_no: metaData?.column_no
+    })
+    setIsMetaUpdateModalOpen(true)
+  }
 
   const metaActionHistory = (actionHistory) => {
     setActionHistory(actionHistory)
@@ -167,16 +168,16 @@ export default function AuditReportMeta() {
                 mutate={mutate}
               />
             )}
-            {/* {isCenterUpdateModalOpen && Object.keys(editableCenter).length && (
-              <CenterUpdate
-                isOpen={isCenterUpdateModalOpen}
-                setIsOpen={setIsCenterUpdateModalOpen}
-                data={editableCenter}
+            {isMetaUpdateModalOpen && Object.keys(editableMeta).length && (
+              <MetaUpdate
+                isOpen={isMetaUpdateModalOpen}
+                setIsOpen={setIsMetaUpdateModalOpen}
+                data={editableMeta}
                 t={t}
                 accessToken={accessToken}
                 mutate={mutate}
               />
-            )} */}
+            )}
             {isActionHistoryModalOpen && (
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
