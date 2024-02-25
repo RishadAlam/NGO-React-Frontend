@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
@@ -13,6 +14,8 @@ import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
+import deleteAlert from '../../helper/deleteAlert'
+import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import AuditIcon from '../../icons/AuditIcon'
 import Clock from '../../icons/Clock'
@@ -21,6 +24,7 @@ import Home from '../../icons/Home'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { AuditReportMetaTableColumns } from '../../resources/staticData/tableColumns'
+import xFetch from '../../utilities/xFetch'
 import '../staffs/staffs.scss'
 
 export default function AuditReportMeta() {
@@ -42,28 +46,28 @@ export default function AuditReportMeta() {
 
   const actionBtnGroup = (id, center) => (
     <ActionBtnGroup>
-      {authPermissions.includes('center_data_update') && (
+      {authPermissions.includes('audit_report_meta_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => centerEdit(center)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('center_soft_delete') && (
+      {authPermissions.includes('audit_report_meta_soft_delete') && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton
             className="text-danger"
-            onClick={() => centerDelete(id)}
-            disabled={loading?.itemDelete || false}>
+            onClick={() => metaDelete(id)}
+            disabled={loading?.metaForm || false}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('center_action_history') && (
+      {authPermissions.includes('audit_report_meta_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
           <IconButton
             className="text-info"
-            onClick={() => centerActionHistory(center.center_action_history)}>
+            onClick={() => metaActionHistory(center.audit_report_meta_action_history)}>
             {<Clock size={20} />}
           </IconButton>
         </Tooltip>
@@ -101,38 +105,38 @@ export default function AuditReportMeta() {
   //     setIsCenterUpdateModalOpen(true)
   //   }
 
-  //   const centerActionHistory = (actionHistory) => {
-  //     setActionHistory(actionHistory)
-  //     setIsActionHistoryModalOpen(true)
-  //   }
+  const metaActionHistory = (actionHistory) => {
+    setActionHistory(actionHistory)
+    setIsActionHistoryModalOpen(true)
+  }
 
-  //   const centerDelete = (id) => {
-  //     deleteAlert(t).then((result) => {
-  //       if (result.isConfirmed) {
-  //         setLoading({ ...loading, itemDelete: true })
-  //         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-  //         xFetch(`centers/${id}`, null, null, accessToken, null, 'DELETE')
-  //           .then((response) => {
-  //             setLoading({ ...loading, itemDelete: false })
-  //             toast.dismiss(toasterLoading)
-  //             if (response?.success) {
-  //               successAlert(
-  //                 t('common.deleted'),
-  //                 response?.message || t('common_validation.data_has_been_deleted'),
-  //                 'success'
-  //               )
-  //               mutate()
-  //               return
-  //             }
-  //             successAlert(t('common.deleted'), response?.message, 'error')
-  //           })
-  //           .catch((errResponse) => {
-  //             setLoading({ ...loading, itemDelete: false })
-  //             successAlert(t('common.deleted'), errResponse?.message, 'error')
-  //           })
-  //       }
-  //     })
-  //   }
+  const metaDelete = (id) => {
+    deleteAlert(t).then((result) => {
+      if (result.isConfirmed) {
+        setLoading({ ...loading, metaForm: true })
+        const toasterLoading = toast.loading(`${t('common.delete')}...`)
+        xFetch(`audit/meta/${id}`, null, null, accessToken, null, 'DELETE')
+          .then((response) => {
+            setLoading({ ...loading, metaForm: false })
+            toast.dismiss(toasterLoading)
+            if (response?.success) {
+              successAlert(
+                t('common.deleted'),
+                response?.message || t('common_validation.data_has_been_deleted'),
+                'success'
+              )
+              mutate()
+              return
+            }
+            successAlert(t('common.deleted'), response?.message, 'error')
+          })
+          .catch((errResponse) => {
+            setLoading({ ...loading, metaForm: false })
+            successAlert(t('common.deleted'), errResponse?.message, 'error')
+          })
+      }
+    })
+  }
 
   return (
     <>
