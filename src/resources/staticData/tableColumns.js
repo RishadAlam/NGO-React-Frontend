@@ -1618,3 +1618,48 @@ export const SearchAccountTableColumns = (t, windowWidth, avatar, actionBtnGroup
     Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
+
+export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isActionHide) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.name'),
+    accessor: 'meta_key',
+    Cell: ({ row, value }) =>
+      defaultNameCheck(t, row.original.is_default, 'audit_report_meta.default.', value)
+  },
+  { Header: t('common.value'), accessor: 'meta_value' },
+  { Header: t('common.page'), accessor: 'page_no', Cell: ({ value }) => tsNumbers(value || 0) },
+  { Header: t('common.column'), accessor: 'column_no', Cell: ({ value }) => tsNumbers(value || 0) },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) =>
+      !Number(row.original.is_default) && actionBtnGroup(row.original.id, row.original)
+  }
+]

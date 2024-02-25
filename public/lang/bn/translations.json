@@ -178,7 +178,10 @@
     "interest_remaining": "লাভ অবশিষ্ট রয়েছে",
     "total_recovered": "মোট আদায়কৃত (ঋণ + লাভ)",
     "total_remaining": "মোট অবশিষ্ট (ঋণ + লাভ)",
-    "total_payable": "মোট প্রদেয় (ঋণ + লাভ)"
+    "total_payable": "মোট প্রদেয় (ঋণ + লাভ)",
+    "page": "পৃষ্ঠা",
+    "column": "কলাম",
+    "value": "মান"
   },
 
   "common_validation": {
@@ -436,6 +439,11 @@
     "period_of_account_checking": "অ্যাকাউন্ট চেকের সময়কাল",
     "disable_unchecked_accounts": "চেকহিন অ্যাকাউন্ট নিষ্ক্রিয় করণ",
     "period_of_inactive_account_disable": "অক্রিয় অ্যাকাউন্ট নিষ্ক্রিয় করণের সময়কাল"
+  },
+  "audit_report_meta": {
+    "audit_report_meta_list": "অডিট রিপোর্ট মেটা তালিকা",
+
+    "default": {}
   },
   "staff_permissions": {
     "group_name": {

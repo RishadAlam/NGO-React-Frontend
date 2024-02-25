@@ -178,7 +178,10 @@
     "interest_remaining": "Interest Remaining",
     "total_recovered": "Total Recovered (Loan + Interest)",
     "total_remaining": "Total Remaining (Loan + Interest)",
-    "total_payable": "Total Payable (Loan + Interest)"
+    "total_payable": "Total Payable (Loan + Interest)",
+    "page": "Page",
+    "column": "Column",
+    "value": "Value"
   },
 
   "common_validation": {
@@ -447,6 +450,11 @@
     "period_of_account_checking": "Period of Account Checking",
     "disable_unchecked_accounts": "Disable Unchecked Accounts",
     "period_of_inactive_account_disable": "Period of Inactive Account Disable"
+  },
+  "audit_report_meta": {
+    "audit_report_meta_list": "Audit Report Meta List",
+
+    "default": {}
   },
   "staff_permissions": {
     "group_name": {

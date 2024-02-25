@@ -1,17 +1,22 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
+import ReactTable from '../../components/utilities/tables/ReactTable'
+import { checkPermissions } from '../../helper/checkPermission'
+import useFetch from '../../hooks/useFetch'
 import AuditIcon from '../../icons/AuditIcon'
 import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
+import { AuditReportMetaTableColumns } from '../../resources/staticData/tableColumns'
 import '../staffs/staffs.scss'
 
 export default function AuditReportMeta() {
@@ -24,12 +29,12 @@ export default function AuditReportMeta() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const [loading, setLoading] = useLoadingState({})
-  //   const {
-  //     data: { data: centers } = [],
-  //     mutate,
-  //     isLoading,
-  //     isError
-  //   } = useFetch({ action: 'centers' })
+  const {
+    data: { data: metaKeys } = [],
+    mutate,
+    isLoading,
+    isError
+  } = useFetch({ action: 'audit/meta' })
 
   const actionBtnGroup = (id, center) => (
     <ActionBtnGroup>
@@ -62,20 +67,24 @@ export default function AuditReportMeta() {
     </ActionBtnGroup>
   )
 
-  //   const columns = useMemo(
-  //     () =>
-  //       CenterTableColumns(
-  //         t,
-  //         windowWidth,
-  //         actionBtnGroup,
-  //         !checkPermissions(
-  //           ['center_data_update', 'center_soft_delete', 'center_action_history'],
-  //           authPermissions
-  //         )
-  //       ),
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //     [t, windowWidth, loading]
-  //   )
+  const columns = useMemo(
+    () =>
+      AuditReportMetaTableColumns(
+        t,
+        windowWidth,
+        actionBtnGroup,
+        !checkPermissions(
+          [
+            'audit_report_meta_update',
+            'audit_report_meta_soft_delete',
+            'audit_report_meta_action_history'
+          ],
+          authPermissions
+        )
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, windowWidth, loading]
+  )
 
   //   const centerEdit = (center) => {
   //     setEditableCenter({
@@ -170,13 +179,17 @@ export default function AuditReportMeta() {
             )}
           </div> */}
         </div>
-        {/* <div className="staff-table">
-          {isLoading && !centers ? (
+        <div className="staff-table">
+          {isLoading && !metaKeys ? (
             <ReactTableSkeleton />
           ) : (
-            <ReactTable title={t('center.Center_List')} columns={columns} data={centers} />
+            <ReactTable
+              title={t('audit_report_meta.audit_report_meta_list')}
+              columns={columns}
+              data={metaKeys}
+            />
           )}
-        </div> */}
+        </div>
       </section>
     </>
   )
