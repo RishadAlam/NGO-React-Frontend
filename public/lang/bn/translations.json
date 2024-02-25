@@ -441,6 +441,7 @@
     "period_of_inactive_account_disable": "অক্রিয় অ্যাকাউন্ট নিষ্ক্রিয় করণের সময়কাল"
   },
   "audit_report_meta": {
+    "create_meta": "মেটা তৈরি করুন",
     "audit_report_meta_list": "অডিট রিপোর্ট মেটা তালিকা",
 
     "default": {}

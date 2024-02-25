@@ -5,9 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
+import CreateAuditReportMeta from '../../components/audit/CreateAuditReportMeta'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
+import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
 import useFetch from '../../hooks/useFetch'
@@ -15,12 +18,13 @@ import AuditIcon from '../../icons/AuditIcon'
 import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
+import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import { AuditReportMetaTableColumns } from '../../resources/staticData/tableColumns'
 import '../staffs/staffs.scss'
 
 export default function AuditReportMeta() {
-  const [isCenterModalOpen, setIsCenterModalOpen] = useState(false)
+  const [isMetaModalOpen, setIsMetaModalOpen] = useState(false)
   const [isCenterUpdateModalOpen, setIsCenterUpdateModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [editableCenter, setEditableCenter] = useState(false)
@@ -143,23 +147,23 @@ export default function AuditReportMeta() {
               ]}
             />
           </div>
-          {/* <div className="col-sm-6 text-end">
+          <div className="col-sm-6 text-end">
             <PrimaryBtn
-              name={t('center.Center_Registration')}
+              name={t('audit_report_meta.create_meta')}
               loading={false}
               endIcon={<Pen size={20} />}
-              onclick={() => setIsCenterModalOpen(true)}
+              onclick={() => setIsMetaModalOpen(true)}
             />
-            {isCenterModalOpen && (
-              <CenterRegistration
-                isOpen={isCenterModalOpen}
-                setIsOpen={setIsCenterModalOpen}
+            {isMetaModalOpen && (
+              <CreateAuditReportMeta
+                isOpen={isMetaModalOpen}
+                setIsOpen={setIsMetaModalOpen}
                 t={t}
                 accessToken={accessToken}
                 mutate={mutate}
               />
             )}
-            {isCenterUpdateModalOpen && Object.keys(editableCenter).length && (
+            {/* {isCenterUpdateModalOpen && Object.keys(editableCenter).length && (
               <CenterUpdate
                 isOpen={isCenterUpdateModalOpen}
                 setIsOpen={setIsCenterUpdateModalOpen}
@@ -168,7 +172,7 @@ export default function AuditReportMeta() {
                 accessToken={accessToken}
                 mutate={mutate}
               />
-            )}
+            )} */}
             {isActionHistoryModalOpen && (
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
@@ -177,7 +181,7 @@ export default function AuditReportMeta() {
                 actionHistory={actionHistory}
               />
             )}
-          </div> */}
+          </div>
         </div>
         <div className="staff-table">
           {isLoading && !metaKeys ? (

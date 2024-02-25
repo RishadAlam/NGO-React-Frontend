@@ -452,6 +452,7 @@
     "period_of_inactive_account_disable": "Period of Inactive Account Disable"
   },
   "audit_report_meta": {
+    "create_meta": "Create Meta",
     "audit_report_meta_list": "Audit Report Meta List",
 
     "default": {}

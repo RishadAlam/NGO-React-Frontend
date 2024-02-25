@@ -1632,9 +1632,13 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
     Cell: ({ row, value }) =>
       defaultNameCheck(t, row.original.is_default, 'audit_report_meta.default.', value)
   },
-  { Header: t('common.value'), accessor: 'meta_value' },
+  { Header: t('common.value'), accessor: 'meta_value', show: windowWidth < 576 ? false : true },
   { Header: t('common.page'), accessor: 'page_no', Cell: ({ value }) => tsNumbers(value || 0) },
-  { Header: t('common.column'), accessor: 'column_no', Cell: ({ value }) => tsNumbers(value || 0) },
+  {
+    Header: t('common.column'),
+    accessor: 'column_no',
+    Cell: ({ value }) => tsNumbers(value?.toString()?.padStart(2, '0') || 0)
+  },
   {
     Header: t('common.creator'),
     accessor: 'author',
@@ -1644,7 +1648,7 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
   {
     Header: t('common.created_at'),
     accessor: 'created_at',
-    show: false,
+    show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
