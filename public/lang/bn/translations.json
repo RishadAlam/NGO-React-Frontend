@@ -221,7 +221,8 @@
       "category": "ক্যাটাগরি",
       "account_management": "হিসাব ব্যবস্থাপনা",
       "staff": "কর্মচারিবর্গ",
-      "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
+      "settings_and_privacy": "সেটিংস ও গোপনীয়তা",
+      "audit": "অডিট"
     },
     "registration": {
       "Client_Registration": "সদস্য নিবন্ধন",
@@ -255,6 +256,10 @@
       "app_settings": "অ্যাপ সেটিংস",
       "approvals_config": "অনুমোদন কনফিগারেশন",
       "categories_config": "ক্যাটাগরি কনফিগারেশন"
+    },
+    "audit": {
+      "report_meta": "অডিট রিপোর্ট মেটা",
+      "audit_report": "অডিট রিপোর্ট"
     }
   },
 
@@ -458,7 +463,8 @@
       "expense_category": "ব্যয় ক্যাটাগরি",
       "staff": "কর্মচারি",
       "staff_role": "কর্মচারিবর্গের ভূমিকা",
-      "settings_and_privacy": "সেটিংস ও গোপনীয়তা"
+      "settings_and_privacy": "সেটিংস ও গোপনীয়তা",
+      "audit_report_meta": "অডিট রিপোর্ট মেটা"
     },
     "permissions": {
       "view_dashboard_as_admin": "একজন অ্যাডমিন রূপে ড্যাশবোর্ড দেখার অনুমতি",
@@ -596,7 +602,13 @@
       "role_delete": "ভূমিকা স্থায়ীভাবে ডিলিটের অনুমতি",
       "app_settings": "অ্যাপ সেটিংস অনুমতি",
       "approvals_config": "অনুমোদন কনফিগারেশন অনুমতি",
-      "categories_config": "ক্যাটাগরি কনফিগারেশন অনুমতি"
+      "categories_config": "ক্যাটাগরি কনফিগারেশন অনুমতি",
+      "audit_report_meta_list_view": "অডিট রিপোর্ট মেটা তালিকা দেখার অনুমতি",
+      "audit_report_meta_create": "অডিট রিপোর্ট মেটা তৈরি করুন অনুমতি",
+      "audit_report_meta_update": "অডিট রিপোর্ট মেটা ডেটা আপডেটের অনুমতি",
+      "audit_report_meta_soft_delete": "অডিট রিপোর্ট মেটা সাময়িকভাবে ডিলিটের অনুমতি",
+      "audit_report_meta_action_history": "অডিট রিপোর্ট মেটা ইতিহাস দেখার অনুমতি",
+      "audit_report_meta_permanently_delete": "অডিট রিপোর্ট মেটা স্থায়ীভাবে ডিলিটের অনুমতি"
     }
   }
 }

@@ -233,7 +233,8 @@
       "category": "Categories",
       "account_management": "Account Management",
       "staff": "Staffs",
-      "settings_and_privacy": "Settings & Privacy"
+      "settings_and_privacy": "Settings & Privacy",
+      "audit": "Audit"
     },
     "registration": {
       "Client_Registration": "Client Registration",
@@ -267,6 +268,10 @@
       "app_settings": "App Settings",
       "approvals_config": "Approvals Configuration",
       "categories_config": "Categories Configuration"
+    },
+    "audit": {
+      "report_meta": "Audit Report Meta",
+      "audit_report": "Audit Report"
     }
   },
 
@@ -469,7 +474,8 @@
       "expense_category": "Expense Category",
       "staff": "Staff",
       "staff_role": "Staff Role",
-      "settings_and_privacy": "Settings & Privacy"
+      "settings_and_privacy": "Settings & Privacy",
+      "audit_report_meta": "Audit Report Meta"
     },
     "permissions": {
       "view_dashboard_as_admin": "Permission To Do Dashboard View As Admin",
@@ -607,7 +613,13 @@
       "role_delete": "Permission To Do Role Delete",
       "app_settings": "Permission To Do App Settings",
       "approvals_config": "Permission To Do Approvals Configuration",
-      "categories_config": "Permission To Do Categories Configuration"
+      "categories_config": "Permission To Do Categories Configuration",
+      "audit_report_meta_list_view": "Permission To Do Audit Report Meta List View",
+      "audit_report_meta_create": "Permission To Do Audit Report Meta Create",
+      "audit_report_meta_update": "Permission To Do Audit Report Meta Data Update",
+      "audit_report_meta_soft_delete": "Permission To Do Audit Report Meta Soft Delete",
+      "audit_report_meta_action_history": "Permission To Do Audit Report Meta Action History",
+      "audit_report_meta_permanently_delete": "Permission To Do Audit Report Meta Permanently Delete"
     }
   }
 }
