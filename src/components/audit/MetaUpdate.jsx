@@ -2,6 +2,7 @@ import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import MetaFormModal from './MetaFormModal'
 
@@ -13,13 +14,13 @@ export default function MetaUpdate({ isOpen, setIsOpen, data, accessToken, t, mu
   const setChange = (val, name) => {
     setMetaData((prevData) =>
       create(prevData, (draftData) => {
-        // if (name === 'field') {
-        //   draftData.field_id = val?.id || ''
-        //   draftData.field = val || null
-        //   return
-        // }
+        if (name === 'page_no') {
+          draftData.page_no = val?.id || ''
+          draftData.page = val || null
+          return
+        }
 
-        draftData[name] = val
+        draftData[name] = name !== 'column_no' ? val : tsNumbers(val, true)
       })
     )
 

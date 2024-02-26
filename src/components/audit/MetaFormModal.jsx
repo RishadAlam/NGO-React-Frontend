@@ -1,7 +1,10 @@
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
+import tsNumbers from '../../libs/tsNumbers'
+import { auditPages } from '../../resources/staticData/auditPages'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
+import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
 
 export default function MetaFormModal({
@@ -16,14 +19,19 @@ export default function MetaFormModal({
   loading,
   onSubmit
 }) {
-  // const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
-  // const selectBoxConfig = {
-  //   options: fields,
-  //   value: defaultValues?.field || null,
-  //   getOptionLabel: (option) => option.name,
-  //   onChange: (e, option) => setChange(option, 'field'),
-  //   isOptionEqualToValue: (option, value) => option.id === value.id
-  // }
+  const pageConfig = {
+    options: auditPages,
+    value: defaultValues?.page || null,
+    getOptionLabel: (option) => option.name,
+    onChange: (e, option) => setChange(option, 'page_no'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+  const columnConfig = {
+    options: ['1', '2'],
+    value: tsNumbers(defaultValues?.column_no, true) || null,
+    getOptionLabel: (option) => tsNumbers(option),
+    onInputChange: (e, option) => setChange(option, 'column_no')
+  }
 
   return (
     <>
@@ -69,34 +77,23 @@ export default function MetaFormModal({
                   />
                 </div>
                 <div className="col-md-6 mb-3">
-                  <TextInputField
+                  <SelectBoxField
                     label={t('common.page')}
+                    config={pageConfig}
                     isRequired={true}
-                    defaultValue={defaultValues?.page_no || ''}
-                    setChange={(val) => setChange(val, 'page_no')}
                     error={error?.page_no}
                     disabled={loading?.metaForm}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
-                  <TextInputField
+                  <SelectBoxField
                     label={t('common.column')}
+                    config={columnConfig}
                     isRequired={true}
-                    defaultValue={defaultValues?.column_no || ''}
-                    setChange={(val) => setChange(val, 'column_no')}
                     error={error?.column_no}
                     disabled={loading?.metaForm}
                   />
                 </div>
-                {/* <div className="col-md-6 mb-3">
-                  <SelectBoxField
-                    label={t('common.field')}
-                    config={selectBoxConfig}
-                    isRequired={true}
-                    error={error?.field}
-                    disabled={loading?.metaForm}
-                  />
-                </div> */}
               </div>
             </div>
             <div className="card-footer text-end">

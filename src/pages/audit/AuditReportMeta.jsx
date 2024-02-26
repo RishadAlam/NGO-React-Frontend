@@ -55,11 +55,13 @@ export default function AuditReportMeta() {
         </Tooltip>
       )}
       {authPermissions.includes('audit_report_meta_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton
-            className="text-danger"
-            onClick={() => metaDelete(id)}
-            disabled={loading?.metaForm || false}>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Delete"
+          arrow
+          followCursor
+          disabled={loading?.metaForm || false}>
+          <IconButton className="text-danger" onClick={() => metaDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
