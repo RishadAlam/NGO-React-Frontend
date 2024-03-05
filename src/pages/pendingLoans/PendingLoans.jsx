@@ -97,13 +97,16 @@ const eventsMap = (loan, t) => ({
   end: new Date(loan.start_date),
   allDay: true,
   title: Number(loan.category.is_default)
-    ? t(`category.default.${loan.category.name}`) + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`
-    : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)})`,
+    ? t(`category.default.${loan.category.name}`) +
+      ` (${tsNumbers(`৳${loan.loan_given}/-`)}) (${tsNumbers(loan?.acc_no)})`
+    : loan.category.name + ` (${tsNumbers(`৳${loan.loan_given}/-`)}) (${tsNumbers(loan?.acc_no)})`,
   acc_no: loan.acc_no,
   name: loan.client_registration.name,
+  image_uri: loan.client_registration.image_uri,
   field: loan.field.name,
   center: loan.center.name,
   category: loan.category.name,
+  category_is_default: loan.category.is_default,
   creator: loan.author.name,
   start_date: loan.start_date,
   duration_date: loan.duration_date,
@@ -112,10 +115,10 @@ const eventsMap = (loan, t) => ({
   payable_deposit: loan.payable_deposit,
   payable_installment: loan.payable_installment,
   payable_interest: loan.payable_interest,
-  total_payable_interest: loan.payable_interest,
-  total_payable_loan_with_interest: loan.payable_interest,
-  loan_installment: loan.payable_interest,
-  interest_installment: loan.payable_interest,
+  total_payable_interest: loan.total_payable_interest,
+  total_payable_loan_with_interest: loan.total_payable_loan_with_interest,
+  loan_installment: loan.loan_installment,
+  interest_installment: loan.interest_installment,
   is_loan_approved: loan.is_loan_approved,
   created_at: loan.created_at
 })

@@ -9,10 +9,11 @@ import useFetch from '../../hooks/useFetch'
 import Info from '../../icons/Info'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
+import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
+import RegisterProfileBox from '../register/RegisterProfileBox'
 import Button from '../utilities/Button'
-import DatePickerInputField from '../utilities/DatePickerInputField'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 import TextInputField from '../utilities/TextInputField'
@@ -104,141 +105,152 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
                   <strong>{error?.message}</strong>
                 </div>
               )}
-              <div className="row">
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.field')}
-                    defaultValue={data?.field || ''}
-                    disabled={true}
+              <div className="row align-items-center justify-content-center">
+                <div className="col-lg-4 mb-4 mb-md-5 mb-lg-0">
+                  <RegisterProfileBox
+                    image_uri={data?.image_uri}
+                    name={data?.name}
+                    acc_no={data?.acc_no}
+                    status={
+                      Number(data?.is_loan_approved) ? t('common.active') : t('common.pending')
+                    }
+                    classNames={Number(data?.is_loan_approved) ? 'bg-success' : 'bg-danger'}
                   />
                 </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.center')}
-                    defaultValue={data?.center || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.category')}
-                    defaultValue={data?.category || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.creator')}
-                    defaultValue={data?.creator || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.acc_no')}
-                    defaultValue={tsNumbers(data?.acc_no) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.name')}
-                    defaultValue={data?.name || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <DatePickerInputField
-                    label={t('common.created_at')}
-                    defaultValue={data?.created_at || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <DatePickerInputField
-                    label={t('common.start_date')}
-                    defaultValue={data?.start_date || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <DatePickerInputField
-                    label={t('common.duration_date')}
-                    defaultValue={data?.duration_date || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.deposit')}
-                    defaultValue={tsNumbers(`৳${data?.payable_deposit}/-`) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.loan_given')}
-                    defaultValue={tsNumbers(`৳${data?.loan_given}/-`) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.total_installment')}
-                    defaultValue={tsNumbers(data?.total_installment) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.interest')}
-                    defaultValue={tsNumbers(`${data?.payable_interest}%`) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={`${t('common.total')} ${t('common.interest')}`}
-                    defaultValue={tsNumbers(data?.total_payable_interest) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.total_payable_loan_with_interest')}
-                    defaultValue={tsNumbers(data?.total_payable_loan_with_interest) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.loan_installment')}
-                    defaultValue={tsNumbers(data?.loan_installment) || ''}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 col-xl-4 mb-3">
-                  <TextInputField
-                    label={t('common.interest_installment')}
-                    defaultValue={tsNumbers(data?.interest_installment) || ''}
-                    disabled={true}
-                  />
-                </div>
-                {!Number(data?.is_loan_approved) &&
-                  permissions.includes('pending_loan_approval') && (
-                    <div className="col-md-6 mb-3">
-                      <SelectBoxField
-                        label={t('common.account')}
-                        config={accountSelectBoxConfig}
-                        isRequired={true}
-                        error={error?.account}
-                        disabled={loading?.loanApproval}
+                <div className="col-lg-8">
+                  <div className="row">
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.field')}
+                        defaultValue={data?.field || ''}
+                        disabled={true}
                       />
-                      <span className="text-info">
-                        <Info size={15} /> {t('common.deduct_loan_msg')}
-                      </span>
                     </div>
-                  )}
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.center')}
+                        defaultValue={data?.center || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.category')}
+                        defaultValue={
+                          Number(data?.category_is_default)
+                            ? t(`category.default.${data?.category}`)
+                            : data?.category || ''
+                        }
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.creator')}
+                        defaultValue={data?.creator || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.created_at')}
+                        defaultValue={tsNumbers(
+                          dateFormat(data?.created_at || '', 'dd/MM/yyyy hh:mm a')
+                        )}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.start_date')}
+                        defaultValue={tsNumbers(dateFormat(data?.start_date || '', 'dd/MM/yyyy'))}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.duration_date')}
+                        defaultValue={tsNumbers(
+                          dateFormat(data?.duration_date || '', 'dd/MM/yyyy')
+                        )}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.deposit')}
+                        defaultValue={tsNumbers(`৳${data?.payable_deposit}/-`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.loan_given')}
+                        defaultValue={tsNumbers(`৳${data?.loan_given}/-`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.total_installment')}
+                        defaultValue={tsNumbers(data?.total_installment) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.interest')}
+                        defaultValue={tsNumbers(`${data?.payable_interest}%`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={`${t('common.total')} ${t('common.interest')}`}
+                        defaultValue={tsNumbers(`৳${data?.total_payable_interest}/-`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.total_payable_loan_with_interest')}
+                        defaultValue={
+                          tsNumbers(`৳${data?.total_payable_loan_with_interest}/-`) || ''
+                        }
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.loan_installment')}
+                        defaultValue={tsNumbers(`৳${data?.loan_installment}/-`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="col-md-6 col-xl-4 mb-3">
+                      <TextInputField
+                        label={t('common.interest_installment')}
+                        defaultValue={tsNumbers(`৳${data?.interest_installment}/-`) || ''}
+                        disabled={true}
+                      />
+                    </div>
+                    {!Number(data?.is_loan_approved) &&
+                      permissions.includes('pending_loan_approval') && (
+                        <div className="col-md-6 mb-3">
+                          <SelectBoxField
+                            label={t('common.account')}
+                            config={accountSelectBoxConfig}
+                            isRequired={true}
+                            error={error?.account}
+                            disabled={loading?.loanApproval}
+                          />
+                          <span className="text-info">
+                            <Info size={15} /> {t('common.deduct_loan_msg')}
+                          </span>
+                        </div>
+                      )}
+                  </div>
+                </div>
               </div>
             </div>
             {!Number(data?.is_loan_approved) && permissions.includes('pending_loan_approval') && (
