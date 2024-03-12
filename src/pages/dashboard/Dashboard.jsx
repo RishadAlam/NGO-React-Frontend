@@ -1,4 +1,6 @@
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
+import { useAppSettingsValue } from '../../atoms/appSettingsAtoms'
 import Cards from '../../components/dashboardCards/Cards'
 import LoanCollectionLists from '../../components/loanCollectionLists/LoanCollectionLists'
 import LoanWithdrawalLists from '../../components/loanWithdrawalLists/LoanWithdrawalLists'
@@ -6,6 +8,7 @@ import PieChartBox from '../../components/pieChartBox/PieChartBox'
 import SavingCollectionLists from '../../components/savingCollectionLists/SavingCollectionLists'
 import SavingWithdrawalLists from '../../components/savingWithdrawalLists/SavingWithdrawalLists'
 import TopCollectors from '../../components/topCollectors/TopCollectors'
+import { isEmpty } from '../../helper/isEmpty'
 import LoanGiven from '../../icons/LoanGiven'
 import LoanIcon from '../../icons/LoanIcon'
 import LoanRecovered from '../../icons/LoanRecovered'
@@ -14,10 +17,17 @@ import PersonalLoan from '../../icons/PersonalLoan'
 import SavingIcon from '../../icons/SavingIcon'
 import './dashboard.scss'
 
-export default function Dashboard() {
+export default function Dashboard({ pageTitle }) {
   const { t } = useTranslation()
+  const { company_name = '' } = useAppSettingsValue()
+  const separator = !isEmpty(pageTitle) && !isEmpty(company_name) ? ' | ' : ''
+
   return (
     <>
+      <Helmet>
+        <title>{`${t(pageTitle) + separator + company_name}`}</title>
+      </Helmet>
+
       <div className="dashboard">
         <div className="row">
           <div className="col-xl-3 d-xl-block d-none">

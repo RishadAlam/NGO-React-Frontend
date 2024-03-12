@@ -1,7 +1,6 @@
 import { Suspense, lazy } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Helmet } from 'react-helmet-async'
-import { useTranslation } from 'react-i18next'
 import { Route, Routes } from 'react-router-dom'
 import { useAppSettingsValue } from './atoms/appSettingsAtoms'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
@@ -49,10 +48,10 @@ const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientReg
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
-
+const t = () => {}
 export default function App() {
   const { company_logo_uri } = useAppSettingsValue()
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   return (
     <>
@@ -66,23 +65,21 @@ export default function App() {
           {/* UnAuthenticate Routes */}
           <Route path="/*" element={<NotFound />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/login" element={<Layout pageTitle={t('page_name.login')} />}>
+          <Route path="/login" element={<Layout pageTitle="page_name.login" />}>
             <Route index element={<Login />} />
           </Route>
-          <Route
-            path="/forgot-password"
-            element={<Layout pageTitle={t('page_name.forgot_password')} />}>
+          <Route path="/forgot-password" element={<Layout pageTitle="page_name.forgot_password" />}>
             <Route index element={<ForgotPassword />} />
           </Route>
           <Route
             path="/account-verification"
-            element={<Layout pageTitle={t('page_name.account_verification')} />}>
+            element={<Layout pageTitle="page_name.account_verification" />}>
             <Route index element={<AccountVerification />} />
           </Route>
 
           {/* Authenticate Routes */}
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<Dashboard pageTitle="menu.dashboard" />} />
             <Route
               path="profile"
               element={
@@ -145,7 +142,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['client_registration']}
-                    pageTitle={t('menu.registration.Client_Registration')}
+                    pageTitle="menu.registration.Client_Registration"
                   />
                 }>
                 <Route
@@ -164,7 +161,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['saving_acc_registration']}
-                    pageTitle={t('menu.registration.saving_account_registration')}
+                    pageTitle="menu.registration.saving_account_registration"
                   />
                 }>
                 <Route
@@ -183,7 +180,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['loan_acc_registration']}
-                    pageTitle={t('menu.registration.loan_account_registration')}
+                    pageTitle="menu.registration.loan_account_registration"
                   />
                 }>
                 <Route
@@ -211,7 +208,7 @@ export default function App() {
                         'regular_saving_collection_list_view',
                         'regular_saving_collection_list_view_as_admin'
                       ]}
-                      pageTitle={t('menu.collection.Saving_Collection')}
+                      pageTitle="menu.collection.Saving_Collection"
                     />
                   }>
                   <Route
@@ -253,7 +250,7 @@ export default function App() {
                         'regular_loan_collection_list_view',
                         'regular_loan_collection_list_view_as_admin'
                       ]}
-                      pageTitle={t('menu.collection.Loan_Collection')}
+                      pageTitle="menu.collection.Loan_Collection"
                     />
                   }>
                   <Route
@@ -460,7 +457,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['pending_loan_view', 'pending_loan_view_as_admin']}
-                  pageTitle={t('menu.label.pending_loans')}
+                  pageTitle="menu.label.pending_loans"
                 />
               }>
               <Route
@@ -531,7 +528,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['field_list_view']}
-                  pageTitle={t('menu.label.field')}
+                  pageTitle="menu.label.field"
                 />
               }>
               <Route
@@ -550,7 +547,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['center_list_view']}
-                  pageTitle={t('menu.label.center')}
+                  pageTitle="menu.label.center"
                 />
               }>
               <Route
@@ -569,7 +566,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['category_list_view']}
-                  pageTitle={t('menu.label.category')}
+                  pageTitle="menu.label.category"
                 />
               }>
               <Route
@@ -590,7 +587,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['account_list_view']}
-                    pageTitle={t('menu.account_management.Accounts')}
+                    pageTitle="menu.account_management.Accounts"
                   />
                 }>
                 <Route
@@ -610,7 +607,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['account_transfer_list_view']}
-                    pageTitle={t('menu.account_management.Transfers')}
+                    pageTitle="menu.account_management.Transfers"
                   />
                 }>
                 <Route
@@ -630,7 +627,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['account_transaction_list_view']}
-                    pageTitle={t('menu.account_management.Transactions')}
+                    pageTitle="menu.account_management.Transactions"
                   />
                 }>
                 <Route
@@ -650,7 +647,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['account_withdrawal_list_view']}
-                    pageTitle={t('menu.account_management.Withdrawals')}
+                    pageTitle="menu.account_management.Withdrawals"
                   />
                 }>
                 <Route
@@ -670,7 +667,7 @@ export default function App() {
                   element={
                     <RequirePermissions
                       allowedPermissions={['income_list_view']}
-                      pageTitle={t('menu.account_management.Incomes')}
+                      pageTitle="menu.account_management.Incomes"
                     />
                   }>
                   <Route
@@ -689,7 +686,7 @@ export default function App() {
                   element={
                     <RequirePermissions
                       allowedPermissions={['income_category_list_view']}
-                      pageTitle={t('menu.account_management.Income_Categories')}
+                      pageTitle="menu.account_management.Income_Categories"
                     />
                   }>
                   <Route
@@ -710,7 +707,7 @@ export default function App() {
                   element={
                     <RequirePermissions
                       allowedPermissions={['expense_list_view']}
-                      pageTitle={t('menu.account_management.Expenses')}
+                      pageTitle="menu.account_management.Expenses"
                     />
                   }>
                   <Route
@@ -729,7 +726,7 @@ export default function App() {
                   element={
                     <RequirePermissions
                       allowedPermissions={['expense_category_list_view']}
-                      pageTitle={t('menu.account_management.Expense_Categories')}
+                      pageTitle="menu.account_management.Expense_Categories"
                     />
                   }>
                   <Route
@@ -752,7 +749,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['staff_list_view']}
-                  pageTitle={t('menu.staffs.Staffs')}
+                  pageTitle="menu.staffs.Staffs"
                 />
               }>
               <Route
@@ -771,7 +768,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['role_list_view']}
-                  pageTitle={t('menu.staffs.Staff_Roles')}
+                  pageTitle="menu.staffs.Staff_Roles"
                 />
               }>
               <Route
@@ -790,7 +787,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['staff_permission_update']}
-                  pageTitle={t('menu.staffs.Staff_Permissions')}
+                  pageTitle="menu.staffs.Staff_Permissions"
                 />
               }>
               <Route
@@ -811,7 +808,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['app_settings']}
-                    pageTitle={t('menu.settings_and_privacy.app_settings')}
+                    pageTitle="menu.settings_and_privacy.app_settings"
                   />
                 }>
                 <Route
@@ -830,7 +827,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['approvals_config']}
-                    pageTitle={t('menu.settings_and_privacy.approvals_config')}
+                    pageTitle="menu.settings_and_privacy.approvals_config"
                   />
                 }>
                 <Route
@@ -849,7 +846,7 @@ export default function App() {
                 element={
                   <RequirePermissions
                     allowedPermissions={['categories_config']}
-                    pageTitle={t('menu.settings_and_privacy.categories_config')}
+                    pageTitle="menu.settings_and_privacy.categories_config"
                   />
                 }>
                 <Route
@@ -871,7 +868,7 @@ export default function App() {
               element={
                 <RequirePermissions
                   allowedPermissions={['audit_report_meta_list_view']}
-                  pageTitle={t('menu.audit.report_meta')}
+                  pageTitle="menu.audit.report_meta"
                 />
               }>
               <Route

@@ -146,8 +146,8 @@ const authFetch = (
           !authorizedData?.success
             ? authorizedData?.message
             : !appSettingsData?.success
-            ? appSettingsData?.message
-            : appApprovalConfigData?.message
+              ? appSettingsData?.message
+              : appApprovalConfigData?.message
         )
         return
       }
