@@ -455,7 +455,29 @@
     "edit_meta": "মেটা সম্পাদনা করুন",
     "audit_report_meta_list": "অডিট রিপোর্ট মেটা তালিকা",
 
-    "default": {}
+    "default": {
+      "collection_of_shares": "শেয়ার আদায়",
+      "collection_of_savings_deposits": "সঞ্চয়য় আমানত আদায়",
+      "collection_of_loans": "ঋণ আদায়",
+      "collection_of_fixed_deposits": "এককালীন সঞ্চয়",
+      "collection_of_loan_interests": "ঋণের লাভ আদায়",
+      "registration_fee": "ভর্তি ফি",
+      "loan_form": "ঋণ ফরম",
+      "closing_fee": "ক্লোজিং ফি",
+      "savings_return": "সঞ্চয় ফেরত",
+      "loan_given": "ঋণ বিতরণ",
+      "printing_stationery": "প্রিন্টিং ষ্টেশনারি",
+      "office_rent": "অফিস ভাড়া",
+      "electricity_bill": "বিদ্যুৎ বিল",
+      "employee_salary": "কর্মচারীর বেতন",
+      "travel_cost": "যাতায়াত",
+      "consumption": "আপ্যায়ণ",
+      "others_expense": "বিবিধ ব্যয়",
+      "reserve_fund": "সংরক্ষিত তহবিল",
+      "cooperative_dev_fund": "সমবায় উন্নয়ন তহবিল",
+      "undistributed_profits": "অবন্টিত লাভ",
+      "current_year_net_profits": "চলতি বছর নিট লাভ"
+    }
   },
   "staff_permissions": {
     "group_name": {

@@ -466,7 +466,29 @@
     "edit_meta": "Edit Meta",
     "audit_report_meta_list": "Audit Report Meta List",
 
-    "default": {}
+    "default": {
+      "collection_of_shares": "Collection of Shares",
+      "collection_of_savings_deposits": "Collection of Savings Deposits",
+      "collection_of_loans": "Collection of Loans",
+      "collection_of_fixed_deposits": "Collection of fixed Deposits",
+      "collection_of_loan_interests": "Collection of Loan Interests",
+      "registration_fee": "Registration Fee",
+      "loan_form": "Loan Form",
+      "closing_fee": "Closing Fee",
+      "savings_return": "Savings Return",
+      "loan_given": "Loan Given",
+      "printing_stationery": "Printing Stationery",
+      "office_rent": "Office Rent",
+      "electricity_bill": "Electricity Bill",
+      "employee_salary": "Employee Salary",
+      "travel_cost": "Travel Cost",
+      "consumption": "Consumption",
+      "others_expense": "Others Expense",
+      "reserve_fund": "Reserve Fund",
+      "cooperative_dev_fund": "Cooperative Development Fund",
+      "undistributed_profits": "Undistributed Profits",
+      "current_year_net_profits": "Current Year Net Profits"
+    }
   },
   "staff_permissions": {
     "group_name": {
