@@ -453,6 +453,14 @@
     "disable_unchecked_accounts": "Disable Unchecked Accounts",
     "period_of_inactive_account_disable": "Period of Inactive Account Disable"
   },
+  "audit_report_page": {
+    "default": {
+      "deposit_expenditure": "Deposit Expenditure",
+      "profit_loss": "Profit Loss",
+      "net_profit": "Net Profit Loss",
+      "surplus_value": "Surplus Value"
+    }
+  },
   "audit_report_meta": {
     "create_meta": "Edit Meta",
     "edit_meta": "Edit Meta",

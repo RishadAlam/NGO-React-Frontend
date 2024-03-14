@@ -15,6 +15,7 @@ import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import deleteAlert from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -197,7 +198,12 @@ export default function AuditReportMeta() {
             metaPages.map((page, index) => (
               <ReactTable
                 key={index}
-                title={page.name}
+                title={defaultNameCheck(
+                  t,
+                  page.is_default,
+                  'audit_report_page.default.',
+                  page.name
+                )}
                 columns={columns}
                 data={page.audit_report_meta}
                 classnames="my-3"

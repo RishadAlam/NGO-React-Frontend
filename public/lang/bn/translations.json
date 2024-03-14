@@ -442,6 +442,14 @@
     "disable_unchecked_accounts": "চেকহিন অ্যাকাউন্ট নিষ্ক্রিয় করণ",
     "period_of_inactive_account_disable": "অক্রিয় অ্যাকাউন্ট নিষ্ক্রিয় করণের সময়কাল"
   },
+  "audit_report_page": {
+    "default": {
+      "deposit_expenditure": "জমা-খরচ হিসাব",
+      "profit_loss": "লাভ-ক্ষতি হিসাব",
+      "net_profit": "নিট লাভ-ক্ষতি হিসাব",
+      "surplus_value": "উদ্বৃত্তপত্র"
+    }
+  },
   "audit_report_meta": {
     "create_meta": "মেটা তৈরি করুন",
     "edit_meta": "মেটা সম্পাদনা করুন",
