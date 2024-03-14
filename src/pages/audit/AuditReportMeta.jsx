@@ -39,7 +39,7 @@ export default function AuditReportMeta() {
   const windowWidth = useWindowInnerWidthValue()
   const [loading, setLoading] = useLoadingState({})
   const {
-    data: { data: metaKeys } = [],
+    data: { data: metaPages } = [],
     mutate,
     isLoading,
     isError
@@ -102,7 +102,7 @@ export default function AuditReportMeta() {
       id: metaData?.id,
       meta_key: metaData?.meta_key,
       meta_value: metaData?.meta_value,
-      page_no: metaData?.page_no,
+      audit_report_page_id: metaData?.audit_report_page_id,
       column_no: metaData?.column_no
     })
     setIsMetaUpdateModalOpen(true)
@@ -191,14 +191,18 @@ export default function AuditReportMeta() {
           </div>
         </div>
         <div className="staff-table">
-          {isLoading && !metaKeys ? (
+          {isLoading && !metaPages ? (
             <ReactTableSkeleton />
           ) : (
-            <ReactTable
-              title={t('audit_report_meta.audit_report_meta_list')}
-              columns={columns}
-              data={metaKeys}
-            />
+            metaPages.map((page, index) => (
+              <ReactTable
+                key={index}
+                title={page.name}
+                columns={columns}
+                data={page.audit_report_meta}
+                classnames="my-3"
+              />
+            ))
           )}
         </div>
       </section>

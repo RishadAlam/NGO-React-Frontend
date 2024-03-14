@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -14,13 +15,14 @@ export default function CategoryFormModal({
   error,
   modalTitle,
   btnTitle,
-  t,
   defaultValues,
   setChange,
   loading,
   onSubmit
 }) {
+  const { t } = useTranslation()
   const { data: { data: groups = [] } = [] } = useFetch({ action: 'categories/groups' })
+
   const selectBoxConfig = {
     options: groups,
     value: defaultValues?.group || null,

@@ -7,20 +7,20 @@ import xFetch from '../../utilities/xFetch'
 import MetaFormModal from './MetaFormModal'
 
 export default function CreateAuditReportMeta({ isOpen, setIsOpen, accessToken, t, mutate }) {
-  const [errors, setErrors] = useState({ meta_key: '', page_no: '', column_no: '' })
+  const [errors, setErrors] = useState({ meta_key: '', page: '', column_no: '' })
   const [loading, setLoading] = useLoadingState({})
   const [metaData, setMetaData] = useState({
     meta_key: '',
     meta_value: '',
-    page_no: '',
+    audit_report_page_id: '',
     column_no: ''
   })
 
   const setChange = (val, name) => {
     setMetaData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'page_no') {
-          draftData.page_no = val?.id || ''
+        if (name === 'page') {
+          draftData.audit_report_page_id = val?.id || ''
           draftData.page = val || null
           return
         }
@@ -40,7 +40,11 @@ export default function CreateAuditReportMeta({ isOpen, setIsOpen, accessToken, 
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (metaData.meta_key === '' || metaData.page_no === '' || metaData.column_no === '') {
+    if (
+      metaData.meta_key === '' ||
+      metaData.audit_report_page_id === '' ||
+      metaData.column_no === ''
+    ) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
@@ -56,7 +60,7 @@ export default function CreateAuditReportMeta({ isOpen, setIsOpen, accessToken, 
           setMetaData({
             meta_key: '',
             meta_value: '',
-            page_no: '',
+            audit_report_page_id: '',
             column_no: ''
           })
           return

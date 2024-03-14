@@ -1,7 +1,6 @@
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
-import { auditPages } from './auditPages'
 
 const lang = document.querySelector('html').lang
 
@@ -1637,11 +1636,6 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
     Header: t('common.meta_value'),
     accessor: 'meta_value',
     show: windowWidth < 576 ? false : true
-  },
-  {
-    Header: t('common.page'),
-    accessor: 'page_no',
-    Cell: ({ value }) => auditPages.find((page) => Number(page.id) === Number(value))?.name
   },
   {
     Header: t('common.column'),

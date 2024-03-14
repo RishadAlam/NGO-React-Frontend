@@ -14,8 +14,8 @@ export default function MetaUpdate({ isOpen, setIsOpen, data, accessToken, t, mu
   const setChange = (val, name) => {
     setMetaData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'page_no') {
-          draftData.page_no = val?.id || ''
+        if (name === 'page') {
+          draftData.audit_report_page_id = val?.id || ''
           draftData.page = val || null
           return
         }
@@ -36,7 +36,11 @@ export default function MetaUpdate({ isOpen, setIsOpen, data, accessToken, t, mu
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (metaData.meta_key === '' || metaData.page_no === '' || metaData.column_no === '') {
+    if (
+      metaData.meta_key === '' ||
+      metaData.audit_report_page_id === '' ||
+      metaData.column_no === ''
+    ) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
@@ -52,7 +56,7 @@ export default function MetaUpdate({ isOpen, setIsOpen, data, accessToken, t, mu
           setMetaData({
             meta_key: '',
             meta_value: '',
-            page_no: '',
+            audit_report_page_id: '',
             column_no: ''
           })
           return

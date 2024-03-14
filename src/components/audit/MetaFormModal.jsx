@@ -1,7 +1,8 @@
+import { useTranslation } from 'react-i18next'
+import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
 import tsNumbers from '../../libs/tsNumbers'
-import { auditPages } from '../../resources/staticData/auditPages'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
@@ -13,17 +14,22 @@ export default function MetaFormModal({
   error,
   modalTitle,
   btnTitle,
-  t,
   defaultValues,
   setChange,
   loading,
   onSubmit
 }) {
+  const { t } = useTranslation()
+  const { data: { data: pages = [] } = [] } = useFetch({ action: 'audit/page/get-all-pages' })
+  const page =
+    defaultValues?.page ||
+    pages.filter((page) => page?.id === defaultValues?.audit_report_page_id)[0]
+
   const pageConfig = {
-    options: auditPages,
-    value: defaultValues?.page || null,
+    options: pages,
+    value: page || null,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setChange(option, 'page_no'),
+    onChange: (e, option) => setChange(option, 'page'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const columnConfig = {

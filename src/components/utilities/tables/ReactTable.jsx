@@ -15,7 +15,7 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import './table.scss'
 
-function ReactTable({ title, columns, data = [], footer = false }) {
+function ReactTable({ title, columns, data = [], footer = false, classnames = '' }) {
   const { t } = useTranslation()
   const lang = Cookies.get('i18next')
   const [anchorEl, setAnchorEl] = useState(null)
@@ -80,7 +80,7 @@ function ReactTable({ title, columns, data = [], footer = false }) {
 
   return (
     <>
-      <div className="card">
+      <div className={`card ${classnames}`}>
         <div className="card-header">
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="heading">{title}</h2>

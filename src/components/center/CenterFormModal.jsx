@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -13,13 +14,14 @@ export default function CenterFormModal({
   error,
   modalTitle,
   btnTitle,
-  t,
   defaultValues,
   setChange,
   loading,
   onSubmit
 }) {
+  const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
+
   const selectBoxConfig = {
     options: fields,
     value: defaultValues?.field || null,
