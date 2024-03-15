@@ -1666,7 +1666,6 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
     show: isActionHide ? false : windowWidth < 576 ? false : true,
     disable: isActionHide,
     isActionHide: isActionHide,
-    Cell: ({ row }) =>
-      !Number(row.original.is_default) && actionBtnGroup(row.original.id, row.original)
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original, row.original.is_default)
   }
 ]

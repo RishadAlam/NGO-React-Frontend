@@ -98,6 +98,7 @@ export default function MetaUpdate({ isOpen, setIsOpen, data, accessToken, t, mu
         t={t}
         onSubmit={onSubmit}
         loading={loading}
+        isDefault={metaData?.is_default || false}
       />
     </>
   )

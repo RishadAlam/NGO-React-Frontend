@@ -46,16 +46,16 @@ export default function AuditReportMeta() {
     isError
   } = useFetch({ action: 'audit/meta' })
 
-  const actionBtnGroup = (id, metaData) => (
+  const actionBtnGroup = (id, metaData, isDefault) => (
     <ActionBtnGroup>
       {authPermissions.includes('audit_report_meta_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => metaEdit(metaData)}>
+          <IconButton className="text-warning" onClick={() => metaEdit(metaData, isDefault)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('audit_report_meta_soft_delete') && (
+      {authPermissions.includes('audit_report_meta_soft_delete') && !Number(isDefault) && (
         <Tooltip
           TransitionComponent={Zoom}
           title="Delete"
@@ -98,13 +98,14 @@ export default function AuditReportMeta() {
     [t, windowWidth, loading]
   )
 
-  const metaEdit = (metaData) => {
+  const metaEdit = (metaData, isDefault = false) => {
     setEditableMeta({
       id: metaData?.id,
       meta_key: metaData?.meta_key,
       meta_value: metaData?.meta_value,
       audit_report_page_id: metaData?.audit_report_page_id,
-      column_no: metaData?.column_no
+      column_no: metaData?.column_no,
+      is_default: isDefault
     })
     setIsMetaUpdateModalOpen(true)
   }

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
 import XCircle from '../../icons/XCircle'
@@ -17,7 +18,8 @@ export default function MetaFormModal({
   defaultValues,
   setChange,
   loading,
-  onSubmit
+  onSubmit,
+  isDefault = false
 }) {
   const { t } = useTranslation()
   const { data: { data: pages = [] } = [] } = useFetch({ action: 'audit/page/get-all-pages' })
@@ -28,7 +30,8 @@ export default function MetaFormModal({
   const pageConfig = {
     options: pages,
     value: page || null,
-    getOptionLabel: (option) => option.name,
+    getOptionLabel: (option) =>
+      defaultNameCheck(t, option.is_default, 'audit_report_page.default.', option.name),
     onChange: (e, option) => setChange(option, 'page'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
@@ -66,11 +69,18 @@ export default function MetaFormModal({
                   <TextInputField
                     label={t('common.meta_key')}
                     isRequired={true}
-                    defaultValue={defaultValues?.meta_key || ''}
+                    defaultValue={
+                      defaultNameCheck(
+                        t,
+                        isDefault,
+                        'audit_report_meta.default.',
+                        defaultValues?.meta_key
+                      ) || ''
+                    }
                     setChange={(val) => setChange(val, 'meta_key')}
                     error={error?.meta_key}
                     autoFocus={true}
-                    disabled={loading?.metaForm}
+                    disabled={loading?.metaForm || Number(isDefault)}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -88,7 +98,7 @@ export default function MetaFormModal({
                     config={pageConfig}
                     isRequired={true}
                     error={error?.page_no}
-                    disabled={loading?.metaForm}
+                    disabled={loading?.metaForm || Number(isDefault)}
                   />
                 </div>
                 <div className="col-md-6 mb-3">
@@ -97,7 +107,7 @@ export default function MetaFormModal({
                     config={columnConfig}
                     isRequired={true}
                     error={error?.column_no}
-                    disabled={loading?.metaForm}
+                    disabled={loading?.metaForm || Number(isDefault)}
                   />
                 </div>
               </div>
