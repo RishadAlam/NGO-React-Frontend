@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import Save from '../../icons/Save'
+import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import StaffPermissionSkeleton from '../loaders/skeleton/StaffPermissionSkeleton'
 import AndroidSwitch from '../utilities/AndroidSwitch'
 import Button from '../utilities/Button'
+import TextInputField from '../utilities/TextInputField'
 
 export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprovals, mutate }) {
   const { t } = useTranslation()
@@ -16,12 +18,14 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
 
-  const setChange = (id, isChecked) => {
+  const setChange = (id, val) => {
     setAllApprovals((prevApprovals) =>
       create(prevApprovals, (draftApprovals) => {
         draftApprovals.find((approval) => {
-          if (approval.id === id) {
-            approval.meta_value = isChecked
+          if (approval.id === id && approval.meta_key === 'client_reg_fee') {
+            approval.meta_value = tsNumbers(val, true)
+          } else if (approval.id === id) {
+            approval.meta_value = val
           }
         })
       })
@@ -83,19 +87,37 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
               {allApprovals.length > 0 &&
                 allApprovals.map((approval) => (
                   <Fragment key={approval.id}>
-                    <li>
-                      <div className="row mb-2 align-items-center">
-                        <div className="col-10">
-                          <p>{t(`approvals_config.${approval.meta_key}`)}</p>
+                    {approval.meta_key === 'client_reg_fee' ? (
+                      <li>
+                        <div className="row mb-2 align-items-center">
+                          <div className="col-8">
+                            <p>{t(`approvals_config.${approval.meta_key}`)}</p>
+                          </div>
+                          <div className="col-4 text-end text-success">
+                            <div className="d-inline-block" style={{ maxWidth: '80px' }}>
+                              <TextInputField
+                                defaultValue={tsNumbers(approval.meta_value)}
+                                setChange={(val) => setChange(approval.id, val)}
+                              />
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-2 text-end text-success">
-                          <AndroidSwitch
-                            value={approval.meta_value}
-                            toggleStatus={(e) => setChange(approval.id, e.target.checked)}
-                          />
+                      </li>
+                    ) : (
+                      <li>
+                        <div className="row mb-2 align-items-center">
+                          <div className="col-10">
+                            <p>{t(`approvals_config.${approval.meta_key}`)}</p>
+                          </div>
+                          <div className="col-2 text-end text-success">
+                            <AndroidSwitch
+                              value={approval.meta_value}
+                              toggleStatus={(e) => setChange(approval.id, e.target.checked)}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </li>
+                      </li>
+                    )}
                   </Fragment>
                 ))}
             </ul>

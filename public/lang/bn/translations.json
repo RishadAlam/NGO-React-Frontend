@@ -366,9 +366,9 @@
     "Income_Categories_Edit": "আয় ক্যাটাগরি ইডিট",
 
     "default": {
-      "registration_fee": "ভর্তি ফি",
+      "registration_fee": "নিবন্ধন ফি",
       "saving_form_fee": "সঞ্চয় ফরম ফি",
-      "loan_form_fee": "ঋণ ফরম ফি",
+      "loan_form": "ঋণ ফরম ফি",
       "closing_fee": "ক্লোজিং ফি",
       "withdrawal_fee": "উত্তোলন ফি",
       "money_transfer_transaction_fee": "টাকা স্থানান্তর ফি"
@@ -386,11 +386,12 @@
       "loan_given": "ঋণ দেওয়া হয়েছে",
       "saving_withdrawal": "সঞ্চয় উত্তোলন",
       "loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলন",
-      "stationary": "ষ্টেশনারী",
+      "printing_stationery": "প্রিন্টিং ষ্টেশনারি",
       "account_closing_interest": "একাউন্ট ক্লোজিং লাভ",
       "employee_salary": "কর্মচারীর বেতন",
-      "transportation_allowance": "যাতায়াত",
-      "hospitality": "আপ্যায়ন"
+      "travel_cost": "যাতায়াত",
+      "consumption": "আপ্যায়ন",
+      "others_expense": "বিবিধ ব্যয়"
     }
   },
   "staffs": {
@@ -431,7 +432,8 @@
     "loan_account_closing_approval": "ঋণ অ্যাকাউন্ট বন্ধ করার অনুমোদন",
     "client_reg_sign_is_required": "ক্লায়েন্ট নিবন্ধন স্বাক্ষর প্রয়োজন?",
     "nominee_reg_sign_is_required": "নমিনি নিবন্ধন স্বাক্ষর প্রয়োজন?",
-    "guarantor_reg_sign_is_required": "গ্যারান্টার নিবন্ধন স্বাক্ষর প্রয়োজন?"
+    "guarantor_reg_sign_is_required": "গ্যারান্টার নিবন্ধন স্বাক্ষর প্রয়োজন?",
+    "client_reg_fee": "নিবন্ধন ফি"
   },
   "categories_config": {
     "account_reg_closing_fees": "অ্যাকাউন্ট নিবন্ধন ও ক্লোজিং ফি",

@@ -380,7 +380,7 @@
     "default": {
       "registration_fee": "Registration Fee",
       "saving_form_fee": "Saving Form Fee",
-      "loan_form_fee": "Loan Form Fee",
+      "loan_form": "Loan Form Fee",
       "closing_fee": "Closing Fee",
       "withdrawal_fee": "Withdrawal Fee",
       "money_transfer_transaction_fee": "Money Transfer Fee"
@@ -398,11 +398,12 @@
       "loan_given": "Loan Given",
       "saving_withdrawal": "Savings Withdrawal",
       "loan_saving_withdrawal": "Loan Savings Withdrawal",
-      "stationary": "Stationary",
+      "printing_stationery": "Printing Stationary",
       "account_closing_interest": "Account Closing interest",
       "employee_salary": "Employee Salary",
-      "transportation_allowance": "Transportation Allowance",
-      "hospitality": "Hospitality"
+      "travel_cost": "Transportation Allowance",
+      "consumption": "Hospitality",
+      "others_expense": "Others Expense"
     }
   },
   "staffs": {
@@ -443,7 +444,8 @@
     "loan_account_closing_approval": "Loan Account Closing Approval",
     "client_reg_sign_is_required": "Client Registration Signature Field Required?",
     "nominee_reg_sign_is_required": "Nominee Registration Signature Field Required?",
-    "guarantor_reg_sign_is_required": "Guarantor Registration Signature Field Required?"
+    "guarantor_reg_sign_is_required": "Guarantor Registration Signature Field Required?",
+    "client_reg_fee": "Client Registration Fee"
   },
   "categories_config": {
     "account_reg_closing_fees": "Account Registration & Closing fees",
