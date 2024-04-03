@@ -183,7 +183,12 @@
     "column": "Column",
     "value": "Value",
     "meta_key": "Meta Key",
-    "meta_value": "Meta Value"
+    "meta_value": "Meta Value",
+    "financial_year": "Financial Year",
+    "net_profits": "Net Profits",
+    "net_loss": "Net Loss",
+    "last_updated_by": "Last Updated by",
+    "current_fund": "Current Fund"
   },
 
   "common_validation": {
@@ -478,7 +483,7 @@
       "loan_form": "Loan Form",
       "closing_fee": "Closing Fee",
       "savings_return": "Savings Return",
-      "loan_given": "Loan Given",
+      "star": "Loan Given",
       "printing_stationery": "Printing Stationery",
       "office_rent": "Office Rent",
       "electricity_bill": "Electricity Bill",

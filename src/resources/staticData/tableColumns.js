@@ -1669,3 +1669,59 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original, row.original.is_default)
   }
 ]
+
+export const AuditReportTableColumns = (t, windowWidth, actionBtnGroup, isActionHide) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.financial_year'),
+    accessor: 'financial_year',
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.net_profits'),
+    accessor: 'net_profits',
+    Cell: ({ row }) => tsNumbers(`৳${row.original.data.profit_loss.total_expenses.net_profits}/-`)
+  },
+  {
+    Header: t('common.net_loss'),
+    accessor: 'net_loss',
+    Cell: ({ row }) => tsNumbers(`৳${row.original.data.profit_loss.total_incomes.net_loss}/-`)
+  },
+  {
+    Header: t('common.current_fund'),
+    accessor: 'current_fund',
+    Cell: ({ row }) =>
+      tsNumbers(`৳${row.original.data.deposit_expenditure.total_distributions.current_fund}/-`)
+  },
+  {
+    Header: t('common.last_updated_by'),
+    accessor: 'last_updated_by',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original, row.original.is_default)
+  }
+]

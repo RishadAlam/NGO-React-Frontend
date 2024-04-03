@@ -183,7 +183,12 @@
     "column": "কলাম",
     "value": "মান",
     "meta_key": "মেটা কী",
-    "meta_value": "মেটা মান"
+    "meta_value": "মেটা মান",
+    "financial_year": "অর্থবছর",
+    "net_profits": "নিট লাভ",
+    "net_loss": "নিট ক্ষতি",
+    "last_updated_by": "শেষ আপডেটকারী",
+    "current_fund": "নগদ তহবিল"
   },
 
   "common_validation": {

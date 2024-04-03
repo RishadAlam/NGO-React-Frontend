@@ -48,6 +48,8 @@ const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientReg
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
+const AuditReport = lazy(() => import('./pages/audit/AuditReport'))
+
 const t = () => {}
 export default function App() {
   const { company_logo_uri } = useAppSettingsValue()
@@ -863,24 +865,44 @@ export default function App() {
             </Route>
 
             {/* Audit Routes */}
-            <Route
-              path="audit-report-meta"
-              element={
-                <RequirePermissions
-                  allowedPermissions={['audit_report_meta_list_view']}
-                  pageTitle="menu.audit.report_meta"
-                />
-              }>
+            <Route path="audit-report">
               <Route
-                index
                 element={
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Suspense fallback={<Loader />}>
-                      <AuditReportMeta />
-                    </Suspense>
-                  </ErrorBoundary>
-                }
-              />
+                  <RequirePermissions
+                    allowedPermissions={['audit_report_meta_list_view']}
+                    pageTitle="menu.audit.audit_report"
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <AuditReport />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="meta"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['audit_report_meta_list_view']}
+                    pageTitle="menu.audit.report_meta"
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <AuditReportMeta />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
             </Route>
           </Route>
         </Routes>
