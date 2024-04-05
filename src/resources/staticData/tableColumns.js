@@ -1722,6 +1722,6 @@ export const AuditReportTableColumns = (t, windowWidth, actionBtnGroup, isAction
     show: isActionHide ? false : windowWidth < 576 ? false : true,
     disable: isActionHide,
     isActionHide: isActionHide,
-    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original, row.original.is_default)
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]

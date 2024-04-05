@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
-import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
-import MetaUpdate from '../../components/audit/MetaUpdate'
+import ViewModal from '../../components/auditReport/ViewModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -23,10 +22,11 @@ import { AuditReportTableColumns } from '../../resources/staticData/tableColumns
 import '../staffs/staffs.scss'
 
 export default function AuditReport() {
-  const [isMetaModalOpen, setIsMetaModalOpen] = useState(false)
-  const [isMetaUpdateModalOpen, setIsMetaUpdateModalOpen] = useState(false)
+  const [report, setReport] = useState()
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-  const [editableMeta, setEditableMeta] = useState(false)
+  const [editableData, setEditableData] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
@@ -39,23 +39,25 @@ export default function AuditReport() {
     isError
   } = useFetch({ action: 'audit/report/co-operative' })
 
-  const actionBtnGroup = (id, metaData, isDefault) => (
+  const actionBtnGroup = (id, report) => (
     <ActionBtnGroup>
-      {authPermissions.includes('cooperative_audit_report_view') && !Number(isDefault) && (
+      {authPermissions.includes('cooperative_audit_report_view') && (
         <Tooltip
           TransitionComponent={Zoom}
           title={t('common.view')}
           arrow
           followCursor
           disabled={loading?.metaForm || false}>
-          <IconButton className="text-primary" onClick={() => metaDelete(id)}>
+          <IconButton
+            className="text-primary"
+            onClick={() => setReportView(report.data, report.financial_year)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('cooperative_audit_report_update') && (
         <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
-          <IconButton className="text-warning" onClick={() => metaEdit(metaData, isDefault)}>
+          <IconButton className="text-warning" onClick={() => metaEdit(report, 1)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -87,8 +89,13 @@ export default function AuditReport() {
     [t, windowWidth, loading]
   )
 
+  const setReportView = (data, financial_year) => {
+    setReport({ financial_year: financial_year, ...data })
+    setIsViewModalOpen(true)
+  }
+
   const metaEdit = (metaData, isDefault = false) => {
-    setEditableMeta({
+    setEditableData({
       id: metaData?.id,
       meta_key: metaData?.meta_key,
       meta_value: metaData?.meta_value,
@@ -96,7 +103,7 @@ export default function AuditReport() {
       column_no: metaData?.column_no,
       is_default: isDefault
     })
-    setIsMetaUpdateModalOpen(true)
+    setIsUpdateModalOpen(true)
   }
 
   return (
@@ -115,7 +122,15 @@ export default function AuditReport() {
             ]}
           />
         </div>
-        {isMetaUpdateModalOpen && Object.keys(editableMeta).length && (
+        {isViewModalOpen && (
+          <ViewModal
+            isOpen={isViewModalOpen}
+            setIsOpen={setIsViewModalOpen}
+            data={report}
+            mutate={mutate}
+          />
+        )}
+        {/* {isMetaUpdateModalOpen && Object.keys(editableMeta).length && (
           <MetaUpdate
             isOpen={isMetaUpdateModalOpen}
             setIsOpen={setIsMetaUpdateModalOpen}
@@ -124,15 +139,7 @@ export default function AuditReport() {
             accessToken={accessToken}
             mutate={mutate}
           />
-        )}
-        {isActionHistoryModalOpen && (
-          <ActionHistoryModal
-            open={isActionHistoryModalOpen}
-            setOpen={setIsActionHistoryModalOpen}
-            t={t}
-            actionHistory={actionHistory}
-          />
-        )}
+        )} */}
         <div className="staff-table">
           {isLoading ? (
             <ReactTableSkeleton />

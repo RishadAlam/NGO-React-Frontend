@@ -1,0 +1,20 @@
+.print-report {
+  .report-body {
+    table {
+      border: 1px solid;
+    }
+
+    th,
+    td {
+      background: transparent !important;
+      color: #000 !important;
+      border: none !important;
+      border-left: 1px solid !important;
+    }
+
+    tfoot td,
+    th {
+      border: 1px solid !important;
+    }
+  }
+}
