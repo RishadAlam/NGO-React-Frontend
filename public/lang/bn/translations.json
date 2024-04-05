@@ -188,7 +188,9 @@
     "net_profits": "নিট লাভ",
     "net_loss": "নিট ক্ষতি",
     "last_updated_by": "শেষ আপডেটকারী",
-    "current_fund": "নগদ তহবিল"
+    "current_fund": "নগদ তহবিল",
+    "view": "দেখুন",
+    "print": "প্রিন্ট"
   },
 
   "common_validation": {

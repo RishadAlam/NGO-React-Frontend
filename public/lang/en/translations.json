@@ -188,7 +188,9 @@
     "net_profits": "Net Profits",
     "net_loss": "Net Loss",
     "last_updated_by": "Last Updated by",
-    "current_fund": "Current Fund"
+    "current_fund": "Current Fund",
+    "view": "view",
+    "print": "Print"
   },
 
   "common_validation": {
