@@ -1,6 +1,10 @@
+import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import tsNumbers from '../../libs/tsNumbers'
 
 export default function DepositExpenditure({ depositMeta, expenditureMeta, deposit_expenditure }) {
+  const { t } = useTranslation()
+
   return (
     <table className="table table-bordered table-light">
       <thead>
@@ -28,7 +32,14 @@ export default function DepositExpenditure({ depositMeta, expenditureMeta, depos
               {index < depositMeta.length ? (
                 <>
                   <td className="text-center">{tsNumbers(index + 1)}</td>
-                  <td>{depositMeta[index].key}</td>
+                  <td>
+                    {defaultNameCheck(
+                      t,
+                      depositMeta[index].is_default,
+                      'audit_report_meta.default.',
+                      depositMeta[index].key
+                    )}
+                  </td>
                   <td className="text-end">{tsNumbers(depositMeta[index].value)}</td>
                 </>
               ) : (
@@ -41,7 +52,14 @@ export default function DepositExpenditure({ depositMeta, expenditureMeta, depos
               {index < expenditureMeta.length ? (
                 <>
                   <td className="text-center">{tsNumbers(index + 1)}</td>
-                  <td>{expenditureMeta[index].key}</td>
+                  <td>
+                    {defaultNameCheck(
+                      t,
+                      expenditureMeta[index].is_default,
+                      'audit_report_meta.default.',
+                      expenditureMeta[index].key
+                    )}
+                  </td>
                   <td className="text-end">{tsNumbers(expenditureMeta[index].value)}</td>
                 </>
               ) : (
@@ -67,10 +85,17 @@ export default function DepositExpenditure({ depositMeta, expenditureMeta, depos
         {Object.keys(deposit_expenditure.total_collections).map((key, index) => (
           <tr key={index}>
             <td></td>
-            <td>{key}</td>
+            <td>{defaultNameCheck(t, true, 'audit_report_meta.default.', key)}</td>
             <td>{tsNumbers(deposit_expenditure.total_collections[key])}</td>
             <td></td>
-            <td>{Object.keys(deposit_expenditure.total_distributions)[index]}</td>
+            <td>
+              {defaultNameCheck(
+                t,
+                true,
+                'audit_report_meta.default.',
+                Object.keys(deposit_expenditure.total_distributions)[index]
+              )}
+            </td>
             <td>
               {tsNumbers(
                 deposit_expenditure.total_distributions[

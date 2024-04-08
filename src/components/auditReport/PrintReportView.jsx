@@ -4,6 +4,7 @@ import NetProfit from './NetProfit'
 import './PrintReportView.scss'
 import ProfitLoss from './ProfitLoss'
 import ReportLayout from './ReportLayout'
+import SurplusValue from './SurplusValue'
 
 export default function PrintReportView({ data }) {
   const { financial_year, deposit_expenditure, net_profit, profit_loss, surplus_value } = data
@@ -40,6 +41,17 @@ export default function PrintReportView({ data }) {
           />
         </ReportLayout>
       )}
+      <ReportLayout
+        title="লাভ-ক্ষতি হিসাব"
+        desc={`${tsNumbers(financial_year)} ইং সনের ৩০ জুন সমাপ্ত বছরের জন্য`}>
+        <SurplusValue
+          capital_meta={surplus_value.capital_meta}
+          resource_meta={surplus_value.resource_meta}
+          surplus_value={surplus_value}
+          net_profit={profit_loss.total_expenses.net_profits}
+          net_loss={profit_loss.total_incomes.net_loss}
+        />
+      </ReportLayout>
     </section>
   )
 }

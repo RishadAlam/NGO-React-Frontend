@@ -1,6 +1,10 @@
+import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import tsNumbers from '../../libs/tsNumbers'
 
 export default function NetProfit({ expense_meta, income_meta, net_profit }) {
+  const { t } = useTranslation()
+
   return (
     <table className="table table-bordered table-light">
       <thead>
@@ -28,7 +32,14 @@ export default function NetProfit({ expense_meta, income_meta, net_profit }) {
               {index < expense_meta.length ? (
                 <>
                   <td className="text-center">{tsNumbers(index + 1)}</td>
-                  <td>{expense_meta[index].key}</td>
+                  <td>
+                    {defaultNameCheck(
+                      t,
+                      expense_meta[index].is_default,
+                      'audit_report_meta.default.',
+                      expense_meta[index].key
+                    )}
+                  </td>
                   <td className="text-end">{tsNumbers(expense_meta[index].value)}</td>
                 </>
               ) : (
@@ -41,7 +52,14 @@ export default function NetProfit({ expense_meta, income_meta, net_profit }) {
               {index < income_meta.length ? (
                 <>
                   <td className="text-center">{tsNumbers(index + 1)}</td>
-                  <td>{income_meta[index].key}</td>
+                  <td>
+                    {defaultNameCheck(
+                      t,
+                      income_meta[index].is_default,
+                      'audit_report_meta.default.',
+                      income_meta[index].key
+                    )}
+                  </td>
                   <td className="text-end">{tsNumbers(income_meta[index].value)}</td>
                 </>
               ) : (
@@ -66,10 +84,10 @@ export default function NetProfit({ expense_meta, income_meta, net_profit }) {
       <tfoot className="text-end">
         <tr>
           <td></td>
-          <td>Total</td>
+          <td>{t('audit_report_meta.default.total')}</td>
           <td>{tsNumbers(net_profit.total_incomes.total)}</td>
           <td></td>
-          <td>Total</td>
+          <td>{t('audit_report_meta.default.total')}</td>
           <td>{tsNumbers(net_profit.total_expenses.total)}</td>
         </tr>
       </tfoot>
