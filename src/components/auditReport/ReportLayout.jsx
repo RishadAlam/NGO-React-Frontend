@@ -4,7 +4,7 @@ export default function ReportLayout({ title, desc, children }) {
   const { company_name } = useAppSettingsValue()
 
   return (
-    <>
+    <div className="mb-5">
       <div className="report-header text-center">
         <h3>{company_name}</h3>
         {title && <h5>{title}</h5>}
@@ -18,6 +18,6 @@ export default function ReportLayout({ title, desc, children }) {
           <h4>অডিট অফিসার</h4>
         </div>
       </div>
-    </>
+    </div>
   )
 }
