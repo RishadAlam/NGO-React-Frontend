@@ -489,6 +489,10 @@
       "collection_of_loan_interests": "ঋণের লাভ আদায়",
       "registration_fee": "ভর্তি ফি",
       "loan_form": "ঋণ ফরম",
+      "loan_form_fee": "ঋণ ফরম",
+      "saving_form_fee": "সঞ্চয় ফরম",
+      "withdrawal_fee": "উত্তোলন ফি",
+      "money_transfer_transaction_fee": "লেনদেন ফি",
       "closing_fee": "ক্লোজিং ফি",
       "savings_return": "সঞ্চয় ফেরত",
       "shares_return": "শেয়ার ফেরত",
@@ -500,6 +504,7 @@
       "travel_cost": "যাতায়াত",
       "consumption": "আপ্যায়ণ",
       "others_expense": "বিবিধ ব্যয়",
+      "daily_expense": "দৈনিক ব্যয়",
       "reserve_fund": "সংরক্ষিত তহবিল",
       "cooperative_dev_fund": "সমবায় উন্নয়ন তহবিল",
       "undistributed_profit": "অবন্টিত লাভ",
@@ -517,7 +522,13 @@
       "furniture": "আসবাবপত্র",
       "net_loss": "নীট ক্ষতি",
       "previous_loss": "বিগত ক্ষতি-",
-      "current_net_profit": "(-) হালে লাভ-"
+      "current_net_profit": "(-) হালে লাভ-",
+      "net_expenses": "মোট",
+      "net_incomes": "মোট",
+      "net_profits": "নীট লাভ",
+      "net_collections": "মোট আদায়",
+      "net_distributions": "মোট খরচ",
+      "previous_fund": "আগত তহবিল"
     }
   },
   "staff_permissions": {

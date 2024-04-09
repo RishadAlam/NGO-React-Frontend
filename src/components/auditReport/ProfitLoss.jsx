@@ -10,10 +10,10 @@ export default function ProfitLoss({ expenses, incomes, profit_loss }) {
       <thead>
         <tr className="text-center">
           <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রাপ্তি সমূহ</th>
+          <th style={{ width: '30%' }}>ব্যয়ের বিবরণ</th>
           <th style={{ width: '15%' }}>টাকা</th>
           <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রদান সমূহ</th>
+          <th style={{ width: '30%' }}>আয়ের বিবরণ</th>
           <th style={{ width: '15%' }}>টাকা</th>
         </tr>
         <tr className="text-center">

@@ -36,10 +36,10 @@ export default function SurplusValue({
       <thead>
         <tr className="text-center">
           <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রাপ্তি সমূহ</th>
+          <th style={{ width: '30%' }}>মূলধন ও দায়</th>
           <th style={{ width: '15%' }}>টাকা</th>
           <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রদান সমূহ</th>
+          <th style={{ width: '30%' }}>সম্পদ ও পরিসম্পদ</th>
           <th style={{ width: '15%' }}>টাকা</th>
         </tr>
         <tr className="text-center">

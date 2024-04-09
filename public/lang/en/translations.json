@@ -500,6 +500,10 @@
       "collection_of_loan_interests": "Collection of Loan Interests",
       "registration_fee": "Registration Fee",
       "loan_form": "Loan Form",
+      "loan_form_fee": "Loan Form",
+      "saving_form_fee": "Saving Form",
+      "withdrawal_fee": "Withdrawal Fee",
+      "money_transfer_transaction_fee": "Transaction Fee",
       "closing_fee": "Closing Fee",
       "savings_return": "Savings Return",
       "shares_return": "Shares Return",
@@ -511,6 +515,7 @@
       "travel_cost": "Travel Cost",
       "consumption": "Consumption",
       "others_expense": "Others Expense",
+      "daily_expense": "Daily Expense",
       "reserve_fund": "Reserve Fund",
       "cooperative_dev_fund": "Cooperative Development Fund",
       "previous_cooperative_dev_fund": "Previous Cooperative Development Fund",
@@ -528,7 +533,13 @@
       "furniture": "Furniture",
       "net_loss": "Net Loss",
       "previous_loss": "previous Loss",
-      "current_net_profit": "Current Net Profit"
+      "current_net_profit": "Current Net Profit",
+      "net_expenses": "Total",
+      "net_incomes": "Total",
+      "net_profits": "Net Profit",
+      "net_collections": "Total Collections",
+      "net_distributions": "Total Distribution",
+      "previous_fund": "Previous Fund"
     }
   },
   "staff_permissions": {
