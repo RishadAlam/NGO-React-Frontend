@@ -35,11 +35,11 @@ export default function SurplusValue({
     <table className="table table-bordered table-light">
       <thead>
         <tr className="text-center">
-          <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>মূলধন ও দায়</th>
+          <th style={{ width: '8%' }}>ক্র/নং</th>
+          <th style={{ width: '27%' }}>মূলধন ও দায়</th>
           <th style={{ width: '15%' }}>টাকা</th>
-          <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>সম্পদ ও পরিসম্পদ</th>
+          <th style={{ width: '8%' }}>ক্র/নং</th>
+          <th style={{ width: '27%' }}>সম্পদ ও পরিসম্পদ</th>
           <th style={{ width: '15%' }}>টাকা</th>
         </tr>
         <tr className="text-center">

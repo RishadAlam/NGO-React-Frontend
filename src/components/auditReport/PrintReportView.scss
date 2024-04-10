@@ -1,8 +1,14 @@
 @import '../../scss/variables';
 
 .print-report {
+  font-family: 'Tiro Bangla', 'Poppins', sans-serif !important;
+
   .report-footer,
   .report-header {
+    h3 {
+      font-size: 24px !important;
+    }
+
     h4,
     h5 {
       font-weight: 500 !important;
@@ -19,7 +25,12 @@
       color: $dark-color !important;
       border: none !important;
       border-left: 1px solid $dark-color !important;
-      font-weight: 500;
+      font-weight: 500 !important;
+      color: $dark-color !important;
+    }
+
+    td {
+      text-wrap: wrap !important;
     }
 
     tfoot td,

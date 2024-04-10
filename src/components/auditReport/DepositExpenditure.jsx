@@ -9,11 +9,11 @@ export default function DepositExpenditure({ depositMeta, expenditureMeta, depos
     <table className="table table-bordered table-light">
       <thead>
         <tr className="text-center">
-          <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রাপ্তি সমূহ</th>
+          <th style={{ width: '8%' }}>ক্র/নং</th>
+          <th style={{ width: '27%' }}>প্রাপ্তি সমূহ</th>
           <th style={{ width: '15%' }}>টাকা</th>
-          <th style={{ width: '5%' }}>ক্র/নং</th>
-          <th style={{ width: '30%' }}>প্রদান সমূহ</th>
+          <th style={{ width: '8%' }}>ক্র/নং</th>
+          <th style={{ width: '27%' }}>প্রদান সমূহ</th>
           <th style={{ width: '15%' }}>টাকা</th>
         </tr>
         <tr className="text-center">

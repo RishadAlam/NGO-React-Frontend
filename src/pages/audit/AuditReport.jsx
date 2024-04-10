@@ -1,10 +1,12 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useReactToPrint } from 'react-to-print'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import PrintReportView from '../../components/auditReport/PrintReportView'
 import ViewModal from '../../components/auditReport/ViewModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
@@ -22,12 +24,11 @@ import { AuditReportTableColumns } from '../../resources/staticData/tableColumns
 import '../staffs/staffs.scss'
 
 export default function AuditReport() {
+  const reportPrint = useRef()
   const [report, setReport] = useState()
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
-  const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [editableData, setEditableData] = useState(false)
-  const [actionHistory, setActionHistory] = useState([])
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
@@ -64,7 +65,11 @@ export default function AuditReport() {
       )}
       {authPermissions.includes('cooperative_audit_report_print') && (
         <Tooltip TransitionComponent={Zoom} title={t('common.print')} arrow followCursor>
-          <IconButton className="text-info">{<Print size={20} />}</IconButton>
+          <IconButton
+            className="text-info"
+            onClick={() => setReportPrint(report.data, report.financial_year)}>
+            {<Print size={20} />}
+          </IconButton>
         </Tooltip>
       )}
     </ActionBtnGroup>
@@ -93,6 +98,17 @@ export default function AuditReport() {
     setReport({ financial_year: financial_year, ...data })
     setIsViewModalOpen(true)
   }
+  const setReportPrint = (data, financial_year) => {
+    setReport({ financial_year: financial_year, ...data })
+    setTimeout(() => {
+      handlePrint()
+    }, 1000)
+  }
+
+  const handlePrint = useReactToPrint({
+    content: () => reportPrint.current,
+    removeAfterPrint: true
+  })
 
   const metaEdit = (metaData, isDefault = false) => {
     setEditableData({
@@ -130,16 +146,9 @@ export default function AuditReport() {
             mutate={mutate}
           />
         )}
-        {/* {isMetaUpdateModalOpen && Object.keys(editableMeta).length && (
-          <MetaUpdate
-            isOpen={isMetaUpdateModalOpen}
-            setIsOpen={setIsMetaUpdateModalOpen}
-            data={editableMeta}
-            t={t}
-            accessToken={accessToken}
-            mutate={mutate}
-          />
-        )} */}
+        <div className="d-none">
+          {report && <PrintReportView data={report} innerRef={reportPrint} />}
+        </div>
         <div className="staff-table">
           {isLoading ? (
             <ReactTableSkeleton />

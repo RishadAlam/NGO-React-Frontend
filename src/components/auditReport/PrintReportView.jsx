@@ -6,14 +6,14 @@ import ProfitLoss from './ProfitLoss'
 import ReportLayout from './ReportLayout'
 import SurplusValue from './SurplusValue'
 
-export default function PrintReportView({ data }) {
+export default function PrintReportView({ data, innerRef }) {
   const { financial_year, deposit_expenditure, net_profit, profit_loss, surplus_value } = data
 
   const depositMeta = [...deposit_expenditure.deposit_meta, ...profit_loss.incomes]
   const expenditureMeta = [...deposit_expenditure.expenditure_meta, ...profit_loss.expenses]
 
   return (
-    <section className="print-report p-5 bg-white text-dark">
+    <section className="print-report p-5 pt-0 bg-white text-dark" ref={innerRef}>
       <ReportLayout desc={`${tsNumbers(financial_year)} ইং সনের জমা খরচের হিসাব`}>
         <DepositExpenditure
           depositMeta={depositMeta}
@@ -42,7 +42,7 @@ export default function PrintReportView({ data }) {
         </ReportLayout>
       )}
       <ReportLayout
-        title="লাভ-ক্ষতি হিসাব"
+        title="উদ্বৃত্তপত্র"
         desc={`${tsNumbers(financial_year)} ইং সনের ৩০ জুন সমাপ্ত বছরের জন্য`}>
         <SurplusValue
           capital_meta={surplus_value.capital_meta}
