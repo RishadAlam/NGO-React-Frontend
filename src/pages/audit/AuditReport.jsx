@@ -9,6 +9,7 @@ import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import PrintReportView from '../../components/auditReport/PrintReportView'
 import ViewModal from '../../components/auditReport/ViewModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import LoaderSm from '../../components/loaders/LoaderSm'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import ReactTable from '../../components/utilities/tables/ReactTable'
@@ -65,11 +66,14 @@ export default function AuditReport() {
       )}
       {authPermissions.includes('cooperative_audit_report_print') && (
         <Tooltip TransitionComponent={Zoom} title={t('common.print')} arrow followCursor>
-          <IconButton
-            className="text-info"
-            onClick={() => setReportPrint(report.data, report.financial_year)}>
-            {<Print size={20} />}
-          </IconButton>
+          <span>
+            <IconButton
+              className="text-info"
+              onClick={() => setReportPrint(report.data, report.financial_year)}
+              disabled={loading?.print || false}>
+              {loading?.print ? <LoaderSm size={20} className="ms-2" /> : <Print size={20} />}
+            </IconButton>
+          </span>
         </Tooltip>
       )}
     </ActionBtnGroup>
@@ -107,6 +111,8 @@ export default function AuditReport() {
 
   const handlePrint = useReactToPrint({
     content: () => reportPrint.current,
+    onBeforePrint: () => setLoading({ ...loading, print: true }),
+    onAfterPrint: () => setLoading({ ...loading, print: false }),
     removeAfterPrint: true
   })
 

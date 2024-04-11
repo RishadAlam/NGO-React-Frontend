@@ -13,7 +13,7 @@ export default function PrintReportView({ data, innerRef }) {
   const expenditureMeta = [...deposit_expenditure.expenditure_meta, ...profit_loss.expenses]
 
   return (
-    <section className="print-report p-5 pt-0 bg-white text-dark" ref={innerRef}>
+    <section className="print-report ps-5 pe-5 bg-white text-dark" ref={innerRef}>
       <ReportLayout desc={`${tsNumbers(financial_year)} ইং সনের জমা খরচের হিসাব`}>
         <DepositExpenditure
           depositMeta={depositMeta}
