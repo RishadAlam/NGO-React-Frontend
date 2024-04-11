@@ -33,6 +33,10 @@
       text-wrap: wrap !important;
     }
 
+    .client-list td {
+      border: 1px solid $dark-color !important;
+    }
+
     tfoot td,
     th {
       border: 1px solid $dark-color !important;

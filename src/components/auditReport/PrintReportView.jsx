@@ -1,4 +1,5 @@
 import tsNumbers from '../../libs/tsNumbers'
+import ClientList from './ClientList'
 import DepositExpenditure from './DepositExpenditure'
 import NetProfit from './NetProfit'
 import './PrintReportView.scss'
@@ -7,7 +8,14 @@ import ReportLayout from './ReportLayout'
 import SurplusValue from './SurplusValue'
 
 export default function PrintReportView({ data, innerRef }) {
-  const { financial_year, deposit_expenditure, net_profit, profit_loss, surplus_value } = data
+  const {
+    financial_year,
+    deposit_expenditure,
+    net_profit,
+    profit_loss,
+    surplus_value,
+    client_list
+  } = data
 
   const depositMeta = [...deposit_expenditure.deposit_meta, ...profit_loss.incomes]
   const expenditureMeta = [...deposit_expenditure.expenditure_meta, ...profit_loss.expenses]
@@ -50,6 +58,15 @@ export default function PrintReportView({ data, innerRef }) {
           surplus_value={surplus_value}
           net_profit={profit_loss.total_expenses.net_profits}
           net_loss={profit_loss.total_incomes.net_loss}
+        />
+      </ReportLayout>
+      <ReportLayout
+        desc={`${tsNumbers(financial_year)} ইং তারিখে সদস্যদের শেয়ার, সঞ্চয় ও ঋণ পাওনার স্থিতি তালিকা`}>
+        <ClientList
+          client_list={client_list.client_list}
+          total_shares={client_list.total_shares}
+          total_savings={client_list.total_savings}
+          total_loan_remaining={client_list.total_loan_remaining}
         />
       </ReportLayout>
     </section>
