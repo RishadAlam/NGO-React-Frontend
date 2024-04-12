@@ -51,7 +51,7 @@ export default function PrintReportView({ data, innerRef }) {
       )}
       <ReportLayout
         title="উদ্বৃত্তপত্র"
-        desc={`${tsNumbers(financial_year)} ইং সনের ৩০ জুন সমাপ্ত বছরের জন্য`}>
+        desc={`৩০ জুন ${tsNumbers(financial_year.split('-')[1])} তারিখের`}>
         <SurplusValue
           capital_meta={surplus_value.capital_meta}
           resource_meta={surplus_value.resource_meta}
@@ -61,7 +61,7 @@ export default function PrintReportView({ data, innerRef }) {
         />
       </ReportLayout>
       <ReportLayout
-        desc={`${tsNumbers(financial_year)} ইং তারিখে সদস্যদের শেয়ার, সঞ্চয় ও ঋণ পাওনার স্থিতি তালিকা`}>
+        desc={`${tsNumbers('30/06/')}${tsNumbers(financial_year.split('-')[1])} ইং তারিখে সদস্যদের শেয়ার, সঞ্চয় ও ঋণ পাওনার স্থিতি তালিকা`}>
         <ClientList
           client_list={client_list.client_list}
           total_shares={client_list.total_shares}

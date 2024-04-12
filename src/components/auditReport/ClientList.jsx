@@ -35,16 +35,6 @@ export default function ClientList({
           </tr>
         ))}
         <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </tbody>
-      <tfoot className="text-end">
-        <tr>
           <td></td>
           <td></td>
           <td>{t('common.total')}</td>
@@ -52,7 +42,7 @@ export default function ClientList({
           <td>{tsNumbers(total_savings)}</td>
           <td>{tsNumbers(total_loan_remaining)}</td>
         </tr>
-      </tfoot>
+      </tbody>
     </table>
   )
 }

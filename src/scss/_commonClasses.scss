@@ -10,6 +10,11 @@ html {
   height: 100%;
 }
 
+@page {
+  // size: auto;
+  margin: 10mm 0 20mm 0;
+}
+
 html[lang='en'] .css-ahj2mt-MuiTypography-root,
 html[lang='en'] .css-1u10cx5-MuiTypography-root,
 html[lang='en'] .css-63vwl1-MuiTypography-root-MuiBreadcrumbs-root,

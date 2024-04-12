@@ -4,7 +4,7 @@ export default function ReportLayout({ title, desc, children }) {
   const { company_name } = useAppSettingsValue()
 
   return (
-    <div className="my-5" style={{ pageBreakAfter: 'always' }}>
+    <div style={{ pageBreakAfter: 'always' }}>
       <div className="report-header text-center">
         <h3>{company_name}</h3>
         {title && <h5>{title}</h5>}
