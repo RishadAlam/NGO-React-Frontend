@@ -4,41 +4,146 @@ import tsNumbers from '../../libs/tsNumbers'
 
 const lang = document.querySelector('html').lang
 
-export const DashSavingCollectionTableColumns = (t, windowWidth) => [
+export const DashSavingCollectionTableColumns = (t, windowWidth, avatar, descParser) => [
   {
     Header: '#',
     accessor: 'id',
     Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
   },
-  { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
-  { Header: t('common.acc_no'), accessor: 'acc_no' },
-  { Header: t('common.volume'), accessor: 'volume', show: false },
-  { Header: t('common.center'), accessor: 'center', show: false },
-  { Header: t('common.type'), accessor: 'type', show: windowWidth < 576 ? false : true },
-  { Header: t('common.description'), accessor: 'description', show: false },
-  { Header: t('common.deposit'), accessor: 'deposit' },
-  { Header: t('common.officer'), accessor: 'officer', show: windowWidth < 576 ? false : true },
-  { Header: t('common.time'), accessor: 'time', show: windowWidth < 576 ? false : true }
+  {
+    Header: t('common.image'),
+    accessor: 'image_uri',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) =>
+      avatar(row.original.client_registration.name, row.original.client_registration.image_uri)
+  },
+  {
+    Header: t('common.client_name'),
+    accessor: 'name',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => row.original.client_registration.name
+  },
+  { Header: t('common.acc_no'), accessor: 'acc_no', Cell: ({ value }) => tsNumbers(value) },
+  { Header: t('common.field'), accessor: 'field', show: false, Cell: ({ value }) => value.name },
+  { Header: t('common.center'), accessor: 'center', show: false, Cell: ({ value }) => value.name },
+  {
+    Header: t('common.category'),
+    accessor: 'category',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: false,
+    Cell: ({ value }) => descParser(value)
+  },
+  {
+    Header: t('common.installment'),
+    accessor: 'installment',
+    show: false,
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.deposit'),
+    accessor: 'deposit',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    show: false,
+    Cell: ({ value }) => defaultNameCheck(t, value?.is_default, 'account.default.', value?.name)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'creator',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => row.original.author.name
+  },
+  {
+    Header: t('common.time'),
+    accessor: 'time',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers(dateFormat(row.original.created_at, 'hh:mm a'))
+  }
 ]
 
-export const DashLoanCollectionTableColumns = (t, windowWidth) => [
+export const DashLoanCollectionTableColumns = (t, windowWidth, avatar, descParser) => [
   {
     Header: '#',
     accessor: 'id',
     Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
   },
-  { Header: t('common.client_name'), accessor: 'name', show: windowWidth < 576 ? false : true },
-  { Header: t('common.acc_no'), accessor: 'acc_no' },
-  { Header: t('common.volume'), accessor: 'volume', show: false },
-  { Header: t('common.center'), accessor: 'center', show: false },
-  { Header: t('common.type'), accessor: 'type', show: windowWidth < 576 ? false : true },
-  { Header: t('common.description'), accessor: 'description', show: false },
-  { Header: t('common.deposit'), accessor: 'deposit' },
-  { Header: t('common.loan'), accessor: 'loan' },
-  { Header: t('common.interest'), accessor: 'interest' },
-  { Header: t('common.total'), accessor: 'total', show: windowWidth < 576 ? false : true },
-  { Header: t('common.officer'), accessor: 'officer', show: windowWidth < 576 ? false : true },
-  { Header: t('common.time'), accessor: 'time', show: windowWidth < 576 ? false : true }
+  {
+    Header: t('common.image'),
+    accessor: 'image_uri',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) =>
+      avatar(row.original.client_registration.name, row.original.client_registration.image_uri)
+  },
+  {
+    Header: t('common.client_name'),
+    accessor: 'name',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => row.original.client_registration.name
+  },
+  { Header: t('common.acc_no'), accessor: 'acc_no', Cell: ({ value }) => tsNumbers(value) },
+  { Header: t('common.field'), accessor: 'field', show: false, Cell: ({ value }) => value.name },
+  { Header: t('common.center'), accessor: 'center', show: false, Cell: ({ value }) => value.name },
+  {
+    Header: t('common.category'),
+    accessor: 'category',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: false,
+    Cell: ({ value }) => descParser(value)
+  },
+  {
+    Header: t('common.installment'),
+    accessor: 'installment',
+    show: false,
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.deposit'),
+    accessor: 'deposit',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  { Header: t('common.loan'), accessor: 'loan', Cell: ({ value }) => tsNumbers(`$${value}/-`) },
+  {
+    Header: t('common.interest'),
+    accessor: 'interest',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.total'),
+    accessor: 'total',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    show: false,
+    Cell: ({ value }) => defaultNameCheck(t, value?.is_default, 'account.default.', value?.name)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'creator',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => row.original.author.name
+  },
+  {
+    Header: t('common.time'),
+    accessor: 'time',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers(dateFormat(row.original.created_at, 'hh:mm a'))
+  }
 ]
 
 export const DashWithdrawalTableColumns = (t, windowWidth) => [
