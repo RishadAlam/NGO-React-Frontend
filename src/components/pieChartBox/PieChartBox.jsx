@@ -1,14 +1,20 @@
+import { useTranslation } from 'react-i18next'
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
+import useFetch from '../../hooks/useFetch'
+import tsNumbers from '../../libs/tsNumbers'
+import { colors } from '../../resources/staticData/colors'
 import './pieChartBox.scss'
 
-const data = [
-  { name: 'Mobile', value: 400, color: '#0088FE' },
-  { name: 'Desktop', value: 300, color: '#00C49F' },
-  { name: 'Laptop', value: 300, color: '#FFBB28' },
-  { name: 'Tablet', value: 200, color: '#FF8042' }
-]
+export default function PieChartBox({ chartName, endpoint }) {
+  const { t } = useTranslation()
+  const { data: { data = [] } = [] } = useFetch({ action: endpoint })
 
-export default function PieChartBox({ chartName }) {
+  const processedData = data.map((item) => ({
+    ...item,
+    amount: parseFloat(item.amount)
+  }))
+
   return (
     <div className="pieChartBox">
       <div className="card">
@@ -19,28 +25,33 @@ export default function PieChartBox({ chartName }) {
           <div className="chart">
             <ResponsiveContainer width="99%" height={300}>
               <PieChart>
-                <Tooltip contentStyle={{ background: 'white', borderRadius: '5px' }} />
+                <Tooltip
+                  contentStyle={{ background: 'white', borderRadius: '5px' }}
+                  content={<CustomTooltip t={t} />}
+                />
                 <Pie
-                  data={data}
+                  data={processedData}
                   innerRadius={'70%'}
                   outerRadius={'90%'}
                   paddingAngle={5}
-                  dataKey="value">
-                  {data.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
+                  dataKey="amount">
+                  {processedData.map((item, index) => (
+                    <Cell key={item.name} fill={colors[index].hex} />
                   ))}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
           </div>
           <div className="options d-flex flex-wrap">
-            {data.map((item) => (
-              <div className="option" key={item.name}>
+            {processedData.map((item, index) => (
+              <div className="option" key={index}>
                 <div className="title">
-                  <div className="dot" style={{ backgroundColor: item.color }} />
-                  <span>{item.name}</span>
+                  <div className="dot" style={{ backgroundColor: colors[index].hex }} />
+                  <span>
+                    {defaultNameCheck(t, item.is_default, 'category.default.', item.name)}
+                  </span>
                 </div>
-                <span>৳ {item.value}</span>
+                <span>৳ {tsNumbers(item.amount || 0)}</span>
               </div>
             ))}
           </div>
@@ -48,4 +59,14 @@ export default function PieChartBox({ chartName }) {
       </div>
     </div>
   )
+}
+
+const CustomTooltip = ({ active, payload, t }) => {
+  if (active && payload && payload.length) {
+    return (
+      <p className="label">{`${defaultNameCheck(t, payload[0].payload.is_default, 'category.default.', payload[0].payload.name)} : ৳${tsNumbers(payload[0].value)}`}</p>
+    )
+  }
+
+  return null
 }

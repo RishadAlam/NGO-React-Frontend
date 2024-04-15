@@ -24,10 +24,16 @@ export default function Dashboard({ pageTitle }) {
         <div className="row">
           <div className="col-xl-3 d-xl-block d-none">
             <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox chartName={t('dashboard.Savings_Collection_by_Sources')} />
+              <PieChartBox
+                chartName={t('dashboard.Savings_Collection_by_Sources')}
+                endpoint={'collection/saving/current-day-collection-sources'}
+              />
             </div>
             <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox chartName={t('dashboard.Loans_Collection_by_Sources')} />
+              <PieChartBox
+                chartName={t('dashboard.Loans_Collection_by_Sources')}
+                endpoint={'collection/loan/current-day-collection-sources'}
+              />
             </div>
           </div>
           <div className="col-xl-6 col-lg-8 px-xl-0">

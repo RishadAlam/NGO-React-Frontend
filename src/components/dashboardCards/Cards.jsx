@@ -52,11 +52,14 @@ export default function Cards({ cardIcon, cardName, color, endpoint }) {
             }
             arrow
             followCursor>
-            <span className="percentage" style={{ color: cmp_amount < 0 ? 'tomato' : 'limegreen' }}>
-              {tsNumbers(cmp_amount || 0)}%
-            </span>
-            <br />
-            <span className="duration">{t('dashboard.cards.this_month')}</span>
+            <>
+              <span
+                className="percentage"
+                style={{ color: cmp_amount < 0 ? 'tomato' : 'limegreen' }}>
+                {tsNumbers(cmp_amount || 0)}%
+              </span>
+              <span className="duration">{t('dashboard.cards.this_month')}</span>
+            </>
           </MaterialTooltip>
         </div>
       </div>
