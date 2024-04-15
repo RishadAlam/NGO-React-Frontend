@@ -26,13 +26,13 @@ export default function Dashboard({ pageTitle }) {
             <div className="box mb-3 shadow pie-analytics">
               <PieChartBox
                 chartName={t('dashboard.Savings_Collection_by_Sources')}
-                endpoint={'collection/saving/current-day-collection-sources'}
+                endpoint="collection/saving/current-day-collection-sources"
               />
             </div>
             <div className="box mb-3 shadow pie-analytics">
               <PieChartBox
                 chartName={t('dashboard.Loans_Collection_by_Sources')}
-                endpoint={'collection/loan/current-day-collection-sources'}
+                endpoint="collection/loan/current-day-collection-sources"
               />
             </div>
           </div>
@@ -52,12 +52,18 @@ export default function Dashboard({ pageTitle }) {
           </div>
           <div className="col-md-6 d-lg-none d-block">
             <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox chartName={t('dashboard.Savings_Collection_by_Sources')} />
+              <PieChartBox
+                chartName={t('dashboard.Savings_Collection_by_Sources')}
+                endpoint="collection/saving/current-day-collection-sources"
+              />
             </div>
           </div>
           <div className="col-md-6 d-lg-none d-block">
             <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox chartName={t('dashboard.Loans_Collection_by_Sources')} />
+              <PieChartBox
+                chartName={t('dashboard.Loans_Collection_by_Sources')}
+                endpoint="collection/loan/current-day-collection-sources"
+              />
             </div>
           </div>
         </div>

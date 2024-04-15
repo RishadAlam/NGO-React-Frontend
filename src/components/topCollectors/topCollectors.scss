@@ -2,6 +2,10 @@
 @import '../../scss/variables';
 
 .topBox {
+  .card {
+    min-height: 420px !important;
+  }
+
   h1 {
     font-size: 16px;
     font-weight: 600;
@@ -17,6 +21,8 @@
       .user {
         display: flex;
         gap: 10px;
+        max-width: 70% !important;
+        overflow: hidden;
 
         img {
           width: 40px;
@@ -38,11 +44,6 @@
             font-size: 12px;
           }
         }
-      }
-
-      .amount {
-        font-weight: 500;
-        font-family: 'Poppins', sans-serif !important;
       }
     }
   }
