@@ -3,7 +3,6 @@ import LoanCollectionLists from '../../components/loanCollectionLists/LoanCollec
 import LoanWithdrawalLists from '../../components/loanWithdrawalLists/LoanWithdrawalLists'
 import SavingCollectionLists from '../../components/savingCollectionLists/SavingCollectionLists'
 import SavingWithdrawalLists from '../../components/savingWithdrawalLists/SavingWithdrawalLists'
-import useFetch from '../../hooks/useFetch'
 import LoanGiven from '../../icons/LoanGiven'
 import LoanIcon from '../../icons/LoanIcon'
 import LoanRecovered from '../../icons/LoanRecovered'
@@ -15,14 +14,6 @@ import Cards from './Cards'
 export default function CardSection() {
   const { t } = useTranslation()
 
-  const {
-    data: { data: fields } = [],
-    mutate,
-    isLoading,
-    isError
-  } = useFetch({ action: 'client/registration/loan/current-month-summary' })
-  console.log(fields)
-
   return (
     <div className="row mb-3">
       <div className="col-md-6 pe-md-1">
@@ -30,10 +21,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<LoanGiven size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Given')}
-            amount={'72137'}
-            compAmount={-5}
             color={'#8884d8'}
-            t={t}
+            endpoint={'client/registration/loan/current-month-summary'}
           />
         </div>
       </div>
@@ -42,10 +31,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<LoanRecovered size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Recovered')}
-            amount={'3453'}
-            compAmount={3}
             color={'skyblue'}
-            t={t}
+            endpoint={'collection/loan/current-month-collection-summary'}
           />
         </div>
       </div>
@@ -54,10 +41,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<MyLoan size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Saving_Collections')}
-            amount={'2323123'}
-            compAmount={-6}
             color={'teal'}
-            t={t}
+            endpoint={'collection/loan/current-month-loan-saving-collection-summary'}
           />
         </div>
       </div>
@@ -66,10 +51,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<SavingIcon size={36} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Saving_Collections')}
-            amount={'233422'}
-            compAmount={2}
             color={'gold'}
-            t={t}
+            endpoint={'collection/saving/current-month-collection-summary'}
           />
         </div>
       </div>
@@ -78,10 +61,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<PersonalLoan size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Monthly_Loan_Collections')}
-            amount={'2323123'}
-            compAmount={-6}
             color={'violet'}
-            t={t}
+            endpoint={'collection/loan/current-month-monthly_loan-collection-summary'}
           />
         </div>
       </div>
@@ -90,10 +71,8 @@ export default function CardSection() {
           <Cards
             cardIcon={<LoanIcon size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.DPS_Collections')}
-            amount={'233422'}
-            compAmount={2}
             color={'cornflowerblue'}
-            t={t}
+            endpoint={'collection/saving/current-month-dps-collection-summary'}
           />
         </div>
       </div>
