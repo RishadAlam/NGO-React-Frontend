@@ -22,6 +22,11 @@ export default function PieChartBox({ chartName, endpoint }) {
           <h1>{chartName}</h1>
         </div>
         <div className="card-body">
+          {!processedData.length && (
+            <div className="d-flex align-items-center justify-content-center">
+              <p>{t('common.No_Records_Found')}</p>
+            </div>
+          )}
           <div className="chart">
             <ResponsiveContainer width="99%" height={300}>
               <PieChart>

@@ -7,6 +7,10 @@
   flex-direction: column;
   justify-content: space-between;
 
+  .card {
+    min-height: 420px !important;
+  }
+
   h1 {
     font-size: 16px;
     font-weight: 600;
