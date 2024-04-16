@@ -1,14 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import LoanCollectionLists from '../../components/loanCollectionLists/LoanCollectionLists'
-import LoanWithdrawalLists from '../../components/loanWithdrawalLists/LoanWithdrawalLists'
 import SavingCollectionLists from '../../components/savingCollectionLists/SavingCollectionLists'
-import SavingWithdrawalLists from '../../components/savingWithdrawalLists/SavingWithdrawalLists'
 import LoanGiven from '../../icons/LoanGiven'
 import LoanIcon from '../../icons/LoanIcon'
 import LoanRecovered from '../../icons/LoanRecovered'
 import MyLoan from '../../icons/MyLoan'
 import PersonalLoan from '../../icons/PersonalLoan'
 import SavingIcon from '../../icons/SavingIcon'
+import WithdrawalLists from '../withdrawalLists/WithdrawalLists'
 import Cards from './Cards'
 
 export default function CardSection() {
@@ -78,12 +77,18 @@ export default function CardSection() {
       </div>
       <div className="col-md-6 mt-2 pe-md-1 d-lg-none d-block">
         <div className="box withdrawal-list">
-          <SavingWithdrawalLists />
+          <WithdrawalLists
+            title={t('dashboard.Recent_Saving_Withdrawals')}
+            endpoint="collection/saving/current-day-withdrawal"
+          />
         </div>
       </div>
       <div className="col-md-6 mt-2 ps-md-1 d-lg-none d-block">
         <div className="box withdrawal-list">
-          <LoanWithdrawalLists />
+          <WithdrawalLists
+            title={t('dashboard.Recent_Loan_Withdrawals')}
+            endpoint="collection/loan/current-day-withdrawal"
+          />
         </div>
       </div>
       <div className="col-md-12 mt-2">

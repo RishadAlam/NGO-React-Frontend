@@ -2,10 +2,9 @@ import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { useAppSettingsValue } from '../../atoms/appSettingsAtoms'
 import CardSection from '../../components/dashboardCards/CardSection'
-import LoanWithdrawalLists from '../../components/loanWithdrawalLists/LoanWithdrawalLists'
 import PieChartBox from '../../components/pieChartBox/PieChartBox'
-import SavingWithdrawalLists from '../../components/savingWithdrawalLists/SavingWithdrawalLists'
 import TopCollectors from '../../components/topCollectors/TopCollectors'
+import WithdrawalLists from '../../components/withdrawalLists/WithdrawalLists'
 import { isEmpty } from '../../helper/isEmpty'
 import './dashboard.scss'
 
@@ -44,10 +43,16 @@ export default function Dashboard({ pageTitle }) {
               <TopCollectors heading={t('dashboard.Todays_Top_Money_Collectors')} />
             </div>
             <div className="box withdrawal-list mb-3 d-lg-block d-none">
-              <SavingWithdrawalLists />
+              <WithdrawalLists
+                title={t('dashboard.Recent_Saving_Withdrawals')}
+                endpoint="collection/saving/current-day-withdrawal"
+              />
             </div>
             <div className="box withdrawal-list mb-3 d-lg-block d-none">
-              <LoanWithdrawalLists />
+              <WithdrawalLists
+                title={t('dashboard.Recent_Loan_Withdrawals')}
+                endpoint="collection/loan/current-day-withdrawal"
+              />
             </div>
           </div>
           <div className="col-md-6 d-lg-none d-block">
