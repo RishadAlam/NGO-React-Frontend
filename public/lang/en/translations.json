@@ -190,7 +190,8 @@
     "last_updated_by": "Last Updated by",
     "current_fund": "Current Fund",
     "view": "view",
-    "print": "Print"
+    "print": "Print",
+    "collection_sheet": "Collection Sheet"
   },
 
   "common_validation": {
@@ -479,6 +480,7 @@
       "total": "Total",
       "authorized_shares": "Authorized Shares",
       "paid_up_shares": "Paid Up Shares",
+      "share_per_each": "Share Per Each",
       "previous_paid_up_shares": "Previous Paid Up Shares",
       "current_share_collections": "(+) Current Share Collections",
       "current_share_return": "(-) Current Share Return",

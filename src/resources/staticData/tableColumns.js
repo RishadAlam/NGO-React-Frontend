@@ -1788,7 +1788,8 @@ export const AuditReportMetaTableColumns = (t, windowWidth, actionBtnGroup, isAc
   {
     Header: t('common.meta_value'),
     accessor: 'meta_value',
-    show: windowWidth < 576 ? false : true
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`৳${value}/-`)
   },
   {
     Header: t('common.column'),

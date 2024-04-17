@@ -20,7 +20,7 @@
     "center": "কেন্দ্র",
     "field_id": "ফিল্ড",
     "center_id": "কেন্দ্র",
-    "creator_id": "নির্মাতা",
+    "creator_id": "অফিসার",
     "category_id": "ক্যাটাগরি",
     "type": "টাইপ",
     "group": "গ্রুপ",
@@ -91,7 +91,7 @@
     "edit": "সম্পাদন করুন",
     "update": "আপডেট",
     "select": "নির্বাচন করুন",
-    "creator": "নির্মাতা",
+    "creator": "অফিসার",
     "created_at": "নিবন্ধন হয়েছে",
     "approved_at": "অনুমোদিত হয়েছে",
     "updated_at": "সর্বশেষ আপডেট",
@@ -190,7 +190,8 @@
     "last_updated_by": "শেষ আপডেটকারী",
     "current_fund": "নগদ তহবিল",
     "view": "দেখুন",
-    "print": "প্রিন্ট"
+    "print": "প্রিন্ট",
+    "collection_sheet": "সংগ্রহ শীট"
   },
 
   "common_validation": {
@@ -468,6 +469,7 @@
       "total": "সর্বমোট",
       "authorized_shares": "অনুমোদিত শেয়ার",
       "paid_up_shares": "পরিশোদিত শেয়ার",
+      "share_per_each": "প্রতিটি শেয়ার",
       "previous_paid_up_shares": "বিগত স্থিতি-",
       "current_share_collections": "(+) হালে আদায়-",
       "current_share_return": "(-) হস্তান্তর/ফেরত-",
@@ -583,8 +585,8 @@
       "client_registration": "সদস্য নিবন্ধনের অনুমতি",
       "saving_acc_registration": "সঞ্চয় একাউন্ট নিবন্ধনের অনুমতি",
       "loan_acc_registration": "ঋণ একাউন্ট নিবন্ধনের অনুমতি",
-      "saving_acc_creator_selection": "সঞ্চয় অ্যাকাউন্ট নির্মাতা নির্বাচনের অনুমতি",
-      "loan_acc_creator_selection": "ঋণ অ্যাকাউন্ট নির্মাতা নির্বাচনের অনুমতি",
+      "saving_acc_creator_selection": "সঞ্চয় অ্যাকাউন্ট অফিসার নির্বাচনের অনুমতি",
+      "loan_acc_creator_selection": "ঋণ অ্যাকাউন্ট অফিসার নির্বাচনের অনুমতি",
       "pending_client_registration_list_view": "অনুমোদন অপেক্ষারত সদস্য নিবন্ধন তালিকা দেখার অনুমতি",
       "pending_client_registration_list_view_as_admin": "একজন অ্যাডমিন রূপে অনুমোদন অপেক্ষারত সদস্য নিবন্ধন তালিকা দেখার অনুমতি",
       "pending_client_registration_update": "অনুমোদন অপেক্ষারত সদস্য নিবন্ধন ডেটা আপডেটের অনুমতি",

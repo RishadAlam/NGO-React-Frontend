@@ -31,7 +31,7 @@ function SavingCollectionSheetHeader({ columnList, setColumnList }) {
   return (
     <div className="card-header">
       <div className="d-flex justify-content-between align-items-center">
-        <h2 className="heading">Collection Sheet</h2>
+        <h2 className="heading">{t('common.collection_sheet')}</h2>
         <div className="column-hiding text-end position-relative">
           <Button
             id="hide-column--button"
