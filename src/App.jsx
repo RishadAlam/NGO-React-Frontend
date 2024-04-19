@@ -869,7 +869,7 @@ export default function App() {
               <Route
                 element={
                   <RequirePermissions
-                    allowedPermissions={['audit_report_meta_list_view']}
+                    allowedPermissions={['cooperative_audit_report_view']}
                     pageTitle="menu.audit.audit_report"
                   />
                 }>

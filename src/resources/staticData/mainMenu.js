@@ -338,7 +338,7 @@ export const mainMenu = (t) => {
         path: '',
         icon: 'AuditIcon',
         view: checkPermissions(
-          ['audit_report_meta_list_view', 'cooperative_audit_report_list_view'],
+          ['audit_report_meta_list_view', 'cooperative_audit_report_view'],
           permissions
         ),
         subMenu: [
@@ -354,7 +354,7 @@ export const mainMenu = (t) => {
             label: t('menu.audit.audit_report'),
             path: '/audit-report',
             icon: 'AuditReportIcon',
-            view: checkPermission('cooperative_audit_report_list_view', permissions)
+            view: checkPermission('cooperative_audit_report_view', permissions)
           }
         ]
       },
