@@ -1,13 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import Edit from '../../icons/Edit'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
-import Button from '../utilities/Button'
 import Address from './Address'
+import CRDButtonGrp from './CRDButtonGrp'
 import RegisterBox from './RegisterBox'
 
-export default function ClientRegisterDetails({ data = {} }) {
+export default function ClientRegisterDetails({ data = {}, mutate }) {
   const { t } = useTranslation()
 
   return (
@@ -128,52 +127,7 @@ export default function ClientRegisterDetails({ data = {} }) {
             </div>
           </div>
         </div>
-        <div className="pt-3">
-          <div className="px-2">
-            <div className="row">
-              <div className="col-md-3">
-                <Button
-                  type="submit"
-                  name={`${t('common.register_account')} ${t('common.edit')}`}
-                  className={'btn-warning text-black py-2 px-3 form-control'}
-                  loading={false}
-                  endIcon={<Edit size={20} />}
-                  disabled={false}
-                />
-              </div>
-              <div className="col-md-3">
-                <Button
-                  type="submit"
-                  name={`${t('common.field')} ${t('common.edit')}`}
-                  className={'btn-warning text-black py-2 px-3 form-control'}
-                  loading={false}
-                  endIcon={<Edit size={20} />}
-                  disabled={false}
-                />
-              </div>
-              <div className="col-md-3">
-                <Button
-                  type="submit"
-                  name={`${t('common.center')} ${t('common.edit')}`}
-                  className={'btn-warning text-black py-2 px-3 form-control'}
-                  loading={false}
-                  endIcon={<Edit size={20} />}
-                  disabled={false}
-                />
-              </div>
-              <div className="col-md-3">
-                <Button
-                  type="submit"
-                  name={`${t('common.acc_no')} ${t('common.edit')}`}
-                  className={'btn-warning text-black py-2 px-3 form-control'}
-                  loading={false}
-                  endIcon={<Edit size={20} />}
-                  disabled={false}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <CRDButtonGrp data={data} mutate={mutate} />
       </div>
     </RegisterBox>
   )

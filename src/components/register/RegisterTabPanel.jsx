@@ -7,12 +7,12 @@ import ClientRegisterDetails from './ClientRegisterDetails'
 
 const ClientAccounts = lazy(() => import('./ClientAccounts'))
 
-export default function RegisterTabPanel({ registerTabValue, data }) {
+export default function RegisterTabPanel({ registerTabValue, data, mutate }) {
   return (
     <>
       <div className="mt-3">
         <TabPanel value={registerTabValue} index={1}>
-          <ClientRegisterDetails data={data} />
+          <ClientRegisterDetails data={data} mutate={mutate} />
         </TabPanel>
         <TabPanel value={registerTabValue} index={2}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
