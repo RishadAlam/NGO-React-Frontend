@@ -15,8 +15,12 @@ export default function MainSearchBox({ t }) {
   const navigate = useNavigate()
   const { accessToken } = useAuthDataValue()
   const [searchData, setSearchData] = useState([])
+  const [searchValue, setSearchValue] = useState()
 
   const liveSearch = debounce((e) => {
+    console.log(e.target.value)
+    setSearchValue(e.target.value)
+
     if (isEmpty(e.target.value)) {
       setSearchData([])
       return
@@ -46,6 +50,11 @@ export default function MainSearchBox({ t }) {
     navigate('/search', { state: { searchData: data } })
   }
 
+  const setChange = (e) => {
+    setSearchValue(e.target.value)
+    liveSearch(e)
+  }
+
   return (
     <>
       <div className="mainSearchBox position-relative">
@@ -55,7 +64,8 @@ export default function MainSearchBox({ t }) {
             className="form-control form-input"
             placeholder={t('common.search_placeholder')}
             name="search"
-            onKeyUp={liveSearch}
+            value={searchValue ? tsNumbers(searchValue) : ''}
+            onChange={setChange}
           />
           <span className="left-pan">
             <Button name={<Search size={20} />} disabled={false} loading={false} type="submit" />
