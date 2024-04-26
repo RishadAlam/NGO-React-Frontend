@@ -12,23 +12,35 @@ import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import TextInputField from '../utilities/TextInputField'
 
-export default function AccNoUpdateModal({ open, setOpen, defaultField = null, mutate }) {
+export default function AccNoUpdateModal({ open, setOpen, id, defaultField = null, mutate }) {
   const [accNo, setAccNo] = useState(defaultField || null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState({})
+  const [error, setError] = useState({ acc_no: '' })
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
+
+  const setChange = (acc_no) => {
+    setAccNo(tsNumbers(acc_no, true))
+    setError({})
+  }
 
   const onSubmit = (event) => {
     event.preventDefault()
 
-    if (isEmpty(accNo?.id)) {
+    if (isEmpty(accNo)) {
       toast.error(t('common_validation.required_categories_are_empty'))
       return
     }
 
     setIsLoading(true)
-    xFetch('categories', accNo, null, accessToken, null, 'POST')
+    xFetch(
+      `client/registration/acc-no-update/${id}`,
+      { acc_no: accNo },
+      null,
+      accessToken,
+      null,
+      'PUT'
+    )
       .then((response) => {
         setIsLoading(false)
         if (response?.success) {
@@ -90,7 +102,7 @@ export default function AccNoUpdateModal({ open, setOpen, defaultField = null, m
                     label={t('common.acc_no')}
                     isRequired={true}
                     defaultValue={tsNumbers(accNo) || ''}
-                    setChange={(val) => setAccNo(tsNumbers(val, true))}
+                    setChange={(val) => setChange(val)}
                     error={error?.acc_no}
                     autoFocus={true}
                     disabled={isLoading}
