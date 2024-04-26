@@ -12,10 +12,10 @@ import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 
-export default function CenterUpdateModal({ open, setOpen, defaultField = null, mutate }) {
-  const [center, setField] = useState(defaultField || null)
+export default function CenterUpdateModal({ open, setOpen, id, defaultField = null, mutate }) {
+  const [center, setCenter] = useState(defaultField || null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState({})
+  const [error, setError] = useState({ center: '' })
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
@@ -24,8 +24,13 @@ export default function CenterUpdateModal({ open, setOpen, defaultField = null, 
     options: centers,
     value: center,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setField(option),
+    onChange: (e, option) => setChange(option),
     isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+
+  const setChange = (center) => {
+    setCenter(center)
+    setError({})
   }
 
   const onSubmit = (event) => {
@@ -37,14 +42,14 @@ export default function CenterUpdateModal({ open, setOpen, defaultField = null, 
     }
 
     setIsLoading(true)
-    xFetch('centers', center, null, accessToken, null, 'POST')
+    xFetch(`client/registration/center-update/${id}`, center, null, accessToken, null, 'PUT')
       .then((response) => {
         setIsLoading(false)
         if (response?.success) {
           toast.success(response.message)
           mutate()
           setOpen(false)
-          setField()
+          setCenter()
           return
         }
         setError((prevErr) =>
