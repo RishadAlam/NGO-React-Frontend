@@ -12,10 +12,10 @@ import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 
-export default function FieldFormModal({ open, setOpen, defaultField = null, mutate }) {
+export default function FieldFormModal({ open, setOpen, id, defaultField = null, mutate }) {
   const [field, setField] = useState(defaultField || null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState({})
+  const [error, setError] = useState({ field: '' })
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
@@ -24,8 +24,13 @@ export default function FieldFormModal({ open, setOpen, defaultField = null, mut
     options: fields,
     value: field,
     getOptionLabel: (option) => option.name,
-    onChange: (e, option) => setField(option),
+    onChange: (e, option) => setChange(option),
     isOptionEqualToValue: (option, value) => option.id === value.id
+  }
+
+  const setChange = (field) => {
+    setField(field)
+    setError({})
   }
 
   const onSubmit = (event) => {
@@ -37,7 +42,7 @@ export default function FieldFormModal({ open, setOpen, defaultField = null, mut
     }
 
     setIsLoading(true)
-    xFetch('fields', field, null, accessToken, null, 'POST')
+    xFetch(`client/registration/field-update/${id}`, field, null, accessToken, null, 'PUT')
       .then((response) => {
         setIsLoading(false)
         if (response?.success) {

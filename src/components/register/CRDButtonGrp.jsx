@@ -21,6 +21,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
         <FieldFormModal
           open={isFUModalOpen}
           setOpen={setIsFUModalOpen}
+          id={data?.id}
           defaultField={data?.field || null}
           mutate={mutate}
         />
@@ -29,6 +30,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
         <CenterUpdateModal
           open={isCUModalOpen}
           setOpen={setIsCUModalOpen}
+          id={data?.id}
           defaultField={data?.center || null}
           mutate={mutate}
         />
@@ -37,6 +39,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
         <AccNoUpdateModal
           open={isANUModalOpen}
           setOpen={setIsANUModalOpen}
+          id={data?.id}
           defaultField={data?.acc_no || null}
           mutate={mutate}
         />
