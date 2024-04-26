@@ -6,10 +6,26 @@
     border-color: $blue-magenta !important;
   }
 
-  .btn-grp * {
-    border-color: $soft-bg !important;
-  }
+  .btn-grp {
+    * {
+      border-color: $soft-bg !important;
+    }
 
+    @include md {
+      & > div {
+        flex-direction: column !important;
+
+        button {
+          margin: 5px 0 !important;
+          border-radius: 10px !important;
+          -webkit-border-radius: 10px !important;
+          -moz-border-radius: 10px !important;
+          -ms-border-radius: 10px !important;
+          -o-border-radius: 10px !important;
+        }
+      }
+    }
+  }
   .middle-column {
     border-left: 1px solid;
     border-right: 1px solid;
