@@ -23,8 +23,8 @@ export default function ClientRegisterAccount({ module = 'register' }) {
                     module === 'register'
                       ? 'client_register'
                       : module === 'saving'
-                      ? 'saving_account'
-                      : 'loan_account'
+                        ? 'saving_account'
+                        : 'loan_account'
                   }`
                 ),
                 icon: module === 'register' ? <User size={16} /> : <Dollar size={16} />,
