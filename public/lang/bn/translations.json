@@ -539,6 +539,7 @@
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
+      "client_register_account": "সদস্য নিবন্ধন একাউন্ট",
       "registration": "নিবন্ধন",
       "pending_client_registration_form": "অনুমোদন অপেক্ষারত সদস্য নিবন্ধন ফরম",
       "pending_saving_acc_registration_form": "অনুমোদন অপেক্ষারত সঞ্চয় একাউন্ট নিবন্ধন ফরম",
@@ -706,7 +707,14 @@
       "audit_report_meta_permanently_delete": "স্থায়ীভাবে ডিলিট",
       "cooperative_audit_report_print": "প্রিন্ট",
       "cooperative_audit_report_update": "আপডেট",
-      "cooperative_audit_report_view": "দেখুন"
+      "cooperative_audit_report_view": "দেখুন",
+      "client_register_account_delete": "সাময়িকভাবে ডিলিট (সকল একাউন্ট)",
+      "client_register_account_account_permanently_delete": "স্থায়ীভাবে ডিলিট (সকল একাউন্ট)",
+      "client_register_account_center_update": "কেন্দ্র আপডেট (সকল একাউন্ট)",
+      "client_register_account_field_update": "ফিল্ড আপডেট (সকল একাউন্ট)",
+      "client_register_account_acc_no_update": "একাউন্ট নং আপডেট (সকল একাউন্ট)",
+      "client_register_account_update": "নিবন্ধন আপডেট",
+      "client_register_account_action_history": "পদক্ষেপ / ইতিহাস"
     }
   }
 }

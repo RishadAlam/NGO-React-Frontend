@@ -550,6 +550,7 @@
       "field": "Field",
       "center": "Center",
       "category": "Category",
+      "client_register_account": "Client Register Account",
       "registration": "Registration Form",
       "pending_client_registration_form": "Pending Client Registration Form",
       "pending_saving_acc_registration_form": "Pending Saving Account Registration Form",
@@ -717,7 +718,14 @@
       "audit_report_meta_permanently_delete": "Permanently Delete",
       "cooperative_audit_report_print": "Print",
       "cooperative_audit_report_update": "Update",
-      "cooperative_audit_report_view": "View"
+      "cooperative_audit_report_view": "View",
+      "client_register_account_delete": "Temporary Delete (All Account)",
+      "client_register_account_account_permanently_delete": "Permanently Delete (All Account)",
+      "client_register_account_center_update": "Center Update (All Account)",
+      "client_register_account_field_update": "Field Update (All Account)",
+      "client_register_account_acc_no_update": "Account No Update (All Account)",
+      "client_register_account_update": "Registration Update",
+      "client_register_account_action_history": "Action History"
     }
   }
 }
