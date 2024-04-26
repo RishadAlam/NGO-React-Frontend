@@ -46,7 +46,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
       )}
       <div className="pt-3">
         <ActionBtnGroup>
-          {authPermissions.includes('field_data_update') && (
+          {authPermissions.includes('account_update') && (
             <Button
               type="button"
               name={`${t('common.register_account')} ${t('common.edit')}`}
@@ -56,7 +56,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
               disabled={false}
             />
           )}
-          {authPermissions.includes('field_data_update') && (
+          {authPermissions.includes('field_update') && (
             <Button
               type="button"
               name={`${t('common.field')} ${t('common.edit')}`}
@@ -67,7 +67,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
               disabled={false}
             />
           )}
-          {authPermissions.includes('field_data_update') && (
+          {authPermissions.includes('center_update') && (
             <Button
               type="button"
               name={`${t('common.center')} ${t('common.edit')}`}
@@ -78,7 +78,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
               disabled={false}
             />
           )}
-          {authPermissions.includes('field_data_update') && (
+          {authPermissions.includes('acc_no_update') && (
             <Button
               type="button"
               name={`${t('common.acc_no')} ${t('common.edit')}`}

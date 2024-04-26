@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next'
+import { useAuthDataValue } from '../../atoms/authAtoms'
+import { checkPermissions } from '../../helper/checkPermission'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
@@ -8,6 +10,7 @@ import RegisterBox from './RegisterBox'
 
 export default function ClientRegisterDetails({ data = {}, mutate }) {
   const { t } = useTranslation()
+  const { permissions: authPermissions } = useAuthDataValue()
 
   return (
     <RegisterBox className="rounded-top-2 shadow rounded-4">
@@ -127,7 +130,10 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
             </div>
           </div>
         </div>
-        <CRDButtonGrp data={data} mutate={mutate} />
+        {checkPermissions(
+          ['account_update', 'account_delete', 'field_update', 'center_update', 'acc_no_update'],
+          authPermissions
+        ) && <CRDButtonGrp data={data} mutate={mutate} />}
       </div>
     </RegisterBox>
   )
