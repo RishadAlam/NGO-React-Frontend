@@ -6,6 +6,10 @@
     border-color: $blue-magenta !important;
   }
 
+  .btn-grp * {
+    border-color: $soft-bg !important;
+  }
+
   .middle-column {
     border-left: 1px solid;
     border-right: 1px solid;

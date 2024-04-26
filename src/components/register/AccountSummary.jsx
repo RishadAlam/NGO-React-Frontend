@@ -52,7 +52,13 @@ export default function AccountSummary({ data }) {
   return (
     <div className="row pb-3 mt-2">
       <div className="col-md-4 d-flex">
-        <RegisterProfileBox image_uri={data?.image_uri} name={data?.name} acc_no={data?.acc_no} />
+        <RegisterProfileBox
+          image_uri={data?.image_uri}
+          name={data?.name}
+          acc_no={data?.acc_no}
+          status={data?.deleted_at ? t('common.closed') : t('common.running')}
+          classNames={data?.deleted_at ? 'bg-secondary' : 'bg-success'}
+        />
       </div>
       <div className="col-md-4">
         <DetailsSummary data={detailsSummary} isMiddle={true} />

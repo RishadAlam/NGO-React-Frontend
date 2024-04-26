@@ -131,7 +131,13 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
           </div>
         </div>
         {checkPermissions(
-          ['account_update', 'account_delete', 'field_update', 'center_update', 'acc_no_update'],
+          [
+            'client_register_account_update',
+            'client_register_account_delete',
+            'client_register_account_field_update',
+            'client_register_account_center_update',
+            'client_register_account_acc_no_update'
+          ],
           authPermissions
         ) && <CRDButtonGrp data={data} mutate={mutate} />}
       </div>
