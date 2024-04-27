@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { checkPermissions } from '../../helper/checkPermission'
+import { isEmpty } from '../../helper/isEmpty'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import SignaturePlaceholder from '../../resources/img/SignaturePlaceholder.png'
@@ -139,7 +140,8 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
             'client_register_account_acc_no_update'
           ],
           authPermissions
-        ) && <CRDButtonGrp data={data} mutate={mutate} />}
+        ) &&
+          isEmpty(data.deleted_at) && <CRDButtonGrp data={data} mutate={mutate} />}
       </div>
     </RegisterBox>
   )
