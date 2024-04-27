@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
 import CheckCircle from '../../icons/CheckCircle'
 import CheckPatch from '../../icons/CheckPatch'
 import Chrome from '../../icons/Chrome'
@@ -16,15 +14,11 @@ import tsNumbers from '../../libs/tsNumbers'
 import DetailsSummary from '../register/DetailsSummary'
 import RegisterProfileBox from '../register/RegisterProfileBox'
 
-export default function AccountSummary() {
-  const { id } = useParams()
+export default function AccountSummary({ data }) {
   const { t } = useTranslation()
   const [detailsSummary, setDetailsSummary] = useState([])
   const [status, setStatus] = useState()
   const [classNames, setClassNames] = useState()
-  const { data: { data = [] } = [], isLoading } = useFetch({
-    action: `client/registration/saving/${id}`
-  })
 
   useEffect(() => {
     if (data?.deleted_at) {

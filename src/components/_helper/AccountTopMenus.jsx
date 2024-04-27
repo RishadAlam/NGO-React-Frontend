@@ -11,21 +11,16 @@ import PrimaryBtn from '../utilities/PrimaryBtn'
 import StoreAccountCheck from './StoreAccountCheck'
 import StoreWithdrawal from './clientACCwithdrawal/StoreWithdrawal'
 
-export default function AccountTopMenus({ prefix }) {
+export default function AccountTopMenus({ prefix, actionHistory = [], actionHistoryPermission }) {
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [accountCheckModalOpen, setAccountCheckModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-  const [actionHistory, setActionHistory] = useState([])
 
-  const fieldActionHistory = (actionHistory) => {
-    setActionHistory(actionHistory)
-    setIsActionHistoryModalOpen(true)
-  }
   return (
     <div className="d-flex justify-content-end mb-2">
-      {prefix ? (
+      {prefix && (
         <>
           {checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
             <PrimaryBtn
@@ -58,24 +53,23 @@ export default function AccountTopMenus({ prefix }) {
             />
           )}
         </>
-      ) : (
-        <>
-          {checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
-            <PrimaryBtn
-              classNames={'mx-3'}
-              name={t('common.action')}
-              loading={false}
-              endIcon={<Clock size={20} />}
-              onclick={() => setWithdrawalModalOpen(true)}
-            />
-          )}
-          <ActionHistoryModal
-            open={isActionHistoryModalOpen}
-            setOpen={setIsActionHistoryModalOpen}
-            t={t}
-            actionHistory={actionHistory}
-          />
-        </>
+      )}
+      {checkPermission(actionHistoryPermission, authPermissions) && (
+        <PrimaryBtn
+          classNames={'mx-3'}
+          name={t('common.action')}
+          loading={false}
+          endIcon={<Clock size={20} />}
+          onclick={() => setIsActionHistoryModalOpen(true)}
+        />
+      )}
+      {isActionHistoryModalOpen && (
+        <ActionHistoryModal
+          open={isActionHistoryModalOpen}
+          setOpen={setIsActionHistoryModalOpen}
+          t={t}
+          actionHistory={actionHistory}
+        />
       )}
     </div>
   )

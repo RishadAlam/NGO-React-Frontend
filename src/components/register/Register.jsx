@@ -21,7 +21,10 @@ export default function Register() {
 
   return (
     <>
-      <AccountTopMenus />
+      <AccountTopMenus
+        actionHistory={data.client_registration_action_history}
+        actionHistoryPermission="client_register_account_action_history"
+      />
       <RegisterBox className="rounded-bottom-2 pb-0 shadow rounded-4">
         <AccountSummary data={data} />
         <RegisterTabNav
