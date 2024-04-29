@@ -16,7 +16,11 @@ export default function ClientAccounts({ module = null, prefix = null }) {
   const [tabValue, setTabValue] = useState(1)
   const [categories, setCategories] = useState([])
 
-  const { data: { data = [] } = [], isLoading } = useFetch({
+  const {
+    data: { data = [] } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: `client/registration/${module}/${prefix}/${id}`
   })
 
@@ -52,9 +56,9 @@ export default function ClientAccounts({ module = null, prefix = null }) {
         {data.map((value, index) => (
           <TabPanel key={index} value={tabValue} index={value.id}>
             {module === 'saving' ? (
-              <SavingAccountDetails data={value} />
+              <SavingAccountDetails data={value} mutate={mutate} />
             ) : (
-              <LoanAccountDetails data={value} />
+              <LoanAccountDetails data={value} mutate={mutate} />
             )}
           </TabPanel>
         ))}

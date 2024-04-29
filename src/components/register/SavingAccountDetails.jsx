@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { useAuthDataValue } from '../../atoms/authAtoms'
+import { checkPermissions } from '../../helper/checkPermission'
 import { isEmpty } from '../../helper/isEmpty'
 import Edit from '../../icons/Edit'
 import Folder from '../../icons/Folder'
@@ -7,10 +9,13 @@ import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import Badge from '../utilities/Badge'
 import Button from '../utilities/Button'
+import CRDButtonGrp from './CRDButtonGrp'
 import NomsDetails from './NomiesDetails'
 
-export default function SavingAccountDetails({ data = {} }) {
+export default function SavingAccountDetails({ data = {}, mutate }) {
   const { t } = useTranslation()
+  const { permissions: authPermissions } = useAuthDataValue()
+
   let statusName = ''
   let statusClass = ''
   let isEditable = false
@@ -209,6 +214,17 @@ export default function SavingAccountDetails({ data = {} }) {
           </div>
         </div>
       )}
+      {checkPermissions(
+        [
+          'client_saving_account_update',
+          'client_saving_account_delete',
+          'client_saving_account_category_update'
+        ],
+        authPermissions
+      ) &&
+        isEmpty(data.deleted_at) && (
+          <CRDButtonGrp module="saving_account" data={data} mutate={mutate} />
+        )}
     </div>
   )
 }

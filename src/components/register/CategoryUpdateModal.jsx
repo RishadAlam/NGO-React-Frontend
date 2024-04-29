@@ -3,6 +3,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
@@ -12,44 +13,62 @@ import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 import SelectBoxField from '../utilities/SelectBoxField'
 
-export default function CenterUpdateModal({ open, setOpen, id, defaultField = null, mutate }) {
-  const [center, setCenter] = useState(defaultField || null)
+export default function CategoryUpdateModal({
+  open,
+  setOpen,
+  id,
+  defaultField = null,
+  module,
+  mutate
+}) {
+  const [category, setCategory] = useState(defaultField || null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState({ center: '' })
+  const [error, setError] = useState({ category: '' })
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
-  const { data: { data: centers = [] } = [] } = useFetch({ action: 'centers/active' })
+  const { data: { data: categories = [] } = [] } = useFetch({
+    action: `categories/active?${module === 'saving_account' ? `saving=${true}` : `loan=${true}`}`
+  })
 
   const selectBoxConfig = {
-    options: centers,
-    value: center,
-    getOptionLabel: (option) => option.name,
+    options: categories.sort((a, b) => (a.group > b.group ? 1 : -1)),
+    value: category,
+    getOptionLabel: (option) =>
+      defaultNameCheck(t, option.is_default, 'category.default.', option.name),
     onChange: (e, option) => setChange(option),
+    groupBy: (option) => option.group,
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
 
-  const setChange = (center) => {
-    setCenter(center)
+  const setChange = (category) => {
+    setCategory(category)
     setError({})
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
 
-    if (isEmpty(center?.id)) {
+    if (isEmpty(category?.id)) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
 
     setIsLoading(true)
-    xFetch(`client/registration/center-update/${id}`, center, null, accessToken, null, 'PUT')
+    xFetch(
+      `client/registration/${module === 'saving_account' ? 'saving' : 'loan'}/category-update/${id}`,
+      category,
+      null,
+      accessToken,
+      null,
+      'PUT'
+    )
       .then((response) => {
         setIsLoading(false)
         if (response?.success) {
           toast.success(response.message)
           mutate()
           setOpen(false)
-          setCenter()
+          setCategory()
           return
         }
         setError((prevErr) =>
@@ -83,7 +102,7 @@ export default function CenterUpdateModal({ open, setOpen, id, defaultField = nu
           <form onSubmit={onSubmit}>
             <div className="card-header">
               <div className="d-flex align-items-center justify-content-between">
-                <b className="text-uppercase">{`${t('common.center')} ${t('common.edit')}`}</b>
+                <b className="text-uppercase">{`${t('common.category')} ${t('common.edit')}`}</b>
                 <Button
                   className={'text-danger p-0'}
                   loading={false}
@@ -101,10 +120,10 @@ export default function CenterUpdateModal({ open, setOpen, id, defaultField = nu
               <div className="row">
                 <div className="col-12 mb-3">
                   <SelectBoxField
-                    label={t('common.center')}
+                    label={t('common.category')}
                     config={selectBoxConfig}
                     isRequired={true}
-                    error={error?.center}
+                    error={error?.category}
                     disabled={isLoading}
                   />
                 </div>

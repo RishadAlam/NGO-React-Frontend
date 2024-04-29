@@ -10,14 +10,16 @@ import xFetch from '../../utilities/xFetch'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import Button from '../utilities/Button'
 import AccNoUpdateModal from './AccNoUpdateModal'
+import CategoryUpdateModal from './CategoryUpdateModal'
 import CenterUpdateModal from './CenterUpdateModal'
 import FieldFormModal from './FieldUpdateModal'
 
-export default function CRDButtonGrp({ data = {}, mutate }) {
+export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const [isLoading, setIsLoading] = useState(false)
   const [isFUModalOpen, setIsFUModalOpen] = useState(false)
   const [isCUModalOpen, setIsCUModalOpen] = useState(false)
   const [isANUModalOpen, setIsANUModalOpen] = useState(false)
+  const [isCATModalOpen, setIsCATModalOpen] = useState(false)
   const { permissions: authPermissions, accessToken } = useAuthDataValue()
   const { t } = useTranslation()
 
@@ -51,7 +53,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
 
   return (
     <>
-      {isFUModalOpen && (
+      {isFUModalOpen && module === 'register_account' && (
         <FieldFormModal
           open={isFUModalOpen}
           setOpen={setIsFUModalOpen}
@@ -60,7 +62,7 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
           mutate={mutate}
         />
       )}
-      {isCUModalOpen && (
+      {isCUModalOpen && module === 'register_account' && (
         <CenterUpdateModal
           open={isCUModalOpen}
           setOpen={setIsCUModalOpen}
@@ -69,7 +71,17 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
           mutate={mutate}
         />
       )}
-      {isANUModalOpen && (
+      {isCATModalOpen && (module === 'saving_account' || module === 'loan_account') && (
+        <CategoryUpdateModal
+          open={isCATModalOpen}
+          setOpen={setIsCATModalOpen}
+          id={data?.id}
+          defaultField={data?.category || null}
+          module={module}
+          mutate={mutate}
+        />
+      )}
+      {isANUModalOpen && module === 'register_account' && (
         <AccNoUpdateModal
           open={isANUModalOpen}
           setOpen={setIsANUModalOpen}
@@ -80,54 +92,95 @@ export default function CRDButtonGrp({ data = {}, mutate }) {
       )}
       <div className="pt-3 btn-grp">
         <ActionBtnGroup>
-          {authPermissions.includes('client_register_account_update') && (
+          {authPermissions.includes('client_register_account_update') &&
+            module === 'register_account' && (
+              <Button
+                type="button"
+                name={`${t('common.register_account')} ${t('common.edit')}`}
+                className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
+                // style={{ background: 'chocolate' }}
+                loading={false}
+                endIcon={<Edit size={20} />}
+                disabled={false}
+              />
+            )}
+          {authPermissions.includes('client_register_account_field_update') &&
+            module === 'register_account' && (
+              <Button
+                type="button"
+                name={`${t('common.field')} ${t('common.edit')}`}
+                className={'text-dark py-2 px-3 form-control'}
+                loading={false}
+                style={{ background: 'tomato' }}
+                endIcon={<Edit size={20} />}
+                onclick={() => setIsFUModalOpen(true)}
+                disabled={false}
+              />
+            )}
+          {authPermissions.includes('client_register_account_center_update') &&
+            module === 'register_account' && (
+              <Button
+                type="button"
+                name={`${t('common.center')} ${t('common.edit')}`}
+                className={'text-dark py-2 px-3 form-control'}
+                loading={false}
+                style={{ background: 'tomato' }}
+                endIcon={<Edit size={20} />}
+                onclick={() => setIsCUModalOpen(true)}
+                disabled={false}
+              />
+            )}
+          {authPermissions.includes('client_register_account_acc_no_update') &&
+            module === 'register_account' && (
+              <Button
+                type="button"
+                name={`${t('common.acc_no')} ${t('common.edit')}`}
+                className={'text-dark py-2 px-3 form-control'}
+                loading={false}
+                style={{ background: 'tomato' }}
+                endIcon={<Edit size={20} />}
+                onclick={() => setIsANUModalOpen(true)}
+                disabled={false}
+              />
+            )}
+
+          {authPermissions.includes('client_saving_account_update') &&
+            module === 'saving_account' && (
+              <Button
+                type="button"
+                name={`${
+                  data.category.is_default
+                    ? t(`category.default.${data.category.name}`)
+                    : data.category.name
+                } ${t('common.saving_account')} ${t('common.edit')}`}
+                className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
+                loading={false}
+                endIcon={<Edit size={20} />}
+                disabled={false}
+              />
+            )}
+
+          {((authPermissions.includes('client_saving_account_category_update') &&
+            module === 'saving_account') ||
+            (authPermissions.includes('client_loan_account_category_update') &&
+              module === 'loan_account')) && (
             <Button
               type="button"
-              name={`${t('common.register_account')} ${t('common.edit')}`}
-              className={'text-black py-2 px-3 form-control rounded-start-4'}
-              style={{ background: 'chocolate' }}
-              loading={false}
-              endIcon={<Edit size={20} />}
-              disabled={false}
-            />
-          )}
-          {authPermissions.includes('client_register_account_field_update') && (
-            <Button
-              type="button"
-              name={`${t('common.field')} ${t('common.edit')}`}
+              name={`${t('common.category')} ${t('common.edit')}`}
               className={'text-dark py-2 px-3 form-control'}
               loading={false}
               style={{ background: 'tomato' }}
               endIcon={<Edit size={20} />}
-              onclick={() => setIsFUModalOpen(true)}
+              onclick={() => setIsCATModalOpen(true)}
               disabled={false}
             />
           )}
-          {authPermissions.includes('client_register_account_center_update') && (
-            <Button
-              type="button"
-              name={`${t('common.center')} ${t('common.edit')}`}
-              className={'text-dark py-2 px-3 form-control'}
-              loading={false}
-              style={{ background: 'tomato' }}
-              endIcon={<Edit size={20} />}
-              onclick={() => setIsCUModalOpen(true)}
-              disabled={false}
-            />
-          )}
-          {authPermissions.includes('client_register_account_acc_no_update') && (
-            <Button
-              type="button"
-              name={`${t('common.acc_no')} ${t('common.edit')}`}
-              className={'text-dark py-2 px-3 form-control'}
-              loading={false}
-              style={{ background: 'tomato' }}
-              endIcon={<Edit size={20} />}
-              onclick={() => setIsANUModalOpen(true)}
-              disabled={false}
-            />
-          )}
-          {authPermissions.includes('client_register_account_delete') && (
+          {((authPermissions.includes('client_register_account_delete') &&
+            module === 'register_account') ||
+            (authPermissions.includes('client_saving_account_delete') &&
+              module === 'saving_account') ||
+            (authPermissions.includes('client_loan_account_delete') &&
+              module === 'loan_account')) && (
             <Button
               type="button"
               name={`${t('common.account')} ${t('common.delete')}`}

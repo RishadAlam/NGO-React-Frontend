@@ -141,7 +141,9 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
           ],
           authPermissions
         ) &&
-          isEmpty(data.deleted_at) && <CRDButtonGrp data={data} mutate={mutate} />}
+          isEmpty(data.deleted_at) && (
+            <CRDButtonGrp module="register_account" data={data} mutate={mutate} />
+          )}
       </div>
     </RegisterBox>
   )
