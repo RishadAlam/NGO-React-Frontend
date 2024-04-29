@@ -24,11 +24,28 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const { t } = useTranslation()
 
   const accountDelete = () => {
+    let endpoint
+
+    switch (module) {
+      case 'register_account':
+        endpoint = `client/registration/${data.id}`
+        break
+      case 'saving_account':
+        endpoint = `client/registration/saving/${data.id}`
+        break
+      case 'loan_account':
+        endpoint = `client/registration/loan/${data.id}`
+        break
+      default:
+        endpoint = ''
+        break
+    }
+
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         setIsLoading(true)
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/registration/${data.id}`, null, null, accessToken, null, 'DELETE')
+        xFetch(endpoint, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             setIsLoading(false)
             toast.dismiss(toasterLoading)
