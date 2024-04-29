@@ -159,6 +159,20 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
                 disabled={false}
               />
             )}
+          {authPermissions.includes('client_loan_account_update') && module === 'loan_account' && (
+            <Button
+              type="button"
+              name={`${
+                data.category.is_default
+                  ? t(`category.default.${data.category.name}`)
+                  : data.category.name
+              } ${t('common.loan_account')} ${t('common.edit')}`}
+              className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
+              loading={false}
+              endIcon={<Edit size={20} />}
+              disabled={false}
+            />
+          )}
 
           {((authPermissions.includes('client_saving_account_category_update') &&
             module === 'saving_account') ||

@@ -17,7 +17,7 @@ export default function SavingAccount() {
     <>
       <AccountTopMenus
         prefix="saving"
-        actionHistory={data.SavingAccountActionHistory}
+        actionHistory={data.saving_account_action_history}
         actionHistoryPermission="client_saving_account_action_history"
       />
       <RegisterBox className="shadow rounded-4">
