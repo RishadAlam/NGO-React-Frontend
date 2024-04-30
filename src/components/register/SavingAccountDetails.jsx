@@ -100,6 +100,15 @@ export default function SavingAccountDetails({ data = {}, mutate }) {
                   </span>
                 </p>
               )}
+              {!isEmpty(data?.deleted_at) && (
+                <p className="truncate mb-3">
+                  {t('common.deleted')}:
+                  <span className="float-end fw-medium">
+                    {data?.deleted_at &&
+                      tsNumbers(dateFormat(data?.deleted_at, 'dd/MM/yyyy hh:mm a'))}
+                  </span>
+                </p>
+              )}
             </div>
             <div className="col-md-4 middle-column">
               <p className="truncate mb-3">

@@ -24,28 +24,11 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const { t } = useTranslation()
 
   const accountDelete = () => {
-    let endpoint
-
-    switch (module) {
-      case 'register_account':
-        endpoint = `client/registration/${data.id}`
-        break
-      case 'saving_account':
-        endpoint = `client/registration/saving/${data.id}`
-        break
-      case 'loan_account':
-        endpoint = `client/registration/loan/${data.id}`
-        break
-      default:
-        endpoint = ''
-        break
-    }
-
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         setIsLoading(true)
         const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(endpoint, null, null, accessToken, null, 'DELETE')
+        xFetch(`client/registration/${data.id}`, null, null, accessToken, null, 'DELETE')
           .then((response) => {
             setIsLoading(false)
             toast.dismiss(toasterLoading)
@@ -198,7 +181,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
             <Button
               type="button"
               name={`${t('common.category')} ${t('common.edit')}`}
-              className={'text-dark py-2 px-3 form-control'}
+              className={'text-dark py-2 px-3 form-control rounded-end-4'}
               loading={false}
               style={{ background: 'tomato' }}
               endIcon={<Edit size={20} />}
@@ -206,22 +189,18 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
               disabled={false}
             />
           )}
-          {((authPermissions.includes('client_register_account_delete') &&
-            module === 'register_account') ||
-            (authPermissions.includes('client_saving_account_delete') &&
-              module === 'saving_account') ||
-            (authPermissions.includes('client_loan_account_delete') &&
-              module === 'loan_account')) && (
-            <Button
-              type="button"
-              name={`${t('common.account')} ${t('common.delete')}`}
-              className={'btn-danger text-dark py-2 px-3 form-control rounded-end-4'}
-              loading={isLoading}
-              endIcon={<Trash size={20} />}
-              onclick={accountDelete}
-              disabled={isLoading}
-            />
-          )}
+          {authPermissions.includes('client_register_account_delete') &&
+            module === 'register_account' && (
+              <Button
+                type="button"
+                name={`${t('common.account')} ${t('common.delete')}`}
+                className={'btn-danger text-dark py-2 px-3 form-control rounded-end-4'}
+                loading={isLoading}
+                endIcon={<Trash size={20} />}
+                onclick={accountDelete}
+                disabled={isLoading}
+              />
+            )}
         </ActionBtnGroup>
       </div>
     </>
