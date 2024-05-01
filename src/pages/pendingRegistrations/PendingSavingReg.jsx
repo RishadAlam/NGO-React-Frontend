@@ -272,7 +272,6 @@ export default function PendingSavingReg() {
             open={editSavingAccDataModal}
             setOpen={setEditSavingAccDataModal}
             accountData={editSavingAccData}
-            setAccountData={setEditSavingAccData}
             mutate={mutate}
           />
         )}

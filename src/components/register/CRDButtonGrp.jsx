@@ -2,7 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
-import { setSavingFields } from '../../helper/RegFormFieldsData'
+import { setLoanAccFields, setSavingFields } from '../../helper/RegFormFieldsData'
 import deleteAlert from '../../helper/deleteAlert'
 import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
@@ -10,6 +10,7 @@ import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import xFetch from '../../utilities/xFetch'
 import EditClientProfileModal from '../pendingReg/EditClientProfileModal'
+import EditLoanAccountModal from '../pendingReg/EditLoanAccountModal'
 import EditSavingAccountModal from '../pendingReg/EditSavingAccountModal'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import Button from '../utilities/Button'
@@ -82,6 +83,14 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           open={isEditSavingModalOpen}
           setOpen={setIsEditSavingModalOpen}
           accountData={setSavingFields(data)}
+          mutate={mutate}
+        />
+      )}
+      {isEditLoanModalOpen && module === 'loan_account' && (
+        <EditLoanAccountModal
+          open={isEditLoanModalOpen}
+          setOpen={setIsEditLoanModalOpen}
+          accountData={setLoanAccFields(data)}
           mutate={mutate}
         />
       )}

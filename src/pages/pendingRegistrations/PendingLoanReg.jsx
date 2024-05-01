@@ -273,7 +273,6 @@ export default function PendingLoanReg() {
             open={editLoanAccDataModal}
             setOpen={setEditLoanAccDataModal}
             accountData={editLoanAccData}
-            setAccountData={setEditLoanAccData}
             mutate={mutate}
           />
         )}
