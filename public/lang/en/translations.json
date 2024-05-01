@@ -554,6 +554,8 @@
       "center": "Center",
       "category": "Category",
       "client_register_account": "Client Register Account",
+      "client_loan_account": "Client Loan Account",
+      "client_saving_account": "Client saving Account",
       "registration": "Registration Form",
       "pending_client_registration_form": "Pending Client Registration Form",
       "pending_saving_acc_registration_form": "Pending Saving Account Registration Form",
@@ -728,7 +730,17 @@
       "client_register_account_field_update": "Field Update (All Account)",
       "client_register_account_acc_no_update": "Account No Update (All Account)",
       "client_register_account_update": "Registration Update",
-      "client_register_account_action_history": "Action History"
+      "client_register_account_action_history": "Action History",
+      "client_loan_account_delete": "Temporary Delete",
+      "client_loan_account_permanently_delete": "Permanently Delete",
+      "client_loan_account_category_update": "Category Update (All Transactions)",
+      "client_loan_account_update": "Update",
+      "client_loan_account_action_history": "Action History",
+      "client_saving_account_delete": "Temporary Delete",
+      "client_saving_account_permanently_delete": "Permanently Delete",
+      "client_saving_account_category_update": "Category Update (All Transactions)",
+      "client_saving_account_update": "Update",
+      "client_saving_account_action_history": "Action History"
     }
   }
 }

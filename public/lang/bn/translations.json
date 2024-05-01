@@ -543,6 +543,8 @@
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
       "client_register_account": "সদস্য নিবন্ধন একাউন্ট",
+      "client_loan_account": "সদস্য ঋণ একাউন্ট",
+      "client_saving_account": "সদস্য সঞ্চয় একাউন্ট",
       "registration": "নিবন্ধন",
       "pending_client_registration_form": "অনুমোদন অপেক্ষারত সদস্য নিবন্ধন ফরম",
       "pending_saving_acc_registration_form": "অনুমোদন অপেক্ষারত সঞ্চয় একাউন্ট নিবন্ধন ফরম",
@@ -717,7 +719,17 @@
       "client_register_account_field_update": "ফিল্ড আপডেট (সকল একাউন্ট)",
       "client_register_account_acc_no_update": "একাউন্ট নং আপডেট (সকল একাউন্ট)",
       "client_register_account_update": "নিবন্ধন আপডেট",
-      "client_register_account_action_history": "পদক্ষেপ / ইতিহাস"
+      "client_register_account_action_history": "পদক্ষেপ / ইতিহাস",
+      "client_loan_account_delete": "সাময়িকভাবে ডিলিট",
+      "client_loan_account_permanently_delete": "স্থায়ীভাবে ডিলিট",
+      "client_loan_account_category_update": "ক্যাটাগরি আপডেট (সকল লেনদেন)",
+      "client_loan_account_update": "আপডেট",
+      "client_loan_account_action_history": "পদক্ষেপ / ইতিহাস",
+      "client_saving_account_delete": "সাময়িকভাবে ডিলিট",
+      "client_saving_account_permanently_delete": "স্থায়ীভাবে ডিলিট",
+      "client_saving_account_category_update": "ক্যাটাগরি আপডেট (সকল লেনদেন)",
+      "client_saving_account_update": "আপডেট",
+      "client_saving_account_action_history": "পদক্ষেপ / ইতিহাস"
     }
   }
 }
