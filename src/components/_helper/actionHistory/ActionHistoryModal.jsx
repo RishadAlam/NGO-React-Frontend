@@ -42,8 +42,8 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
                               history.action_type === 'delete'
                                 ? 'bg-danger'
                                 : history.action_type === 'restore'
-                                ? 'bg-success'
-                                : ''
+                                  ? 'bg-success'
+                                  : ''
                             }`}>
                             <b className="text-capitalize text-white">
                               {t(`common.action_history.${history.action_type}`)}
@@ -56,19 +56,7 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
                             </b>
                           </div>
                         </div>
-                        {Object.keys(history.action_details).length > 0 && (
-                          <div className="details p-3 mt-2">
-                            <ul className="m-0 p-0">
-                              {history.action_type === 'update' &&
-                                Object.keys(history.action_details).map((dataKey, index) => (
-                                  <li key={index} className="text-nowrap">
-                                    {t(`common.${dataKey}`)} :{' '}
-                                    {parse(history.action_details[dataKey])}
-                                  </li>
-                                ))}
-                            </ul>
-                          </div>
-                        )}
+                        {setActionDetails(history.action_details, history.action_type, t)}
                       </div>
                     </Fragment>
                   ))
@@ -87,3 +75,20 @@ export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) 
     </>
   )
 }
+
+const setActionDetails = (action_details, action_type, t) =>
+  Object.keys(action_details).length > 0 && (
+    <div className="details p-3">
+      <ul className="m-0 p-0">
+        {action_type === 'update' &&
+          Object.keys(action_details).map((dataKey, index) => (
+            <li key={index} className="text-nowrap">
+              {t(`common.${dataKey}`)} :{' '}
+              {typeof action_details[dataKey] === 'string'
+                ? parse(action_details[dataKey])
+                : setActionDetails(action_details[dataKey], action_type, t)}
+            </li>
+          ))}
+      </ul>
+    </div>
+  )

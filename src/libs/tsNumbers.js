@@ -1,6 +1,9 @@
 import Cookies from 'js-cookie'
+import { isEmpty } from '../helper/isEmpty'
 
 export default function tsNumbers(numbers, en = false) {
+  if (isEmpty(numbers)) return numbers
+
   const lang = Cookies.get('i18next')
   const bn_to_en = {
     '১': '1',

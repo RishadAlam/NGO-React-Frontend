@@ -3,10 +3,12 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import deleteAlert from '../../helper/deleteAlert'
+import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
 import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import xFetch from '../../utilities/xFetch'
+import EditClientProfileModal from '../pendingReg/EditClientProfileModal'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import Button from '../utilities/Button'
 import AccNoUpdateModal from './AccNoUpdateModal'
@@ -16,6 +18,7 @@ import FieldFormModal from './FieldUpdateModal'
 
 export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const [isLoading, setIsLoading] = useState(false)
+  const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
   const [isFUModalOpen, setIsFUModalOpen] = useState(false)
   const [isCUModalOpen, setIsCUModalOpen] = useState(false)
   const [isANUModalOpen, setIsANUModalOpen] = useState(false)
@@ -62,6 +65,14 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           mutate={mutate}
         />
       )}
+      {isEditClientModalOpen && module === 'register_account' && (
+        <EditClientProfileModal
+          open={isEditClientModalOpen}
+          setOpen={setIsEditClientModalOpen}
+          profileData={setProfileDataObj(data)}
+          mutate={mutate}
+        />
+      )}
       {isCUModalOpen && module === 'register_account' && (
         <CenterUpdateModal
           open={isCUModalOpen}
@@ -98,9 +109,9 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
                 type="button"
                 name={`${t('common.register_account')} ${t('common.edit')}`}
                 className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
-                // style={{ background: 'chocolate' }}
                 loading={false}
                 endIcon={<Edit size={20} />}
+                onclick={() => setIsEditClientModalOpen(true)}
                 disabled={false}
               />
             )}

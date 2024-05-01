@@ -17,7 +17,7 @@ export default function AccountTopMenus({ prefix, actionHistory = [], actionHist
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [accountCheckModalOpen, setAccountCheckModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-
+  console.log(actionHistory)
   return (
     <div className="d-flex justify-content-end mb-2">
       {prefix && (
