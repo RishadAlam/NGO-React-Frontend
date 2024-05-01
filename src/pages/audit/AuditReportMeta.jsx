@@ -195,7 +195,7 @@ export default function AuditReportMeta() {
         <div className="staff-table">
           {isLoading && !metaPages ? (
             <ReactTableSkeleton />
-          ) : (
+          ) : metaPages.length > 0 ? (
             metaPages.map((page, index) => (
               <ReactTable
                 key={index}
@@ -210,6 +210,8 @@ export default function AuditReportMeta() {
                 classnames="my-3"
               />
             ))
+          ) : (
+            <p>{t('react_table.No_Records_Found')}</p>
           )}
         </div>
       </section>
