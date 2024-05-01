@@ -2,6 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { setSavingFields } from '../../helper/RegFormFieldsData'
 import deleteAlert from '../../helper/deleteAlert'
 import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
@@ -9,6 +10,7 @@ import Edit from '../../icons/Edit'
 import Trash from '../../icons/Trash'
 import xFetch from '../../utilities/xFetch'
 import EditClientProfileModal from '../pendingReg/EditClientProfileModal'
+import EditSavingAccountModal from '../pendingReg/EditSavingAccountModal'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import Button from '../utilities/Button'
 import AccNoUpdateModal from './AccNoUpdateModal'
@@ -19,6 +21,8 @@ import FieldFormModal from './FieldUpdateModal'
 export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const [isLoading, setIsLoading] = useState(false)
   const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false)
+  const [isEditSavingModalOpen, setIsEditSavingModalOpen] = useState(false)
+  const [isEditLoanModalOpen, setIsEditLoanModalOpen] = useState(false)
   const [isFUModalOpen, setIsFUModalOpen] = useState(false)
   const [isCUModalOpen, setIsCUModalOpen] = useState(false)
   const [isANUModalOpen, setIsANUModalOpen] = useState(false)
@@ -70,6 +74,14 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           open={isEditClientModalOpen}
           setOpen={setIsEditClientModalOpen}
           profileData={setProfileDataObj(data)}
+          mutate={mutate}
+        />
+      )}
+      {isEditSavingModalOpen && module === 'saving_account' && (
+        <EditSavingAccountModal
+          open={isEditSavingModalOpen}
+          setOpen={setIsEditSavingModalOpen}
+          accountData={setSavingFields(data)}
           mutate={mutate}
         />
       )}
@@ -167,6 +179,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
                 className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
                 loading={false}
                 endIcon={<Edit size={20} />}
+                onclick={() => setIsEditSavingModalOpen(true)}
                 disabled={false}
               />
             )}
@@ -181,6 +194,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
               className={'btn-warning text-black py-2 px-3 form-control rounded-start-4'}
               loading={false}
               endIcon={<Edit size={20} />}
+              onclick={() => setIsEditLoanModalOpen(true)}
               disabled={false}
             />
           )}
