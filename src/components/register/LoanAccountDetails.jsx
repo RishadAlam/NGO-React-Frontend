@@ -123,6 +123,21 @@ export default function LoanAccountDetails({ data = {}, mutate }) {
               )}
             </div>
             <div className="col-md-4 middle-column">
+              {!isEmpty(data?.loan_approver?.name) && (
+                <p className="truncate mb-3">
+                  {t('common.loan_approver')}:
+                  <span className="float-end fw-medium">{data?.loan_approver?.name}</span>
+                </p>
+              )}
+              {!isEmpty(data?.is_loan_approved_at) && (
+                <p className="truncate mb-3">
+                  {t('common.loan_approved_at')}:
+                  <span className="float-end fw-medium">
+                    {data?.is_loan_approved_at &&
+                      tsNumbers(dateFormat(data?.is_loan_approved_at, 'dd/MM/yyyy hh:mm a'))}
+                  </span>
+                </p>
+              )}
               <p className="truncate mb-3">
                 {t('common.start_date')}:
                 <span className="float-end fw-medium">

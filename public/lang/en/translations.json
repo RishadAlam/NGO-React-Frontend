@@ -157,6 +157,8 @@
     "save": "Save",
     "client_register": "Client Register",
     "approver": "Approver",
+    "loan_approver": "Loan Approver",
+    "loan_approved_at": "Loan Approved At",
     "details_summary": "Details Summary",
     "running": "Running",
     "active": "Active",

@@ -157,6 +157,8 @@
     "save": "সংরক্ষণ",
     "client_register": "নিবন্ধিত সদস্য",
     "approver": "অনুমোদনকারী",
+    "loan_approver": "ঋণ অনুমোদনকারী",
+    "loan_approved_at": "ঋণ অনুমোদিত হয়েছে",
     "details_summary": "বিস্তারিত সারাংশ",
     "running": "চলমান",
     "active": "সক্রিয়",

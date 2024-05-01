@@ -2,7 +2,6 @@ import { Expand } from '@mui/icons-material'
 import { CalendarIcon } from '@mui/x-date-pickers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
 import CheckCircle from '../../icons/CheckCircle'
 import CheckPatch from '../../icons/CheckPatch'
 import Chrome from '../../icons/Chrome'
@@ -75,6 +74,14 @@ export default function AccountSummary({ data }) {
         }
       ],
       [
+        { key: 'loan_approver', value: data?.loan_approver?.name, icon: <CheckCircle size={18} /> },
+        {
+          key: 'loan_approved_at',
+          value:
+            data?.is_loan_approved_at &&
+            tsNumbers(dateFormat(data?.is_loan_approved_at, 'dd/MM/yyyy hh:mm a')),
+          icon: <CheckPatch size={18} />
+        },
         {
           key: 'loan_given',
           value: tsNumbers(`$${data?.loan_given || 0}/-`),
