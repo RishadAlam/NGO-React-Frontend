@@ -18,7 +18,6 @@ export default function MainSearchBox({ t }) {
   const [searchValue, setSearchValue] = useState()
 
   const liveSearch = debounce((e) => {
-    console.log(e.target.value)
     setSearchValue(e.target.value)
 
     if (isEmpty(e.target.value)) {

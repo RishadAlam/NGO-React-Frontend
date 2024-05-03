@@ -49,11 +49,21 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
               mutate()
               return
             }
-            successAlert(t('common.deleted'), response?.message, 'error')
+            successAlert(
+              t('common.delete'),
+              response?.errors?.message || response?.message,
+              'error'
+            )
           })
           .catch((errResponse) => {
             setIsLoading(false)
-            successAlert(t('common.deleted'), errResponse?.message, 'error')
+            toast.dismiss(toasterLoading)
+            toast.error(errResponse?.errors?.message || errResponse?.message)
+            successAlert(
+              t('common.delete'),
+              errResponse?.errors?.message || errResponse?.message,
+              'error'
+            )
           })
       }
     })
