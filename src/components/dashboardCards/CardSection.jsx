@@ -10,7 +10,19 @@ import SavingIcon from '../../icons/SavingIcon'
 import WithdrawalLists from '../withdrawalLists/WithdrawalLists'
 import Cards from './Cards'
 
-export default function CardSection() {
+export default function CardSection({
+  loan_distributions = {},
+  loan_collections_summery = {},
+  loan_saving_collections = {},
+  monthly_loan_collections = {},
+  loan_collections = [],
+  saving_collections_summery = {},
+  dps_collections = {},
+  saving_collections = [],
+  saving_withdrawal = [],
+  loan_saving_withdrawal = [],
+  isLoading = false
+}) {
   const { t } = useTranslation()
 
   return (
@@ -21,7 +33,8 @@ export default function CardSection() {
             cardIcon={<LoanGiven size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Given')}
             color={'#8884d8'}
-            endpoint={'client/registration/loan/current-month-summary'}
+            itemData={loan_distributions}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -31,7 +44,8 @@ export default function CardSection() {
             cardIcon={<LoanRecovered size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Recovered')}
             color={'skyblue'}
-            endpoint={'collection/loan/current-month-collection-summary'}
+            itemData={loan_collections_summery}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -41,7 +55,8 @@ export default function CardSection() {
             cardIcon={<MyLoan size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Loan_Saving_Collections')}
             color={'teal'}
-            endpoint={'collection/loan/current-month-loan-saving-collection-summary'}
+            itemData={loan_saving_collections}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -51,7 +66,8 @@ export default function CardSection() {
             cardIcon={<SavingIcon size={36} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Saving_Collections')}
             color={'gold'}
-            endpoint={'collection/saving/current-month-collection-summary'}
+            itemData={saving_collections_summery}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -61,7 +77,8 @@ export default function CardSection() {
             cardIcon={<PersonalLoan size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.Monthly_Loan_Collections')}
             color={'violet'}
-            endpoint={'collection/loan/current-month-monthly_loan-collection-summary'}
+            itemData={monthly_loan_collections}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -71,7 +88,8 @@ export default function CardSection() {
             cardIcon={<LoanIcon size={32} color={'#8884d8'} />}
             cardName={t('dashboard.cards.DPS_Collections')}
             color={'cornflowerblue'}
-            endpoint={'collection/saving/current-month-dps-collection-summary'}
+            itemData={dps_collections}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -79,7 +97,8 @@ export default function CardSection() {
         <div className="box withdrawal-list">
           <WithdrawalLists
             title={t('dashboard.Recent_Saving_Withdrawals')}
-            endpoint="collection/saving/current-day-withdrawal"
+            withdrawal={saving_withdrawal}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -87,18 +106,19 @@ export default function CardSection() {
         <div className="box withdrawal-list">
           <WithdrawalLists
             title={t('dashboard.Recent_Loan_Withdrawals')}
-            endpoint="collection/loan/current-day-withdrawal"
+            withdrawal={loan_saving_withdrawal}
+            isLoading={isLoading}
           />
         </div>
       </div>
       <div className="col-md-12 mt-2">
         <div className="box collection-list">
-          <SavingCollectionLists />
+          <SavingCollectionLists collections={saving_collections} isLoading={isLoading} />
         </div>
       </div>
       <div className="col-md-12 mt-3">
         <div className="box collection-list">
-          <LoanCollectionLists />
+          <LoanCollectionLists collections={loan_collections} isLoading={isLoading} />
         </div>
       </div>
     </div>

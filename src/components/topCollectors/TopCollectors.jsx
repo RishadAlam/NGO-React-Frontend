@@ -1,16 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import Avatar from '../utilities/Avatar'
 import './topCollectors.scss'
 
-export default function TopCollectors({ heading }) {
+export default function TopCollectors({ heading, collectors, isLoading }) {
   const { t } = useTranslation()
-  const { data: { data = [] } = [], isLoading } = useFetch({
-    action: 'collection/current-day-top-collectionist'
-  })
 
   return (
     <div className="topBox">
@@ -23,8 +19,8 @@ export default function TopCollectors({ heading }) {
           </div>
           <div className="card-body">
             <div className="list">
-              {Array.isArray(data) &&
-                data.map((user) => (
+              {Array.isArray(collectors) &&
+                collectors.map((user) => (
                   <div className="listItem" key={user.id}>
                     <div className="user">
                       <Avatar name={user.name} img={user.image_uri} />
@@ -36,7 +32,7 @@ export default function TopCollectors({ heading }) {
                     <span className="amount">৳ {tsNumbers(user.amount)}</span>
                   </div>
                 ))}
-              {!data.length && (
+              {!collectors.length && (
                 <div className="d-flex align-items-center justify-content-center">
                   <p>{t('common.No_Records_Found')}</p>
                 </div>

@@ -1,16 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import useFetch from '../../hooks/useFetch'
 import tsNumbers from '../../libs/tsNumbers'
 import { colors } from '../../resources/staticData/colors'
 import './pieChartBox.scss'
 
-export default function PieChartBox({ chartName, endpoint }) {
+export default function PieChartBox({ chartName, sources = [], isLoading }) {
   const { t } = useTranslation()
-  const { data: { data = [] } = [] } = useFetch({ action: endpoint })
-
-  const processedData = data.map((item) => ({
+  const processedData = sources.map((item) => ({
     ...item,
     amount: parseFloat(item.amount)
   }))

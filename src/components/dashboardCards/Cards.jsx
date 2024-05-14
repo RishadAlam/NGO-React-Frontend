@@ -2,19 +2,13 @@ import { Tooltip as MaterialTooltip, Zoom } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts'
-import useFetch from '../../hooks/useFetch'
 import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 import './cards.scss'
 
-export default function Cards({ cardIcon, cardName, color, endpoint }) {
+export default function Cards({ cardIcon, cardName, color, itemData, isLoading }) {
   const { t } = useTranslation()
-
-  const {
-    data: { data: { current_amount = 0, last_amount = 0, data = [], cmp_amount = 0 } = {} } = []
-  } = useFetch({
-    action: endpoint
-  })
+  const { current_amount = 0, last_amount = 0, data = [], cmp_amount = 0 } = itemData
 
   return (
     <div className="cardBox">
