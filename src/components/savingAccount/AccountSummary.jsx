@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import CheckCircle from '../../icons/CheckCircle'
 import CheckPatch from '../../icons/CheckPatch'
 import Chrome from '../../icons/Chrome'
@@ -39,7 +40,16 @@ export default function AccountSummary({ data }) {
       [
         { key: 'field', value: data?.field?.name, icon: <Globe size={18} /> },
         { key: 'center', value: data?.center?.name, icon: <Chrome size={18} /> },
-        { key: 'category', value: data?.category?.name, icon: <Command size={18} /> },
+        {
+          key: 'category',
+          value: defaultNameCheck(
+            t,
+            data?.category?.is_default,
+            'category.default.',
+            data?.category?.name
+          ),
+          icon: <Command size={18} />
+        },
         { key: 'creator', value: data?.author?.name, icon: <User size={18} /> },
         {
           key: 'registration',

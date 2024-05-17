@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import xFetch from '../utilities/xFetch'
 
 export default function deleteAlert(t) {
   return Swal.fire({
@@ -23,5 +24,40 @@ export function permanentDeleteAlert(t) {
     cancelButtonColor: '#d33',
     confirmButtonText: t('common_validation.Yes_delete_it'),
     cancelButtonText: t('common.cancel')
+  })
+}
+
+export function passwordCheckAlert(t, accessToken) {
+  return Swal.fire({
+    title: t('common_validation.enter_password'),
+    input: 'password',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    confirmButtonText: t('common.submit'),
+    cancelButtonText: t('common.cancel'),
+    showLoaderOnConfirm: true,
+    preConfirm: async (login) => {
+      try {
+        const response = await xFetch(
+          'verify-user',
+          { password: login },
+          null,
+          accessToken,
+          null,
+          'POST'
+        )
+        if (!response?.success) {
+          return Swal.showValidationMessage(`
+            ${JSON.stringify(await response.json())}
+          `)
+        }
+        return true
+      } catch (error) {
+        Swal.showValidationMessage(`${error?.errors?.message || error?.message}`)
+      }
+    },
+    allowOutsideClick: () => !Swal.isLoading()
   })
 }

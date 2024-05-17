@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { setLoanAccFields, setSavingFields } from '../../helper/RegFormFieldsData'
-import deleteAlert from '../../helper/deleteAlert'
+import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
 import Edit from '../../icons/Edit'
@@ -34,37 +34,41 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
   const accountDelete = () => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        setIsLoading(true)
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/registration/${data.id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            setIsLoading(false)
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
-              )
-              mutate()
-              return
-            }
-            successAlert(
-              t('common.delete'),
-              response?.errors?.message || response?.message,
-              'error'
-            )
-          })
-          .catch((errResponse) => {
-            setIsLoading(false)
-            toast.dismiss(toasterLoading)
-            toast.error(errResponse?.errors?.message || errResponse?.message)
-            successAlert(
-              t('common.delete'),
-              errResponse?.errors?.message || errResponse?.message,
-              'error'
-            )
-          })
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            setIsLoading(true)
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`client/registration/${data.id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                setIsLoading(false)
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(
+                  t('common.delete'),
+                  response?.errors?.message || response?.message,
+                  'error'
+                )
+              })
+              .catch((errResponse) => {
+                setIsLoading(false)
+                toast.dismiss(toasterLoading)
+                toast.error(errResponse?.errors?.message || errResponse?.message)
+                successAlert(
+                  t('common.delete'),
+                  errResponse?.errors?.message || errResponse?.message,
+                  'error'
+                )
+              })
+          }
+        })
       }
     })
   }

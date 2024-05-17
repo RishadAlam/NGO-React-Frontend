@@ -11,12 +11,14 @@ export default function PrimaryBtn({
   onclick,
   variant,
   endIcon,
-  classNames
+  classNames,
+  color = 'primary'
 }) {
   return (
     <>
       <Button
         className={classNames}
+        color={color}
         variant={variant || 'contained'}
         endIcon={loading ? <LoaderSm size={20} clr="#1c3faa" className="ms-2" /> : endIcon}
         type={type || 'button'}

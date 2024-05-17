@@ -194,10 +194,12 @@
     "current_fund": "নগদ তহবিল",
     "view": "দেখুন",
     "print": "প্রিন্ট",
-    "collection_sheet": "সংগ্রহ শীট"
+    "collection_sheet": "সংগ্রহ শীট",
+    "submit": "দাখিল করুন"
   },
 
   "common_validation": {
+    "enter_password": "পাসওয়ার্ড লিখুন",
     "required_fields_are_empty": "প্রয়োজনীয় ক্ষেত্র খালি।",
     "Are_you_sure": "আপনি কি নিশ্চিত?",
     "Are_you_sure_to_delete_permanently": "আপনি স্থায়ীভাবে মুছে ফেলার বিষয়ে নিশ্চিত?",

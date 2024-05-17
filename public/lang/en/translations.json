@@ -194,10 +194,12 @@
     "current_fund": "Current Fund",
     "view": "view",
     "print": "Print",
-    "collection_sheet": "Make Collection Sheet"
+    "collection_sheet": "Make Collection Sheet",
+    "submit": "Submit"
   },
 
   "common_validation": {
+    "enter_password": "Enter Password",
     "required_fields_are_empty": "Required fields are empty!",
     "Are_you_sure": "Are you sure?",
     "Are_you_sure_to_delete_permanently": "Are you sure to delete permanently?",
