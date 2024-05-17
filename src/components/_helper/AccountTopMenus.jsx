@@ -45,11 +45,16 @@ export default function AccountTopMenus({
             endIcon={<Check />}
             onclick={() => setAccountCheckModalOpen(true)}
           />
-          <ChangeAccountStatus
-            prefix={prefix === 'loan-saving' ? 'loan' : prefix}
-            status={status}
-            mutate={mutate}
-          />
+          {(prefix === 'saving' &&
+            checkPermission('client_saving_account_change_status', authPermissions)) ||
+            (prefix === 'loan-saving' &&
+              checkPermission('client_loan_account_change_status', authPermissions) && (
+                <ChangeAccountStatus
+                  prefix={prefix === 'loan-saving' ? 'loan' : prefix}
+                  status={status}
+                  mutate={mutate}
+                />
+              ))}
           {withdrawalModalOpen &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
               <StoreWithdrawal
