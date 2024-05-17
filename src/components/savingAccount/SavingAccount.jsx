@@ -9,13 +9,19 @@ import AccountSummary from './AccountSummary'
 export default function SavingAccount() {
   const { id } = useParams()
 
-  const { data: { data = [] } = [], isLoading } = useFetch({
+  const {
+    data: { data = [] } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: `client/registration/saving/${id}`
   })
 
   return (
     <>
       <AccountTopMenus
+        status={data?.status}
+        mutate={mutate}
         prefix="saving"
         actionHistory={data.saving_account_action_history}
         actionHistoryPermission="client_saving_account_action_history"

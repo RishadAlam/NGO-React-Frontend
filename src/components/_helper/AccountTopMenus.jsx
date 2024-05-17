@@ -8,10 +8,17 @@ import CashWithdrawal from '../../icons/CashWithdrawal'
 import Clock from '../../icons/Clock'
 import '../register/RegisterBox.scss'
 import PrimaryBtn from '../utilities/PrimaryBtn'
+import ChangeAccountStatus from './ChangeAccountStatus'
 import StoreAccountCheck from './StoreAccountCheck'
 import StoreWithdrawal from './clientACCwithdrawal/StoreWithdrawal'
 
-export default function AccountTopMenus({ prefix, actionHistory = [], actionHistoryPermission }) {
+export default function AccountTopMenus({
+  prefix,
+  actionHistory = [],
+  actionHistoryPermission,
+  status,
+  mutate
+}) {
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
@@ -26,6 +33,7 @@ export default function AccountTopMenus({ prefix, actionHistory = [], actionHist
             <PrimaryBtn
               classNames={'mx-3'}
               name={t('common.withdrawal')}
+              color="warning"
               loading={false}
               endIcon={<CashWithdrawal size={20} />}
               onclick={() => setWithdrawalModalOpen(true)}
@@ -36,6 +44,11 @@ export default function AccountTopMenus({ prefix, actionHistory = [], actionHist
             loading={false}
             endIcon={<Check />}
             onclick={() => setAccountCheckModalOpen(true)}
+          />
+          <ChangeAccountStatus
+            prefix={prefix === 'loan-saving' ? 'loan' : prefix}
+            status={status}
+            mutate={mutate}
           />
           {withdrawalModalOpen &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
@@ -56,8 +69,9 @@ export default function AccountTopMenus({ prefix, actionHistory = [], actionHist
       )}
       {checkPermission(actionHistoryPermission, authPermissions) && (
         <PrimaryBtn
-          classNames={'mx-3'}
+          classNames={'me-3'}
           name={t('common.action')}
+          color="info"
           loading={false}
           endIcon={<Clock size={20} />}
           onclick={() => setIsActionHistoryModalOpen(true)}

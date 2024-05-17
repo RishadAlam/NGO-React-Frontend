@@ -9,7 +9,11 @@ import AccountSummary from './AccountSummary'
 export default function LoanAccount() {
   const { id } = useParams()
 
-  const { data: { data = [] } = [], isLoading } = useFetch({
+  const {
+    data: { data = [] } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: `client/registration/loan/${id}`
   })
   return (
@@ -18,6 +22,8 @@ export default function LoanAccount() {
         prefix="loan-saving"
         actionHistory={data.loan_account_action_history}
         actionHistoryPermission="client_loan_account_action_history"
+        status={data?.status}
+        mutate={mutate}
       />
       <RegisterBox className="shadow rounded-4">
         <AccountSummary data={data} />
