@@ -13,7 +13,6 @@ export default function ChangeAccountStatus({ prefix, status, mutate }) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [isLoading, setIsLoading] = useState()
-  console.log(prefix)
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -48,12 +47,13 @@ export default function ChangeAccountStatus({ prefix, status, mutate }) {
 
   return (
     <PrimaryBtn
-      classNames="mx-3"
+      classNames="mx-1"
       color="error"
       name={status ? t('common.hold') : t('common.active')}
       loading={false}
       endIcon={<Refresh size={20} />}
       onclick={onSubmit}
+      disabled={isLoading}
     />
   )
 }

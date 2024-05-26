@@ -24,14 +24,16 @@ export default function AccountTopMenus({
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [accountCheckModalOpen, setAccountCheckModalOpen] = useState(false)
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
-
+  console.log(
+    prefix === 'saving' && checkPermission('client_saving_account_change_status', authPermissions)
+  )
   return (
     <div className="d-flex justify-content-end mb-2">
       {prefix && (
         <>
           {checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
             <PrimaryBtn
-              classNames={'mx-3'}
+              classNames="mx-1"
               name={t('common.withdrawal')}
               color="warning"
               loading={false}
@@ -40,21 +42,22 @@ export default function AccountTopMenus({
             />
           )}
           <PrimaryBtn
+            classNames="mx-1"
             name={t('common.account_check')}
             loading={false}
             endIcon={<Check />}
             onclick={() => setAccountCheckModalOpen(true)}
           />
-          {(prefix === 'saving' &&
+          {((prefix === 'saving' &&
             checkPermission('client_saving_account_change_status', authPermissions)) ||
             (prefix === 'loan-saving' &&
-              checkPermission('client_loan_account_change_status', authPermissions) && (
-                <ChangeAccountStatus
-                  prefix={prefix === 'loan-saving' ? 'loan' : prefix}
-                  status={status}
-                  mutate={mutate}
-                />
-              ))}
+              checkPermission('client_loan_account_change_status', authPermissions))) && (
+            <ChangeAccountStatus
+              prefix={prefix === 'loan-saving' ? 'loan' : prefix}
+              status={status}
+              mutate={mutate}
+            />
+          )}
           {withdrawalModalOpen &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions) && (
               <StoreWithdrawal
@@ -74,7 +77,7 @@ export default function AccountTopMenus({
       )}
       {checkPermission(actionHistoryPermission, authPermissions) && (
         <PrimaryBtn
-          classNames={'me-3'}
+          classNames="mx-1"
           name={t('common.action')}
           color="info"
           loading={false}
