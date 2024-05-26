@@ -18,7 +18,7 @@ import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setApprovalWithdrawalModalData } from '../../helper/RegFormFieldsData'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import { permanentDeleteAlert } from '../../helper/deleteAlert'
+import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import CashWithdrawal from '../../icons/CashWithdrawal'
@@ -50,8 +50,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const {
     data: { data: withdrawal } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({
     action: `${endpoint}/pending`,
     queryParams: {
@@ -190,22 +189,28 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const deleteWithdrawal = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`${endpoint}/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`${endpoint}/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) =>
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
               )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          }
+        })
       }
     })
   }

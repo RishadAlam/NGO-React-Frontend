@@ -18,7 +18,7 @@ import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
-import deleteAlert from '../../helper/deleteAlert'
+import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Clock from '../../icons/Clock'
@@ -43,7 +43,7 @@ export default function Staffs() {
   const { accessToken, id: authId, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: staffs } = [], mutate, isLoading, isError } = useFetch({ action: 'users' })
+  const { data: { data: staffs } = [], mutate, isLoading } = useFetch({ action: 'users' })
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const pendingBadge = (value) => (
     <Badge
@@ -171,22 +171,28 @@ export default function Staffs() {
 
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`users/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) =>
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
               )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          }
+        })
       }
     })
   }

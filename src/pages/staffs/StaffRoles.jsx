@@ -12,7 +12,7 @@ import RoleUpdate from '../../components/staffRoles/RoleUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import deleteAlert from '../../helper/deleteAlert'
+import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
@@ -31,7 +31,7 @@ export default function StaffRoles() {
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: roles } = [], mutate, isLoading, isError } = useFetch({ action: 'roles' })
+  const { data: { data: roles } = [], mutate, isLoading } = useFetch({ action: 'roles' })
 
   const actionBtnGroup = (id, role) => (
     <ActionBtnGroup>
@@ -60,19 +60,23 @@ export default function StaffRoles() {
   const roleDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`roles/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
-          toast.dismiss(toasterLoading)
-          if (response?.success) {
-            successAlert(
-              t('common.deleted'),
-              response?.message || t('common_validation.data_has_been_deleted'),
-              'success'
-            )
-            mutate()
-            return
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`roles/${id}`, null, null, accessToken, null, 'DELETE').then((response) => {
+              toast.dismiss(toasterLoading)
+              if (response?.success) {
+                successAlert(
+                  t('common.deleted'),
+                  response?.message || t('common_validation.data_has_been_deleted'),
+                  'success'
+                )
+                mutate()
+                return
+              }
+              successAlert(t('common.deleted'), response?.message, 'error')
+            })
           }
-          successAlert(t('common.deleted'), response?.message, 'error')
         })
       }
     })

@@ -15,7 +15,7 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
-import { permanentDeleteAlert } from '../../helper/deleteAlert'
+import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
 import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
@@ -40,8 +40,7 @@ export default function PendingClientReg() {
   const {
     data: { data: clientProfiles } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({
     action: 'client/registration/pending-forms'
   })
@@ -122,22 +121,28 @@ export default function PendingClientReg() {
   const clientProfileDelete = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`client/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) =>
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
               )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          }
+        })
       }
     })
   }

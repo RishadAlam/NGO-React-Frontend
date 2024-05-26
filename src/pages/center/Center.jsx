@@ -16,7 +16,7 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
-import deleteAlert from '../../helper/deleteAlert'
+import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Chrome from '../../icons/Chrome'
@@ -39,12 +39,7 @@ export default function Center() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const [loading, setLoading] = useLoadingState({})
-  const {
-    data: { data: centers } = [],
-    mutate,
-    isLoading,
-    isError
-  } = useFetch({ action: 'centers' })
+  const { data: { data: centers } = [], mutate, isLoading } = useFetch({ action: 'centers' })
 
   const statusSwitch = (value, id) => (
     <AndroidSwitch
@@ -144,27 +139,31 @@ export default function Center() {
   const centerDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        setLoading({ ...loading, itemDelete: true })
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`centers/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            setLoading({ ...loading, itemDelete: false })
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
-              )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => {
-            setLoading({ ...loading, itemDelete: false })
-            successAlert(t('common.deleted'), errResponse?.message, 'error')
-          })
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            setLoading({ ...loading, itemDelete: true })
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`centers/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                setLoading({ ...loading, itemDelete: false })
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) => {
+                setLoading({ ...loading, itemDelete: false })
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
+              })
+          }
+        })
       }
     })
   }

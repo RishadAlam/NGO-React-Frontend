@@ -19,7 +19,7 @@ import { setSavingFields } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import { permanentDeleteAlert } from '../../helper/deleteAlert'
+import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import BankTransferIn from '../../icons/BankTransferIn'
@@ -50,8 +50,7 @@ export default function PendingSavingReg() {
   const {
     data: { data: savingAccounts } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({
     action: 'client/registration/saving/pending-forms',
     queryParams: {
@@ -217,22 +216,28 @@ export default function PendingSavingReg() {
   const savingAccountDelete = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`client/saving/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`client/saving/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) =>
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
               )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => successAlert(t('common.deleted'), errResponse?.message, 'error'))
+          }
+        })
       }
     })
   }

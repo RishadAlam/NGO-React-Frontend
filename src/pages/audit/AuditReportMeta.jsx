@@ -16,7 +16,7 @@ import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import deleteAlert from '../../helper/deleteAlert'
+import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import AuditIcon from '../../icons/AuditIcon'
@@ -39,12 +39,7 @@ export default function AuditReportMeta() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const [loading, setLoading] = useLoadingState({})
-  const {
-    data: { data: metaPages } = [],
-    mutate,
-    isLoading,
-    isError
-  } = useFetch({ action: 'audit/meta' })
+  const { data: { data: metaPages } = [], mutate, isLoading } = useFetch({ action: 'audit/meta' })
 
   const actionBtnGroup = (id, metaData, isDefault) => (
     <ActionBtnGroup>
@@ -118,27 +113,31 @@ export default function AuditReportMeta() {
   const metaDelete = (id) => {
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
-        setLoading({ ...loading, metaForm: true })
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        xFetch(`audit/meta/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            setLoading({ ...loading, metaForm: false })
-            toast.dismiss(toasterLoading)
-            if (response?.success) {
-              successAlert(
-                t('common.deleted'),
-                response?.message || t('common_validation.data_has_been_deleted'),
-                'success'
-              )
-              mutate()
-              return
-            }
-            successAlert(t('common.deleted'), response?.message, 'error')
-          })
-          .catch((errResponse) => {
-            setLoading({ ...loading, metaForm: false })
-            successAlert(t('common.deleted'), errResponse?.message, 'error')
-          })
+        passwordCheckAlert(t, accessToken).then((result) => {
+          if (result.isConfirmed) {
+            setLoading({ ...loading, metaForm: true })
+            const toasterLoading = toast.loading(`${t('common.delete')}...`)
+            xFetch(`audit/meta/${id}`, null, null, accessToken, null, 'DELETE')
+              .then((response) => {
+                setLoading({ ...loading, metaForm: false })
+                toast.dismiss(toasterLoading)
+                if (response?.success) {
+                  successAlert(
+                    t('common.deleted'),
+                    response?.message || t('common_validation.data_has_been_deleted'),
+                    'success'
+                  )
+                  mutate()
+                  return
+                }
+                successAlert(t('common.deleted'), response?.message, 'error')
+              })
+              .catch((errResponse) => {
+                setLoading({ ...loading, metaForm: false })
+                successAlert(t('common.deleted'), errResponse?.message, 'error')
+              })
+          }
+        })
       }
     })
   }
