@@ -169,6 +169,13 @@
     "loan_account": "ঋণ অ্যাকাউন্ট",
     "total_loan_rec": "সর্বমোট ঋণ সংগ্রহ",
     "total_interest_rec": "সর্বমোট লাভ সংগ্রহ",
+    "total_interest": "মোট লাভ",
+    "total_interest_remaining": "সর্বমোট লাভ বকেয়া",
+    "total_loan_remaining": "সর্বমোট ঋণ বকেয়া",
+    "total_rec_installment": "আদায়কৃত কিস্তি সংখ্যা",
+    "closing_fee": "ক্লোজিং ফি",
+    "total_balance": "সর্বমোট ব্যালেন্স",
+    "taka": "টাকা",
     "account_check": "একাউন্ট চেক",
     "balance_remaining": "অবশিষ্ট ব্যালেন্স",
     "next_check_in_at": "পরবর্তী চেক",
@@ -195,7 +202,8 @@
     "view": "দেখুন",
     "print": "প্রিন্ট",
     "collection_sheet": "সংগ্রহ শীট",
-    "submit": "দাখিল করুন"
+    "submit": "দাখিল করুন",
+    "account_closing": "একাউন্ট ক্লোজিং"
   },
 
   "common_validation": {

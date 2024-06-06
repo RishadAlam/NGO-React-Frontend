@@ -168,6 +168,13 @@
     "saving_account": "Saving Account",
     "loan_account": "Loan Account",
     "total_loan_rec": "Total Loan Make Collections",
+    "total_interest": "Total Interest",
+    "total_interest_remaining": "Total Interest Remaining",
+    "total_loan_remaining": "Total Loan Remaining",
+    "total_rec_installment": "Total Recovered Installment",
+    "closing_fee": "Closing fee",
+    "total_balance": "Total Balance",
+    "taka": "Taka",
     "total_interest_rec": "Total Interest Make Collections",
     "account_check": "Account Check",
     "balance_remaining": "Remaining Balance",
@@ -195,7 +202,8 @@
     "view": "view",
     "print": "Print",
     "collection_sheet": "Make Collection Sheet",
-    "submit": "Submit"
+    "submit": "Submit",
+    "account_closing": "Account Closing"
   },
 
   "common_validation": {
