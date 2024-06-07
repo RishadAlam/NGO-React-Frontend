@@ -978,7 +978,7 @@ export const TransferTableColumns = (t, windowWidth, setTransactionTypes) => [
   }
 ]
 
-export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => [
+export const TransactionTableColumns = (t, windowWidth, setTransactionTypes, setCategory) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1000,6 +1000,11 @@ export const TransactionTableColumns = (t, windowWidth, setTransactionTypes) => 
     Header: t('common.type'),
     accessor: 'type',
     Cell: ({ value }) => setTransactionTypes(value)
+  },
+  {
+    Header: t('common.category'),
+    accessor: 'category',
+    Cell: ({ value, row }) => setCategory(value, row)
   },
   {
     Header: t('common.description'),

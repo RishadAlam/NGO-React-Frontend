@@ -69,8 +69,22 @@ export default function Transactions() {
     return <Badge name={t(`common.${value}`)} className={className} />
   }
 
+  const setCategory = (value, row) => {
+    let category = t(`common.${row.original.type}`)
+
+    if (value) {
+      if (row.original.type === 'income') {
+        category = defaultNameCheck(t, value.is_default, 'income_categories.default.', value.name)
+      } else if (row.original.type === 'expense') {
+        category = defaultNameCheck(t, value.is_default, 'expense_categories.default.', value.name)
+      }
+    }
+
+    return category
+  }
+
   const columns = useMemo(
-    () => TransactionTableColumns(t, windowWidth, setTransactionTypes),
+    () => TransactionTableColumns(t, windowWidth, setTransactionTypes, setCategory),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
