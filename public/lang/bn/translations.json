@@ -152,6 +152,7 @@
     "total_payable_interest": "মোট লাভ",
     "deduct_loan_msg": "ঋণ কাটার জন্য একটি অ্যাকাউন্ট নির্বাচন করুন অন্যথায় এড়িয়ে যান।",
     "deduct_withdrawal_msg": "উত্তোলনের টাকা কাটার জন্য একটি অ্যাকাউন্ট নির্বাচন করুন অন্যথায় এড়িয়ে যান।",
+    "closing_modal_msg": "ন্যূনতম ক্লোজিং ফি এর সমান পরিমাণ টাকা ব্যালেন্সে জমা রাখতে হবে।",
     "note": "বিঃদ্রঃ",
     "installment": "কিস্তি সংখ্যা",
     "save": "সংরক্ষণ",
@@ -203,7 +204,9 @@
     "print": "প্রিন্ট",
     "collection_sheet": "সংগ্রহ শীট",
     "submit": "দাখিল করুন",
-    "account_closing": "একাউন্ট ক্লোজিং"
+    "account_closing": "একাউন্ট ক্লোজিং",
+    "total_withdrawn": "সর্বমোট সকল উত্তোলন",
+    "total_fees": "সর্বমোট ফি আদায়"
   },
 
   "common_validation": {
@@ -222,7 +225,9 @@
     "week": "দুর্বল",
     "confirm_password_not_match": "পাসওয়ার্ড মেলে না তা নিশ্চিত করুন",
     "crossed_the_limitations": "সীমাবদ্ধতা অতিক্রম করেছে",
-    "insufficient_balance": "পর্যাপ্ত পরিমাণ টাকা জমা নেই।"
+    "insufficient_balance": "পর্যাপ্ত পরিমাণ টাকা জমা নেই।",
+    "outstanding_loan_detected": "বকেয়া ঋণ সনাক্ত করা হয়েছে।",
+    "outstanding_interest_detected": "বকেয়া লাভ সনাক্ত করা হয়েছে।"
   },
 
   "app_config": {

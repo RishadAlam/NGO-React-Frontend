@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import Info from '../../../icons/Info'
 import Save from '../../../icons/Save'
 import XCircle from '../../../icons/XCircle'
 import tsNumbers from '../../../libs/tsNumbers'
@@ -21,6 +22,7 @@ export default function ClosingModal({
 }) {
   const { t } = useTranslation()
 
+  console.log(errors)
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
@@ -43,13 +45,15 @@ export default function ClosingModal({
                   <strong>{errors?.message}</strong>
                 </div>
               )}
-              <div className="row">
+              <span className="text-info">
+                <Info size={15} /> {t('common.closing_modal_msg')}
+              </span>
+              <div className="row mt-3">
                 <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.name')}
                     isRequired={true}
                     defaultValue={closingData?.name || ''}
-                    setChange={(val) => setChange(val, 'name')}
                     error={errors?.name}
                     disabled={true}
                   />
@@ -69,7 +73,7 @@ export default function ClosingModal({
                       <TextInputField
                         label={`${t('common.interest')} (${t('common.taka')})`}
                         isRequired={true}
-                        defaultValue={tsNumbers(closingData?.interest || 0)}
+                        defaultValue={tsNumbers(closingData?.interest || '')}
                         setChange={(val) => setChange(val, 'interest')}
                         error={errors?.interest}
                         autoFocus={true}
@@ -112,9 +116,11 @@ export default function ClosingModal({
                         label={t('common.total_loan_remaining')}
                         isRequired={true}
                         defaultValue={tsNumbers(closingData?.total_loan_remaining || 0)}
-                        error={errors?.total_loan_remaining}
                         disabled={true}
                       />
+                      {errors?.total_loan_remaining && (
+                        <span className="text-danger">{errors?.total_loan_remaining}</span>
+                      )}
                     </div>
                     <div className="col-md-6 mb-3">
                       <TextInputField
@@ -139,9 +145,11 @@ export default function ClosingModal({
                         label={t('common.total_interest_remaining')}
                         isRequired={true}
                         defaultValue={tsNumbers(closingData?.total_interest_remaining || 0)}
-                        error={errors?.total_interest_remaining}
                         disabled={true}
                       />
+                      {errors?.total_interest_remaining && (
+                        <span className="text-danger">{errors?.total_interest_remaining}</span>
+                      )}
                     </div>
                   </>
                 )}

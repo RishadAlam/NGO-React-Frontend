@@ -152,6 +152,7 @@
     "total_payable_interest": "Total Payable Interest",
     "deduct_loan_msg": "Select an account for deduct the loan otherwise avoid.",
     "deduct_withdrawal_msg": "Select an account for deduct the Withdrawal amount otherwise avoid.",
+    "closing_modal_msg": "An amount equal to the minimum closing fee must be deposited in the balance.",
     "note": "Note",
     "installment": "Installment",
     "save": "Save",
@@ -203,7 +204,9 @@
     "print": "Print",
     "collection_sheet": "Make Collection Sheet",
     "submit": "Submit",
-    "account_closing": "Account Closing"
+    "account_closing": "Account Closing",
+    "total_withdrawn": "Total Withdrawn",
+    "total_fees": "Total Fee Deducted"
   },
 
   "common_validation": {
@@ -222,7 +225,11 @@
     "week": "Week",
     "confirm_password_not_match": "Make sure the passwords do not match",
     "crossed_the_limitations": "crossed the limitations.",
-    "insufficient_balance": "Insufficient Balance"
+    "insufficient_balance": "Insufficient Balance",
+    "outstanding_loan_detected": "Outstanding Loan Detected",
+    "outstanding_interest_detected": "Outstanding Interest Detected"
+
+",
   },
 
   "react_table": {
@@ -308,20 +315,20 @@
   },
 
   "dashboard": {
-    "Savings_Make Collection_by_Sources": "Savings Make Collection by Sources",
-    "Loans_Make Collection_by_Sources": "Loans collection by sources",
+    "Savings_Collection_by_Sources": "Savings Make Collection by Sources",
+    "Loans_Collection_by_Sources": "Loans collection by sources",
     "Todays_Top_Money_Collectors": "Today's Top Money Collectors",
-    "Recent_Saving_Make Collections": "Recent Saving Make Collections",
-    "Recent_Loan_Make Collections": "Recent Loan Make Collections",
+    "Recent_Saving_Collections": "Recent Saving Make Collections",
+    "Recent_Loan_Collections": "Recent Loan Make Collections",
     "Recent_Saving_Withdrawals": "Recent Saving Withdrawals",
     "Recent_Loan_Withdrawals": "Recent Loan Withdrawals",
     "cards": {
       "Loan_Given": "Loan Given",
       "Loan_Recovered": "Loan Make Collections",
-      "Loan_Saving_Make Collections": "Loan Saving Make Collections",
-      "Saving_Make Collections": "Saving Make Collections",
-      "DPS_Make Collections": "DPS Make Collections",
-      "Monthly_Loan_Make Collections": "Monthly Loan Make Collections",
+      "Loan_Saving_Collections": "Loan Saving Make Collections",
+      "Saving_Collections": "Saving Make Collections",
+      "DPS_Collections": "DPS Make Collections",
+      "Monthly_Loan_Collections": "Monthly Loan Make Collections",
       "View_all": "View all",
       "this_month": "this month"
     }

@@ -9,7 +9,7 @@ import { isEmpty } from '../../../helper/isEmpty'
 import useFetch from '../../../hooks/useFetch'
 import tsNumbers from '../../../libs/tsNumbers'
 import xFetch from '../../../utilities/xFetch'
-import WithdrawalModal from './ClosingModal'
+import ClosingModal from './ClosingModal'
 
 export default function StoreAccClosing({ open, setOpen, prefix }) {
   const { id } = useParams()
@@ -57,19 +57,36 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
           }
         })
       )
-    !isEmpty(isError) && setErrors(isError)
+    !isEmpty(isError)
+      ? setErrors(isError)
+      : setErrors((prevError) =>
+          create(prevError, (draftError) => {
+            if (data?.closing_fee > data.balance) {
+              draftError['balance'] = t('common_validation.insufficient_balance')
+              draftError['closing_fee'] = t('common_validation.insufficient_balance')
+            }
+            if (data?.total_loan_remaining > 0) {
+              draftError['total_loan_remaining'] = t('common_validation.outstanding_loan_detected')
+            }
+            if (data?.total_interest_remaining > 0) {
+              draftError['total_interest_remaining'] = t(
+                'common_validation.outstanding_interest_detected'
+              )
+            }
+          })
+        )
   }, [data, isError])
 
   const setChange = (val, name) => {
-    if (name === 'amount') {
+    if (name === 'interest') {
       val = tsNumbers(val, true)
     }
 
     setClosingData((prevData) =>
       create(prevData, (draftData) => {
-        if (name === 'amount') {
+        if (name === 'interest') {
           draftData[name] = val
-          draftData.balance_remaining = draftData.balance - val
+          draftData.total_balance = parseInt(draftData.balance) + parseInt(val || 0)
           return
         }
 
@@ -81,24 +98,12 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
       create(prevErr, (draftErr) => {
         delete draftErr.message
 
-        if (name === 'amount') {
-          if (!Number(val)) {
-            draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
-            return
-          }
-          if (data?.max > 0 && (val < data?.min || val > data?.max)) {
-            draftErr[name] = `${t(`common.${name}`)} ${t(
-              `common_validation.crossed_the_limitations`
-            )}`
-            return
-          }
-          if (val > data?.balance) {
-            draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.insufficient_balance`)}`
-            return
-          }
+        if (name === 'interest' && !Number(val) && val != 0) {
+          draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
+          return
         }
 
-        val === ''
+        isEmpty(val)
           ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
           : delete draftErr[name]
       })
@@ -111,6 +116,19 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
+    if (data?.closing_fee > data.balance) {
+      toast.error(t('common_validation.insufficient_balance'))
+      return
+    }
+    if (data?.total_loan_remaining > 0) {
+      toast.error(t('common_validation.outstanding_loan_detected'))
+      return
+    }
+    if (data?.total_interest_remaining > 0) {
+      toast.error(t('common_validation.outstanding_interest_detected'))
+      return
+    }
+
     setLoading({ ...loading, withdrawForm: true })
     xFetch(endpoint, closingData, null, accessToken, null, 'POST')
       .then((response) => {
@@ -146,7 +164,7 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
   }
 
   return (
-    <WithdrawalModal
+    <ClosingModal
       open={open}
       setOpen={setOpen}
       closingData={closingData}
