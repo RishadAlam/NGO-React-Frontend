@@ -67,6 +67,15 @@ export default function ClosingModal({
                     disabled={true}
                   />
                 </div>
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.closing_fee')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(closingData?.closing_fee || 0)}
+                    error={errors?.closing_fee}
+                    disabled={true}
+                  />
+                </div>
                 {prefix === 'saving' && (
                   <>
                     <div className="col-md-6 mb-3">
@@ -82,12 +91,13 @@ export default function ClosingModal({
                     </div>
                     <div className="col-md-6 mb-3">
                       <TextInputField
-                        label={t('common.total_balance')}
+                        label={t('common.balance_remaining')}
                         isRequired={true}
                         defaultValue={tsNumbers(closingData?.total_balance || 0)}
                         error={errors?.total_balance}
                         disabled={true}
                       />
+                      {errors?.balance && <span className="text-danger">{errors?.balance}</span>}
                     </div>
                   </>
                 )}
@@ -168,15 +178,6 @@ export default function ClosingModal({
                     isRequired={true}
                     defaultValue={tsNumbers(closingData?.total_rec_installment || 0)}
                     error={errors?.total_rec_installment}
-                    disabled={true}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.closing_fee')}
-                    isRequired={true}
-                    defaultValue={tsNumbers(closingData?.closing_fee || 0)}
-                    error={errors?.closing_fee}
                     disabled={true}
                   />
                 </div>

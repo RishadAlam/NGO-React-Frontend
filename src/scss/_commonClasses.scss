@@ -205,6 +205,11 @@ span {
   line-height: unset !important;
 }
 
+.Mui-disabled.MuiFormHelperText-root.Mui-error,
+.MuiFormHelperText-root.Mui-error {
+  color: #d32f2f !important;
+}
+
 .btn-check:active + .btn-warning:focus,
 .btn-check:checked + .btn-warning:focus,
 .btn-warning.active:focus,

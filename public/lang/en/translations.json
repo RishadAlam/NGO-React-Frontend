@@ -228,8 +228,6 @@
     "insufficient_balance": "Insufficient Balance",
     "outstanding_loan_detected": "Outstanding Loan Detected",
     "outstanding_interest_detected": "Outstanding Interest Detected"
-
-",
   },
 
   "react_table": {

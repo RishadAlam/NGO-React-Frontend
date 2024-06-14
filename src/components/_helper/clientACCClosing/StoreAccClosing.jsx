@@ -46,7 +46,9 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
 
           if (prefix === 'saving') {
             draftData['interest'] = data?.interest
-            draftData['total_balance'] = data?.total_balance
+            draftData['total_balance'] =
+              parseInt(parseInt(data?.balance) + parseInt(data?.interest)) -
+              parseInt(data?.closing_fee)
           } else {
             draftData['loan_given'] = data?.loan_given || 0
             draftData['total_loan_rec'] = data?.total_loan_rec || 0
@@ -57,9 +59,11 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
           }
         })
       )
+
     !isEmpty(isError)
       ? setErrors(isError)
-      : setErrors((prevError) =>
+      : data &&
+        setErrors((prevError) =>
           create(prevError, (draftError) => {
             if (data?.closing_fee > data.balance) {
               draftError['balance'] = t('common_validation.insufficient_balance')
@@ -86,7 +90,10 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
       create(prevData, (draftData) => {
         if (name === 'interest') {
           draftData[name] = val
-          draftData.total_balance = parseInt(draftData.balance) + parseInt(val || 0)
+          draftData.total_balance = parseInt(
+            parseInt(parseInt(draftData?.balance) + parseInt(val || 0)) -
+              parseInt(draftData?.closing_fee)
+          )
           return
         }
 
@@ -103,6 +110,23 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
           return
         }
 
+        if (
+          parseInt(
+            parseInt(parseInt(closingData?.balance) + parseInt(val || 0)) -
+              parseInt(closingData?.closing_fee)
+          ) < 0
+        ) {
+          draftErr['balance'] = t('common_validation.insufficient_balance')
+        } else if (
+          parseInt(
+            parseInt(parseInt(closingData?.balance) + parseInt(val || 0)) -
+              parseInt(closingData?.closing_fee)
+          ) >= 0
+        ) {
+          delete draftErr.balance
+          delete draftErr.closing_fee
+        }
+
         isEmpty(val)
           ? (draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_required`)}`)
           : delete draftErr[name]
@@ -112,19 +136,20 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (closingData.amount === '' || closingData.description === '') {
+    if (isEmpty(closingData.description)) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-    if (data?.closing_fee > data.balance) {
+    console.log(closingData.total_balance)
+    if (closingData.total_balance < 0) {
       toast.error(t('common_validation.insufficient_balance'))
       return
     }
-    if (data?.total_loan_remaining > 0) {
+    if (closingData?.total_loan_remaining > 0) {
       toast.error(t('common_validation.outstanding_loan_detected'))
       return
     }
-    if (data?.total_interest_remaining > 0) {
+    if (closingData?.total_interest_remaining > 0) {
       toast.error(t('common_validation.outstanding_interest_detected'))
       return
     }
