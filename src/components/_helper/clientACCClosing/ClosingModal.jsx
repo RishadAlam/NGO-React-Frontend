@@ -22,7 +22,6 @@ export default function ClosingModal({
 }) {
   const { t } = useTranslation()
 
-  console.log(errors)
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
@@ -77,30 +76,28 @@ export default function ClosingModal({
                   />
                 </div>
                 {prefix === 'saving' && (
-                  <>
-                    <div className="col-md-6 mb-3">
-                      <TextInputField
-                        label={`${t('common.interest')} (${t('common.taka')})`}
-                        isRequired={true}
-                        defaultValue={tsNumbers(closingData?.interest || '')}
-                        setChange={(val) => setChange(val, 'interest')}
-                        error={errors?.interest}
-                        autoFocus={true}
-                        disabled={loading?.closingForm}
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <TextInputField
-                        label={t('common.balance_remaining')}
-                        isRequired={true}
-                        defaultValue={tsNumbers(closingData?.total_balance || 0)}
-                        error={errors?.total_balance}
-                        disabled={true}
-                      />
-                      {errors?.balance && <span className="text-danger">{errors?.balance}</span>}
-                    </div>
-                  </>
+                  <div className="col-md-6 mb-3">
+                    <TextInputField
+                      label={`${t('common.interest')} (${t('common.taka')})`}
+                      isRequired={true}
+                      defaultValue={tsNumbers(closingData?.interest || '')}
+                      setChange={(val) => setChange(val, 'interest')}
+                      error={errors?.interest}
+                      autoFocus={true}
+                      disabled={loading?.closingForm}
+                    />
+                  </div>
                 )}
+                <div className="col-md-6 mb-3">
+                  <TextInputField
+                    label={t('common.balance_remaining')}
+                    isRequired={true}
+                    defaultValue={tsNumbers(closingData?.total_balance || 0)}
+                    error={errors?.total_balance}
+                    disabled={true}
+                  />
+                  {errors?.balance && <span className="text-danger">{errors?.balance}</span>}
+                </div>
                 {prefix === 'loan' && (
                   <>
                     <div className="col-md-6 mb-3">

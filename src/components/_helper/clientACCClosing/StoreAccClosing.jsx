@@ -43,12 +43,13 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
           draftData['closing_fee_acc_id'] = data?.closing_fee_acc_id
           draftData['total_installment'] = data?.total_installment || 0
           draftData['total_rec_installment'] = data?.total_rec_installment || 0
+          draftData['total_balance'] = parseInt(
+            parseInt(data?.balance) - parseInt(data?.closing_fee)
+          )
 
           if (prefix === 'saving') {
             draftData['interest'] = data?.interest
-            draftData['total_balance'] =
-              parseInt(parseInt(data?.balance) + parseInt(data?.interest)) -
-              parseInt(data?.closing_fee)
+            draftData['total_balance'] += parseInt(data?.interest)
           } else {
             draftData['loan_given'] = data?.loan_given || 0
             draftData['total_loan_rec'] = data?.total_loan_rec || 0
@@ -154,10 +155,10 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
       return
     }
 
-    setLoading({ ...loading, withdrawForm: true })
+    setLoading({ ...loading, closingForm: true })
     xFetch(endpoint, closingData, null, accessToken, null, 'POST')
       .then((response) => {
-        setLoading({ ...loading, withdrawForm: false })
+        setLoading({ ...loading, closingForm: false })
         if (response?.success) {
           toast.success(response.message)
           setOpen(false)
@@ -175,7 +176,7 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
         )
       })
       .catch((errResponse) => {
-        setLoading({ ...loading, withdrawForm: false })
+        setLoading({ ...loading, closingForm: false })
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
