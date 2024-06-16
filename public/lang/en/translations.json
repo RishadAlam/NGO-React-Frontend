@@ -273,8 +273,8 @@
       "loan_account_registration": "Loan Account Registration"
     },
     "collection": {
-      "Saving_Make Collection": "Saving Make Collection",
-      "Loan_Make Collection": "Loan Make Collection"
+      "Saving_Collection": "Saving Make Collection",
+      "Loan_Collection": "Loan Make Collection"
     },
     "withdrawal": {
       "Saving_Withdrawal": "Saving Withdrawal",

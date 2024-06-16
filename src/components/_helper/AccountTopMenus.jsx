@@ -18,7 +18,9 @@ export default function AccountTopMenus({
   prefix,
   actionHistory = [],
   actionHistoryPermission,
-  status,
+  status = false,
+  is_approved = false,
+  is_loan_approved = false,
   mutate
 }) {
   const { t } = useTranslation()
@@ -30,7 +32,7 @@ export default function AccountTopMenus({
 
   return (
     <div className="d-flex justify-content-end mb-2">
-      {prefix && (
+      {prefix && Boolean(is_approved) && (
         <>
           {((prefix === 'saving' &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions)) ||
@@ -60,6 +62,7 @@ export default function AccountTopMenus({
           {((prefix === 'saving' &&
             checkPermission('client_saving_account_change_status', authPermissions)) ||
             (prefix === 'loan-saving' &&
+              Boolean(is_loan_approved) &&
               checkPermission('client_loan_account_change_status', authPermissions))) && (
             <ChangeAccountStatus
               prefix={prefix === 'loan-saving' ? 'loan' : prefix}

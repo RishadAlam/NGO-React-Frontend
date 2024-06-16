@@ -29,14 +29,20 @@ export default function AccountSummary({ data }) {
       setClassNames('bg-secondary')
     } else {
       setStatus(
-        data?.is_approved
+        data?.is_approved && data?.is_loan_approved
           ? data?.status
             ? t('common.running')
             : t('common.hold')
           : t('common.pending')
       )
 
-      setClassNames(data?.is_approved ? (data?.status ? 'bg-success' : 'bg-warning') : 'bg-danger')
+      setClassNames(
+        data?.is_approved && data?.is_loan_approved
+          ? data?.status
+            ? 'bg-success'
+            : 'bg-warning'
+          : 'bg-danger'
+      )
     }
     setDetailsSummary([
       [

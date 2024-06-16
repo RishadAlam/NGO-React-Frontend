@@ -23,6 +23,8 @@ export default function LoanAccount() {
         actionHistory={data.loan_account_action_history}
         actionHistoryPermission="client_loan_account_action_history"
         status={data?.status}
+        is_approved={data?.is_approved}
+        is_loan_approved={data?.is_loan_approved}
         mutate={mutate}
       />
       <RegisterBox className="shadow rounded-4">
