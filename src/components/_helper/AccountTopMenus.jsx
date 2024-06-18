@@ -21,6 +21,7 @@ export default function AccountTopMenus({
   status = false,
   is_approved = false,
   is_loan_approved = false,
+  is_acc_closed = false,
   mutate
 }) {
   const { t } = useTranslation()
@@ -32,7 +33,7 @@ export default function AccountTopMenus({
 
   return (
     <div className="d-flex justify-content-end mb-2">
-      {prefix && Boolean(is_approved) && (
+      {prefix && Boolean(is_approved) && !is_acc_closed && (
         <>
           {((prefix === 'saving' &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions)) ||
@@ -88,6 +89,7 @@ export default function AccountTopMenus({
               open={withdrawalModalOpen}
               setOpen={setWithdrawalModalOpen}
               prefix={prefix}
+              mutate={mutate}
             />
           )}
           {accountClosingModalOpen && (
@@ -95,6 +97,7 @@ export default function AccountTopMenus({
               open={accountClosingModalOpen}
               setOpen={setAccountClosingModalOpen}
               prefix={prefix === 'loan-saving' ? 'loan' : prefix}
+              mutate={mutate}
             />
           )}
           {accountCheckModalOpen && (

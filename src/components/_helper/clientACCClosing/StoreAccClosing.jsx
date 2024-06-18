@@ -11,7 +11,7 @@ import tsNumbers from '../../../libs/tsNumbers'
 import xFetch from '../../../utilities/xFetch'
 import ClosingModal from './ClosingModal'
 
-export default function StoreAccClosing({ open, setOpen, prefix }) {
+export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
   const { id } = useParams()
   const { t } = useTranslation()
   const endpoint = `closing/${prefix}`
@@ -22,14 +22,11 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
     account_id: id,
     name: '',
     balance: 0,
-    description: ''
+    description: '',
+    withdrawal_account: ''
   })
 
-  const {
-    data: { data } = [],
-    isLoading,
-    isError
-  } = useFetch({
+  const { data: { data } = [], isError } = useFetch({
     action: `${endpoint}/${id}`
   })
 
@@ -156,13 +153,21 @@ export default function StoreAccClosing({ open, setOpen, prefix }) {
     }
 
     setLoading({ ...loading, closingForm: true })
-    xFetch(endpoint, closingData, null, accessToken, null, 'POST')
+    xFetch(
+      endpoint,
+      { ...closingData, withdrawal_account_id: closingData?.withdrawal_account?.id || '' },
+      null,
+      accessToken,
+      null,
+      'POST'
+    )
       .then((response) => {
         setLoading({ ...loading, closingForm: false })
         if (response?.success) {
           toast.success(response.message)
           setOpen(false)
           setClosingData({})
+          mutate()
           return
         }
         setErrors((prevErr) =>

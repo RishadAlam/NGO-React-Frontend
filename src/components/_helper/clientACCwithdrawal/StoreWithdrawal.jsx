@@ -11,7 +11,7 @@ import tsNumbers from '../../../libs/tsNumbers'
 import xFetch from '../../../utilities/xFetch'
 import WithdrawalModal from './WithdrawalModal'
 
-export default function StoreWithdrawal({ open, setOpen, prefix }) {
+export default function StoreWithdrawal({ open, setOpen, prefix, mutate }) {
   const { id } = useParams()
   const { t } = useTranslation()
   const endpoint = `withdrawal/${prefix}`
@@ -27,11 +27,7 @@ export default function StoreWithdrawal({ open, setOpen, prefix }) {
     description: ''
   })
 
-  const {
-    data: { data } = [],
-    isLoading,
-    isError
-  } = useFetch({
+  const { data: { data } = [], isError } = useFetch({
     action: `${endpoint}/${id}`
   })
 
@@ -106,6 +102,7 @@ export default function StoreWithdrawal({ open, setOpen, prefix }) {
           toast.success(response.message)
           setOpen(false)
           setWithdrawData({})
+          mutate()
           return
         }
         setErrors((prevErr) =>

@@ -185,7 +185,7 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
                 {permissions.includes(`pending_${permissionPrefix}_withdrawal_approval`) && (
                   <div className="col-md-6 mb-3">
                     <SelectBoxField
-                      label={t('common.account')}
+                      label={t('common.withdrawal_account')}
                       config={accountSelectBoxConfig}
                       isRequired={true}
                       error={error?.account}

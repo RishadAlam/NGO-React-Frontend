@@ -9,11 +9,7 @@ import AccountSummary from './AccountSummary'
 export default function LoanAccount() {
   const { id } = useParams()
 
-  const {
-    data: { data = [] } = [],
-    mutate,
-    isLoading
-  } = useFetch({
+  const { data: { data = [] } = [], mutate } = useFetch({
     action: `client/registration/loan/${id}`
   })
   return (
@@ -25,6 +21,7 @@ export default function LoanAccount() {
         status={data?.status}
         is_approved={data?.is_approved}
         is_loan_approved={data?.is_loan_approved}
+        is_acc_closed={data?.deleted_at}
         mutate={mutate}
       />
       <RegisterBox className="shadow rounded-4">

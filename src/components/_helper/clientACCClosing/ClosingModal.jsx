@@ -1,10 +1,13 @@
 import { useTranslation } from 'react-i18next'
+import { defaultNameCheck } from '../../../helper/defaultNameCheck'
+import useFetch from '../../../hooks/useFetch'
 import Info from '../../../icons/Info'
 import Save from '../../../icons/Save'
 import XCircle from '../../../icons/XCircle'
 import tsNumbers from '../../../libs/tsNumbers'
 import Button from '../../utilities/Button'
 import ModalPro from '../../utilities/ModalPro'
+import SelectBoxField from '../../utilities/SelectBoxField'
 import TextAreaInputField from '../../utilities/TextAreaInputField'
 import TextInputField from '../../utilities/TextInputField'
 
@@ -21,6 +24,16 @@ export default function ClosingModal({
   btnTitle
 }) {
   const { t } = useTranslation()
+  const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
+
+  const accountSelectBoxConfig = {
+    options: accounts,
+    value: closingData.withdrawal_account || null,
+    getOptionLabel: (option) =>
+      defaultNameCheck(t, option.is_default, 'account.default.', option.name),
+    onChange: (e, option) => setChange(option, 'withdrawal_account'),
+    isOptionEqualToValue: (option, value) => option.id === value.id
+  }
 
   return (
     <>
@@ -90,7 +103,7 @@ export default function ClosingModal({
                 )}
                 <div className="col-md-6 mb-3">
                   <TextInputField
-                    label={t('common.balance_remaining')}
+                    label={`${t('common.balance_remaining')} (${t('common.balance')} - ${t('common.closing_fee')} + ${t('common.interest')})`}
                     isRequired={true}
                     defaultValue={tsNumbers(closingData?.total_balance || 0)}
                     error={errors?.total_balance}
@@ -177,6 +190,18 @@ export default function ClosingModal({
                     error={errors?.total_rec_installment}
                     disabled={true}
                   />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <SelectBoxField
+                    label={t('common.withdrawal_account')}
+                    config={accountSelectBoxConfig}
+                    isRequired={true}
+                    error={errors?.withdrawal_account}
+                    disabled={loading?.withdrawal_account}
+                  />
+                  <span className="text-info">
+                    <Info size={15} /> {t('common.deduct_withdrawal_msg')}
+                  </span>
                 </div>
                 <div className="col-md-12 mb-3 text-start">
                   <TextAreaInputField
