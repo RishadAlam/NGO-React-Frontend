@@ -22,6 +22,7 @@ export default function LoanAccount() {
         is_approved={data?.is_approved}
         is_loan_approved={data?.is_loan_approved}
         is_acc_closed={data?.deleted_at}
+        closing_req={data?.closing_req}
         mutate={mutate}
       />
       <RegisterBox className="shadow rounded-4">

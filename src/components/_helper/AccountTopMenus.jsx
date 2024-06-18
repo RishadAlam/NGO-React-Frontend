@@ -22,6 +22,7 @@ export default function AccountTopMenus({
   is_approved = false,
   is_loan_approved = false,
   is_acc_closed = false,
+  closing_req = false,
   mutate
 }) {
   const { t } = useTranslation()
@@ -33,6 +34,9 @@ export default function AccountTopMenus({
 
   return (
     <div className="d-flex justify-content-end mb-2">
+      {Boolean(closing_req) && (
+        <span className="me-3 text-danger">{t('common.account_closing_msg')}</span>
+      )}
       {prefix && Boolean(is_approved) && !is_acc_closed && (
         <>
           {((prefix === 'saving' &&

@@ -19,6 +19,7 @@ export default function SavingAccount() {
         status={data?.status}
         is_approved={data?.is_approved}
         is_acc_closed={data?.deleted_at}
+        closing_req={data?.closing_req}
         mutate={mutate}
         prefix="saving"
         actionHistory={data.saving_account_action_history}
