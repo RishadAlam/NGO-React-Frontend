@@ -586,7 +586,9 @@
       "staff_permission": "কর্মচারিবর্গের অনুমতি",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা",
       "audit_report_meta": "অডিট রিপোর্ট মেটা",
-      "cooperative_audit_report": "কো-অপারেটিভে অডিট রিপোর্ট"
+      "cooperative_audit_report": "কো-অপারেটিভে অডিট রিপোর্ট",
+      "pending_req_to_delete_loan_acc": "অনুমোদন অপেক্ষারত ঋণ অ্যাকাউন্ট মুছে ফেলার অনুরোধ",
+      "pending_req_to_delete_saving_acc": "অনুমোদন অপেক্ষারত সঞ্চয় অ্যাকাউন্ট মুছে ফেলার অনুরোধ"
     },
     "permissions": {
       "view_dashboard_as_admin": "অ্যাডমিন হিসাবে দেখুন",
@@ -732,7 +734,7 @@
       "cooperative_audit_report_update": "আপডেট",
       "cooperative_audit_report_view": "দেখুন",
       "client_register_account_delete": "সাময়িকভাবে ডিলিট (সকল একাউন্ট)",
-      "client_register_account_account_permanently_delete": "স্থায়ীভাবে ডিলিট (সকল একাউন্ট)",
+      "client_register_account_permanently_delete": "স্থায়ীভাবে ডিলিট (সকল একাউন্ট)",
       "client_register_account_center_update": "কেন্দ্র আপডেট (সকল একাউন্ট)",
       "client_register_account_field_update": "ফিল্ড আপডেট (সকল একাউন্ট)",
       "client_register_account_acc_no_update": "একাউন্ট নং আপডেট (সকল একাউন্ট)",
@@ -743,11 +745,23 @@
       "client_loan_account_category_update": "ক্যাটাগরি আপডেট (সকল লেনদেন)",
       "client_loan_account_update": "আপডেট",
       "client_loan_account_action_history": "পদক্ষেপ / ইতিহাস",
+      "client_loan_account_change_status": "একাউন্ট স্ট্যটাস পরিবর্তন (সক্রিয় / তামাদি)",
       "client_saving_account_delete": "সাময়িকভাবে ডিলিট",
       "client_saving_account_permanently_delete": "স্থায়ীভাবে ডিলিট",
       "client_saving_account_category_update": "ক্যাটাগরি আপডেট (সকল লেনদেন)",
       "client_saving_account_update": "আপডেট",
-      "client_saving_account_action_history": "পদক্ষেপ / ইতিহাস"
+      "client_saving_account_action_history": "পদক্ষেপ / ইতিহাস",
+      "client_saving_account_change_status": "একাউন্ট স্ট্যটাস পরিবর্তন (সক্রিয় / তামাদি)",
+      "pending_req_to_delete_loan_acc_approval": "অনুমোদন",
+      "pending_req_to_delete_loan_acc_delete": "ডিলিট",
+      "pending_req_to_delete_loan_acc_list_view": "দেখুন",
+      "pending_req_to_delete_loan_acc_list_view_as_admin": "অ্যাডমিন হিসাবে দেখুন",
+      "pending_req_to_delete_loan_acc_update": "আপডেট",
+      "pending_req_to_delete_saving_acc_approval": "অনুমোদন",
+      "pending_req_to_delete_saving_acc_delete": "ডিলিট",
+      "pending_req_to_delete_saving_acc_list_view": "দেখুন",
+      "pending_req_to_delete_saving_acc_list_view_as_admin": "অ্যাডমিন হিসাবে দেখুন",
+      "pending_req_to_delete_saving_acc_update": "আপডেট"
     }
   }
 }

@@ -597,7 +597,9 @@
       "staff_permission": "Staff Permission",
       "settings_and_privacy": "Settings & Privacy",
       "audit_report_meta": "Audit Report Meta",
-      "cooperative_audit_report": "Co-Operative Audit Report"
+      "cooperative_audit_report": "Co-Operative Audit Report",
+      "pending_req_to_delete_loan_acc": "Pending Request to Delete Loan Account",
+      "pending_req_to_delete_saving_acc": "Pending Request to Delete Saving Account"
     },
     "permissions": {
       "view_dashboard_as_admin": "View As Admin",
@@ -743,7 +745,7 @@
       "cooperative_audit_report_update": "Update",
       "cooperative_audit_report_view": "View",
       "client_register_account_delete": "Temporary Delete (All Account)",
-      "client_register_account_account_permanently_delete": "Permanently Delete (All Account)",
+      "client_register_account_permanently_delete": "Permanently Delete (All Account)",
       "client_register_account_center_update": "Center Update (All Account)",
       "client_register_account_field_update": "Field Update (All Account)",
       "client_register_account_acc_no_update": "Account No Update (All Account)",
@@ -754,11 +756,23 @@
       "client_loan_account_category_update": "Category Update (All Transactions)",
       "client_loan_account_update": "Update",
       "client_loan_account_action_history": "Action History",
+      "client_loan_account_change_status": "Change Status (Active / Hold)",
       "client_saving_account_delete": "Temporary Delete",
       "client_saving_account_permanently_delete": "Permanently Delete",
       "client_saving_account_category_update": "Category Update (All Transactions)",
       "client_saving_account_update": "Update",
-      "client_saving_account_action_history": "Action History"
+      "client_saving_account_action_history": "Action History",
+      "client_saving_account_change_status": "Change Status (Active / Hold)",
+      "pending_req_to_delete_loan_acc_approval": "Approval",
+      "pending_req_to_delete_loan_acc_delete": "Delete",
+      "pending_req_to_delete_loan_acc_list_view": "View",
+      "pending_req_to_delete_loan_acc_list_view_as_admin": "View As Admin",
+      "pending_req_to_delete_loan_acc_update": "Update",
+      "pending_req_to_delete_saving_acc_approval": "Approval",
+      "pending_req_to_delete_saving_acc_delete": "Delete",
+      "pending_req_to_delete_saving_acc_list_view": "View",
+      "pending_req_to_delete_saving_acc_list_view_as_admin": "View As Admin",
+      "pending_req_to_delete_saving_acc_update": "Update"
     }
   }
 }
