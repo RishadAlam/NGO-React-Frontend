@@ -268,7 +268,8 @@
       "account_management": "Account Management",
       "staff": "Staffs",
       "settings_and_privacy": "Settings & Privacy",
-      "audit": "Audit"
+      "audit": "Audit",
+      "pending_acc_delete_req": "Pending Account Delete Request"
     },
     "registration": {
       "Client_Registration": "Client Registration",
@@ -282,6 +283,10 @@
     "withdrawal": {
       "Saving_Withdrawal": "Saving Withdrawal",
       "Loan_Saving_Withdrawal": "Loan Saving Withdrawal"
+    },
+    "delete": {
+      "Saving_Delete": "Saving Account Delete",
+      "Loan_Delete": "Loan Account Delete"
     },
     "account_management": {
       "Accounts": "Accounts",

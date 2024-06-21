@@ -220,6 +220,49 @@ export const mainMenu = (t) => {
             )
           }
         ]
+      },
+      {
+        id: 5,
+        label: t('menu.label.pending_acc_delete_req'),
+        path: '',
+        icon: 'Trash',
+        view: checkPermissions(
+          [
+            'pending_req_to_delete_saving_acc_list_view',
+            'pending_req_to_delete_saving_acc_list_view_as_admin',
+            'pending_req_to_delete_loan_acc_list_view',
+            'pending_req_to_delete_loan_acc_list_view_as_admin'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'pendingWithdrawal1',
+            label: t('menu.delete.Saving_Delete'),
+            path: '/pending/delete/saving',
+            icon: 'Trash',
+            view: checkPermissions(
+              [
+                'pending_req_to_delete_saving_acc_list_view',
+                'pending_req_to_delete_saving_acc_list_view_as_admin'
+              ],
+              permissions
+            )
+          },
+          {
+            id: 'pendingWithdrawal2',
+            label: t('menu.delete.Loan_Delete'),
+            path: '/pending/delete/loan-saving',
+            icon: 'Trash',
+            view: checkPermissions(
+              [
+                'pending_req_to_delete_loan_acc_list_view',
+                'pending_req_to_delete_loan_acc_list_view_as_admin'
+              ],
+              permissions
+            )
+          }
+        ]
       }
     ],
     [t('menu.categories.Control_Panel')]: [

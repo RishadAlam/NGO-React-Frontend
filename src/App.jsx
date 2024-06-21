@@ -46,6 +46,7 @@ const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfi
 const CategoriesConfig = lazy(() => import('./pages/configurations/CategoriesConfig'))
 const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientRegisterAccount'))
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
+const PendingClosing = lazy(() => import('./pages/pendingClosings/PendingClosing'))
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
 const AuditReport = lazy(() => import('./pages/audit/AuditReport'))
@@ -517,6 +518,54 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <PendingWithdrawal prefix="loan-saving" />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+            </Route>
+
+            {/* Pending Closing Request Routes */}
+            <Route path="pending/delete">
+              <Route
+                path="saving"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_req_to_delete_saving_acc_list_view',
+                      'pending_req_to_delete_saving_acc_list_view_as_admin'
+                    ]}
+                    pageTitle={['common.pending', 'menu.delete.Saving_Delete']}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingClosing prefix="saving" />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="loan-saving"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={[
+                      'pending_req_to_delete_loan_acc_list_view',
+                      'pending_req_to_delete_loan_acc_list_view_as_admin'
+                    ]}
+                    pageTitle={['common.pending', 'menu.delete.Loan_Delete']}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <PendingClosing prefix="loan" />
                       </Suspense>
                     </ErrorBoundary>
                   }

@@ -21,19 +21,21 @@ import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
-import CashWithdrawal from '../../icons/CashWithdrawal'
 import CheckPatch from '../../icons/CheckPatch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
-import { PendingWithdrawalTableColumns } from '../../resources/staticData/tableColumns'
+import {
+  PendingLoanClosingTableColumns,
+  PendingSavingClosingTableColumns
+} from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
 
-export default function PendingSavingWithdrawal({ prefix }) {
-  const [editWithdrawalAccData, setEditWithdrawalAccData] = useState()
-  const [editWithdrawalAccDataModal, setEditWithdrawalAccDataModal] = useState(false)
-  const [withdrawalAppData, setWithdrawalAppData] = useState()
-  const [withdrawalAppModal, setWithdrawalAppModal] = useState(false)
+export default function PendingClosing({ prefix }) {
+  const [editClosingAccData, setEditClosingAccData] = useState()
+  const [editClosingAccDataModal, setEditClosingAccDataModal] = useState(false)
+  const [withdrawalAppData, setClosingAppData] = useState()
+  const [withdrawalAppModal, setClosingAppModal] = useState(false)
   const [selectedField, setSelectedField] = useState()
   const [selectedCenter, setSelectedCenter] = useState()
   const [selectedCategory, setSelectedCategory] = useState()
@@ -42,17 +44,16 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const windowWidth = useWindowInnerWidthValue()
   const { id, accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
-  const endpoint = `withdrawal/${prefix}`
-  const permissionPrefix = prefix === 'saving' ? 'saving' : 'loan_saving'
+  const endpoint = `closing/${prefix}`
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
-    data: { data: withdrawal } = [],
+    data: { data: closings } = [],
     mutate,
     isLoading
   } = useFetch({
-    action: `${endpoint}/pending`,
+    action: endpoint,
     queryParams: {
       field_id: selectedField?.id || '',
       center_id: selectedCenter?.id || '',
@@ -110,7 +111,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const creatorConfig = {
-    options: !checkPermission(`pending_${permissionPrefix}_acc_list_view_as_admin`, authPermissions)
+    options: !checkPermission(`pending_${prefix}_acc_list_view_as_admin`, authPermissions)
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: selectedCreator || null,
@@ -121,7 +122,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const statusSwitch = (value, data) =>
-    checkPermission(`pending_${permissionPrefix}_withdrawal_approval`, authPermissions) && (
+    checkPermission(`pending_req_to_delete_${prefix}_acc_approval`, authPermissions) && (
       <AndroidSwitch
         value={Number(value) ? true : false}
         toggleStatus={() => setApprovalData(data)}
@@ -131,14 +132,14 @@ export default function PendingSavingWithdrawal({ prefix }) {
 
   const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
-      {checkPermission(`pending_${permissionPrefix}_withdrawal_update`, authPermissions) && (
+      {checkPermission(`pending_req_to_delete_${prefix}_acc_update`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => setWithdrawalEdit(withdrawal)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {checkPermission(`pending_${permissionPrefix}_withdrawal_delete`, authPermissions) && (
+      {checkPermission(`pending_req_to_delete_${prefix}_acc_delete`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => deleteWithdrawal(id)}>
             {<Trash size={20} />}
@@ -154,36 +155,55 @@ export default function PendingSavingWithdrawal({ prefix }) {
 
   const columns = useMemo(
     () =>
-      PendingWithdrawalTableColumns(
-        t,
-        windowWidth,
-        avatar,
-        statusSwitch,
-        descParser,
-        actionBtnGroup,
-        !checkPermission(`pending_${permissionPrefix}_withdrawal_approval`, authPermissions),
-        !checkPermissions(
-          [
-            `pending_${permissionPrefix}_withdrawal_list_view`,
-            `pending_${permissionPrefix}_withdrawal_list_view_as_admin`,
-            `pending_${permissionPrefix}_withdrawal_update`,
-            `pending_${permissionPrefix}_withdrawal_delete`
-          ],
-          authPermissions
-        )
-      ),
+      prefix === 'saving'
+        ? PendingSavingClosingTableColumns(
+            t,
+            windowWidth,
+            avatar,
+            statusSwitch,
+            descParser,
+            actionBtnGroup,
+            !checkPermission(`pending_req_to_delete_${prefix}_acc_approval`, authPermissions),
+            !checkPermissions(
+              [
+                `pending_req_to_delete_${prefix}_acc_list_view`,
+                `pending_req_to_delete_${prefix}_acc_list_view_as_admin`,
+                `pending_req_to_delete_${prefix}_acc_update`,
+                `pending_req_to_delete_${prefix}_acc_delete`
+              ],
+              authPermissions
+            )
+          )
+        : PendingLoanClosingTableColumns(
+            t,
+            windowWidth,
+            avatar,
+            statusSwitch,
+            descParser,
+            actionBtnGroup,
+            !checkPermission(`pending_req_to_delete_${prefix}_acc_approval`, authPermissions),
+            !checkPermissions(
+              [
+                `pending_req_to_delete_${prefix}_acc_list_view`,
+                `pending_req_to_delete_${prefix}_acc_list_view_as_admin`,
+                `pending_req_to_delete_${prefix}_acc_update`,
+                `pending_req_to_delete_${prefix}_acc_delete`
+              ],
+              authPermissions
+            )
+          ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, prefix]
   )
 
   const setWithdrawalEdit = (account) => {
-    setEditWithdrawalAccData(setApprovalWithdrawalModalData(account))
-    setEditWithdrawalAccDataModal(true)
+    setEditClosingAccData(setApprovalWithdrawalModalData(account))
+    setEditClosingAccDataModal(true)
   }
 
   const setApprovalData = (data) => {
-    setWithdrawalAppData(setApprovalWithdrawalModalData(data))
-    setWithdrawalAppModal(true)
+    setClosingAppData(setApprovalWithdrawalModalData(data))
+    setClosingAppModal(true)
   }
 
   const deleteWithdrawal = (id) => {
@@ -224,39 +244,39 @@ export default function PendingSavingWithdrawal({ prefix }) {
               breadcrumbs={[
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
-                  name: t('menu.label.pending_withdrawals'),
+                  name: t('menu.label.pending_acc_delete_req'),
                   icon: <CheckPatch size={16} />,
                   active: false
                 },
                 {
                   name:
                     prefix === 'saving'
-                      ? t('menu.withdrawal.Saving_Withdrawal')
-                      : t('menu.withdrawal.Loan_Saving_Withdrawal'),
-                  icon: <CashWithdrawal size={18} />,
+                      ? t('menu.delete.Saving_Delete')
+                      : t('menu.delete.Loan_Delete'),
+                  icon: <Trash size={18} />,
                   active: true
                 }
               ]}
             />
           </div>
         </div>
-        {editWithdrawalAccData &&
-          authPermissions.includes(`pending_${permissionPrefix}_withdrawal_update`) && (
+        {editClosingAccData &&
+          authPermissions.includes(`pending_req_to_delete_${prefix}_acc_update`) && (
             <EditWithdrawalModal
-              open={editWithdrawalAccDataModal}
-              setOpen={setEditWithdrawalAccDataModal}
-              withdrawal={editWithdrawalAccData}
-              setAccountData={setEditWithdrawalAccData}
+              open={editClosingAccDataModal}
+              setOpen={setEditClosingAccDataModal}
+              withdrawal={editClosingAccData}
+              setAccountData={setEditClosingAccData}
               prefix={prefix}
               mutate={mutate}
-              category_id={editWithdrawalAccData?.category?.id}
+              category_id={editClosingAccData?.category?.id}
             />
           )}
         {withdrawalAppData &&
-          authPermissions.includes(`pending_${permissionPrefix}_withdrawal_approval`) && (
+          authPermissions.includes(`pending_req_to_delete_${prefix}_acc_approval`) && (
             <ApproveWithdrawalModal
               open={withdrawalAppModal}
-              setOpen={setWithdrawalAppModal}
+              setOpen={setClosingAppModal}
               data={withdrawalAppData}
               mutate={mutate}
               prefix={prefix}
@@ -274,14 +294,14 @@ export default function PendingSavingWithdrawal({ prefix }) {
           </div>
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
             {checkPermission(
-              `pending_${permissionPrefix}_withdrawal_list_view_as_admin`,
+              `pending_req_to_delete_${prefix}_acc_list_view_as_admin`,
               authPermissions
             ) &&
               creators && <SelectBoxField label={t('common.creator')} config={creatorConfig} />}
           </div>
         </div>
         <div className="staff-table">
-          {isLoading && !withdrawal ? (
+          {isLoading && !closings ? (
             <ReactTableSkeleton />
           ) : (
             <ReactTable
@@ -291,8 +311,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
                   : t('menu.withdrawal.Loan_Saving_Withdrawal')
               }
               columns={columns}
-              data={withdrawal}
-              footer={true}
+              data={closings}
             />
           )}
         </div>
