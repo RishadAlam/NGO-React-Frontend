@@ -1771,24 +1771,24 @@ export const PendingSavingClosingTableColumns = (
   },
   {
     Header: t('common.acc_no'),
-    accessor: 'acc_no',
+    accessor: 'saving_account.acc_no',
     Cell: ({ value }) => tsNumbers(value)
   },
   {
     Header: t('common.field'),
-    accessor: 'field',
+    accessor: 'saving_account.field',
     show: false,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
     Header: t('common.center'),
-    accessor: 'center',
+    accessor: 'saving_account.center',
     show: false,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
     Header: t('common.category'),
-    accessor: 'category',
+    accessor: 'saving_account.category',
     Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
@@ -1799,7 +1799,7 @@ export const PendingSavingClosingTableColumns = (
   },
   {
     Header: t('common.balance'),
-    accessor: 'balance',
+    accessor: 'main_balance',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => tsNumbers(`$${value}/-`)
   },
@@ -1895,24 +1895,24 @@ export const PendingLoanClosingTableColumns = (
   },
   {
     Header: t('common.acc_no'),
-    accessor: 'acc_no',
+    accessor: 'loan_account.acc_no',
     Cell: ({ value }) => tsNumbers(value)
   },
   {
     Header: t('common.field'),
-    accessor: 'field',
+    accessor: 'loan_account.field',
     show: false,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
     Header: t('common.center'),
-    accessor: 'center',
+    accessor: 'loan_account.center',
     show: false,
     Cell: ({ value }) => (value ? value.name : '')
   },
   {
     Header: t('common.category'),
-    accessor: 'category',
+    accessor: 'loan_account.category',
     Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
@@ -1923,7 +1923,7 @@ export const PendingLoanClosingTableColumns = (
   },
   {
     Header: t('common.balance'),
-    accessor: 'balance',
+    accessor: 'main_balance',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => tsNumbers(`$${value}/-`)
   },
