@@ -1789,7 +1789,8 @@ export const PendingSavingClosingTableColumns = (
   {
     Header: t('common.category'),
     accessor: 'saving_account.category',
-    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
+    Cell: ({ value }) =>
+      value && defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
     Header: t('common.description'),
@@ -1913,7 +1914,8 @@ export const PendingLoanClosingTableColumns = (
   {
     Header: t('common.category'),
     accessor: 'loan_account.category',
-    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'category.default.', value.name)
+    Cell: ({ value }) =>
+      value && defaultNameCheck(t, value.is_default, 'category.default.', value.name)
   },
   {
     Header: t('common.description'),

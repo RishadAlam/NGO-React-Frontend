@@ -67,9 +67,7 @@ export default function PendingClosing({ prefix }) {
   })
   const { data: { data: categories = [] } = [] } = useFetch({
     action: 'categories/active',
-    queryParams: {
-      saving: true
-    }
+    queryParams: prefix === 'saving' ? { saving: true } : { loan: true }
   })
 
   const setParamsState = (option, name) => {
