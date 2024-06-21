@@ -11,11 +11,14 @@ export default function RequirePermissions({ allowedPermissions, pageTitle = '' 
   const { permissions } = useAuthDataValue()
   const { company_name = '' } = useAppSettingsValue()
   const separator = !isEmpty(pageTitle) && !isEmpty(company_name) ? ' | ' : ''
+  const title = !Array.isArray(pageTitle)
+    ? t(pageTitle)
+    : pageTitle.map((title) => t(title)).join(' ')
 
   return (
     <>
       <Helmet>
-        <title>{`${t(pageTitle) + separator + company_name}`}</title>
+        <title>{`${title + separator + company_name}`}</title>
       </Helmet>
 
       {allowedPermissions &&
