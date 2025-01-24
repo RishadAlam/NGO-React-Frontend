@@ -150,7 +150,8 @@ export default function StaffProfile() {
                   <div className="col-md-6 mb-3 text-start">
                     <ImagePreview
                       label={t('common.image')}
-                      src={profileImage}
+                      imageUri={profileImage}
+                      setImageUri={setProfileImage}
                       setChange={(val) => setChange(val, 'image')}
                       error={errors?.image}
                       disabled={loading?.profile}

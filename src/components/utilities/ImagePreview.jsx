@@ -20,6 +20,7 @@ export default function ImagePreview({
 
   const save = (val) => {
     setImageUri(URL.createObjectURL(val))
+    
     if (setChange) {
       setChange(val)
     }
