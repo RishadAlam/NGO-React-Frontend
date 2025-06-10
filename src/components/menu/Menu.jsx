@@ -10,6 +10,7 @@ function Menu({ setMobileMenuClosed }) {
   const { t } = useTranslation()
   const menu = useMemo(() => mainMenu(t), [t])
   const [dropDowns, setDropDowns] = useState({})
+
   const toggleSideMenu = (e, id) => {
     e.preventDefault()
     setDropDowns({ [id]: !dropDowns[id] })

@@ -50,6 +50,15 @@ const PendingClosing = lazy(() => import('./pages/pendingClosings/PendingClosing
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
 const AuditReport = lazy(() => import('./pages/audit/AuditReport'))
+const RegisteredClientAccountList = lazy(
+  () => import('./pages/registeredAccountList/RegisteredClientAccountList')
+)
+const RegisteredSavingAccountList = lazy(
+  () => import('./pages/registeredAccountList/RegisteredSavingAccountList')
+)
+const RegisteredLoanAccountList = lazy(
+  () => import('./pages/registeredAccountList/RegisteredLoanAccountList')
+)
 
 const t = () => {}
 export default function App() {
@@ -630,6 +639,67 @@ export default function App() {
                   </ErrorBoundary>
                 }
               />
+            </Route>
+
+            {/* Registered Account Routes */}
+            <Route path="registered">
+              <Route
+                path="client"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['registered_client_account_list_view']}
+                    pageTitle={`${t('menu.registration.Client_Registration')} ${t('common.list')}`}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <RegisteredClientAccountList />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="saving-account"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['registered_saving_account_list_view']}
+                    pageTitle={`${t('menu.registration.saving_account_registration')} ${t('common.list')}`}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <RegisteredSavingAccountList />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="loan-account"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['registered_loan_account_list_view']}
+                    pageTitle={`${t('menu.registration.loan_account_registration')} ${t('common.list')}`}
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <RegisteredLoanAccountList />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
             </Route>
 
             {/* Account Management Routes */}

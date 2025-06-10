@@ -209,7 +209,8 @@
     "account_closing": "একাউন্ট ক্লোজিং",
     "total_withdrawn": "সর্বমোট সকল উত্তোলন",
     "total_fees": "সর্বমোট ফি আদায়",
-    "withdrawal_account": "উত্তোলন একাউন্ট"
+    "withdrawal_account": "উত্তোলন একাউন্ট",
+    "list": "তালিকা"
   },
 
   "common_validation": {
@@ -257,7 +258,8 @@
       "staff": "কর্মচারিবর্গ",
       "settings_and_privacy": "সেটিংস ও গোপনীয়তা",
       "audit": "অডিট",
-      "pending_acc_delete_req": "অনুমোদন অপেক্ষারত ক্লোজিং রিকুয়েস্ট"
+      "pending_acc_delete_req": "অনুমোদন অপেক্ষারত ক্লোজিং রিকুয়েস্ট",
+      "registered_account_list": "নিবন্ধিত অ্যাকাউন্ট তালিকা"
     },
     "registration": {
       "Client_Registration": "সদস্য নিবন্ধন",

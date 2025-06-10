@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Cookies from 'js-cookie'
 import { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import CornerRightDownArrow from '../../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../../icons/CornerRightUpArrow'
@@ -15,7 +16,16 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import './table.scss'
 
-function ReactTable({ title, columns, data = [], footer = false, classnames = '' }) {
+function ReactTable({
+  title,
+  columns,
+  data = [],
+  footer = false,
+  classnames = '',
+  rowLinkPath = '#',
+  rowLinkPrefix = '#'
+}) {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const lang = Cookies.get('i18next')
   const [anchorEl, setAnchorEl] = useState(null)
@@ -164,7 +174,11 @@ function ReactTable({ title, columns, data = [], footer = false, classnames = ''
                   page.map((row, i) => {
                     prepareRow(row)
                     return (
-                      <tr key={i} {...row.getRowProps()}>
+                      <tr
+                        key={i}
+                        {...row.getRowProps()}
+                        onClick={() => navigate(`${rowLinkPath}/${row.original[rowLinkPrefix]}`)}
+                        style={{ cursor: 'pointer' }}>
                         {row.cells.map((cell, index) => (
                           <td key={index} {...cell.getCellProps()}>
                             {cell.render('Cell')}

@@ -289,6 +289,43 @@ export const mainMenu = (t) => {
       },
       {
         id: 4,
+        label: t('menu.label.registered_account_list'),
+        path: '',
+        icon: 'Pen',
+        view: checkPermissions(
+          [
+            'registered_client_account_list_view',
+            'registered_saving_account_list_view',
+            'registered_loan_account_list_view'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'regAccList1',
+            label: `${t('menu.registration.Client_Registration')} ${t('common.list')}`,
+            path: '/registered/client',
+            icon: 'UserPlus',
+            view: checkPermission('registered_client_account_list_view', permissions)
+          },
+          {
+            id: 'regAccList2',
+            label: `${t('menu.registration.saving_account_registration')} ${t('common.list')}`,
+            path: '/registered/saving-account',
+            icon: 'BankTransferIn',
+            view: checkPermission('registered_saving_account_list_view', permissions)
+          },
+          {
+            id: 'regAccList3',
+            label: `${t('menu.registration.loan_account_registration')} ${t('common.list')}`,
+            path: '/registered/loan-account',
+            icon: 'BankTransferOut',
+            view: checkPermission('registered_loan_account_list_view', permissions)
+          }
+        ]
+      },
+      {
+        id: 5,
         label: t('menu.label.account_management'),
         path: '',
         icon: 'BankTransfer',
@@ -353,7 +390,7 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 5,
+        id: 6,
         label: t('menu.label.staff'),
         path: '',
         icon: 'Users',
@@ -376,7 +413,7 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 6,
+        id: 7,
         label: t('menu.label.audit'),
         path: '',
         icon: 'AuditIcon',
@@ -402,7 +439,7 @@ export const mainMenu = (t) => {
         ]
       },
       {
-        id: 7,
+        id: 8,
         label: t('menu.label.settings_and_privacy'),
         path: '',
         icon: 'Settings',

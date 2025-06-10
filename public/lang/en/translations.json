@@ -209,7 +209,8 @@
     "account_closing": "Account Closing",
     "total_withdrawn": "Total Withdrawn",
     "total_fees": "Total Fee Deducted",
-    "withdrawal_account": "Withdrawal Account"
+    "withdrawal_account": "Withdrawal Account",
+    "list": "List"
   },
 
   "common_validation": {
@@ -269,7 +270,8 @@
       "staff": "Staffs",
       "settings_and_privacy": "Settings & Privacy",
       "audit": "Audit",
-      "pending_acc_delete_req": "Pending Account Delete Request"
+      "pending_acc_delete_req": "Pending Account Delete Request",
+      "registered_account_list": "Registered Account List"
     },
     "registration": {
       "Client_Registration": "Client Registration",
@@ -365,12 +367,12 @@
     "view_client_profile": "View Client Profile"
   },
   "saving": {
-    "pending_saving_acc_reg_list": "Saving Account registration approval pending list",
+    "pending_saving_acc_reg_list": "Saving Account registration approval, pending list",
     "edit_saving_acc": "Edit Saving Account",
     "view_saving_acc": "View Saving Account"
   },
   "loan": {
-    "pending_loan_acc_reg_list": "Loan Account registration approval pending list",
+    "pending_loan_acc_reg_list": "Loan Account registration approval, pending list",
     "edit_loan_acc": "Edit Loan Account",
     "view_loan_acc": "View Loan Account"
   },

@@ -2166,3 +2166,48 @@ export const AuditReportTableColumns = (t, windowWidth, actionBtnGroup, isAction
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
+
+export const RegisteredClientTableColumns = (t, windowWidth, avatar) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.image'),
+    accessor: 'image_uri',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row, value }) => avatar(row.original.name, value)
+  },
+  { Header: t('common.name'), accessor: 'name' },
+  {
+    Header: t('common.acc_no'),
+    accessor: 'acc_no',
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  { Header: t('common.field'), accessor: 'field', Cell: ({ value }) => (value ? value.name : '') },
+  {
+    Header: t('common.center'),
+    accessor: 'center',
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  }
+]
