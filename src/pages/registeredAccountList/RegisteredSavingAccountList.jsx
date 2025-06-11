@@ -9,18 +9,17 @@ import useFetch from '../../hooks/useFetch'
 import CheckPatch from '../../icons/CheckPatch'
 import Home from '../../icons/Home'
 import UserPlus from '../../icons/UserPlus'
-import { RegisteredClientTableColumns } from '../../resources/staticData/tableColumns'
+import { RegisteredSavingsTableColumns } from '../../resources/staticData/tableColumns'
 
-export default function RegisteredClientAccountList() {
+export default function RegisteredSavingAccountList() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: clientProfiles } = [], isLoading } = useFetch({
-    action: 'client/registration',
-    queryParams: { latest: true }
+    action: 'client/registration/saving/get'
   })
 
   const columns = useMemo(
-    () => RegisteredClientTableColumns(t, windowWidth, avatar),
+    () => RegisteredSavingsTableColumns(t, windowWidth, avatar),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
@@ -39,7 +38,7 @@ export default function RegisteredClientAccountList() {
                   active: false
                 },
                 {
-                  name: `${t('menu.registration.Client_Registration')} ${t('common.list')}`,
+                  name: `${t('menu.registration.saving_account_registration')} ${t('common.list')}`,
                   icon: <UserPlus size={16} />,
                   active: true
                 }
@@ -52,10 +51,10 @@ export default function RegisteredClientAccountList() {
             <ReactTableSkeleton />
           ) : (
             <ReactTable
-              title={`${t('menu.registration.Client_Registration')} ${t('common.list')}`}
+              title={`${t('menu.registration.saving_account_registration')} ${t('common.list')}`}
               columns={columns}
               data={clientProfiles}
-              rowLinkPath="/client-register"
+              rowLinkPath="/saving-account"
               rowLinkPrefix="id"
             />
           )}
