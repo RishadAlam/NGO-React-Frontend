@@ -10,6 +10,7 @@ import TabPanel from '../utilities/TabPanel'
 import TabsGroup from '../utilities/TabsGroup'
 import AccountSummary from './AccountSummary'
 import LoanCollections from './LoanCollections'
+import LoanSavingWithdrawals from './LoanSavingWithdrawals'
 
 export default function LoanAccount() {
   const [tabValue, setTabValue] = useState(1)
@@ -48,7 +49,7 @@ export default function LoanAccount() {
         <LoanCollections />
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
-        {/* <SavingWithdrawals /> */}
+        <LoanSavingWithdrawals />
       </TabPanel>
       <TabPanel value={tabValue} index={4}>
         {/* <SavingAccountFees /> */}
