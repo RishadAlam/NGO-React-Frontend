@@ -2616,7 +2616,7 @@ export const SavingAccChecksStatementsTableColumn = (t, windowWidth, decodeHTMLs
     Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   },
   {
-    Header: t('common.installment'),
+    Header: t('common.total_rec_installment'),
     accessor: 'installment_recovered',
     show: windowWidth < 576 ? false : true,
     Cell: ({ value }) => tsNumbers(value)
@@ -2730,5 +2730,85 @@ export const LoanCollectionsStatementsTableColumn = (
     accessor: 'action',
     show: windowWidth < 576 ? false : true,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]
+
+export const LoanAccChecksStatementsTableColumn = (t, windowWidth, decodeHTMLs) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.time'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.next_check_in_at'),
+    accessor: 'next_check_in_at',
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.total_rec_installment'),
+    accessor: 'installment_recovered',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.installment_remaining'),
+    accessor: 'installment_remaining',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(value)
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.loan_recovered'),
+    accessor: 'loan_recovered',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.loan_remaining'),
+    accessor: 'loan_remaining',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.interest_recovered'),
+    accessor: 'interest_recovered',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.interest_remaining'),
+    accessor: 'interest_remaining',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => decodeHTMLs(value)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
 ]

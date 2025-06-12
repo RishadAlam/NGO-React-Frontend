@@ -176,6 +176,7 @@
     "total_interest_remaining": "সর্বমোট লাভ বকেয়া",
     "total_loan_remaining": "সর্বমোট ঋণ বকেয়া",
     "total_rec_installment": "আদায়কৃত কিস্তি সংখ্যা",
+    "installment_remaining": "অবশিষ্ট কিস্তি সংখ্যা",
     "closing_fee": "ক্লোজিং ফি",
     "total_balance": "সর্বমোট ব্যালেন্স",
     "taka": "টাকা",

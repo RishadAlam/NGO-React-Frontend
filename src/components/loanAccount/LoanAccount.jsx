@@ -9,6 +9,7 @@ import '../register/RegisterBox.scss'
 import TabPanel from '../utilities/TabPanel'
 import TabsGroup from '../utilities/TabsGroup'
 import AccountSummary from './AccountSummary'
+import LoanAccountChecks from './LoanAccountChecks'
 import LoanCollections from './LoanCollections'
 import LoanSavingWithdrawals from './LoanSavingWithdrawals'
 
@@ -55,7 +56,7 @@ export default function LoanAccount() {
         {/* <SavingAccountFees /> */}
       </TabPanel>
       <TabPanel value={tabValue} index={5}>
-        {/* <SavingAccountChecks /> */}
+        <LoanAccountChecks />
       </TabPanel>
     </>
   )
