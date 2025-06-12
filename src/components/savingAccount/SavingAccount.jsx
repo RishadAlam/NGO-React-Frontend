@@ -15,6 +15,7 @@ import TabPanel from '../utilities/TabPanel'
 import TabsGroup from '../utilities/TabsGroup'
 import AccountSummary from './AccountSummary'
 import SavingAccountChecks from './SavingAccountChecks'
+import SavingAccountFees from './SavingAccountFees'
 import SavingCollections from './SavingCollections'
 import SavingTransactions from './SavingTransactions'
 import SavingWithdrawals from './SavingWithdrawals'
@@ -105,6 +106,9 @@ export default function SavingAccount() {
       </TabPanel>
       <TabPanel value={tabValue} index={3}>
         <SavingWithdrawals />
+      </TabPanel>
+      <TabPanel value={tabValue} index={4}>
+        <SavingAccountFees />
       </TabPanel>
       <TabPanel value={tabValue} index={5}>
         <SavingAccountChecks />
