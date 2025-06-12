@@ -11,20 +11,20 @@ import Eye from '../../icons/Eye'
 import Trash from '../../icons/Trash'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
-import { SavingCollectionsStatementsTableColumn } from '../../resources/staticData/tableColumns'
+import { SavingAccChecksStatementsTableColumn } from '../../resources/staticData/tableColumns'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../utilities/DateRangePickerInputField'
 import ReactTable from '../utilities/tables/ReactTable'
 
-export default function SavingTransactions() {
+export default function SavingAccountChecks() {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: collection } = [], isLoading } = useFetch({
-    action: 'collection/saving',
+    action: 'saving/check',
     queryParams: { saving_account_id: id }
   })
 
@@ -55,7 +55,7 @@ export default function SavingTransactions() {
   )
 
   const columns = useMemo(
-    () => SavingCollectionsStatementsTableColumn(t, windowWidth, decodeHTMLs, actionBtnGroup),
+    () => SavingAccChecksStatementsTableColumn(t, windowWidth, decodeHTMLs, actionBtnGroup),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
@@ -76,7 +76,11 @@ export default function SavingTransactions() {
         {isLoading && !collection ? (
           <ReactTableSkeleton />
         ) : (
-          <ReactTable title={t('account_transaction.Transaction_List')} columns={[]} data={[]} />
+          <ReactTable
+            title={`${t('common.account_check')} ${t('common.list')}`}
+            columns={columns}
+            data={collection}
+          />
         )}
       </div>
     </>
