@@ -8,7 +8,12 @@ export default function TabsGroup({ defaultValue, setValue, data = [] }) {
       onChange={(e, value) => setValue(value)}
       variant="scrollable"
       scrollButtons
-      allowScrollButtonsMobile>
+      allowScrollButtonsMobile
+      sx={{
+        '& .MuiTabs-flexContainer': {
+          justifyContent: 'space-between'
+        }
+      }}>
       {data.map((tab, index) => (
         <Tab
           key={index}

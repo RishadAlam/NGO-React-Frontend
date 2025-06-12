@@ -25,22 +25,24 @@ export default function ClientAccounts({ module = null, prefix = null }) {
   })
 
   useEffect(() => {
-    if (!isEmptyArray(data)) {
-      setTabValue(data[0]['id'])
-      setCategories(
-        data.map((value) => ({
-          label: value.category.is_default
-            ? t(`category.default.${value.category.name}`)
-            : value.category.name,
-          value: value.id,
-          icon: (
-            <span className="me-2">
-              <Command />
-            </span>
-          )
-        }))
-      )
+    if (isEmptyArray(data)) {
+      return
     }
+
+    setTabValue(data[0]['id'])
+    setCategories(
+      data.map((value) => ({
+        label: value.category.is_default
+          ? t(`category.default.${value.category.name}`)
+          : value.category.name,
+        value: value.id,
+        icon: (
+          <span className="me-2">
+            <Command />
+          </span>
+        )
+      }))
+    )
   }, [data, t])
 
   return isEmptyArray(data) ? (

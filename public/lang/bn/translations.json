@@ -210,7 +210,8 @@
     "total_withdrawn": "সর্বমোট সকল উত্তোলন",
     "total_fees": "সর্বমোট ফি আদায়",
     "withdrawal_account": "উত্তোলন একাউন্ট",
-    "list": "তালিকা"
+    "list": "তালিকা",
+    "fee_collections": "ফি কালেকশন"
   },
 
   "common_validation": {

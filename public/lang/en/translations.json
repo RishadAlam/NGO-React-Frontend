@@ -210,7 +210,8 @@
     "total_withdrawn": "Total Withdrawn",
     "total_fees": "Total Fee Deducted",
     "withdrawal_account": "Withdrawal Account",
-    "list": "List"
+    "list": "List",
+    "fee_collections": "Fee Collections"
   },
 
   "common_validation": {
