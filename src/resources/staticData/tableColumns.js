@@ -2517,3 +2517,82 @@ export const SavingCollectionsStatementsTableColumn = (
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
+
+export const SavingWithdrawalStatementsTableColumn = (
+  t,
+  windowWidth,
+  decodeHTMLs,
+  actionBtnGroup
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.time'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'account',
+    Cell: ({ value }) =>
+      value && defaultNameCheck(t, value.is_default, 'account.default.', value.name)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => decodeHTMLs(value)
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.balance_remaining'),
+    accessor: 'balance_remaining',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.approved_at'),
+    accessor: 'approved_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.approver'),
+    accessor: 'approver',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]

@@ -16,6 +16,7 @@ import TabsGroup from '../utilities/TabsGroup'
 import AccountSummary from './AccountSummary'
 import SavingCollections from './SavingCollections'
 import SavingTransactions from './SavingTransactions'
+import SavingWithdrawals from './SavingWithdrawals'
 
 export default function SavingAccount() {
   const [tabValue, setTabValue] = useState(1)
@@ -100,6 +101,9 @@ export default function SavingAccount() {
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <SavingCollections />
+      </TabPanel>
+      <TabPanel value={tabValue} index={3}>
+        <SavingWithdrawals />
       </TabPanel>
     </>
   )
