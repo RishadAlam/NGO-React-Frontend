@@ -177,7 +177,10 @@ function ReactTable({
                       <tr
                         key={i}
                         {...row.getRowProps()}
-                        onClick={() => navigate(`${rowLinkPath}/${row.original[rowLinkPrefix]}`)}
+                        onClick={() =>
+                          rowLinkPath != '#' &&
+                          navigate(`${rowLinkPath}/${row.original[rowLinkPrefix]}`)
+                        }
                         style={{ cursor: 'pointer' }}>
                         {row.cells.map((cell, index) => (
                           <td key={index} {...cell.getCellProps()}>
