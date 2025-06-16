@@ -1,5 +1,6 @@
 import parse from 'html-react-parser'
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import XCircle from '../../../icons/XCircle'
 import dateFormat from '../../../libs/dateFormat'
 import Avatar from '../../utilities/Avatar'
@@ -7,7 +8,9 @@ import Button from '../../utilities/Button'
 import ModalPro from '../../utilities/ModalPro'
 import './actionHistoryModal.scss'
 
-export default function ActionHistoryModal({ open, setOpen, t, actionHistory }) {
+export default function ActionHistoryModal({ open, setOpen, actionHistory }) {
+  const { t } = useTranslation()
+
   return (
     <>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
@@ -82,7 +85,7 @@ const setActionDetails = (action_details, action_type, t) =>
       <ul className="m-0 p-0">
         {action_type === 'update' &&
           Object.keys(action_details).map((dataKey, index) => (
-            <li key={index} className="text-nowrap">
+            <li key={index} className="text-nowrap d-flex justify-content-between">
               {t(`common.${dataKey}`)} :{' '}
               {typeof action_details[dataKey] === 'string'
                 ? parse(action_details[dataKey])

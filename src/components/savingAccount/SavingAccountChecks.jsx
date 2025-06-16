@@ -17,9 +17,13 @@ export default function SavingAccountChecks() {
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: collection } = [], isLoading } = useFetch({
+  const {
+    data: { data: collection } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: 'saving/check',
-    queryParams: { saving_account_id: id }
+    queryParams: { saving_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
   const columns = useMemo(
@@ -31,7 +35,7 @@ export default function SavingAccountChecks() {
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
       setDateRange([new Date(dateRanges[0]), new Date(dateRanges[1])])
-      // mutate()
+      mutate()
     }
   }
 

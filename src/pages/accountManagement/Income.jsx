@@ -187,7 +187,6 @@ export default function Income() {
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
-                t={t}
                 actionHistory={actionHistory}
               />
             )}

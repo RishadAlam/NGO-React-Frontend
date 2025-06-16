@@ -224,7 +224,6 @@ export default function Category() {
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
-                t={t}
                 actionHistory={actionHistory}
               />
             )}

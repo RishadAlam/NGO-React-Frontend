@@ -208,7 +208,6 @@ export default function Field() {
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
-                t={t}
                 actionHistory={actionHistory}
               />
             )}

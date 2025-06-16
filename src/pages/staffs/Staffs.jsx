@@ -250,7 +250,6 @@ export default function Staffs() {
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
-                t={t}
                 actionHistory={actionHistory}
               />
             )}

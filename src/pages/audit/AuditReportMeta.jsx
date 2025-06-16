@@ -185,7 +185,6 @@ export default function AuditReportMeta() {
               <ActionHistoryModal
                 open={isActionHistoryModalOpen}
                 setOpen={setIsActionHistoryModalOpen}
-                t={t}
                 actionHistory={actionHistory}
               />
             )}

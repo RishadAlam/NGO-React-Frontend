@@ -205,6 +205,10 @@ span {
   line-height: unset !important;
 }
 
+p + p {
+  margin-top: 0 !important;
+}
+
 .Mui-disabled.MuiFormHelperText-root.Mui-error,
 .MuiFormHelperText-root.Mui-error {
   color: #d32f2f !important;

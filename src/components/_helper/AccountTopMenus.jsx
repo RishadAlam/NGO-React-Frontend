@@ -127,7 +127,6 @@ export default function AccountTopMenus({
         <ActionHistoryModal
           open={isActionHistoryModalOpen}
           setOpen={setIsActionHistoryModalOpen}
-          t={t}
           actionHistory={actionHistory}
         />
       )}

@@ -15,9 +15,13 @@ export default function LoanAccountChecks() {
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: collection } = [], isLoading } = useFetch({
+  const {
+    data: { data: collection } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: 'loan/check',
-    queryParams: { loan_account_id: id }
+    queryParams: { loan_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
   const columns = useMemo(
@@ -29,7 +33,7 @@ export default function LoanAccountChecks() {
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
       setDateRange([new Date(dateRanges[0]), new Date(dateRanges[1])])
-      // mutate()
+      mutate()
     }
   }
 

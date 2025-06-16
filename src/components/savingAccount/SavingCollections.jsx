@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
@@ -20,19 +21,30 @@ import ActionBtnGroup from '../utilities/ActionBtnGroup'
 export default function SavingCollections() {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
+  const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
+  const [actionHistory, setActionHistory] = useState([])
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: collection } = [], isLoading } = useFetch({
+  const {
+    data: { data: collection } = [],
+    mutate,
+    isLoading
+  } = useFetch({
     action: 'collection/saving',
-    queryParams: { saving_account_id: id }
+    queryParams: { saving_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
       {authPermissions.includes('pending_client_registration_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
-          <IconButton className="text-primary" onClick={() => console.log(profile)}>
+          <IconButton
+            className="text-primary"
+            onClick={() => {
+              setActionHistory(profile?.saving_collection_action_history || [])
+              setIsActionHistoryModalOpen(true)
+            }}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
@@ -63,12 +75,19 @@ export default function SavingCollections() {
   const setDateRangeField = (dateRanges) => {
     if (dateRanges !== null) {
       setDateRange([new Date(dateRanges[0]), new Date(dateRanges[1])])
-      // mutate()
+      mutate()
     }
   }
-
+  console.log(collection)
   return (
     <>
+      {isActionHistoryModalOpen && (
+        <ActionHistoryModal
+          open={isActionHistoryModalOpen}
+          setOpen={setIsActionHistoryModalOpen}
+          actionHistory={actionHistory}
+        />
+      )}
       <div className="text-end my-3">
         <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
       </div>
