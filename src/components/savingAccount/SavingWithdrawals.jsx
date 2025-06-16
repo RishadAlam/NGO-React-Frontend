@@ -12,6 +12,7 @@ import Trash from '../../icons/Trash'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
 import { SavingWithdrawalStatementsTableColumn } from '../../resources/staticData/tableColumns'
+import ActionHistoryModal from '../_helper/actionHistory/ActionHistoryModal'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../utilities/DateRangePickerInputField'
@@ -20,11 +21,13 @@ import ReactTable from '../utilities/tables/ReactTable'
 export default function SavingWithdrawals() {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
+  const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
+  const [actionHistory, setActionHistory] = useState([])
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const {
-    data: { data: collection } = [],
+    data: { data: withdrawals } = [],
     mutate,
     isLoading
   } = useFetch({
@@ -36,7 +39,12 @@ export default function SavingWithdrawals() {
     <ActionBtnGroup>
       {authPermissions.includes('pending_client_registration_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
-          <IconButton className="text-primary" onClick={() => console.log(profile)}>
+          <IconButton
+            className="text-primary"
+            onClick={() => {
+              setActionHistory(profile?.saving_withdrawal_action_history || [])
+              setIsActionHistoryModalOpen(true)
+            }}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
@@ -73,17 +81,24 @@ export default function SavingWithdrawals() {
 
   return (
     <>
+      {isActionHistoryModalOpen && (
+        <ActionHistoryModal
+          open={isActionHistoryModalOpen}
+          setOpen={setIsActionHistoryModalOpen}
+          actionHistory={actionHistory}
+        />
+      )}
       <div className="text-end my-3">
         <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
       </div>
       <div className="staff-table">
-        {isLoading && !collection ? (
+        {isLoading && !withdrawals ? (
           <ReactTableSkeleton />
         ) : (
           <ReactTable
             title={`${t('menu.withdrawal.Saving_Withdrawal')} ${t('common.list')}`}
             columns={columns}
-            data={collection}
+            data={withdrawals}
           />
         )}
       </div>

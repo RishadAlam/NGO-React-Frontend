@@ -27,7 +27,7 @@ export default function SavingCollections() {
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const {
-    data: { data: collection } = [],
+    data: { data: collections } = [],
     mutate,
     isLoading
   } = useFetch({
@@ -78,7 +78,7 @@ export default function SavingCollections() {
       mutate()
     }
   }
-  console.log(collection)
+
   return (
     <>
       {isActionHistoryModalOpen && (
@@ -92,13 +92,13 @@ export default function SavingCollections() {
         <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
       </div>
       <div className="staff-table">
-        {isLoading && !collection ? (
+        {isLoading && !collections ? (
           <ReactTableSkeleton />
         ) : (
           <ReactTable
             title={`${t('menu.label.regular_collection')} ${t('common.list')}`}
             columns={columns}
-            data={collection}
+            data={collections}
           />
         )}
       </div>

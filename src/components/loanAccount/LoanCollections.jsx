@@ -12,6 +12,7 @@ import Trash from '../../icons/Trash'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
 import { LoanCollectionsStatementsTableColumn } from '../../resources/staticData/tableColumns'
+import ActionHistoryModal from '../_helper/actionHistory/ActionHistoryModal'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../utilities/DateRangePickerInputField'
@@ -20,6 +21,8 @@ import ReactTable from '../utilities/tables/ReactTable'
 export default function LoanCollections() {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
+  const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
+  const [actionHistory, setActionHistory] = useState([])
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
@@ -36,7 +39,12 @@ export default function LoanCollections() {
     <ActionBtnGroup>
       {authPermissions.includes('pending_client_registration_list_view') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
-          <IconButton className="text-primary" onClick={() => console.log(profile)}>
+          <IconButton
+            className="text-primary"
+            onClick={() => {
+              setActionHistory(profile?.loan_collection_action_history || [])
+              setIsActionHistoryModalOpen(true)
+            }}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
@@ -73,6 +81,13 @@ export default function LoanCollections() {
 
   return (
     <>
+      {isActionHistoryModalOpen && (
+        <ActionHistoryModal
+          open={isActionHistoryModalOpen}
+          setOpen={setIsActionHistoryModalOpen}
+          actionHistory={actionHistory}
+        />
+      )}
       <div className="text-end my-3">
         <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
       </div>
