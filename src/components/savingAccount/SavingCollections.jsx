@@ -4,11 +4,13 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
+import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { collectionDelete } from '../../helper/collectionActions'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
@@ -23,8 +25,9 @@ export default function SavingCollections() {
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
+  const [loading, setLoading] = useLoadingState({})
   const { t } = useTranslation()
-  const { permissions: authPermissions } = useAuthDataValue()
+  const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const {
     data: { data: collections } = [],
@@ -61,8 +64,15 @@ export default function SavingCollections() {
         </Tooltip>
       )}
       {authPermissions.includes('pending_client_registration_permanently_delete') && (
-        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
-          <IconButton className="text-danger" onClick={() => console.log(id)}>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.delete')}
+          arrow
+          followCursor
+          disabled={loading?.collectionDelete || false}>
+          <IconButton
+            className="text-danger"
+            onClick={() => collectionDelete(id, t, accessToken, mutate, loading, setLoading)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>

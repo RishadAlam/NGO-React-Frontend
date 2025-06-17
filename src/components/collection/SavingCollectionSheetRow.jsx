@@ -2,13 +2,12 @@ import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { create } from 'mutative'
 import { memo, useState } from 'react'
-import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
+import { collectionDelete } from '../../helper/collectionActions'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import { permanentDeleteAlert } from '../../helper/deleteAlert'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
 import { setCollectionBG } from '../../helper/setCollectionBG'
@@ -17,7 +16,6 @@ import Trash from '../../icons/Trash'
 import dateFormat from '../../libs/dateFormat'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import tsNumbers from '../../libs/tsNumbers'
-import xFetch from '../../utilities/xFetch'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import AndroidSwitch from '../utilities/AndroidSwitch'
 import Avatar from '../utilities/Avatar'
@@ -91,7 +89,10 @@ function SavingCollectionSheetRow({
             disabled={loading?.collectionDelete || false}>
             <IconButton
               className="text-danger"
-              onClick={() => collection?.id && collectionDelete(collection?.id)}>
+              onClick={() =>
+                collection?.id &&
+                collectionDelete(collection?.id, t, accessToken, mutate, loading, setLoading)
+              }>
               {<Trash size={20} />}
             </IconButton>
           </Tooltip>
@@ -123,30 +124,6 @@ function SavingCollectionSheetRow({
       })
     )
     setOpenCollectionModal(true)
-  }
-
-  const collectionDelete = (id) => {
-    permanentDeleteAlert(t).then((result) => {
-      if (result.isConfirmed) {
-        const toasterLoading = toast.loading(`${t('common.delete')}...`)
-        setLoading({ ...loading, collectionDelete: true })
-        xFetch(`collection/saving/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
-          .then((response) => {
-            toast.dismiss(toasterLoading)
-            setLoading({ ...loading, collectionDelete: false })
-            if (response?.success) {
-              toast.success(response?.message)
-              mutate()
-              return
-            }
-            toast.error(response?.message)
-          })
-          .catch((errResponse) => {
-            toast.error(errResponse?.message)
-            setLoading({ ...loading, collectionDelete: false })
-          })
-      }
-    })
   }
 
   const setApproved = (id, val) => {

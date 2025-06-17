@@ -83,7 +83,7 @@ const setActionDetails = (action_details, action_type, t) =>
   Object.keys(action_details).length > 0 && (
     <div className="details p-3">
       <ul className="m-0 p-0">
-        {action_type === 'update' &&
+        {(action_type === 'update' || action_type === 'delete') &&
           Object.keys(action_details).map((dataKey, index) => (
             <li key={index} className="text-nowrap d-flex justify-content-between">
               {t(`common.${dataKey}`)} :{' '}
