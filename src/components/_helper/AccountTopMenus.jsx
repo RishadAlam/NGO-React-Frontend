@@ -116,7 +116,7 @@ export default function AccountTopMenus({
       {checkPermission(actionHistoryPermission, authPermissions) && (
         <PrimaryBtn
           classNames="mx-1"
-          name={t('common.action')}
+          name={t('common.action_history.action_history')}
           color="info"
           loading={false}
           endIcon={<Clock size={20} />}

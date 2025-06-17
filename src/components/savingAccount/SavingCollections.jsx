@@ -38,7 +38,11 @@ export default function SavingCollections() {
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
       {authPermissions.includes('pending_client_registration_list_view') && (
-        <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-primary"
             onClick={() => {
@@ -50,14 +54,14 @@ export default function SavingCollections() {
         </Tooltip>
       )}
       {authPermissions.includes('pending_client_registration_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => console.log(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('pending_client_registration_permanently_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => console.log(id)}>
             {<Trash size={20} />}
           </IconButton>
