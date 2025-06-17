@@ -91,7 +91,15 @@ function SavingCollectionSheetRow({
               className="text-danger"
               onClick={() =>
                 collection?.id &&
-                collectionDelete(collection?.id, t, accessToken, mutate, loading, setLoading)
+                collectionDelete(
+                  'saving',
+                  collection?.id,
+                  t,
+                  accessToken,
+                  mutate,
+                  loading,
+                  setLoading
+                )
               }>
               {<Trash size={20} />}
             </IconButton>

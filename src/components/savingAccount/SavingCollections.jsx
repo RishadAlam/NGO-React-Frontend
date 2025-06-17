@@ -72,7 +72,9 @@ export default function SavingCollections() {
           disabled={loading?.collectionDelete || false}>
           <IconButton
             className="text-danger"
-            onClick={() => collectionDelete(id, t, accessToken, mutate, loading, setLoading)}>
+            onClick={() =>
+              collectionDelete('saving', id, t, accessToken, mutate, loading, setLoading)
+            }>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
