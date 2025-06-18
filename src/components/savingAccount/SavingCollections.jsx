@@ -10,6 +10,7 @@ import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHis
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { checkPermissions } from '../../helper/checkPermission'
 import { collectionDelete } from '../../helper/collectionActions'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
@@ -40,7 +41,7 @@ export default function SavingCollections() {
 
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
-      {authPermissions.includes('pending_client_registration_list_view') && (
+      {authPermissions.includes('client_saving_account_collection_action_history') && (
         <Tooltip
           TransitionComponent={Zoom}
           title={t('common.action_history.action_history')}
@@ -56,14 +57,14 @@ export default function SavingCollections() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_update') && (
+      {authPermissions.includes('client_saving_account_collection_update') && (
         <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => console.log(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_permanently_delete') && (
+      {authPermissions.includes('client_saving_account_collection_permanently_delete') && (
         <Tooltip
           TransitionComponent={Zoom}
           title={t('common.delete')}
@@ -83,7 +84,21 @@ export default function SavingCollections() {
   )
 
   const columns = useMemo(
-    () => SavingCollectionsStatementsTableColumn(t, windowWidth, decodeHTMLs, actionBtnGroup),
+    () =>
+      SavingCollectionsStatementsTableColumn(
+        t,
+        windowWidth,
+        decodeHTMLs,
+        actionBtnGroup,
+        !checkPermissions(
+          [
+            'client_saving_account_collection_action_history',
+            'client_saving_account_collection_update',
+            'client_saving_account_collection_permanently_delete'
+          ],
+          authPermissions
+        )
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )

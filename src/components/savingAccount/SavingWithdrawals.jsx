@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
+import { checkPermissions } from '../../helper/checkPermission'
 import { deleteWithdrawal } from '../../helper/collectionActions'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
@@ -40,7 +41,7 @@ export default function SavingWithdrawals() {
 
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
-      {authPermissions.includes('pending_client_registration_list_view') && (
+      {authPermissions.includes('client_saving_account_withdrawal_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton
             className="text-primary"
@@ -52,14 +53,14 @@ export default function SavingWithdrawals() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_update') && (
+      {authPermissions.includes('client_saving_account_withdrawal_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
           <IconButton className="text-warning" onClick={() => console.log(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('pending_client_registration_permanently_delete') && (
+      {authPermissions.includes('client_saving_account_withdrawal_permanently_delete') && (
         <Tooltip
           TransitionComponent={Zoom}
           title="Delete"
@@ -79,7 +80,21 @@ export default function SavingWithdrawals() {
   )
 
   const columns = useMemo(
-    () => SavingWithdrawalStatementsTableColumn(t, windowWidth, decodeHTMLs, actionBtnGroup),
+    () =>
+      SavingWithdrawalStatementsTableColumn(
+        t,
+        windowWidth,
+        decodeHTMLs,
+        actionBtnGroup,
+        !checkPermissions(
+          [
+            'client_saving_account_withdrawal_action_history',
+            'client_saving_account_withdrawal_update',
+            'client_saving_account_withdrawal_permanently_delete'
+          ],
+          authPermissions
+        )
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )

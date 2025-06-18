@@ -2451,7 +2451,8 @@ export const SavingCollectionsStatementsTableColumn = (
   t,
   windowWidth,
   decodeHTMLs,
-  actionBtnGroup
+  actionBtnGroup,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -2513,7 +2514,9 @@ export const SavingCollectionsStatementsTableColumn = (
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
@@ -2522,7 +2525,8 @@ export const SavingWithdrawalStatementsTableColumn = (
   t,
   windowWidth,
   decodeHTMLs,
-  actionBtnGroup
+  actionBtnGroup,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -2592,7 +2596,9 @@ export const SavingWithdrawalStatementsTableColumn = (
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
@@ -2651,7 +2657,8 @@ export const LoanCollectionsStatementsTableColumn = (
   t,
   windowWidth,
   decodeHTMLs,
-  actionBtnGroup
+  actionBtnGroup,
+  isActionHide
 ) => [
   {
     Header: '#',
@@ -2728,7 +2735,9 @@ export const LoanCollectionsStatementsTableColumn = (
   {
     Header: t('common.action'),
     accessor: 'action',
-    show: windowWidth < 576 ? false : true,
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
     Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
   }
 ]
