@@ -1,7 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
-import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
@@ -17,9 +16,8 @@ import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setApprovalWithdrawalModalData } from '../../helper/RegFormFieldsData'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
+import { deleteWithdrawal } from '../../helper/collectionActions'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
-import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
-import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import CashWithdrawal from '../../icons/CashWithdrawal'
 import CheckPatch from '../../icons/CheckPatch'
@@ -27,7 +25,6 @@ import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
 import { PendingWithdrawalTableColumns } from '../../resources/staticData/tableColumns'
-import xFetch from '../../utilities/xFetch'
 
 export default function PendingSavingWithdrawal({ prefix }) {
   const [editWithdrawalAccData, setEditWithdrawalAccData] = useState()
@@ -139,8 +136,17 @@ export default function PendingSavingWithdrawal({ prefix }) {
         </Tooltip>
       )}
       {checkPermission(`pending_${permissionPrefix}_withdrawal_delete`, authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => deleteWithdrawal(id)}>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Delete"
+          arrow
+          followCursor
+          disabled={loading?.withdrawalDelete || false}>
+          <IconButton
+            className="text-danger"
+            onClick={() =>
+              deleteWithdrawal(endpoint, id, t, accessToken, mutate, loading, setLoading)
+            }>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -184,35 +190,6 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const setApprovalData = (data) => {
     setWithdrawalAppData(setApprovalWithdrawalModalData(data))
     setWithdrawalAppModal(true)
-  }
-
-  const deleteWithdrawal = (id) => {
-    permanentDeleteAlert(t).then((result) => {
-      if (result.isConfirmed) {
-        passwordCheckAlert(t, accessToken).then((result) => {
-          if (result.isConfirmed) {
-            const toasterLoading = toast.loading(`${t('common.delete')}...`)
-            xFetch(`${endpoint}/${id}`, null, null, accessToken, null, 'DELETE')
-              .then((response) => {
-                toast.dismiss(toasterLoading)
-                if (response?.success) {
-                  successAlert(
-                    t('common.deleted'),
-                    response?.message || t('common_validation.data_has_been_deleted'),
-                    'success'
-                  )
-                  mutate()
-                  return
-                }
-                successAlert(t('common.deleted'), response?.message, 'error')
-              })
-              .catch((errResponse) =>
-                successAlert(t('common.deleted'), errResponse?.message, 'error')
-              )
-          }
-        })
-      }
-    })
   }
 
   return (
