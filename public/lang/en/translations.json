@@ -212,7 +212,8 @@
     "total_fees": "Total Fee Deducted",
     "withdrawal_account": "Withdrawal Account",
     "list": "List",
-    "fee_collections": "Fee Collections"
+    "fee_collections": "Fee Collections",
+    "fees_category": "Fees Category"
   },
 
   "common_validation": {
@@ -421,7 +422,8 @@
       "loan_form": "Loan Form Fee",
       "closing_fee": "Closing Fee",
       "withdrawal_fee": "Withdrawal Fee",
-      "money_transfer_transaction_fee": "Money Transfer Fee"
+      "money_transfer_transaction_fee": "Money Transfer Fee",
+      "transaction_fee": "Transaction Fee"
     }
   },
   "expense_categories": {

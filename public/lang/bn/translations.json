@@ -212,7 +212,8 @@
     "total_fees": "সর্বমোট ফি আদায়",
     "withdrawal_account": "উত্তোলন একাউন্ট",
     "list": "তালিকা",
-    "fee_collections": "ফি কালেকশন"
+    "fee_collections": "ফি কালেকশন",
+    "fees_category": "ফি ক্যাটাগরি"
   },
 
   "common_validation": {
@@ -409,7 +410,8 @@
       "loan_form": "ঋণ ফরম ফি",
       "closing_fee": "ক্লোজিং ফি",
       "withdrawal_fee": "উত্তোলন ফি",
-      "money_transfer_transaction_fee": "টাকা স্থানান্তর ফি"
+      "money_transfer_transaction_fee": "লেনদেন ফি",
+      "transaction_fee": "লেনদেন ফি"
     }
   },
   "expense_categories": {

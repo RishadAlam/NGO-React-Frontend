@@ -2821,3 +2821,47 @@ export const LoanAccChecksStatementsTableColumn = (t, windowWidth, decodeHTMLs) 
     Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
   }
 ]
+
+export const SavingAccFeesStatementsTableColumn = (t, windowWidth, decodeHTMLs) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.fees_category'),
+    accessor: 'account_fees_category',
+    Cell: ({ value }) =>
+      defaultNameCheck(t, value.is_default, 'income_categories.default.', value.name)
+  },
+  {
+    Header: t('common.fee'),
+    accessor: 'amount',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => decodeHTMLs(value)
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  }
+]
