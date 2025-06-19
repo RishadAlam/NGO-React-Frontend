@@ -2822,7 +2822,7 @@ export const LoanAccChecksStatementsTableColumn = (t, windowWidth, decodeHTMLs) 
   }
 ]
 
-export const SavingAccFeesStatementsTableColumn = (t, windowWidth, decodeHTMLs) => [
+export const ClientAccFeesStatementsTableColumn = (t, windowWidth, decodeHTMLs) => [
   {
     Header: '#',
     accessor: 'id',

@@ -5,12 +5,12 @@ import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import useFetch from '../../hooks/useFetch'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
-import { SavingAccFeesStatementsTableColumn } from '../../resources/staticData/tableColumns'
+import { ClientAccFeesStatementsTableColumn } from '../../resources/staticData/tableColumns'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import DateRangePickerInputField from '../utilities/DateRangePickerInputField'
 import ReactTable from '../utilities/tables/ReactTable'
 
-export default function SavingAccountFees() {
+export default function ClientAccountFees({ accountType }) {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const { t } = useTranslation()
@@ -20,12 +20,12 @@ export default function SavingAccountFees() {
     mutate,
     isLoading
   } = useFetch({
-    action: 'client/fees/saving',
-    queryParams: { saving_account_id: id, date_range: JSON.stringify(dateRange) }
+    action: `client/fees/${accountType}`,
+    queryParams: { [`${accountType}_account_id`]: id, date_range: JSON.stringify(dateRange) }
   })
 
   const columns = useMemo(
-    () => SavingAccFeesStatementsTableColumn(t, windowWidth, decodeHTMLs),
+    () => ClientAccFeesStatementsTableColumn(t, windowWidth, decodeHTMLs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )

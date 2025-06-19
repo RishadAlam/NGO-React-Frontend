@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import AccStatementTabsNav from '../../resources/staticData/AccStatementTabsNav'
 import AccountTopMenus from '../_helper/AccountTopMenus'
+import ClientAccountFees from '../_helper/ClientAccountFees'
 import AccountShortSummery from '../_helper/accountShortSummery/AccountShortSummery'
 import RegisterBox from '../register/RegisterBox'
 import '../register/RegisterBox.scss'
@@ -53,7 +54,7 @@ export default function LoanAccount() {
         <LoanSavingWithdrawals />
       </TabPanel>
       <TabPanel value={tabValue} index={4}>
-        {/* <SavingAccountFees /> */}
+        <ClientAccountFees accountType="loan" />
       </TabPanel>
       <TabPanel value={tabValue} index={5}>
         <LoanAccountChecks />
