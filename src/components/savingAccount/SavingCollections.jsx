@@ -1,5 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
+import { create } from 'mutative'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
@@ -19,6 +20,7 @@ import Trash from '../../icons/Trash'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
 import { SavingCollectionsStatementsTableColumn } from '../../resources/staticData/tableColumns'
+import SavingCollectionModal from '../collection/SavingCollectionModal'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 
 export default function SavingCollections() {
@@ -27,6 +29,24 @@ export default function SavingCollections() {
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const [loading, setLoading] = useLoadingState({})
+  const [openCollectionModal, setOpenCollectionModal] = useState(false)
+  const [collectionData, setCollectionData] = useState({
+    newCollection: true,
+    collection_id: '',
+    saving_account_id: '',
+    field_id: '',
+    center_id: '',
+    category_id: '',
+    client_registration_id: '',
+    account_id: 1,
+    acc_no: '',
+    name: '',
+    payable_deposit: '',
+    installment: 1,
+    deposit: '',
+    description: ''
+  })
+
   const { t } = useTranslation()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
@@ -39,7 +59,7 @@ export default function SavingCollections() {
     queryParams: { saving_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
-  const actionBtnGroup = (id, profile) => (
+  const actionBtnGroup = (id, collection) => (
     <ActionBtnGroup>
       {authPermissions.includes('client_saving_account_collection_action_history') && (
         <Tooltip
@@ -50,7 +70,7 @@ export default function SavingCollections() {
           <IconButton
             className="text-primary"
             onClick={() => {
-              setActionHistory(profile?.saving_collection_action_history || [])
+              setActionHistory(collection?.saving_collection_action_history || [])
               setIsActionHistoryModalOpen(true)
             }}>
             {<Eye size={20} />}
@@ -59,7 +79,7 @@ export default function SavingCollections() {
       )}
       {authPermissions.includes('client_saving_account_collection_update') && (
         <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
-          <IconButton className="text-warning" onClick={() => console.log(profile)}>
+          <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -110,6 +130,28 @@ export default function SavingCollections() {
     }
   }
 
+  const collectionEdit = (collection) => {
+    setCollectionData((prevData) =>
+      create(prevData, (draftData) => {
+        draftData.newCollection = false
+        draftData.saving_account_id = collection.id
+        draftData.field_id = collection.field_id
+        draftData.center_id = collection.center_id
+        draftData.category_id = collection.category_id
+        draftData.client_registration_id = collection.client_registration_id
+        draftData.acc_no = collection.acc_no
+        draftData.name = collection.client_registration.name
+        draftData.deposit = collection.deposit
+        draftData.payable_deposit = collection.saving_account.payable_deposit
+        draftData.collection_id = collection.id
+        draftData.account_id = collection.account_id
+        draftData.installment = collection.installment
+        draftData.description = collection.description
+      })
+    )
+    setOpenCollectionModal(true)
+  }
+
   return (
     <>
       {isActionHistoryModalOpen && (
@@ -117,6 +159,15 @@ export default function SavingCollections() {
           open={isActionHistoryModalOpen}
           setOpen={setIsActionHistoryModalOpen}
           actionHistory={actionHistory}
+        />
+      )}
+      {openCollectionModal && (
+        <SavingCollectionModal
+          open={openCollectionModal}
+          setOpen={setOpenCollectionModal}
+          collectionData={collectionData}
+          mutate={mutate}
+          isRegular={false}
         />
       )}
       <div className="text-end my-3">
