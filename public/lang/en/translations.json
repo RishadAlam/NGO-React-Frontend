@@ -213,7 +213,17 @@
     "withdrawal_account": "Withdrawal Account",
     "list": "List",
     "fee_collections": "Fee Collections",
-    "fees_category": "Fees Category"
+    "fees_category": "Fees Category",
+    "regular_collection": "Regular Make Collection",
+    "withdrawal_fee": "Withdrawal Fee",
+    "registration_fee": "Registration Fee",
+    "saving_form_fee": "Saving Form Fee",
+    "loan_form": "Loan Form Fee",
+    "money_transfer_transaction_fee": "Money Transfer Fee",
+    "transaction_fee": "Transaction Fee",
+    "credit": "Credit",
+    "debit": "Debit",
+    "checked": "Account Checked"
   },
 
   "common_validation": {

@@ -4,6 +4,7 @@ import useFetch from '../../hooks/useFetch'
 import AccStatementTabsNav from '../../resources/staticData/AccStatementTabsNav'
 import AccountTopMenus from '../_helper/AccountTopMenus'
 import ClientAccountFees from '../_helper/ClientAccountFees'
+import ClientAccountTransactions from '../_helper/ClientAccountTransactions'
 import AccountShortSummery from '../_helper/accountShortSummery/AccountShortSummery'
 import RegisterBox from '../register/RegisterBox'
 import '../register/RegisterBox.scss'
@@ -45,7 +46,7 @@ export default function LoanAccount() {
       </RegisterBox>
 
       <TabPanel value={tabValue} index={1}>
-        {/* <SavingTransactions /> */}
+        <ClientAccountTransactions accountType="loan" />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <LoanCollections />

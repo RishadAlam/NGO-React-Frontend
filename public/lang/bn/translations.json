@@ -213,7 +213,17 @@
     "withdrawal_account": "উত্তোলন একাউন্ট",
     "list": "তালিকা",
     "fee_collections": "ফি কালেকশন",
-    "fees_category": "ফি ক্যাটাগরি"
+    "fees_category": "ফি ক্যাটাগরি",
+    "regular_collection": "দৈনিক সংগ্রহ",
+    "withdrawal_fee": "উত্তোলন ফি",
+    "registration_fee": "নিবন্ধন ফি",
+    "saving_form_fee": "সঞ্চয় ফরম ফি",
+    "loan_form": "ঋণ ফরম ফি",
+    "money_transfer_transaction_fee": "লেনদেন ফি",
+    "transaction_fee": "লেনদেন ফি",
+    "credit": "ক্রেডিট",
+    "debit": "ডেবিট",
+    "checked": "একাউন্ট চেক"
   },
 
   "common_validation": {
