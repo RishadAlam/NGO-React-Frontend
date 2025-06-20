@@ -1,5 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
+import { create } from 'mutative'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
@@ -16,6 +17,7 @@ import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
 import { LoanCollectionsStatementsTableColumn } from '../../resources/staticData/tableColumns'
 import ActionHistoryModal from '../_helper/actionHistory/ActionHistoryModal'
+import LoanCollectionModal from '../collection/LoanCollectionModal'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../utilities/DateRangePickerInputField'
@@ -27,6 +29,29 @@ export default function LoanCollections() {
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
   const [loading, setLoading] = useLoadingState({})
+  const [openCollectionModal, setOpenCollectionModal] = useState(false)
+  const [collectionData, setCollectionData] = useState({
+    newCollection: true,
+    collection_id: '',
+    loan_account_id: '',
+    field_id: '',
+    center_id: '',
+    category_id: '',
+    client_registration_id: '',
+    account_id: 1,
+    acc_no: '',
+    name: '',
+    payable_deposit: '',
+    loan_installment: '',
+    interest_installment: '',
+    installment: 1,
+    deposit: '',
+    loan: '',
+    interest: '',
+    total: '',
+    description: ''
+  })
+
   const { t } = useTranslation()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
@@ -39,14 +64,14 @@ export default function LoanCollections() {
     queryParams: { loan_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
-  const actionBtnGroup = (id, profile) => (
+  const actionBtnGroup = (id, collection) => (
     <ActionBtnGroup>
       {authPermissions.includes('client_loan_account_collection_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton
             className="text-primary"
             onClick={() => {
-              setActionHistory(profile?.loan_collection_action_history || [])
+              setActionHistory(collection?.loan_collection_action_history || [])
               setIsActionHistoryModalOpen(true)
             }}>
             {<Eye size={20} />}
@@ -55,7 +80,7 @@ export default function LoanCollections() {
       )}
       {authPermissions.includes('client_loan_account_collection_update') && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => console.log(profile)}>
+          <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -106,6 +131,39 @@ export default function LoanCollections() {
     }
   }
 
+  const collectionEdit = (collection) => {
+    setCollectionData((prevData) =>
+      create(prevData, (draftData) => {
+        draftData.loan_account_id = collection.loan_account_id
+        draftData.is_loan_approved = collection.loan_account.is_loan_approved
+        draftData.field_id = collection.field_id
+        draftData.center_id = collection.center_id
+        draftData.category_id = collection.category_id
+        draftData.client_registration_id = collection.client_registration_id
+        draftData.acc_no = collection.acc_no
+        draftData.name = collection.client_registration.name
+        draftData.payable_deposit = collection.loan_account.payable_deposit
+        draftData.loan_installment = collection.loan_account.loan_installment
+        draftData.interest_installment = collection.loan_account.interest_installment
+        draftData.total_installment =
+          parseInt(collection.loan_account.payable_deposit || 0) +
+          parseInt(collection.loan_account.loan_installment || 0) +
+          parseInt(collection.loan_account.interest_installment || 0)
+
+        draftData.newCollection = false
+        draftData.collection_id = collection.id
+        draftData.account_id = collection.account_id
+        draftData.installment = collection.installment
+        draftData.deposit = collection.deposit
+        draftData.loan = collection.loan
+        draftData.interest = collection.interest
+        draftData.total = collection.total
+        draftData.description = collection.description
+      })
+    )
+    setOpenCollectionModal(true)
+  }
+
   return (
     <>
       {isActionHistoryModalOpen && (
@@ -113,6 +171,15 @@ export default function LoanCollections() {
           open={isActionHistoryModalOpen}
           setOpen={setIsActionHistoryModalOpen}
           actionHistory={actionHistory}
+        />
+      )}
+      {openCollectionModal && (
+        <LoanCollectionModal
+          open={openCollectionModal}
+          setOpen={setOpenCollectionModal}
+          collectionData={collectionData}
+          mutate={mutate}
+          isRegular={false}
         />
       )}
       <div className="text-end my-3">
