@@ -37,7 +37,7 @@ export default function AccountTopMenus({
       {Boolean(closing_req) && (
         <span className="me-3 text-danger">{t('common.account_closing_msg')}</span>
       )}
-      {prefix && Boolean(is_approved) && !is_acc_closed && (
+      {!closing_req && prefix && Boolean(is_approved) && !is_acc_closed && (
         <>
           {((prefix === 'saving' &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions)) ||
@@ -76,9 +76,9 @@ export default function AccountTopMenus({
             />
           )}
           {((prefix === 'saving' &&
-            !checkPermission('client_saving_account_closing', authPermissions)) ||
+            checkPermission('client_saving_account_closing', authPermissions)) ||
             (prefix === 'loan-saving' &&
-              !checkPermission('client_loan_account_closing', authPermissions))) && (
+              checkPermission('client_loan_account_closing', authPermissions))) && (
             <PrimaryBtn
               classNames="mx-1"
               color="error"
