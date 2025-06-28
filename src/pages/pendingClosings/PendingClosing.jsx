@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
-import ApproveWithdrawalModal from '../../components/_helper/clientACCwithdrawal/ApproveWithdrawalModal'
 import EditWithdrawalModal from '../../components/_helper/clientACCwithdrawal/EditWithdrawalModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
@@ -16,6 +15,7 @@ import Avatar from '../../components/utilities/Avatar'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { setApprovalWithdrawalModalData } from '../../helper/RegFormFieldsData'
+import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
@@ -30,12 +30,13 @@ import {
   PendingSavingClosingTableColumns
 } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
+import PendingClosingModal from './PendingClosingModal'
 
 export default function PendingClosing({ prefix }) {
   const [editClosingAccData, setEditClosingAccData] = useState()
   const [editClosingAccDataModal, setEditClosingAccDataModal] = useState(false)
-  const [withdrawalAppData, setClosingAppData] = useState()
-  const [withdrawalAppModal, setClosingAppModal] = useState(false)
+  const [closingAppData, setClosingAppData] = useState()
+  const [closingAppModal, setClosingAppModal] = useState(false)
   const [selectedField, setSelectedField] = useState()
   const [selectedCenter, setSelectedCenter] = useState()
   const [selectedCategory, setSelectedCategory] = useState()
@@ -119,11 +120,11 @@ export default function PendingClosing({ prefix }) {
   }
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value, data) =>
+  const statusSwitch = (value, id) =>
     checkPermission(`pending_req_to_delete_${prefix}_acc_approval`, authPermissions) && (
       <AndroidSwitch
         value={Number(value) ? true : false}
-        toggleStatus={() => setApprovalData(data)}
+        toggleStatus={() => approved(id)}
         disabled={loading?.approval || false}
       />
     )
@@ -132,7 +133,7 @@ export default function PendingClosing({ prefix }) {
     <ActionBtnGroup>
       {checkPermission(`pending_req_to_delete_${prefix}_acc_update`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => setWithdrawalEdit(closing)}>
+          <IconButton className="text-warning" onClick={() => setClosingEdit(closing)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
@@ -194,14 +195,35 @@ export default function PendingClosing({ prefix }) {
     [t, windowWidth, loading, prefix]
   )
 
-  const setWithdrawalEdit = (account) => {
+  const setClosingEdit = (account) => {
     setEditClosingAccData(setApprovalWithdrawalModalData(account))
     setEditClosingAccDataModal(true)
   }
 
-  const setApprovalData = (data) => {
-    setClosingAppData(setApprovalWithdrawalModalData(data))
-    setClosingAppModal(true)
+  const approved = (id) => {
+    clientRegApprovalAlert(t).then((result) => {
+      if (result.isConfirmed) {
+        setLoading({ ...loading, approval: true })
+        const toasterLoading = toast.loading(`${t('common.approval')}...`)
+        xFetch(`${endpoint}/approved/${id}`, null, null, accessToken, null, 'PUT')
+          .then((response) => {
+            setLoading({ ...loading, approval: false })
+            toast.dismiss(toasterLoading)
+
+            if (response?.success) {
+              toast.success(response?.message)
+              mutate()
+              return
+            }
+
+            toast.error(response?.message)
+          })
+          .catch((errResponse) => {
+            setLoading({ ...loading, approval: false })
+            toast.error(errResponse?.message)
+          })
+      }
+    })
   }
 
   const deleteClosing = (id) => {
@@ -270,12 +292,12 @@ export default function PendingClosing({ prefix }) {
               category_id={editClosingAccData?.category?.id}
             />
           )}
-        {withdrawalAppData &&
+        {closingAppData &&
           authPermissions.includes(`pending_req_to_delete_${prefix}_acc_approval`) && (
-            <ApproveWithdrawalModal
-              open={withdrawalAppModal}
+            <PendingClosingModal
+              open={closingAppModal}
               setOpen={setClosingAppModal}
-              data={withdrawalAppData}
+              data={closingAppData}
               mutate={mutate}
               prefix={prefix}
             />

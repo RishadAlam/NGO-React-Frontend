@@ -1847,7 +1847,7 @@ export const PendingSavingClosingTableColumns = (
     show: isApprovalHide ? false : true,
     disable: isApprovalHide,
     isActionHide: isApprovalHide,
-    Cell: ({ value, row }) => statusSwitch(value, row.original)
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
@@ -2004,7 +2004,7 @@ export const PendingLoanClosingTableColumns = (
     show: isApprovalHide ? false : true,
     disable: isApprovalHide,
     isActionHide: isApprovalHide,
-    Cell: ({ value, row }) => statusSwitch(value, row.original)
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
