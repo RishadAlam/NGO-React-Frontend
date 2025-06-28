@@ -128,18 +128,18 @@ export default function PendingClosing({ prefix }) {
       />
     )
 
-  const actionBtnGroup = (id, withdrawal) => (
+  const actionBtnGroup = (id, closing) => (
     <ActionBtnGroup>
       {checkPermission(`pending_req_to_delete_${prefix}_acc_update`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => setWithdrawalEdit(withdrawal)}>
+          <IconButton className="text-warning" onClick={() => setWithdrawalEdit(closing)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {checkPermission(`pending_req_to_delete_${prefix}_acc_delete`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
-          <IconButton className="text-danger" onClick={() => deleteWithdrawal(id)}>
+          <IconButton className="text-danger" onClick={() => deleteClosing(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -204,7 +204,7 @@ export default function PendingClosing({ prefix }) {
     setClosingAppModal(true)
   }
 
-  const deleteWithdrawal = (id) => {
+  const deleteClosing = (id) => {
     permanentDeleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         passwordCheckAlert(t, accessToken).then((result) => {
@@ -304,9 +304,7 @@ export default function PendingClosing({ prefix }) {
           ) : (
             <ReactTable
               title={
-                prefix === 'saving'
-                  ? t('menu.withdrawal.Saving_Withdrawal')
-                  : t('menu.withdrawal.Loan_Saving_Withdrawal')
+                prefix === 'saving' ? t('menu.delete.Saving_Delete') : t('menu.delete.Loan_Delete')
               }
               columns={columns}
               data={closings}
