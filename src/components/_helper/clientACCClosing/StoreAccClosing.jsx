@@ -40,13 +40,11 @@ export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
           draftData['closing_fee_acc_id'] = data?.closing_fee_acc_id
           draftData['total_installment'] = data?.total_installment || 0
           draftData['total_rec_installment'] = data?.total_rec_installment || 0
-          draftData['total_balance'] = parseInt(
-            parseInt(data?.balance) - parseInt(data?.closing_fee)
-          )
+          draftData['total_balance'] = Number(Number(data?.balance) - Number(data?.closing_fee))
 
           if (prefix === 'saving') {
             draftData['interest'] = data?.interest
-            draftData['total_balance'] += parseInt(data?.interest)
+            draftData['total_balance'] += Number(data?.interest)
           } else {
             draftData['loan_given'] = data?.loan_given || 0
             draftData['total_loan_rec'] = data?.total_loan_rec || 0
@@ -88,9 +86,8 @@ export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
       create(prevData, (draftData) => {
         if (name === 'interest') {
           draftData[name] = val
-          draftData.total_balance = parseInt(
-            parseInt(parseInt(draftData?.balance) + parseInt(val || 0)) -
-              parseInt(draftData?.closing_fee)
+          draftData.total_balance = Number(
+            Number(Number(draftData?.balance) + Number(val || 0)) - Number(draftData?.closing_fee)
           )
           return
         }
@@ -109,16 +106,16 @@ export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
         }
 
         if (
-          parseInt(
-            parseInt(parseInt(closingData?.balance) + parseInt(val || 0)) -
-              parseInt(closingData?.closing_fee)
+          Number(
+            Number(Number(closingData?.balance) + Number(val || 0)) -
+              Number(closingData?.closing_fee)
           ) < 0
         ) {
           draftErr['balance'] = t('common_validation.insufficient_balance')
         } else if (
-          parseInt(
-            parseInt(parseInt(closingData?.balance) + parseInt(val || 0)) -
-              parseInt(closingData?.closing_fee)
+          Number(
+            Number(Number(closingData?.balance) + Number(val || 0)) -
+              Number(closingData?.closing_fee)
           ) >= 0
         ) {
           delete draftErr.balance

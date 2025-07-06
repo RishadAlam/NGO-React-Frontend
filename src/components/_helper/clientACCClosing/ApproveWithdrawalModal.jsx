@@ -220,13 +220,16 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
 const checkValidation = (data, account, setError, t) => {
   const error = {}
 
-  if (data?.amount > data?.balance) {
+  if (Number(data?.amount || 0) > Number(data?.balance || 0)) {
     error['balance'] = t('common_validation.insufficient_balance')
   }
-  if (data?.fee > 0 && data?.balance < parseInt(data?.amount) + parseInt(data?.fee)) {
+  if (
+    Number(data?.fee || 0) > 0 &&
+    Number(data?.balance || 0) < Number(data?.amount) + Number(data?.fee)
+  ) {
     error['fee'] = t('common_validation.insufficient_balance')
   }
-  if (account && account?.balance < data?.amount) {
+  if (account && Number(account?.balance || 0) < Number(data?.amount || 0)) {
     error['account'] = t('common_validation.insufficient_balance')
   }
   if (isEmptyObject(error)) return true

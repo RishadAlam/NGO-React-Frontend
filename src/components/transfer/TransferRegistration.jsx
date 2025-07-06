@@ -36,21 +36,21 @@ export default function TransferRegistration({ isOpen, setIsOpen, mutate }) {
         if (name === 'tx_acc_id') {
           draftData.tx_acc_id = val?.id || ''
           draftData.tx_prev_balance = val?.balance
-          draftData.tx_balance = parseInt(val?.balance) - parseInt(draftData.amount)
+          draftData.tx_balance = Number(val?.balance) - Number(draftData.amount)
           draftData.tx_account = val
           return
         }
         if (name === 'rx_acc_id') {
           draftData.rx_acc_id = val?.id || ''
           draftData.rx_prev_balance = val?.balance
-          draftData.rx_balance = parseInt(val?.balance) + parseInt(draftData.amount)
+          draftData.rx_balance = Number(val?.balance) + Number(draftData.amount)
           draftData.rx_account = val
           return
         }
         if (name === 'amount') {
-          draftData.amount = parseInt(val)
-          draftData.tx_balance = parseInt(draftData.tx_prev_balance) - parseInt(val)
-          draftData.rx_balance = parseInt(draftData.rx_prev_balance) + parseInt(val)
+          draftData.amount = Number(val)
+          draftData.tx_balance = Number(draftData.tx_prev_balance) - Number(val)
+          draftData.rx_balance = Number(draftData.rx_prev_balance) + Number(val)
           return
         }
         draftData[name] = val

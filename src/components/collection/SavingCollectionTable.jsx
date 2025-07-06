@@ -50,7 +50,7 @@ function countTotalCollections(data) {
   let approvedCount = 0
 
   data.forEach((account) => {
-    approvedCount += account.saving_collection.length
+    approvedCount += Number(account?.saving_collection?.length || 0)
   })
 
   return approvedCount

@@ -9,34 +9,25 @@ import TextInputField from '../utilities/TextInputField'
 export default function LoanFields({ formData, setFormData, errors, setErrors, disabled }) {
   const { t } = useTranslation()
 
-  const total = (loan_given = 0, installment = 0, interest = 0) => {
-    const total = Math.round(installment * deposit)
-
-    if (ints) {
-      return Math.ceil(parseFloat(total) + parseFloat((total / 100) * interest))
-    }
-    return total
-  }
-
   const calculateLoanDetails = (
     loanAmount = 0,
     totalInstallments = 0,
     interestRatePercentage = 0
   ) => {
     // Convert interest rate percentage to decimal
-    const interestRateDecimal = parseInt(interestRatePercentage) / 100
+    const interestRateDecimal = Number(interestRatePercentage) / 100
 
     // Calculate total interest
-    const totalInterest = Math.ceil(parseInt(loanAmount) * interestRateDecimal)
+    const totalInterest = Math.ceil(Number(loanAmount) * interestRateDecimal)
 
     // Calculate total loan with interest
-    const totalLoan = parseInt(loanAmount) + totalInterest
+    const totalLoan = Number(loanAmount) + totalInterest
 
     // Calculate loan installment
-    const loanInstallment = Math.ceil(parseInt(loanAmount) / parseInt(totalInstallments))
+    const loanInstallment = Math.ceil(Number(loanAmount) / Number(totalInstallments))
 
     // Calculate interest installment
-    const interestInstallment = Math.ceil(totalInterest / parseInt(totalInstallments))
+    const interestInstallment = Math.ceil(totalInterest / Number(totalInstallments))
 
     return {
       totalInterest,

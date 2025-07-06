@@ -105,10 +105,10 @@ function calculateDepositSum(data = []) {
   data.forEach((item) => {
     if (item.loan_collection && item.loan_collection.length > 0) {
       item.loan_collection.forEach((collection) => {
-        depositSum += parseInt(collection.deposit || 0)
-        loanSum += parseInt(collection.loan || 0)
-        interestSum += parseInt(collection.interest || 0)
-        totalSum += parseInt(collection.total || 0)
+        depositSum += Number(collection.deposit || 0)
+        loanSum += Number(collection.loan || 0)
+        interestSum += Number(collection.interest || 0)
+        totalSum += Number(collection.total || 0)
       })
     }
   })

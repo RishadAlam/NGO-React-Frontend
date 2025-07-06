@@ -109,15 +109,15 @@ export default function LoanCollectionModal({
           return
         }
         if (name === 'installment') {
-          draftData.deposit = parseInt(draftData.payable_deposit || 0) * parseInt(val || 0)
-          draftData.loan = parseInt(draftData.loan_installment || 0) * parseInt(val || 0)
-          draftData.interest = parseInt(draftData.interest_installment || 0) * parseInt(val || 0)
+          draftData.deposit = Number(draftData.payable_deposit || 0) * Number(val || 0)
+          draftData.loan = Number(draftData.loan_installment || 0) * Number(val || 0)
+          draftData.interest = Number(draftData.interest_installment || 0) * Number(val || 0)
         }
         draftData[name] = val
         draftData.total =
-          parseInt(draftData.deposit || 0) +
-          parseInt(draftData.loan || 0) +
-          parseInt(draftData.interest || 0)
+          Number(draftData.deposit || 0) +
+          Number(draftData.loan || 0) +
+          Number(draftData.interest || 0)
       })
     )
     setErrors((prevErr) =>

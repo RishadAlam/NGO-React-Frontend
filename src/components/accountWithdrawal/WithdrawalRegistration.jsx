@@ -32,13 +32,13 @@ export default function WithdrawalRegistration({ isOpen, setIsOpen, mutate }) {
         if (name === 'account_id') {
           draftData.account_id = val?.id || ''
           draftData.previous_balance = val?.balance
-          draftData.balance = parseInt(val?.balance) + parseInt(draftData.amount)
+          draftData.balance = Number(val?.balance) + Number(draftData.amount)
           draftData.account = val
           return
         }
         if (name === 'amount') {
-          draftData.amount = parseInt(val)
-          draftData.balance = parseInt(draftData.previous_balance) - parseInt(val)
+          draftData.amount = Number(val)
+          draftData.balance = Number(draftData.previous_balance) - Number(val)
           return
         }
         draftData[name] = val

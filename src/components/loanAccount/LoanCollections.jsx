@@ -146,9 +146,9 @@ export default function LoanCollections() {
         draftData.loan_installment = collection.loan_account.loan_installment
         draftData.interest_installment = collection.loan_account.interest_installment
         draftData.total_installment =
-          parseInt(collection.loan_account.payable_deposit || 0) +
-          parseInt(collection.loan_account.loan_installment || 0) +
-          parseInt(collection.loan_account.interest_installment || 0)
+          Number(collection.loan_account.payable_deposit || 0) +
+          Number(collection.loan_account.loan_installment || 0) +
+          Number(collection.loan_account.interest_installment || 0)
 
         draftData.newCollection = false
         draftData.collection_id = collection.id

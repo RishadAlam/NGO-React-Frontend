@@ -18,8 +18,8 @@ export default function WithdrawalUpdate({ isOpen, setIsOpen, data, mutate }) {
     setWithdrawalData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'amount') {
-          draftData.amount = parseInt(val)
-          draftData.balance = parseInt(draftData.previous_balance) - parseInt(val)
+          draftData.amount = Number(val)
+          draftData.balance = Number(draftData.previous_balance) - Number(val)
           return
         }
         draftData[name] = val

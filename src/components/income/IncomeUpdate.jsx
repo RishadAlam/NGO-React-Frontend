@@ -23,8 +23,8 @@ export default function IncomeUpdate({ isOpen, setIsOpen, data, mutate }) {
           return
         }
         if (name === 'amount') {
-          draftData.amount = parseInt(val)
-          draftData.balance = parseInt(draftData.previous_balance) + parseInt(val)
+          draftData.amount = Number(val)
+          draftData.balance = Number(draftData.previous_balance) + Number(val)
           return
         }
         draftData[name] = val

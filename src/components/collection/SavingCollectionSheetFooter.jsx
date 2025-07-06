@@ -90,7 +90,7 @@ function calculateDepositSum(data = []) {
   data.forEach((item) => {
     if (item.saving_collection && item.saving_collection.length > 0) {
       item.saving_collection.forEach((collection) => {
-        depositSum += collection.deposit
+        depositSum += Number(collection?.deposit || 0)
       })
     }
   })

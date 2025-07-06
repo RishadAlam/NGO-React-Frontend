@@ -140,7 +140,9 @@ export default function AccountSummary({ data }) {
         },
         {
           key: 'total',
-          value: tsNumbers(`$${data?.interest_installment + data?.loan_installment || 0}/-`),
+          value: tsNumbers(
+            `$${Number(data?.interest_installment || 0) + Number(data?.loan_installment || 0)}/-`
+          ),
           icon: <List size={18} />
         }
       ]
