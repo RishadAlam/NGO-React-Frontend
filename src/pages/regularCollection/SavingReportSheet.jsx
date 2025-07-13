@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import SavingCollectionSheet from '../../components/collection/SavingCollectionSheet'
-import DatePickerInputField from '../../components/utilities/DatePickerInputField'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import { checkPermission } from '../../helper/checkPermission'
 import useFetch from '../../hooks/useFetch'
@@ -14,21 +13,26 @@ import Chrome from '../../icons/Chrome'
 import Globe from '../../icons/Globe'
 import Home from '../../icons/Home'
 import SaveEnergy from '../../icons/SaveEnergy'
+import dateFormat from '../../libs/dateFormat'
+import tsNumbers from '../../libs/tsNumbers'
 
 export default function SavingReportSheet({ isRegular = true }) {
   const { category_id, field_id } = useParams()
   const { id, permissions: authPermissions } = useAuthDataValue()
-  const [dateRange, setDateRange] = useState(new Date(Date.now() - 864e5))
+  const [dateRange, setDateRange] = useState()
   const [selectedCreator, setSelectedCreator] = useState()
   const { t } = useTranslation()
   const prefix = isRegular ? 'regular' : 'pending'
   const queryParams = isRegular
     ? { user_id: selectedCreator?.id || '' }
-    : { user_id: selectedCreator?.id || '', date: !isRegular ? dateRange.toISOString() || '' : '' }
-
+    : {
+        user_id: selectedCreator?.id || '',
+        date: !isRegular ? dateRange || '' : ''
+      }
+  console.log(dateRange)
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
-    data: { data: collections = [] } = [],
+    data: { data: { dates = [], collections = [] } = [] } = [],
     mutate,
     isLoading
   } = useFetch({
@@ -48,15 +52,36 @@ export default function SavingReportSheet({ isRegular = true }) {
     onChange: (e, option) => setParamsState(option, 'creator'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
+  const datesConfig = {
+    options: dates?.map((date) => ({
+      label: tsNumbers(dateFormat(date, 'dd/MM/yyyy')),
+      value: date
+    })),
+    value: dateRange
+      ? {
+          label: tsNumbers(dateFormat(dateRange, 'dd/MM/yyyy')),
+          value: dateRange
+        }
+      : null,
+    getOptionLabel: (option) => option.label,
+    onChange: (e, option) => setParamsState(option, 'dateRange'),
+    isOptionEqualToValue: (option, value) => option.value === value.value
+  }
 
   const setParamsState = (val, name) => {
     if (name === 'dateRange') {
-      setDateRange(new Date(val))
+      setDateRange(val.value)
     } else if (name === 'creator') {
       setSelectedCreator(val)
     }
     mutate()
   }
+
+  useEffect(() => {
+    if (!dateRange) {
+      setDateRange(dates[0])
+    }
+  }, [dates])
 
   return (
     <>
@@ -101,10 +126,7 @@ export default function SavingReportSheet({ isRegular = true }) {
           <div className="col-lg-4 col-xxl-6 d-md-none d-lg-block"></div>
           {!isRegular && (
             <div className="col-sm-6 col-lg-4 col-xxl-3 text-end mb-3">
-              <DatePickerInputField
-                defaultValue={dateRange}
-                setChange={(val) => setParamsState(val, 'dateRange')}
-              />
+              <SelectBoxField label={t('common.date')} config={datesConfig} />
             </div>
           )}
         </div>
