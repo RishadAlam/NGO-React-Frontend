@@ -36,19 +36,20 @@ export default function EditWithdrawalModal({
     requestData: requestData
   })
 
-  const min = data?.min_saving_withdrawal || data?.min_loan_saving_withdrawal
-  const max = data?.max_saving_withdrawal || data?.max_loan_saving_withdrawal
+  const min = Number(data?.min_saving_withdrawal || data?.min_loan_saving_withdrawal)
+  const max = Number(data?.max_saving_withdrawal || data?.max_loan_saving_withdrawal)
 
   const setChange = (val, name) => {
     if (name === 'amount') {
       val = tsNumbers(val, true)
+      val = Number(val)
     }
 
     setWithdrawData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'amount') {
           draftData[name] = val
-          draftData.balance_remaining = draftData.balance - val
+          draftData.balance_remaining = Number(draftData.balance) - val
           return
         }
 
@@ -71,7 +72,7 @@ export default function EditWithdrawalModal({
             )}`
             return
           }
-          if (val > withdrawData?.balance) {
+          if (val > Number(withdrawData?.balance)) {
             draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.insufficient_balance`)}`
             return
           }

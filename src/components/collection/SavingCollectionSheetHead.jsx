@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingValue } from '../../atoms/loaderAtoms'
@@ -37,9 +36,9 @@ export default function SavingCollectionSheetHead({
           <th className={`${!columnList.approval ? 'd-none' : ''}`}>
             {t('common.approval')}
             &nbsp;&nbsp;
-            {totalCollection > 0 && (
+            {Number(totalCollection) > 0 && (
               <AndroidSwitch
-                value={totalCollection === approvedList.length}
+                value={Number(totalCollection) === approvedList.length}
                 toggleStatus={(e) =>
                   setApprovedList(e.target.checked ? getSavingCollectionIds(accounts) : [])
                 }

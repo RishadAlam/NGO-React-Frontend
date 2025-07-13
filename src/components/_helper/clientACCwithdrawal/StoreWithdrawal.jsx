@@ -46,13 +46,14 @@ export default function StoreWithdrawal({ open, setOpen, prefix, mutate }) {
   const setChange = (val, name) => {
     if (name === 'amount') {
       val = tsNumbers(val, true)
+      val = Number(val)
     }
 
     setWithdrawData((prevData) =>
       create(prevData, (draftData) => {
         if (name === 'amount') {
           draftData[name] = val
-          draftData.balance_remaining = draftData.balance - val
+          draftData.balance_remaining = Number(draftData.balance) - val
           return
         }
 
@@ -69,13 +70,13 @@ export default function StoreWithdrawal({ open, setOpen, prefix, mutate }) {
             draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.is_invalid`)}`
             return
           }
-          if (data?.max > 0 && (val < data?.min || val > data?.max)) {
+          if (Number(data?.max) > 0 && (val < Number(data?.min) || val > Number(data?.max))) {
             draftErr[name] = `${t(`common.${name}`)} ${t(
               `common_validation.crossed_the_limitations`
             )}`
             return
           }
-          if (val > data?.balance) {
+          if (val > Number(data?.balance)) {
             draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.insufficient_balance`)}`
             return
           }

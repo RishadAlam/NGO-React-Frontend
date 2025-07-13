@@ -77,11 +77,11 @@ export default function TransferRegistration({ isOpen, setIsOpen, mutate }) {
       transferData.tx_acc_id === '' ||
       transferData.rx_acc_id === '' ||
       transferData.amount === '' ||
-      transferData.amount === 0 ||
+      Number(transferData.amount) === 0 ||
       transferData.tx_prev_balance === '' ||
-      transferData.tx_balance < 0 ||
+      Number(transferData.tx_balance) < 0 ||
       transferData.rx_prev_balance === '' ||
-      transferData.rx_balance <= 0 ||
+      Number(transferData.rx_balance) <= 0 ||
       transferData.date === ''
     ) {
       toast.error(t('common_validation.required_fields_are_empty'))

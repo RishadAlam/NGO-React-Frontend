@@ -13,7 +13,7 @@ export default function SurplusValue({
   const { t } = useTranslation()
 
   capital_meta =
-    net_profit > 0
+    Number(net_profit) > 0
       ? capital_meta
       : capital_meta &&
         capital_meta.filter((meta) =>
@@ -27,7 +27,7 @@ export default function SurplusValue({
         )
 
   resource_meta =
-    net_loss > 0
+    Number(net_loss) > 0
       ? resource_meta
       : resource_meta && resource_meta.filter((meta) => !['net_loss'].includes(meta.key))
 

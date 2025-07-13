@@ -61,14 +61,14 @@ export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
       : data &&
         setErrors((prevError) =>
           create(prevError, (draftError) => {
-            if (data?.closing_fee > data.balance) {
+            if (Number(data?.closing_fee) > Number(data.balance)) {
               draftError['balance'] = t('common_validation.insufficient_balance')
               draftError['closing_fee'] = t('common_validation.insufficient_balance')
             }
-            if (data?.total_loan_remaining > 0) {
+            if (Number(data?.total_loan_remaining) > 0) {
               draftError['total_loan_remaining'] = t('common_validation.outstanding_loan_detected')
             }
-            if (data?.total_interest_remaining > 0) {
+            if (Number(data?.total_interest_remaining) > 0) {
               draftError['total_interest_remaining'] = t(
                 'common_validation.outstanding_interest_detected'
               )
@@ -135,16 +135,16 @@ export default function StoreAccClosing({ open, setOpen, prefix, mutate }) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-    console.log(closingData.total_balance)
-    if (closingData.total_balance < 0) {
+
+    if (Number(closingData.total_balance) < 0) {
       toast.error(t('common_validation.insufficient_balance'))
       return
     }
-    if (closingData?.total_loan_remaining > 0) {
+    if (Number(closingData?.total_loan_remaining) > 0) {
       toast.error(t('common_validation.outstanding_loan_detected'))
       return
     }
-    if (closingData?.total_interest_remaining > 0) {
+    if (Number(closingData?.total_interest_remaining) > 0) {
       toast.error(t('common_validation.outstanding_interest_detected'))
       return
     }

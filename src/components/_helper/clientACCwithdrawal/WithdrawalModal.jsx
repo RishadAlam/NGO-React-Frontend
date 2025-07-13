@@ -75,7 +75,7 @@ export default function WithdrawalModal({
                     autoFocus={true}
                     disabled={loading?.withdrawForm}
                   />
-                  {(max > 0 || min > 0) && (
+                  {(Number(max) > 0 || Number(min) > 0) && (
                     <span className="text-info d-block mt-1">
                       {`${t('common.min')} ${t('common.amount')}: ${tsNumbers(`$${min}/-`)} ${t(
                         'common.max'
