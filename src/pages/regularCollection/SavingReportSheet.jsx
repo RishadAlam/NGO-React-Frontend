@@ -29,7 +29,7 @@ export default function SavingReportSheet({ isRegular = true }) {
         user_id: selectedCreator?.id || '',
         date: !isRegular ? dateRange || '' : ''
       }
-  console.log(dateRange)
+
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
     data: { data: { dates = [], collections = [] } = [] } = [],
@@ -52,6 +52,7 @@ export default function SavingReportSheet({ isRegular = true }) {
     onChange: (e, option) => setParamsState(option, 'creator'),
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
+
   const datesConfig = {
     options: dates?.map((date) => ({
       label: tsNumbers(dateFormat(date, 'dd/MM/yyyy')),
