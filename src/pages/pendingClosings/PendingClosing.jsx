@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
-import EditWithdrawalModal from '../../components/_helper/clientACCwithdrawal/EditWithdrawalModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
@@ -14,7 +13,6 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import ReactTable from '../../components/utilities/tables/ReactTable'
-import { setApprovalWithdrawalModalData } from '../../helper/RegFormFieldsData'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
@@ -22,7 +20,6 @@ import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAle
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import CheckPatch from '../../icons/CheckPatch'
-import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
 import Trash from '../../icons/Trash'
 import {
@@ -30,13 +27,8 @@ import {
   PendingSavingClosingTableColumns
 } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
-import PendingClosingModal from './PendingClosingModal'
 
 export default function PendingClosing({ prefix }) {
-  const [editClosingAccData, setEditClosingAccData] = useState()
-  const [editClosingAccDataModal, setEditClosingAccDataModal] = useState(false)
-  const [closingAppData, setClosingAppData] = useState()
-  const [closingAppModal, setClosingAppModal] = useState(false)
   const [selectedField, setSelectedField] = useState()
   const [selectedCenter, setSelectedCenter] = useState()
   const [selectedCategory, setSelectedCategory] = useState()
@@ -62,10 +54,12 @@ export default function PendingClosing({ prefix }) {
       user_id: selectedCreator?.id || ''
     }
   })
+
   const { data: { data: centers = [] } = [] } = useFetch({
     action: 'centers/active',
     queryParams: { field_id: selectedField?.id || '' }
   })
+
   const { data: { data: categories = [] } = [] } = useFetch({
     action: 'categories/active',
     queryParams: prefix === 'saving' ? { saving: true } : { loan: true }
@@ -82,6 +76,7 @@ export default function PendingClosing({ prefix }) {
     } else if (name === 'creator') {
       setSelectedCreator(option)
     }
+
     mutate()
   }
 
@@ -129,15 +124,8 @@ export default function PendingClosing({ prefix }) {
       />
     )
 
-  const actionBtnGroup = (id, closing) => (
+  const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      {checkPermission(`pending_req_to_delete_${prefix}_acc_update`, authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => setClosingEdit(closing)}>
-            {<Edit size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
       {checkPermission(`pending_req_to_delete_${prefix}_acc_delete`, authPermissions) && (
         <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
           <IconButton className="text-danger" onClick={() => deleteClosing(id)}>
@@ -167,7 +155,6 @@ export default function PendingClosing({ prefix }) {
               [
                 `pending_req_to_delete_${prefix}_acc_list_view`,
                 `pending_req_to_delete_${prefix}_acc_list_view_as_admin`,
-                `pending_req_to_delete_${prefix}_acc_update`,
                 `pending_req_to_delete_${prefix}_acc_delete`
               ],
               authPermissions
@@ -185,7 +172,6 @@ export default function PendingClosing({ prefix }) {
               [
                 `pending_req_to_delete_${prefix}_acc_list_view`,
                 `pending_req_to_delete_${prefix}_acc_list_view_as_admin`,
-                `pending_req_to_delete_${prefix}_acc_update`,
                 `pending_req_to_delete_${prefix}_acc_delete`
               ],
               authPermissions
@@ -194,11 +180,6 @@ export default function PendingClosing({ prefix }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth, loading, prefix]
   )
-
-  const setClosingEdit = (account) => {
-    setEditClosingAccData(setApprovalWithdrawalModalData(account))
-    setEditClosingAccDataModal(true)
-  }
 
   const approved = (id) => {
     clientRegApprovalAlert(t).then((result) => {
@@ -280,28 +261,6 @@ export default function PendingClosing({ prefix }) {
             />
           </div>
         </div>
-        {editClosingAccData &&
-          authPermissions.includes(`pending_req_to_delete_${prefix}_acc_update`) && (
-            <EditWithdrawalModal
-              open={editClosingAccDataModal}
-              setOpen={setEditClosingAccDataModal}
-              withdrawal={editClosingAccData}
-              setAccountData={setEditClosingAccData}
-              prefix={prefix}
-              mutate={mutate}
-              category_id={editClosingAccData?.category?.id}
-            />
-          )}
-        {closingAppData &&
-          authPermissions.includes(`pending_req_to_delete_${prefix}_acc_approval`) && (
-            <PendingClosingModal
-              open={closingAppModal}
-              setOpen={setClosingAppModal}
-              data={closingAppData}
-              mutate={mutate}
-              prefix={prefix}
-            />
-          )}
         <div className="row">
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
             {fields && <SelectBoxField label={t('common.field')} config={fieldConfig} />}

@@ -1850,12 +1850,12 @@ export const PendingSavingClosingTableColumns = (
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
-    Header: t('common.action'),
+    Header: t('common.delete'),
     accessor: 'action',
     show: isActionHide ? false : windowWidth < 576 ? false : true,
     disable: isActionHide,
     isActionHide: isActionHide,
-    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 
@@ -2007,12 +2007,12 @@ export const PendingLoanClosingTableColumns = (
     Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
-    Header: t('common.action'),
+    Header: t('common.delete'),
     accessor: 'action',
     show: isActionHide ? false : windowWidth < 576 ? false : true,
     disable: isActionHide,
     isActionHide: isActionHide,
-    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 
