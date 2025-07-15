@@ -19,7 +19,7 @@ export default function SavingReport({ isRegular = true }) {
     ? `collection/saving/${prefix}/collection-sheet`
     : `collection/saving/${prefix}/collection-sheet/${category_id}`
 
-  const { data: { data: collections = [] } = [], isLoading } = useFetch({
+  const { data: { data: { category_name = '', report = [] } = [] } = [], isLoading } = useFetch({
     action: endpoint
   })
 
@@ -28,40 +28,56 @@ export default function SavingReport({ isRegular = true }) {
       <section className="staff">
         <div className="row align-items-center my-3">
           <div className="col-sm-6">
-            <Breadcrumb
-              breadcrumbs={[
-                { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
-                {
-                  name: t(`menu.label.${isRegular ? 'regular' : 'pending'}_collection`),
-                  icon: isRegular ? <BusinessOpportunity size={16} /> : <CheckPatch size={16} />,
-                  active: false
-                },
-                {
-                  name: t('menu.collection.Saving_Collection'),
-                  icon: <SaveEnergy size={16} />,
-                  active: true
-                },
-                isEmpty(category_id)
-                  ? {
-                      name: t('common.category'),
-                      icon: <Chrome size={16} />,
-                      active: true
-                    }
-                  : {
-                      name: t('common.field'),
-                      icon: <Globe size={16} />,
-                      active: true
-                    }
-              ]}
-            />
+            <Breadcrumb breadcrumbs={dynamicBreadcrumb(category_name, category_id, t, isRegular)} />
           </div>
         </div>
         <SavingCollectionReport
-          data={collections}
+          data={report}
           loading={isLoading}
           hasCategoryId={!isEmpty(category_id)}
         />
       </section>
     </>
   )
+}
+
+export const dynamicBreadcrumb = (category_name, category_id, t, isRegular) => {
+  var breadCrumbs = [
+    { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
+    {
+      name: t(`menu.label.${isRegular ? 'regular' : 'pending'}_collection`),
+      icon: isRegular ? <BusinessOpportunity size={16} /> : <CheckPatch size={16} />,
+      active: false
+    },
+    {
+      name: t('menu.collection.Saving_Collection'),
+      icon: <SaveEnergy size={16} />,
+      active: true
+    }
+  ]
+
+  if (isEmpty(category_id)) {
+    breadCrumbs.push({
+      name: t('common.category'),
+      icon: <Chrome size={16} />,
+      active: true
+    })
+  }
+  if (!isEmpty(category_name)) {
+    breadCrumbs.push({
+      name: category_name,
+      icon: <Chrome size={16} />,
+      active: true
+    })
+  }
+
+  if (!isEmpty(category_id)) {
+    breadCrumbs.push({
+      name: t('common.field'),
+      icon: <Globe size={16} />,
+      active: true
+    })
+  }
+
+  return breadCrumbs
 }

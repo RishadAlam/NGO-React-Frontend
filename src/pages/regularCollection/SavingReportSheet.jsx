@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import SavingCollectionSheet from '../../components/collection/SavingCollectionSheet'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import { checkPermission } from '../../helper/checkPermission'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import BusinessOpportunity from '../../icons/BusinessOpportunity'
 import CheckPatch from '../../icons/CheckPatch'
@@ -32,7 +33,7 @@ export default function SavingReportSheet({ isRegular = true }) {
 
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
   const {
-    data: { data: { dates = [], collections = [] } = [] } = [],
+    data: { data: { category_name = '', field_name = '', dates = [], collections = [] } = [] } = [],
     mutate,
     isLoading
   } = useFetch({
@@ -89,31 +90,7 @@ export default function SavingReportSheet({ isRegular = true }) {
       <section className="staff">
         <div className="row align-items-center my-3">
           <div className="col-sm-12">
-            <Breadcrumb
-              breadcrumbs={[
-                { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
-                {
-                  name: t(`menu.label.${isRegular ? 'regular' : 'pending'}_collection`),
-                  icon: isRegular ? <BusinessOpportunity size={16} /> : <CheckPatch size={16} />,
-                  active: false
-                },
-                {
-                  name: t('menu.collection.Saving_Collection'),
-                  icon: <SaveEnergy size={16} />,
-                  active: true
-                },
-                {
-                  name: t('common.category'),
-                  icon: <Chrome size={16} />,
-                  active: true
-                },
-                {
-                  name: t('common.field'),
-                  icon: <Globe size={16} />,
-                  active: true
-                }
-              ]}
-            />
+            <Breadcrumb breadcrumbs={dynamicBreadcrumb(category_name, field_name, t, isRegular)} />
           </div>
         </div>
         <div className="row">
@@ -140,4 +117,38 @@ export default function SavingReportSheet({ isRegular = true }) {
       </section>
     </>
   )
+}
+
+export const dynamicBreadcrumb = (category_name, field_name, t, isRegular) => {
+  var breadCrumbs = [
+    { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
+    {
+      name: t(`menu.label.${isRegular ? 'regular' : 'pending'}_collection`),
+      icon: isRegular ? <BusinessOpportunity size={16} /> : <CheckPatch size={16} />,
+      active: false
+    },
+    {
+      name: t('menu.collection.Saving_Collection'),
+      icon: <SaveEnergy size={16} />,
+      active: true
+    }
+  ]
+
+  if (!isEmpty(category_name)) {
+    breadCrumbs.push({
+      name: category_name,
+      icon: <Chrome size={16} />,
+      active: true
+    })
+  }
+
+  if (!isEmpty(field_name)) {
+    breadCrumbs.push({
+      name: field_name,
+      icon: <Globe size={16} />,
+      active: true
+    })
+  }
+
+  return breadCrumbs
 }
