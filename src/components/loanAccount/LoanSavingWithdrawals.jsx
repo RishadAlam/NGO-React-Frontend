@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
-import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermission } from '../../helper/checkPermission'
 import useFetch from '../../hooks/useFetch'
@@ -23,9 +22,8 @@ export default function LoanSavingWithdrawals() {
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const [isActionHistoryModalOpen, setIsActionHistoryModalOpen] = useState(false)
   const [actionHistory, setActionHistory] = useState([])
-  const [loading, setLoading] = useLoadingState({})
   const { t } = useTranslation()
-  const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const {
     data: { data: collection } = [],
