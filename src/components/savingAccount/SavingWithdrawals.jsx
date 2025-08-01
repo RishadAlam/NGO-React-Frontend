@@ -6,13 +6,9 @@ import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
-import { checkPermissions } from '../../helper/checkPermission'
-import { deleteWithdrawal } from '../../helper/collectionActions'
-import { isEmpty } from '../../helper/isEmpty'
+import { checkPermission } from '../../helper/checkPermission'
 import useFetch from '../../hooks/useFetch'
-import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
-import Trash from '../../icons/Trash'
 import decodeHTMLs from '../../libs/decodeHTMLs'
 import getCurrentMonth from '../../libs/getCurrentMonth'
 import { SavingWithdrawalStatementsTableColumn } from '../../resources/staticData/tableColumns'
@@ -54,39 +50,6 @@ export default function SavingWithdrawals() {
           </IconButton>
         </Tooltip>
       )}
-      {isEmpty(withdrawal.deleted_at) &&
-        authPermissions.includes('client_saving_account_withdrawal_update') && (
-          <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-            <IconButton className="text-warning" onClick={() => console.log(withdrawal)}>
-              {<Edit size={20} />}
-            </IconButton>
-          </Tooltip>
-        )}
-      {isEmpty(withdrawal.deleted_at) &&
-        authPermissions.includes('client_saving_account_withdrawal_permanently_delete') && (
-          <Tooltip
-            TransitionComponent={Zoom}
-            title="Delete"
-            arrow
-            followCursor
-            disabled={loading?.withdrawalDelete || false}>
-            <IconButton
-              className="text-danger"
-              onClick={() =>
-                deleteWithdrawal(
-                  'withdrawal/saving',
-                  id,
-                  t,
-                  accessToken,
-                  mutate,
-                  loading,
-                  setLoading
-                )
-              }>
-              {<Trash size={20} />}
-            </IconButton>
-          </Tooltip>
-        )}
     </ActionBtnGroup>
   )
 
@@ -97,14 +60,7 @@ export default function SavingWithdrawals() {
         windowWidth,
         decodeHTMLs,
         actionBtnGroup,
-        !checkPermissions(
-          [
-            'client_saving_account_withdrawal_action_history',
-            'client_saving_account_withdrawal_update',
-            'client_saving_account_withdrawal_permanently_delete'
-          ],
-          authPermissions
-        )
+        !checkPermission('client_saving_account_withdrawal_action_history', authPermissions)
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
