@@ -2476,7 +2476,8 @@ export const SavingCollectionsStatementsTableColumn = (
   {
     Header: t('common.account'),
     accessor: 'account',
-    Cell: ({ value }) => defaultNameCheck(t, value.is_default, 'account.default.', value.name)
+    Cell: ({ value }) =>
+      !isEmpty(value) && defaultNameCheck(t, value.is_default, 'account.default.', value.name)
   },
   {
     Header: t('common.installment'),
