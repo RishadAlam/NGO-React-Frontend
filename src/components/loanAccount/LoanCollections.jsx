@@ -9,6 +9,7 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermissions } from '../../helper/checkPermission'
 import { collectionDelete } from '../../helper/collectionActions'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
@@ -78,29 +79,31 @@ export default function LoanCollections() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('client_loan_account_collection_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
-            {<Edit size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
-      {authPermissions.includes('client_loan_account_collection_permanently_delete') && (
-        <Tooltip
-          TransitionComponent={Zoom}
-          title="Delete"
-          arrow
-          followCursor
-          disabled={loading?.collectionDelete || false}>
-          <IconButton
-            className="text-danger"
-            onClick={() =>
-              collectionDelete('loan', id, t, accessToken, mutate, loading, setLoading)
-            }>
-            {<Trash size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
+      {isEmpty(collection.deleted_at) &&
+        authPermissions.includes('client_loan_account_collection_update') && (
+          <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+            <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
+              {<Edit size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
+      {isEmpty(collection.deleted_at) &&
+        authPermissions.includes('client_loan_account_collection_permanently_delete') && (
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Delete"
+            arrow
+            followCursor
+            disabled={loading?.collectionDelete || false}>
+            <IconButton
+              className="text-danger"
+              onClick={() =>
+                collectionDelete('loan', id, t, accessToken, mutate, loading, setLoading)
+              }>
+              {<Trash size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
     </ActionBtnGroup>
   )
 

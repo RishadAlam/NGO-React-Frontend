@@ -8,6 +8,7 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermissions } from '../../helper/checkPermission'
 import { deleteWithdrawal } from '../../helper/collectionActions'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
@@ -39,43 +40,53 @@ export default function SavingWithdrawals() {
     queryParams: { saving_account_id: id, date_range: JSON.stringify(dateRange) }
   })
 
-  const actionBtnGroup = (id, profile) => (
+  const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
       {authPermissions.includes('client_saving_account_withdrawal_action_history') && (
         <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
           <IconButton
             className="text-primary"
             onClick={() => {
-              setActionHistory(profile?.saving_withdrawal_action_history || [])
+              setActionHistory(withdrawal?.saving_withdrawal_action_history || [])
               setIsActionHistoryModalOpen(true)
             }}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('client_saving_account_withdrawal_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-          <IconButton className="text-warning" onClick={() => console.log(profile)}>
-            {<Edit size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
-      {authPermissions.includes('client_saving_account_withdrawal_permanently_delete') && (
-        <Tooltip
-          TransitionComponent={Zoom}
-          title="Delete"
-          arrow
-          followCursor
-          disabled={loading?.withdrawalDelete || false}>
-          <IconButton
-            className="text-danger"
-            onClick={() =>
-              deleteWithdrawal('withdrawal/saving', id, t, accessToken, mutate, loading, setLoading)
-            }>
-            {<Trash size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
+      {isEmpty(withdrawal.deleted_at) &&
+        authPermissions.includes('client_saving_account_withdrawal_update') && (
+          <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+            <IconButton className="text-warning" onClick={() => console.log(withdrawal)}>
+              {<Edit size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
+      {isEmpty(withdrawal.deleted_at) &&
+        authPermissions.includes('client_saving_account_withdrawal_permanently_delete') && (
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Delete"
+            arrow
+            followCursor
+            disabled={loading?.withdrawalDelete || false}>
+            <IconButton
+              className="text-danger"
+              onClick={() =>
+                deleteWithdrawal(
+                  'withdrawal/saving',
+                  id,
+                  t,
+                  accessToken,
+                  mutate,
+                  loading,
+                  setLoading
+                )
+              }>
+              {<Trash size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
     </ActionBtnGroup>
   )
 

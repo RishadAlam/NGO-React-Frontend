@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import useFetch from '../../hooks/useFetch'
 import decodeHTMLs from '../../libs/decodeHTMLs'
@@ -15,7 +14,6 @@ export default function SavingAccountChecks() {
   const { id } = useParams()
   const [dateRange, setDateRange] = useState(getCurrentMonth())
   const { t } = useTranslation()
-  const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
   const {
     data: { data: collection } = [],

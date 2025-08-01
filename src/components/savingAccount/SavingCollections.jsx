@@ -13,6 +13,7 @@ import DateRangePickerInputField from '../../components/utilities/DateRangePicke
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
 import { collectionDelete } from '../../helper/collectionActions'
+import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Eye from '../../icons/Eye'
@@ -77,29 +78,31 @@ export default function SavingCollections() {
           </IconButton>
         </Tooltip>
       )}
-      {authPermissions.includes('client_saving_account_collection_update') && (
-        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
-          <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
-            {<Edit size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
-      {authPermissions.includes('client_saving_account_collection_permanently_delete') && (
-        <Tooltip
-          TransitionComponent={Zoom}
-          title={t('common.delete')}
-          arrow
-          followCursor
-          disabled={loading?.collectionDelete || false}>
-          <IconButton
-            className="text-danger"
-            onClick={() =>
-              collectionDelete('saving', id, t, accessToken, mutate, loading, setLoading)
-            }>
-            {<Trash size={20} />}
-          </IconButton>
-        </Tooltip>
-      )}
+      {isEmpty(collection.deleted_at) &&
+        authPermissions.includes('client_saving_account_collection_update') && (
+          <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
+            <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
+              {<Edit size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
+      {isEmpty(collection.deleted_at) &&
+        authPermissions.includes('client_saving_account_collection_permanently_delete') && (
+          <Tooltip
+            TransitionComponent={Zoom}
+            title={t('common.delete')}
+            arrow
+            followCursor
+            disabled={loading?.collectionDelete || false}>
+            <IconButton
+              className="text-danger"
+              onClick={() =>
+                collectionDelete('saving', id, t, accessToken, mutate, loading, setLoading)
+              }>
+              {<Trash size={20} />}
+            </IconButton>
+          </Tooltip>
+        )}
     </ActionBtnGroup>
   )
 
