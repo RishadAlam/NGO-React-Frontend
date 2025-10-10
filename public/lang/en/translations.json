@@ -223,7 +223,8 @@
     "transaction_fee": "Transaction Fee",
     "credit": "Credit",
     "debit": "Debit",
-    "checked": "Account Checked"
+    "checked": "Account Checked",
+    "transactions": "Transactions"
   },
 
   "common_validation": {
@@ -484,7 +485,7 @@
   "approvals_config": {
     "saving_collection_approval": "Saving Make Collection Approval",
     "loan_collection_approval": "Loan Make Collection Approval",
-    "money_exchange_approval": "Money Exchange Approval",
+    "account_transactions_approval": "Account Transaction Approval",
     "money_withdrawal_approval": "Money Withdrawal Approval",
     "client_registration_approval": "Client Registration Approval",
     "saving_account_registration_approval": "Saving Account Registration Approval",

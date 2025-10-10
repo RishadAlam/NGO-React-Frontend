@@ -6,12 +6,14 @@ import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHis
 import { checkPermission } from '../../helper/checkPermission'
 import CashWithdrawal from '../../icons/CashWithdrawal'
 import Clock from '../../icons/Clock'
+import Transactions from '../../icons/Transactions'
 import Trash from '../../icons/Trash'
 import '../register/RegisterBox.scss'
 import PrimaryBtn from '../utilities/PrimaryBtn'
 import ChangeAccountStatus from './ChangeAccountStatus'
 import StoreAccountCheck from './StoreAccountCheck'
 import StoreAccClosing from './clientACCClosing/StoreAccClosing'
+import StoreTransaction from './clientACCwithdrawal/StoreTransaction'
 import StoreWithdrawal from './clientACCwithdrawal/StoreWithdrawal'
 
 export default function AccountTopMenus({
@@ -27,6 +29,7 @@ export default function AccountTopMenus({
 }) {
   const { t } = useTranslation()
   const { permissions: authPermissions } = useAuthDataValue()
+  const [transactionModalOpen, setTransactionModalOpen] = useState(false)
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [accountCheckModalOpen, setAccountCheckModalOpen] = useState(false)
   const [accountClosingModalOpen, setAccountClosingModalOpen] = useState(false)
@@ -39,6 +42,18 @@ export default function AccountTopMenus({
       )}
       {!closing_req && prefix && Boolean(is_approved) && !is_acc_closed && (
         <>
+          {((prefix === 'saving' && checkPermission('make_saving_transactions', authPermissions)) ||
+            (prefix === 'loan-saving' &&
+              checkPermission('make_loan_transactions', authPermissions))) && (
+            <PrimaryBtn
+              classNames="mx-1"
+              name={t('common.send_money')}
+              color="warning"
+              loading={false}
+              endIcon={<Transactions size={20} />}
+              onclick={() => setTransactionModalOpen(true)}
+            />
+          )}
           {((prefix === 'saving' &&
             checkPermission('permission_to_make_saving_withdrawal', authPermissions)) ||
             (prefix === 'loan-saving' &&
@@ -86,6 +101,14 @@ export default function AccountTopMenus({
               loading={false}
               endIcon={<Trash />}
               onclick={() => setAccountClosingModalOpen(true)}
+            />
+          )}
+          {transactionModalOpen && (
+            <StoreTransaction
+              open={transactionModalOpen}
+              setOpen={setTransactionModalOpen}
+              prefix={prefix === 'loan-saving' ? 'loan' : prefix}
+              mutate={mutate}
             />
           )}
           {withdrawalModalOpen && (

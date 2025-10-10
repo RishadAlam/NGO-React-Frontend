@@ -114,7 +114,7 @@
     "this_month": "এই মাস",
     "this_year": "এই বছর",
     "transaction": "লেনদেন",
-    "send_money": "টাকা পাঠিয়েছে",
+    "send_money": "সেন্ড মানি",
     "received_money": "টাকা এসেছে",
     "income": "আয়",
     "expense": "ব্যয়",
@@ -223,7 +223,8 @@
     "transaction_fee": "লেনদেন ফি",
     "credit": "ক্রেডিট",
     "debit": "ডেবিট",
-    "checked": "একাউন্ট চেক"
+    "checked": "একাউন্ট চেক",
+    "transactions": "লেনদেন"
   },
 
   "common_validation": {
@@ -472,8 +473,8 @@
   "approvals_config": {
     "saving_collection_approval": "সঞ্চয় সংগ্রহ অনুমোদন",
     "loan_collection_approval": "ঋণ সংগ্রহের অনুমোদন",
-    "money_exchange_approval": "টাকা বিনিময় অনুমোদন",
-    "money_withdrawal_approval": "টাকা উত্তোলন অনুমোদন",
+    "account_transactions_approval": "অ্যাকাউন্ট লেনদেনের অনুমোদন",
+    "money_withdrawal_approval": "অ্যাকাউন্ট উত্তোলনের অনুমোদন",
     "client_registration_approval": "সদস্য নিবন্ধন অনুমোদন",
     "saving_account_registration_approval": "সেভিংস অ্যাকাউন্ট নিবন্ধন অনুমোদন",
     "saving_account_closing_approval": "সেভিংস অ্যাকাউন্ট ক্লোজ করার অনুমোদন",
