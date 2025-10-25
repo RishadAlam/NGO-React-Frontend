@@ -46,8 +46,10 @@ export default function TransactionModal({
     queryParams: transactionData.field_id ? { field_id: transactionData.field_id } : null
   })
 
+  const accountPrefix =
+    transactionData?.type === `${prefix}_to_saving` ? 'saving-accounts' : 'loan-accounts'
   const { data: { data: accounts = [] } = [] } = useFetch({
-    action: `client/registration/saving-accounts/${transactionData?.field_id || ''}/${transactionData?.center_id || ''}/${transactionData?.category_id || ''}`
+    action: `client/registration/${accountPrefix}/${transactionData?.field_id || ''}/${transactionData?.center_id || ''}/${transactionData?.category_id || ''}`
   })
 
   const fieldConfig = {

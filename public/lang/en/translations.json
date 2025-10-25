@@ -224,7 +224,12 @@
     "credit": "Credit",
     "debit": "Debit",
     "checked": "Account Checked",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "approval_required": "Approval Required",
+    "saving_to_saving": "Saving to Saving",
+    "saving_to_loan": "Saving to Loan",
+    "loan_to_saving": "Loan to Saving",
+    "loan_to_loan": "Loan to Loan"
   },
 
   "common_validation": {

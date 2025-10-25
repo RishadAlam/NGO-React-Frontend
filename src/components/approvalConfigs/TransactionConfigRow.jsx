@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import InputFieldSetup from '../_helper/InputFieldSetup'
+import AndroidSwitch from '../utilities/AndroidSwitch'
 import SelectBoxField from '../utilities/SelectBoxField'
 
 export default function TransactionConfigRow({
@@ -30,7 +31,13 @@ export default function TransactionConfigRow({
   return (
     <tr>
       <td>{index + 1}</td>
-      <td>{data_key}</td>
+      <td>{t(`common.${data_key}`)}</td>
+      <td>
+        <AndroidSwitch
+          value={Number(config[data_key]?.approval_required ?? false)}
+          toggleStatus={(e) => setChange(e.target.checked, 'approval_required', data_key)}
+        />
+      </td>
       <td>
         <InputFieldSetup
           val={config[data_key]?.fee}

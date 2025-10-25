@@ -116,6 +116,7 @@ export default function TransferTransactionConfig({
                   <tr>
                     <th>#</th>
                     <th>{t('common.transaction')}</th>
+                    <th>{`${t('common.approval_required')}`}</th>
                     <th>{`${t('common.transaction')} ${t('common.fee')}`}</th>
                     <th>{`${t('common.account')}`}</th>
                     <th>{`${t('common.min')} ${t('common.transaction')}`}</th>

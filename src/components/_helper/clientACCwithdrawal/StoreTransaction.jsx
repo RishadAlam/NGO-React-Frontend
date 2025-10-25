@@ -34,8 +34,6 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
     action: `${endpoint}/${id}`
   })
 
-  console.log('transactionData', transactionData)
-
   useEffect(() => {
     if (data?.account) {
       setTransactionData((prevData) =>
@@ -120,7 +118,8 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
             )}`
             return
           }
-          if (val > Number(config?.balance)) {
+
+          if (val > Number(transactionData?.balance)) {
             draftErr[name] = `${t(`common.${name}`)} ${t(`common_validation.insufficient_balance`)}`
             return
           }
