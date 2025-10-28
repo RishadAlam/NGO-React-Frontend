@@ -30,11 +30,16 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
   })
 
   const endpoint = `client/registration/transaction/${prefix}`
-  const { data: { data } = [], isError } = useFetch({
+  const {
+    data: { data } = [],
+    mutate: refetchAccount,
+    isError
+  } = useFetch({
     action: `${endpoint}/${id}`
   })
 
   useEffect(() => {
+    console.log(data)
     if (data?.account) {
       setTransactionData((prevData) =>
         create(prevData, (draftData) => {
@@ -50,7 +55,7 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
     }
 
     !isEmpty(isError) && setErrors(isError)
-  }, [data, isError])
+  }, [data, isError, transactionType])
 
   const setChange = (val, name) => {
     if (name === 'amount') {
@@ -78,7 +83,7 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
           return
         }
         if (name === 'rx_account') {
-          draftData.rx_account_id = val?.id || ''
+          draftData.rx_acc_id = val?.id || ''
           draftData.rx_account = val || null
           return
         }
@@ -87,14 +92,27 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
           draftData.balance_remaining = Number(draftData.balance) - val
           return
         }
+        if (name === 'type') {
+          setTransactionType(val)
+          refetchAccount()
 
+          return rawReturn({
+            tx_acc_id: id,
+            type: val,
+            amount: 0,
+            balance: 0,
+            balance_remaining: 0,
+            rx_acc_id: '',
+            description: ''
+          })
+        }
         draftData[name] = val
       })
     )
 
-    if (name === 'type') {
-      setTransactionType(val)
-    }
+    // if (name === 'type') {
+    //   setTransactionType(val)
+    // }
 
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
@@ -138,17 +156,21 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
+
     setLoading({ ...loading, transactionForm: true })
-    xFetch(endpoint, transactionData, null, accessToken, null, 'POST')
+    xFetch('transactions', transactionData, null, accessToken, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, transactionForm: false })
+
         if (response?.success) {
           toast.success(response.message)
           setOpen(false)
           setTransactionData({})
           mutate()
+
           return
         }
+
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!response?.errors) {
