@@ -23,6 +23,9 @@ const PendingClientReg = lazy(() => import('./pages/pendingRegistrations/Pending
 const PendingSavingReg = lazy(() => import('./pages/pendingRegistrations/PendingSavingReg'))
 const PendingLoanReg = lazy(() => import('./pages/pendingRegistrations/PendingLoanReg'))
 const PendingLoans = lazy(() => import('./pages/pendingLoans/PendingLoans'))
+const PendingClientTransactions = lazy(
+  () => import('./pages/pendingClientTransactions/PendingClientTransactions')
+)
 const SavingReport = lazy(() => import('./pages/regularCollection/SavingReport'))
 const SavingReportSheet = lazy(() => import('./pages/regularCollection/SavingReportSheet'))
 const LoanReport = lazy(() => import('./pages/regularCollection/LoanReport'))
@@ -532,6 +535,60 @@ export default function App() {
                   }
                 />
               </Route>
+            </Route>
+
+            {/* Pending Client Account Transactions Request Routes */}
+            <Route
+              path="pending/transactions"
+              element={
+                <RequirePermissions
+                  allowedPermissions={[
+                    'pending_client_transactions_list_view',
+                    'pending_client_transactions_list_view_as_admin'
+                  ]}
+                  pageTitle={['common.pending', 'menu.label.pending_transactions']}
+                />
+              }>
+              <Route
+                path="saving_to_saving"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <PendingClientTransactions type="saving_to_saving" />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="saving_to_loan"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <PendingClientTransactions type="saving_to_loan" />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="loan_to_loan"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <PendingClientTransactions type="loan_to_loan" />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="loan_to_saving"
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <PendingClientTransactions type="loan_to_saving" />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
             </Route>
 
             {/* Pending Closing Request Routes */}

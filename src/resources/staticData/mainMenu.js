@@ -223,6 +223,49 @@ export const mainMenu = (t) => {
       },
       {
         id: 5,
+        label: t('menu.label.pending_transactions'),
+        path: '',
+        icon: 'Transactions',
+        view: checkPermissions(
+          [
+            'pending_client_transactions_list_view',
+            'pending_client_transactions_list_view_as_admin'
+          ],
+          permissions
+        ),
+        subMenu: [
+          {
+            id: 'pendingTransaction1',
+            label: `${t('common.saving_to_saving')} ${t('common.transactions')}`,
+            path: '/pending/transactions/saving_to_saving',
+            icon: 'Transactions',
+            view: true
+          },
+          {
+            id: 'pendingTransaction2',
+            label: `${t('common.saving_to_loan')} ${t('common.transactions')}`,
+            path: '/pending/transactions/saving_to_loan',
+            icon: 'Transactions',
+            view: true
+          },
+          {
+            id: 'pendingTransaction3',
+            label: `${t('common.loan_to_saving')} ${t('common.transactions')}`,
+            path: '/pending/transactions/loan_to_saving',
+            icon: 'Transactions',
+            view: true
+          },
+          {
+            id: 'pendingTransaction4',
+            label: `${t('common.loan_to_loan')} ${t('common.transactions')}`,
+            path: '/pending/transactions/loan_to_loan',
+            icon: 'Transactions',
+            view: true
+          }
+        ]
+      },
+      {
+        id: 6,
         label: t('menu.label.pending_acc_delete_req'),
         path: '',
         icon: 'Trash',

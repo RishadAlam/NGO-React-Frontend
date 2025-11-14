@@ -280,6 +280,7 @@
       "registration": "Registration",
       "pending_loans": "Pending Loans",
       "pending_withdrawals": "Pending Withdrawals",
+      "pending_transactions": "Pending Transactions",
       "regular_collection": "Regular Make Collection",
       "pending_collection": "Pending Make Collection",
       "field": "Fields",

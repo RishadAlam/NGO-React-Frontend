@@ -1734,6 +1734,101 @@ export const PendingWithdrawalTableColumns = (
   }
 ]
 
+export const PendingTransactionTableColumns = (
+  t,
+  windowWidth,
+  avatar,
+  statusSwitch,
+  descParser,
+  actionBtnGroup,
+  isApprovalHide,
+  isActionHide
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.account'),
+    accessor: 'tx_account',
+    Cell: ({ value }) =>
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
+  },
+  {
+    Header: `${t('common.transaction')} ${t('common.account')}`,
+    accessor: 'transaction_account',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) =>
+      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => descParser(value)
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`),
+    Footer: ({ data }) => {
+      const totalAmount = data.reduce((sum, transaction) => {
+        return parseInt(sum) + parseInt(transaction.amount)
+      }, 0)
+
+      return tsNumbers(`৳${totalAmount}/-`)
+    }
+  },
+  {
+    Header: t('common.previous_balance'),
+    accessor: 'previous_balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: false,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.approval'),
+    accessor: 'is_approved',
+    show: isApprovalHide ? false : true,
+    disable: isApprovalHide,
+    isActionHide: isApprovalHide,
+    Cell: ({ value, row }) => statusSwitch(value, row.original)
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : windowWidth < 576 ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original.id, row.original)
+  }
+]
+
 export const PendingSavingClosingTableColumns = (
   t,
   windowWidth,

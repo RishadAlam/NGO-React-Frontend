@@ -110,10 +110,6 @@ export default function StoreTransaction({ open, setOpen, prefix, mutate }) {
       })
     )
 
-    // if (name === 'type') {
-    //   setTransactionType(val)
-    // }
-
     setErrors((prevErr) =>
       create(prevErr, (draftErr) => {
         delete draftErr.message
