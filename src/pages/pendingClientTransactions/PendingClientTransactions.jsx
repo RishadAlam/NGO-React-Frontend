@@ -9,14 +9,15 @@ import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import AndroidSwitch from '../../components/utilities/AndroidSwitch'
-import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
-import { deleteWithdrawal } from '../../helper/collectionActions'
+import { approveTransaction, deleteTransaction } from '../../helper/collectionActions'
+import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import useFetch from '../../hooks/useFetch'
-import CheckPatch from '../../icons/CheckPatch'
 import Home from '../../icons/Home'
+import Transactions from '../../icons/Transactions'
 import Trash from '../../icons/Trash'
+import tsNumbers from '../../libs/tsNumbers'
 import { PendingTransactionTableColumns } from '../../resources/staticData/tableColumns'
 
 export default function PendingClientTransactions({ type }) {
@@ -34,12 +35,27 @@ export default function PendingClientTransactions({ type }) {
     action: `transactions/pending-transactions/${type}`
   })
 
-  const avatar = (name, img) => <Avatar name={name} img={img} />
-  const statusSwitch = (value) =>
+  const account = (account) => `
+      ${account?.client_registration?.name || ''} 
+      (${tsNumbers(account?.client_registration?.acc_no || 0)})
+      (${defaultNameCheck(t, account?.category?.is_default, 'category.default.', account?.category?.name)})
+      `
+
+  const statusSwitch = (value, id) =>
     checkPermission(`pending_client_transactions_approval`, authPermissions) && (
       <AndroidSwitch
         value={Number(value) ? true : false}
-        toggleStatus={(e) => console.log(e)}
+        toggleStatus={(e) =>
+          e.target.checked &&
+          approveTransaction(
+            `transactions/approve-transactions/${id}/${type}`,
+            t,
+            accessToken,
+            mutate,
+            loading,
+            setLoading
+          )
+        }
         disabled={loading?.approval || false}
       />
     )
@@ -55,7 +71,16 @@ export default function PendingClientTransactions({ type }) {
           disabled={loading?.transactionDelete || false}>
           <IconButton
             className="text-danger"
-            onClick={() => deleteWithdrawal('', id, t, accessToken, mutate, loading, setLoading)}>
+            onClick={() =>
+              deleteTransaction(
+                `transactions/delete-transactions/${id}/${type}`,
+                t,
+                accessToken,
+                mutate,
+                loading,
+                setLoading
+              )
+            }>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
@@ -72,7 +97,7 @@ export default function PendingClientTransactions({ type }) {
       PendingTransactionTableColumns(
         t,
         windowWidth,
-        avatar,
+        account,
         statusSwitch,
         descParser,
         actionBtnGroup,
@@ -100,8 +125,8 @@ export default function PendingClientTransactions({ type }) {
                 { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
                 {
                   name: t('menu.label.pending_transactions'),
-                  icon: <CheckPatch size={16} />,
-                  active: false
+                  icon: <Transactions size={16} />,
+                  active: true
                 }
               ]}
             />
@@ -112,7 +137,7 @@ export default function PendingClientTransactions({ type }) {
             <ReactTableSkeleton />
           ) : (
             <ReactTable
-              title={t('menu.label.pending_transactions')}
+              title={`${t(`common.${type}`)} ${t('common.transactions')}`}
               columns={columns}
               data={transactions}
               footer={true}

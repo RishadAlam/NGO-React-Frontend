@@ -1737,7 +1737,7 @@ export const PendingWithdrawalTableColumns = (
 export const PendingTransactionTableColumns = (
   t,
   windowWidth,
-  avatar,
+  account,
   statusSwitch,
   descParser,
   actionBtnGroup,
@@ -1753,15 +1753,13 @@ export const PendingTransactionTableColumns = (
   {
     Header: t('common.account'),
     accessor: 'tx_account',
-    Cell: ({ value }) =>
-      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
+    Cell: ({ value }) => account(value)
   },
   {
     Header: `${t('common.transaction')} ${t('common.account')}`,
-    accessor: 'transaction_account',
+    accessor: 'rx_account',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) =>
-      value ? defaultNameCheck(t, value.is_default, 'account.default.', value.name) : ''
+    Cell: ({ value }) => account(value)
   },
   {
     Header: t('common.description'),
@@ -1782,16 +1780,16 @@ export const PendingTransactionTableColumns = (
     }
   },
   {
-    Header: t('common.previous_balance'),
-    accessor: 'previous_balance',
+    Header: `${t('common.balance')} (${t('common.account')})`,
+    accessor: 'tx_prev_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ row }) => tsNumbers(`৳${row.original.tx_account?.balance || 0}`)
   },
   {
-    Header: t('common.balance'),
-    accessor: 'balance',
+    Header: `${t('common.balance')} (${t('common.transaction')} ${t('common.account')})`,
+    accessor: 'rx_prev_balance',
     show: windowWidth < 576 ? false : true,
-    Cell: ({ value }) => tsNumbers(`৳${value ? value : 0}`)
+    Cell: ({ row }) => tsNumbers(`৳${row.original.rx_account?.balance || 0}`)
   },
   {
     Header: t('common.creator'),
@@ -1817,7 +1815,7 @@ export const PendingTransactionTableColumns = (
     show: isApprovalHide ? false : true,
     disable: isApprovalHide,
     isActionHide: isApprovalHide,
-    Cell: ({ value, row }) => statusSwitch(value, row.original)
+    Cell: ({ value, row }) => statusSwitch(value, row.original.id)
   },
   {
     Header: t('common.action'),
