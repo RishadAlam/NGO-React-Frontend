@@ -5,6 +5,7 @@ import AccStatementTabsNav from '../../resources/staticData/AccStatementTabsNav'
 import AccountTopMenus from '../_helper/AccountTopMenus'
 import ClientAccountFees from '../_helper/ClientAccountFees'
 import ClientAccountTransactions from '../_helper/ClientAccountTransactions'
+import ListOfTransactions from '../_helper/ListOfTransactions'
 import AccountShortSummery from '../_helper/accountShortSummery/AccountShortSummery'
 import RegisterBox from '../register/RegisterBox'
 import '../register/RegisterBox.scss'
@@ -55,9 +56,12 @@ export default function SavingAccount() {
         <SavingWithdrawals />
       </TabPanel>
       <TabPanel value={tabValue} index={4}>
-        <ClientAccountFees accountType="saving" />
+        <ListOfTransactions accountType="saving" />
       </TabPanel>
       <TabPanel value={tabValue} index={5}>
+        <ClientAccountFees accountType="saving" />
+      </TabPanel>
+      <TabPanel value={tabValue} index={6}>
         <SavingAccountChecks />
       </TabPanel>
     </>

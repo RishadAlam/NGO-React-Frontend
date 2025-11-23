@@ -2,8 +2,8 @@ import { Check } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import CashWithdrawal from '../../icons/CashWithdrawal'
 import Dollar from '../../icons/Dollar'
-import Loan from '../../icons/Loan'
 import SaveEnergy from '../../icons/SaveEnergy'
+import Transaction from '../../icons/Transactions'
 
 export default function AccStatementTabsNav() {
   const { t } = useTranslation()
@@ -37,17 +37,26 @@ export default function AccStatementTabsNav() {
       )
     },
     {
-      label: t('common.fee_collections'),
+      label: t('common.transactions'),
       value: 4,
       icon: (
         <span className="me-2">
-          <Loan />
+          <Transaction />
+        </span>
+      )
+    },
+    {
+      label: t('common.fee_collections'),
+      value: 5,
+      icon: (
+        <span className="me-2">
+          <Dollar />
         </span>
       )
     },
     {
       label: t('common.account_check'),
-      value: 5,
+      value: 6,
       icon: (
         <span className="me-2">
           <Check />

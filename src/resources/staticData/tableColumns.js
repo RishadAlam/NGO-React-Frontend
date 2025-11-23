@@ -3037,3 +3037,80 @@ export const ClientAccTransactionStatementsTableColumn = (
     Cell: ({ value }) => (value ? value.name : '')
   }
 ]
+
+export const transactionStatementsTableColumn = (
+  t,
+  windowWidth,
+  account,
+  decodeHTMLs,
+  setTransactionTypes
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('common.created_at'),
+    accessor: 'created_at',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.type'),
+    accessor: 'type',
+    Cell: ({ value }) => setTransactionTypes(value)
+  },
+  {
+    Header: `${t('common.transaction')} ${t('common.category')}`,
+    accessor: 'transaction_category',
+    Cell: ({ value }) => `${t(`common.${value}`)}`
+  },
+  {
+    Header: `${t('common.transaction')} ${t('common.account')}`,
+    accessor: 'ts_account',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => account(row)
+  },
+  {
+    Header: t('common.description'),
+    accessor: 'description',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => decodeHTMLs(value)
+  },
+  {
+    Header: t('common.amount'),
+    accessor: 'amount',
+    Cell: ({ value }) => value && tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.balance'),
+    accessor: 'balance',
+    Cell: ({ value }) => tsNumbers(`$${value}/-`)
+  },
+  {
+    Header: t('common.approved_at'),
+    accessor: 'approved_at',
+    show: false,
+    Cell: ({ value }) => value && tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.updated_at'),
+    accessor: 'updated_at',
+    show: false,
+    Cell: ({ value }) => tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a'))
+  },
+  {
+    Header: t('common.approver'),
+    accessor: 'approver',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  },
+  {
+    Header: t('common.creator'),
+    accessor: 'author',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => (value ? value.name : '')
+  }
+]

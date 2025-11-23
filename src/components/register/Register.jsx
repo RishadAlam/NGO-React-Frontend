@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import AccountTopMenus from '../_helper/AccountTopMenus'
@@ -10,14 +9,9 @@ import RegisterTabNav from './RegisterTabNav'
 import RegisterTabPanel from './RegisterTabPanel'
 
 export default function Register() {
-  const { t } = useTranslation()
   const { id } = useParams()
   const [registerTabValue, setRegisterTabValue] = useState(1)
-  const {
-    data: { data = [] } = [],
-    isLoading,
-    mutate
-  } = useFetch({ action: `client/registration/${id}` })
+  const { data: { data = [] } = [], mutate } = useFetch({ action: `client/registration/${id}` })
 
   return (
     <>

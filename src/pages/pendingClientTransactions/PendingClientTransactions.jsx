@@ -25,7 +25,6 @@ export default function PendingClientTransactions({ type }) {
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
-  // const permissionPrefix = prefix === 'saving' ? 'saving' : 'loan_saving'
 
   const {
     data: { data: transactions } = [],
