@@ -40,7 +40,7 @@ export default function ListOfTransactions({ accountType }) {
   }
 
   const account = (row) => {
-    if (row?.original?.tx_acc_id === id) {
+    if (Number(row?.original?.tx_acc_id) === Number(id)) {
       return prepareAccount(row?.original?.rx_account, t)
     } else {
       return prepareAccount(row?.original?.tx_account, t)
