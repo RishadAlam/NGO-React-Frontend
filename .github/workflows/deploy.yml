@@ -22,6 +22,8 @@ jobs:
 
     - name: Build React App (Vite)
       run: npm run build
+      env:
+        VITE_BASE_URI: ${{ secrets.VITE_BASE_URI }}
 
     - name: Deploy to cPanel via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
