@@ -1,4 +1,4 @@
-name: Deploy React App to cPanel
+name: Deploy React App to cPanel (FTP)
 
 on:
   release:
@@ -9,33 +9,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Install Dependencies
+      run: npm install
 
-      - name: Build React App
-        run: npm run build
+    - name: Build React App (Vite)
+      run: npm run build
 
-      - name: Zip Build Folder
-        run: |
-          cd build
-          zip -r build.zip .
-          mv build.zip ../
-
-      - name: Upload & Deploy to cPanel
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USER }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}         
-          script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-            rm -rf *
-            unzip ~/build.zip -d .
+    - name: Deploy to cPanel via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASS }}
+        port: ${{ secrets.FTP_PORT }}
+        local-dir: dist/
+        server-dir: ${{ secrets.FTP_TARGET }}/
+        dangerous-clean-slate: true
