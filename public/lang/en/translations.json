@@ -854,7 +854,14 @@
       "client_saving_account_closing": "Close client savings account",
       "registered_client_account_list_view": "View all registered clients",
       "registered_loan_account_list_view": "View all registered loan accounts",
-      "registered_saving_account_list_view": "View all registered savings accounts"
+      "registered_saving_account_list_view": "View all registered savings accounts",
+
+      "make_loan_transactions": "Make loan transactions",
+      "make_saving_transactions": "Make saving transactions",
+      "pending_client_transactions_approval": "Pending client transactions approval",
+      "pending_client_transactions_delete": "Pending client transactions delete",
+      "pending_client_transactions_list_view": "Pending client transactions list view",
+      "pending_client_transactions_list_view_as_admin": "Pending client transactions list view as admin"
     }
   }
 }

@@ -812,7 +812,13 @@
       "client_saving_account_closing": "সদস্য সঞ্চয় একাউন্ট বন্ধ",
       "registered_client_account_list_view": "নিবন্ধিত সদস্য তালিকা দেখুন",
       "registered_loan_account_list_view": "নিবন্ধিত ঋণ একাউন্ট তালিকা দেখুন",
-      "registered_saving_account_list_view": "নিবন্ধিত সঞ্চয় একাউন্ট তালিকা দেখুন"
+      "registered_saving_account_list_view": "নিবন্ধিত সঞ্চয় একাউন্ট তালিকা দেখুন",
+      "make_loan_transactions": "ঋণ লেনদেন করুন",
+      "make_saving_transactions": "সঞ্চয় লেনদেন করুন",
+      "pending_client_transactions_approval": "অপেক্ষমাণ সদস্য লেনদেন অনুমোদন",
+      "pending_client_transactions_delete": "অপেক্ষমাণ সদস্য লেনদেন ডিলিট",
+      "pending_client_transactions_list_view": "অপেক্ষমাণ সদস্য লেনদেন তালিকা দেখুন",
+      "pending_client_transactions_list_view_as_admin": "অ্যাডমিন হিসেবে অপেক্ষমাণ সদস্য লেনদেন তালিকা দেখুন"
     }
   }
 }
