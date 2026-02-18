@@ -272,47 +272,48 @@
   "menu": {
     "dashboard": "Dashboard",
     "categories": {
-      "Basic": "Basic",
-      "Pending_Approval": "Pending Approval",
-      "Control_Panel": "Control Panel"
+      "Basic": "Daily Operations",
+      "Pending_Approval": "Pending Approvals",
+      "Control_Panel": "Administration"
     },
     "label": {
-      "registration": "Registration",
-      "pending_loans": "Pending Loans",
-      "pending_withdrawals": "Pending Withdrawals",
-      "pending_transactions": "Pending Transactions",
-      "regular_collection": "Regular Make Collection",
-      "pending_collection": "Pending Make Collection",
-      "field": "Fields",
-      "center": "Centers",
-      "category": "Categories",
-      "account_management": "Account Management",
-      "staff": "Staffs",
-      "settings_and_privacy": "Settings & Privacy",
-      "audit": "Audit",
-      "pending_acc_delete_req": "Pending Account Delete Request",
-      "registered_account_list": "Registered Account List"
+      "registration": "New Registrations",
+      "pending_loans": "Loan Approvals",
+      "pending_registration": "Registration Approvals",
+      "pending_withdrawals": "Withdrawal Approvals",
+      "pending_transactions": "Transaction Approvals",
+      "regular_collection": "Regular Collections",
+      "pending_collection": "Collection Approvals",
+      "field": "Field Setup",
+      "center": "Center Setup",
+      "category": "Category Setup",
+      "account_management": "Financial Management",
+      "staff": "Team Management",
+      "settings_and_privacy": "System Settings",
+      "audit": "Audit & Reports",
+      "pending_acc_delete_req": "Account Closure Requests",
+      "registered_account_list": "Registered Accounts"
     },
     "registration": {
-      "Client_Registration": "Client Registration",
-      "saving_account_registration": "Saving Account Registration",
+      "Client_Registration": "Member Registration",
+      "saving_account_registration": "Savings Account Registration",
       "loan_account_registration": "Loan Account Registration"
     },
     "collection": {
-      "Saving_Collection": "Saving Make Collection",
-      "Loan_Collection": "Loan Make Collection"
+      "Saving_Collection": "Savings Collection",
+      "Loan_Collection": "Loan Collection"
     },
     "withdrawal": {
-      "Saving_Withdrawal": "Saving Withdrawal",
-      "Loan_Saving_Withdrawal": "Loan Saving Withdrawal"
+      "Saving_Withdrawal": "Savings Withdrawal",
+      "Loan_Saving_Withdrawal": "Loan Savings Withdrawal"
     },
     "delete": {
-      "Saving_Delete": "Saving Account Delete",
-      "Loan_Delete": "Loan Account Delete"
+      "Saving_Delete": "Savings Account Closure",
+      "Loan_Delete": "Loan Account Closure"
     },
     "account_management": {
       "Accounts": "Accounts",
-      "Incomes": "Incomes",
+      "Incomes": "Income",
       "Expenses": "Expenses",
       "Withdrawals": "Withdrawals",
       "Transfers": "Transfers",
@@ -321,18 +322,18 @@
       "Expense_Categories": "Expense Categories"
     },
     "staffs": {
-      "Staffs": "Staffs",
+      "Staffs": "Staff",
       "Staff_Permissions": "Staff Permissions",
       "Staff_Roles": "Staff Roles"
     },
     "settings_and_privacy": {
-      "app_settings": "App Settings",
-      "approvals_config": "Approvals Configuration",
+      "app_settings": "Application Settings",
+      "approvals_config": "Approval Workflow Settings",
       "categories_config": "Categories Configuration"
     },
     "audit": {
-      "report_meta": "Audit Report Meta",
-      "audit_report": "Audit Report"
+      "report_meta": "Audit Metadata",
+      "audit_report": "Audit Reports"
     }
   },
 

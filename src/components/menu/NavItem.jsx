@@ -1,26 +1,27 @@
 import Nav from './Nav'
 
 export default function NavItem({
-  menu,
-  menuKey,
+  sectionId,
+  sectionLabel,
+  sectionItems,
   setMobileMenuClosed,
   dropDowns,
   setDropDowns,
   toggleSideMenu
 }) {
+  if (!sectionItems?.length) return null
+
   return (
     <>
-      {menu[menuKey].find((m) => m.view) && (
-        <div className="side-nav__devider mt-3">
-          <span>{menuKey}</span>
-        </div>
-      )}
+      <li className="side-nav__devider mt-3" aria-hidden="true">
+        <span>{sectionLabel}</span>
+      </li>
 
-      {menu[menuKey].map((m) => (
+      {sectionItems.map((m) => (
         <Nav
           key={`${m.label}${m.id}`}
           m={m}
-          menuKey={menuKey}
+          sectionId={sectionId}
           setMobileMenuClosed={setMobileMenuClosed}
           dropDowns={dropDowns}
           setDropDowns={setDropDowns}

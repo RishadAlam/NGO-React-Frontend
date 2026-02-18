@@ -260,31 +260,32 @@
   "menu": {
     "dashboard": "ড্যাশবোর্ড",
     "categories": {
-      "Basic": "মৌলিক",
-      "Pending_Approval": "অনুমোদন অপেক্ষারত",
-      "Control_Panel": "কন্ট্রোল প্যানেল"
+      "Basic": "দৈনন্দিন কার্যক্রম",
+      "Pending_Approval": "অপেক্ষমাণ অনুমোদন",
+      "Control_Panel": "প্রশাসন"
     },
     "label": {
-      "registration": "নিবন্ধন",
-      "pending_loans": "অনুমোদন অপেক্ষারত ঋণ",
-      "pending_withdrawals": "অনুমোদন অপেক্ষারত উত্তোলন",
-      "pending_transactions": "অনুমোদন অপেক্ষারত লেনদেন",
-      "regular_collection": "দৈনিক সংগ্রহ",
-      "pending_collection": "অনুমোদন অপেক্ষারত সংগ্রহ",
-      "field": "ফিল্ড",
-      "center": "কেন্দ্র",
-      "category": "ক্যাটাগরি",
-      "account_management": "হিসাব ব্যবস্থাপনা",
-      "staff": "কর্মচারিবর্গ",
-      "settings_and_privacy": "সেটিংস ও গোপনীয়তা",
-      "audit": "অডিট",
-      "pending_acc_delete_req": "অনুমোদন অপেক্ষারত ক্লোজিং রিকুয়েস্ট",
-      "registered_account_list": "নিবন্ধিত অ্যাকাউন্ট তালিকা"
+      "registration": "নতুন নিবন্ধন",
+      "pending_loans": "ঋণ অনুমোদন",
+      "pending_registration": "নিবন্ধন অনুমোদন",
+      "pending_withdrawals": "উত্তোলন অনুমোদন",
+      "pending_transactions": "লেনদেন অনুমোদন",
+      "regular_collection": "নিয়মিত সংগ্রহ",
+      "pending_collection": "সংগ্রহ অনুমোদন",
+      "field": "ফিল্ড সেটআপ",
+      "center": "কেন্দ্র সেটআপ",
+      "category": "ক্যাটাগরি সেটআপ",
+      "account_management": "আর্থিক ব্যবস্থাপনা",
+      "staff": "টিম ব্যবস্থাপনা",
+      "settings_and_privacy": "সিস্টেম সেটিংস",
+      "audit": "অডিট ও রিপোর্ট",
+      "pending_acc_delete_req": "অ্যাকাউন্ট ক্লোজিং অনুরোধ",
+      "registered_account_list": "নিবন্ধিত অ্যাকাউন্টসমূহ"
     },
     "registration": {
       "Client_Registration": "সদস্য নিবন্ধন",
-      "saving_account_registration": "সঞ্চয় একাউন্ট নিবন্ধন",
-      "loan_account_registration": "ঋণ একাউন্ট নিবন্ধন"
+      "saving_account_registration": "সঞ্চয় অ্যাকাউন্ট নিবন্ধন",
+      "loan_account_registration": "ঋণ অ্যাকাউন্ট নিবন্ধন"
     },
     "collection": {
       "Saving_Collection": "সঞ্চয় সংগ্রহ",
@@ -305,22 +306,22 @@
       "Withdrawals": "উত্তোলন",
       "Transfers": "টাকা স্থানান্তর",
       "Transactions": "লেনদেন",
-      "Income_Categories": "আয় ক্যাটাগরি",
-      "Expense_Categories": "ব্যয় ক্যাটাগরি"
+      "Income_Categories": "আয়ের ক্যাটাগরি",
+      "Expense_Categories": "ব্যয়ের ক্যাটাগরি"
     },
     "staffs": {
-      "Staffs": "কর্মচারিবর্গ",
-      "Staff_Permissions": "কর্মচারিবর্গের অনুমতি",
-      "Staff_Roles": "কর্মচারিবর্গের ভূমিকা"
+      "Staffs": "স্টাফ",
+      "Staff_Permissions": "স্টাফ অনুমতি",
+      "Staff_Roles": "স্টাফ ভূমিকা"
     },
     "settings_and_privacy": {
       "app_settings": "অ্যাপ সেটিংস",
-      "approvals_config": "অনুমোদন কনফিগারেশন",
+      "approvals_config": "অনুমোদন সেটিংস",
       "categories_config": "ক্যাটাগরি কনফিগারেশন"
     },
     "audit": {
-      "report_meta": "অডিট রিপোর্ট মেটা",
-      "audit_report": "অডিট রিপোর্ট"
+      "report_meta": "অডিট মেটাডেটা",
+      "audit_report": "অডিট রিপোর্টসমূহ"
     }
   },
 

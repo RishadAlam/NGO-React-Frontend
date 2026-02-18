@@ -1,12 +1,11 @@
 import loadable from '@loadable/component'
-import { Link } from 'react-router-dom'
 import ChevronDown from '../../icons/ChevronDown'
 import ChevronUp from '../../icons/ChevronUp'
 import LoaderSm from '../loaders/LoaderSm'
 import NavItemLink from './NavItemLink'
 
 const DynamicIcon = loadable(({ icon }) => import(`../../icons/${icon}.jsx`), {
-  fallback: <LoaderSm size={20} clr="#1c3faa" className="ms-2" />,
+  fallback: <LoaderSm size={20} clr="currentColor" className="ms-2" />,
   cacheKey: ({ icon }) => icon
 })
 
@@ -16,47 +15,47 @@ export default function NavDropdown({
   dropDowns,
   isDropDownActive,
   toggleSideMenu,
-  menuKey
+  dropdownId,
+  subMenuItems
 }) {
+  const isOpen = dropDowns?.[dropdownId]
+
   return (
     <>
       <li>
-        <Link
-          to="#"
-          onClick={(e) => toggleSideMenu(e, `${menuKey}d${m.id}`)}
-          className={`side-menu ${dropDowns?.[`${menuKey}d${m.id}`] ? 'side-menu--open' : ''} ${
+        <button
+          type="button"
+          onClick={(e) => toggleSideMenu(e, dropdownId)}
+          className={`side-menu side-menu--trigger ${isOpen ? 'side-menu--open' : ''} ${
             isDropDownActive ? 'side-menu--active' : ''
-          } cursor-pointer`}>
+          } cursor-pointer`}
+          aria-expanded={Boolean(isOpen)}
+          aria-controls={`submenu-${dropdownId}`}
+          aria-label={m.label}
+          title={m.label}>
           <div className="side-menu__icon">
-            <DynamicIcon icon={m.icon} />
+            <DynamicIcon icon={m.icon} stroke="currentColor" color="currentColor" />
           </div>
 
           <div className="side-menu__title">
-            {m.label}
+            <span className="side-menu__text">{m.label}</span>
             <div className="side-menu__sub-icon">
-              {dropDowns?.[`${menuKey}d${m.id}`] ? (
-                <ChevronDown size={18} />
-              ) : (
-                <ChevronUp size={18} />
-              )}
+              {isOpen ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
             </div>
           </div>
-        </Link>
+        </button>
         <ul
-          className={`shadow mt-1 ${
-            dropDowns?.[`${menuKey}d${m.id}`] ? 'side-menu__sub-open' : ''
-          }`}>
-          {m.subMenu.map(
-            (subMenu) =>
-              subMenu.view && (
-                <NavItemLink
-                  key={`${subMenu.label}${subMenu.label}`}
-                  m={subMenu}
-                  setMobileMenuClosed={setMobileMenuClosed}
-                  iconSize={18}
-                />
-              )
-          )}
+          id={`submenu-${dropdownId}`}
+          className={`side-menu__submenu ${isOpen ? 'side-menu__sub-open' : ''}`}>
+          {subMenuItems.map((subMenu) => (
+            <NavItemLink
+              key={subMenu.id || subMenu.path || subMenu.label}
+              m={subMenu}
+              setMobileMenuClosed={setMobileMenuClosed}
+              iconSize={18}
+              isSubMenu
+            />
+          ))}
         </ul>
       </li>
     </>
