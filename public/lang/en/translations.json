@@ -505,12 +505,38 @@
     "client_reg_fee": "Client Registration Fee"
   },
   "categories_config": {
-    "account_reg_closing_fees": "Account Registration & Closing fees",
-    "withdrawal_fees": "Withdrawal fees",
-    "limitations_of_withdrawals": "Limitations of Withdrawals",
-    "period_of_account_checking": "Period of Account Checking",
-    "disable_unchecked_accounts": "Disable Unchecked Accounts",
-    "period_of_inactive_account_disable": "Period of Inactive Account Disable"
+    "account_reg_closing_fees": "Registration and Closing Fees",
+    "withdrawal_fees": "Withdrawal Fees",
+    "limitations_of_withdrawals": "Withdrawal Limits",
+    "period_of_account_checking": "Account Review Interval",
+    "disable_unchecked_accounts": "Auto-disable Unreviewed Accounts",
+    "period_of_inactive_account_disable": "Inactive Account Disable Interval",
+    "page_description": "Configure fees, limits, and account safety rules for each category.",
+    "search_category": "Find Category",
+    "search_category_placeholder": "Search category...",
+    "no_categories_found": "No categories matched your search.",
+    "list_title": "Categories",
+    "list_hint": "Select a category to configure.",
+    "select_category_prompt": "Select a category from the list to start editing.",
+    "review_before_update": "Review each category before updating.",
+    "changes_saved_for_all": "Changes are saved for all categories.",
+    "pending_changes_count": "Unsaved changes in {{count}} categories.",
+    "no_pending_changes": "No unsaved changes.",
+    "field_labels": {
+      "fee_account": "Fee Collection Account",
+      "saving_registration_fee": "Savings Account Registration Fee",
+      "saving_closing_fee": "Savings Account Closing Fee",
+      "loan_registration_fee": "Loan Account Registration Fee",
+      "loan_closing_fee": "Loan Account Closing Fee",
+      "saving_withdrawal_fee": "Savings Withdrawal Fee",
+      "loan_saving_withdrawal_fee": "Loan Savings Withdrawal Fee",
+      "min_saving_withdrawal": "Minimum Savings Withdrawal",
+      "max_saving_withdrawal": "Maximum Savings Withdrawal",
+      "min_loan_saving_withdrawal": "Minimum Loan Savings Withdrawal",
+      "max_loan_saving_withdrawal": "Maximum Loan Savings Withdrawal",
+      "savings_account": "Savings Account",
+      "loan_account": "Loan Account"
+    }
   },
   "audit_report_page": {
     "default": {

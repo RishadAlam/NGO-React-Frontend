@@ -493,13 +493,39 @@
     "client_reg_fee": "নিবন্ধন ফি"
   },
   "categories_config": {
-    "account_reg_closing_fees": "অ্যাকাউন্ট নিবন্ধন ও ক্লোজিং ফি",
+    "account_reg_closing_fees": "নিবন্ধন ও অ্যাকাউন্ট বন্ধের ফি",
     "loan_account_fees": "ঋণ অ্যাকাউন্ট ফি",
     "withdrawal_fees": "উত্তোলন ফি",
-    "limitations_of_withdrawals": "সঞ্চয় উত্তোলনের সীমাবদ্ধতা",
-    "period_of_account_checking": "অ্যাকাউন্ট চেকের সময়কাল",
-    "disable_unchecked_accounts": "চেকহিন অ্যাকাউন্ট নিষ্ক্রিয় করণ",
-    "period_of_inactive_account_disable": "অক্রিয় অ্যাকাউন্ট নিষ্ক্রিয় করণের সময়কাল"
+    "limitations_of_withdrawals": "উত্তোলনের সীমা",
+    "period_of_account_checking": "অ্যাকাউন্ট পর্যালোচনার সময়কাল",
+    "disable_unchecked_accounts": "পর্যালোচনা না করা অ্যাকাউন্ট স্বয়ংক্রিয়ভাবে নিষ্ক্রিয় করুন",
+    "period_of_inactive_account_disable": "নিষ্ক্রিয় অ্যাকাউন্ট বন্ধের সময়কাল",
+    "page_description": "প্রতিটি ক্যাটাগরির জন্য ফি, সীমা এবং অ্যাকাউন্ট সুরক্ষা নীতিমালা নির্ধারণ করুন।",
+    "search_category": "ক্যাটাগরি খুঁজুন",
+    "search_category_placeholder": "ক্যাটাগরি অনুসন্ধান করুন...",
+    "no_categories_found": "আপনার অনুসন্ধানের সাথে কোনো ক্যাটাগরি মেলেনি।",
+    "list_title": "ক্যাটাগরিসমূহ",
+    "list_hint": "কনফিগার করার জন্য একটি ক্যাটাগরি নির্বাচন করুন।",
+    "select_category_prompt": "সম্পাদনা শুরু করতে তালিকা থেকে একটি ক্যাটাগরি নির্বাচন করুন।",
+    "review_before_update": "আপডেট করার আগে প্রতিটি ক্যাটাগরি যাচাই করুন।",
+    "changes_saved_for_all": "সব ক্যাটাগরির পরিবর্তন একসাথে সংরক্ষণ হবে।",
+    "pending_changes_count": "{{count}} টি ক্যাটাগরিতে অসংরক্ষিত পরিবর্তন আছে।",
+    "no_pending_changes": "কোনো অসংরক্ষিত পরিবর্তন নেই।",
+    "field_labels": {
+      "fee_account": "ফি জমার অ্যাকাউন্ট",
+      "saving_registration_fee": "সঞ্চয় অ্যাকাউন্ট নিবন্ধন ফি",
+      "saving_closing_fee": "সঞ্চয় অ্যাকাউন্ট বন্ধ ফি",
+      "loan_registration_fee": "ঋণ অ্যাকাউন্ট নিবন্ধন ফি",
+      "loan_closing_fee": "ঋণ অ্যাকাউন্ট বন্ধ ফি",
+      "saving_withdrawal_fee": "সঞ্চয় উত্তোলন ফি",
+      "loan_saving_withdrawal_fee": "ঋণ সঞ্চয় উত্তোলন ফি",
+      "min_saving_withdrawal": "সঞ্চয় উত্তোলনের সর্বনিম্ন সীমা",
+      "max_saving_withdrawal": "সঞ্চয় উত্তোলনের সর্বোচ্চ সীমা",
+      "min_loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলনের সর্বনিম্ন সীমা",
+      "max_loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলনের সর্বোচ্চ সীমা",
+      "savings_account": "সঞ্চয় অ্যাকাউন্ট",
+      "loan_account": "ঋণ অ্যাকাউন্ট"
+    }
   },
   "audit_report_page": {
     "default": {

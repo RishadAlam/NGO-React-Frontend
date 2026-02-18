@@ -22,55 +22,57 @@ export default function CategoriesConfig() {
   const {
     data: { data: categories = [] } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({ action: 'categories-config' })
 
   useEffect(() => {
     categories.length && setAllConfigurations(categories)
   }, [categories])
 
-  const updateConfig = (event) => {
+  const updateConfig = async (event) => {
     event.preventDefault()
 
     setLoading({ ...loading, CategoriesConfig: true })
-    xFetch(
-      'categories-config-update',
-      { categoriesConfig: allConfigurations },
-      null,
-      accessToken,
-      null,
-      'PUT'
-    )
-      .then((response) => {
-        setLoading({ ...loading, CategoriesConfig: false })
-        if (response?.success) {
-          toast.success(response.message)
-          mutate()
-          return
-        }
-        setError((prevErr) =>
-          create(prevErr, (draftErr) => {
-            if (!response?.errors) {
-              draftErr.message = response?.message
-              return
-            }
-            return rawReturn(response?.errors || response)
-          })
-        )
-      })
-      .catch((errorResponse) => {
-        setLoading({ ...loading, CategoriesConfig: false })
-        setError((prevErr) =>
-          create(prevErr, (draftErr) => {
-            if (!errorResponse?.errors) {
-              draftErr.message = errorResponse?.message
-              return
-            }
-            return rawReturn(errorResponse?.errors || errorResponse)
-          })
-        )
-      })
+    try {
+      const response = await xFetch(
+        'categories-config-update',
+        { categoriesConfig: allConfigurations },
+        null,
+        accessToken,
+        null,
+        'PUT'
+      )
+
+      setLoading({ ...loading, CategoriesConfig: false })
+      if (response?.success) {
+        toast.success(response.message)
+        mutate()
+        return true
+      }
+
+      setError((prevErr) =>
+        create(prevErr, (draftErr) => {
+          if (!response?.errors) {
+            draftErr.message = response?.message
+            return
+          }
+          return rawReturn(response?.errors || response)
+        })
+      )
+      return false
+    } catch (errorResponse) {
+      setLoading({ ...loading, CategoriesConfig: false })
+      setError((prevErr) =>
+        create(prevErr, (draftErr) => {
+          if (!errorResponse?.errors) {
+            draftErr.message = errorResponse?.message
+            return
+          }
+          return rawReturn(errorResponse?.errors || errorResponse)
+        })
+      )
+      return false
+    }
   }
 
   return (
