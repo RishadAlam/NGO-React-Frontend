@@ -1,4 +1,8 @@
-export default function Loader({ color = '#0a8dff', style = { height: '100vh' }, className }) {
+export default function Loader({
+  color = 'var(--accent-color)',
+  style = { height: '100vh' },
+  className
+}) {
   return (
     <div className={`d-flex align-items-center justify-content-center ${className}`} style={style}>
       <div>

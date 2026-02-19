@@ -7,7 +7,7 @@ export default function deleteAlert(t) {
     text: t('common_validation.you_can_bring_it_back'),
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
+    confirmButtonColor: 'var(--accent-color)',
     cancelButtonColor: '#d33',
     confirmButtonText: t('common_validation.Yes_delete_it'),
     cancelButtonText: t('common.cancel')
@@ -20,7 +20,7 @@ export function permanentDeleteAlert(t) {
     text: t('common_validation.You_wont_be_able_to_revert_this'),
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
+    confirmButtonColor: 'var(--accent-color)',
     cancelButtonColor: '#d33',
     confirmButtonText: t('common_validation.Yes_delete_it'),
     cancelButtonText: t('common.cancel')

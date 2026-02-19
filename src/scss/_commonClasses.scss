@@ -164,6 +164,13 @@ fieldset:disabled {
 
 body {
   background-color: $main-bg;
+  background-image: var(--page-bg-gradient);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  --bs-border-color: var(--border-color);
+  --bs-border-color-translucent: var(--border-color);
+  --bs-card-border-color: var(--border-color);
   color: $main-color;
   position: relative;
   height: 100%;
@@ -173,6 +180,10 @@ body {
 
 .card {
   overflow: hidden;
+  background: var(--surface-bg);
+  --bs-card-border-color: var(--border-color);
+  --bs-card-bg: transparent;
+  border-color: var(--bs-card-border-color);
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -327,11 +338,11 @@ ul {
   }
 }
 
-.light .box {
-  background-color: $white-color;
+.box {
+  background: var(--surface-bg);
 }
-.light .content {
-  background-color: $soft-light;
+.content {
+  background: var(--surface-bg);
   border-radius: 10px 10px 0 0;
   -webkit-border-radius: 10px 10px 0 0;
   -moz-border-radius: 10px 10px 0 0;
@@ -517,20 +528,18 @@ ul {
   .MuiInput-underline:before,
   .MuiOutlinedInput-notchedOutline,
   .image-preview,
-  .MuiPickersDay-today,
-  .card {
-    border-color: $blue-magenta !important;
+  .MuiPickersDay-today {
+    border-color: var(--border-color) !important;
   }
 
   .card-footer,
   .card-header {
-    background-color: $soft-bg;
+    background: var(--surface-bg-strong);
     color: $white-color;
-    // overflow: hidden;
   }
 
   .card-body {
-    background-color: $main-bg !important;
+    background-color: transparent !important;
     color: $white-color;
   }
   .MuiFormControl-root {
@@ -636,7 +645,7 @@ ul {
 
     * {
       color: $soft-light !important;
-      border-color: $blue-magenta !important;
+      border-color: var(--border-color) !important;
     }
 
     .rs-btn-subtle:hover,

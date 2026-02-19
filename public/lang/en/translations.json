@@ -489,6 +489,21 @@
     "company_address": "Company Address",
     "company_logo": "Company Logo"
   },
+  "theme_palette": {
+    "template": "Template",
+    "options": {
+      "ocean-blue": "Ocean Blue",
+      "indigo-night": "Indigo Night",
+      "sunset-coral": "Sunset Coral",
+      "royal-purple": "Royal Purple",
+      "slate-mono": "Slate Mono",
+      "ruby-ember": "Ruby Ember",
+      "arctic-frost": "Arctic Frost",
+      "sand-dune": "Sand Dune",
+      "midnight-neon": "Midnight Neon",
+      "carbon-gold": "Carbon Gold"
+    }
+  },
   "approvals_config": {
     "saving_collection_approval": "Saving Make Collection Approval",
     "loan_collection_approval": "Loan Make Collection Approval",

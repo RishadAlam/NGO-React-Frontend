@@ -5,7 +5,7 @@
   .box {
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid $blue-soft-magenta;
+    border: 2px solid var(--border-color);
 
     &.withdrawal-list,
     &.collection-list,

@@ -34,7 +34,6 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   minWidth: 350,
-  // border: '2px solid #8884d8',
   borderRadius: '20px',
   boxShadow: 24,
   overflow: 'hidden'

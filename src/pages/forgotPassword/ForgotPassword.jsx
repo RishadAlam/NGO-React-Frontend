@@ -86,7 +86,7 @@ export default function ForgotPassword() {
             disabled={Object.keys(error).length || loading?.email}>
             <div className="d-flex">
               Send Passsword Reset OTP{' '}
-              {loading?.email && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+              {loading?.email && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
             </div>
           </button>
         </form>

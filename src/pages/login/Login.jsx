@@ -182,7 +182,7 @@ export default function Login() {
             disabled={Object.keys(errors).length || loading?.login}>
             <div className="d-flex">
               Login
-              {loading?.login && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+              {loading?.login && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
             </div>
           </button>
         </form>

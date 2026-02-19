@@ -20,7 +20,7 @@ export default function PrimaryBtn({
         className={classNames}
         color={color}
         variant={variant || 'contained'}
-        endIcon={loading ? <LoaderSm size={20} clr="#1c3faa" className="ms-2" /> : endIcon}
+        endIcon={loading ? <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" /> : endIcon}
         type={type || 'button'}
         disabled={disabled || false}
         style={style}

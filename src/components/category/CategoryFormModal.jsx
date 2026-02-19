@@ -78,7 +78,7 @@ export default function CategoryFormModal({
                     className="border rounded-2 mt-3 px-2"
                     ref={(el) => {
                       if (el) {
-                        el.style.setProperty('border-color', '#8884d8', 'important')
+                        el.style.setProperty('border-color', 'var(--accent-color)', 'important')
                       }
                     }}>
                     <CheckboxInputField

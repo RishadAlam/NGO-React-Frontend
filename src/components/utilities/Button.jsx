@@ -22,7 +22,7 @@ export default function Button({
         <div className="d-flex justify-content-center">
           {name}
           &nbsp;
-          {loading ? <LoaderSm size={20} clr="#1c3faa" className="ms-2" /> : endIcon}
+          {loading ? <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" /> : endIcon}
         </div>
       </button>
     </>

@@ -8,10 +8,10 @@
   --menu-active-bg: #{$secondary-color};
   --menu-active-text: #{$white-color};
   --menu-active-border: #{$blue-magenta};
-  --menu-sub-bg: rgba(56, 66, 86, 0.2);
+  --menu-sub-bg: rgba(var(--main-bg-rgb), 0.16);
   --menu-divider: #{$gray-500};
-  --menu-focus: rgba(136, 132, 216, 0.45);
-  --menu-scroll-thumb: rgba(136, 132, 216, 0.4);
+  --menu-focus: rgba(var(--accent-rgb), 0.45);
+  --menu-scroll-thumb: rgba(var(--accent-rgb), 0.4);
 
   > ul {
     display: flex;
@@ -182,10 +182,10 @@ body.light .menu.menu--modern,
   --menu-active-bg: #{$primary-bg};
   --menu-active-text: #{$white-color};
   --menu-active-border: #{$primary-bg-hover};
-  --menu-sub-bg: rgba(28, 63, 170, 0.08);
+  --menu-sub-bg: rgba(var(--primary-rgb), 0.1);
   --menu-divider: #{$gray-600};
-  --menu-focus: rgba(28, 63, 170, 0.28);
-  --menu-scroll-thumb: rgba(28, 63, 170, 0.35);
+  --menu-focus: rgba(var(--primary-rgb), 0.3);
+  --menu-scroll-thumb: rgba(var(--primary-rgb), 0.35);
 }
 
 body.dark .menu.menu--modern,
@@ -196,10 +196,10 @@ body.dark .menu.menu--modern,
   --menu-active-bg: #{$secondary-color};
   --menu-active-text: #{$white-color};
   --menu-active-border: #{$blue-magenta};
-  --menu-sub-bg: rgba(56, 66, 86, 0.2);
+  --menu-sub-bg: rgba(var(--main-bg-rgb), 0.24);
   --menu-divider: #{$gray-500};
-  --menu-focus: rgba(136, 132, 216, 0.45);
-  --menu-scroll-thumb: rgba(136, 132, 216, 0.4);
+  --menu-focus: rgba(var(--accent-rgb), 0.36);
+  --menu-scroll-thumb: rgba(var(--accent-rgb), 0.35);
 }
 
 .main .side-bar.side-bar-sm .menu.menu--modern {

@@ -173,7 +173,7 @@ export default function ResetPassword({ userId, loading, setLoading }) {
             disabled={Object.keys(errors).length || loading?.resetPassword}>
             <div className="d-flex">
               Reset Password
-              {loading?.resetPassword && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+              {loading?.resetPassword && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
             </div>
           </button>
         </form>

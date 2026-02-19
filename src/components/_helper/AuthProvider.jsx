@@ -14,6 +14,11 @@ import { useSetAppSettingsState } from '../../atoms/appSettingsAtoms'
 import { useIsAuthorizedState, useSetAuthDataState } from '../../atoms/authAtoms'
 import { useIsLoadingState, useLoadingState } from '../../atoms/loaderAtoms'
 import { GetSessionStorage, removeSessionStorage } from '../../helper/GetDataFromStorage'
+import {
+  applyThemePalette,
+  DEFAULT_THEME_PALETTE,
+  THEME_PALETTE_COOKIE
+} from '../../resources/staticData/themePalettes'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
@@ -57,8 +62,12 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const lang = Cookies.get('i18next')
     const darkMood = Cookies.get('isDark')
+    const paletteId = Cookies.get(THEME_PALETTE_COOKIE) || DEFAULT_THEME_PALETTE
     document.querySelector('html').lang = lang ? lang : 'en'
-    document.body.className = darkMood ? (JSON.parse(darkMood) ? 'dark' : 'light') : 'light'
+    const mode = darkMood ? (JSON.parse(darkMood) ? 'dark' : 'light') : 'light'
+    document.body.className = mode
+    Cookies.set(THEME_PALETTE_COOKIE, paletteId, { expires: 30 })
+    applyThemePalette(paletteId, mode)
     const controller = new AbortController()
 
     if (!isAuthorized) {

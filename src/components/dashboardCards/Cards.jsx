@@ -60,7 +60,7 @@ export default function Cards({ cardIcon, cardName, color, itemData, isLoading }
                 <>
                   <span
                     className="percentage"
-                    style={{ color: cmp_amount < 0 ? 'tomato' : 'limegreen' }}>
+                    style={{ color: cmp_amount < 0 ? 'tomato' : 'var(--primary-color)' }}>
                     {tsNumbers(cmp_amount || 0)}%
                   </span>
                   <span className="duration">{t('dashboard.cards.this_month')}</span>

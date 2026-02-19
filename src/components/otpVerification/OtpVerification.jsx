@@ -100,7 +100,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
           <div className="text-end mt-2">
             {loading?.resendOtp ? (
               <div className="d-inline-block">
-                <LoaderSm size={30} clr="#1c3faa" className="ms-2" />
+                <LoaderSm size={30} clr="var(--primary-color)" className="ms-2" />
               </div>
             ) : (
               <p className="cursor-pointer" onClick={resendOTP}>
@@ -114,7 +114,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
             disabled={Object.keys(error).length || loading?.otp}>
             <div className="d-flex">
               Submit
-              {loading?.otp && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+              {loading?.otp && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
             </div>
           </button>
         </form>

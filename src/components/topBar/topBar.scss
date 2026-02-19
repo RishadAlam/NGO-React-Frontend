@@ -13,4 +13,17 @@
   .DarkLangButton > button {
     color: $main-color;
   }
+
+  .DarkLangButton .form-select {
+    min-width: 138px;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    line-height: 1.2;
+  }
+
+  .DarkLangButton .palette-label {
+    color: $main-color;
+    font-size: 12px;
+    white-space: nowrap;
+  }
 }

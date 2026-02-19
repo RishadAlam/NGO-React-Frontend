@@ -1,4 +1,4 @@
-export default function LoaderSm({ size, className, clr = '#0a8dff', style }) {
+export default function LoaderSm({ size, className, clr = 'var(--accent-color)', style }) {
   return (
     <div className={className} style={{ height: size, width: size, ...style }}>
       <svg

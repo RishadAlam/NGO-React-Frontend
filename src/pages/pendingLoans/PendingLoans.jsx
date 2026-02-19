@@ -65,7 +65,7 @@ export default function PendingLoans() {
           <div className="card my-3 mx-auto">
             <div className="card-header d-flex align-items-center">
               <b className="text-uppercase">{t('menu.label.pending_loans')}</b>{' '}
-              {isLoading && <LoaderSm size={20} clr="#1c3faa" className="ms-2" />}
+              {isLoading && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
             </div>
             {isApprovalModalOpen && loanData && (
               <PendingLoanApprovedModal

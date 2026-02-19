@@ -6,7 +6,7 @@ export const setCollectionBG = (el, valueToComp, value) => {
     if (value < valueToComp) {
       el.style.setProperty('background-color', '#dc3545', 'important')
     } else if (value > valueToComp) {
-      el.style.setProperty('background-color', '#198754', 'important')
+      el.style.setProperty('background-color', 'var(--primary-color)', 'important')
     }
   }
 }

@@ -3,7 +3,7 @@
 
 .register-box {
   & * {
-    border-color: $blue-magenta !important;
+    border-color: var(--border-color) !important;
   }
 
   .btn-grp {

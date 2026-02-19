@@ -477,6 +477,21 @@
     "company_address": "প্রতিষ্ঠানের ঠিকানা",
     "company_logo": "প্রতিষ্ঠানের লোগো"
   },
+  "theme_palette": {
+    "template": "টেমপ্লেট",
+    "options": {
+      "ocean-blue": "ওশান ব্লু",
+      "indigo-night": "ইন্ডিগো নাইট",
+      "sunset-coral": "সানসেট কোরাল",
+      "royal-purple": "রয়্যাল পার্পল",
+      "slate-mono": "স্লেট মনো",
+      "ruby-ember": "রুবি এম্বার",
+      "arctic-frost": "আর্কটিক ফ্রস্ট",
+      "sand-dune": "স্যান্ড ডিউন",
+      "midnight-neon": "মিডনাইট নিয়ন",
+      "carbon-gold": "কার্বন গোল্ড"
+    }
+  },
   "approvals_config": {
     "saving_collection_approval": "সঞ্চয় সংগ্রহ অনুমোদন",
     "loan_collection_approval": "ঋণ সংগ্রহের অনুমোদন",

@@ -30,9 +30,9 @@ export default function CardSection({
       <div className="col-md-6 pe-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<LoanGiven size={32} color={'#8884d8'} />}
+            cardIcon={<LoanGiven size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Given')}
-            color={'#8884d8'}
+            color={'var(--accent-color)'}
             itemData={loan_distributions}
             isLoading={isLoading}
           />
@@ -41,9 +41,9 @@ export default function CardSection({
       <div className="col-md-6 ps-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<LoanRecovered size={32} color={'#8884d8'} />}
+            cardIcon={<LoanRecovered size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Recovered')}
-            color={'skyblue'}
+            color={'var(--primary-color)'}
             itemData={loan_collections_summery}
             isLoading={isLoading}
           />
@@ -52,9 +52,9 @@ export default function CardSection({
       <div className="col-md-6 pe-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<MyLoan size={32} color={'#8884d8'} />}
+            cardIcon={<MyLoan size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Saving_Collections')}
-            color={'teal'}
+            color={'var(--accent-color)'}
             itemData={loan_saving_collections}
             isLoading={isLoading}
           />
@@ -63,9 +63,9 @@ export default function CardSection({
       <div className="col-md-6 ps-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<SavingIcon size={36} color={'#8884d8'} />}
+            cardIcon={<SavingIcon size={36} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Saving_Collections')}
-            color={'gold'}
+            color={'var(--primary-color)'}
             itemData={saving_collections_summery}
             isLoading={isLoading}
           />
@@ -74,9 +74,9 @@ export default function CardSection({
       <div className="col-md-6 pe-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<PersonalLoan size={32} color={'#8884d8'} />}
+            cardIcon={<PersonalLoan size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Monthly_Loan_Collections')}
-            color={'violet'}
+            color={'var(--accent-color)'}
             itemData={monthly_loan_collections}
             isLoading={isLoading}
           />
@@ -85,9 +85,9 @@ export default function CardSection({
       <div className="col-md-6 ps-md-1">
         <div className="box mb-2 shadow box-card">
           <Cards
-            cardIcon={<LoanIcon size={32} color={'#8884d8'} />}
+            cardIcon={<LoanIcon size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.DPS_Collections')}
-            color={'cornflowerblue'}
+            color={'var(--primary-color)'}
             itemData={dps_collections}
             isLoading={isLoading}
           />

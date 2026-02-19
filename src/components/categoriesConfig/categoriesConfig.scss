@@ -2,27 +2,27 @@
 @import '../../scss/variables';
 
 .categories-config-modern {
-  --cfg-surface: #f4f6fb;
-  --cfg-surface-alt: #ffffff;
-  --cfg-border: #ced4da;
-  --cfg-text: #2d3748;
-  --cfg-muted: #4a5568;
-  --cfg-accent: #8884d8;
-  --cfg-accent-soft: rgba(136, 132, 216, 0.14);
-  --cfg-card-bg: #ffffff;
+  --cfg-surface: var(--main-bg);
+  --cfg-surface-alt: var(--soft-bg);
+  --cfg-border: var(--border-color);
+  --cfg-text: var(--main-color);
+  --cfg-muted: var(--soft-color);
+  --cfg-accent: var(--accent-color);
+  --cfg-accent-soft: rgba(var(--accent-rgb), 0.14);
+  --cfg-card-bg: var(--soft-bg);
   --cfg-card-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-  --cfg-header-bg: #dee2e6fc;
-  --cfg-header-border: #ced4da;
-  --cfg-meta-bg: #ffffff;
-  --cfg-meta-border: #ced4da;
-  --cfg-search-bg: #ffffff;
-  --cfg-section-bg: #ffffff;
-  --cfg-row-header-bg: #eef1f6;
-  --cfg-row-header-border: #ced4da;
-  --cfg-chip-bg: rgba(136, 132, 216, 0.16);
-  --cfg-chip-border: rgba(136, 132, 216, 0.4);
-  --cfg-footer-bg: #dee2e6fc;
-  --cfg-focus-ring: rgba(136, 132, 216, 0.3);
+  --cfg-header-bg: var(--main-bg);
+  --cfg-header-border: var(--border-color);
+  --cfg-meta-bg: var(--soft-bg);
+  --cfg-meta-border: var(--border-color);
+  --cfg-search-bg: var(--soft-bg);
+  --cfg-section-bg: var(--soft-bg);
+  --cfg-row-header-bg: var(--secondary-color);
+  --cfg-row-header-border: var(--border-color);
+  --cfg-chip-bg: rgba(var(--accent-rgb), 0.16);
+  --cfg-chip-border: rgba(var(--accent-rgb), 0.4);
+  --cfg-footer-bg: var(--main-bg);
+  --cfg-focus-ring: rgba(var(--accent-rgb), 0.3);
 
   border: 1px solid var(--cfg-border);
   border-radius: 16px;
@@ -471,52 +471,52 @@
 
 body.light .categories-config-modern,
 .light .categories-config-modern {
-  --cfg-surface: #f4f6fb;
-  --cfg-surface-alt: #ffffff;
-  --cfg-border: #ced4da;
-  --cfg-text: #2d3748;
-  --cfg-muted: #4a5568;
-  --cfg-accent: #8884d8;
-  --cfg-accent-soft: rgba(136, 132, 216, 0.14);
-  --cfg-card-bg: #ffffff;
+  --cfg-surface: var(--main-bg);
+  --cfg-surface-alt: var(--soft-bg);
+  --cfg-border: var(--border-color);
+  --cfg-text: var(--main-color);
+  --cfg-muted: var(--soft-color);
+  --cfg-accent: var(--accent-color);
+  --cfg-accent-soft: rgba(var(--accent-rgb), 0.14);
+  --cfg-card-bg: var(--soft-bg);
   --cfg-card-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-  --cfg-header-bg: #dee2e6fc;
-  --cfg-header-border: #ced4da;
-  --cfg-meta-bg: #ffffff;
-  --cfg-meta-border: #ced4da;
-  --cfg-search-bg: #ffffff;
-  --cfg-section-bg: #ffffff;
-  --cfg-row-header-bg: #eef1f6;
-  --cfg-row-header-border: #ced4da;
-  --cfg-chip-bg: rgba(136, 132, 216, 0.16);
-  --cfg-chip-border: rgba(136, 132, 216, 0.4);
-  --cfg-footer-bg: #dee2e6fc;
-  --cfg-focus-ring: rgba(136, 132, 216, 0.3);
+  --cfg-header-bg: var(--main-bg);
+  --cfg-header-border: var(--border-color);
+  --cfg-meta-bg: var(--soft-bg);
+  --cfg-meta-border: var(--border-color);
+  --cfg-search-bg: var(--soft-bg);
+  --cfg-section-bg: var(--soft-bg);
+  --cfg-row-header-bg: var(--secondary-color);
+  --cfg-row-header-border: var(--border-color);
+  --cfg-chip-bg: rgba(var(--accent-rgb), 0.16);
+  --cfg-chip-border: rgba(var(--accent-rgb), 0.4);
+  --cfg-footer-bg: var(--main-bg);
+  --cfg-focus-ring: rgba(var(--accent-rgb), 0.3);
 }
 
 body.dark .categories-config-modern,
 .dark .categories-config-modern {
-  --cfg-surface: #384256;
-  --cfg-surface-alt: #293145fc;
-  --cfg-border: #8884d8;
-  --cfg-text: #ffffff;
-  --cfg-muted: #d5d5d5;
-  --cfg-accent: #8884d8;
-  --cfg-accent-soft: rgba(136, 132, 216, 0.24);
-  --cfg-card-bg: #293145fc;
+  --cfg-surface: var(--soft-bg);
+  --cfg-surface-alt: var(--soft-bg);
+  --cfg-border: var(--border-color);
+  --cfg-text: var(--main-color);
+  --cfg-muted: var(--soft-color);
+  --cfg-accent: var(--accent-color);
+  --cfg-accent-soft: rgba(var(--accent-rgb), 0.2);
+  --cfg-card-bg: var(--soft-bg);
   --cfg-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
-  --cfg-header-bg: #384256;
-  --cfg-header-border: #8884d8;
-  --cfg-meta-bg: #384256;
-  --cfg-meta-border: #8884d8;
-  --cfg-search-bg: #293145fc;
-  --cfg-section-bg: #293145fc;
-  --cfg-row-header-bg: #384256;
-  --cfg-row-header-border: #8884d8;
-  --cfg-chip-bg: rgba(136, 132, 216, 0.24);
-  --cfg-chip-border: rgba(136, 132, 216, 0.55);
-  --cfg-footer-bg: #384256;
-  --cfg-focus-ring: rgba(136, 132, 216, 0.35);
+  --cfg-header-bg: var(--main-bg);
+  --cfg-header-border: var(--border-color);
+  --cfg-meta-bg: var(--soft-bg);
+  --cfg-meta-border: var(--border-color);
+  --cfg-search-bg: var(--soft-bg);
+  --cfg-section-bg: var(--main-bg);
+  --cfg-row-header-bg: var(--soft-bg);
+  --cfg-row-header-border: var(--border-color);
+  --cfg-chip-bg: rgba(var(--accent-rgb), 0.2);
+  --cfg-chip-border: rgba(var(--accent-rgb), 0.48);
+  --cfg-footer-bg: var(--main-bg);
+  --cfg-focus-ring: rgba(var(--accent-rgb), 0.32);
 
   .category-config-input {
     .MuiOutlinedInput-notchedOutline,

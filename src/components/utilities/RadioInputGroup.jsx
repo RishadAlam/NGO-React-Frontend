@@ -31,7 +31,7 @@ export default function RadioInputGroup({
           className="border rounded-2 px-2 w-100"
           ref={(el) => {
             if (el) {
-              el.style.setProperty('border-color', error ? 'red' : '#8884d8', 'important')
+              el.style.setProperty('border-color', error ? 'red' : 'var(--accent-color)', 'important')
             }
           }}>
           {options?.map((option, index) => (
