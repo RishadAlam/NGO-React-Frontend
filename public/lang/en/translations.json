@@ -333,7 +333,8 @@
     },
     "audit": {
       "report_meta": "Audit Metadata",
-      "audit_report": "Audit Reports"
+      "audit_report": "Audit Reports",
+      "internal_audit_report": "Internal Audit Report"
     }
   },
 
@@ -561,6 +562,89 @@
       "profit_loss": "Profit Loss",
       "net_profit": "Net Profit Loss",
       "surplus_value": "Surplus Value"
+    },
+    "internal": {
+      "ui": {
+        "subtitle": "Review key internal audit numbers with category-level breakdowns and consistency checks.",
+        "filters_title": "Report Filters",
+        "filters_applied": "Filters Applied",
+        "applied_filters": "Applied Filters",
+        "no_filters": "No filters applied. Showing all available data.",
+        "overview_title": "Audit Overview",
+        "overview_hint": "A quick summary of the main balances before detailed reconciliation.",
+        "categories_count": "Categories: {{count}}"
+      },
+      "filters": {
+        "from_date": "From Date",
+        "to_date": "To Date",
+        "all_fields": "All Fields",
+        "all_centers": "All Centers",
+        "apply": "Show Report",
+        "reset": "Clear Filters",
+        "date_range_error": "Start date must be on or before end date."
+      },
+      "messages": {
+        "something_went_wrong": "Could not load the report. Please try again."
+      },
+      "cards": {
+        "total_savings_deposit": "Savings Deposits",
+        "total_loan_savings": "Loan Savings",
+        "total_all_savings_combined": "Combined Savings Total",
+        "total_loan_remaining": "Outstanding Loan Balance"
+      },
+      "sections": {
+        "savings_summary": "Savings Summary",
+        "savings_summary_hint": "Category-wise total savings deposits.",
+        "loan_savings_summary": "Loan Savings Summary",
+        "loan_savings_summary_hint": "Category-wise total loan savings.",
+        "loan_summary": "Loan Summary (Principal + Interest)",
+        "loan_summary_hint": "Compare recorded and calculated principal/interest values for each category.",
+        "profit_reconciliation": "Profit / Loss Reconciliation",
+        "profit_reconciliation_hint": "Verify reported totals against recalculated totals from category data."
+      },
+      "columns": {
+        "principal_group": "Principal",
+        "interest_group": "Interest",
+        "total_savings_deposit": "Savings Deposits",
+        "total_loan_savings": "Loan Savings",
+        "loan_given_actual": "Loan Given (Recorded)",
+        "loan_recovery": "Recovered Principal",
+        "loan_recovery_percentage": "Principal Recovery (%)",
+        "loan_remaining": "Remaining Principal",
+        "loan_given_calculated": "Loan Given (Recovered + Remaining)",
+        "loan_check": "Principal Match",
+        "interest_actual": "Interest (Recorded)",
+        "interest_recovery": "Recovered Interest",
+        "interest_recovery_percentage": "Interest Recovery (%)",
+        "interest_remaining": "Remaining Interest",
+        "interest_calculated": "Interest (Recovered + Remaining)",
+        "interest_check": "Interest Match"
+      },
+      "badges": {
+        "mismatch": "Not Matched",
+        "ok": "Matched"
+      },
+      "values": {
+        "percent": "{{value}}%"
+      },
+      "profit_loss": {
+        "title": "Profit / Loss",
+        "formula": "Loan Remaining - (Savings Deposit + Loan Savings)",
+        "breakdown_label": "Item",
+        "api_total": "Reported Total",
+        "calculated_total": "Recalculated Total",
+        "check": "Match",
+        "breakdown_title": "Reconciliation Breakdown",
+        "rows": {
+          "total_loan_remaining": "Outstanding Loan Balance",
+          "total_savings_deposit": "Savings Deposits",
+          "total_loan_savings": "Loan Savings",
+          "total_all_savings_combined": "Combined Savings Total",
+          "profit_loss": "Profit / Loss"
+        },
+        "loss": "Loss",
+        "profit": "Profit"
+      }
     }
   },
   "audit_report_meta": {
@@ -840,6 +924,7 @@
       "cooperative_audit_report_print": "Print audit report",
       "cooperative_audit_report_update": "Update audit report",
       "cooperative_audit_report_view": "View audit report",
+      "internal_audit_report_view": "View internal audit report",
 
       "client_register_account_delete": "Temporarily delete all client accounts",
       "client_register_account_permanently_delete": "Permanently delete all client accounts",

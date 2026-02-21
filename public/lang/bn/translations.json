@@ -321,7 +321,8 @@
     },
     "audit": {
       "report_meta": "অডিট মেটাডেটা",
-      "audit_report": "অডিট রিপোর্টসমূহ"
+      "audit_report": "অডিট রিপোর্টসমূহ",
+      "internal_audit_report": "অভ্যন্তরীণ অডিট রিপোর্ট"
     }
   },
 
@@ -550,6 +551,89 @@
       "profit_loss": "লাভ-ক্ষতি হিসাব",
       "net_profit": "নিট লাভ-ক্ষতি হিসাব",
       "surplus_value": "উদ্বৃত্তপত্র"
+    },
+    "internal": {
+      "ui": {
+        "subtitle": "ক্যাটাগরি ভিত্তিক বিশ্লেষণ ও মিল যাচাইসহ গুরুত্বপূর্ণ অভ্যন্তরীণ অডিট তথ্য দেখুন।",
+        "filters_title": "রিপোর্ট ফিল্টার",
+        "filters_applied": "ফিল্টার প্রয়োগ হয়েছে",
+        "applied_filters": "প্রয়োগকৃত ফিল্টার",
+        "no_filters": "কোনো ফিল্টার প্রয়োগ করা হয়নি। সব তথ্য দেখানো হচ্ছে।",
+        "overview_title": "অডিট সারসংক্ষেপ",
+        "overview_hint": "বিস্তারিত মিল যাচাইয়ের আগে প্রধান ব্যালেন্সগুলোর দ্রুত চিত্র।",
+        "categories_count": "ক্যাটাগরি: {{count}}"
+      },
+      "filters": {
+        "from_date": "শুরুর তারিখ",
+        "to_date": "শেষের তারিখ",
+        "all_fields": "সব ফিল্ড",
+        "all_centers": "সব কেন্দ্র",
+        "apply": "রিপোর্ট দেখুন",
+        "reset": "ফিল্টার মুছুন",
+        "date_range_error": "শুরুর তারিখ শেষের তারিখের আগে বা সমান হতে হবে।"
+      },
+      "messages": {
+        "something_went_wrong": "রিপোর্ট লোড করা যায়নি। আবার চেষ্টা করুন।"
+      },
+      "cards": {
+        "total_savings_deposit": "সঞ্চয় জমার মোট",
+        "total_loan_savings": "ঋণ সঞ্চয়ের মোট",
+        "total_all_savings_combined": "সম্মিলিত সঞ্চয়ের মোট",
+        "total_loan_remaining": "বকেয়া ঋণের মোট"
+      },
+      "sections": {
+        "savings_summary": "সঞ্চয় সারাংশ",
+        "savings_summary_hint": "ক্যাটাগরি অনুযায়ী সঞ্চয় জমার মোট পরিমাণ।",
+        "loan_savings_summary": "ঋণ সঞ্চয় সারাংশ",
+        "loan_savings_summary_hint": "ক্যাটাগরি অনুযায়ী ঋণ সঞ্চয়ের মোট পরিমাণ।",
+        "loan_summary": "ঋণ সারাংশ (মূলধন + লাভ)",
+        "loan_summary_hint": "প্রতিটি ক্যাটাগরিতে রেকর্ডকৃত ও গণিত মান মিলিয়ে দেখুন।",
+        "profit_reconciliation": "লাভ / ক্ষতি মিল যাচাই",
+        "profit_reconciliation_hint": "ক্যাটাগরি ডেটা থেকে পুনর্গণিত মানের সাথে রিপোর্টকৃত মোট যাচাই করুন।"
+      },
+      "columns": {
+        "principal_group": "মূলধন",
+        "interest_group": "লাভ",
+        "total_savings_deposit": "সঞ্চয় জমার মোট",
+        "total_loan_savings": "ঋণ সঞ্চয়ের মোট",
+        "loan_given_actual": "বিতরণকৃত ঋণ (রেকর্ড)",
+        "loan_recovery": "আদায়কৃত মূলধন",
+        "loan_recovery_percentage": "মূলধন আদায় (%)",
+        "loan_remaining": "অবশিষ্ট মূলধন",
+        "loan_given_calculated": "বিতরণকৃত ঋণ (আদায় + অবশিষ্ট)",
+        "loan_check": "মূলধন মিল",
+        "interest_actual": "লাভ (রেকর্ড)",
+        "interest_recovery": "আদায়কৃত লাভ",
+        "interest_recovery_percentage": "লাভ আদায় (%)",
+        "interest_remaining": "অবশিষ্ট লাভ",
+        "interest_calculated": "লাভ (আদায় + অবশিষ্ট)",
+        "interest_check": "লাভের মিল"
+      },
+      "badges": {
+        "mismatch": "মেলেনি",
+        "ok": "মিলেছে"
+      },
+      "values": {
+        "percent": "{{value}}%"
+      },
+      "profit_loss": {
+        "title": "লাভ / ক্ষতি",
+        "formula": "অবশিষ্ট ঋণ - (সঞ্চয় জমা + ঋণ সঞ্চয়)",
+        "breakdown_label": "আইটেম",
+        "api_total": "রিপোর্টকৃত মোট",
+        "calculated_total": "পুনর্গণিত মোট",
+        "check": "মিল",
+        "breakdown_title": "মিল যাচাই বিশ্লেষণ",
+        "rows": {
+          "total_loan_remaining": "বকেয়া ঋণের মোট",
+          "total_savings_deposit": "সঞ্চয় জমার মোট",
+          "total_loan_savings": "ঋণ সঞ্চয়ের মোট",
+          "total_all_savings_combined": "সম্মিলিত সঞ্চয়ের মোট",
+          "profit_loss": "লাভ / ক্ষতি"
+        },
+        "loss": "ক্ষতি",
+        "profit": "লাভ"
+      }
     }
   },
   "audit_report_meta": {
@@ -805,6 +889,7 @@
       "cooperative_audit_report_print": "অডিট রিপোর্ট প্রিন্ট করুন",
       "cooperative_audit_report_update": "অডিট রিপোর্ট আপডেট",
       "cooperative_audit_report_view": "অডিট রিপোর্ট দেখুন",
+      "internal_audit_report_view": "অভ্যন্তরীণ অডিট রিপোর্ট দেখুন",
       "client_register_account_delete": "সদস্যের সমস্ত একাউন্ট সাময়িকভাবে ডিলিট",
       "client_register_account_permanently_delete": "সদস্যের সমস্ত একাউন্ট স্থায়ীভাবে ডিলিট",
       "client_register_account_center_update": "সদস্যের সমস্ত একাউন্টের সেন্টার আপডেট",

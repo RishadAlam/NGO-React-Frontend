@@ -53,6 +53,7 @@ const PendingClosing = lazy(() => import('./pages/pendingClosings/PendingClosing
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
 const AuditReport = lazy(() => import('./pages/audit/AuditReport'))
+const InternalAuditReport = lazy(() => import('./pages/audit/InternalAuditReport'))
 const RegisteredClientAccountList = lazy(
   () => import('./pages/registeredAccountList/RegisteredClientAccountList')
 )
@@ -1055,6 +1056,25 @@ export default function App() {
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                       <Suspense fallback={<Loader />}>
                         <AuditReport />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+              </Route>
+              <Route
+                path="internal"
+                element={
+                  <RequirePermissions
+                    allowedPermissions={['internal_audit_report_view']}
+                    pageTitle="menu.audit.internal_audit_report"
+                  />
+                }>
+                <Route
+                  index
+                  element={
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense fallback={<Loader />}>
+                        <InternalAuditReport />
                       </Suspense>
                     </ErrorBoundary>
                   }
