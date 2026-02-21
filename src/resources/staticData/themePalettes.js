@@ -341,6 +341,40 @@ export const THEME_PALETTES = [
       'secondary-color': '#1c1e21',
       'border-color': '#5a503c'
     }
+  },
+  {
+    id: 'plain-dark',
+    label: 'Plain Dark',
+    light: {
+      'main-bg': '#f3f4f6',
+      'main-bg-rgb': '243, 244, 246',
+      'soft-bg': '#ffffff',
+      'main-color': '#111827',
+      'soft-color': '#4b5563',
+      'primary-color': '#374151',
+      'primary-color-hover': '#1f2937',
+      'primary-rgb': '55, 65, 81',
+      'accent-color': '#6b7280',
+      'accent-soft-color': '#6b72807d',
+      'accent-rgb': '107, 114, 128',
+      'secondary-color': '#e5e7eb',
+      'border-color': '#d1d5db'
+    },
+    dark: {
+      'main-bg': '#111315',
+      'main-bg-rgb': '17, 19, 21',
+      'soft-bg': '#171a1f',
+      'main-color': '#e5e7eb',
+      'soft-color': '#9ca3af',
+      'primary-color': '#4b5563',
+      'primary-color-hover': '#6b7280',
+      'primary-rgb': '75, 85, 99',
+      'accent-color': '#6b7280',
+      'accent-soft-color': '#6b72807d',
+      'accent-rgb': '107, 114, 128',
+      'secondary-color': '#171a1f',
+      'border-color': '#2f353e'
+    }
   }
 ]
 
