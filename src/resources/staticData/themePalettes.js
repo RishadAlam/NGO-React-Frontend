@@ -360,19 +360,18 @@ export const applyThemePalette = (paletteId, mode = 'light') => {
   const mainBgRgb = tokens['main-bg-rgb']
   const primaryRgb = tokens['primary-rgb']
   const accentRgb = tokens['accent-rgb']
-  const pageBackgroundGradient = `radial-gradient(circle at 0% 0%, rgba(${primaryRgb}, ${
-    themeMode === 'dark' ? 0.2 : 0.16
-  }) 0%, transparent ${themeMode === 'dark' ? 42 : 40}%), radial-gradient(circle at 100% 0%, rgba(${accentRgb}, ${
-    themeMode === 'dark' ? 0.16 : 0.14
-  }) 0%, transparent ${themeMode === 'dark' ? 38 : 36}%)`
+  const pageBackgroundGradient =
+    themeMode === 'dark'
+      ? `radial-gradient(circle at 8% -12%, rgba(${primaryRgb}, 0.34) 0%, transparent 48%), radial-gradient(circle at 95% 4%, rgba(${accentRgb}, 0.26) 0%, transparent 44%), radial-gradient(circle at 48% 120%, rgba(${primaryRgb}, 0.2) 0%, transparent 58%), linear-gradient(160deg, rgba(${mainBgRgb}, 0.94) 0%, rgba(2, 6, 23, 0.98) 62%, rgba(1, 3, 12, 1) 100%)`
+      : `radial-gradient(circle at 8% -6%, rgba(${primaryRgb}, 0.28) 0%, transparent 42%), radial-gradient(circle at 92% 6%, rgba(${accentRgb}, 0.24) 0%, transparent 40%), radial-gradient(circle at 50% 115%, rgba(${primaryRgb}, 0.14) 0%, transparent 52%), linear-gradient(165deg, rgba(255, 255, 255, 0.92) 0%, rgba(${mainBgRgb}, 0.96) 55%, rgba(${mainBgRgb}, 1) 100%)`
   const surfaceBackground =
     themeMode === 'dark'
-      ? `linear-gradient(130deg, rgba(${mainBgRgb}, 0.92) 0%, rgba(${primaryRgb}, 0.16) 58%, rgba(${accentRgb}, 0.1) 100%)`
-      : `linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(${primaryRgb}, 0.08) 62%, rgba(${accentRgb}, 0.05) 100%)`
+      ? `linear-gradient(155deg, rgba(${mainBgRgb}, 0.96) 0%, rgba(${primaryRgb}, 0.25) 56%, rgba(${accentRgb}, 0.18) 100%)`
+      : `linear-gradient(155deg, rgba(255, 255, 255, 0.99) 0%, rgba(${primaryRgb}, 0.12) 52%, rgba(${accentRgb}, 0.1) 100%)`
   const surfaceBackgroundStrong =
     themeMode === 'dark'
-      ? `linear-gradient(130deg, rgba(${mainBgRgb}, 0.98) 0%, rgba(${primaryRgb}, 0.2) 100%)`
-      : `linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(${primaryRgb}, 0.11) 100%)`
+      ? `linear-gradient(155deg, rgba(${mainBgRgb}, 0.99) 0%, rgba(${primaryRgb}, 0.3) 68%, rgba(${accentRgb}, 0.16) 100%)`
+      : `linear-gradient(155deg, rgba(255, 255, 255, 1) 0%, rgba(${primaryRgb}, 0.18) 65%, rgba(${accentRgb}, 0.08) 100%)`
 
   Object.entries(tokens).forEach(([token, value]) => {
     document.body.style.setProperty(`--${token}`, value)
