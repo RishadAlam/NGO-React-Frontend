@@ -19,11 +19,13 @@ export default function Cards({ cardIcon, cardName, color, itemData, isLoading }
         <div className="cardBox">
           <div className="boxInfo">
             <div className="title">
-              {cardIcon}
-              <span>{cardName}</span>
+              <span className="iconWrap">{cardIcon}</span>
+              <span className="titleText">{cardName}</span>
             </div>
-            <h1>৳ {tsNumbers(current_amount)}</h1>
-            <Link to="/">{t('dashboard.cards.View_all')}</Link>
+            <h1 className="amount">৳ {tsNumbers(current_amount)}</h1>
+            <Link className="viewAll" to="/">
+              {t('dashboard.cards.View_all')}
+            </Link>
           </div>
           <div className="cardInfo">
             <div className="chart">

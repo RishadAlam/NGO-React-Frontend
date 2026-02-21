@@ -44,24 +44,26 @@ export default function Dashboard({ pageTitle }) {
       </Helmet>
 
       <div className="dashboard">
-        <div className="row">
-          <div className="col-xl-3 d-xl-block d-none">
-            <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox
-                chartName={t('dashboard.Savings_Collection_by_Sources')}
-                sources={saving_collections_sources}
-                isLoading={isLoading}
-              />
-            </div>
-            <div className="box mb-3 shadow pie-analytics">
-              <PieChartBox
-                chartName={t('dashboard.Loans_Collection_by_Sources')}
-                sources={loan_collections_sources}
-                isLoading={isLoading}
-              />
+        <div className="row g-3 dashboard-grid">
+          <div className="col-xl-3 d-xl-block d-none dashboard-column dashboard-column--analytics">
+            <div className="dashboard-stack">
+              <div className="box dashboard-panel pie-analytics">
+                <PieChartBox
+                  chartName={t('dashboard.Savings_Collection_by_Sources')}
+                  sources={saving_collections_sources}
+                  isLoading={isLoading}
+                />
+              </div>
+              <div className="box dashboard-panel pie-analytics">
+                <PieChartBox
+                  chartName={t('dashboard.Loans_Collection_by_Sources')}
+                  sources={loan_collections_sources}
+                  isLoading={isLoading}
+                />
+              </div>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-8 px-xl-0">
+          <div className="col-xl-6 col-lg-8 dashboard-column dashboard-column--metrics">
             <CardSection
               loan_distributions={loan_distributions}
               loan_collections_summery={loan_collections_summery}
@@ -76,31 +78,33 @@ export default function Dashboard({ pageTitle }) {
               isLoading={isLoading}
             />
           </div>
-          <div className="col-xl-3 col-lg-4 col-md-6 collectors">
-            <div className="box mb-3 top-collectors">
-              <TopCollectors
-                heading={t('dashboard.Todays_Top_Money_Collectors')}
-                collectors={top_collectionist}
-                isLoading={isLoading}
-              />
-            </div>
-            <div className="box withdrawal-list mb-3 d-lg-block d-none">
-              <WithdrawalLists
-                title={t('dashboard.Recent_Saving_Withdrawals')}
-                withdrawal={saving_withdrawal}
-                isLoading={isLoading}
-              />
-            </div>
-            <div className="box withdrawal-list mb-3 d-lg-block d-none">
-              <WithdrawalLists
-                title={t('dashboard.Recent_Loan_Withdrawals')}
-                withdrawal={loan_saving_withdrawal}
-                isLoading={isLoading}
-              />
+          <div className="col-xl-3 col-lg-4 col-md-6 dashboard-column collectors">
+            <div className="dashboard-stack">
+              <div className="box dashboard-panel top-collectors">
+                <TopCollectors
+                  heading={t('dashboard.Todays_Top_Money_Collectors')}
+                  collectors={top_collectionist}
+                  isLoading={isLoading}
+                />
+              </div>
+              <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
+                <WithdrawalLists
+                  title={t('dashboard.Recent_Saving_Withdrawals')}
+                  withdrawal={saving_withdrawal}
+                  isLoading={isLoading}
+                />
+              </div>
+              <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
+                <WithdrawalLists
+                  title={t('dashboard.Recent_Loan_Withdrawals')}
+                  withdrawal={loan_saving_withdrawal}
+                  isLoading={isLoading}
+                />
+              </div>
             </div>
           </div>
-          <div className="col-md-6 d-lg-none d-block">
-            <div className="box mb-3 shadow pie-analytics">
+          <div className="col-md-6 d-lg-none d-block dashboard-column">
+            <div className="box dashboard-panel pie-analytics">
               <PieChartBox
                 chartName={t('dashboard.Savings_Collection_by_Sources')}
                 sources={saving_collections_sources}
@@ -108,8 +112,8 @@ export default function Dashboard({ pageTitle }) {
               />
             </div>
           </div>
-          <div className="col-md-6 d-lg-none d-block">
-            <div className="box mb-3 shadow pie-analytics">
+          <div className="col-md-6 d-lg-none d-block dashboard-column">
+            <div className="box dashboard-panel pie-analytics">
               <PieChartBox
                 chartName={t('dashboard.Loans_Collection_by_Sources')}
                 sources={loan_collections_sources}
