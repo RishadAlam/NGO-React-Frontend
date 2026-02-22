@@ -50,7 +50,7 @@ export default function LoanCollectionSheetFooter({
   }
 
   return (
-    <tfoot>
+    <tfoot className="collection-sheet-tfoot">
       <tr>
         <th className={`${!columnList['#'] ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.image ? 'd-none' : ''}`}></th>

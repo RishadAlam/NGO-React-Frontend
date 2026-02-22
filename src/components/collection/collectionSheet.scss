@@ -1,0 +1,252 @@
+@import '../../scss/variables';
+
+.collection-sheet {
+  .collection-sheet-card {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08), 0 3px 10px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+  }
+
+  .collection-sheet-header {
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(var(--main-bg-rgb), 0.68);
+    backdrop-filter: blur(8px);
+    padding: 0.9rem 1.1rem;
+  }
+
+  .collection-sheet-toolbar .heading {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .collection-sheet-body {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .collection-sheet-center-block {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 0.6rem;
+    background: rgba(var(--main-bg-rgb), 0.32);
+  }
+
+  .collection-sheet-center-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $soft-color;
+    margin: 0 0 0.55rem;
+    padding: 0 0.2rem;
+  }
+
+  .collection-sheet-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--soft-bg);
+    overflow: auto;
+    min-height: unset;
+    max-height: calc(100vh - 300px);
+    isolation: isolate;
+  }
+
+  .collection-sheet-table {
+    width: 100%;
+    min-width: 100%;
+    margin: 0;
+    border-spacing: 0 !important;
+    border-collapse: separate !important;
+  }
+
+  .collection-sheet-table.table-report:not(.table-report--bordered):not(.table-report--tabulator) {
+    border-spacing: 0 !important;
+  }
+
+  .collection-sheet-table tr {
+    box-shadow: none !important;
+  }
+
+  .collection-sheet-table .collection-sheet-thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f8fafc !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: #0f172a !important;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.72rem 0.72rem !important;
+    vertical-align: middle;
+    white-space: nowrap;
+    opacity: 1 !important;
+    filter: none !important;
+    text-shadow: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .collection-sheet-table .collection-sheet-thead th * {
+    color: inherit !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  .collection-sheet-table tbody td,
+  .collection-sheet-table .collection-sheet-tfoot th {
+    padding: 0.72rem 0.72rem !important;
+    vertical-align: middle;
+    border-top: 1px solid transparent !important;
+    border-bottom: 1px solid transparent !important;
+  }
+
+  .collection-sheet-table tbody tr:nth-child(odd) > td {
+    background: rgba(var(--main-bg-rgb), 0.3) !important;
+  }
+
+  .collection-sheet-table.table-hover > tbody > tr:hover > * {
+    background: rgba(var(--primary-rgb), 0.15) !important;
+    border-color: rgba(var(--primary-rgb), 0.26) !important;
+    color: $main-color !important;
+  }
+
+  .collection-sheet-empty-row > * {
+    background: transparent !important;
+  }
+
+  .collection-sheet-spacer-row > * {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .collection-sheet-spacer-cell {
+    height: 0;
+  }
+
+  .collection-sheet-empty-cell {
+    padding: 2.1rem 1rem !important;
+    color: $soft-color;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .collection-sheet-tfoot th {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(var(--main-bg-rgb), 0.92) !important;
+    border-top: 1px solid var(--border-color) !important;
+    font-weight: 700;
+  }
+
+  .collection-sheet-tfoot .btn {
+    border-radius: 10px;
+  }
+}
+
+.dark .collection-sheet {
+  .collection-sheet-header {
+    background: rgba(11, 18, 32, 0.8);
+  }
+
+  .collection-sheet-center-title {
+    color: $soft-light;
+  }
+
+  .collection-sheet-table-wrap {
+    background: rgba(11, 18, 32, 0.66);
+  }
+
+  .collection-sheet-table .collection-sheet-thead th {
+    background: #111a2e !important;
+    color: #f8fafc !important;
+    background-image: none !important;
+  }
+
+  .collection-sheet-table tbody tr:nth-child(odd) > td {
+    background: rgba(17, 26, 46, 0.8) !important;
+  }
+
+  .collection-sheet-table.table-hover > tbody > tr:hover > * {
+    background: rgba(var(--primary-rgb), 0.3) !important;
+    border-color: rgba(var(--primary-rgb), 0.45) !important;
+    color: $white-color !important;
+  }
+
+  .collection-sheet-empty-cell {
+    color: $soft-light;
+  }
+
+  .collection-sheet-tfoot th {
+    background: rgba(11, 18, 32, 0.95) !important;
+    color: $soft-light !important;
+  }
+}
+
+/* Safari-specific rendering fallback for sticky table headers */
+@supports (-webkit-touch-callout: none) {
+  .collection-sheet .collection-sheet-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .collection-sheet .collection-sheet-table-wrap {
+    background: #111a2e;
+  }
+
+  .collection-sheet .collection-sheet-table .collection-sheet-thead,
+  .collection-sheet .collection-sheet-table .collection-sheet-thead tr,
+  .collection-sheet .collection-sheet-table .collection-sheet-thead th {
+    background: #111a2e !important;
+    background-image: none !important;
+    color: #f8fafc !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-sheet .collection-sheet-header {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .collection-sheet .collection-sheet-body {
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+
+  .collection-sheet .collection-sheet-center-block {
+    padding: 0.45rem;
+    border-radius: 12px;
+  }
+
+  .collection-sheet .collection-sheet-table-wrap {
+    border-radius: 10px;
+  }
+
+  .collection-sheet .collection-sheet-table {
+    min-width: 760px;
+  }
+
+  .collection-sheet .collection-sheet-table .collection-sheet-thead th {
+    font-size: 0.7rem;
+    padding: 0.64rem 0.6rem !important;
+  }
+
+  .collection-sheet .collection-sheet-table tbody td,
+  .collection-sheet .collection-sheet-table .collection-sheet-tfoot th {
+    padding: 0.62rem 0.6rem !important;
+  }
+}

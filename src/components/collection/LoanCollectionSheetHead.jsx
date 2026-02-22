@@ -18,7 +18,7 @@ export default function LoanCollectionSheetHead({
   const { t } = useTranslation()
 
   return (
-    <thead>
+    <thead className="collection-sheet-thead">
       <tr>
         <th className={`${!columnList['#'] ? 'd-none' : ''}`}>#</th>
         <th className={`${!columnList.image ? 'd-none' : ''}`}>{t('common.image')}</th>

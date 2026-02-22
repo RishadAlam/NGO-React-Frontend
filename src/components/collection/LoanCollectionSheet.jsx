@@ -3,6 +3,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermission } from '../../helper/checkPermission'
 import '../../pages/staffs/staffs.scss'
+import './collectionSheet.scss'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import LoanCollectionSheetHeader from './LoanCollectionSheetHeader'
 import LoanCollectionTable from './LoanCollectionTable'
@@ -41,13 +42,13 @@ function LoanCollectionSheet({ data = [], mutate, loading, isRegular = true }) {
 
   return (
     <>
-      <div className="staff-table">
+      <div className="staff-table collection-sheet">
         {loading ? (
           <ReactTableSkeleton />
         ) : (
-          <div className="card">
+          <div className="card collection-sheet-card">
             <LoanCollectionSheetHeader columnList={columnList} setColumnList={setColumnList} />
-            <div className="card-body">
+            <div className="card-body collection-sheet-body">
               {data.map((center, index) => (
                 <LoanCollectionTable
                   key={index}

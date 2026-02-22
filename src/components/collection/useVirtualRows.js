@@ -1,0 +1,65 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
+
+export default function useVirtualRows(
+  rows,
+  { enabled = true, rowHeight = 64, overscan = 8 } = {}
+) {
+  const bodyRef = useRef(null)
+  const [scrollTop, setScrollTop] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(0)
+  const shouldVirtualize = enabled && rows.length > 0
+
+  useEffect(() => {
+    if (!shouldVirtualize) {
+      setScrollTop(0)
+      setViewportHeight(0)
+      return
+    }
+
+    const tableWrap = bodyRef.current?.closest('.collection-sheet-table-wrap')
+    if (!tableWrap) return
+
+    let frameId
+    const updateViewport = () => {
+      if (frameId) cancelAnimationFrame(frameId)
+      frameId = requestAnimationFrame(() => {
+        setScrollTop(tableWrap.scrollTop)
+        setViewportHeight(tableWrap.clientHeight)
+      })
+    }
+
+    updateViewport()
+    tableWrap.addEventListener('scroll', updateViewport, { passive: true })
+    window.addEventListener('resize', updateViewport)
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId)
+      tableWrap.removeEventListener('scroll', updateViewport)
+      window.removeEventListener('resize', updateViewport)
+    }
+  }, [rows.length, shouldVirtualize])
+
+  const virtualizedState = useMemo(() => {
+    if (!shouldVirtualize || viewportHeight === 0) {
+      return {
+        isVirtualized: false,
+        visibleRows: rows,
+        topPadding: 0,
+        bottomPadding: 0
+      }
+    }
+
+    const startIndex = Math.max(0, Math.floor(scrollTop / rowHeight) - overscan)
+    const visibleCount = Math.max(1, Math.ceil(viewportHeight / rowHeight) + overscan * 2)
+    const endIndex = Math.min(rows.length, startIndex + visibleCount)
+
+    return {
+      isVirtualized: true,
+      visibleRows: rows.slice(startIndex, endIndex),
+      topPadding: startIndex * rowHeight,
+      bottomPadding: Math.max(0, (rows.length - endIndex) * rowHeight)
+    }
+  }, [rows, shouldVirtualize, viewportHeight, scrollTop, rowHeight, overscan])
+
+  return { bodyRef, ...virtualizedState }
+}

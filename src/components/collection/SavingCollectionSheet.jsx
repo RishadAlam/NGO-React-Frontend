@@ -3,6 +3,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermission } from '../../helper/checkPermission'
 import '../../pages/staffs/staffs.scss'
+import './collectionSheet.scss'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import SavingCollectionSheetHeader from './SavingCollectionSheetHeader'
 import SavingCollectionTable from './SavingCollectionTable'
@@ -38,13 +39,13 @@ function SavingCollectionSheet({ data = [], mutate, loading, isRegular = true })
 
   return (
     <>
-      <div className="staff-table">
+      <div className="staff-table collection-sheet">
         {loading ? (
           <ReactTableSkeleton />
         ) : (
-          <div className="card">
+          <div className="card collection-sheet-card">
             <SavingCollectionSheetHeader columnList={columnList} setColumnList={setColumnList} />
-            <div className="card-body">
+            <div className="card-body collection-sheet-body">
               {data.map((center, index) => (
                 <SavingCollectionTable
                   key={index}

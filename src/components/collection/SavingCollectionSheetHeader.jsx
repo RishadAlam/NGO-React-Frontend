@@ -29,13 +29,13 @@ function SavingCollectionSheetHeader({ columnList, setColumnList }) {
   }
 
   return (
-    <div className="card-header">
-      <div className="d-flex justify-content-between align-items-center">
+    <div className="card-header collection-sheet-header">
+      <div className="d-flex justify-content-between align-items-center collection-sheet-toolbar">
         <h2 className="heading">{t('common.collection_sheet')}</h2>
         <div className="column-hiding text-end position-relative">
           <Button
             id="hide-column--button"
-            className="table-btn p-0"
+            className="table-btn table-btn--icon"
             aria-controls={open ? 'hide-column-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}

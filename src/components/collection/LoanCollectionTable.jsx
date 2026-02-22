@@ -10,35 +10,39 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
 
   return (
     <>
-      <h2 className="heading">{center?.name}</h2>
-      <div className="table-responsive" style={{ minHeight: 'unset' }}>
-        <table className="table table-hover table-report">
-          <LoanCollectionSheetHead
-            columnList={columnList}
-            setApprovedList={setApprovedList}
-            accounts={center?.loan_account}
-            totalCollection={totalCollection}
-            approvedList={approvedList}
-            isRegular={isRegular}
-          />
-          <LoanCollectionSheetBody
-            center={center}
-            columnList={columnList}
-            mutate={mutate}
-            approvedList={approvedList}
-            setApprovedList={setApprovedList}
-            isRegular={isRegular}
-          />
-          <LoanCollectionSheetFooter
-            columnList={columnList}
-            center={center}
-            approvedList={approvedList}
-            setApprovedList={setApprovedList}
-            mutate={mutate}
-            isRegular={isRegular}
-          />
-        </table>
-      </div>
+      <section className="collection-sheet-center-block">
+        <h2 className="heading collection-sheet-center-title">{center?.name}</h2>
+        <div
+          className="table-responsive collection-sheet-table-wrap"
+          style={{ minHeight: 'unset' }}>
+          <table className="table table-hover table-report collection-sheet-table">
+            <LoanCollectionSheetHead
+              columnList={columnList}
+              setApprovedList={setApprovedList}
+              accounts={center?.loan_account}
+              totalCollection={totalCollection}
+              approvedList={approvedList}
+              isRegular={isRegular}
+            />
+            <LoanCollectionSheetBody
+              center={center}
+              columnList={columnList}
+              mutate={mutate}
+              approvedList={approvedList}
+              setApprovedList={setApprovedList}
+              isRegular={isRegular}
+            />
+            <LoanCollectionSheetFooter
+              columnList={columnList}
+              center={center}
+              approvedList={approvedList}
+              setApprovedList={setApprovedList}
+              mutate={mutate}
+              isRegular={isRegular}
+            />
+          </table>
+        </div>
+      </section>
     </>
   )
 }
