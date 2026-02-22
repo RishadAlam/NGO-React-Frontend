@@ -242,7 +242,7 @@ export default function Staffs() {
                 data={userPermissions}
                 authId={authId}
                 t={t}
-                modalTitle={t('staffs.Staff_Registration')}
+                modalTitle={t('menu.staffs.Staff_Permissions')}
                 btnTitle={t('common.update')}
               />
             )}

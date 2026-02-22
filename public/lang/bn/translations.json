@@ -710,6 +710,25 @@
     }
   },
   "staff_permissions": {
+    "ui": {
+      "modal_showing": "মোট {{total}} টি অনুমতির মধ্যে {{visible}} টি দেখানো হচ্ছে",
+      "modal_close_aria": "অনুমতি মডাল বন্ধ করুন",
+      "search_permission_or_group": "অনুমতি বা গ্রুপ খুঁজুন",
+      "search_group_or_permission": "গ্রুপ বা অনুমতি খুঁজুন",
+      "clear": "মুছুন",
+      "no_match_search": "আপনার অনুসন্ধানের সাথে কোনো অনুমতি মেলেনি।",
+      "list_showing": "মোট {{total}} টি অনুমতির মধ্যে {{visible}} টি দেখানো হচ্ছে, {{groups}} টি গ্রুপে।",
+      "groups": "গ্রুপ",
+      "enabled": "সক্রিয়",
+      "total": "মোট",
+      "enabled_only": "শুধু সক্রিয়",
+      "all_permissions": "সব অনুমতি",
+      "enable_visible": "দেখানো সব সক্রিয় করুন",
+      "disable_visible": "দেখানো সব নিষ্ক্রিয় করুন",
+      "group_enabled": "{{total}} এর মধ্যে {{enabled}} টি সক্রিয়",
+      "no_match_filters": "বর্তমান ফিল্টারের সাথে কোনো অনুমতি মেলেনি।",
+      "update_failed": "অনুমতি আপডেট করা যায়নি।"
+    },
     "group_name": {
       "dashboard": "ড্যাশবোর্ড",
       "field": "ক্ষেত্র",
@@ -729,6 +748,7 @@
       "pending_loan_collection": "অনুমোদন অপেক্ষমাণ ঋণ সংগ্রহ",
       "loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলন",
       "saving_withdrawal": "সঞ্চয় উত্তোলন",
+      "client_account_transactions": "সদস্য অ্যাকাউন্ট লেনদেন",
       "account_management": "হিসাব পরিচালনা",
       "account_transfer": "হিসাবের টাকা স্থানান্তর",
       "income": "আয়",
@@ -826,6 +846,14 @@
       "pending_loan_saving_withdrawal_list_view_as_admin": "অ্যাডমিন হিসেবে ঋণ সঞ্চয় উত্তোলন দেখুন",
       "pending_loan_saving_withdrawal_update": "অপেক্ষমাণ ঋণ সঞ্চয় উত্তোলন আপডেট",
       "permission_to_make_loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলনের অনুমতি",
+
+      "make_saving_transactions": "সঞ্চয় লেনদেন সম্পাদন",
+      "make_loan_transactions": "ঋণ লেনদেন সম্পাদন",
+      "pending_client_transactions_list_view": "অপেক্ষমাণ সদস্য লেনদেন তালিকা দেখুন",
+      "pending_client_transactions_list_view_as_admin": "অ্যাডমিন হিসেবে অপেক্ষমাণ সদস্য লেনদেন দেখুন",
+      "pending_client_transactions_approval": "অপেক্ষমাণ সদস্য লেনদেন অনুমোদন",
+      "pending_client_transactions_delete": "অপেক্ষমাণ সদস্য লেনদেন মুছুন",
+
       "account_list_view": "হিসাব তালিকা দেখুন",
       "account_transaction_list_view": "লেনদেন দেখুন",
       "account_registration": "নতুন হিসাব নিবন্ধন",

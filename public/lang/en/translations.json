@@ -721,6 +721,25 @@
     }
   },
   "staff_permissions": {
+    "ui": {
+      "modal_showing": "Showing {{visible}} of {{total}} permissions",
+      "modal_close_aria": "Close permissions modal",
+      "search_permission_or_group": "Search permission or group",
+      "search_group_or_permission": "Search group or permission",
+      "clear": "Clear",
+      "no_match_search": "No permissions match your search.",
+      "list_showing": "Showing {{visible}} of {{total}} permissions across {{groups}} groups.",
+      "groups": "Groups",
+      "enabled": "Enabled",
+      "total": "Total",
+      "enabled_only": "Enabled only",
+      "all_permissions": "All permissions",
+      "enable_visible": "Enable visible",
+      "disable_visible": "Disable visible",
+      "group_enabled": "{{enabled}}/{{total}} enabled",
+      "no_match_filters": "No permissions match your current filters.",
+      "update_failed": "Failed to update permissions."
+    },
     "group_name": {
       "dashboard": "Dashboard",
       "field": "Field",
@@ -740,6 +759,7 @@
       "pending_loan_collection": "Pending Loan Make Collection",
       "loan_saving_withdrawal": "Loan Saving Withdrawal",
       "saving_withdrawal": "Saving Withdrawal",
+      "client_account_transactions": "Client Account Transactions",
       "account_management": "Account Management",
       "account_transfer": "Account Transfer",
       "income": "Income",
@@ -850,6 +870,13 @@
       "pending_loan_saving_withdrawal_list_view_as_admin": "View loan savings withdrawal requests (Admin)",
       "pending_loan_saving_withdrawal_update": "Update loan savings withdrawal",
       "permission_to_make_loan_saving_withdrawal": "Make loan savings withdrawal",
+
+      "make_saving_transactions": "Make savings transaction",
+      "make_loan_transactions": "Make loan transaction",
+      "pending_client_transactions_list_view": "View pending client transactions",
+      "pending_client_transactions_list_view_as_admin": "View pending client transactions (Admin)",
+      "pending_client_transactions_approval": "Approve pending client transaction",
+      "pending_client_transactions_delete": "Delete pending client transaction",
 
       "account_list_view": "View accounts",
       "account_transaction_list_view": "View transactions",
