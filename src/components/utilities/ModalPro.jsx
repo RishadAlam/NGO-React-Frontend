@@ -5,7 +5,7 @@ import { animated, useSpring } from '@react-spring/web'
 import { cloneElement, forwardRef } from 'react'
 
 const Fade = forwardRef(function Fade(props, ref) {
-  const { children, in: open, onClick, onEnter, onExited, ownerState, ...other } = props
+  const { children, in: open, onClick, onEnter, onExited, ...other } = props
   const style = useSpring({
     from: { opacity: 0 },
     to: { opacity: open ? 1 : 0 },
@@ -34,6 +34,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   minWidth: 350,
+  backgroundColor: 'rgba(var(--main-bg-rgb), 0.84)',
   borderRadius: '20px',
   boxShadow: 24,
   overflow: 'hidden'
@@ -52,7 +53,8 @@ export default function ModalPro({ open, handleClose, children }) {
         slots={{ backdrop: Backdrop }}
         slotProps={{
           backdrop: {
-            TransitionComponent: Fade
+            TransitionComponent: Fade,
+            sx: { backgroundColor: 'rgba(15, 23, 42, 0.46)' }
           }
         }}>
         <Fade in={open}>
