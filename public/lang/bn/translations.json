@@ -232,7 +232,6 @@
     "loan_to_saving": "ঋণ থেকে সঞ্চয়",
     "loan_to_loan": "ঋণ থেকে ঋণ"
   },
-
   "common_validation": {
     "enter_password": "পাসওয়ার্ড লিখুন",
     "required_fields_are_empty": "প্রয়োজনীয় ক্ষেত্র খালি।",
@@ -253,11 +252,9 @@
     "outstanding_loan_detected": "বকেয়া ঋণ সনাক্ত করা হয়েছে।",
     "outstanding_interest_detected": "বকেয়া লাভ সনাক্ত করা হয়েছে।"
   },
-
   "app_config": {
     "app_name": "জনকল্যান কো-অপারেটিভ সোসাইটি লিমিটেড"
   },
-
   "menu": {
     "dashboard": "ড্যাশবোর্ড",
     "categories": {
@@ -281,7 +278,8 @@
       "settings_and_privacy": "সিস্টেম সেটিংস",
       "audit": "অডিট ও রিপোর্ট",
       "pending_acc_delete_req": "অ্যাকাউন্ট ক্লোজিং অনুরোধ",
-      "registered_account_list": "নিবন্ধিত অ্যাকাউন্টসমূহ"
+      "registered_account_list": "নিবন্ধিত অ্যাকাউন্টসমূহ",
+      "recycle_bin": "রিসাইকেল বিন"
     },
     "registration": {
       "Client_Registration": "সদস্য নিবন্ধন",
@@ -326,13 +324,11 @@
       "internal_audit_report": "অভ্যন্তরীণ অডিট রিপোর্ট"
     }
   },
-
   "profile_box": {
     "profile": "প্রোফাইল",
     "change_password": "পাসওয়ার্ড পরিবর্তন করুন",
     "logout": "প্রস্থান"
   },
-
   "dashboard": {
     "Savings_Collection_by_Sources": "সূত্র দ্বারা সঞ্চয় সংগ্রহ",
     "Loans_Collection_by_Sources": "সূত্র দ্বারা ঋণ সংগ্রহ",
@@ -366,7 +362,6 @@
     "Category_List": "ক্যাটাগরি তালিকা",
     "Category_Registration": "ক্যাটাগরি নিবন্ধন",
     "Category_edit": "ক্যাটাগরি ইডিট",
-
     "default": {
       "monthly_loan": "মাসিক ঋণ",
       "dps": "ডিপিএস"
@@ -392,7 +387,6 @@
     "Account_Registration": "অ্যাকাউন্ট নিবন্ধন",
     "Account_edit": "অ্যাকাউন্ট ইডিট",
     "Account_Info": "অ্যাকাউন্ট তথ্য",
-
     "default": {
       "cash": "নগদ"
     }
@@ -419,11 +413,99 @@
   "account_transaction": {
     "Transaction_List": "লেনদেন তালিকা"
   },
+  "recycle_bin": {
+    "title": "রিসাইকেল বিন",
+    "module": "মডিউল",
+    "name": "রেকর্ড",
+    "deleted_at": "মুছে ফেলার সময়",
+    "deleted_by": "মুছে ফেলেছেন",
+    "metadata": "বিস্তারিত",
+    "all_modules": "সব মডিউল",
+    "deleted_from": "মুছে ফেলা শুরুর তারিখ",
+    "deleted_to": "মুছে ফেলা শেষ তারিখ",
+    "view_mode": "ভিউ মোড",
+    "view_list": "লিস্ট",
+    "view_grid": "গ্রিড",
+    "per_page_limit": "প্রতি পেজে",
+    "search_placeholder": "নাম, শিরোনাম বা আইডি দিয়ে খুঁজুন",
+    "restore": "পুনরুদ্ধার",
+    "force_delete": "স্থায়ীভাবে মুছুন",
+    "reset_filters": "ফিল্টার রিসেট",
+    "restore_success": "আইটেম সফলভাবে পুনরুদ্ধার করা হয়েছে।",
+    "force_delete_success": "আইটেম স্থায়ীভাবে মুছে ফেলা হয়েছে।",
+    "restore_failed": "আইটেম পুনরুদ্ধার করা যায়নি।",
+    "force_delete_failed": "আইটেম স্থায়ীভাবে মুছে ফেলা যায়নি।",
+    "load_failed": "রিসাইকেল বিন ডেটা লোড করা যায়নি।",
+    "no_deleted_records": "মুছে ফেলা কোনো রেকর্ড পাওয়া যায়নি।",
+    "items_count": "{{count}} টি",
+    "unknown_folder": "অজানা",
+    "back": "পেছনে",
+    "root_folder": "সব মডিউল",
+    "folders": "ফোল্ডারসমূহ",
+    "records": "রেকর্ডসমূহ",
+    "not_available": "প্রযোজ্য নয়",
+    "total_records": "মোট রেকর্ড: {{count}}",
+    "showing_records": "{{total}} এর মধ্যে {{shown}} টি দেখানো হচ্ছে",
+    "load_more": "আরও দেখুন",
+    "empty_location": "এই স্থানে কোনো ফোল্ডার বা রেকর্ড পাওয়া যায়নি।",
+    "subfolder_filters": "সাব-ফোল্ডার ফিল্টার",
+    "all_values": "সব",
+    "column_name": "নাম",
+    "column_date_modified": "সর্বশেষ পরিবর্তন",
+    "column_size": "সাইজ",
+    "column_kind": "ধরন",
+    "folder_kind": "ফোল্ডার",
+    "record_kind": "রেকর্ড",
+    "yes": "হ্যাঁ",
+    "no": "না",
+    "module_labels": {
+      "field": "ফিল্ড",
+      "center": "কেন্দ্র",
+      "category": "ক্যাটাগরি",
+      "client_registration": "সদস্য নিবন্ধন",
+      "saving_account": "সঞ্চয় অ্যাকাউন্ট",
+      "loan_account": "ঋণ অ্যাকাউন্ট",
+      "account": "অ্যাকাউন্ট",
+      "income_category": "আয় ক্যাটাগরি",
+      "expense_category": "ব্যয় ক্যাটাগরি",
+      "income": "আয়",
+      "expense": "ব্যয়",
+      "staff": "কর্মচারী",
+      "audit_report_meta": "অডিট রিপোর্ট মেটা"
+    },
+    "metadata_labels": {
+      "description": "বর্ণনা",
+      "creator": "নির্মাতা",
+      "field": "ফিল্ড",
+      "group": "গ্রুপ",
+      "saving": "সঞ্চয়",
+      "loan": "ঋণ",
+      "acc_no": "অ্যাকাউন্ট নং",
+      "account_no": "অ্যাকাউন্ট নং",
+      "name": "নাম",
+      "center": "কেন্দ্র",
+      "client": "সদস্য",
+      "category": "ক্যাটাগরি",
+      "balance": "ব্যালেন্স",
+      "email": "ইমেল",
+      "phone": "মুঠোফোন",
+      "role": "ভূমিকা",
+      "page": "পেজ",
+      "meta_key": "মেটা কী",
+      "column_no": "কলাম নং",
+      "details": "বিস্তারিত",
+      "default": "ডিফল্ট",
+      "account": "অ্যাকাউন্ট",
+      "amount": "পরিমাণ",
+      "date": "তারিখ",
+      "approved": "অনুমোদিত"
+    },
+    "record_image_alt": "রেকর্ডের ছবি"
+  },
   "income_categories": {
     "Income_Categories_List": "আয় ক্যাটাগরি তালিকা",
     "Income_Categories_Registration": "আয় ক্যাটাগরি নিবন্ধন",
     "Income_Categories_Edit": "আয় ক্যাটাগরি ইডিট",
-
     "default": {
       "registration_fee": "নিবন্ধন ফি",
       "saving_form_fee": "সঞ্চয় ফরম ফি",
@@ -438,7 +520,6 @@
     "Expense_Categories_List": "ব্যয় ক্যাটাগরি তালিকা",
     "Expense_Categories_Registration": "ব্যয় ক্যাটাগরি নিবন্ধন",
     "Expense_Categories_Edit": "ব্যয় ক্যাটাগরি ইডিট",
-
     "default": {
       "electricity_bill": "বিদ্যুৎ বিল",
       "office_rent": "অফিস ভাড়া",
@@ -464,7 +545,6 @@
     "Staff_Roles_Registration": "ভূমিকা ন",
     "Staff_Roles_Update": "ভূমিকা আপডেট",
     "Role_Name_is_Required": "ভূমিকার নাম প্রয়োজন।",
-
     "default": {
       "developer": "ডেভেলপার",
       "super_admin": "সুপার অ্যাডমিন",
@@ -642,7 +722,6 @@
     "create_meta": "মেটা তৈরি করুন",
     "edit_meta": "মেটা সম্পাদনা করুন",
     "audit_report_meta_list": "অডিট রিপোর্ট মেটা তালিকা",
-
     "default": {
       "total": "সর্বমোট",
       "authorized_shares": "অনুমোদিত শেয়ার",
@@ -766,7 +845,8 @@
       "cooperative_audit_report": "সমবায় অডিট রিপোর্ট",
       "pending_req_to_delete_loan_acc": "ঋণ একাউন্ট মুছে ফেলার অনুরোধ",
       "pending_req_to_delete_saving_acc": "সঞ্চয় একাউন্ট মুছে ফেলার অনুরোধ",
-      "registered_account_view": "নিবন্ধিত একাউন্ট তালিকা"
+      "registered_account_view": "নিবন্ধিত একাউন্ট তালিকা",
+      "recycle_bin": "রিসাইকেল বিন"
     },
     "permissions": {
       "view_dashboard_as_admin": "অ্যাডমিন হিসেবে ড্যাশবোর্ড দেখুন",
@@ -848,14 +928,12 @@
       "pending_loan_saving_withdrawal_list_view_as_admin": "অ্যাডমিন হিসেবে ঋণ সঞ্চয় উত্তোলন দেখুন",
       "pending_loan_saving_withdrawal_update": "অপেক্ষমাণ ঋণ সঞ্চয় উত্তোলন আপডেট",
       "permission_to_make_loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলনের অনুমতি",
-
       "make_saving_transactions": "সঞ্চয় লেনদেন সম্পাদন",
       "make_loan_transactions": "ঋণ লেনদেন সম্পাদন",
       "pending_client_transactions_list_view": "অপেক্ষমাণ সদস্য লেনদেন তালিকা দেখুন",
       "pending_client_transactions_list_view_as_admin": "অ্যাডমিন হিসেবে অপেক্ষমাণ সদস্য লেনদেন দেখুন",
       "pending_client_transactions_approval": "অপেক্ষমাণ সদস্য লেনদেন অনুমোদন",
       "pending_client_transactions_delete": "অপেক্ষমাণ সদস্য লেনদেন মুছুন",
-
       "account_list_view": "হিসাব তালিকা দেখুন",
       "account_transaction_list_view": "লেনদেন দেখুন",
       "account_registration": "নতুন হিসাব নিবন্ধন",
@@ -896,6 +974,9 @@
       "staff_list_view": "স্টাফ তালিকা দেখুন",
       "staff_permission_view": "স্টাফ অনুমতি দেখুন",
       "staff_permission_update": "স্টাফ অনুমতি আপডেট",
+      "recycle_bin_view": "রিসাইকেল বিন দেখুন",
+      "recycle_bin_restore": "রিসাইকেল বিন থেকে পুনরুদ্ধার করুন",
+      "recycle_bin_force_delete": "রিসাইকেল বিন থেকে স্থায়ীভাবে মুছুন",
       "staff_registration": "নতুন স্টাফ নিবন্ধন",
       "staff_data_update": "স্টাফ তথ্য আপডেট",
       "staff_status_update": "স্টাফ স্ট্যাটাস পরিবর্তন",

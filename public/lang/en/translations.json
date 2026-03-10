@@ -232,7 +232,6 @@
     "loan_to_saving": "Loan to Saving",
     "loan_to_loan": "Loan to Loan"
   },
-
   "common_validation": {
     "enter_password": "Enter Password",
     "required_fields_are_empty": "Required fields are empty!",
@@ -253,15 +252,12 @@
     "outstanding_loan_detected": "Outstanding Loan Detected",
     "outstanding_interest_detected": "Outstanding Interest Detected"
   },
-
   "react_table": {
     "No_Records_Found": "No Records Found!"
   },
-
   "app_config": {
     "app_name": "Jonokollan Kormojibi Co-operative Society LTD"
   },
-
   "page_name": {
     "login": "Login",
     "forgot_password": "Forgot Password",
@@ -269,7 +265,6 @@
     "profile": "Profile",
     "client_registration_account": "Client Registration Account"
   },
-
   "menu": {
     "dashboard": "Dashboard",
     "categories": {
@@ -293,7 +288,8 @@
       "settings_and_privacy": "System Settings",
       "audit": "Audit & Reports",
       "pending_acc_delete_req": "Account Closure Requests",
-      "registered_account_list": "Registered Accounts"
+      "registered_account_list": "Registered Accounts",
+      "recycle_bin": "Recycle Bin"
     },
     "registration": {
       "Client_Registration": "Member Registration",
@@ -338,13 +334,11 @@
       "internal_audit_report": "Internal Audit Report"
     }
   },
-
   "profile_box": {
     "profile": "Profile",
     "change_password": "Change Password",
     "logout": "Logout"
   },
-
   "dashboard": {
     "Savings_Collection_by_Sources": "Savings Make Collection by Sources",
     "Loans_Collection_by_Sources": "Loans collection by sources",
@@ -378,7 +372,6 @@
     "Category_List": "CATEGORY LIST",
     "Category_Registration": "Category Registration",
     "Category_Edit": "Category Edit",
-
     "default": {
       "monthly_loan": "Monthly Loan",
       "dps": "DPS"
@@ -404,7 +397,6 @@
     "Account_Registration": "Account Registration",
     "Account_Edit": "Account Edit",
     "Account_Info": "Account Info",
-
     "default": {
       "cash": "Cash"
     }
@@ -431,11 +423,99 @@
   "account_transaction": {
     "Transaction_List": "TRANSACTION LIST"
   },
+  "recycle_bin": {
+    "title": "RECYCLE BIN",
+    "module": "Module",
+    "name": "Record",
+    "deleted_at": "Deleted At",
+    "deleted_by": "Deleted By",
+    "metadata": "Details",
+    "all_modules": "All Modules",
+    "deleted_from": "Deleted From",
+    "deleted_to": "Deleted To",
+    "view_mode": "View Mode",
+    "view_list": "List",
+    "view_grid": "Grid",
+    "per_page_limit": "Per Page",
+    "search_placeholder": "Search by name, title, or ID",
+    "restore": "Restore",
+    "force_delete": "Delete Permanently",
+    "reset_filters": "Reset Filters",
+    "restore_success": "Item restored successfully.",
+    "force_delete_success": "Item permanently deleted.",
+    "restore_failed": "Failed to restore item.",
+    "force_delete_failed": "Failed to permanently delete item.",
+    "load_failed": "Failed to load recycle bin data.",
+    "no_deleted_records": "No deleted records found.",
+    "items_count": "{{count}} items",
+    "unknown_folder": "Unknown",
+    "back": "Back",
+    "root_folder": "All Modules",
+    "folders": "Folders",
+    "records": "Records",
+    "not_available": "N/A",
+    "total_records": "Total records: {{count}}",
+    "showing_records": "Showing {{shown}} of {{total}} records",
+    "load_more": "Load More",
+    "empty_location": "No folders or records found in this location.",
+    "subfolder_filters": "Subfolder Filters",
+    "all_values": "All",
+    "column_name": "Name",
+    "column_date_modified": "Date Modified",
+    "column_size": "Size",
+    "column_kind": "Kind",
+    "folder_kind": "Folder",
+    "record_kind": "Record",
+    "yes": "Yes",
+    "no": "No",
+    "module_labels": {
+      "field": "Fields",
+      "center": "Centers",
+      "category": "Categories",
+      "client_registration": "Client Registrations",
+      "saving_account": "Saving Accounts",
+      "loan_account": "Loan Accounts",
+      "account": "Accounts",
+      "income_category": "Income Categories",
+      "expense_category": "Expense Categories",
+      "income": "Income",
+      "expense": "Expense",
+      "staff": "Staff",
+      "audit_report_meta": "Audit Report Meta"
+    },
+    "metadata_labels": {
+      "description": "Description",
+      "creator": "Creator",
+      "field": "Field",
+      "group": "Group",
+      "saving": "Saving",
+      "loan": "Loan",
+      "acc_no": "Account No.",
+      "account_no": "Account No.",
+      "name": "Name",
+      "center": "Center",
+      "client": "Client",
+      "category": "Category",
+      "balance": "Balance",
+      "email": "Email",
+      "phone": "Phone",
+      "role": "Role",
+      "page": "Page",
+      "meta_key": "Meta Key",
+      "column_no": "Column No.",
+      "details": "Details",
+      "default": "Default",
+      "account": "Account",
+      "amount": "Amount",
+      "date": "Date",
+      "approved": "Approved"
+    },
+    "record_image_alt": "Record image"
+  },
   "income_categories": {
     "Income_Categories_List": "INCOME CATEGORY LIST",
     "Income_Categories_Registration": "Income Category Registration",
     "Income_Categories_Edit": "Income Category Edit",
-
     "default": {
       "registration_fee": "Registration Fee",
       "saving_form_fee": "Saving Form Fee",
@@ -450,7 +530,6 @@
     "Expense_Categories_List": "EXPENSE CATEGORY LIST",
     "Expense_Categories_Registration": "Expense Category Registration",
     "Expense_Categories_Edit": "Expense Category Edit",
-
     "default": {
       "electricity_bill": "Electricity Bill",
       "office_rent": "Office Rent",
@@ -476,7 +555,6 @@
     "Staff_Roles_Registration": "Role Registration",
     "Staff_Roles_Update": "Role Update",
     "Role_Name_is_Required": "Role Name is Required!",
-
     "default": {
       "developer": "Developer",
       "super_admin": "Super Admin",
@@ -653,7 +731,6 @@
     "create_meta": "Edit Meta",
     "edit_meta": "Edit Meta",
     "audit_report_meta_list": "Audit Report Meta List",
-
     "default": {
       "total": "Total",
       "authorized_shares": "Authorized Shares",
@@ -777,7 +854,8 @@
       "cooperative_audit_report": "Cooperative Audit Report",
       "pending_req_to_delete_loan_acc": "Pending Loan Account Deletion Requests",
       "pending_req_to_delete_saving_acc": "Pending Saving Account Deletion Requests",
-      "registered_account_view": "Registered Accounts"
+      "registered_account_view": "Registered Accounts",
+      "recycle_bin": "Recycle Bin"
     },
     "permissions": {
       "view_dashboard_as_admin": "View dashboard (Admin)",
@@ -787,71 +865,60 @@
       "field_soft_delete": "Temporarily delete field",
       "field_action_history": "Field activity history",
       "field_permanently_delete": "Permanently delete field",
-
       "center_list_view": "View centers",
       "center_registration": "Register new center",
       "center_data_update": "Update center info",
       "center_soft_delete": "Temporarily delete center",
       "center_action_history": "Center activity history",
       "center_permanently_delete": "Permanently delete center",
-
       "category_list_view": "View categories",
       "category_registration": "Register new category",
       "category_data_update": "Update category",
       "category_soft_delete": "Temporarily delete category",
       "category_action_history": "Category activity history",
       "category_permanently_delete": "Permanently delete category",
-
       "client_registration": "Register new client",
       "saving_acc_registration": "Register savings account",
       "loan_acc_registration": "Register loan account",
       "saving_acc_creator_selection": "Assign officer for savings account",
       "loan_acc_creator_selection": "Assign officer for loan account",
-
       "pending_client_registration_list_view": "View pending client registrations",
       "pending_client_registration_list_view_as_admin": "View pending client registrations (Admin)",
       "pending_client_registration_update": "Update pending client",
       "pending_client_registration_permanently_delete": "Permanently delete pending client",
       "pending_client_registration_approval": "Approve client registration",
-
       "pending_saving_acc_list_view": "View pending savings accounts",
       "pending_saving_acc_list_view_as_admin": "View pending savings accounts (Admin)",
       "pending_saving_acc_update": "Update pending savings account",
       "pending_saving_acc_permanently_delete": "Permanently delete pending savings account",
       "pending_saving_acc_approval": "Approve savings account",
-
       "pending_loan_acc_list_view": "View pending loan accounts",
       "pending_loan_acc_list_view_as_admin": "View pending loan accounts (Admin)",
       "pending_loan_acc_update": "Update pending loan account",
       "pending_loan_acc_permanently_delete": "Permanently delete pending loan account",
       "pending_loan_acc_approval": "Approve loan account",
-
       "pending_loan_view": "View pending loan",
       "pending_loan_view_as_admin": "View pending loan (Admin)",
       "pending_loan_update": "Update pending loan",
       "pending_loan_permanently_delete": "Permanently delete pending loan",
       "pending_loan_approval": "Approve loan",
-
       "regular_saving_collection_list_view": "View savings collections",
       "regular_saving_collection_list_view_as_admin": "View savings collections (Admin)",
       "permission_to_do_saving_collection": "Collect savings",
       "regular_saving_collection_update": "Update savings collection",
       "regular_saving_collection_approval": "Approve savings collection",
       "regular_saving_collection_permanently_delete": "Permanently delete savings collection",
-
       "pending_saving_collection_approval": "Approve pending savings collection",
       "pending_saving_collection_list_view": "View pending savings collections",
       "pending_saving_collection_list_view_as_admin": "View pending savings collections (Admin)",
       "pending_saving_collection_permanently_delete": "Permanently delete pending savings collection",
       "pending_saving_collection_update": "Update pending savings collection",
-
       "pending_saving_withdrawal_approval": "Approve savings withdrawal",
       "pending_saving_withdrawal_delete": "Delete savings withdrawal",
       "pending_saving_withdrawal_list_view": "View pending savings withdrawals",
       "pending_saving_withdrawal_list_view_as_admin": "View pending savings withdrawals (Admin)",
       "pending_saving_withdrawal_update": "Update pending savings withdrawal",
       "permission_to_make_saving_withdrawal": "Make savings withdrawal",
-
       "regular_loan_collection_list_view": "View loan collections",
       "regular_loan_collection_list_view_as_admin": "View loan collections (Admin)",
       "permission_to_do_loan_collection": "Collect loan payment",
@@ -859,27 +926,23 @@
       "regular_loan_collection_update": "Update loan collection",
       "regular_loan_collection_approval": "Approve loan collection",
       "regular_loan_collection_permanently_delete": "Permanently delete loan collection",
-
       "pending_loan_collection_approval": "Approve pending loan collection",
       "pending_loan_collection_list_view": "View pending loan collections",
       "pending_loan_collection_list_view_as_admin": "View pending loan collections (Admin)",
       "pending_loan_collection_permanently_delete": "Permanently delete pending loan collection",
       "pending_loan_collection_update": "Update pending loan collection",
-
       "pending_loan_saving_withdrawal_approval": "Approve loan savings withdrawal",
       "pending_loan_saving_withdrawal_delete": "Delete loan savings withdrawal",
       "pending_loan_saving_withdrawal_list_view": "View loan savings withdrawal requests",
       "pending_loan_saving_withdrawal_list_view_as_admin": "View loan savings withdrawal requests (Admin)",
       "pending_loan_saving_withdrawal_update": "Update loan savings withdrawal",
       "permission_to_make_loan_saving_withdrawal": "Make loan savings withdrawal",
-
       "make_saving_transactions": "Make savings transaction",
       "make_loan_transactions": "Make loan transaction",
       "pending_client_transactions_list_view": "View pending client transactions",
       "pending_client_transactions_list_view_as_admin": "View pending client transactions (Admin)",
       "pending_client_transactions_approval": "Approve pending client transaction",
       "pending_client_transactions_delete": "Delete pending client transaction",
-
       "account_list_view": "View accounts",
       "account_transaction_list_view": "View transactions",
       "account_registration": "Register new account",
@@ -889,43 +952,40 @@
       "account_permanently_delete": "Permanently delete account",
       "account_transfer_list_view": "View account transfers",
       "account_transfer_registration": "Transfer between accounts",
-
       "income_list_view": "View income",
       "income_registration": "Record new income",
       "income_data_update": "Update income",
       "income_soft_delete": "Temporarily delete income",
       "income_action_history": "Income activity history",
       "income_permanently_delete": "Permanently delete income",
-
       "income_category_list_view": "View income categories",
       "income_category_registration": "Add new income category",
       "income_category_data_update": "Update income category",
       "income_category_soft_delete": "Temporarily delete income category",
       "income_category_permanently_delete": "Permanently delete income category",
-
       "expense_list_view": "View expenses",
       "expense_registration": "Record new expense",
       "expense_data_update": "Update expense",
       "expense_soft_delete": "Temporarily delete expense",
       "expense_action_history": "Expense activity history",
       "expense_permanently_delete": "Permanently delete expense",
-
       "account_withdrawal_list_view": "View withdrawals",
       "account_withdrawal_registration": "Make withdrawal",
       "account_withdrawal_data_update": "Update withdrawal",
       "account_withdrawal_soft_delete": "Temporarily delete withdrawal",
       "account_withdrawal_action_history": "Withdrawal activity history",
       "account_withdrawal_permanently_delete": "Permanently delete withdrawal",
-
       "expense_category_list_view": "View expense categories",
       "expense_category_registration": "Add new expense category",
       "expense_category_data_update": "Update expense category",
       "expense_category_soft_delete": "Temporarily delete expense category",
       "expense_category_permanently_delete": "Permanently delete expense category",
-
       "staff_list_view": "View staff",
       "staff_permission_view": "View staff permissions",
       "staff_permission_update": "Update staff permissions",
+      "recycle_bin_view": "View recycle bin",
+      "recycle_bin_restore": "Restore recycle bin records",
+      "recycle_bin_force_delete": "Permanently delete recycle bin records",
       "staff_registration": "Register new staff",
       "staff_data_update": "Update staff details",
       "staff_status_update": "Update staff status",
@@ -933,28 +993,23 @@
       "staff_action_history": "Staff activity history",
       "staff_reset_password": "Reset staff password",
       "staff_permanently_delete": "Permanently delete staff",
-
       "role_list_view": "View roles",
       "role_registration": "Register new role",
       "role_update": "Update role",
       "role_delete": "Delete role",
-
       "app_settings": "App settings",
       "approvals_config": "Approval settings",
       "categories_config": "Category settings",
-
       "audit_report_meta_list_view": "View audit templates",
       "audit_report_meta_create": "Create audit template",
       "audit_report_meta_update": "Update audit template",
       "audit_report_meta_soft_delete": "Temporarily delete audit template",
       "audit_report_meta_action_history": "Audit template history",
       "audit_report_meta_permanently_delete": "Permanently delete audit template",
-
       "cooperative_audit_report_print": "Print audit report",
       "cooperative_audit_report_update": "Update audit report",
       "cooperative_audit_report_view": "View audit report",
       "internal_audit_report_view": "View internal audit report",
-
       "client_register_account_delete": "Temporarily delete all client accounts",
       "client_register_account_permanently_delete": "Permanently delete all client accounts",
       "client_register_account_center_update": "Update center for all accounts",
@@ -962,7 +1017,6 @@
       "client_register_account_acc_no_update": "Update account number (all accounts)",
       "client_register_account_update": "Update client registration",
       "client_register_account_action_history": "Client registration activity history",
-
       "client_loan_account_delete": "Temporarily delete loan account",
       "client_loan_account_permanently_delete": "Permanently delete loan account",
       "client_loan_account_category_update": "Update loan category (all transactions)",
@@ -975,7 +1029,6 @@
       "client_loan_account_withdrawal_action_history": "Loan withdrawal history",
       "client_loan_account_withdrawal_update": "Update loan withdrawal",
       "client_loan_account_withdrawal_permanently_delete": "Permanently delete loan withdrawal",
-
       "client_saving_account_delete": "Temporarily delete savings account",
       "client_saving_account_permanently_delete": "Permanently delete savings account",
       "client_saving_account_category_update": "Update savings category (all transactions)",
@@ -988,25 +1041,21 @@
       "client_saving_account_withdrawal_action_history": "Savings withdrawal history",
       "client_saving_account_withdrawal_update": "Update savings withdrawal",
       "client_saving_account_withdrawal_permanently_delete": "Permanently delete savings withdrawal",
-
       "pending_req_to_delete_loan_acc_approval": "Approve loan account deletion request",
       "pending_req_to_delete_loan_acc_delete": "Delete loan account request",
       "pending_req_to_delete_loan_acc_list_view": "View loan account deletion requests",
       "pending_req_to_delete_loan_acc_list_view_as_admin": "View loan account deletion requests (Admin)",
       "pending_req_to_delete_loan_acc_update": "Update loan deletion request",
-
       "pending_req_to_delete_saving_acc_approval": "Approve savings account deletion request",
       "pending_req_to_delete_saving_acc_delete": "Delete savings account request",
       "pending_req_to_delete_saving_acc_list_view": "View savings account deletion requests",
       "pending_req_to_delete_saving_acc_list_view_as_admin": "View savings account deletion requests (Admin)",
       "pending_req_to_delete_saving_acc_update": "Update savings deletion request",
-
       "client_loan_account_check": "Check client loan account",
       "client_loan_account_closing": "Close client loan account",
       "client_loan_account_saving_withdrawal_permanently_delete": "Permanently delete loan savings withdrawal",
       "client_loan_account_saving_withdrawal_update": "Update loan savings withdrawal",
       "client_loan_account_saving_withdrawal_action_history": "Loan savings withdrawal history",
-
       "client_saving_account_check": "Check client savings account",
       "client_saving_account_closing": "Close client savings account",
       "registered_client_account_list_view": "View all registered clients",

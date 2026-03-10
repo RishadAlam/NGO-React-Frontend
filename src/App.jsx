@@ -51,6 +51,7 @@ const ClientRegisterAccount = lazy(() => import('./pages/clientAccount/ClientReg
 const PendingWithdrawal = lazy(() => import('./pages/pendingWithdrawals/PendingWithdrawal'))
 const PendingClosing = lazy(() => import('./pages/pendingClosings/PendingClosing'))
 const Search = lazy(() => import('./pages/searchAccount/SearchAccount'))
+const RecycleBin = lazy(() => import('./pages/recycleBin/RecycleBin'))
 const AuditReportMeta = lazy(() => import('./pages/audit/AuditReportMeta'))
 const AuditReport = lazy(() => import('./pages/audit/AuditReport'))
 const InternalAuditReport = lazy(() => import('./pages/audit/InternalAuditReport'))
@@ -693,6 +694,25 @@ export default function App() {
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <Suspense fallback={<Loader />}>
                       <Category />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+            <Route
+              path="recycle-bin"
+              element={
+                <RequirePermissions
+                  allowedPermissions={['recycle_bin_view']}
+                  pageTitle="menu.label.recycle_bin"
+                />
+              }>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <RecycleBin />
                     </Suspense>
                   </ErrorBoundary>
                 }

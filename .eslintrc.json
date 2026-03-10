@@ -16,6 +16,12 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
+  "ignorePatterns": ["build/", "dist/", "node_modules/"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/react-in-jsx-scope": "off",

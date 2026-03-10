@@ -521,6 +521,13 @@ export const mainMenu = (t) => {
             view: checkPermission('categories_config', permissions)
           }
         ]
+      },
+      {
+        id: 9,
+        label: t('menu.label.recycle_bin'),
+        path: '/recycle-bin',
+        icon: 'Trash',
+        view: checkPermission('recycle_bin_view', permissions)
       }
     ]
   }

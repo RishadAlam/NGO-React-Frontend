@@ -3114,3 +3114,52 @@ export const transactionStatementsTableColumn = (
     Cell: ({ value }) => (value ? value.name : '')
   }
 ]
+
+export const RecycleBinTableColumns = (
+  t,
+  windowWidth,
+  actionBtnGroup,
+  isActionHide,
+  deletedByCell,
+  metadataCell
+) => [
+  {
+    Header: '#',
+    accessor: 'id',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ row }) => tsNumbers((row.index + 1).toString().padStart(2, '0'))
+  },
+  {
+    Header: t('recycle_bin.module'),
+    accessor: 'type_label'
+  },
+  {
+    Header: t('recycle_bin.name'),
+    accessor: 'display_name'
+  },
+  {
+    Header: t('recycle_bin.deleted_at'),
+    accessor: 'deleted_at',
+    Cell: ({ value }) => (value ? tsNumbers(dateFormat(value, 'dd/MM/yyyy hh:mm a')) : '-')
+  },
+  {
+    Header: t('recycle_bin.deleted_by'),
+    accessor: 'deleted_by',
+    show: windowWidth < 576 ? false : true,
+    Cell: ({ value }) => deletedByCell(value)
+  },
+  {
+    Header: t('recycle_bin.metadata'),
+    accessor: 'metadata',
+    show: windowWidth < 768 ? false : true,
+    Cell: ({ value }) => metadataCell(value)
+  },
+  {
+    Header: t('common.action'),
+    accessor: 'action',
+    show: isActionHide ? false : true,
+    disable: isActionHide,
+    isActionHide: isActionHide,
+    Cell: ({ row }) => actionBtnGroup(row.original)
+  }
+]
