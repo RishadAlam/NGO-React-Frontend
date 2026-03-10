@@ -3,13 +3,9 @@
 .internal-audit-report {
   --audit-card-bg: var(--soft-bg);
   --audit-border: var(--border-color);
-  --audit-soft-bg: rgba(var(--primary-rgb), 0.04);
   --audit-chip-bg: rgba(var(--primary-rgb), 0.08);
-  --audit-chip-border: rgba(var(--primary-rgb), 0.22);
-  --audit-table-head-bg: rgba(var(--main-bg-rgb), 0.64);
-  --audit-table-group-bg: rgba(var(--primary-rgb), 0.1);
-  --audit-row-stripe: rgba(var(--primary-rgb), 0.02);
-  --audit-total-row-bg: rgba(var(--primary-rgb), 0.08);
+  --audit-chip-border: rgba(var(--primary-rgb), 0.24);
+  --audit-head-bg: rgba(var(--primary-rgb), 0.05);
   --audit-profit-color: #067647;
   --audit-loss-color: #b42318;
   --audit-savings-accent: rgba(var(--primary-rgb), 0.45);
@@ -18,63 +14,30 @@
   --audit-remaining-accent: #dc3545;
 
   body.dark & {
-    --audit-soft-bg: rgba(var(--primary-rgb), 0.16);
     --audit-chip-bg: rgba(var(--primary-rgb), 0.18);
     --audit-chip-border: rgba(var(--primary-rgb), 0.35);
-    --audit-table-head-bg: rgba(var(--main-bg-rgb), 0.9);
-    --audit-table-group-bg: rgba(var(--primary-rgb), 0.24);
-    --audit-row-stripe: rgba(var(--primary-rgb), 0.06);
-    --audit-total-row-bg: rgba(var(--primary-rgb), 0.18);
+    --audit-head-bg: rgba(var(--primary-rgb), 0.18);
     --audit-profit-color: #6ee7b7;
     --audit-loss-color: #fda4af;
     --audit-remaining-accent: #fb7185;
   }
 
-  .audit-page-header {
+  .audit-filter-card,
+  .audit-page-header,
+  .audit-overview,
+  .audit-state-card,
+  .report-table,
+  .profit-hero-card {
     border: 1px solid var(--audit-border);
     border-radius: 14px;
-    padding: 16px 18px;
     background: var(--audit-card-bg);
-    border-left: 4px solid rgba(var(--primary-rgb), 0.7);
-
-    .page-title {
-      font-size: 23px;
-      font-weight: 700;
-      color: $main-color;
-      line-height: 1.2;
-    }
-
-    .page-subtitle {
-      font-size: 13px;
-      color: $soft-color;
-    }
-  }
-
-  .audit-layout {
-    display: grid;
-    grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
-    gap: 14px;
-    align-items: start;
-  }
-
-  .audit-side {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: sticky;
-    top: 74px;
-    align-self: start;
-  }
-
-  .audit-main {
-    min-width: 0;
+    box-shadow: 0 3px 12px rgba(16, 24, 40, 0.03);
   }
 
   .audit-filter-card {
-    border: 1px solid var(--audit-border);
-    border-radius: 14px;
-    box-shadow: 0 3px 10px rgba(16, 24, 40, 0.03);
-    background: var(--audit-card-bg);
+    .card-body {
+      padding: 14px;
+    }
 
     .filter-title {
       font-size: 15px;
@@ -82,9 +45,28 @@
       color: $main-color;
     }
 
-    .filter-actions {
-      button {
+    .audit-filter-form {
+      .filter-actions {
+        margin-top: 2px;
+      }
+
+      .filter-actions button {
         min-height: 38px;
+        min-width: 130px;
+        font-weight: 600;
+      }
+
+      .filter-actions .btn.btn-outline-secondary {
+        color: $main-color !important;
+        border: none !important;
+        background: rgba(var(--main-bg-rgb), 0.55) !important;
+      }
+
+      .filter-actions .btn.btn-outline-secondary:hover,
+      .filter-actions .btn.btn-outline-secondary:focus {
+        color: $main-color !important;
+        border: none !important;
+        background: rgba(var(--primary-rgb), 0.16) !important;
       }
     }
 
@@ -95,8 +77,7 @@
       .title {
         color: $soft-color;
         font-size: 12px;
-        letter-spacing: 0.01em;
-        font-weight: 600;
+        font-weight: 700;
       }
 
       .chips {
@@ -106,16 +87,13 @@
       }
 
       .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
         padding: 6px 10px;
-        border-radius: 999px;
         border: 1px solid var(--audit-chip-border);
         background: var(--audit-chip-bg);
+        border-radius: 999px;
         color: $main-color;
         font-size: 12px;
-        line-height: 1.1;
+        line-height: 1.2;
       }
 
       .empty {
@@ -125,40 +103,31 @@
     }
   }
 
-  .audit-side-summary {
-    border: 1px solid var(--audit-border);
-    border-radius: 14px;
-    background: var(--audit-card-bg);
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .audit-page-header {
+    padding: 14px 16px;
+    border-left: 4px solid rgba(var(--primary-rgb), 0.7);
 
-  .side-summary-head {
-    .heading {
-      font-size: 15px;
+    .page-title {
+      font-size: 22px;
+      line-height: 1.2;
       font-weight: 700;
       color: $main-color;
     }
 
-    .subheading {
-      font-size: 12px;
+    .page-subtitle {
+      font-size: 13px;
       color: $soft-color;
-      line-height: 1.3;
     }
   }
 
-  .side-metrics {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .audit-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .audit-overview {
-    border: 1px solid var(--audit-border);
-    border-radius: 14px;
     padding: 14px;
-    background: var(--audit-card-bg);
 
     .overview-head {
       margin-bottom: 12px;
@@ -174,150 +143,216 @@
         color: $soft-color;
       }
     }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 14px;
-    }
   }
 
   .audit-metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 12px;
   }
 
   .audit-metric-card {
     position: relative;
-    border: 1px solid var(--audit-border);
-    border-radius: 12px;
-    background: var(--surface-bg);
-    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    padding: 14px;
+    overflow: hidden;
+    min-height: 150px;
+    color: #fff;
+    background: linear-gradient(140deg, #1d4ed8 0%, #0f172a 100%);
+    box-shadow:
+      0 12px 24px rgba(2, 6, 23, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
 
     &::before {
       content: '';
       position: absolute;
-      left: 12px;
-      top: 12px;
-      width: 3px;
-      height: calc(100% - 24px);
-      background: rgba(var(--primary-rgb), 0.5);
-      border-radius: 999px;
+      width: 160px;
+      height: 160px;
+      right: -44px;
+      top: -74px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
     }
 
-    &.metric-savings::before {
-      background: var(--audit-savings-accent);
+    &::after {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      left: -48px;
+      bottom: -72px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
     }
 
-    &.metric-loan-savings::before {
-      background: var(--audit-loan-savings-accent);
+    &.metric-savings {
+      background: linear-gradient(138deg, #0f766e 0%, #0f172a 100%);
     }
 
-    &.metric-combined::before {
-      background: var(--audit-combined-accent);
+    &.metric-loan-savings {
+      background: linear-gradient(138deg, #1d4ed8 0%, #0f172a 100%);
     }
 
-    &.metric-remaining::before {
-      background: var(--audit-remaining-accent);
+    &.metric-combined {
+      background: linear-gradient(138deg, #7c3aed 0%, #0f172a 100%);
+    }
+
+    &.metric-remaining {
+      background: linear-gradient(138deg, #b42318 0%, #3f0d12 100%);
+    }
+
+    .metric-card-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
     }
 
     .label {
-      color: $soft-color;
-      margin-bottom: 3px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      max-width: calc(100% - 42px);
+    }
+
+    .metric-chip {
+      width: 30px;
+      height: 22px;
+      border-radius: 6px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: linear-gradient(
+        140deg,
+        rgba(255, 255, 255, 0.72) 0%,
+        rgba(255, 255, 255, 0.28) 100%
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .metric-id {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 8px;
+      color: rgba(255, 255, 255, 0.78);
       font-size: 12px;
-      font-weight: 600;
-      margin-left: 10px;
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
     }
 
     h4 {
-      font-size: 18px;
-      font-weight: 700;
-      color: $main-color;
-      margin-bottom: 0;
-      margin-left: 10px;
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.18;
+      font-weight: 800;
+      color: #fff;
+      text-wrap: balance;
     }
   }
 
+  .audit-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .audit-profit-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+
   .profit-hero-card {
-    border: 1px solid var(--audit-chip-border);
-    border-radius: 12px;
-    background: linear-gradient(
-      150deg,
-      rgba(var(--primary-rgb), 0.14) 0%,
-      rgba(var(--primary-rgb), 0.04) 100%
-    );
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100%;
+    border-color: var(--audit-chip-border);
+    background: linear-gradient(
+      155deg,
+      rgba(var(--primary-rgb), 0.15) 0%,
+      rgba(var(--primary-rgb), 0.05) 100%
+    );
 
     .hero-label {
       font-size: 12px;
       color: $soft-color;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .hero-value {
       font-size: 30px;
+      line-height: 1.12;
       font-weight: 800;
-      line-height: 1.15;
-
-      &.is-loss {
-        color: var(--audit-loss-color);
-      }
 
       &.is-profit {
         color: var(--audit-profit-color);
+      }
+
+      &.is-loss {
+        color: var(--audit-loss-color);
       }
     }
 
     .hero-status {
       display: inline-flex;
-      align-self: flex-start;
-      padding: 4px 10px;
+      align-items: center;
       border-radius: 999px;
+      padding: 4px 10px;
       font-size: 11px;
+      letter-spacing: 0.04em;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
       margin-bottom: 10px;
-
-      &.is-loss {
-        background: rgba(180, 35, 24, 0.14);
-        color: var(--audit-loss-color);
-      }
 
       &.is-profit {
         background: rgba(6, 118, 71, 0.14);
         color: var(--audit-profit-color);
+      }
+
+      &.is-loss {
+        background: rgba(180, 35, 24, 0.14);
+        color: var(--audit-loss-color);
       }
     }
 
     .hero-formula {
       font-size: 12px;
       color: $soft-color;
-      line-height: 1.3;
+      line-height: 1.35;
+    }
+
+    .profit-audit-values {
+      font-size: 12px;
+      color: $main-color;
+
+      span {
+        color: $soft-color;
+      }
+
+      strong {
+        color: $main-color;
+      }
     }
   }
 
   .report-table {
-    border: 1px solid var(--audit-border);
-    border-radius: 14px;
-    box-shadow: 0 3px 10px rgba(16, 24, 40, 0.03);
-    background: var(--audit-card-bg);
-
     .card-header {
+      padding: 12px 14px;
       border-bottom: 1px solid var(--audit-border);
       background: var(--audit-card-bg);
-      padding: 12px 14px;
 
       .section-head-row {
         display: flex;
-        justify-content: space-between;
-        gap: 12px;
         align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
       }
 
       .section-pill {
@@ -340,158 +375,166 @@
       }
 
       .subheading {
-        color: $soft-color;
         font-size: 12px;
-        line-height: 1.3;
+        color: $soft-color;
+        line-height: 1.35;
       }
-    }
-
-    .table {
-      margin-bottom: 0;
-      min-width: 680px;
     }
 
     .table-responsive {
       min-height: 0 !important;
       max-height: none;
       overflow-x: auto;
-      overflow-y: visible;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
+      margin: 0;
     }
 
-    .table-compact {
-      min-width: 100%;
+    .table {
       width: 100%;
-      table-layout: fixed;
-
-      th,
-      td {
-        white-space: normal;
-        word-break: break-word;
-        line-height: 1.3;
-      }
+      min-width: 0;
+      margin-bottom: 0;
     }
 
     .table-loan-summary {
-      min-width: 1380px;
+      min-width: 1320px;
     }
 
     .table-breakdown {
       min-width: 720px;
     }
 
-    th {
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      background: var(--audit-table-head-bg);
-      color: $soft-color;
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
+    .table-compact {
+      table-layout: fixed;
 
-    thead tr:first-child th {
-      top: 0;
-      z-index: 3;
-      background: var(--audit-table-group-bg);
-      border-bottom: 1px solid var(--audit-border);
-    }
-
-    thead tr:nth-child(2) th {
-      top: 36px;
-      z-index: 2;
-      background: var(--audit-table-head-bg);
-    }
-
-    .group-header {
-      text-align: center;
+      th,
+      td {
+        white-space: normal;
+        word-break: break-word;
+      }
     }
 
     th,
     td {
-      vertical-align: middle;
       font-size: 13px;
       padding-top: 9px;
       padding-bottom: 9px;
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--audit-head-bg);
+      color: $soft-color;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     tbody tr:nth-child(even):not(.table-total-row) td {
-      background: var(--audit-row-stripe);
+      background: rgba(var(--primary-rgb), 0.02);
     }
 
     .table-total-row td {
-      font-weight: 600;
       font-size: 12px;
-      padding-top: 6px;
-      padding-bottom: 6px;
-      background-color: var(--audit-total-row-bg);
+      font-weight: 700;
+      background: rgba(var(--primary-rgb), 0.08);
+    }
+  }
+
+  .audit-summary-table {
+    .table-responsive {
+      overflow-x: hidden;
     }
   }
 
   .profit-breakdown-card {
     .breakdown-title {
-      font-size: 12px;
       color: $soft-color;
-      letter-spacing: 0.01em;
+      font-size: 12px;
       font-weight: 700;
     }
   }
 
   @media (max-width: 1199px) {
-    .audit-layout {
+    .audit-profit-grid {
       grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .audit-side {
-      position: static;
-      top: auto;
-    }
-
-    .side-metrics {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    .profit-hero-card {
-      min-height: unset;
     }
   }
 
   @media (max-width: 991px) {
+    .audit-summary-grid {
+      grid-template-columns: 1fr;
+    }
+
     .audit-page-header {
-      padding: 14px 15px;
-    }
+      padding: 12px 14px;
 
-    .audit-page-header .page-title {
-      font-size: 20px;
-    }
-
-    .audit-page-header .page-subtitle {
-      font-size: 12px;
-    }
-
-    .audit-side-summary {
-      padding: 10px;
-      gap: 10px;
+      .page-title {
+        font-size: 20px;
+      }
     }
 
     .report-table {
       .card-header {
         padding: 10px 12px;
-      }
 
-      .card-header .section-head-row {
-        flex-direction: column;
-        align-items: flex-start;
+        .section-head-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
 
       .table-loan-summary {
-        min-width: 1040px;
+        min-width: 1080px;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .audit-filter-card {
+      .card-body {
+        padding: 12px;
       }
 
+      .audit-filter-form {
+        .filter-actions {
+          flex-direction: column;
+        }
+
+        .filter-actions button {
+          width: 100%;
+        }
+      }
+    }
+
+    .audit-overview {
+      padding: 12px;
+    }
+
+    .audit-metric-card {
+      min-height: 136px;
+
+      h4 {
+        font-size: 18px;
+      }
+
+      .metric-id {
+        margin-top: 12px;
+        font-size: 11px;
+      }
+    }
+
+    .profit-hero-card {
+      padding: 14px;
+
+      .hero-value {
+        font-size: 24px;
+      }
+    }
+
+    .report-table {
       th,
       td {
         font-size: 12px;
@@ -499,94 +542,30 @@
         padding-bottom: 8px;
       }
 
-      th,
-      thead tr:first-child th,
-      thead tr:nth-child(2) th {
-        position: static;
-        top: auto;
-      }
-    }
-  }
-
-  @media (max-width: 767px) {
-    .audit-layout {
-      gap: 10px;
-    }
-
-    .audit-filter-card {
-      .filter-title {
-        font-size: 14px;
-      }
-
-      .filter-actions {
-        flex-direction: column;
-
-        button {
-          width: 100%;
-        }
-      }
-    }
-
-    .audit-side-summary {
-      padding: 9px;
-    }
-
-    .side-metrics {
-      grid-template-columns: 1fr;
-    }
-
-    .audit-metric-card {
-      padding: 10px 12px;
-
-      .label {
-        font-size: 11px;
-      }
-
-      h4 {
-        font-size: 16px;
-      }
-    }
-
-    .profit-hero-card .hero-value {
-      font-size: 22px;
-    }
-
-    .report-table {
-      .card-header .section-pill {
-        font-size: 10px;
-        padding: 3px 8px;
-      }
-
-      .table-compact {
-        min-width: 100%;
-      }
-
       .table-breakdown {
         min-width: 620px;
       }
 
       .table-loan-summary {
-        min-width: 960px;
+        min-width: 980px;
       }
     }
   }
 
   @media (max-width: 575px) {
+    .audit-page-header {
+      padding: 11px 12px;
+    }
+
     .audit-metrics-grid {
       grid-template-columns: 1fr;
     }
 
-    .audit-page-header {
-      padding: 12px 13px;
-    }
-
-    .audit-filter-card .applied-filters .chip {
-      max-width: 100%;
-      word-break: break-word;
-    }
-
-    .profit-hero-card .hero-value {
-      font-size: 24px;
+    .audit-filter-card {
+      .applied-filters .chip {
+        max-width: 100%;
+        word-break: break-word;
+      }
     }
 
     .report-table {
@@ -596,28 +575,6 @@
 
       th {
         font-size: 10px;
-      }
-
-      th,
-      td {
-        padding-top: 7px;
-        padding-bottom: 7px;
-      }
-    }
-  }
-
-  @media (max-width: 420px) {
-    .report-table {
-      .table-compact {
-        min-width: 100%;
-      }
-
-      .table-breakdown {
-        min-width: 580px;
-      }
-
-      .table-loan-summary {
-        min-width: 860px;
       }
     }
   }
