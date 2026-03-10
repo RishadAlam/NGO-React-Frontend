@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { collectionDelete } from '../../helper/collectionActions'
+import { getSavingEstimateDeposit } from '../../helper/collectionEstimate'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
@@ -33,6 +34,7 @@ function SavingCollectionSheetRow({
   isRegular = true
 }) {
   const { t } = useTranslation()
+  const estimatedDeposit = getSavingEstimateDeposit(account, collection)
   const isSingleCollection =
     (account?.saving_collection?.length > 1 && !collectionIndex) ||
     account?.saving_collection?.length === 1 ||
@@ -187,9 +189,14 @@ function SavingCollectionSheetRow({
       </td>
       <td
         className={`${!columnList.deposit ? 'd-none' : ''}`}
-        ref={(e) => setCollectionBG(e, account.payable_deposit, collection?.deposit)}>
+        ref={(e) => setCollectionBG(e, estimatedDeposit, collection?.deposit)}>
         {collection?.deposit && tsNumbers(`$${collection?.deposit}/-`)}
       </td>
+      {columnList.estimate_collection !== undefined && (
+        <td className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+          {tsNumbers(`$${estimatedDeposit}/-`)}
+        </td>
+      )}
       <td className={`${!columnList.creator ? 'd-none' : ''}`}>{collection?.author?.name}</td>
       <td className={`${!columnList.time ? 'd-none' : ''}`}>
         {collection?.created_at &&

@@ -31,6 +31,11 @@ export default function LoanCollectionSheetHead({
         <th className={`${!columnList.loan ? 'd-none' : ''}`}>{t('common.loan')}</th>
         <th className={`${!columnList.interest ? 'd-none' : ''}`}>{t('common.interest')}</th>
         <th className={`${!columnList.total ? 'd-none' : ''}`}>{t('common.total')}</th>
+        {columnList.estimate_collection !== undefined && (
+          <th className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+            {t('common.estimate_collection')}
+          </th>
+        )}
         <th className={`${!columnList.creator ? 'd-none' : ''}`}>{t('common.creator')}</th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}>{t('common.time')}</th>
         {checkPermission(

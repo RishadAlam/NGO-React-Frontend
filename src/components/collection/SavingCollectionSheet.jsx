@@ -20,6 +20,7 @@ function SavingCollectionSheet({ data = [], mutate, loading, isRegular = true })
     installment: true,
     description: windowWidth < 576 ? false : true,
     deposit: true,
+    ...(isRegular ? { estimate_collection: true } : {}),
     creator: windowWidth < 576 ? false : true,
     time: windowWidth < 576 ? false : true,
     action: true

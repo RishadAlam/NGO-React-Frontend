@@ -73,7 +73,7 @@ export default function LoanCollectionSheetBody({
         </>
       ) : (
         <tr className="collection-sheet-empty-row">
-          <td colSpan={15} className="text-center collection-sheet-empty-cell">
+          <td colSpan={99} className="text-center collection-sheet-empty-cell">
             {t('common.No_Records_Found')}
           </td>
         </tr>

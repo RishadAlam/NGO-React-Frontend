@@ -206,6 +206,7 @@
     "view": "view",
     "print": "Print",
     "collection_sheet": "Make Collection Sheet",
+    "estimate_collection": "Estimate Collection",
     "submit": "Submit",
     "account_closing": "Account Closing",
     "total_withdrawn": "Total Withdrawn",

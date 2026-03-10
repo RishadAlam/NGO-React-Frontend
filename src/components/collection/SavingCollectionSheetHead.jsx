@@ -27,6 +27,11 @@ export default function SavingCollectionSheetHead({
         <th className={`${!columnList.installment ? 'd-none' : ''}`}>{t('common.installment')}</th>
         <th className={`${!columnList.description ? 'd-none' : ''}`}>{t('common.description')}</th>
         <th className={`${!columnList.deposit ? 'd-none' : ''}`}>{t('common.deposit')}</th>
+        {columnList.estimate_collection !== undefined && (
+          <th className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+            {t('common.estimate_collection')}
+          </th>
+        )}
         <th className={`${!columnList.creator ? 'd-none' : ''}`}>{t('common.creator')}</th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}>{t('common.time')}</th>
         {checkPermission(

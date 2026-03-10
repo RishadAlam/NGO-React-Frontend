@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import { collectionDelete } from '../../helper/collectionActions'
+import { getLoanEstimateBreakdown } from '../../helper/collectionEstimate'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
@@ -33,6 +34,7 @@ function LoanCollectionSheetRow({
   isRegular = true
 }) {
   const { t } = useTranslation()
+  const estimate = getLoanEstimateBreakdown(account, collection)
   const isSingleCollection =
     (account?.loan_collection?.length > 1 && !collectionIndex) ||
     account?.loan_collection?.length === 1 ||
@@ -216,32 +218,29 @@ function LoanCollectionSheetRow({
       </td>
       <td
         className={`${!columnList.deposit ? 'd-none' : ''}`}
-        ref={(e) => setCollectionBG(e, account.payable_deposit, collection?.deposit)}>
+        ref={(e) => setCollectionBG(e, estimate.deposit, collection?.deposit)}>
         {collection?.deposit && tsNumbers(`$${collection?.deposit}/-`)}
       </td>
       <td
         className={`${!columnList.loan ? 'd-none' : ''}`}
-        ref={(e) => setCollectionBG(e, account.loan_installment, collection?.loan)}>
+        ref={(e) => setCollectionBG(e, estimate.loan, collection?.loan)}>
         {collection?.loan && tsNumbers(`$${collection?.loan}/-`)}
       </td>
       <td
         className={`${!columnList.interest ? 'd-none' : ''}`}
-        ref={(e) => setCollectionBG(e, account.interest_installment, collection?.interest)}>
+        ref={(e) => setCollectionBG(e, estimate.interest, collection?.interest)}>
         {collection?.interest && tsNumbers(`$${collection?.interest}/-`)}
       </td>
       <td
         className={`${!columnList.total ? 'd-none' : ''}`}
-        ref={(e) =>
-          setCollectionBG(
-            e,
-            Number(account?.payable_deposit || 0) +
-              Number(account?.loan_installment || 0) +
-              Number(account?.interest_installment || 0),
-            collection?.total
-          )
-        }>
+        ref={(e) => setCollectionBG(e, estimate.total, collection?.total)}>
         {collection?.total && tsNumbers(`$${collection?.total}/-`)}
       </td>
+      {columnList.estimate_collection !== undefined && (
+        <td className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+          {tsNumbers(`$${estimate.total}/-`)}
+        </td>
+      )}
       <td className={`${!columnList.creator ? 'd-none' : ''}`}>{collection?.author?.name}</td>
       <td className={`${!columnList.time ? 'd-none' : ''}`}>
         {collection?.created_at &&

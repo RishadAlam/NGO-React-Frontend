@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission } from '../../helper/checkPermission'
+import { getLoanEstimateBreakdown } from '../../helper/collectionEstimate'
 import Save from '../../icons/Save'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
@@ -19,7 +20,7 @@ export default function LoanCollectionSheetFooter({
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const { t } = useTranslation()
-  const { depositSum, loanSum, interestSum, totalSum } = useMemo(
+  const { depositSum, loanSum, interestSum, totalSum, estimateSum } = useMemo(
     () => calculateDepositSum(center?.loan_account),
     [center]
   )
@@ -73,6 +74,11 @@ export default function LoanCollectionSheetFooter({
         <th className={`${!columnList.total ? 'd-none' : ''}`}>
           {totalSum && tsNumbers(`$${totalSum}/-`)}
         </th>
+        {columnList.estimate_collection !== undefined && (
+          <th className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+            {estimateSum && tsNumbers(`$${estimateSum}/-`)}
+          </th>
+        )}
         <th className={`${!columnList.creator ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}></th>
         {checkPermission('regular_loan_collection_approval', authPermissions) && (
@@ -101,17 +107,22 @@ function calculateDepositSum(data = []) {
   let loanSum = 0
   let interestSum = 0
   let totalSum = 0
+  let estimateSum = 0
 
   data.forEach((item) => {
-    if (item.loan_collection && item.loan_collection.length > 0) {
-      item.loan_collection.forEach((collection) => {
-        depositSum += Number(collection.deposit || 0)
-        loanSum += Number(collection.loan || 0)
-        interestSum += Number(collection.interest || 0)
-        totalSum += Number(collection.total || 0)
-      })
+    const loanCollections = item?.loan_collection || []
+    if (!loanCollections.length) {
+      estimateSum += getLoanEstimateBreakdown(item).total
+      return
     }
+    loanCollections.forEach((collection) => {
+      depositSum += Number(collection?.deposit || 0)
+      loanSum += Number(collection?.loan || 0)
+      interestSum += Number(collection?.interest || 0)
+      totalSum += Number(collection?.total || 0)
+      estimateSum += getLoanEstimateBreakdown(item, collection).total
+    })
   })
 
-  return { depositSum, loanSum, interestSum, totalSum }
+  return { depositSum, loanSum, interestSum, totalSum, estimateSum }
 }

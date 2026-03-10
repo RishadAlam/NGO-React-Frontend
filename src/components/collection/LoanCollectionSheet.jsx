@@ -23,6 +23,7 @@ function LoanCollectionSheet({ data = [], mutate, loading, isRegular = true }) {
     loan: true,
     interest: true,
     total: true,
+    ...(isRegular ? { estimate_collection: true } : {}),
     creator: windowWidth < 576 ? false : true,
     time: windowWidth < 576 ? false : true,
     action: true

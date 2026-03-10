@@ -73,7 +73,7 @@ export default function SavingCollectionSheetBody({
         </>
       ) : (
         <tr className="collection-sheet-empty-row">
-          <td colSpan={12} className="text-center collection-sheet-empty-cell">
+          <td colSpan={99} className="text-center collection-sheet-empty-cell">
             {t('common.No_Records_Found')}
           </td>
         </tr>

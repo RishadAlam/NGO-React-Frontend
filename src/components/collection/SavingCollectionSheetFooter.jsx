@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission } from '../../helper/checkPermission'
+import { getSavingEstimateDeposit } from '../../helper/collectionEstimate'
 import Save from '../../icons/Save'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
@@ -19,7 +20,10 @@ export default function SavingCollectionSheetFooter({
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const { t } = useTranslation()
-  const depositSum = useMemo(() => calculateDepositSum(center?.saving_account), [center])
+  const { depositSum, estimateSum } = useMemo(
+    () => calculateDepositSum(center?.saving_account),
+    [center]
+  )
 
   const approved = (event) => {
     event.preventDefault()
@@ -61,6 +65,11 @@ export default function SavingCollectionSheetFooter({
         <th className={`${!columnList.deposit ? 'd-none' : ''}`}>
           {depositSum && tsNumbers(`$${depositSum}/-`)}
         </th>
+        {columnList.estimate_collection !== undefined && (
+          <th className={`${!columnList.estimate_collection ? 'd-none' : ''}`}>
+            {estimateSum && tsNumbers(`$${estimateSum}/-`)}
+          </th>
+        )}
         <th className={`${!columnList.creator ? 'd-none' : ''}`}></th>
         <th className={`${!columnList.time ? 'd-none' : ''}`}></th>
         {checkPermission('regular_saving_collection_approval', authPermissions) && (
@@ -86,14 +95,19 @@ export default function SavingCollectionSheetFooter({
 
 function calculateDepositSum(data = []) {
   let depositSum = 0
+  let estimateSum = 0
 
   data.forEach((item) => {
-    if (item.saving_collection && item.saving_collection.length > 0) {
-      item.saving_collection.forEach((collection) => {
-        depositSum += Number(collection?.deposit || 0)
-      })
+    const savingCollections = item?.saving_collection || []
+    if (!savingCollections.length) {
+      estimateSum += getSavingEstimateDeposit(item)
+      return
     }
+    savingCollections.forEach((collection) => {
+      depositSum += Number(collection?.deposit || 0)
+      estimateSum += getSavingEstimateDeposit(item, collection)
+    })
   })
 
-  return depositSum
+  return { depositSum, estimateSum }
 }
