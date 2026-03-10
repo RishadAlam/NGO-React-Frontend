@@ -580,7 +580,7 @@
         "total_loan_savings": "ঋণ সঞ্চয়ের মোট",
         "total_all_savings_combined": "সম্মিলিত সঞ্চয়ের মোট",
         "total_loan_remaining": "বকেয়া ঋণের মোট",
-        "card_number": "কার্ড নং: •••• •••• •••• {{value}}"
+        "card_number": "•••• •••• •••• {{value}}"
       },
       "sections": {
         "savings_summary": "সঞ্চয় সারাংশ",

@@ -591,7 +591,7 @@
         "total_loan_savings": "Loan Savings",
         "total_all_savings_combined": "Combined Savings Total",
         "total_loan_remaining": "Outstanding Loan Balance",
-        "card_number": "Card No: •••• •••• •••• {{value}}"
+        "card_number": "•••• •••• •••• {{value}}"
       },
       "sections": {
         "savings_summary": "Savings Summary",
