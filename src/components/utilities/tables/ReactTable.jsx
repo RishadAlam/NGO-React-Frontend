@@ -3,10 +3,19 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Cookies from 'js-cookie'
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
+import {
+  createTableColumnVisibilityStorageKey,
+  getColumnVisibilitySignature,
+  getColumnVisibilityStateFromHiddenColumns,
+  getDefaultColumnVisibilityState,
+  getHiddenColumnsFromVisibilityState,
+  loadColumnVisibilityState,
+  saveColumnVisibilityState
+} from '../../../helper/tableColumnVisibility'
 import CornerRightDownArrow from '../../../icons/CornerRightDownArrow'
 import CornerRightUpArrow from '../../../icons/CornerRightUpArrow'
 import MoreVertical from '../../../icons/MoreVertical'
@@ -38,6 +47,27 @@ function ReactTable({
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const columnVisibilitySignature = useMemo(() => getColumnVisibilitySignature(columns), [columns])
+  const columnVisibilityStorageKey = useMemo(
+    () =>
+      createTableColumnVisibilityStorageKey(
+        'react_table',
+        rowLinkPath,
+        rowLinkPrefix,
+        columnVisibilitySignature
+      ),
+    [columnVisibilitySignature, rowLinkPath, rowLinkPrefix]
+  )
+  const initialHiddenColumns = useMemo(() => {
+    const defaultVisibilityState = getDefaultColumnVisibilityState(columns)
+    const visibilityState = loadColumnVisibilityState(
+      columnVisibilityStorageKey,
+      defaultVisibilityState
+    )
+
+    return getHiddenColumnsFromVisibilityState(columns, visibilityState)
+  }, [columnVisibilityStorageKey, columns])
+  const [isVisibilityHydrated, setIsVisibilityHydrated] = useState(false)
   const setFooterColSpan = (totalCol, colIndex, colSpan = null, isAfterSpan = false) => {
     return colSpan ? colSpan : isAfterSpan ? totalCol - colIndex : 1
   }
@@ -59,15 +89,14 @@ function ReactTable({
     setPageSize,
     gotoPage,
     pageCount,
+    setHiddenColumns,
     allColumns
   } = useTable(
     {
       columns,
       data,
       initialState: {
-        hiddenColumns: columns.map((column) => {
-          if (column.show === false) return column.accessor || column.id
-        })
+        hiddenColumns: initialHiddenColumns
       },
       autoResetPage: false,
       autoResetFilters: false,
@@ -81,8 +110,26 @@ function ReactTable({
     usePagination,
     useResizeColumns
   )
+  const { globalFilter, pageIndex, pageSize, hiddenColumns = [] } = state
+  const currentColumnVisibilityState = useMemo(
+    () => getColumnVisibilityStateFromHiddenColumns(allColumns, hiddenColumns),
+    [allColumns, hiddenColumns]
+  )
 
-  const { globalFilter, pageIndex, pageSize } = state
+  useEffect(() => {
+    setIsVisibilityHydrated(false)
+  }, [columnVisibilityStorageKey])
+
+  useEffect(() => {
+    if (!allColumns.length) return
+    setHiddenColumns(initialHiddenColumns)
+    setIsVisibilityHydrated(true)
+  }, [allColumns.length, initialHiddenColumns, setHiddenColumns])
+
+  useEffect(() => {
+    if (!isVisibilityHydrated) return
+    saveColumnVisibilityState(columnVisibilityStorageKey, currentColumnVisibilityState)
+  }, [columnVisibilityStorageKey, currentColumnVisibilityState, isVisibilityHydrated])
   const visibleColumnCount = headerGroups?.[0]?.headers?.length || allColumns.length || 1
   const pageRows = useMemo(() => page, [page])
   const { bodyRef, isVirtualized, visibleRows, topPadding, bottomPadding } = useVirtualRows(

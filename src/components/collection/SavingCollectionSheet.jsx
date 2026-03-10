@@ -1,7 +1,12 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import { checkPermission } from '../../helper/checkPermission'
+import {
+  createTableColumnVisibilityStorageKey,
+  loadColumnVisibilityState,
+  saveColumnVisibilityState
+} from '../../helper/tableColumnVisibility'
 import '../../pages/staffs/staffs.scss'
 import './collectionSheet.scss'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
@@ -11,20 +16,39 @@ import SavingCollectionTable from './SavingCollectionTable'
 function SavingCollectionSheet({ data = [], mutate, loading, isRegular = true }) {
   const { permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
-  const [columnList, setColumnList] = useState({
-    '#': windowWidth < 576 ? false : true,
-    image: windowWidth < 576 ? false : true,
-    name: windowWidth < 576 ? false : true,
-    acc_no: true,
-    account: true,
-    installment: true,
-    description: windowWidth < 576 ? false : true,
-    deposit: true,
-    ...(isRegular ? { estimate_collection: true } : {}),
-    creator: windowWidth < 576 ? false : true,
-    time: windowWidth < 576 ? false : true,
-    action: true
-  })
+  const defaultColumnList = useMemo(
+    () => ({
+      '#': windowWidth < 576 ? false : true,
+      image: windowWidth < 576 ? false : true,
+      name: windowWidth < 576 ? false : true,
+      acc_no: true,
+      account: true,
+      installment: true,
+      description: windowWidth < 576 ? false : true,
+      deposit: true,
+      ...(isRegular ? { estimate_collection: true } : {}),
+      creator: windowWidth < 576 ? false : true,
+      time: windowWidth < 576 ? false : true,
+      action: true
+    }),
+    [isRegular, windowWidth]
+  )
+  const columnVisibilityStorageKey = useMemo(
+    () =>
+      createTableColumnVisibilityStorageKey(
+        'collection_sheet',
+        'saving',
+        isRegular ? 'regular' : 'pending'
+      ),
+    [isRegular]
+  )
+  const [columnList, setColumnList] = useState(() =>
+    loadColumnVisibilityState(columnVisibilityStorageKey, defaultColumnList)
+  )
+
+  useEffect(() => {
+    setColumnList((prevColumns) => ({ ...defaultColumnList, ...prevColumns }))
+  }, [defaultColumnList])
 
   useEffect(() => {
     if (
@@ -33,10 +57,16 @@ function SavingCollectionSheet({ data = [], mutate, loading, isRegular = true })
         authPermissions
       )
     ) {
-      setColumnList({ ...columnList, approval: true })
+      setColumnList((prevColumns) => ({
+        ...prevColumns,
+        approval: prevColumns.approval ?? true
+      }))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [authPermissions, isRegular])
+
+  useEffect(() => {
+    saveColumnVisibilityState(columnVisibilityStorageKey, columnList)
+  }, [columnList, columnVisibilityStorageKey])
 
   return (
     <>
