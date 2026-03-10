@@ -91,6 +91,7 @@ describe('RecycleBin Page', () => {
   beforeEach(async () => {
     vi.clearAllMocks()
     window.localStorage.clear()
+    window.sessionStorage.clear()
 
     const { useAuthDataValue } = await import('../../atoms/authAtoms')
     const { useLoadingState } = await import('../../atoms/loaderAtoms')
@@ -196,6 +197,88 @@ describe('RecycleBin Page', () => {
     expect(listButton.className.includes('btn-primary')).toBe(true)
     fireEvent.click(gridButton)
     expect(window.localStorage.getItem('recycle_bin_view_mode')).toBe('grid')
+  })
+
+  it('restores module state from session storage after remount', () => {
+    window.sessionStorage.setItem(
+      'recycle_bin_browser_state',
+      JSON.stringify({
+        searchInput: '',
+        deletedFrom: '',
+        deletedTo: '',
+        moduleType: 'field',
+        subFolderFilters: {},
+        perPageLimit: 24,
+        visibleCount: 24
+      })
+    )
+
+    render(
+      <MemoryRouter>
+        <RecycleBin />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText('Field 01')).toBeInTheDocument()
+  })
+
+  it('restores load more visible count from session storage', () => {
+    const generatedItems = Array.from({ length: 30 }, (_, index) => {
+      const recordId = index + 1
+      return {
+        id: recordId,
+        type: 'field',
+        type_label: 'Field',
+        display_name: `Field ${recordId}`,
+        deleted_at: `2026-03-${String((index % 28) + 1).padStart(2, '0')}T00:00:00Z`,
+        deleted_by: { id: 1, name: 'Admin' },
+        metadata: {},
+        restorable: true,
+        force_deletable: true
+      }
+    })
+
+    swrState.foldersData = {
+      data: {
+        folders: [
+          {
+            type: 'field',
+            label: 'Field',
+            total_items: 30,
+            last_deleted_at: '2026-03-10T00:00:00Z',
+            last_deleted_at_unix: 1773100800
+          }
+        ]
+      }
+    }
+    swrState.itemsData = {
+      data: {
+        module: { value: 'field', label: 'Field' },
+        items: generatedItems
+      }
+    }
+
+    window.sessionStorage.setItem(
+      'recycle_bin_browser_state',
+      JSON.stringify({
+        searchInput: '',
+        deletedFrom: '',
+        deletedTo: '',
+        moduleType: 'field',
+        subFolderFilters: {},
+        perPageLimit: 24,
+        visibleCount: 30
+      })
+    )
+
+    render(
+      <MemoryRouter>
+        <RecycleBin />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText('Field 30')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /recycle_bin.load_more/i })).not.toBeInTheDocument()
   })
 
   it('shows total records and load more based on per-page limit', () => {

@@ -437,10 +437,26 @@
     color: var(--rb-title);
   }
 
-  .recycle-bin-record-row__name-main span:last-child {
+  .recycle-bin-record-row__name-main > :last-child {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .recycle-bin-item-link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    line-height: inherit;
+  }
+
+  .recycle-bin-item-link:hover,
+  .recycle-bin-item-link:focus-visible {
+    color: var(--rb-link);
+    text-decoration: underline;
   }
 
   .recycle-bin-item-image {

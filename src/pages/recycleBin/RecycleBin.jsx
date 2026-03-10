@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -25,6 +25,7 @@ import './recycleBin.scss'
 const EMPTY_ARRAY = []
 const UNKNOWN_FOLDER_KEY = '__unknown__'
 const VIEW_MODE_STORAGE_KEY = 'recycle_bin_view_mode'
+const BROWSER_STATE_STORAGE_KEY = 'recycle_bin_browser_state'
 const DEFAULT_VIEW_MODE = 'grid'
 const PER_PAGE_OPTIONS = [12, 24, 50, 100]
 const DEFAULT_PER_PAGE = 24
@@ -54,6 +55,11 @@ const MODULE_FOLDER_ORDER = [
   'staff',
   'audit_report_meta'
 ]
+const ITEM_MAIN_PAGE_ROUTES = {
+  client_registration: (id) => `/client-register/${id}`,
+  saving_account: (id) => `/saving-account/${id}`,
+  loan_account: (id) => `/loan-account/${id}`
+}
 const EN_TO_BN_DIGITS = {
   0: '০',
   1: '১',
@@ -81,15 +87,40 @@ const BN_TO_EN_DIGITS = {
   '৳': '$'
 }
 
+const readStoredBrowserState = () => {
+  if (typeof window === 'undefined') return null
+
+  try {
+    const rawState = window.sessionStorage.getItem(BROWSER_STATE_STORAGE_KEY)
+    if (!rawState) return null
+
+    const parsedState = JSON.parse(rawState)
+    if (!parsedState || typeof parsedState !== 'object' || Array.isArray(parsedState)) {
+      return null
+    }
+
+    return parsedState
+  } catch (error) {
+    return null
+  }
+}
+
 export default function RecycleBin() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const { accessToken, permissions: authPermissions = EMPTY_ARRAY } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
-  const [searchInput, setSearchInput] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [deletedFrom, setDeletedFrom] = useState('')
-  const [deletedTo, setDeletedTo] = useState('')
+  const storedBrowserState = useMemo(() => readStoredBrowserState(), [])
+  const storedPerPageLimit = useMemo(() => {
+    const savedPerPage = Number(storedBrowserState?.perPageLimit)
+    return PER_PAGE_OPTIONS.includes(savedPerPage) ? savedPerPage : DEFAULT_PER_PAGE
+  }, [storedBrowserState])
+  const [searchInput, setSearchInput] = useState(() => storedBrowserState?.searchInput || '')
+  const [searchQuery, setSearchQuery] = useState(() =>
+    (storedBrowserState?.searchInput || '').trim()
+  )
+  const [deletedFrom, setDeletedFrom] = useState(() => storedBrowserState?.deletedFrom || '')
+  const [deletedTo, setDeletedTo] = useState(() => storedBrowserState?.deletedTo || '')
   const [viewMode, setViewMode] = useState(() => {
     if (typeof window === 'undefined') return DEFAULT_VIEW_MODE
 
@@ -102,10 +133,22 @@ export default function RecycleBin() {
       return DEFAULT_VIEW_MODE
     }
   })
-  const [perPageLimit, setPerPageLimit] = useState(DEFAULT_PER_PAGE)
-  const [visibleCount, setVisibleCount] = useState(DEFAULT_PER_PAGE)
-  const [moduleType, setModuleType] = useState(null)
-  const [subFolderFilters, setSubFolderFilters] = useState({})
+  const [perPageLimit, setPerPageLimit] = useState(storedPerPageLimit)
+  const [visibleCount, setVisibleCount] = useState(() => {
+    const savedVisibleCount = Number(storedBrowserState?.visibleCount)
+    return Number.isInteger(savedVisibleCount) && savedVisibleCount > 0
+      ? savedVisibleCount
+      : storedPerPageLimit
+  })
+  const [moduleType, setModuleType] = useState(() =>
+    typeof storedBrowserState?.moduleType === 'string' ? storedBrowserState.moduleType : null
+  )
+  const [subFolderFilters, setSubFolderFilters] = useState(() => {
+    const savedFilters = storedBrowserState?.subFolderFilters
+    return savedFilters && typeof savedFilters === 'object' && !Array.isArray(savedFilters)
+      ? savedFilters
+      : {}
+  })
   const userLocale = useMemo(() => {
     const languageCode = (i18n?.resolvedLanguage || i18n?.language || 'en').toLowerCase()
     return languageCode.startsWith('bn') ? 'bn-BD' : 'en-US'
@@ -132,6 +175,34 @@ export default function RecycleBin() {
       // Keep UI functional if storage is unavailable.
     }
   }, [viewMode])
+
+  const persistBrowserState = useCallback(
+    (overrideState = {}) => {
+      if (typeof window === 'undefined') return
+
+      const browserState = {
+        searchInput,
+        deletedFrom,
+        deletedTo,
+        moduleType,
+        subFolderFilters,
+        perPageLimit,
+        visibleCount,
+        ...overrideState
+      }
+
+      try {
+        window.sessionStorage.setItem(BROWSER_STATE_STORAGE_KEY, JSON.stringify(browserState))
+      } catch (error) {
+        // Keep UI functional if storage is unavailable.
+      }
+    },
+    [deletedFrom, deletedTo, moduleType, perPageLimit, searchInput, subFolderFilters, visibleCount]
+  )
+
+  useEffect(() => {
+    persistBrowserState()
+  }, [persistBrowserState])
 
   const normalizeFolderValue = (value) => {
     if (value === null || value === undefined || value === '') {
@@ -246,6 +317,16 @@ export default function RecycleBin() {
       })
   }, [foldersResponse?.data?.folders, typeLabel])
 
+  useEffect(() => {
+    if (!moduleType || isFoldersLoading) return
+
+    const hasActiveModuleFolder = moduleFolders.some((module) => module.type === moduleType)
+    if (hasActiveModuleFolder) return
+
+    setModuleType(null)
+    setSubFolderFilters({})
+  }, [isFoldersLoading, moduleFolders, moduleType])
+
   const deletedItems = itemsResponse?.data?.items ?? EMPTY_ARRAY
   const activeModule = useMemo(
     () => moduleFolders.find((module) => module.type === moduleType) || null,
@@ -346,10 +427,32 @@ export default function RecycleBin() {
     })
   }, [filteredItems])
   const subFolderFilterKey = useMemo(() => JSON.stringify(subFolderFilters), [subFolderFilters])
+  const visibilityResetSignature = useMemo(
+    () =>
+      JSON.stringify({
+        deletedFrom,
+        deletedTo,
+        moduleType,
+        perPageLimit,
+        searchQuery,
+        subFolderFilterKey
+      }),
+    [deletedFrom, deletedTo, moduleType, perPageLimit, searchQuery, subFolderFilterKey]
+  )
+  const previousVisibilityResetSignatureRef = useRef(null)
 
   useEffect(() => {
-    setVisibleCount(perPageLimit)
-  }, [deletedFrom, deletedTo, moduleType, perPageLimit, searchQuery, subFolderFilterKey])
+    if (previousVisibilityResetSignatureRef.current === null) {
+      previousVisibilityResetSignatureRef.current = visibilityResetSignature
+      return
+    }
+
+    if (previousVisibilityResetSignatureRef.current !== visibilityResetSignature) {
+      setVisibleCount(perPageLimit)
+    }
+
+    previousVisibilityResetSignatureRef.current = visibilityResetSignature
+  }, [perPageLimit, visibilityResetSignature])
 
   const totalFilteredItems = sortedFilteredItems.length
   const visibleItems = useMemo(
@@ -563,47 +666,86 @@ export default function RecycleBin() {
     )
   }
 
-  const renderGridItem = (item) => (
-    <div key={`${item.type}_${item.id}`} className="col-12 col-md-6 col-xl-4">
-      <div className="card h-100 recycle-bin-grid-item">
-        <div className="card-body d-flex flex-column">
-          {isClientAccountType(item.type) ? (
-            <div className="recycle-bin-grid-item__header mb-2">
-              {renderItemIcon(item, 18, 'recycle-bin-item-image--grid')}
-              <div className="recycle-bin-grid-item__account-head">
-                <h6 className="recycle-bin-grid-item__title mb-1">
-                  {localizeText(item?.metadata?.client) || t('recycle_bin.not_available')}
-                </h6>
-                <p className="recycle-bin-grid-item__subtitle mb-0">
-                  <strong>{t('recycle_bin.metadata_labels.account_no')}:</strong>{' '}
-                  {localizeText(item.display_name || t('recycle_bin.not_available'))}
-                </p>
+  const resolveItemMainPageRoute = (item) => {
+    const routeResolver = ITEM_MAIN_PAGE_ROUTES[item?.type]
+    if (!routeResolver || item?.id === null || item?.id === undefined) {
+      return null
+    }
+
+    return routeResolver(item.id)
+  }
+
+  const openItemMainPage = (item) => {
+    const route = resolveItemMainPageRoute(item)
+    if (!route) return
+
+    persistBrowserState()
+    navigate(route)
+  }
+
+  const renderGridItem = (item) => {
+    const itemMainRoute = resolveItemMainPageRoute(item)
+
+    return (
+      <div key={`${item.type}_${item.id}`} className="col-12 col-md-6 col-xl-4">
+        <div className="card h-100 recycle-bin-grid-item">
+          <div className="card-body d-flex flex-column">
+            {isClientAccountType(item.type) ? (
+              <div className="recycle-bin-grid-item__header mb-2">
+                {renderItemIcon(item, 18, 'recycle-bin-item-image--grid')}
+                <div className="recycle-bin-grid-item__account-head">
+                  <h6 className="recycle-bin-grid-item__title mb-1">
+                    {itemMainRoute ? (
+                      <button
+                        type="button"
+                        className="recycle-bin-item-link"
+                        onClick={() => openItemMainPage(item)}>
+                        {localizeText(item?.metadata?.client) || t('recycle_bin.not_available')}
+                      </button>
+                    ) : (
+                      localizeText(item?.metadata?.client) || t('recycle_bin.not_available')
+                    )}
+                  </h6>
+                  <p className="recycle-bin-grid-item__subtitle mb-0">
+                    <strong>{t('recycle_bin.metadata_labels.account_no')}:</strong>{' '}
+                    {localizeText(item.display_name || t('recycle_bin.not_available'))}
+                  </p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="recycle-bin-grid-item__header mb-2">
-              {renderItemIcon(item, 18, 'recycle-bin-item-image--grid')}
-              <h6 className="recycle-bin-grid-item__title mb-0">
-                {localizeText(item.display_name)}
-              </h6>
-            </div>
-          )}
-          <p className="text-muted small mb-1">
-            <strong>{t('recycle_bin.deleted_at')}:</strong> {formatDeletedAt(item.deleted_at)}
-          </p>
-          <p className="text-muted small mb-1">
-            <strong>{t('recycle_bin.deleted_by')}:</strong> {formatDeletedBy(item.deleted_by)}
-          </p>
-          <p className="text-muted small mb-3">{metadataCell(item.metadata, item.type)}</p>
-          {showActionButtons && (
-            <div className="mt-auto pt-2 border-top recycle-bin-grid-item__actions">
-              {actionBtnGroup(item)}
-            </div>
-          )}
+            ) : (
+              <div className="recycle-bin-grid-item__header mb-2">
+                {renderItemIcon(item, 18, 'recycle-bin-item-image--grid')}
+                <h6 className="recycle-bin-grid-item__title mb-0">
+                  {itemMainRoute ? (
+                    <button
+                      type="button"
+                      className="recycle-bin-item-link"
+                      onClick={() => openItemMainPage(item)}>
+                      {localizeText(item.display_name)}
+                    </button>
+                  ) : (
+                    localizeText(item.display_name)
+                  )}
+                </h6>
+              </div>
+            )}
+            <p className="text-muted small mb-1">
+              <strong>{t('recycle_bin.deleted_at')}:</strong> {formatDeletedAt(item.deleted_at)}
+            </p>
+            <p className="text-muted small mb-1">
+              <strong>{t('recycle_bin.deleted_by')}:</strong> {formatDeletedBy(item.deleted_by)}
+            </p>
+            <p className="text-muted small mb-3">{metadataCell(item.metadata, item.type)}</p>
+            {showActionButtons && (
+              <div className="mt-auto pt-2 border-top recycle-bin-grid-item__actions">
+                {actionBtnGroup(item)}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   const renderRecordList = (items) => {
     const listClassName = showActionButtons
@@ -623,6 +765,7 @@ export default function RecycleBin() {
         <div className="recycle-bin-record-list__body">
           {items.map((item) => {
             const metadata = metadataCell(item.metadata, item.type)
+            const itemMainRoute = resolveItemMainPageRoute(item)
             const title = isClientAccountType(item.type)
               ? localizeText(item?.metadata?.client) || t('recycle_bin.not_available')
               : localizeText(item.display_name)
@@ -642,7 +785,16 @@ export default function RecycleBin() {
                 <span className="recycle-bin-record-row__name" title={details}>
                   <span className="recycle-bin-record-row__name-main">
                     {renderItemIcon(item)}
-                    <span>{title}</span>
+                    {itemMainRoute ? (
+                      <button
+                        type="button"
+                        className="recycle-bin-item-link"
+                        onClick={() => openItemMainPage(item)}>
+                        {title}
+                      </button>
+                    ) : (
+                      <span>{title}</span>
+                    )}
                   </span>
                   <span className="recycle-bin-record-row__meta">{details}</span>
                 </span>
@@ -782,6 +934,13 @@ export default function RecycleBin() {
     setDeletedTo('')
     setModuleType(null)
     setSubFolderFilters({})
+
+    if (typeof window === 'undefined') return
+    try {
+      window.sessionStorage.removeItem(BROWSER_STATE_STORAGE_KEY)
+    } catch (error) {
+      // Keep UI functional if storage is unavailable.
+    }
   }
 
   const breadcrumbs = [
