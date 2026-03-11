@@ -8,7 +8,7 @@ const useSessionStorage = (key, initialValue = null) => {
 
   useEffect(() => {
     sessionStorage.setItem(key, JSON.stringify(value))
-  }, [value, setValue])
+  }, [key, value])
 
   return [value, setValue]
 }

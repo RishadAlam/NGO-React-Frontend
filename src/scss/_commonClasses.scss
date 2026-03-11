@@ -350,6 +350,34 @@ ul {
   -o-border-radius: 10px 10px 0 0;
 }
 
+.table-scroll-both {
+  width: 100%;
+  max-width: 100%;
+  max-height: 70vh;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-both > .table {
+  width: max-content !important;
+  min-width: 100% !important;
+  table-layout: auto;
+  margin-bottom: 0;
+}
+
+@media print {
+  .table-scroll-both {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .table-scroll-both > .table {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+}
+
 .table-report:not(.table-report--bordered):not(.table-report--tabulator) {
   border-collapse: separate !important;
   border-spacing: 0 10px !important;

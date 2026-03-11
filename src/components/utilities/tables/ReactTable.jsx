@@ -196,7 +196,7 @@ function ReactTable({
           </div>
         </div>
 
-        <div className="table-responsive react-table-scroll">
+        <div className="table-responsive table-scroll-both react-table-scroll">
           <table {...getTableProps()} className="table table-hover table-report react-data-table">
             <thead>
               {headerGroups.map((headerGroup, i) => (
