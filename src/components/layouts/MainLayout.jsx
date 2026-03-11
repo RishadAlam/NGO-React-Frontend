@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
@@ -12,11 +12,39 @@ export default function MainLayout() {
   const location = useLocation()
   const isAuthorized = useIsAuthorizedValue()
   const [isSidebarMd, setIsSidebarMd] = useState(() => (window.innerWidth <= 1024 ? true : false))
+  const [disableMenuScroll, setDisableMenuScroll] = useState(false)
+  const contentRef = useRef(null)
 
   useEffect(() => {
     if (!isAuthorized) navigate('login', { state: { from: location }, replace: false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthorized])
+
+  useEffect(() => {
+    const content = contentRef.current
+    if (!content) return
+
+    const updateMenuScrollState = () => {
+      setDisableMenuScroll(content.scrollHeight > window.innerHeight)
+    }
+
+    updateMenuScrollState()
+    window.addEventListener('resize', updateMenuScrollState)
+
+    if (typeof ResizeObserver === 'undefined') {
+      return () => {
+        window.removeEventListener('resize', updateMenuScrollState)
+      }
+    }
+
+    const resizeObserver = new ResizeObserver(updateMenuScrollState)
+    resizeObserver.observe(content)
+
+    return () => {
+      window.removeEventListener('resize', updateMenuScrollState)
+      resizeObserver.disconnect()
+    }
+  }, [location.pathname])
 
   const setMobileMenuClosed = () => {
     if (window.innerWidth < 728) {
@@ -31,14 +59,14 @@ export default function MainLayout() {
           <div className="d-flex">
             <div className={`side-bar d-md-block d-none ${isSidebarMd ? 'side-bar-sm' : ''}`}>
               <SideBarLogo />
-              <Menu setMobileMenuClosed={setMobileMenuClosed} />
+              <Menu setMobileMenuClosed={setMobileMenuClosed} disableScroll={disableMenuScroll} />
             </div>
             <div className="main-body">
               <TopBar setIsSidebarMd={setIsSidebarMd} />
               <div className={`mobile-menu px-3 d-md-none ${isSidebarMd ? '' : 'active'}`}>
-                <Menu setMobileMenuClosed={setMobileMenuClosed} />
+                <Menu setMobileMenuClosed={setMobileMenuClosed} disableScroll={disableMenuScroll} />
               </div>
-              <div className="content p-2">
+              <div className="content p-2" ref={contentRef}>
                 <Outlet />
               </div>
             </div>
