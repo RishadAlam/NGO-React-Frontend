@@ -10,7 +10,8 @@ export default function ClientList({
   const { t } = useTranslation()
 
   return (
-    <table className="table table-bordered table-light client-list">
+    <div className="table-responsive table-scroll-both">
+      <table className="table table-bordered table-light client-list">
       <thead>
         <tr className="text-center">
           <th style={{ width: '8%' }}>ক্র/নং</th>
@@ -43,6 +44,7 @@ export default function ClientList({
           <td>{tsNumbers(total_loan_remaining)}</td>
         </tr>
       </tbody>
-    </table>
+      </table>
+    </div>
   )
 }

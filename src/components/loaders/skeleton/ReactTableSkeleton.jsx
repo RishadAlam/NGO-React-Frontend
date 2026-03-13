@@ -25,7 +25,7 @@ export default function ReactTableSkeleton() {
             </div>
           </div>
 
-          <div className="table-responsive">
+          <div className="table-responsive table-scroll-both">
             <table className="table table-hover table-report">
               <thead>
                 <tr>

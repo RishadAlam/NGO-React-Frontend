@@ -6,7 +6,8 @@ export default function ProfitLoss({ expenses, incomes, profit_loss }) {
   const { t } = useTranslation()
 
   return (
-    <table className="table table-bordered table-light">
+    <div className="table-responsive table-scroll-both">
+      <table className="table table-bordered table-light">
       <thead>
         <tr className="text-center">
           <th style={{ width: '8%' }}>ক্র/নং</th>
@@ -100,6 +101,7 @@ export default function ProfitLoss({ expenses, incomes, profit_loss }) {
           </tr>
         ))}
       </tfoot>
-    </table>
+      </table>
+    </div>
   )
 }

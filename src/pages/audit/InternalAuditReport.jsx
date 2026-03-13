@@ -436,7 +436,7 @@ export default function InternalAuditReport() {
                 </div>
               </div>
               <div className="card-body p-0">
-                <div className="table-responsive">
+                <div className="table-responsive table-scroll-both">
                   <table className="table table-hover table-report table-compact mb-0">
                     <thead>
                       <tr>
@@ -482,7 +482,7 @@ export default function InternalAuditReport() {
                 </div>
               </div>
               <div className="card-body p-0">
-                <div className="table-responsive">
+                <div className="table-responsive table-scroll-both">
                   <table className="table table-hover table-report table-compact mb-0">
                     <thead>
                       <tr>
@@ -529,7 +529,7 @@ export default function InternalAuditReport() {
               </div>
             </div>
             <div className="card-body p-0">
-              <div className="table-responsive">
+              <div className="table-responsive table-scroll-both">
                 <table className="table table-hover table-report table-loan-summary mb-0">
                   <thead>
                     <tr>
@@ -687,7 +687,7 @@ export default function InternalAuditReport() {
                 </p>
               </div>
               <div className="card-body">
-                <div className="table-responsive">
+                <div className="table-responsive table-scroll-both">
                   <p className="breakdown-title mb-2">
                     {t('audit_report_page.internal.profit_loss.breakdown_title')}
                   </p>

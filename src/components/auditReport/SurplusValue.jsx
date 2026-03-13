@@ -32,7 +32,8 @@ export default function SurplusValue({
       : resource_meta && resource_meta.filter((meta) => !['net_loss'].includes(meta.key))
 
   return (
-    <table className="table table-bordered table-light">
+    <div className="table-responsive table-scroll-both">
+      <table className="table table-bordered table-light">
       <thead>
         <tr className="text-center">
           <th style={{ width: '8%' }}>ক্র/নং</th>
@@ -154,6 +155,7 @@ export default function SurplusValue({
           <td>{tsNumbers(surplus_value.total_resource.total)}</td>
         </tr>
       </tfoot>
-    </table>
+      </table>
+    </div>
   )
 }

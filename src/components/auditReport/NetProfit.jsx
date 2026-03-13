@@ -6,7 +6,8 @@ export default function NetProfit({ expense_meta, income_meta, net_profit }) {
   const { t } = useTranslation()
 
   return (
-    <table className="table table-bordered table-light">
+    <div className="table-responsive table-scroll-both">
+      <table className="table table-bordered table-light">
       <thead>
         <tr className="text-center">
           <th style={{ width: '8%' }}>ক্র/নং</th>
@@ -91,6 +92,7 @@ export default function NetProfit({ expense_meta, income_meta, net_profit }) {
           <td>{tsNumbers(net_profit.total_expenses.total)}</td>
         </tr>
       </tfoot>
-    </table>
+      </table>
+    </div>
   )
 }

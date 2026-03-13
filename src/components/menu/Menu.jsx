@@ -6,7 +6,7 @@ import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
 
-function Menu({ setMobileMenuClosed }) {
+function Menu({ setMobileMenuClosed, disableScroll = false }) {
   const { t } = useTranslation()
   const menu = useMemo(() => mainMenu(t), [t])
   const sections = useMemo(
@@ -28,7 +28,9 @@ function Menu({ setMobileMenuClosed }) {
   }
 
   return (
-    <nav className="menu menu--modern mt-md-4" aria-label={t('menu.dashboard')}>
+    <nav
+      className={`menu menu--modern mt-md-4 ${disableScroll ? 'menu--full-height' : ''}`}
+      aria-label={t('menu.dashboard')}>
       <ul>
         <li>
           <NavLink

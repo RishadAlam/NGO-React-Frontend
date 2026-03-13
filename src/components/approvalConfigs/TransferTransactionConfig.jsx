@@ -110,7 +110,7 @@ export default function TransferTransactionConfig({
                 <strong>{error?.message}</strong>
               </div>
             )}
-            <div className="table-responsive">
+            <div className="table-responsive table-scroll-both">
               <table className="table table-hover table-report mb-0">
                 <thead>
                   <tr>
