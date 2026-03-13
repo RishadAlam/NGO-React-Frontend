@@ -61,3 +61,32 @@ export function passwordCheckAlert(t, accessToken) {
     allowOutsideClick: () => !Swal.isLoading()
   })
 }
+
+export function reassignStaffAlert(t, staffs = []) {
+  const options = staffs.reduce((allOptions, staff) => {
+    if (!staff?.id) return allOptions
+
+    return {
+      ...allOptions,
+      [staff.id]: staff.name || `#${staff.id}`
+    }
+  }, {})
+
+  return Swal.fire({
+    title: t('recycle_bin.reassign_staff_title'),
+    text: t('recycle_bin.reassign_staff_text'),
+    input: 'select',
+    inputOptions: options,
+    inputPlaceholder: t('recycle_bin.reassign_staff_placeholder'),
+    showCancelButton: true,
+    confirmButtonText: t('common.submit'),
+    cancelButtonText: t('common.cancel'),
+    inputValidator: (value) => {
+      if (!value) {
+        return t('recycle_bin.reassign_staff_required')
+      }
+
+      return null
+    }
+  })
+}

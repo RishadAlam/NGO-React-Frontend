@@ -10,7 +10,11 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
+import {
+  passwordCheckAlert,
+  permanentDeleteAlert,
+  reassignStaffAlert
+} from '../../helper/deleteAlert'
 import ChevronLeft from '../../icons/ChevronLeft'
 import ChevronRight from '../../icons/ChevronRight'
 import Folder from '../../icons/Folder'
@@ -284,12 +288,21 @@ export default function RecycleBin() {
       : null,
     ([endpoint]) => xFetch(endpoint, null, null, accessToken, itemQueryParams, 'GET')
   )
+  const { data: activeUsersResponse, error: activeUsersError } = useSWR(
+    accessToken ? ['users/active', accessToken] : null,
+    ([endpoint]) => xFetch(endpoint, null, null, accessToken, null, 'GET')
+  )
+  const activeUsers = activeUsersResponse?.data ?? EMPTY_ARRAY
 
   useEffect(() => {
-    if (foldersError?.status === 403 || itemsError?.status === 403) {
+    if (
+      foldersError?.status === 403 ||
+      itemsError?.status === 403 ||
+      activeUsersError?.status === 403
+    ) {
       navigate('/unauthorized')
     }
-  }, [foldersError, itemsError, navigate])
+  }, [activeUsersError, foldersError, itemsError, navigate])
 
   const moduleFolders = useMemo(() => {
     const moduleOrderIndex = (type) => {
@@ -507,40 +520,59 @@ export default function RecycleBin() {
     if (!item?.force_deletable || !canForceDelete) return
 
     permanentDeleteAlert(t).then((result) => {
-      if (result.isConfirmed) {
+      if (!result.isConfirmed) return
+
+      const performForceDelete = (reassignUserId = null) => {
         passwordCheckAlert(t, accessToken).then((passwordResult) => {
-          if (passwordResult.isConfirmed) {
-            setRowLoading('force', item, true)
-            const loadingToast = toast.loading(`${t('common.delete')}...`)
-            xFetch(
-              `recycle-bin/${item.type}/${item.id}/force`,
-              null,
-              null,
-              accessToken,
-              null,
-              'DELETE'
-            )
-              .then((forceDeleteResponse) => {
-                toast.dismiss(loadingToast)
-                setRowLoading('force', item, false)
-                if (forceDeleteResponse?.success) {
-                  toast.success(
-                    forceDeleteResponse?.message || t('recycle_bin.force_delete_success')
-                  )
-                  refreshRecycleBinData()
-                  return
-                }
-                toast.error(forceDeleteResponse?.message || t('recycle_bin.force_delete_failed'))
-              })
-              .catch((errorResponse) => {
-                toast.dismiss(loadingToast)
-                setRowLoading('force', item, false)
-                if (errorResponse?.status === 403) navigate('/unauthorized')
-                toast.error(errorResponse?.message || t('recycle_bin.force_delete_failed'))
-              })
-          }
+          if (!passwordResult.isConfirmed) return
+
+          setRowLoading('force', item, true)
+          const loadingToast = toast.loading(`${t('common.delete')}...`)
+          const forceDeleteQuery = reassignUserId ? { reassign_user_id: reassignUserId } : null
+
+          xFetch(
+            `recycle-bin/${item.type}/${item.id}/force`,
+            null,
+            null,
+            accessToken,
+            forceDeleteQuery,
+            'DELETE'
+          )
+            .then((forceDeleteResponse) => {
+              toast.dismiss(loadingToast)
+              setRowLoading('force', item, false)
+              if (forceDeleteResponse?.success) {
+                toast.success(forceDeleteResponse?.message || t('recycle_bin.force_delete_success'))
+                refreshRecycleBinData()
+                return
+              }
+              toast.error(forceDeleteResponse?.message || t('recycle_bin.force_delete_failed'))
+            })
+            .catch((errorResponse) => {
+              toast.dismiss(loadingToast)
+              setRowLoading('force', item, false)
+              if (errorResponse?.status === 403) navigate('/unauthorized')
+              toast.error(errorResponse?.message || t('recycle_bin.force_delete_failed'))
+            })
         })
       }
+
+      if (item.type === 'staff') {
+        const eligibleStaffs = activeUsers.filter((staff) => String(staff?.id) !== String(item?.id))
+
+        if (!eligibleStaffs.length) {
+          toast.error(t('recycle_bin.reassign_staff_no_options'))
+          return
+        }
+
+        reassignStaffAlert(t, eligibleStaffs).then((reassignResult) => {
+          if (!reassignResult.isConfirmed) return
+          performForceDelete(reassignResult.value)
+        })
+        return
+      }
+
+      performForceDelete()
     })
   }
 
