@@ -1,0 +1,51 @@
+@import '../../scss/responsive';
+
+.account-top-menus {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.account-top-menus__message {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.account-top-menus__item {
+  display: flex;
+}
+
+.account-top-menus__btn {
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+@include lg {
+  .account-top-menus {
+    justify-content: flex-start;
+  }
+}
+
+@include md {
+  .account-top-menus {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .account-top-menus__message {
+    margin-right: 0;
+  }
+
+  .account-top-menus__item {
+    width: 100%;
+  }
+
+  .account-top-menus__item .MuiButton-root,
+  .account-top-menus__btn {
+    width: 100%;
+  }
+}

@@ -47,7 +47,7 @@ export default function ChangeAccountStatus({ prefix, status, mutate }) {
 
   return (
     <PrimaryBtn
-      classNames="mx-1"
+      classNames="account-top-menus__btn"
       color="error"
       name={status ? t('common.hold') : t('common.active')}
       loading={false}

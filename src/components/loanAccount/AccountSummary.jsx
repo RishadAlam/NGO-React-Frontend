@@ -22,7 +22,7 @@ export default function AccountSummary({ data }) {
   const [detailsSummary, setDetailsSummary] = useState([])
   const [status, setStatus] = useState()
   const [classNames, setClassNames] = useState()
-
+  
   useEffect(() => {
     if (data?.deleted_at) {
       setStatus(t('common.closed'))
@@ -141,7 +141,7 @@ export default function AccountSummary({ data }) {
         {
           key: 'total',
           value: tsNumbers(
-            `$${Number(data?.interest_installment || 0) + Number(data?.loan_installment || 0)}/-`
+            `$${Number(data?.interest_installment || 0) + Number(data?.loan_installment || 0) + Number(data?.payable_deposit || 0)}/-`
           ),
           icon: <List size={18} />
         }
