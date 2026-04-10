@@ -5,7 +5,9 @@
 
   .collection-sheet-card {
     border: 1px solid var(--border-color);
-    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08), 0 3px 10px rgba(15, 23, 42, 0.06);
+    box-shadow:
+      0 14px 34px rgba(15, 23, 42, 0.08),
+      0 3px 10px rgba(15, 23, 42, 0.06);
     overflow: hidden;
   }
 
@@ -60,7 +62,7 @@
     scrollbar-gutter: stable both-edges;
     -webkit-overflow-scrolling: touch;
     min-height: unset;
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - 20px);
     isolation: isolate;
   }
 
