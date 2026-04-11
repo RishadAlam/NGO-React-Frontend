@@ -210,7 +210,7 @@ export default function SavingCollectionModal({
             <div className="card-footer text-end">
               <Button
                 type="submit"
-                name={t('common.update')}
+                name={t('common.posting')}
                 className={'btn-primary py-2 px-3'}
                 loading={loading?.collectionForm || false}
                 endIcon={<Save size={20} />}

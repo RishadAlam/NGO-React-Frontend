@@ -236,28 +236,28 @@ export const mainMenu = (t) => {
         subMenu: [
           {
             id: 'pendingTransaction1',
-            label: `${t('common.saving_to_saving')} ${t('common.transactions')}`,
+            label: t('common.saving_to_saving'),
             path: '/pending/transactions/saving_to_saving',
             icon: 'Refresh',
             view: true
           },
           {
             id: 'pendingTransaction2',
-            label: `${t('common.saving_to_loan')} ${t('common.transactions')}`,
+            label: t('common.saving_to_loan'),
             path: '/pending/transactions/saving_to_loan',
             icon: 'CornerRightUpArrow',
             view: true
           },
           {
             id: 'pendingTransaction3',
-            label: `${t('common.loan_to_saving')} ${t('common.transactions')}`,
+            label: t('common.loan_to_saving'),
             path: '/pending/transactions/loan_to_saving',
             icon: 'CornerRightDownArrow',
             view: true
           },
           {
             id: 'pendingTransaction4',
-            label: `${t('common.loan_to_loan')} ${t('common.transactions')}`,
+            label: t('common.loan_to_loan'),
             path: '/pending/transactions/loan_to_loan',
             icon: 'BankTransfer',
             view: true
@@ -346,21 +346,21 @@ export const mainMenu = (t) => {
         subMenu: [
           {
             id: 'regAccList1',
-            label: `${t('menu.registration.Client_Registration')} ${t('common.list')}`,
+            label: t('common.client_register'),
             path: '/registered/client',
             icon: 'User',
             view: checkPermission('registered_client_account_list_view', permissions)
           },
           {
             id: 'regAccList2',
-            label: `${t('menu.registration.saving_account_registration')} ${t('common.list')}`,
+            label: t('common.saving_account'),
             path: '/registered/saving-account',
             icon: 'BankTransferIn',
             view: checkPermission('registered_saving_account_list_view', permissions)
           },
           {
             id: 'regAccList3',
-            label: `${t('menu.registration.loan_account_registration')} ${t('common.list')}`,
+            label: t('common.loan_account'),
             path: '/registered/loan-account',
             icon: 'BankTransferOut',
             view: checkPermission('registered_loan_account_list_view', permissions)
