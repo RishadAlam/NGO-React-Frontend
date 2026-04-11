@@ -32,6 +32,9 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
     width: 16,
     height: 16,
     margin: 2
+  },
+  '& .MuiSwitch-input': {
+    display: 'none'
   }
 }))
 
