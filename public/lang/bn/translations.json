@@ -229,9 +229,9 @@
     "transactions": "লেনদেন",
     "approval_required": "অনুমোদন প্রয়োজন",
     "saving_to_saving": "সঞ্চয় থেকে সঞ্চয়",
-    "saving_to_loan": "সঞ্চয় থেকে ঋণ",
-    "loan_to_saving": "ঋণ থেকে সঞ্চয়",
-    "loan_to_loan": "ঋণ থেকে ঋণ"
+    "saving_to_loan_saving": "সঞ্চয় থেকে ঋণ",
+    "loan_saving_to_saving": "ঋণ থেকে সঞ্চয়",
+    "loan_saving_to_loan_saving": "ঋণ থেকে ঋণ"
   },
   "common_validation": {
     "enter_password": "পাসওয়ার্ড লিখুন",

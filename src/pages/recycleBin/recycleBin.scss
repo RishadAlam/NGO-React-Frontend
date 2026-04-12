@@ -175,14 +175,18 @@
     border-radius: 10px;
     border: 1px solid var(--rb-folder-icon-border);
     background: var(--rb-folder-icon-bg);
-    box-shadow: inset 0 1px 0 var(--rb-folder-highlight), var(--rb-folder-shadow);
+    box-shadow:
+      inset 0 1px 0 var(--rb-folder-highlight),
+      var(--rb-folder-shadow);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--rb-folder-icon-color);
     margin-bottom: 0.6rem;
     position: relative;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
 
     &::before {
       content: '';
@@ -201,12 +205,13 @@
   .recycle-bin-folder-card:hover .recycle-bin-folder-card__icon,
   .recycle-bin-folder-card:focus-visible .recycle-bin-folder-card__icon {
     transform: translateY(-2px);
-    box-shadow: inset 0 1px 0 var(--rb-folder-highlight), var(--rb-folder-shadow-hover);
+    box-shadow:
+      inset 0 1px 0 var(--rb-folder-highlight),
+      var(--rb-folder-shadow-hover);
   }
 
   .recycle-bin-folder-card__name {
     font-size: 1.02rem;
-    font-weight: 600;
     color: var(--rb-title);
     line-height: 1.35;
   }
@@ -339,8 +344,12 @@
     font-weight: 600;
     line-height: 1.2;
     padding-inline: 1.25rem;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
-      box-shadow 0.2s ease, transform 0.15s ease;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.15s ease;
   }
 
   .recycle-bin-load-more .recycle-bin-load-more__btn:hover,
@@ -374,10 +383,9 @@
   .recycle-bin-record-list__head,
   .recycle-bin-record-row {
     display: grid;
-    grid-template-columns: minmax(260px, 2fr) minmax(180px, 1fr) minmax(140px, 0.8fr) minmax(
-        110px,
-        0.7fr
-      ) minmax(120px, auto);
+    grid-template-columns:
+      minmax(260px, 2fr) minmax(180px, 1fr) minmax(140px, 0.8fr) minmax(110px, 0.7fr)
+      minmax(120px, auto);
     align-items: center;
     column-gap: 0.8rem;
   }

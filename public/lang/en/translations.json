@@ -229,9 +229,9 @@
     "transactions": "Transactions",
     "approval_required": "Approval Required",
     "saving_to_saving": "Saving to Saving",
-    "saving_to_loan": "Saving to Loan",
-    "loan_to_saving": "Loan to Saving",
-    "loan_to_loan": "Loan to Loan"
+    "saving_to_loan_saving": "Saving to Loan",
+    "loan_saving_to_saving": "Loan to Saving",
+    "loan_saving_to_loan_saving": "Loan to Loan"
   },
   "common_validation": {
     "enter_password": "Enter Password",
