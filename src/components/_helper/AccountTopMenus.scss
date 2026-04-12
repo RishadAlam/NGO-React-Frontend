@@ -30,7 +30,6 @@
 
 @include md {
   .account-top-menus {
-    flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 10px;
@@ -38,14 +37,5 @@
 
   .account-top-menus__message {
     margin-right: 0;
-  }
-
-  .account-top-menus__item {
-    width: 100%;
-  }
-
-  .account-top-menus__item .MuiButton-root,
-  .account-top-menus__btn {
-    width: 100%;
   }
 }
