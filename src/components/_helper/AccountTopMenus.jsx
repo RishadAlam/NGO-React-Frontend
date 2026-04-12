@@ -52,7 +52,7 @@ export default function AccountTopMenus({
               <PrimaryBtn
                 classNames="account-top-menus__btn"
                 name={t('common.send_money')}
-                color="warning"
+                color="success"
                 loading={false}
                 endIcon={<Transactions size={20} />}
                 onclick={() => setTransactionModalOpen(true)}
@@ -82,6 +82,7 @@ export default function AccountTopMenus({
               <PrimaryBtn
                 classNames="account-top-menus__btn"
                 name={t('common.account_check')}
+                color="primary"
                 loading={false}
                 endIcon={<Check />}
                 onclick={() => setAccountCheckModalOpen(true)}
@@ -109,7 +110,7 @@ export default function AccountTopMenus({
               <PrimaryBtn
                 classNames="account-top-menus__btn"
                 color="error"
-                name={t('common.account_closing')}
+                name={t('common.closing')}
                 loading={false}
                 endIcon={<Trash />}
                 onclick={() => setAccountClosingModalOpen(true)}

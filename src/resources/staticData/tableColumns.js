@@ -1409,7 +1409,7 @@ export const PendingLoanRegTableColumns = (
   }
 ]
 
-export const CategoryCollectionSavingReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const CategoryCollectionSavingReportTableColumns = (t, windowWidth) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1434,15 +1434,10 @@ export const CategoryCollectionSavingReportTableColumns = (t, windowWidth, actio
 
       return tsNumbers(`৳${totalAmount}/-`)
     }
-  },
-  {
-    Header: t('common.action'),
-    accessor: 'action',
-    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 
-export const FieldCollectionSavingReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const FieldCollectionSavingReportTableColumns = (t, windowWidth) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1465,15 +1460,10 @@ export const FieldCollectionSavingReportTableColumns = (t, windowWidth, actionBt
 
       return tsNumbers(`৳${totalAmount}/-`)
     }
-  },
-  {
-    Header: t('common.action'),
-    accessor: 'action',
-    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 
-export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const CategoryCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1534,15 +1524,10 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth, actionB
 
       return tsNumbers(`৳${totalAmount}/-`)
     }
-  },
-  {
-    Header: t('common.action'),
-    accessor: 'action',
-    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 
-export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnGroup) => [
+export const FieldCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: '#',
     accessor: 'id',
@@ -1601,11 +1586,6 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth, actionBtnG
 
       return tsNumbers(`৳${totalAmount}/-`)
     }
-  },
-  {
-    Header: t('common.action'),
-    accessor: 'action',
-    Cell: ({ row }) => actionBtnGroup(row.original.id)
   }
 ]
 

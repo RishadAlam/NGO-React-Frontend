@@ -114,7 +114,7 @@
     "this_month": "এই মাস",
     "this_year": "এই বছর",
     "transaction": "লেনদেন",
-    "send_money": "সেন্ড মানি",
+    "send_money": "ট্রান্সফার",
     "received_money": "টাকা এসেছে",
     "income": "আয়",
     "expense": "ব্যয়",
@@ -157,7 +157,7 @@
     "account_closing_msg": "এই অ্যাকাউন্টটি বন্ধ করার জন্য আবেদন করা হয়েছে।",
     "note": "বিঃদ্রঃ",
     "installment": "কিস্তি সংখ্যা",
-    "save": "সংরক্ষণ",
+    "save": "সেভ করুন",
     "client_register": "সদস্য রেজিস্টার",
     "approver": "অনুমোদনকারী",
     "loan_approver": "ঋণ অনুমোদনকারী",
@@ -165,7 +165,7 @@
     "details_summary": "বিস্তারিত সারাংশ",
     "running": "চলমান",
     "active": "সক্রিয়",
-    "hold": "তামাদি",
+    "hold": "খেলাপি",
     "closed": "বন্ধ",
     "register_account": "নিবন্ধন অ্যাকাউন্ট",
     "saving_account": "সঞ্চয় অ্যাকাউন্ট",
@@ -408,8 +408,8 @@
     "Withdrawal_Edit": "উত্তোলন ইডিট"
   },
   "account_transfer": {
-    "Transfer_List": "টাকা স্থানান্তর তালিকা",
-    "Transfer_Registration": "টাকা স্থানান্তর নিবন্ধন"
+    "Transfer_List": "টাকা ট্রান্সফারের তালিকা",
+    "Transfer_Registration": "টাকা ট্রান্সফার নিবন্ধন"
   },
   "account_transaction": {
     "Transaction_List": "লেনদেন তালিকা"

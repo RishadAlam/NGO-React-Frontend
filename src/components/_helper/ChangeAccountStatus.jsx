@@ -48,7 +48,7 @@ export default function ChangeAccountStatus({ prefix, status, mutate }) {
   return (
     <PrimaryBtn
       classNames="account-top-menus__btn"
-      color="error"
+      color="secondary"
       name={status ? t('common.hold') : t('common.active')}
       loading={false}
       endIcon={<Refresh size={20} />}
