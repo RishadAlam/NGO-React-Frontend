@@ -6,9 +6,25 @@
   height: 60px;
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
   -webkit-box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
   -moz-box-shadow: 4px 6px 16px 4px rgba(0, 0, 0, 0.02);
+
+  .top-bar-search {
+    flex: 1 1 clamp(220px, 34vw, 420px);
+    min-width: 0;
+    max-width: 420px;
+  }
+
+  .top-bar-search .mainSearchBox {
+    width: 100%;
+  }
+
+  .top-bar-actions {
+    flex-shrink: 0;
+    gap: 0.75rem;
+  }
 
   .DarkLangButton > button {
     color: $main-color;
@@ -25,5 +41,33 @@
     color: $main-color;
     font-size: 12px;
     white-space: nowrap;
+  }
+
+  @include xl {
+    .DarkLangButton .palette-label {
+      display: none;
+    }
+
+    .DarkLangButton .form-select {
+      min-width: 120px;
+      width: 120px;
+    }
+  }
+
+  @include lg {
+    height: auto;
+    padding: 10px;
+    flex-wrap: wrap;
+
+    .top-bar-search {
+      order: 3;
+      flex: 1 1 100%;
+      max-width: none;
+      margin-top: 4px;
+    }
+
+    .top-bar-actions {
+      margin-left: auto;
+    }
   }
 }

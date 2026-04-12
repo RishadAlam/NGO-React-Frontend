@@ -11,16 +11,16 @@ function TopBar({ setIsSidebarMd }) {
 
   return (
     <>
-      <div className="top-bar d-flex align-items-center">
+      <div className="top-bar d-flex align-items-center gap-3">
         <div
           className="cursor-pointer menu-btn"
           onClick={() => setIsSidebarMd((prevState) => !prevState)}>
           <Menu />
         </div>
-        <div className="mx-3">
+        <div className="top-bar-search">
           <MainSearchBox t={t} />
         </div>
-        <div className="ms-auto d-flex align-items-center">
+        <div className="top-bar-actions ms-auto d-flex align-items-center">
           <DarkLangButton />
           <ProfileBox t={t} />
         </div>

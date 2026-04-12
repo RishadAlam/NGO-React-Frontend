@@ -568,17 +568,17 @@
   "theme_palette": {
     "template": "টেমপ্লেট",
     "options": {
-      "ocean-blue": "ওশান ব্লু",
-      "indigo-night": "ইন্ডিগো নাইট",
-      "sunset-coral": "সানসেট কোরাল",
-      "royal-purple": "রয়্যাল পার্পল",
-      "slate-mono": "স্লেট মনো",
-      "ruby-ember": "রুবি এম্বার",
-      "arctic-frost": "আর্কটিক ফ্রস্ট",
-      "sand-dune": "স্যান্ড ডিউন",
-      "midnight-neon": "মিডনাইট নিয়ন",
-      "carbon-gold": "কার্বন গোল্ড",
-      "plain-dark": "প্লেইন ডার্ক"
+      "ocean-blue": "সমুদ্র নীল",
+      "indigo-night": "গাঢ় নীল রাত",
+      "sunset-coral": "সূর্যাস্তের প্রবাল রঙ",
+      "royal-purple": "রাজকীয় বেগুনি",
+      "slate-mono": "স্লেট ধূসর",
+      "ruby-ember": "রুবি অঙ্গার",
+      "arctic-frost": "আর্কটিক তুষার",
+      "sand-dune": "বালুর ঢিবি",
+      "midnight-neon": "মধ্যরাতের নিয়ন",
+      "carbon-gold": "কার্বন সোনালী",
+      "plain-dark": "সাধারণ গাঢ়"
     }
   },
   "approvals_config": {
