@@ -11,6 +11,12 @@ export default function Button({
   onclick,
   endIcon
 }) {
+  const trailingIcon = loading ? (
+    <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />
+  ) : (
+    endIcon
+  )
+
   return (
     <>
       <button
@@ -19,10 +25,9 @@ export default function Button({
         disabled={disabled}
         style={style}
         onClick={onclick}>
-        <div className="d-flex justify-content-center">
+        <div className="d-inline-flex align-items-center justify-content-center">
           {name}
-          &nbsp;
-          {loading ? <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" /> : endIcon}
+          {trailingIcon ? <span className="ms-2 d-inline-flex align-items-center">{trailingIcon}</span> : null}
         </div>
       </button>
     </>
