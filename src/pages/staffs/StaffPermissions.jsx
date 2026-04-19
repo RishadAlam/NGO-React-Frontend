@@ -16,11 +16,23 @@ import Save from '../../icons/Save'
 import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
 
+const DEFAULT_PARENT_CATEGORY = 'others'
+
+const resolveParentCategoryLabel = (t, parentGroupName) => {
+  const fallbackLabel = parentGroupName
+    ? parentGroupName.replaceAll('_', ' ')
+    : DEFAULT_PARENT_CATEGORY
+  const translationKey = `staff_permissions.parent_category.${parentGroupName || DEFAULT_PARENT_CATEGORY}`
+  const translatedLabel = t(translationKey)
+  return translatedLabel === translationKey ? fallbackLabel : translatedLabel
+}
+
 export default function StaffPermissions() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [permissions, setPermissions] = useState({})
+  const [groupParents, setGroupParents] = useState({})
   const [error, setError] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const [showEnabledOnly, setShowEnabledOnly] = useState(false)
@@ -43,6 +55,8 @@ export default function StaffPermissions() {
       .map((groupName) => {
         const groupPermissions = permissions[groupName]
         const groupLabel = t(`staff_permissions.group_name.${groupName}`)
+        const parentGroupName = groupParents[groupName] || DEFAULT_PARENT_CATEGORY
+        const parentGroupLabel = resolveParentCategoryLabel(t, parentGroupName)
         const permissionKeys = Object.keys(groupPermissions)
 
         const visiblePermissionKeys = permissionKeys.filter((permissionName) => {
@@ -53,7 +67,8 @@ export default function StaffPermissions() {
           return (
             permissionLabel.includes(normalizedSearch) ||
             permissionName.toLowerCase().includes(normalizedSearch) ||
-            groupLabel.toLowerCase().includes(normalizedSearch)
+            groupLabel.toLowerCase().includes(normalizedSearch) ||
+            parentGroupLabel.toLowerCase().includes(normalizedSearch)
           )
         })
 
@@ -64,6 +79,8 @@ export default function StaffPermissions() {
         return {
           groupName,
           groupLabel,
+          parentGroupName,
+          parentGroupLabel,
           permissionKeys,
           visiblePermissionKeys,
           enabledCount
@@ -71,15 +88,55 @@ export default function StaffPermissions() {
       })
       .filter(({ visiblePermissionKeys }) => visiblePermissionKeys.length > 0)
       .sort((leftGroup, rightGroup) => leftGroup.groupLabel.localeCompare(rightGroup.groupLabel))
-  }, [normalizedSearch, permissions, showEnabledOnly, t])
+  }, [groupParents, normalizedSearch, permissions, showEnabledOnly, t])
+
+  const filteredParentGroups = useMemo(() => {
+    const parentGroups = {}
+
+    filteredGroups.forEach((group) => {
+      if (!Array.isArray(parentGroups[group.parentGroupName])) {
+        parentGroups[group.parentGroupName] = []
+      }
+
+      parentGroups[group.parentGroupName].push(group)
+    })
+
+    return Object.keys(parentGroups)
+      .map((parentGroupName) => {
+        const groups = parentGroups[parentGroupName].sort((leftGroup, rightGroup) =>
+          leftGroup.groupLabel.localeCompare(rightGroup.groupLabel)
+        )
+
+        const totalCount = groups.reduce((total, group) => total + group.permissionKeys.length, 0)
+        const enabledCount = groups.reduce((total, group) => total + group.enabledCount, 0)
+        const visibleCount = groups.reduce(
+          (total, group) => total + group.visiblePermissionKeys.length,
+          0
+        )
+
+        return {
+          parentGroupName,
+          parentGroupLabel: resolveParentCategoryLabel(t, parentGroupName),
+          groups,
+          totalCount,
+          enabledCount,
+          visibleCount
+        }
+      })
+      .sort((leftParent, rightParent) =>
+        leftParent.parentGroupLabel.localeCompare(rightParent.parentGroupLabel)
+      )
+  }, [filteredGroups, t])
 
   const permissionStats = useMemo(() => {
     let groupCount = 0
+    const parentCategorySet = new Set()
     let totalCount = 0
     let enabledCount = 0
 
     Object.keys(permissions).forEach((groupName) => {
       groupCount += 1
+      parentCategorySet.add(groupParents[groupName] || DEFAULT_PARENT_CATEGORY)
       Object.keys(permissions[groupName]).forEach((permissionName) => {
         totalCount += 1
         if (permissions[groupName][permissionName]) {
@@ -95,20 +152,22 @@ export default function StaffPermissions() {
     )
 
     return {
+      parentCount: parentCategorySet.size,
       groupCount,
       totalCount,
       enabledCount,
+      visibleParentCount: filteredParentGroups.length,
       visibleGroupCount,
       visibleCount
     }
-  }, [filteredGroups, permissions])
+  }, [filteredGroups, filteredParentGroups.length, groupParents, permissions])
 
   useEffect(() => {
     if (Number(authId) === Number(id)) {
       return navigate('/unauthorized')
     }
 
-    allPermissions.length &&
+    if (allPermissions.length) {
       setPermissions(() =>
         create({}, (draftPerm) => {
           allPermissions.forEach((permission) => {
@@ -121,6 +180,22 @@ export default function StaffPermissions() {
           })
         })
       )
+
+      setGroupParents(() =>
+        create({}, (draftParents) => {
+          allPermissions.forEach((permission) => {
+            if (typeof draftParents[permission.group_name] !== 'string') {
+              draftParents[permission.group_name] =
+                permission.parent_group_name || DEFAULT_PARENT_CATEGORY
+            }
+          })
+        })
+      )
+    } else {
+      setPermissions({})
+      setGroupParents({})
+    }
+
     setError({})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allPermissions, authId, id, userPermissions])
@@ -238,11 +313,16 @@ export default function StaffPermissions() {
                   {t('staff_permissions.ui.list_showing', {
                     visible: permissionStats.visibleCount,
                     total: permissionStats.totalCount,
-                    groups: permissionStats.visibleGroupCount
+                    groups: permissionStats.visibleGroupCount,
+                    categories: permissionStats.visibleParentCount
                   })}
                 </p>
               </div>
               <div className="staff-permissions-shell__stats">
+                <div className="staff-permissions-shell__stat">
+                  <span>{t('staff_permissions.ui.categories')}</span>
+                  <strong>{permissionStats.parentCount}</strong>
+                </div>
                 <div className="staff-permissions-shell__stat">
                   <span>{t('staff_permissions.ui.groups')}</span>
                   <strong>{permissionStats.groupCount}</strong>
@@ -305,52 +385,86 @@ export default function StaffPermissions() {
               </div>
 
               <div className="staff-permissions-grid row g-3">
-                {filteredGroups.length > 0 ? (
-                  filteredGroups.map(
+                {filteredParentGroups.length > 0 ? (
+                  filteredParentGroups.map(
                     ({
-                      groupName,
-                      groupLabel,
-                      permissionKeys,
-                      visiblePermissionKeys,
-                      enabledCount
+                      parentGroupName,
+                      parentGroupLabel,
+                      groups,
+                      enabledCount: parentEnabledCount,
+                      totalCount: parentTotalCount
                     }) => (
-                      <div key={groupName} className="col-12 col-lg-6 col-xxl-4">
-                        <div className="staff-permissions-group card h-100">
-                          <div className="card-header staff-permissions-group__header">
-                            <div className="staff-permissions-group__title-wrap">
-                              <b className="text-capitalize">{groupLabel}</b>
+                      <div key={parentGroupName} className="col-12">
+                        <div className="staff-permissions-parent card">
+                          <div className="card-header staff-permissions-parent__header">
+                            <div className="staff-permissions-parent__title-wrap">
+                              <b className="text-uppercase">{parentGroupLabel}</b>
                               <small>
-                                {t('staff_permissions.ui.group_enabled', {
-                                  enabled: enabledCount,
-                                  total: permissionKeys.length
+                                {t('staff_permissions.ui.category_enabled', {
+                                  enabled: parentEnabledCount,
+                                  total: parentTotalCount,
+                                  groups: groups.length
                                 })}
                               </small>
                             </div>
-                            <AndroidSwitch
-                              value={setGroupChecked(permissions[groupName])}
-                              toggleStatus={(e) =>
-                                toggleGroupPermissions(groupName, e.target.checked)
-                              }
-                            />
                           </div>
-                          <div className="card-body py-2">
-                            <ul className="mb-0 staff-permissions-group__list">
-                              {visiblePermissionKeys.map((permission) => (
-                                <li
-                                  key={`${groupName}-${permission}`}
-                                  className={`staff-permissions-group__permission-item ${
-                                    permissions[groupName][permission] ? 'is-enabled' : ''
-                                  }`}>
-                                  <p>{t(`staff_permissions.permissions.${permission}`)}</p>
-                                  <AndroidSwitch
-                                    value={permissions[groupName][permission]}
-                                    toggleStatus={(e) =>
-                                      setChange(groupName, permission, e.target.checked)
-                                    }
-                                  />
-                                </li>
-                              ))}
-                            </ul>
+                          <div className="card-body">
+                            <div className="row g-3">
+                              {groups.map(
+                                ({
+                                  groupName,
+                                  groupLabel,
+                                  permissionKeys,
+                                  visiblePermissionKeys,
+                                  enabledCount
+                                }) => (
+                                  <div key={groupName} className="col-12 col-lg-6 col-xxl-4">
+                                    <div className="staff-permissions-group card h-100">
+                                      <div className="card-header staff-permissions-group__header">
+                                        <div className="staff-permissions-group__title-wrap">
+                                          <b className="text-capitalize">{groupLabel}</b>
+                                          <small>
+                                            {t('staff_permissions.ui.group_enabled', {
+                                              enabled: enabledCount,
+                                              total: permissionKeys.length
+                                            })}
+                                          </small>
+                                        </div>
+                                        <AndroidSwitch
+                                          value={setGroupChecked(permissions[groupName])}
+                                          toggleStatus={(e) =>
+                                            toggleGroupPermissions(groupName, e.target.checked)
+                                          }
+                                        />
+                                      </div>
+                                      <div className="card-body py-2">
+                                        <ul className="mb-0 staff-permissions-group__list">
+                                          {visiblePermissionKeys.map((permission) => (
+                                            <li
+                                              key={`${groupName}-${permission}`}
+                                              className={`staff-permissions-group__permission-item ${
+                                                permissions[groupName][permission]
+                                                  ? 'is-enabled'
+                                                  : ''
+                                              }`}>
+                                              <p>
+                                                {t(`staff_permissions.permissions.${permission}`)}
+                                              </p>
+                                              <AndroidSwitch
+                                                value={permissions[groupName][permission]}
+                                                toggleStatus={(e) =>
+                                                  setChange(groupName, permission, e.target.checked)
+                                                }
+                                              />
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
