@@ -11,12 +11,15 @@ import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Button from '../../components/utilities/Button'
 import useFetch from '../../hooks/useFetch'
 import Home from '../../icons/Home'
-import Search from '../../icons/Search'
 import Save from '../../icons/Save'
+import Search from '../../icons/Search'
+import User from '../../icons/User'
+import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
 
 const DEFAULT_PARENT_CATEGORY = 'others'
+const ALL_PARENT_CATEGORY_FILTER = '__all__'
 
 const resolveParentCategoryLabel = (t, parentGroupName) => {
   const fallbackLabel = parentGroupName
@@ -27,6 +30,22 @@ const resolveParentCategoryLabel = (t, parentGroupName) => {
   return translatedLabel === translationKey ? fallbackLabel : translatedLabel
 }
 
+const resolveRoleNameLabel = (t, roleName) => {
+  const normalizedRoleName = String(roleName || '')
+    .trim()
+    .toLowerCase()
+    .replaceAll(' ', '_')
+
+  if (!normalizedRoleName) return null
+
+  const translationKey = `staff_roles.default.${normalizedRoleName}`
+  const translatedRoleName = t(translationKey)
+
+  return translatedRoleName === translationKey
+    ? normalizedRoleName.replaceAll('_', ' ')
+    : translatedRoleName
+}
+
 export default function StaffPermissions() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -35,14 +54,24 @@ export default function StaffPermissions() {
   const [groupParents, setGroupParents] = useState({})
   const [error, setError] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedParentCategory, setSelectedParentCategory] = useState(ALL_PARENT_CATEGORY_FILTER)
   const [showEnabledOnly, setShowEnabledOnly] = useState(false)
   const [loading, setLoading] = useLoadingState({})
+
   const normalizedSearch = searchQuery.trim().toLowerCase()
   const { accessToken, id: authId } = useAuthDataValue()
+
   const {
     data: {
-      data: { allPermissions, userPermissions, userDirectPermissions, userRolePermissions } = {
+      data: {
+        allPermissions,
+        user,
+        userPermissions,
+        userDirectPermissions,
+        userRolePermissions
+      } = {
         allPermissions: [],
+        user: null,
         userPermissions: [],
         userDirectPermissions: [],
         userRolePermissions: []
@@ -53,6 +82,31 @@ export default function StaffPermissions() {
   } = useFetch({ action: `permissions/${id}` })
 
   const rolePermissionNameSet = useMemo(() => new Set(userRolePermissions), [userRolePermissions])
+
+  const userRoleNames = useMemo(() => {
+    if (!Array.isArray(user?.roles)) return []
+
+    return user.roles
+      .map((role) => {
+        if (typeof role === 'string') return role
+        return role?.name || null
+      })
+      .map((roleName) => resolveRoleNameLabel(t, roleName))
+      .filter(Boolean)
+  }, [t, user?.roles])
+
+  const parentCategoryOptions = useMemo(() => {
+    const parentGroupNames = Object.keys(permissions).map(
+      (groupName) => groupParents[groupName] || DEFAULT_PARENT_CATEGORY
+    )
+
+    return [...new Set(parentGroupNames)]
+      .map((parentGroupName) => ({
+        value: parentGroupName,
+        label: resolveParentCategoryLabel(t, parentGroupName)
+      }))
+      .sort((leftOption, rightOption) => leftOption.label.localeCompare(rightOption.label))
+  }, [groupParents, permissions, t])
 
   const filteredGroups = useMemo(() => {
     return Object.keys(permissions)
@@ -69,6 +123,7 @@ export default function StaffPermissions() {
             const isEnabledDirectly = groupPermissions[permissionName]
             if (!isEnabledByRole && !isEnabledDirectly) return false
           }
+
           if (!normalizedSearch) return true
 
           const permissionLabel = t(`staff_permissions.permissions.${permissionName}`).toLowerCase()
@@ -95,9 +150,21 @@ export default function StaffPermissions() {
           enabledCount
         }
       })
-      .filter(({ visiblePermissionKeys }) => visiblePermissionKeys.length > 0)
+      .filter(({ parentGroupName, visiblePermissionKeys }) => {
+        if (!visiblePermissionKeys.length) return false
+        if (selectedParentCategory === ALL_PARENT_CATEGORY_FILTER) return true
+        return parentGroupName === selectedParentCategory
+      })
       .sort((leftGroup, rightGroup) => leftGroup.groupLabel.localeCompare(rightGroup.groupLabel))
-  }, [groupParents, normalizedSearch, permissions, rolePermissionNameSet, showEnabledOnly, t])
+  }, [
+    groupParents,
+    normalizedSearch,
+    permissions,
+    rolePermissionNameSet,
+    selectedParentCategory,
+    showEnabledOnly,
+    t
+  ])
 
   const filteredParentGroups = useMemo(() => {
     const parentGroups = {}
@@ -179,12 +246,15 @@ export default function StaffPermissions() {
 
   useEffect(() => {
     if (Number(authId) === Number(id)) {
-      return navigate('/unauthorized')
+      navigate('/unauthorized')
     }
+  }, [authId, id, navigate])
 
-    const selectedDirectPermissions = userDirectPermissions.length
+  useEffect(() => {
+    const selectedDirectPermissions = Array.isArray(userDirectPermissions)
       ? userDirectPermissions
       : userPermissions
+    const selectedDirectPermissionSet = new Set(selectedDirectPermissions)
 
     if (allPermissions.length) {
       setPermissions(() =>
@@ -193,7 +263,7 @@ export default function StaffPermissions() {
             if (typeof draftPerm[permission.group_name] !== 'object') {
               draftPerm[permission.group_name] = {}
             }
-            draftPerm[permission.group_name][permission.name] = selectedDirectPermissions.includes(
+            draftPerm[permission.group_name][permission.name] = selectedDirectPermissionSet.has(
               permission.name
             )
           })
@@ -216,37 +286,49 @@ export default function StaffPermissions() {
     }
 
     setError({})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allPermissions, authId, id, userDirectPermissions, userPermissions])
+  }, [allPermissions, userDirectPermissions, userPermissions])
+
+  useEffect(() => {
+    if (selectedParentCategory === ALL_PARENT_CATEGORY_FILTER) return
+
+    const hasSelectedParentCategory = parentCategoryOptions.some(
+      ({ value }) => value === selectedParentCategory
+    )
+
+    if (!hasSelectedParentCategory) {
+      setSelectedParentCategory(ALL_PARENT_CATEGORY_FILTER)
+    }
+  }, [parentCategoryOptions, selectedParentCategory])
 
   const clearErrors = () => {
     if (Object.keys(error).length) setError({})
   }
 
-  const setChange = (group_name, permission, isChecked) => {
+  const setChange = (groupName, permissionName, isChecked) => {
     clearErrors()
     setPermissions((prevPerm) =>
       create(prevPerm, (draftPerm) => {
-        draftPerm[group_name][permission] = isChecked
+        draftPerm[groupName][permissionName] = isChecked
       })
     )
   }
 
-  const setGroupChecked = (permissions) => {
-    return Object.keys(permissions).every(
-      (permission) => permissions[permission] || rolePermissionNameSet.has(permission)
+  const setGroupChecked = (groupPermissionMap = {}) => {
+    return Object.keys(groupPermissionMap).every(
+      (permissionName) =>
+        groupPermissionMap[permissionName] || rolePermissionNameSet.has(permissionName)
     )
   }
 
-  const toggleGroupPermissions = (group, isChecked) => {
+  const toggleGroupPermissions = (groupName, isChecked) => {
     clearErrors()
     setPermissions((prevPerm) =>
       create(prevPerm, (draftPerm) => {
-        Object.keys(draftPerm[group]).forEach((permission) => {
+        Object.keys(draftPerm[groupName]).forEach((permissionName) => {
           const inheritedOnly =
-            rolePermissionNameSet.has(permission) && !draftPerm[group][permission]
+            rolePermissionNameSet.has(permissionName) && !draftPerm[groupName][permissionName]
           if (inheritedOnly) return
-          draftPerm[group][permission] = isChecked
+          draftPerm[groupName][permissionName] = isChecked
         })
       })
     )
@@ -259,11 +341,11 @@ export default function StaffPermissions() {
     setPermissions((prevPerm) =>
       create(prevPerm, (draftPerm) => {
         filteredGroups.forEach(({ groupName, visiblePermissionKeys }) => {
-          visiblePermissionKeys.forEach((permission) => {
+          visiblePermissionKeys.forEach((permissionName) => {
             const inheritedOnly =
-              rolePermissionNameSet.has(permission) && !draftPerm[groupName][permission]
+              rolePermissionNameSet.has(permissionName) && !draftPerm[groupName][permissionName]
             if (inheritedOnly) return
-            draftPerm[groupName][permission] = isChecked
+            draftPerm[groupName][permissionName] = isChecked
           })
         })
       })
@@ -274,10 +356,10 @@ export default function StaffPermissions() {
     event.preventDefault()
     const staffPermissions = []
 
-    Object.keys(permissions).forEach((group) => {
-      Object.keys(permissions[group]).forEach((permission) => {
-        if (permissions[group][permission]) {
-          staffPermissions.push(permission)
+    Object.keys(permissions).forEach((groupName) => {
+      Object.keys(permissions[groupName]).forEach((permissionName) => {
+        if (permissions[groupName][permissionName]) {
+          staffPermissions.push(permissionName)
         }
       })
     })
@@ -291,12 +373,14 @@ export default function StaffPermissions() {
           mutate()
           return
         }
+
         setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!response?.errors) {
               draftErr.message = response?.message
               return
             }
+
             return rawReturn(response?.errors || response)
           })
         )
@@ -308,62 +392,143 @@ export default function StaffPermissions() {
   }
 
   const hasPermissionData = permissionStats.totalCount > 0
+  const noneLabel = t('staff_permissions.ui.none')
+  const userName = user?.name || noneLabel
+  const userEmail = user?.email || noneLabel
+  const userPhone = user?.phone || noneLabel
+  const userId = user?.id || noneLabel
+  const userImageUri =
+    typeof user?.image_uri === 'string' && user.image_uri.trim() ? user.image_uri : null
+  const userStatusLabel = user?.status ? t('common.active') : t('staff_permissions.ui.inactive')
+  const userRoleLabel = userRoleNames.length ? userRoleNames.join(', ') : noneLabel
+  const directPermissionCount = userDirectPermissions.length
+  const rolePermissionCount = userRolePermissions.length
+  const userIdLabel = tsNumbers(userId)
+  const userPhoneLabel = tsNumbers(userPhone)
+  const directPermissionCountLabel = tsNumbers(directPermissionCount)
+  const rolePermissionCountLabel = tsNumbers(rolePermissionCount)
+  const listShowingVisibleLabel = tsNumbers(permissionStats.visibleCount)
+  const listShowingTotalLabel = tsNumbers(permissionStats.totalCount)
+  const listShowingGroupLabel = tsNumbers(permissionStats.visibleGroupCount)
+  const listShowingCategoryLabel = tsNumbers(permissionStats.visibleParentCount)
+  const shellCategoryCountLabel = tsNumbers(permissionStats.parentCount)
+  const shellGroupCountLabel = tsNumbers(permissionStats.groupCount)
+  const shellEnabledCountLabel = tsNumbers(permissionStats.enabledCount)
+  const shellTotalCountLabel = tsNumbers(permissionStats.totalCount)
 
   return (
-    <>
-      <section className="staff-permissions staff-permissions-page">
-        <Breadcrumb
-          breadcrumbs={[
-            { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
-            {
-              name: t('menu.staffs.Staffs'),
-              path: '/staffs',
-              icon: <Home size={16} />,
-              active: false
-            },
-            {
-              name: t('menu.staffs.Staff_Permissions'),
-              icon: <Home size={16} />,
-              active: true
-            }
-          ]}
-        />
+    <section className="staff-permissions staff-permissions-page">
+      <Breadcrumb
+        breadcrumbs={[
+          { name: t('menu.dashboard'), path: '/', icon: <Home size={16} />, active: false },
+          {
+            name: t('menu.staffs.Staffs'),
+            path: '/staffs',
+            icon: <Home size={16} />,
+            active: false
+          },
+          {
+            name: t('menu.staffs.Staff_Permissions'),
+            icon: <Home size={16} />,
+            active: true
+          }
+        ]}
+      />
 
-        {isLoading ? (
-          <StaffPermissionSkeleton skeletonSize={6} />
-        ) : (
+      {isLoading ? (
+        <StaffPermissionSkeleton skeletonSize={6} />
+      ) : (
+        <>
+          <div className="staff-permissions-context-card card my-3">
+            <div className="staff-permissions-context-card__identity">
+              <div className="staff-permissions-context-card__avatar-shell">
+                {userImageUri ? (
+                  <img
+                    src={userImageUri}
+                    alt={userName}
+                    className="staff-permissions-context-card__avatar"
+                  />
+                ) : (
+                  <div className="staff-permissions-context-card__avatar-fallback">
+                    <User size={34} />
+                  </div>
+                )}
+              </div>
+              <div className="staff-permissions-context-card__headline">
+                <small>{t('staff_permissions.ui.profile_card_title')}</small>
+                <h5>{userName}</h5>
+                <p>{userEmail}</p>
+                <div className="staff-permissions-context-card__status-row">
+                  <span
+                    className={`staff-permissions-context-card__status ${
+                      user?.status ? 'is-active' : 'is-inactive'
+                    }`}>
+                    {userStatusLabel}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="staff-permissions-context-card__details">
+              <h6>{t('staff_permissions.ui.details')}</h6>
+              <div className="staff-permissions-context-card__detail-grid">
+                <div className="staff-permissions-context-card__detail-item">
+                  <span>{t('staff_permissions.ui.user_id')}</span>
+                  <strong>{userIdLabel}</strong>
+                </div>
+                <div className="staff-permissions-context-card__detail-item">
+                  <span>{t('common.phone')}</span>
+                  <strong>{userPhoneLabel}</strong>
+                </div>
+                <div className="staff-permissions-context-card__detail-item">
+                  <span>{t('common.role')}</span>
+                  <strong>{userRoleLabel}</strong>
+                </div>
+                <div className="staff-permissions-context-card__detail-item">
+                  <span>{t('staff_permissions.ui.direct_permissions')}</span>
+                  <strong>{directPermissionCountLabel}</strong>
+                </div>
+                <div className="staff-permissions-context-card__detail-item">
+                  <span>{t('staff_permissions.ui.role_permissions')}</span>
+                  <strong>{rolePermissionCountLabel}</strong>
+                </div>
+              </div>
+              <p className="staff-permissions-context-card__summary mb-0">
+                {t('staff_permissions.ui.list_showing', {
+                  visible: listShowingVisibleLabel,
+                  total: listShowingTotalLabel,
+                  groups: listShowingGroupLabel,
+                  categories: listShowingCategoryLabel
+                })}
+              </p>
+            </div>
+
+            <div className="staff-permissions-context-card__stats-grid">
+              <div className="staff-permissions-context-card__stat-tile">
+                <strong>{shellCategoryCountLabel}</strong>
+                <span>{t('staff_permissions.ui.categories')}</span>
+              </div>
+              <div className="staff-permissions-context-card__stat-tile">
+                <strong>{shellGroupCountLabel}</strong>
+                <span>{t('staff_permissions.ui.groups')}</span>
+              </div>
+              <div className="staff-permissions-context-card__stat-tile">
+                <strong>{shellEnabledCountLabel}</strong>
+                <span>{t('staff_permissions.ui.enabled')}</span>
+              </div>
+              <div className="staff-permissions-context-card__stat-tile">
+                <strong>{shellTotalCountLabel}</strong>
+                <span>{t('staff_permissions.ui.total')}</span>
+              </div>
+            </div>
+          </div>
+
           <div className="staff-permissions-shell card my-3">
             <div className="card-header staff-permissions-shell__header">
               <div className="staff-permissions-shell__title-wrap">
                 <b className="text-uppercase">{t('menu.staffs.Staff_Permissions')}</b>
-                <p className="mb-0">
-                  {t('staff_permissions.ui.list_showing', {
-                    visible: permissionStats.visibleCount,
-                    total: permissionStats.totalCount,
-                    groups: permissionStats.visibleGroupCount,
-                    categories: permissionStats.visibleParentCount
-                  })}
-                </p>
-              </div>
-              <div className="staff-permissions-shell__stats">
-                <div className="staff-permissions-shell__stat">
-                  <span>{t('staff_permissions.ui.categories')}</span>
-                  <strong>{permissionStats.parentCount}</strong>
-                </div>
-                <div className="staff-permissions-shell__stat">
-                  <span>{t('staff_permissions.ui.groups')}</span>
-                  <strong>{permissionStats.groupCount}</strong>
-                </div>
-                <div className="staff-permissions-shell__stat">
-                  <span>{t('staff_permissions.ui.enabled')}</span>
-                  <strong>{permissionStats.enabledCount}</strong>
-                </div>
-                <div className="staff-permissions-shell__stat">
-                  <span>{t('staff_permissions.ui.total')}</span>
-                  <strong>{permissionStats.totalCount}</strong>
-                </div>
               </div>
             </div>
+
             <div className="card-body staff-permissions-shell__body">
               <div className="staff-permissions-shell__controls mb-3">
                 <label className="staff-permissions-shell__search">
@@ -375,6 +540,23 @@ export default function StaffPermissions() {
                     onChange={(event) => setSearchQuery(event.target.value)}
                   />
                 </label>
+
+                <label className="staff-permissions-shell__parent-filter">
+                  <span>{t('staff_permissions.ui.parent_category_filter')}</span>
+                  <select
+                    value={selectedParentCategory}
+                    onChange={(event) => setSelectedParentCategory(event.target.value)}>
+                    <option value={ALL_PARENT_CATEGORY_FILTER}>
+                      {t('staff_permissions.ui.all_categories')}
+                    </option>
+                    {parentCategoryOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
                 <div className="staff-permissions-shell__actions">
                   <button
                     type="button"
@@ -400,11 +582,14 @@ export default function StaffPermissions() {
                     disabled={!filteredGroups.length}>
                     {t('staff_permissions.ui.disable_visible')}
                   </button>
-                  {searchQuery && (
+                  {(searchQuery || selectedParentCategory !== ALL_PARENT_CATEGORY_FILTER) && (
                     <button
                       type="button"
                       className="staff-permissions-shell__control-btn"
-                      onClick={() => setSearchQuery('')}>
+                      onClick={() => {
+                        setSearchQuery('')
+                        setSelectedParentCategory(ALL_PARENT_CATEGORY_FILTER)
+                      }}>
                       {t('staff_permissions.ui.clear')}
                     </button>
                   )}
@@ -428,9 +613,9 @@ export default function StaffPermissions() {
                               <b className="text-uppercase">{parentGroupLabel}</b>
                               <small>
                                 {t('staff_permissions.ui.category_enabled', {
-                                  enabled: parentEnabledCount,
-                                  total: parentTotalCount,
-                                  groups: groups.length
+                                  enabled: tsNumbers(parentEnabledCount),
+                                  total: tsNumbers(parentTotalCount),
+                                  groups: tsNumbers(groups.length)
                                 })}
                               </small>
                             </div>
@@ -452,38 +637,38 @@ export default function StaffPermissions() {
                                           <b className="text-capitalize">{groupLabel}</b>
                                           <small>
                                             {t('staff_permissions.ui.group_enabled', {
-                                              enabled: enabledCount,
-                                              total: permissionKeys.length
+                                              enabled: tsNumbers(enabledCount),
+                                              total: tsNumbers(permissionKeys.length)
                                             })}
                                           </small>
                                         </div>
                                         <AndroidSwitch
                                           value={setGroupChecked(permissions[groupName])}
-                                          toggleStatus={(e) =>
-                                            toggleGroupPermissions(groupName, e.target.checked)
+                                          toggleStatus={(event) =>
+                                            toggleGroupPermissions(groupName, event.target.checked)
                                           }
                                         />
                                       </div>
                                       <div className="card-body py-2">
                                         <ul className="mb-0 staff-permissions-group__list">
-                                          {visiblePermissionKeys.map((permission) => {
+                                          {visiblePermissionKeys.map((permissionName) => {
                                             const isDirectEnabled =
-                                              permissions[groupName][permission]
+                                              permissions[groupName][permissionName]
                                             const isInherited =
-                                              rolePermissionNameSet.has(permission)
+                                              rolePermissionNameSet.has(permissionName)
                                             const isEnabled = isDirectEnabled || isInherited
                                             const isInheritedOnly = isInherited && !isDirectEnabled
 
                                             return (
                                               <li
-                                                key={`${groupName}-${permission}`}
+                                                key={`${groupName}-${permissionName}`}
                                                 className={`staff-permissions-group__permission-item ${
                                                   isEnabled ? 'is-enabled' : ''
                                                 } ${isInherited ? 'is-inherited' : ''}`}>
                                                 <div className="staff-permissions-group__permission-content">
                                                   <p>
                                                     {t(
-                                                      `staff_permissions.permissions.${permission}`
+                                                      `staff_permissions.permissions.${permissionName}`
                                                     )}
                                                   </p>
                                                   {isInherited && (
@@ -497,11 +682,11 @@ export default function StaffPermissions() {
                                                 <AndroidSwitch
                                                   value={isEnabled}
                                                   disabled={isInheritedOnly}
-                                                  toggleStatus={(e) =>
+                                                  toggleStatus={(event) =>
                                                     setChange(
                                                       groupName,
-                                                      permission,
-                                                      e.target.checked
+                                                      permissionName,
+                                                      event.target.checked
                                                     )
                                                   }
                                                 />
@@ -533,6 +718,7 @@ export default function StaffPermissions() {
                 )}
               </div>
             </div>
+
             <div className="card-footer staff-permissions-shell__footer">
               {error?.message && <p className="staff-permissions-shell__error">{error.message}</p>}
               <Button
@@ -541,13 +727,13 @@ export default function StaffPermissions() {
                 className={'btn-primary py-2 px-4 staff-permissions-shell__submit-btn'}
                 loading={loading?.staffPermissions || false}
                 endIcon={<Save size={20} />}
-                onclick={(e) => updatePermissions(e)}
+                onclick={(event) => updatePermissions(event)}
                 disabled={loading?.staffPermissions}
               />
             </div>
           </div>
-        )}
-      </section>
-    </>
+        </>
+      )}
+    </section>
   )
 }

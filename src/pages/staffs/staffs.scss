@@ -331,6 +331,261 @@
 }
 
 .staff-permissions-page {
+  .staff-permissions-context-card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border: 1px solid rgba(var(--primary-rgb), 0.24);
+    border-radius: 20px;
+    box-shadow:
+      0 18px 34px -26px rgba(var(--primary-rgb), 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    background:
+      radial-gradient(circle at 90% -16%, rgba(var(--accent-rgb), 0.22) 0%, transparent 42%),
+      radial-gradient(circle at 8% 12%, rgba(var(--primary-rgb), 0.2) 0%, transparent 55%),
+      var(--surface-bg-strong);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .staff-permissions-context-card__identity,
+  .staff-permissions-context-card__details,
+  .staff-permissions-context-card__stats-grid {
+    min-width: 0;
+    padding: 1.25rem 1.3rem;
+    position: relative;
+  }
+
+  .staff-permissions-context-card__identity,
+  .staff-permissions-context-card__details {
+    border-right: 1px solid rgba(var(--primary-rgb), 0.18);
+  }
+
+  .staff-permissions-context-card__identity {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .staff-permissions-context-card__avatar-shell {
+    width: 128px;
+    height: 128px;
+    padding: 6px;
+    border-radius: 20px;
+    border: 1px solid rgba(var(--primary-rgb), 0.35);
+    background:
+      linear-gradient(135deg, rgba(var(--primary-rgb), 0.22), rgba(var(--accent-rgb), 0.1)),
+      rgba(var(--main-bg-rgb), 0.52);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .staff-permissions-context-card__avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .staff-permissions-context-card__avatar-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    background: rgba(var(--primary-rgb), 0.14);
+    color: $main-color;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .staff-permissions-context-card__headline {
+    min-width: 0;
+  }
+
+  .staff-permissions-context-card__headline small {
+    color: $soft-color;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .staff-permissions-context-card__headline h5 {
+    margin: 0.45rem 0 0.2rem;
+    color: $main-color;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .staff-permissions-context-card__headline p {
+    margin: 0;
+    color: $soft-color;
+    font-size: 0.93rem;
+    overflow-wrap: anywhere;
+  }
+
+  .staff-permissions-context-card__status-row {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .staff-permissions-context-card__details {
+    h6 {
+      margin: 0 0 0.8rem;
+      color: $main-color;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+  }
+
+  .staff-permissions-context-card__detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 0.8rem;
+  }
+
+  .staff-permissions-context-card__summary {
+    margin-top: 0.75rem;
+    color: $soft-color;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .staff-permissions-context-card__detail-item {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1px solid rgba(var(--primary-rgb), 0.22);
+    border-radius: 12px;
+    background: rgba(var(--main-bg-rgb), 0.45);
+    padding: 0.55rem 0.65rem;
+
+    span {
+      color: $soft-color;
+      font-size: 0.68rem;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    strong {
+      color: $main-color;
+      font-size: 0.88rem;
+      line-height: 1.25;
+      font-weight: 700;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .staff-permissions-context-card__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    align-content: center;
+  }
+
+  .staff-permissions-context-card__stat-tile {
+    border: 1px solid rgba(var(--primary-rgb), 0.24);
+    border-radius: 14px;
+    background:
+      linear-gradient(140deg, rgba(var(--primary-rgb), 0.14) 0%, transparent 55%),
+      rgba(var(--main-bg-rgb), 0.46);
+    padding: 0.7rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 78px;
+
+    strong {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    span {
+      margin-top: 0.4rem;
+      color: $soft-color;
+      font-size: 0.72rem;
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+  }
+
+  .staff-permissions-context-card__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 96px;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--primary-rgb), 0.36);
+    color: $main-color;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 0.34rem 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .staff-permissions-context-card__status.is-active {
+    background: rgba(34, 197, 94, 0.16);
+    border-color: rgba(34, 197, 94, 0.42);
+  }
+
+  .staff-permissions-context-card__status.is-inactive {
+    background: rgba(239, 68, 68, 0.14);
+    border-color: rgba(239, 68, 68, 0.4);
+  }
+
+  body.light & {
+    .staff-permissions-context-card {
+      border-color: rgba(var(--primary-rgb), 0.28);
+      background:
+        radial-gradient(circle at 92% -18%, rgba(var(--accent-rgb), 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 8% 10%, rgba(var(--primary-rgb), 0.16) 0%, transparent 50%),
+        linear-gradient(
+          148deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(var(--main-bg-rgb), 0.98) 58%,
+          rgba(var(--primary-rgb), 0.14) 100%
+        );
+      box-shadow:
+        0 20px 36px -30px rgba(var(--primary-rgb), 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .staff-permissions-context-card__identity,
+    .staff-permissions-context-card__details {
+      border-right-color: rgba(var(--primary-rgb), 0.2);
+    }
+
+    .staff-permissions-context-card__detail-item {
+      background: rgba(255, 255, 255, 0.74);
+      border-color: rgba(var(--primary-rgb), 0.24);
+    }
+
+    .staff-permissions-context-card__stat-tile {
+      background:
+        linear-gradient(150deg, rgba(var(--primary-rgb), 0.16) 0%, rgba(255, 255, 255, 0.82) 62%),
+        rgba(255, 255, 255, 0.72);
+      border-color: rgba(var(--primary-rgb), 0.28);
+    }
+  }
+
   .staff-permissions-shell {
     width: 100%;
     border: 1px solid rgba(var(--primary-rgb), 0.18);
@@ -346,46 +601,6 @@
     gap: 1rem;
     border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
     background: var(--surface-bg-strong);
-  }
-
-  .staff-permissions-shell__title-wrap {
-    p {
-      color: $soft-color;
-      font-size: 0.9rem;
-      margin-top: 0.4rem;
-    }
-  }
-
-  .staff-permissions-shell__stats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(78px, auto));
-    gap: 0.55rem;
-  }
-
-  .staff-permissions-shell__stat {
-    min-width: 88px;
-    border: 1px solid rgba(var(--primary-rgb), 0.24);
-    border-radius: 12px;
-    padding: 0.45rem 0.6rem;
-    background: rgba(var(--main-bg-rgb), 0.56);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.2;
-
-    span {
-      color: $soft-color;
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    strong {
-      color: $main-color;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-top: 0.15rem;
-    }
   }
 
   .staff-permissions-shell__body {
@@ -419,6 +634,38 @@
       outline: none;
       color: $main-color;
       font-size: 0.9rem;
+    }
+  }
+
+  .staff-permissions-shell__parent-filter {
+    min-width: 210px;
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    border-radius: 10px;
+    background: rgba(var(--main-bg-rgb), 0.56);
+    padding: 0.4rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    span {
+      color: $soft-color;
+      font-size: 0.73rem;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: $main-color;
+      outline: none;
+      font-size: 0.86rem;
+      line-height: 1.25;
+      padding-right: 0.25rem;
+      appearance: none;
+      cursor: pointer;
     }
   }
 
@@ -599,16 +846,64 @@
   }
 
   @include lg {
-    .staff-permissions-shell__header {
-      flex-direction: column;
+    .staff-permissions-context-card {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
 
-    .staff-permissions-shell__stats {
-      grid-template-columns: repeat(2, minmax(70px, 1fr));
+    .staff-permissions-context-card__details {
+      border-right: none;
+    }
+
+    .staff-permissions-context-card__stats-grid {
+      grid-column: 1 / -1;
+      border-top: 1px solid rgba(var(--primary-rgb), 0.18);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .staff-permissions-shell__header {
+      flex-direction: column;
     }
   }
 
   @include md {
+    .staff-permissions-context-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .staff-permissions-context-card__identity,
+    .staff-permissions-context-card__details,
+    .staff-permissions-context-card__stats-grid {
+      border-right: none;
+      padding: 0.9rem;
+    }
+
+    .staff-permissions-context-card__identity,
+    .staff-permissions-context-card__details {
+      border-bottom: 1px solid rgba(var(--primary-rgb), 0.18);
+    }
+
+    .staff-permissions-context-card__identity {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.8rem;
+    }
+
+    .staff-permissions-context-card__avatar-shell {
+      width: 96px;
+      height: 96px;
+    }
+
+    .staff-permissions-context-card__headline h5 {
+      font-size: 1.15rem;
+    }
+
+    .staff-permissions-context-card__detail-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .staff-permissions-context-card__stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .staff-permissions-shell__header,
     .staff-permissions-shell__body,
     .staff-permissions-shell__footer {
@@ -620,8 +915,8 @@
       min-width: 100%;
     }
 
-    .staff-permissions-shell__stats {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+    .staff-permissions-shell__parent-filter {
+      min-width: 100%;
     }
   }
 }
