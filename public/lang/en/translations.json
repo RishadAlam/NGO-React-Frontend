@@ -887,7 +887,12 @@
       "pending_req_to_delete_saving_acc": "Pending Saving Account Deletion Requests",
       "pending_client_account_transactions": "Pending Client Account Transactions",
       "registered_account_view": "Registered Accounts",
-      "recycle_bin": "Recycle Bin"
+      "client_saving_account_collection": "Client Saving Account Collection",
+      "client_loan_account_collection": "Client Loan Account Collection",
+      "client_saving_account_actions": "Client Saving Account Actions",
+      "client_loan_account_actions": "Client Loan Account Actions",
+      "recycle_bin": "Recycle Bin",
+      "others": "Others"
     },
     "permissions": {
       "view_dashboard_as_admin": "View dashboard (Admin)",
