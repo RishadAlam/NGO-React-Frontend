@@ -24,7 +24,7 @@ import useFetch from '../../hooks/useFetch'
 import Clock from '../../icons/Clock'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
-import List from '../../icons/List'
+import Menu from '../../icons/Menu'
 import Trash from '../../icons/Trash'
 import UserPlus from '../../icons/UserPlus'
 import Users from '../../icons/Users'
@@ -66,7 +66,7 @@ export default function Staffs() {
           <IconButton
             className="text-success"
             onClick={() => viewUserPermissions(id, staff?.permissions)}>
-            {<List size={20} />}
+            {<Menu size={20} />}
           </IconButton>
         </Tooltip>
       )}

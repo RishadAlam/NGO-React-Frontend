@@ -312,7 +312,8 @@
     "staffs": {
       "Staffs": "অফিসার",
       "Staff_Permissions": "অফিসার অনুমতি",
-      "Staff_Roles": "অফিসার ভূমিকা"
+      "Staff_Roles": "অফিসার ভূমিকা",
+      "Role_Permissions": "ভূমিকার অনুমতি"
     },
     "settings_and_privacy": {
       "app_settings": "অ্যাপ সেটিংস",
@@ -816,11 +817,13 @@
       "group_enabled": "{{total}} এর মধ্যে {{enabled}} টি সক্রিয়",
       "category_enabled": "{{groups}} টি গ্রুপে {{total}} এর মধ্যে {{enabled}} টি সক্রিয়",
       "category_group_count": "{{count}} টি গ্রুপ",
+      "inherited_from_role": "রোল থেকে প্রাপ্ত",
       "no_match_filters": "বর্তমান ফিল্টারের সাথে কোনো অনুমতি মেলেনি।",
       "update_failed": "অনুমতি আপডেট করা যায়নি।"
     },
     "parent_category": {
       "dashboard": "ড্যাশবোর্ড",
+      "fields": "ফিল্ডস",
       "field": "ফিল্ড",
       "center": "কেন্দ্র",
       "category": "ক্যাটাগরি",
@@ -1025,6 +1028,8 @@
       "role_registration": "নতুন ভূমিকা নিবন্ধন",
       "role_update": "ভূমিকা আপডেট",
       "role_delete": "ভূমিকা ডিলিট",
+      "role_permission_view": "ভূমিকার অনুমতি দেখুন",
+      "role_permission_update": "ভূমিকার অনুমতি আপডেট",
       "app_settings": "অ্যাপ সেটিংস",
       "approvals_config": "অনুমোদন কনফিগারেশন",
       "categories_config": "ক্যাটাগরি কনফিগারেশন",

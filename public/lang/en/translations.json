@@ -322,7 +322,8 @@
     "staffs": {
       "Staffs": "Staff",
       "Staff_Permissions": "Staff Permissions",
-      "Staff_Roles": "Staff Roles"
+      "Staff_Roles": "Staff Roles",
+      "Role_Permissions": "Role Permissions"
     },
     "settings_and_privacy": {
       "app_settings": "Application Settings",
@@ -825,6 +826,7 @@
       "group_enabled": "{{enabled}}/{{total}} enabled",
       "category_enabled": "{{enabled}}/{{total}} enabled across {{groups}} groups",
       "category_group_count": "{{count}} groups",
+      "inherited_from_role": "Inherited from role",
       "no_match_filters": "No permissions match your current filters.",
       "update_failed": "Failed to update permissions."
     },
@@ -1033,6 +1035,8 @@
       "role_registration": "Register new role",
       "role_update": "Update role",
       "role_delete": "Delete role",
+      "role_permission_view": "View role permissions",
+      "role_permission_update": "Update role permissions",
       "app_settings": "App settings",
       "approvals_config": "Approval settings",
       "categories_config": "Category settings",

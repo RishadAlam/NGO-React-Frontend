@@ -43,6 +43,7 @@ const IncomeCategories = lazy(() => import('./pages/accountManagement/IncomeCate
 const ExpenseCategories = lazy(() => import('./pages/accountManagement/ExpenseCategories'))
 const Staffs = lazy(() => import('./pages/staffs/Staffs'))
 const StaffRoles = lazy(() => import('./pages/staffs/StaffRoles'))
+const RolePermissions = lazy(() => import('./pages/staffs/RolePermissions'))
 const StaffPermissions = lazy(() => import('./pages/staffs/StaffPermissions'))
 const AppSettings = lazy(() => import('./pages/configurations/AppSettings'))
 const ApprovalsConfig = lazy(() => import('./pages/configurations/ApprovalsConfig'))
@@ -976,6 +977,25 @@ export default function App() {
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <Suspense fallback={<Loader />}>
                       <StaffRoles />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </Route>
+            <Route
+              path="role-permissions/:id"
+              element={
+                <RequirePermissions
+                  allowedPermissions={['role_permission_view', 'role_permission_update']}
+                  pageTitle="menu.staffs.Role_Permissions"
+                />
+              }>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <RolePermissions />
                     </Suspense>
                   </ErrorBoundary>
                 }

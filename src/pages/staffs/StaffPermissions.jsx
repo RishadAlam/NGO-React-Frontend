@@ -41,14 +41,18 @@ export default function StaffPermissions() {
   const { accessToken, id: authId } = useAuthDataValue()
   const {
     data: {
-      data: { allPermissions, userPermissions } = {
+      data: { allPermissions, userPermissions, userDirectPermissions, userRolePermissions } = {
         allPermissions: [],
-        userPermissions: []
+        userPermissions: [],
+        userDirectPermissions: [],
+        userRolePermissions: []
       }
     } = [],
     mutate,
     isLoading
   } = useFetch({ action: `permissions/${id}` })
+
+  const rolePermissionNameSet = useMemo(() => new Set(userRolePermissions), [userRolePermissions])
 
   const filteredGroups = useMemo(() => {
     return Object.keys(permissions)
@@ -60,7 +64,11 @@ export default function StaffPermissions() {
         const permissionKeys = Object.keys(groupPermissions)
 
         const visiblePermissionKeys = permissionKeys.filter((permissionName) => {
-          if (showEnabledOnly && !groupPermissions[permissionName]) return false
+          if (showEnabledOnly) {
+            const isEnabledByRole = rolePermissionNameSet.has(permissionName)
+            const isEnabledDirectly = groupPermissions[permissionName]
+            if (!isEnabledByRole && !isEnabledDirectly) return false
+          }
           if (!normalizedSearch) return true
 
           const permissionLabel = t(`staff_permissions.permissions.${permissionName}`).toLowerCase()
@@ -73,7 +81,8 @@ export default function StaffPermissions() {
         })
 
         const enabledCount = permissionKeys.filter(
-          (permissionName) => groupPermissions[permissionName]
+          (permissionName) =>
+            groupPermissions[permissionName] || rolePermissionNameSet.has(permissionName)
         ).length
 
         return {
@@ -88,7 +97,7 @@ export default function StaffPermissions() {
       })
       .filter(({ visiblePermissionKeys }) => visiblePermissionKeys.length > 0)
       .sort((leftGroup, rightGroup) => leftGroup.groupLabel.localeCompare(rightGroup.groupLabel))
-  }, [groupParents, normalizedSearch, permissions, showEnabledOnly, t])
+  }, [groupParents, normalizedSearch, permissions, rolePermissionNameSet, showEnabledOnly, t])
 
   const filteredParentGroups = useMemo(() => {
     const parentGroups = {}
@@ -139,7 +148,7 @@ export default function StaffPermissions() {
       parentCategorySet.add(groupParents[groupName] || DEFAULT_PARENT_CATEGORY)
       Object.keys(permissions[groupName]).forEach((permissionName) => {
         totalCount += 1
-        if (permissions[groupName][permissionName]) {
+        if (permissions[groupName][permissionName] || rolePermissionNameSet.has(permissionName)) {
           enabledCount += 1
         }
       })
@@ -160,12 +169,22 @@ export default function StaffPermissions() {
       visibleGroupCount,
       visibleCount
     }
-  }, [filteredGroups, filteredParentGroups.length, groupParents, permissions])
+  }, [
+    filteredGroups,
+    filteredParentGroups.length,
+    groupParents,
+    permissions,
+    rolePermissionNameSet
+  ])
 
   useEffect(() => {
     if (Number(authId) === Number(id)) {
       return navigate('/unauthorized')
     }
+
+    const selectedDirectPermissions = userDirectPermissions.length
+      ? userDirectPermissions
+      : userPermissions
 
     if (allPermissions.length) {
       setPermissions(() =>
@@ -174,7 +193,7 @@ export default function StaffPermissions() {
             if (typeof draftPerm[permission.group_name] !== 'object') {
               draftPerm[permission.group_name] = {}
             }
-            draftPerm[permission.group_name][permission.name] = userPermissions.includes(
+            draftPerm[permission.group_name][permission.name] = selectedDirectPermissions.includes(
               permission.name
             )
           })
@@ -198,7 +217,7 @@ export default function StaffPermissions() {
 
     setError({})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allPermissions, authId, id, userPermissions])
+  }, [allPermissions, authId, id, userDirectPermissions, userPermissions])
 
   const clearErrors = () => {
     if (Object.keys(error).length) setError({})
@@ -214,7 +233,9 @@ export default function StaffPermissions() {
   }
 
   const setGroupChecked = (permissions) => {
-    return Object.keys(permissions).every((permission) => permissions[permission])
+    return Object.keys(permissions).every(
+      (permission) => permissions[permission] || rolePermissionNameSet.has(permission)
+    )
   }
 
   const toggleGroupPermissions = (group, isChecked) => {
@@ -222,6 +243,9 @@ export default function StaffPermissions() {
     setPermissions((prevPerm) =>
       create(prevPerm, (draftPerm) => {
         Object.keys(draftPerm[group]).forEach((permission) => {
+          const inheritedOnly =
+            rolePermissionNameSet.has(permission) && !draftPerm[group][permission]
+          if (inheritedOnly) return
           draftPerm[group][permission] = isChecked
         })
       })
@@ -236,6 +260,9 @@ export default function StaffPermissions() {
       create(prevPerm, (draftPerm) => {
         filteredGroups.forEach(({ groupName, visiblePermissionKeys }) => {
           visiblePermissionKeys.forEach((permission) => {
+            const inheritedOnly =
+              rolePermissionNameSet.has(permission) && !draftPerm[groupName][permission]
+            if (inheritedOnly) return
             draftPerm[groupName][permission] = isChecked
           })
         })
@@ -439,25 +466,48 @@ export default function StaffPermissions() {
                                       </div>
                                       <div className="card-body py-2">
                                         <ul className="mb-0 staff-permissions-group__list">
-                                          {visiblePermissionKeys.map((permission) => (
-                                            <li
-                                              key={`${groupName}-${permission}`}
-                                              className={`staff-permissions-group__permission-item ${
-                                                permissions[groupName][permission]
-                                                  ? 'is-enabled'
-                                                  : ''
-                                              }`}>
-                                              <p>
-                                                {t(`staff_permissions.permissions.${permission}`)}
-                                              </p>
-                                              <AndroidSwitch
-                                                value={permissions[groupName][permission]}
-                                                toggleStatus={(e) =>
-                                                  setChange(groupName, permission, e.target.checked)
-                                                }
-                                              />
-                                            </li>
-                                          ))}
+                                          {visiblePermissionKeys.map((permission) => {
+                                            const isDirectEnabled =
+                                              permissions[groupName][permission]
+                                            const isInherited =
+                                              rolePermissionNameSet.has(permission)
+                                            const isEnabled = isDirectEnabled || isInherited
+                                            const isInheritedOnly = isInherited && !isDirectEnabled
+
+                                            return (
+                                              <li
+                                                key={`${groupName}-${permission}`}
+                                                className={`staff-permissions-group__permission-item ${
+                                                  isEnabled ? 'is-enabled' : ''
+                                                } ${isInherited ? 'is-inherited' : ''}`}>
+                                                <div className="staff-permissions-group__permission-content">
+                                                  <p>
+                                                    {t(
+                                                      `staff_permissions.permissions.${permission}`
+                                                    )}
+                                                  </p>
+                                                  {isInherited && (
+                                                    <small className="staff-permissions-group__inherited-tag">
+                                                      {t(
+                                                        'staff_permissions.ui.inherited_from_role'
+                                                      )}
+                                                    </small>
+                                                  )}
+                                                </div>
+                                                <AndroidSwitch
+                                                  value={isEnabled}
+                                                  disabled={isInheritedOnly}
+                                                  toggleStatus={(e) =>
+                                                    setChange(
+                                                      groupName,
+                                                      permission,
+                                                      e.target.checked
+                                                    )
+                                                  }
+                                                />
+                                              </li>
+                                            )
+                                          })}
                                         </ul>
                                       </div>
                                     </div>

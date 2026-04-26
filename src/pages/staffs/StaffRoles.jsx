@@ -3,6 +3,7 @@ import { Tooltip, Zoom } from '@mui/material'
 import React, { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
@@ -12,11 +13,13 @@ import RoleUpdate from '../../components/staffRoles/RoleUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
+import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 import deleteAlert, { passwordCheckAlert } from '../../helper/deleteAlert'
 import successAlert from '../../helper/successAlert'
 import useFetch from '../../hooks/useFetch'
 import Edit from '../../icons/Edit'
 import Home from '../../icons/Home'
+import Menu from '../../icons/Menu'
 import Pen from '../../icons/Pen'
 import Trash from '../../icons/Trash'
 import UserCheck from '../../icons/UserCheck'
@@ -25,39 +28,64 @@ import xFetch from '../../utilities/xFetch'
 import './staffs.scss'
 
 export default function StaffRoles() {
+  const navigate = useNavigate()
   const [isRegModalOpen, setIsRegModalOpen] = useState(false)
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [editRoleData, setEditRoleData] = useState({})
-  const { accessToken } = useAuthDataValue()
+  const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: roles } = [], mutate, isLoading } = useFetch({ action: 'roles' })
 
   const actionBtnGroup = (id, role) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
-        <IconButton className="text-warning" onClick={() => roleEdit(role)}>
-          {<Edit size={20} />}
-        </IconButton>
-      </Tooltip>
-      <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
-        <IconButton className="text-danger" onClick={() => roleDelete(id)}>
-          {<Trash size={20} />}
-        </IconButton>
-      </Tooltip>
+      {checkPermission('role_permission_view', authPermissions) && (
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('menu.staffs.Role_Permissions')}
+          arrow
+          followCursor>
+          <IconButton className="text-success" onClick={() => navigate(`/role-permissions/${id}`)}>
+            {<Menu size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
+      {!Number(role?.is_default) && checkPermission('role_update', authPermissions) && (
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
+          <IconButton className="text-warning" onClick={() => roleEdit(role)}>
+            {<Edit size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
+      {!Number(role?.is_default) && checkPermission('role_delete', authPermissions) && (
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
+          <IconButton className="text-danger" onClick={() => roleDelete(id)}>
+            {<Trash size={20} />}
+          </IconButton>
+        </Tooltip>
+      )}
     </ActionBtnGroup>
   )
 
   const columns = useMemo(
-    () => RolesTableColumns(t, windowWidth, actionBtnGroup),
+    () =>
+      RolesTableColumns(
+        t,
+        windowWidth,
+        actionBtnGroup,
+        !checkPermissions(['role_permission_view', 'role_update', 'role_delete'], authPermissions)
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, windowWidth]
   )
   const roleEdit = (role) => {
+    if (!checkPermission('role_update', authPermissions)) return
     setEditRoleData(role)
     setIsUpdateModalOpen(true)
   }
   const roleDelete = (id) => {
+    if (!checkPermission('role_delete', authPermissions)) return
+
     deleteAlert(t).then((result) => {
       if (result.isConfirmed) {
         passwordCheckAlert(t, accessToken).then((result) => {
@@ -95,20 +123,24 @@ export default function StaffRoles() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('staff_roles.Staff_Roles_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsRegModalOpen(true)}
-            />
-            {isRegModalOpen && (
-              <RoleRegistration
-                isOpen={isRegModalOpen}
-                setIsOpen={setIsRegModalOpen}
-                accessToken={accessToken}
-                t={t}
-                mutate={mutate}
-              />
+            {checkPermission('role_registration', authPermissions) && (
+              <>
+                <PrimaryBtn
+                  name={t('staff_roles.Staff_Roles_Registration')}
+                  loading={false}
+                  endIcon={<Pen size={20} />}
+                  onclick={() => setIsRegModalOpen(true)}
+                />
+                {isRegModalOpen && (
+                  <RoleRegistration
+                    isOpen={isRegModalOpen}
+                    setIsOpen={setIsRegModalOpen}
+                    accessToken={accessToken}
+                    t={t}
+                    mutate={mutate}
+                  />
+                )}
+              </>
             )}
             {isUpdateModalOpen && Object.keys(editRoleData).length && (
               <RoleUpdate

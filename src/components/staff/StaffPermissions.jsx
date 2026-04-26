@@ -51,7 +51,10 @@ export default function StaffPermissions({
         }
       }
 
-      allPermissions[permission.group_name].permissions.push(permission.name)
+      allPermissions[permission.group_name].permissions.push({
+        name: permission.name,
+        inherited: Boolean(permission.inherited)
+      })
       return allPermissions
     }, {})
   }, [staff_permissions])
@@ -64,13 +67,14 @@ export default function StaffPermissions({
         const parentGroupName = groupData?.parentGroupName || DEFAULT_PARENT_CATEGORY
         const parentGroupLabel = resolveParentCategoryLabel(t, parentGroupName)
 
-        const filteredPermissions = groupPermissions.filter((permission) => {
+        const filteredPermissions = groupPermissions.filter((permissionItem) => {
           if (!normalizedSearch) return true
 
-          const permissionLabel = t(`staff_permissions.permissions.${permission}`).toLowerCase()
+          const permissionName = permissionItem?.name || ''
+          const permissionLabel = t(`staff_permissions.permissions.${permissionName}`).toLowerCase()
           return (
             permissionLabel.includes(normalizedSearch) ||
-            permission.toLowerCase().includes(normalizedSearch) ||
+            permissionName.toLowerCase().includes(normalizedSearch) ||
             groupLabel.toLowerCase().includes(normalizedSearch) ||
             parentGroupLabel.toLowerCase().includes(normalizedSearch)
           )
@@ -214,13 +218,22 @@ export default function StaffPermissions({
                                   </div>
                                   <div className="card-body py-2">
                                     <ul className="staff-permission-modal__permission-list mb-0">
-                                      {filteredPermissions.map((permission) => (
+                                      {filteredPermissions.map((permissionItem) => (
                                         <li
-                                          key={`${groupName}-${permission}`}
+                                          key={`${groupName}-${permissionItem.name}`}
                                           className="staff-permission-modal__permission-item">
-                                          <span>
-                                            {t(`staff_permissions.permissions.${permission}`)}
-                                          </span>
+                                          <div className="staff-permission-modal__permission-content">
+                                            <span>
+                                              {t(
+                                                `staff_permissions.permissions.${permissionItem.name}`
+                                              )}
+                                            </span>
+                                            {permissionItem.inherited && (
+                                              <small className="staff-permission-modal__inherited-tag">
+                                                {t('staff_permissions.ui.inherited_from_role')}
+                                              </small>
+                                            )}
+                                          </div>
                                           <CheckCircle size={18} />
                                         </li>
                                       ))}
