@@ -891,8 +891,7 @@
       "client_loan_account_collection": "Client Loan Account Collection",
       "client_saving_account_actions": "Client Saving Account Actions",
       "client_loan_account_actions": "Client Loan Account Actions",
-      "recycle_bin": "Recycle Bin",
-      "others": "Others"
+      "recycle_bin": "Recycle Bin"
     },
     "permissions": {
       "view_dashboard_as_admin": "View dashboard (Admin)",
