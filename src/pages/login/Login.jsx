@@ -2,94 +2,81 @@ import Cookies from 'js-cookie'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthDataState, useIsAuthorizedState } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import AuthShell from '../../components/_helper/AuthShell'
 import LoaderSm from '../../components/loaders/LoaderSm'
 import { setSessionStorage } from '../../helper/GetDataFromStorage'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import xFetch from '../../utilities/xFetch'
-import './login.scss'
+
+const MailIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m3 7 9 6 9-6" />
+  </svg>
+)
+const LockIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="11" width="16" height="10" rx="2" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+  </svg>
+)
 
 export default function Login() {
-  // States & Hooks
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState(false)
   const [loading, setLoading] = useLoadingState({})
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
-  const [authData, setAuthData] = useAuthDataState()
-  const [isAutorized, setIsAuthorized] = useIsAuthorizedState()
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  })
-  const [errors, SetErrors] = useState({
-    email: '',
-    password: ''
-  })
+  const [, setAuthData] = useAuthDataState()
+  const [, setIsAuthorized] = useIsAuthorizedState()
+  const [inputs, setInputs] = useState({ email: '', password: '', rememberMe: false })
+  const [errors, SetErrors] = useState({ email: '', password: '' })
 
   useEffect(() => {
     document.title = 'Login'
   }, [])
 
-  // Set the OnChange Values
   const setChange = (name, val) => {
-    setInputs((prevInputs) =>
-      create(prevInputs, (draftInputs) => {
-        draftInputs[name] = val
-      })
-    )
-
-    // Set Errors
-    SetErrors((prevErrors) =>
-      create(prevErrors, (draftErrors) => {
-        val === '' ? (draftErrors[name] = `${name} is required!`) : delete draftErrors[name]
-      })
-    )
+    setInputs((prev) => create(prev, (d) => { d[name] = val }))
+    SetErrors((prev) => create(prev, (d) => {
+      val === '' ? (d[name] = `${name} is required!`) : delete d[name]
+    }))
   }
 
-  // Submit Form
   const loginUser = (event) => {
     event.preventDefault()
     if (inputs.email === '' || inputs.password === '') {
-      toast.error('Required fields are empty!')
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-
     setLoading({ ...loading, login: true })
-    const requestData = {
-      email: inputs.email,
-      password: inputs.password
-    }
-
+    const requestData = { email: inputs.email, password: inputs.password }
     const controller = new AbortController()
     xFetch('login', requestData, null, controller.signal, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, login: false })
-
         if (response.success) {
           inputs.rememberMe
             ? Cookies.set('accessToken', response.access_token, { expires: 30 })
             : setSessionStorage('accessToken', response.access_token)
-
           setIsAuthorized(true)
-          setAuthData((prevAuthData) =>
-            create(prevAuthData, (draftAuthData) => {
-              draftAuthData.accessToken = `Bearer ${response.access_token}`
-              draftAuthData.id = response?.id
-              draftAuthData.name = response?.name
-              draftAuthData.email = response?.email
-              draftAuthData.email_verified_at = response?.email_verified_at ? true : false
-              draftAuthData.phone = response?.phone
-              draftAuthData.status = response?.status
-              draftAuthData.role = response?.role
-              draftAuthData.permissions = response?.permissions
-            })
-          )
-
+          setAuthData((prev) => create(prev, (d) => {
+            d.accessToken = `Bearer ${response.access_token}`
+            d.id = response?.id
+            d.name = response?.name
+            d.email = response?.email
+            d.email_verified_at = response?.email_verified_at ? true : false
+            d.phone = response?.phone
+            d.status = response?.status
+            d.role = response?.role
+            d.permissions = response?.permissions
+          }))
           toast.success(response.message)
           navigate(from, { replace: true })
           return
@@ -110,83 +97,80 @@ export default function Login() {
   }
 
   return (
-    <>
-      <div className="login p-5">
-        <form className="text-center" onSubmit={loginUser}>
-          <p className="h4 mb-4">Login</p>
+    <AuthShell
+      title={t('auth.login_title', 'Welcome back')}
+      subtitle={t('auth.login_subtitle', 'Sign in to manage your cooperative')}
+      footer={
+        <span>
+          {t('auth.no_account', 'Need help?')}
+          <Link to="/forgot-password">{t('auth.forgot_link', 'Reset password')}</Link>
+        </span>
+      }>
+      <form onSubmit={loginUser} noValidate>
+        {errors?.message && <div className="auth-alert">{errors.message}</div>}
 
-          {errors?.message && errors?.message !== '' && (
-            <div className="alert alert-danger" role="alert">
-              <strong>{errors?.message}</strong>
-            </div>
-          )}
-
-          <div className="input-group position-relative mb-4">
+        <div className="auth-field">
+          <label htmlFor="email">{t('auth.email', 'Email')}</label>
+          <div className="input-wrap">
+            <span className="leading-icon"><MailIcon /></span>
             <input
               type="email"
               id="email"
               name="email"
-              className={`form-control ${errors?.email ? 'is-invalid' : ''}`}
-              placeholder="E-mail"
-              value={inputs?.email || ''}
+              autoComplete="email"
+              className={errors?.email ? 'has-error' : ''}
+              placeholder={t('auth.email_placeholder', 'name@example.com')}
+              value={inputs.email}
               onChange={(e) => setChange('email', e.target.value)}
               disabled={loading?.login}
             />
-            {errors?.email && <div className="invalid-feedback text-start">{errors?.email}</div>}
           </div>
+          {errors?.email && <div className="field-error">{errors.email}</div>}
+        </div>
 
-          <div className="input-group position-relative mb-4">
+        <div className="auth-field">
+          <label htmlFor="password">{t('auth.password', 'Password')}</label>
+          <div className="input-wrap">
+            <span className="leading-icon"><LockIcon /></span>
             <input
               type={isPlainText ? 'text' : 'password'}
               id="password"
               name="password"
-              className={`form-control pe-4 ${errors?.password ? 'is-invalid' : ''}`}
-              placeholder="Password"
-              value={inputs?.password || ''}
+              autoComplete="current-password"
+              className={errors?.password ? 'has-error' : ''}
+              placeholder="••••••••"
+              value={inputs.password}
               onChange={(e) => setChange('password', e.target.value)}
               disabled={loading?.login}
             />
-            <span className="eye" onClick={() => SetIsPlainText((prev) => !prev)}>
-              {isPlainText ? <Eye size={20} /> : <EyeOff size={20} />}
+            <span className="trailing-icon is-button" onClick={() => SetIsPlainText((p) => !p)}>
+              {isPlainText ? <Eye size={18} /> : <EyeOff size={18} />}
             </span>
-            {errors.password && (
-              <div className="invalid-feedback text-start">{errors.password}</div>
-            )}
           </div>
+          {errors?.password && <div className="field-error">{errors.password}</div>}
+        </div>
 
-          <div className="d-flex justify-content-between">
-            <div>
-              <div className="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  className="custom-control-input"
-                  id="rememberMe"
-                  name="rememberMe"
-                  onChange={(e) => setChange('rememberMe', e.target.checked)}
-                  disabled={loading?.login}
-                />
-                &nbsp;
-                <label className="cursor-pointer" htmlFor="rememberMe">
-                  Remember me
-                </label>
-              </div>
-            </div>
-            <div>
-              <Link to={'/forgot-password'}>Forgot password?</Link>
-            </div>
-          </div>
+        <div className="auth-row">
+          <label>
+            <input
+              type="checkbox"
+              checked={inputs.rememberMe}
+              onChange={(e) => setChange('rememberMe', e.target.checked)}
+              disabled={loading?.login}
+            />
+            {t('auth.remember_me', 'Remember me')}
+          </label>
+          <Link to="/forgot-password">{t('auth.forgot_password', 'Forgot password?')}</Link>
+        </div>
 
-          <button
-            className="btn btn-primary btn-block mt-4"
-            type="submit"
-            disabled={Object.keys(errors).length || loading?.login}>
-            <div className="d-flex">
-              Login
-              {loading?.login && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
-            </div>
-          </button>
-        </form>
-      </div>
-    </>
+        <button
+          type="submit"
+          className="auth-btn"
+          disabled={Object.keys(errors).length || loading?.login}>
+          {t('auth.sign_in', 'Sign in')}
+          {loading?.login && <LoaderSm size={18} clr="#fff" />}
+        </button>
+      </form>
+    </AuthShell>
   )
 }

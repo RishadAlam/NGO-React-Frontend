@@ -1,74 +1,88 @@
 import { create } from 'mutative'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import LoaderSm from '../../components/loaders/LoaderSm'
-import '../../pages/login/login.scss'
+import { useTranslation } from 'react-i18next'
+import LoaderSm from '../loaders/LoaderSm'
 import xFetch from '../../utilities/xFetch'
 
-export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
-  // States
-  const [otp, setOtp] = useState('')
-  const [error, setError] = useState({
-    otp: '',
-    message: message
-  })
+const OTP_LEN = 6
+const RESEND_COOLDOWN = 30
 
-  // Set Onchange Value
-  const setChange = (val) => {
-    setOtp(val)
-    setError((prevError) =>
-      create(prevError, (draftErrors) => {
-        delete draftErrors?.message
-        val === '' ? (draftErrors.otp = 'OTP is required!') : delete draftErrors.otp
-        if (val !== '') {
-          val.length !== 6 ? (draftErrors.otp = 'OTP is invalid!') : delete draftErrors.otp
-        }
-      })
-    )
+export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
+  const { t } = useTranslation()
+  const [digits, setDigits] = useState(() => Array(OTP_LEN).fill(''))
+  const [error, setError] = useState({ otp: '', message })
+  const [cooldown, setCooldown] = useState(RESEND_COOLDOWN)
+  const inputRefs = useRef([])
+
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const id = setTimeout(() => setCooldown((c) => c - 1), 1000)
+    return () => clearTimeout(id)
+  }, [cooldown])
+
+  const otp = digits.join('')
+
+  const setDigit = (idx, val) => {
+    const clean = val.replace(/\D/g, '').slice(0, 1)
+    setDigits((prev) => create(prev, (d) => { d[idx] = clean }))
+    setError((prev) => create(prev, (d) => {
+      delete d?.message
+      const joined = [...digits.slice(0, idx), clean, ...digits.slice(idx + 1)].join('')
+      joined.length === OTP_LEN ? delete d.otp : (d.otp = '')
+    }))
+    if (clean && idx < OTP_LEN - 1) inputRefs.current[idx + 1]?.focus()
   }
 
-  // Submit Data
+  const handleKeyDown = (idx, e) => {
+    if (e.key === 'Backspace' && !digits[idx] && idx > 0) {
+      inputRefs.current[idx - 1]?.focus()
+    }
+    if (e.key === 'ArrowLeft' && idx > 0) inputRefs.current[idx - 1]?.focus()
+    if (e.key === 'ArrowRight' && idx < OTP_LEN - 1) inputRefs.current[idx + 1]?.focus()
+  }
+
+  const handlePaste = (e) => {
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, OTP_LEN)
+    if (!pasted) return
+    e.preventDefault()
+    const arr = Array(OTP_LEN).fill('')
+    pasted.split('').forEach((c, i) => { arr[i] = c })
+    setDigits(arr)
+    inputRefs.current[Math.min(pasted.length, OTP_LEN - 1)]?.focus()
+  }
+
   const otpSubmit = (event) => {
     event.preventDefault()
-    if (otp === '') {
-      toast.error('Required fields are empty!')
+    if (otp.length !== OTP_LEN) {
+      toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-
     setLoading({ ...loading, otp: true })
-    const requestData = {
-      otp: otp
-    }
-
     const controller = new AbortController()
-    xFetch('account-verification', requestData, null, controller.signal, null, 'POST').then(
-      (response) => {
-        setLoading({ ...loading, otp: false })
-
-        if (response?.success) {
-          toast.success(response.message)
-          setStep(2)
-          return
-        }
-        setError(response?.errors || response)
+    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST').then((response) => {
+      setLoading({ ...loading, otp: false })
+      if (response?.success) {
+        toast.success(response.message)
+        setStep(2)
+        return
       }
-    )
+      setError(response?.errors || response)
+    })
     controller.abort()
   }
 
-  // Resend OTP
   const resendOTP = () => {
-    if (userId === '' || userId === undefined) {
+    if (!userId) {
       toast.error('Undefined User!')
       return
     }
-
     setLoading({ ...loading, resendOtp: true })
     xFetch(`otp-resend/${userId}`).then((response) => {
       setLoading({ ...loading, resendOtp: false })
-
       if (response?.success) {
         toast.success(response.message)
+        setCooldown(RESEND_COOLDOWN)
         return
       }
       setError(response?.errors || response)
@@ -76,49 +90,55 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
   }
 
   return (
-    <>
-      <div className="login p-5">
-        <form className="text-center" onSubmit={otpSubmit}>
-          <h2 className="mb-4">OTP Verification</h2>
-          {error?.message && error?.message !== '' && (
-            <div className="alert alert-danger" role="alert">
-              <strong>{error?.message}</strong>
-            </div>
-          )}
+    <form onSubmit={otpSubmit} noValidate>
+      {error?.message && <div className="auth-alert">{error.message}</div>}
 
-          <input
-            type="number"
-            id="defaultLoginFormEmail"
-            className={`form-control ${error?.otp ? ' is-invalid' : ''}`}
-            placeholder="OTP"
-            value={otp || ''}
-            onChange={(e) => setChange(e.target.value)}
-            disabled={loading?.otp}
-          />
-          {error?.otp && <div className="invalid-feedback text-start">{error?.otp}</div>}
-
-          <div className="text-end mt-2">
-            {loading?.resendOtp ? (
-              <div className="d-inline-block">
-                <LoaderSm size={30} clr="var(--primary-color)" className="ms-2" />
-              </div>
-            ) : (
-              <p className="cursor-pointer" onClick={resendOTP}>
-                Did not get OTP? Resend OTP{' '}
-              </p>
-            )}
-          </div>
-          <button
-            className="btn btn-primary btn-block mt-4"
-            type="submit"
-            disabled={Object.keys(error).length || loading?.otp}>
-            <div className="d-flex">
-              Submit
-              {loading?.otp && <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />}
-            </div>
-          </button>
-        </form>
+      <div className="auth-field">
+        <label>{t('auth.otp_label', 'Enter 6-digit code')}</label>
+        <div className="otp-boxes" onPaste={handlePaste}>
+          {digits.map((d, i) => (
+            <input
+              key={i}
+              ref={(el) => (inputRefs.current[i] = el)}
+              type="text"
+              inputMode="numeric"
+              maxLength={1}
+              value={d}
+              onChange={(e) => setDigit(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              className={error?.otp ? 'has-error' : ''}
+              disabled={loading?.otp}
+              autoFocus={i === 0}
+            />
+          ))}
+        </div>
+        {error?.otp && <div className="field-error">{error.otp}</div>}
       </div>
-    </>
+
+      <div className="otp-resend">
+        {loading?.resendOtp ? (
+          <LoaderSm size={20} clr="var(--primary-color)" />
+        ) : cooldown > 0 ? (
+          <>
+            {t('auth.otp_resend_in', 'Resend code in')} <strong>{cooldown}s</strong>
+          </>
+        ) : (
+          <>
+            {t('auth.otp_didnt_get', "Didn't get the code?")}
+            <button type="button" onClick={resendOTP}>
+              {t('auth.resend_otp', 'Resend OTP')}
+            </button>
+          </>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        className="auth-btn"
+        disabled={otp.length !== OTP_LEN || loading?.otp}>
+        {t('auth.verify', 'Verify')}
+        {loading?.otp && <LoaderSm size={18} clr="#fff" />}
+      </button>
+    </form>
   )
 }
