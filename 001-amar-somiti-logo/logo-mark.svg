@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="আমার সমিতি mark">
+  <defs>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#14a8a8"/>
+      <stop offset="100%" stop-color="#0a5252"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd76b"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <radialGradient id="coinGrad" cx="0.35" cy="0.35" r="0.75">
+      <stop offset="0%" stop-color="#ffe48a"/>
+      <stop offset="60%" stop-color="#e8b733"/>
+      <stop offset="100%" stop-color="#9c6b08"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Tile background -->
+  <rect width="256" height="256" rx="56" fill="#fff"/>
+  <rect x="6" y="6" width="244" height="244" rx="52" fill="none" stroke="url(#tealGrad)" stroke-width="2" opacity="0.2"/>
+
+  <!-- Member ring: 8 dots = cooperative members united around shield -->
+  <g fill="url(#tealGrad)" opacity="0.85">
+    <circle cx="128" cy="36"  r="6"/>
+    <circle cx="193" cy="63"  r="6"/>
+    <circle cx="220" cy="128" r="6"/>
+    <circle cx="193" cy="193" r="6"/>
+    <circle cx="128" cy="220" r="6"/>
+    <circle cx="63"  cy="193" r="6"/>
+    <circle cx="36"  cy="128" r="6"/>
+    <circle cx="63"  cy="63"  r="6"/>
+  </g>
+  <!-- Subtle ring connecting members -->
+  <circle cx="128" cy="128" r="92" fill="none" stroke="url(#tealGrad)" stroke-width="1.5" opacity="0.25"/>
+
+  <!-- Shield (trust / financial security) -->
+  <path d="M 128 56
+           L 188 76
+           L 188 138
+           Q 188 178 128 204
+           Q 68 178 68 138
+           L 68 76 Z"
+        fill="url(#tealGrad)"/>
+  <!-- Inner shield highlight -->
+  <path d="M 128 68
+           L 178 84
+           L 178 138
+           Q 178 170 128 192
+           Q 78 170 78 138
+           L 78 84 Z"
+        fill="none" stroke="#fff" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Gold coin centered in shield -->
+  <g transform="translate(128 130)">
+    <circle r="38" fill="url(#coinGrad)"/>
+    <circle r="38" fill="none" stroke="#7a5208" stroke-width="2" opacity="0.7"/>
+    <circle r="32" fill="none" stroke="#fff8d8" stroke-width="1" opacity="0.5"/>
+    <!-- Bengali Taka ৳ -->
+    <text y="14" text-anchor="middle"
+          font-family="'Noto Sans Bengali', 'SolaimanLipi', 'Hind Siliguri', system-ui, sans-serif"
+          font-size="50" font-weight="700" fill="#0d4040">৳</text>
+  </g>
+</svg>

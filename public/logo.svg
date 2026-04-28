@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 540" width="420" height="540" role="img" aria-label="আমার সমিতি logo">
+  <defs>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#14a8a8"/>
+      <stop offset="100%" stop-color="#0a5252"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd76b"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <radialGradient id="coinGrad" cx="0.35" cy="0.35" r="0.75">
+      <stop offset="0%" stop-color="#ffe48a"/>
+      <stop offset="60%" stop-color="#e8b733"/>
+      <stop offset="100%" stop-color="#9c6b08"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Emblem block -->
+  <g transform="translate(210 210)">
+    <!-- Member ring: 8 dots -->
+    <g fill="url(#tealGrad)" opacity="0.85">
+      <circle cx="0"    cy="-150" r="8"/>
+      <circle cx="106"  cy="-106" r="8"/>
+      <circle cx="150"  cy="0"    r="8"/>
+      <circle cx="106"  cy="106"  r="8"/>
+      <circle cx="0"    cy="150"  r="8"/>
+      <circle cx="-106" cy="106"  r="8"/>
+      <circle cx="-150" cy="0"    r="8"/>
+      <circle cx="-106" cy="-106" r="8"/>
+    </g>
+    <circle r="138" fill="none" stroke="url(#tealGrad)" stroke-width="2" opacity="0.25"/>
+
+    <!-- Shield -->
+    <path d="M 0 -110
+             L 90 -80
+             L 90 12
+             Q 90 72 0 110
+             Q -90 72 -90 12
+             L -90 -80 Z"
+          fill="url(#tealGrad)"/>
+    <path d="M 0 -92
+             L 75 -68
+             L 75 12
+             Q 75 60 0 92
+             Q -75 60 -75 12
+             L -75 -68 Z"
+          fill="none" stroke="#fff" stroke-width="1.5" opacity="0.35"/>
+
+    <!-- Coin + ৳ -->
+    <g transform="translate(0 8)">
+      <circle r="58" fill="url(#coinGrad)"/>
+      <circle r="58" fill="none" stroke="#7a5208" stroke-width="2" opacity="0.7"/>
+      <circle r="50" fill="none" stroke="#fff8d8" stroke-width="1" opacity="0.5"/>
+      <text y="22" text-anchor="middle"
+            font-family="'Noto Sans Bengali', 'SolaimanLipi', 'Hind Siliguri', system-ui, sans-serif"
+            font-size="76" font-weight="700" fill="#0d4040">৳</text>
+    </g>
+  </g>
+
+  <!-- Bengali wordmark -->
+  <text x="210" y="430" text-anchor="middle"
+        font-family="'Noto Sans Bengali', 'SolaimanLipi', 'Hind Siliguri', system-ui, sans-serif"
+        font-size="58" font-weight="700" fill="#0d6e6e" letter-spacing="1">আমার সমিতি</text>
+
+  <!-- Tagline -->
+  <text x="210" y="470" text-anchor="middle"
+        font-family="'Inter', system-ui, sans-serif"
+        font-size="13" font-weight="600" fill="#14a8a8" letter-spacing="4">COOPERATIVE · SAVINGS · TRUST</text>
+
+  <!-- Gold underline -->
+  <rect x="175" y="488" width="70" height="3" rx="1.5" fill="url(#goldGrad)"/>
+</svg>
