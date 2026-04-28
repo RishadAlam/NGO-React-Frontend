@@ -1,5 +1,5 @@
 import { create, rawReturn } from 'mutative'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAppSettingsState } from '../../atoms/appSettingsAtoms'
@@ -15,11 +15,17 @@ import Save from '../../icons/Save'
 import Tool from '../../icons/Tool'
 import xFetch from '../../utilities/xFetch'
 
+const FALLBACK_LOGO = '/logo.svg'
+
+const isValidImageUri = (uri) => typeof uri === 'string' && uri.trim() !== ''
+
 export default function AppSettings() {
   const [appSettings, setAppSettings] = useAppSettingsState()
   const { accessToken } = useAuthDataValue()
   const { t } = useTranslation()
-  const [companyLogo, setCompanyLogo] = useState(appSettings?.company_logo_uri)
+  const [companyLogo, setCompanyLogo] = useState(
+    isValidImageUri(appSettings?.company_logo_uri) ? appSettings.company_logo_uri : FALLBACK_LOGO
+  )
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useLoadingState({})
   const [inputs, setInputs] = useState(() => ({
@@ -29,10 +35,17 @@ export default function AppSettings() {
     company_logo: ''
   }))
 
+  useEffect(() => {
+    setCompanyLogo(
+      isValidImageUri(appSettings?.company_logo_uri) ? appSettings.company_logo_uri : FALLBACK_LOGO
+    )
+  }, [appSettings?.company_logo_uri])
+
   const setChange = (val, name) => {
     if (name === 'company_logo') {
       setCompanyLogo(URL.createObjectURL(val))
     }
+
     setInputs((prevInputs) =>
       create(prevInputs, (draftInputs) => {
         draftInputs[name] = val
@@ -51,6 +64,7 @@ export default function AppSettings() {
 
   const onSubmit = (event) => {
     event.preventDefault()
+
     if (
       inputs.company_name === '' ||
       inputs.company_short_name === '' ||
@@ -134,7 +148,7 @@ export default function AppSettings() {
                     <div className="col-md-12 mb-3 text-center">
                       <ImagePreview
                         label={t('app_settings.company_logo')}
-                        imageUri={companyLogo || ''}
+                        imageUri={companyLogo}
                         setImageUri={setCompanyLogo}
                         setChange={(val) => setChange(val, 'company_logo')}
                         error={errors?.company_logo}
