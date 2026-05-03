@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as *;
 
 .internal-audit-report {
   --audit-card-bg: var(--soft-bg);

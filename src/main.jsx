@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
+import 'rsuite/dist/rsuite.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'

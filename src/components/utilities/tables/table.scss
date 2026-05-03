@@ -1,4 +1,4 @@
-@import '../../../scss/variables';
+@use '../../../scss/variables' as *;
 
 .react-table-card {
   border: 1px solid var(--border-color);

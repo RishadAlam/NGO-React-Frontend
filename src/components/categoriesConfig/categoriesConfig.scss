@@ -1,5 +1,5 @@
-@import '../../scss/responsive';
-@import '../../scss/variables';
+@use '../../scss/responsive' as *;
+@use '../../scss/variables' as *;
 
 .categories-config-modern {
   --cfg-surface: var(--main-bg);

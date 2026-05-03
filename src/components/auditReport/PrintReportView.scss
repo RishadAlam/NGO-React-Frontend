@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@use '../../scss/variables' as *;
 
 .print-report {
   font-family: 'Tiro Bangla', 'Poppins', sans-serif !important;
