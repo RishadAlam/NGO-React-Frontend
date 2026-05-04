@@ -38,6 +38,7 @@ const Income = lazy(() => import('./pages/accountManagement/Income'))
 const Expense = lazy(() => import('./pages/accountManagement/Expense'))
 const Transfers = lazy(() => import('./pages/accountManagement/Transfers'))
 const Transactions = lazy(() => import('./pages/accountManagement/Transactions'))
+const Analytics = lazy(() => import('./pages/analytics/Analytics'))
 const Withdrawal = lazy(() => import('./pages/accountManagement/Withdrawal'))
 const IncomeCategories = lazy(() => import('./pages/accountManagement/IncomeCategories'))
 const ExpenseCategories = lazy(() => import('./pages/accountManagement/ExpenseCategories'))
@@ -81,7 +82,7 @@ export default function App() {
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* UnAuthenticate Routes */}
-          <Route path="/*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/login" element={<Layout pageTitle="page_name.login" />}>
             <Route index element={<Login />} />
@@ -941,6 +942,27 @@ export default function App() {
                   />
                 </Route>
               </Route>
+            </Route>
+
+            {/* Global Analytics */}
+            <Route
+              path="analytics"
+              element={
+                <RequirePermissions
+                  allowedPermissions={['analytics_dashboard_view']}
+                  pageTitle="menu.label.analytics"
+                />
+              }>
+              <Route
+                index
+                element={
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Suspense fallback={<Loader />}>
+                      <Analytics />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
             </Route>
 
             {/* Staffs */}

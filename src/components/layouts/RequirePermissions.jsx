@@ -25,7 +25,7 @@ export default function RequirePermissions({ allowedPermissions, pageTitle = '' 
       allowedPermissions?.some((permission) => permissions.includes(permission)) ? (
         <Outlet />
       ) : (
-        <NotFound />
+        <NotFound embedded permissionFallback />
       )}
     </>
   )

@@ -12,6 +12,7 @@
     "search": "Search",
     "No_Records_Found": "No Records Found!",
     "Showing_Up": "Showing Up",
+    "table_showing_results": "Showing {{start}} to {{end}} of {{total}} results.",
     "client_name": "Client",
     "acc_no": "Account No.",
     "acc_details": "Account Details",
@@ -231,7 +232,8 @@
     "saving_to_saving": "Saving to Saving",
     "saving_to_loan_saving": "Saving to Loan",
     "loan_saving_to_saving": "Loan to Saving",
-    "loan_saving_to_loan_saving": "Loan to Loan"
+    "loan_saving_to_loan_saving": "Loan to Loan",
+    "details": "Details"
   },
   "common_validation": {
     "enter_password": "Enter Password",
@@ -285,6 +287,7 @@
       "center": "Center Setup",
       "category": "Category Setup",
       "account_management": "Financial Management",
+      "analytics": "Analytics",
       "staff": "Team Management",
       "settings_and_privacy": "System Settings",
       "audit": "Audit & Reports",
@@ -424,6 +427,52 @@
   },
   "account_transaction": {
     "Transaction_List": "TRANSACTION LIST"
+  },
+  "analytics": {
+    "table_title": "FINANCIAL ANALYTICS",
+    "from_account": "From Account",
+    "to_account": "To Account",
+    "filters": {
+      "source_type": "Source Type",
+      "approval_status": "Approval Status"
+    },
+    "source_types": {
+      "all": "All Sources",
+      "registration": "All Registrations",
+      "saving_collection": "Savings Collection",
+      "loan_collection": "Loan Collection",
+      "saving_withdrawal": "Savings Withdrawal",
+      "loan_saving_withdrawal": "Loan Savings Withdrawal",
+      "saving_to_saving": "Saving To Saving Transfer",
+      "saving_to_loan": "Saving To Loan Transfer",
+      "loan_to_saving": "Loan To Saving Transfer",
+      "loan_to_loan": "Loan To Loan Transfer",
+      "income": "Income",
+      "expense": "Expense",
+      "account_transfer": "Account Transfer",
+      "account_withdrawal": "Account Withdrawal",
+      "client_registration": "Client Registration",
+      "saving_account_registration": "Savings Account Registration",
+      "loan_account_registration": "Loan Account Registration",
+      "loan_given": "Loan Given"
+    },
+    "transaction_types": {
+      "collection": "Collection",
+      "withdrawal": "Withdrawal",
+      "transfer": "Transfer",
+      "income": "Income",
+      "expense": "Expense",
+      "registration": "Registration"
+    },
+    "approval_status": {
+      "all": "All",
+      "approved": "Approved",
+      "pending": "Pending",
+      "not_required": "Not Required"
+    },
+    "details": {
+      "balance_flow": "{{from}} -> {{to}}"
+    }
   },
   "recycle_bin": {
     "title": "RECYCLE BIN",
@@ -1001,6 +1050,7 @@
       "pending_client_transactions_delete": "Delete pending client transaction",
       "account_list_view": "View accounts",
       "account_transaction_list_view": "View transactions",
+      "analytics_dashboard_view": "View analytics dashboard",
       "account_registration": "Register new account",
       "account_data_update": "Update account",
       "account_soft_delete": "Temporarily delete account",
@@ -1141,6 +1191,16 @@
     "no_account": "Need help?",
     "remember_creds": "Remembered it?",
     "back_to_login": "Back to sign in",
+    "not_found_badge": "Error 404",
+    "not_found_title": "Page not found",
+    "not_found_subtitle": "The page you are trying to open does not exist or may have been moved.",
+    "not_found_hint": "Check the link spelling or return using one of the shortcuts below.",
+    "not_found_primary_cta": "Go to dashboard",
+    "not_found_secondary_cta": "Back to sign in",
+    "permission_denied_badge": "Access Restricted",
+    "permission_denied_title": "You do not have permission to access this page",
+    "permission_denied_subtitle": "Please contact an administrator if you believe this is a mistake.",
+    "permission_denied_hint": "If this section should be available for your role, ask an admin to review your permissions.",
     "sign_in": "Sign in",
     "send_otp": "Send Reset OTP",
     "verify": "Verify",

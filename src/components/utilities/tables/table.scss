@@ -191,6 +191,14 @@
   background-color: rgba(var(--main-bg-rgb), 0.34) !important;
 }
 
+.react-data-table--virtualized tbody tr.react-table-row--odd > * {
+  background-color: rgba(var(--main-bg-rgb), 0.34) !important;
+}
+
+.react-data-table--virtualized tbody tr.react-table-row--even > * {
+  background-color: transparent !important;
+}
+
 .react-table-card .table-hover > tbody > tr:hover > * {
   color: $main-color !important;
   background-color: rgba(var(--primary-rgb), 0.16) !important;
@@ -203,6 +211,10 @@
 
 .react-table-row--clickable:hover {
   transform: translateY(-1px);
+}
+
+.react-data-table--virtualized .react-table-row--clickable:hover {
+  transform: none;
 }
 
 .react-data-table tfoot td {
@@ -270,6 +282,14 @@
 
 .dark .react-data-table tbody tr:nth-child(odd) > * {
   background-color: rgba(17, 26, 46, 0.84) !important;
+}
+
+.dark .react-data-table--virtualized tbody tr.react-table-row--odd > * {
+  background-color: rgba(17, 26, 46, 0.84) !important;
+}
+
+.dark .react-data-table--virtualized tbody tr.react-table-row--even > * {
+  background-color: transparent !important;
 }
 
 .dark .react-table-card .table-hover > tbody > tr:hover > * {

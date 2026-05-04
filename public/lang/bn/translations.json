@@ -12,6 +12,7 @@
     "search": "অনুসন্ধান করুন",
     "No_Records_Found": "কোন তথ্য পাওয়া যায়নি!",
     "Showing_Up": "প্রদর্শন",
+    "table_showing_results": "{{total}}টি ফলাফলের মধ্যে {{start}} থেকে {{end}} পর্যন্ত দেখানো হয়েছে।",
     "client_name": "সদস্যের নাম",
     "acc_no": "অ্যাকাউন্ট নং",
     "acc_details": "অ্যাকাউন্টের বিবরণ",
@@ -231,7 +232,8 @@
     "saving_to_saving": "সঞ্চয় থেকে সঞ্চয়",
     "saving_to_loan_saving": "সঞ্চয় থেকে ঋণ",
     "loan_saving_to_saving": "ঋণ থেকে সঞ্চয়",
-    "loan_saving_to_loan_saving": "ঋণ থেকে ঋণ"
+    "loan_saving_to_loan_saving": "ঋণ থেকে ঋণ",
+    "details": "বিস্তারিত"
   },
   "common_validation": {
     "enter_password": "পাসওয়ার্ড লিখুন",
@@ -275,6 +277,7 @@
       "center": "কেন্দ্র নিবন্ধন",
       "category": "ক্যাটাগরি নিবন্ধন",
       "account_management": "আর্থিক ব্যবস্থাপনা",
+      "analytics": "অ্যানালিটিক্স",
       "staff": "অফিসার ব্যবস্থাপনা",
       "settings_and_privacy": "সিস্টেম সেটিংস",
       "audit": "অডিট ও রিপোর্ট",
@@ -414,6 +417,52 @@
   },
   "account_transaction": {
     "Transaction_List": "লেনদেন তালিকা"
+  },
+  "analytics": {
+    "table_title": "আর্থিক অ্যানালিটিক্স",
+    "from_account": "প্রেরক অ্যাকাউন্ট",
+    "to_account": "গ্রাহক অ্যাকাউন্ট",
+    "filters": {
+      "source_type": "সোর্স টাইপ",
+      "approval_status": "অনুমোদন স্ট্যাটাস"
+    },
+    "source_types": {
+      "all": "সব সোর্স",
+      "registration": "সব নিবন্ধন",
+      "saving_collection": "সঞ্চয় কালেকশন",
+      "loan_collection": "ঋণ কালেকশন",
+      "saving_withdrawal": "সঞ্চয় উত্তোলন",
+      "loan_saving_withdrawal": "ঋণ সঞ্চয় উত্তোলন",
+      "saving_to_saving": "সঞ্চয় থেকে সঞ্চয় ট্রান্সফার",
+      "saving_to_loan": "সঞ্চয় থেকে ঋণ ট্রান্সফার",
+      "loan_to_saving": "ঋণ থেকে সঞ্চয় ট্রান্সফার",
+      "loan_to_loan": "ঋণ থেকে ঋণ ট্রান্সফার",
+      "income": "আয়",
+      "expense": "ব্যয়",
+      "account_transfer": "অ্যাকাউন্ট ট্রান্সফার",
+      "account_withdrawal": "অ্যাকাউন্ট উত্তোলন",
+      "client_registration": "ক্লায়েন্ট নিবন্ধন",
+      "saving_account_registration": "সঞ্চয় অ্যাকাউন্ট নিবন্ধন",
+      "loan_account_registration": "ঋণ অ্যাকাউন্ট নিবন্ধন",
+      "loan_given": "ঋণ প্রদান"
+    },
+    "transaction_types": {
+      "collection": "কালেকশন",
+      "withdrawal": "উত্তোলন",
+      "transfer": "ট্রান্সফার",
+      "income": "আয়",
+      "expense": "ব্যয়",
+      "registration": "নিবন্ধন"
+    },
+    "approval_status": {
+      "all": "সব",
+      "approved": "অনুমোদিত",
+      "pending": "অপেক্ষারত",
+      "not_required": "প্রযোজ্য নয়"
+    },
+    "details": {
+      "balance_flow": "{{from}} -> {{to}}"
+    }
   },
   "recycle_bin": {
     "title": "রিসাইকেল বিন",
@@ -995,6 +1044,7 @@
       "pending_client_transactions_delete": "ডিলিট",
       "account_list_view": "তালিকা দেখুন",
       "account_transaction_list_view": "লেনদেন দেখুন",
+      "analytics_dashboard_view": "অ্যানালিটিক্স ড্যাশবোর্ড দেখুন",
       "account_registration": "নিবন্ধন",
       "account_data_update": "আপডেট",
       "account_soft_delete": "ডিলিট (সাময়িক)",
@@ -1133,6 +1183,16 @@
     "no_account": "সাহায্য দরকার?",
     "remember_creds": "মনে পড়েছে?",
     "back_to_login": "সাইন ইনে ফিরে যান",
+    "not_found_badge": "এরর ৪০৪",
+    "not_found_title": "পেজ খুঁজে পাওয়া যায়নি",
+    "not_found_subtitle": "আপনি যে পেজটি খুলতে চাচ্ছেন সেটি নেই বা অন্য কোথাও সরিয়ে নেওয়া হয়েছে।",
+    "not_found_hint": "লিংকের বানান যাচাই করুন অথবা নিচের শর্টকাট থেকে ফিরে যান।",
+    "not_found_primary_cta": "ড্যাশবোর্ডে যান",
+    "not_found_secondary_cta": "সাইন ইনে ফিরে যান",
+    "permission_denied_badge": "অ্যাক্সেস সীমাবদ্ধ",
+    "permission_denied_title": "এই পেজে প্রবেশের অনুমতি আপনার নেই",
+    "permission_denied_subtitle": "এটি ভুল মনে হলে অনুগ্রহ করে একজন অ্যাডমিনের সাথে যোগাযোগ করুন।",
+    "permission_denied_hint": "আপনার রোলে এই সেকশন থাকা উচিত হলে, অ্যাডমিনকে পারমিশন যাচাই করতে বলুন।",
     "sign_in": "সাইন ইন",
     "send_otp": "রিসেট OTP পাঠান",
     "verify": "যাচাই করুন",

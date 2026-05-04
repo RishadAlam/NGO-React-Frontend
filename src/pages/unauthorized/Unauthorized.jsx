@@ -1,5 +1,6 @@
 import React from 'react'
+import NotFound from './NotFound'
 
 export default function Unauthorized() {
-  return <div>Unauthorized</div>
+  return <NotFound permissionFallback />
 }

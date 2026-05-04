@@ -433,6 +433,13 @@ export const mainMenu = (t) => {
         ]
       },
       {
+        id: 'globalAnalytics',
+        label: t('menu.label.analytics'),
+        path: '/analytics',
+        icon: 'BusinessOpportunity',
+        view: checkPermission('analytics_dashboard_view', permissions)
+      },
+      {
         id: 6,
         label: t('menu.label.staff'),
         path: '',

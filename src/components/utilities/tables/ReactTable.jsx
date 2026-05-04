@@ -2,7 +2,6 @@ import { FormControlLabel, Switch } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Cookies from 'js-cookie'
 import { memo, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -37,7 +36,6 @@ function ReactTable({
 }) {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const lang = Cookies.get('i18next')
   const isRowClickable = rowLinkPath !== '#'
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -134,7 +132,7 @@ function ReactTable({
   const pageRows = useMemo(() => page, [page])
   const { bodyRef, isVirtualized, visibleRows, topPadding, bottomPadding } = useVirtualRows(
     pageRows,
-    { enabled: pageRows.length > 50, rowHeight: 56, overscan: 8 }
+    { enabled: pageRows.length > 100, rowHeight: 56, overscan: 12 }
   )
   const showedTotalRows =
     pageSize !== page.length
@@ -197,7 +195,11 @@ function ReactTable({
         </div>
 
         <div className="table-responsive table-scroll-both react-table-scroll">
-          <table {...getTableProps()} className="table table-hover table-report react-data-table">
+          <table
+            {...getTableProps()}
+            className={`table table-hover table-report react-data-table ${
+              isVirtualized ? 'react-data-table--virtualized' : ''
+            }`}>
             <thead>
               {headerGroups.map((headerGroup, i) => (
                 <tr key={i} {...headerGroup.getHeaderGroupProps()}>
@@ -239,15 +241,21 @@ function ReactTable({
                   )}
                   {visibleRows.map((row) => {
                     prepareRow(row)
+                    const rowStripeClass =
+                      row.index % 2 === 0 ? 'react-table-row--even' : 'react-table-row--odd'
+
                     return (
                       <tr
                         key={row.id}
                         {...row.getRowProps()}
+                        data-virtual-row="true"
                         onClick={() =>
                           isRowClickable &&
                           navigate(`${rowLinkPath}/${row.original[rowLinkPrefix]}`)
                         }
-                        className={isRowClickable ? 'react-table-row--clickable' : ''}>
+                        className={`${rowStripeClass} ${
+                          isRowClickable ? 'react-table-row--clickable' : ''
+                        }`.trim()}>
                         {row.cells.map((cell, index) => (
                           <td key={index} {...cell.getCellProps()}>
                             {cell.render('Cell')}
@@ -303,16 +311,13 @@ function ReactTable({
         {pageCount > 0 && (
           <div className="react-table-footer">
             <div className="react-table-footer-summary">
-              {lang !== 'bn' ? (
-                <span>
-                  Showing {rowStart} to {showedTotalRows} of {totalRows} results.
-                </span>
-              ) : (
-                <span>
-                  {tsNumbers(totalRows)}টি ফলাফলের মধ্যে {tsNumbers(rowStart)} থেকে{' '}
-                  {tsNumbers(showedTotalRows)} পর্যন্ত দেখানো হয়েছে।
-                </span>
-              )}
+              <span>
+                {t('common.table_showing_results', {
+                  total: tsNumbers(totalRows),
+                  start: tsNumbers(rowStart),
+                  end: tsNumbers(showedTotalRows)
+                })}
+              </span>
             </div>
             <div className="react-table-footer-pagination">
               {pageCount > 1 && (
