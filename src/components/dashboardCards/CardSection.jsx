@@ -35,6 +35,7 @@ export default function CardSection({
             color={'var(--accent-color)'}
             itemData={loan_distributions}
             isLoading={isLoading}
+            viewAllPath="/dashboard/loan-given"
           />
         </div>
       </div>
@@ -46,6 +47,7 @@ export default function CardSection({
             color={'var(--primary-color)'}
             itemData={loan_collections_summery}
             isLoading={isLoading}
+            viewAllPath="/dashboard/loan-recovered"
           />
         </div>
       </div>
@@ -57,6 +59,7 @@ export default function CardSection({
             color={'var(--accent-color)'}
             itemData={loan_saving_collections}
             isLoading={isLoading}
+            viewAllPath="/dashboard/loan-saving"
           />
         </div>
       </div>
@@ -68,6 +71,7 @@ export default function CardSection({
             color={'var(--primary-color)'}
             itemData={saving_collections_summery}
             isLoading={isLoading}
+            viewAllPath="/dashboard/saving-collections"
           />
         </div>
       </div>
@@ -79,6 +83,7 @@ export default function CardSection({
             color={'var(--accent-color)'}
             itemData={monthly_loan_collections}
             isLoading={isLoading}
+            viewAllPath="/dashboard/monthly-loan"
           />
         </div>
       </div>
@@ -90,6 +95,7 @@ export default function CardSection({
             color={'var(--primary-color)'}
             itemData={dps_collections}
             isLoading={isLoading}
+            viewAllPath="/dashboard/dps-collections"
           />
         </div>
       </div>

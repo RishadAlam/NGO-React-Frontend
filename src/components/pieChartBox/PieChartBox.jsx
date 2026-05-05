@@ -12,6 +12,7 @@ export default function PieChartBox({ chartName, sources = [], isLoading }) {
     ...item,
     amount: parseFloat(item.amount)
   }))
+  const total = processedData.reduce((sum, item) => sum + (item.amount || 0), 0)
 
   return (
     <>
@@ -48,6 +49,12 @@ export default function PieChartBox({ chartName, sources = [], isLoading }) {
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
+                {processedData.length > 0 && (
+                  <div className="chart-center-label">
+                    <span className="chart-center-label__value">৳ {tsNumbers(total)}</span>
+                    <span className="chart-center-label__sub">{t('common.Total') || 'Total'}</span>
+                  </div>
+                )}
               </div>
               <div className="options d-flex flex-wrap">
                 {processedData.map((item, index) => (
@@ -76,6 +83,5 @@ const CustomTooltip = ({ active, payload, t }) => {
       <p className="label">{`${defaultNameCheck(t, payload[0].payload.is_default, 'category.default.', payload[0].payload.name)} : ৳${tsNumbers(payload[0].value)}`}</p>
     )
   }
-
   return null
 }

@@ -30,6 +30,12 @@ const SavingReport = lazy(() => import('./pages/regularCollection/SavingReport')
 const SavingReportSheet = lazy(() => import('./pages/regularCollection/SavingReportSheet'))
 const LoanReport = lazy(() => import('./pages/regularCollection/LoanReport'))
 const LoanReportSheet = lazy(() => import('./pages/regularCollection/LoanReportSheet'))
+const LoanGivenViewAll = lazy(() => import('./pages/dashboard/LoanGivenViewAll'))
+const LoanRecoveredViewAll = lazy(() => import('./pages/dashboard/LoanRecoveredViewAll'))
+const LoanSavingViewAll = lazy(() => import('./pages/dashboard/LoanSavingViewAll'))
+const MonthlyLoanViewAll = lazy(() => import('./pages/dashboard/MonthlyLoanViewAll'))
+const SavingCollectionsViewAll = lazy(() => import('./pages/dashboard/SavingCollectionsViewAll'))
+const DpsCollectionsViewAll = lazy(() => import('./pages/dashboard/DpsCollectionsViewAll'))
 const Field = lazy(() => import('./pages/field/Field'))
 const Center = lazy(() => import('./pages/center/Center'))
 const Category = lazy(() => import('./pages/category/Category'))
@@ -99,6 +105,69 @@ export default function App() {
           {/* Authenticate Routes */}
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard pageTitle="menu.dashboard" />} />
+
+            {/* Dashboard View All Routes */}
+            <Route
+              path="dashboard/loan-given"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <LoanGivenViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="dashboard/loan-recovered"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <LoanRecoveredViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="dashboard/loan-saving"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <LoanSavingViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="dashboard/monthly-loan"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <MonthlyLoanViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="dashboard/saving-collections"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <SavingCollectionsViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+            <Route
+              path="dashboard/dps-collections"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <DpsCollectionsViewAll />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
+
             <Route
               path="profile"
               element={

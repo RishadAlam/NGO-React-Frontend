@@ -5,6 +5,8 @@ import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import Avatar from '../utilities/Avatar'
 import './topCollectors.scss'
 
+const RANK_LABELS = ['rankBadge--gold', 'rankBadge--silver', 'rankBadge--bronze']
+
 export default function TopCollectors({ heading, collectors, isLoading }) {
   const { t } = useTranslation()
 
@@ -20,8 +22,11 @@ export default function TopCollectors({ heading, collectors, isLoading }) {
           <div className="card-body">
             <div className="list">
               {Array.isArray(collectors) &&
-                collectors.map((user) => (
+                collectors.map((user, index) => (
                   <div className="listItem" key={user.id}>
+                    <span className={`rankBadge ${RANK_LABELS[index] || 'rankBadge--default'}`}>
+                      {index + 1}
+                    </span>
                     <div className="user">
                       <Avatar name={user.name} img={user.image_uri} />
                       <div className="userTexts">

@@ -427,7 +427,7 @@
       "approval_status": "অনুমোদন স্ট্যাটাস"
     },
     "source_types": {
-      "all": "সব সোর্স",
+      "all": "সব",
       "registration": "সব নিবন্ধন",
       "saving_collection": "সঞ্চয় কালেকশন",
       "loan_collection": "ঋণ কালেকশন",
@@ -441,7 +441,7 @@
       "expense": "ব্যয়",
       "account_transfer": "অ্যাকাউন্ট ট্রান্সফার",
       "account_withdrawal": "অ্যাকাউন্ট উত্তোলন",
-      "client_registration": "ক্লায়েন্ট নিবন্ধন",
+      "client_registration": "সদস্য নিবন্ধন",
       "saving_account_registration": "সঞ্চয় অ্যাকাউন্ট নিবন্ধন",
       "loan_account_registration": "ঋণ অ্যাকাউন্ট নিবন্ধন",
       "loan_given": "ঋণ প্রদান"

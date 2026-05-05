@@ -25,7 +25,7 @@
   .list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     flex: 1;
     min-height: 0;
     overflow: auto;
@@ -34,54 +34,109 @@
     .listItem {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid rgba(var(--primary-rgb), 0.16);
+      border: 1px solid rgba(var(--primary-rgb), 0.14);
       background: linear-gradient(
         155deg,
-        rgba(var(--primary-rgb), 0.05) 0%,
-        rgba(var(--accent-rgb), 0.05) 100%
+        rgba(var(--primary-rgb), 0.04) 0%,
+        rgba(var(--accent-rgb), 0.04) 100%
       );
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 
-      .user {
-        display: flex;
-        gap: 10px;
-        max-width: 70% !important;
-        overflow: hidden;
-
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        .userTexts {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-
-          .username {
-            font-size: 14px;
-            font-weight: 600;
-          }
-          .role {
-            font-size: 12px;
-            color: $soft-color;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-      }
-
-      .amount {
-        font-size: 15px;
-        font-weight: 600;
-        color: $blue-magenta;
+      &:hover {
+        background: linear-gradient(
+          155deg,
+          rgba(var(--primary-rgb), 0.08) 0%,
+          rgba(var(--accent-rgb), 0.06) 100%
+        );
+        border-color: rgba(var(--primary-rgb), 0.28);
       }
     }
+  }
+
+  .rankBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+
+    &--gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+    }
+
+    &--silver {
+      background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(100, 116, 139, 0.3);
+    }
+
+    &--bronze {
+      background: linear-gradient(135deg, #cd7c3e 0%, #a05c2a 100%);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(160, 92, 42, 0.3);
+    }
+
+    &--default {
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--soft-color);
+    }
+  }
+
+  .user {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    align-items: center;
+
+    img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .userTexts {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+
+      .username {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .role {
+        font-size: 11px;
+        color: $soft-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .amount {
+    font-size: 14px;
+    font-weight: 700;
+    color: $blue-magenta;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 }
