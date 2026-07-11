@@ -7,8 +7,17 @@ import { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import MoreVertical from '../../icons/MoreVertical'
 import '../../pages/staffs/staffs.scss'
+import CollectionSheetFilters from './CollectionSheetFilters'
 
-function LoanCollectionSheetHeader({ columnList, setColumnList }) {
+function LoanCollectionSheetHeader({
+  columnList,
+  setColumnList,
+  searchQuery,
+  setSearchQuery,
+  centerOptions,
+  selectedCenter,
+  onCenterChange
+}) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const { t } = useTranslation()
@@ -32,39 +41,49 @@ function LoanCollectionSheetHeader({ columnList, setColumnList }) {
     <div className="card-header collection-sheet-header">
       <div className="d-flex justify-content-between align-items-center collection-sheet-toolbar">
         <h2 className="heading">{t('common.collection_sheet')}</h2>
-        <div className="column-hiding text-end position-relative">
-          <Button
-            id="hide-column--button"
-            className="table-btn table-btn--icon"
-            aria-controls={open ? 'hide-column-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}>
-            <MoreVertical size={24} />
-          </Button>
-          <Menu
-            id="hide-column-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'hide-column--button'
-            }}>
-            {Object.keys(columnList).map((column, index) => (
-              <MenuItem key={index}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      size="small"
-                      checked={columnList[column]}
-                      onChange={(e) => setColumnVisible(e.target.checked, column)}
-                    />
-                  }
-                  label={t(`common.${column}`)}
-                />
-              </MenuItem>
-            ))}
-          </Menu>
+        <div className="collection-sheet-toolbar-actions">
+          <CollectionSheetFilters
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            centerOptions={centerOptions}
+            selectedCenter={selectedCenter}
+            onCenterChange={onCenterChange}
+          />
+          <div className="column-hiding text-end position-relative">
+            <Button
+              id="hide-column--button"
+              className="table-btn table-btn--icon"
+              aria-label={t('common.choose_columns')}
+              aria-controls={open ? 'hide-column-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}>
+              <MoreVertical size={24} />
+            </Button>
+            <Menu
+              id="hide-column-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'hide-column--button'
+              }}>
+              {Object.keys(columnList).map((column, index) => (
+                <MenuItem key={index}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        size="small"
+                        checked={columnList[column]}
+                        onChange={(e) => setColumnVisible(e.target.checked, column)}
+                      />
+                    }
+                    label={t(`common.${column}`)}
+                  />
+                </MenuItem>
+              ))}
+            </Menu>
+          </div>
         </div>
       </div>
     </div>

@@ -83,7 +83,7 @@ export default function SavingReportSheet({ isRegular = true }) {
     if (!dateRange) {
       setDateRange(dates[0])
     }
-  }, [dates])
+  }, [dateRange, dates])
 
   return (
     <>
@@ -113,6 +113,8 @@ export default function SavingReportSheet({ isRegular = true }) {
           loading={isLoading}
           mutate={mutate}
           isRegular={isRegular}
+          categoryName={category_name}
+          fieldName={field_name}
         />
       </section>
     </>

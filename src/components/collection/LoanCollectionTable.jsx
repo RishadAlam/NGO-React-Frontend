@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import LoanCollectionSheetBody from './LoanCollectionSheetBody'
 import LoanCollectionSheetFooter from './LoanCollectionSheetFooter'
 import LoanCollectionSheetHead from './LoanCollectionSheetHead'
@@ -7,6 +7,28 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
   const [approvedList, setApprovedList] = useState([])
 
   const totalCollection = useMemo(() => countTotalCollections(center?.loan_account || []), [center])
+  const visibleCollectionIds = useMemo(
+    () =>
+      new Set(
+        (center?.loan_account || []).flatMap((account) =>
+          (account?.loan_collection || [])
+            .map((collection) => collection?.id)
+            .filter((id) => id !== undefined && id !== null)
+        )
+      ),
+    [center]
+  )
+  const visibleApprovedList = useMemo(
+    () => approvedList.filter((id) => visibleCollectionIds.has(id)),
+    [approvedList, visibleCollectionIds]
+  )
+
+  useEffect(() => {
+    setApprovedList((currentList) => {
+      const visibleList = currentList.filter((id) => visibleCollectionIds.has(id))
+      return visibleList.length === currentList.length ? currentList : visibleList
+    })
+  }, [visibleCollectionIds])
 
   return (
     <>
@@ -21,21 +43,21 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
               setApprovedList={setApprovedList}
               accounts={center?.loan_account}
               totalCollection={totalCollection}
-              approvedList={approvedList}
+              approvedList={visibleApprovedList}
               isRegular={isRegular}
             />
             <LoanCollectionSheetBody
               center={center}
               columnList={columnList}
               mutate={mutate}
-              approvedList={approvedList}
+              approvedList={visibleApprovedList}
               setApprovedList={setApprovedList}
               isRegular={isRegular}
             />
             <LoanCollectionSheetFooter
               columnList={columnList}
               center={center}
-              approvedList={approvedList}
+              approvedList={visibleApprovedList}
               setApprovedList={setApprovedList}
               mutate={mutate}
               isRegular={isRegular}
