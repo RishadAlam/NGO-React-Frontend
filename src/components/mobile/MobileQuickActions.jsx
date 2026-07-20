@@ -248,7 +248,6 @@ export default function MobileQuickActions() {
         key={group.id}>
         <span className="mobile-quick-actions__icon" aria-hidden="true">
           <MobileServiceIcon name={group.icon} />
-          <small className="mobile-quick-actions__group-count">{group.actions.length}</small>
         </span>
         <span className="mobile-quick-actions__label">{group.label}</span>
       </button>
