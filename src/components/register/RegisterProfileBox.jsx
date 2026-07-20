@@ -12,9 +12,9 @@ export default function RegisterProfileBox({
   const { t } = useTranslation()
 
   return (
-    <div className="d-flex h-100 w-100 align-items-center justify-content-center">
+    <div className="register-profile d-flex h-100 w-100 align-items-center justify-content-center">
       <div className="image-preview border shadow rounded-4 p-2">
-        <div className="img" style={{ width: '180px', height: '180px' }}>
+        <div className="img register-profile__media" style={{ width: '180px', height: '180px' }}>
           <img
             className="rounded-2"
             alt="image"
@@ -24,7 +24,7 @@ export default function RegisterProfileBox({
           />
         </div>
       </div>
-      <div className="ms-3">
+      <div className="register-profile__content ms-3">
         <div className="truncate text-wrap fw-medium ln-hight">
           <b>{name}</b>
         </div>

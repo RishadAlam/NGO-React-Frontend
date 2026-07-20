@@ -1,7 +1,8 @@
-import { changeLanguage } from 'i18next'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import useLanguageMode from '../../hooks/useLanguageMode'
+import useThemeMode from '../../hooks/useThemeMode'
 import Moon from '../../icons/Moon'
 import Sun from '../../icons/Sun'
 import {
@@ -15,37 +16,11 @@ import Button from '../utilities/Button'
 
 export default function DarkLangButton() {
   const { t } = useTranslation()
-  const darkMood = Cookies.get('isDark')
-  const [isDark, setIsDark] = useState(() =>
-    darkMood ? JSON.parse(darkMood) === true : false
+  const { language, toggleLanguage } = useLanguageMode()
+  const { isDark, toggleThemeMode } = useThemeMode()
+  const [paletteId, setPaletteId] = useState(
+    () => getThemePalette(Cookies.get(THEME_PALETTE_COOKIE) || DEFAULT_THEME_PALETTE).id
   )
-  const [lang, setLang] = useState(() => Cookies.get('i18next') || 'en')
-  const [paletteId, setPaletteId] = useState(() =>
-    getThemePalette(Cookies.get(THEME_PALETTE_COOKIE) || DEFAULT_THEME_PALETTE).id
-  )
-
-  const setDarkMood = () =>
-    setIsDark((prevState) => {
-      const nextIsDark = !prevState
-      const mode = nextIsDark ? 'dark' : 'light'
-      document.body.className = mode
-      Cookies.set('isDark', JSON.stringify(nextIsDark), { expires: 30 })
-      applyThemePalette(paletteId, mode)
-      return nextIsDark
-    })
-
-  const setLanguage = () => {
-    changeLanguage(lang === 'en' ? 'bn' : 'en')
-    setLang((prevState) => {
-      const ln = prevState === 'en' ? 'bn' : 'en'
-      const htmlElement = document.querySelector('html')
-      if (htmlElement) {
-        htmlElement.lang = ln
-      }
-      Cookies.set('i18next', ln, { expires: 30 })
-      return ln
-    })
-  }
 
   /** @param {{ target: { value: string } }} event */
   const setThemePalette = (event) => {
@@ -80,23 +55,25 @@ export default function DarkLangButton() {
         </div>
         <Button
           type="button"
-          name={lang === 'en' ? 'Eng' : 'বাংলা'}
+          name={language === 'en' ? 'Eng' : 'বাংলা'}
           disabled={false}
           loading={false}
-          onclick={setLanguage}
+          onclick={toggleLanguage}
           style={{}}
           endIcon={null}
-          className={`topbar-lang-btn ${lang === 'bn' ? 'is-bn' : 'is-en'}`}
+          className={`topbar-lang-btn d-none d-md-inline-flex ${
+            language === 'bn' ? 'is-bn' : 'is-en'
+          }`}
         />
         <Button
           type="button"
           name={isDark ? <Moon /> : <Sun />}
           disabled={false}
           loading={false}
-          onclick={setDarkMood}
+          onclick={toggleThemeMode}
           style={{}}
           endIcon={null}
-          className="topbar-theme-btn"
+          className="topbar-theme-btn d-none d-md-inline-flex"
         />
       </div>
     </>

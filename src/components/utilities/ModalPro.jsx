@@ -37,7 +37,21 @@ const style = {
   backgroundColor: 'rgba(var(--main-bg-rgb), 0.84)',
   borderRadius: '20px',
   boxShadow: 24,
-  overflow: 'hidden'
+  overflow: 'hidden',
+  '@media (max-width: 767.98px)': {
+    top: 'auto',
+    right: 0,
+    bottom: 0,
+    left: 0,
+    transform: 'none',
+    width: '100%',
+    maxWidth: '100%',
+    minWidth: 0,
+    maxHeight: 'calc(100dvh - 12px)',
+    borderRadius: '24px 24px 0 0',
+    overflowX: 'hidden',
+    overflowY: 'auto'
+  }
 }
 
 export default function ModalPro({ open, handleClose, children }) {

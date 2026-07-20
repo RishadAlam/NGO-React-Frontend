@@ -83,7 +83,7 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
                 <strong>{error?.message}</strong>
               </div>
             )}
-            <ul className="mb-0">
+            <ul className="approval-config-list mb-0">
               {allApprovals.length > 0 &&
                 allApprovals.map((approval) => (
                   <Fragment key={approval.id}>

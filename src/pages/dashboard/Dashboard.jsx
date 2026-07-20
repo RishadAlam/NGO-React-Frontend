@@ -80,7 +80,7 @@ export default function Dashboard({ pageTitle }) {
           </div>
           <div className="col-xl-3 col-lg-4 col-md-6 dashboard-column collectors">
             <div className="dashboard-stack">
-              <div className="box dashboard-panel top-collectors">
+              <div className="box dashboard-panel top-collectors dashboard-grid-panel dashboard-grid-panel--people">
                 <TopCollectors
                   heading={t('dashboard.Todays_Top_Money_Collectors')}
                   collectors={top_collectionist}
@@ -103,8 +103,8 @@ export default function Dashboard({ pageTitle }) {
               </div>
             </div>
           </div>
-          <div className="col-md-6 d-lg-none d-block dashboard-column">
-            <div className="box dashboard-panel pie-analytics">
+          <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
+            <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
               <PieChartBox
                 chartName={t('dashboard.Savings_Collection_by_Sources')}
                 sources={saving_collections_sources}
@@ -112,8 +112,8 @@ export default function Dashboard({ pageTitle }) {
               />
             </div>
           </div>
-          <div className="col-md-6 d-lg-none d-block dashboard-column">
-            <div className="box dashboard-panel pie-analytics">
+          <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
+            <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
               <PieChartBox
                 chartName={t('dashboard.Loans_Collection_by_Sources')}
                 sources={loan_collections_sources}

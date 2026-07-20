@@ -115,7 +115,7 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
                 <div className="d-flex h-100 w-100 align-items-center justify-content-center">
                   <div className="image-preview border shadow rounded-4 p-2">
                     <div
-                      className="img"
+                      className="img register-signature__media"
                       style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
                       <img
                         className="rounded-2"

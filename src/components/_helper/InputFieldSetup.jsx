@@ -8,7 +8,7 @@ export default function InputFieldSetup({ val, name, index, setChange, disabled,
       toggleStatus={(e) => setChange(e.target.checked, name, index)}
     />
   ) : (
-    <div style={{ maxWidth: '80px' }}>
+    <div className="input-field-setup" style={{ maxWidth: '80px' }}>
       <TextInputField
         type="number"
         autoFocus={true}

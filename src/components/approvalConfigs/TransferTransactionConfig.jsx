@@ -98,7 +98,7 @@ export default function TransferTransactionConfig({
       {isLoading || !Object.keys(accTransferConfigs)?.length ? (
         <ReactTableSkeleton />
       ) : (
-        <div className="card my-3 mx-auto">
+        <div className="card transfer-config-card my-3 mx-auto">
           <div className="card-header">
             <b className="text-uppercase">{`${t('common.transaction')} ${t(
               'common.configuration'

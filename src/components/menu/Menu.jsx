@@ -6,7 +6,7 @@ import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
 
-function Menu({ setMobileMenuClosed, disableScroll = false }) {
+function Menu({ setMobileMenuClosed, disableScroll = false, dashboardPath = '/' }) {
   const { t } = useTranslation()
   const menu = useMemo(() => mainMenu(t), [t])
   const sections = useMemo(
@@ -35,7 +35,7 @@ function Menu({ setMobileMenuClosed, disableScroll = false }) {
         <li>
           <NavLink
             end
-            to="/"
+            to={dashboardPath}
             className={({ isActive }) => `side-menu ${isActive ? 'side-menu--active' : ''}`}
             onClick={setMobileMenuClosed}
             aria-label={t('menu.dashboard')}

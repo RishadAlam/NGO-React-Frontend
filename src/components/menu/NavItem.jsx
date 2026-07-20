@@ -17,9 +17,9 @@ export default function NavItem({
         <span>{sectionLabel}</span>
       </li>
 
-      {sectionItems.map((m) => (
+      {sectionItems.map((m, index) => (
         <Nav
-          key={`${m.label}${m.id}`}
+          key={`${sectionId}-${m.path || m.label}-${m.id}-${index}`}
           m={m}
           sectionId={sectionId}
           setMobileMenuClosed={setMobileMenuClosed}

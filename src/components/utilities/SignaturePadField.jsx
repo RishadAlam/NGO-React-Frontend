@@ -51,7 +51,7 @@ export default function SignaturePadField({
     <div className="text-center">
       <label className="form-label mb-3">{isRequired ? requiredLabel : label}</label>
       <ModalPro open={open} handleClose={() => setOpen(false)}>
-        <div className="card" style={{ width: '100vw', height: '100vh' }}>
+        <div className="card signature-pad-card" style={{ width: '100vw', height: '100vh' }}>
           <div className="card-header">
             <div className="d-flex align-items-category justify-content-between">
               <b className="text-uppercase">{label}</b>

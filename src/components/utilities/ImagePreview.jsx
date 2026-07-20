@@ -32,7 +32,7 @@ export default function ImagePreview({
       <div
         className={`image-preview border shadow rounded-4 p-3 ${error && 'border-danger'}`}
         style={style}>
-        <div className="img" style={{ width: '250px', height: '250px' }}>
+        <div className="img image-preview__media" style={{ width: '250px', height: '250px' }}>
           <img
             className="rounded-2"
             alt="image"
@@ -48,7 +48,7 @@ export default function ImagePreview({
           <input
             type="file"
             id="image"
-            className="top-0 start-0 position-absolute opacity-0 cursor-pointer"
+            className="image-preview__input top-0 start-0 position-absolute opacity-0 cursor-pointer"
             onChange={(event) => save(event.target.files[0])}
             accept="image/*"
             disabled={disabled}

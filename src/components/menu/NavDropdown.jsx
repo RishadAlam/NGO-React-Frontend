@@ -47,9 +47,9 @@ export default function NavDropdown({
         <ul
           id={`submenu-${dropdownId}`}
           className={`side-menu__submenu ${isOpen ? 'side-menu__sub-open' : ''}`}>
-          {subMenuItems.map((subMenu) => (
+          {subMenuItems.map((subMenu, index) => (
             <NavItemLink
-              key={subMenu.id || subMenu.path || subMenu.label}
+              key={`${dropdownId}-${subMenu.path || subMenu.label}-${subMenu.id}-${index}`}
               m={subMenu}
               setMobileMenuClosed={setMobileMenuClosed}
               iconSize={18}

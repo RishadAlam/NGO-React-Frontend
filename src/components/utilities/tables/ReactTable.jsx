@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import {
   createTableColumnVisibilityStorageKey,
+  getColumnVisibilityId,
   getColumnVisibilitySignature,
   getColumnVisibilityStateFromHiddenColumns,
   getDefaultColumnVisibilityState,
@@ -24,6 +25,12 @@ import PageOptions from './PageOptions'
 import ShowingRows from './ShowingRows'
 import useVirtualRows from './useVirtualRows'
 import './table.scss'
+
+const withoutReactKey = (props) => {
+  const nextProps = { ...props }
+  delete nextProps.key
+  return nextProps
+}
 
 function ReactTable({
   title,
@@ -62,6 +69,14 @@ function ReactTable({
       columnVisibilityStorageKey,
       defaultVisibilityState
     )
+
+    if (window.matchMedia('(max-width: 767.98px)').matches) {
+      columns.forEach((column, index) => {
+        if (column?.isActionHide === false) {
+          visibilityState[getColumnVisibilityId(column, index)] = true
+        }
+      })
+    }
 
     return getHiddenColumnsFromVisibilityState(columns, visibilityState)
   }, [columnVisibilityStorageKey, columns])
@@ -202,11 +217,13 @@ function ReactTable({
             }`}>
             <thead>
               {headerGroups.map((headerGroup, i) => (
-                <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                <tr key={i} {...withoutReactKey(headerGroup.getHeaderGroupProps())}>
                   {headerGroup.headers.map((column, index) => (
                     <th
                       key={index}
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      {...withoutReactKey(
+                        column.getHeaderProps(column.getSortByToggleProps())
+                      )}
                       className={`text-nowrap react-table-head-cell ${
                         column.isSorted ? 'is-sorted' : ''
                       }`}>
@@ -247,7 +264,7 @@ function ReactTable({
                     return (
                       <tr
                         key={row.id}
-                        {...row.getRowProps()}
+                        {...withoutReactKey(row.getRowProps())}
                         data-virtual-row="true"
                         onClick={() =>
                           isRowClickable &&
@@ -257,7 +274,20 @@ function ReactTable({
                           isRowClickable ? 'react-table-row--clickable' : ''
                         }`.trim()}>
                         {row.cells.map((cell, index) => (
-                          <td key={index} {...cell.getCellProps()}>
+                          <td
+                            key={index}
+                            {...withoutReactKey(cell.getCellProps())}
+                            data-label={
+                              typeof cell.column.Header === 'string'
+                                ? cell.column.Header
+                                : cell.column.id
+                            }
+                            data-mobile-primary={
+                              index === (row.cells.length > 1 ? 1 : 0) ? 'true' : undefined
+                            }
+                            data-mobile-action={
+                              cell.column?.isActionHide === false ? 'true' : undefined
+                            }>
                             {cell.render('Cell')}
                           </td>
                         ))}
@@ -285,11 +315,16 @@ function ReactTable({
             {footer && (
               <tfoot>
                 {footerGroups.map((footerGroup, groupIndex) => (
-                  <tr key={groupIndex} {...footerGroup.getFooterGroupProps()}>
+                  <tr
+                    key={groupIndex}
+                    {...withoutReactKey(footerGroup.getFooterGroupProps())}>
                     {footerGroup.headers.map((column, columnIndex) => (
                       <td
                         key={columnIndex}
-                        {...column.getFooterProps()}
+                        {...withoutReactKey(column.getFooterProps())}
+                        data-label={
+                          typeof column.Header === 'string' ? column.Header : column.id
+                        }
                         colSpan={
                           setFooterColSpan(
                             footerGroup.headers.length,

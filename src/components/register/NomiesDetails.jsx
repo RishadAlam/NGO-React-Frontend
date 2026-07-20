@@ -74,7 +74,9 @@ export default function NomsDetails({ data = [], index = 0, status }) {
             <div className="col-md-4">
               <div className="d-flex h-100 w-100 align-items-center justify-content-center">
                 <div className="image-preview border shadow rounded-4 p-2">
-                  <div className="img" style={{ width: '180px', height: '180px' }}>
+                  <div
+                    className="img register-profile__media"
+                    style={{ width: '180px', height: '180px' }}>
                     <img
                       className="rounded-2"
                       alt="image"
@@ -106,7 +108,7 @@ export default function NomsDetails({ data = [], index = 0, status }) {
               <div className="d-flex h-100 w-100 align-items-center justify-content-center">
                 <div className="image-preview border shadow rounded-4 p-2">
                   <div
-                    className="img"
+                    className="img register-signature__media"
                     style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
                     <img
                       className="rounded-2"

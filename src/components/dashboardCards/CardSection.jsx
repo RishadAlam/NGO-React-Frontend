@@ -27,8 +27,8 @@ export default function CardSection({
 
   return (
     <div className="row g-3 card-section">
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--accent">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--accent dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<LoanGiven size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Given')}
@@ -39,8 +39,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--primary">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--primary dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<LoanRecovered size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Recovered')}
@@ -51,8 +51,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--accent">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--accent dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<MyLoan size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Loan_Saving_Collections')}
@@ -63,8 +63,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--primary">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--primary dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<SavingIcon size={36} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Saving_Collections')}
@@ -75,8 +75,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--accent">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--accent dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<PersonalLoan size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.Monthly_Loan_Collections')}
@@ -87,8 +87,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6">
-        <div className="box shadow box-card metric-card metric-card--primary">
+      <div className="col-md-6 dashboard-grid-cell">
+        <div className="box shadow box-card metric-card metric-card--primary dashboard-grid-panel dashboard-grid-panel--metric">
           <Cards
             cardIcon={<LoanIcon size={32} color={'var(--accent-color)'} />}
             cardName={t('dashboard.cards.DPS_Collections')}
@@ -99,8 +99,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6 d-lg-none d-block">
-        <div className="box withdrawal-list dashboard-panel">
+      <div className="col-md-6 d-lg-none d-block dashboard-grid-cell">
+        <div className="box withdrawal-list dashboard-panel dashboard-grid-panel dashboard-grid-panel--activity">
           <WithdrawalLists
             title={t('dashboard.Recent_Saving_Withdrawals')}
             withdrawal={saving_withdrawal}
@@ -108,8 +108,8 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-6 d-lg-none d-block">
-        <div className="box withdrawal-list dashboard-panel">
+      <div className="col-md-6 d-lg-none d-block dashboard-grid-cell">
+        <div className="box withdrawal-list dashboard-panel dashboard-grid-panel dashboard-grid-panel--activity">
           <WithdrawalLists
             title={t('dashboard.Recent_Loan_Withdrawals')}
             withdrawal={loan_saving_withdrawal}
@@ -117,13 +117,13 @@ export default function CardSection({
           />
         </div>
       </div>
-      <div className="col-md-12">
-        <div className="box collection-list dashboard-panel">
+      <div className="col-md-12 dashboard-grid-cell">
+        <div className="box collection-list dashboard-panel dashboard-grid-panel dashboard-grid-panel--activity">
           <SavingCollectionLists collections={saving_collections} isLoading={isLoading} />
         </div>
       </div>
-      <div className="col-md-12">
-        <div className="box collection-list dashboard-panel">
+      <div className="col-md-12 dashboard-grid-cell">
+        <div className="box collection-list dashboard-panel dashboard-grid-panel dashboard-grid-panel--activity">
           <LoanCollectionLists collections={loan_collections} isLoading={isLoading} />
         </div>
       </div>

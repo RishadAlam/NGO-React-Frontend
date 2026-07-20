@@ -59,6 +59,7 @@ function EventCalender({
 
   return (
     <Calendar
+      className="event-calendar"
       culture={culture}
       localizer={localizer}
       events={events}

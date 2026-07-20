@@ -112,7 +112,7 @@ export default function AccountSummary({ data }) {
   }, [data, t])
 
   return (
-    <div className="row pb-3 mt-2">
+    <div className="row account-summary-grid pb-3 mt-2">
       <div className="col-md-4 d-flex">
         <RegisterProfileBox
           image_uri={data?.client_registration?.image_uri}

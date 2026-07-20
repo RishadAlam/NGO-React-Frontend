@@ -18,7 +18,7 @@ export default function SelectBoxField({
 
   return (
     <>
-      <div style={{ minWidth: '150px' }}>
+      <div className="select-box-field" style={{ minWidth: '150px' }}>
         <Autocomplete
           {...config}
           id="combo-box-demo"

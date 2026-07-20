@@ -3,7 +3,7 @@ import { Skeleton } from '@mui/material'
 export default function ReactTableSkeleton() {
   return (
     <>
-      <div className="card">
+      <div className="card react-table-skeleton">
         <div className="card-header">
           <div className="d-flex justify-content-between align-items-center">
             <Skeleton animation="wave" width={250} height={20} variant="text" />

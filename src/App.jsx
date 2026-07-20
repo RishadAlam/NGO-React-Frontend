@@ -1,7 +1,7 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Helmet } from 'react-helmet-async'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAppSettingsValue } from './atoms/appSettingsAtoms'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Layout from './components/layouts/Layout'
@@ -72,8 +72,25 @@ const RegisteredSavingAccountList = lazy(
 const RegisteredLoanAccountList = lazy(
   () => import('./pages/registeredAccountList/RegisteredLoanAccountList')
 )
+const MobileServices = lazy(() => import('./pages/mobileServices/MobileServices'))
 
 const t = () => {}
+const mobileViewportQuery = '(max-width: 767.98px)'
+
+function DefaultLandingPage() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileViewportQuery).matches)
+
+  useEffect(() => {
+    const viewport = window.matchMedia(mobileViewportQuery)
+    const updateViewport = (event) => setIsMobile(event.matches)
+
+    viewport.addEventListener('change', updateViewport)
+    return () => viewport.removeEventListener('change', updateViewport)
+  }, [])
+
+  return isMobile ? <Navigate to="/services" replace /> : <Dashboard pageTitle="menu.dashboard" />
+}
+
 export default function App() {
   const { company_logo_uri } = useAppSettingsValue()
   // const { t } = useTranslation()
@@ -104,7 +121,18 @@ export default function App() {
 
           {/* Authenticate Routes */}
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Dashboard pageTitle="menu.dashboard" />} />
+            <Route index element={<DefaultLandingPage />} />
+            <Route path="dashboard" element={<Dashboard pageTitle="menu.dashboard" />} />
+            <Route
+              path="services"
+              element={
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <Suspense fallback={<Loader />}>
+                    <MobileServices />
+                  </Suspense>
+                </ErrorBoundary>
+              }
+            />
 
             {/* Dashboard View All Routes */}
             <Route
