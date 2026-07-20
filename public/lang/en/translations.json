@@ -256,6 +256,8 @@
     "member_approval": "Member Approval",
     "savings_account_approval": "Savings Account Approval",
     "loan_account_approval": "Loan Account Approval",
+    "regular_savings_collection": "Regular Savings Collection",
+    "regular_loan_collection": "Regular Loan Collection",
     "pending_savings_collection": "Pending Savings Collection",
     "pending_loan_collection": "Pending Loan Collection",
     "registered_members": "Registered Members",

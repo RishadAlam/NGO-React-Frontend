@@ -256,6 +256,8 @@
     "member_approval": "সদস্য অনুমোদন",
     "savings_account_approval": "সঞ্চয় হিসাব অনুমোদন",
     "loan_account_approval": "ঋণ হিসাব অনুমোদন",
+    "regular_savings_collection": "দৈনিক সঞ্চয় কালেকশন",
+    "regular_loan_collection": "দৈনিক ঋণ কালেকশন",
     "pending_savings_collection": "তামাদি সঞ্চয় কালেকশন",
     "pending_loan_collection": "তামাদি ঋণ কালেকশন",
     "registered_members": "নিবন্ধিত সদস্য",
