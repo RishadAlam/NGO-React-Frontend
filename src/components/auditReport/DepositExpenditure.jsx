@@ -7,7 +7,7 @@ export default function DepositExpenditure({ depositMeta, expenditureMeta, depos
 
   return (
     <div className="table-responsive table-scroll-both">
-      <table className="table table-bordered table-light">
+      <table className="table table-bordered table-light mobile-hide-paired-serial">
         <thead>
           <tr className="text-center">
             <th style={{ width: '8%' }}>ক্র/নং</th>

@@ -14,13 +14,29 @@ import EyeOff from '../../icons/EyeOff'
 import xFetch from '../../utilities/xFetch'
 
 const MailIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <rect x="3" y="5" width="18" height="14" rx="2" />
     <path d="m3 7 9 6 9-6" />
   </svg>
 )
 const LockIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <rect x="4" y="11" width="16" height="10" rx="2" />
     <path d="M8 11V7a4 4 0 0 1 8 0v4" />
   </svg>
@@ -43,10 +59,16 @@ export default function Login() {
   }, [])
 
   const setChange = (name, val) => {
-    setInputs((prev) => create(prev, (d) => { d[name] = val }))
-    SetErrors((prev) => create(prev, (d) => {
-      val === '' ? (d[name] = `${name} is required!`) : delete d[name]
-    }))
+    setInputs((prev) =>
+      create(prev, (d) => {
+        d[name] = val
+      })
+    )
+    SetErrors((prev) =>
+      create(prev, (d) => {
+        val === '' ? (d[name] = `${name} is required!`) : delete d[name]
+      })
+    )
   }
 
   const loginUser = (event) => {
@@ -57,8 +79,7 @@ export default function Login() {
     }
     setLoading({ ...loading, login: true })
     const requestData = { email: inputs.email, password: inputs.password }
-    const controller = new AbortController()
-    xFetch('login', requestData, null, controller.signal, null, 'POST')
+    xFetch('login', requestData, null, null, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, login: false })
         if (response.success) {
@@ -66,17 +87,19 @@ export default function Login() {
             ? Cookies.set('accessToken', response.access_token, { expires: 30 })
             : setSessionStorage('accessToken', response.access_token)
           setIsAuthorized(true)
-          setAuthData((prev) => create(prev, (d) => {
-            d.accessToken = `Bearer ${response.access_token}`
-            d.id = response?.id
-            d.name = response?.name
-            d.email = response?.email
-            d.email_verified_at = response?.email_verified_at ? true : false
-            d.phone = response?.phone
-            d.status = response?.status
-            d.role = response?.role
-            d.permissions = response?.permissions
-          }))
+          setAuthData((prev) =>
+            create(prev, (d) => {
+              d.accessToken = `Bearer ${response.access_token}`
+              d.id = response?.id
+              d.name = response?.name
+              d.email = response?.email
+              d.email_verified_at = response?.email_verified_at ? true : false
+              d.phone = response?.phone
+              d.status = response?.status
+              d.role = response?.role
+              d.permissions = response?.permissions
+            })
+          )
           toast.success(response.message)
           navigate(from, { replace: true })
           return
@@ -93,7 +116,6 @@ export default function Login() {
         setLoading({ ...loading, login: false })
         SetErrors(error?.errors || error)
       })
-    controller.abort()
   }
 
   return (
@@ -112,7 +134,9 @@ export default function Login() {
         <div className="auth-field">
           <label htmlFor="email">{t('auth.email', 'Email')}</label>
           <div className="input-wrap">
-            <span className="leading-icon"><MailIcon /></span>
+            <span className="leading-icon">
+              <MailIcon />
+            </span>
             <input
               type="email"
               id="email"
@@ -131,7 +155,9 @@ export default function Login() {
         <div className="auth-field">
           <label htmlFor="password">{t('auth.password', 'Password')}</label>
           <div className="input-wrap">
-            <span className="leading-icon"><LockIcon /></span>
+            <span className="leading-icon">
+              <LockIcon />
+            </span>
             <input
               type={isPlainText ? 'text' : 'password'}
               id="password"

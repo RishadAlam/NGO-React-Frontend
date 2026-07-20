@@ -111,7 +111,7 @@ export default function TransferTransactionConfig({
               </div>
             )}
             <div className="table-responsive table-scroll-both">
-              <table className="table table-hover table-report mb-0">
+              <table className="table table-hover table-report mb-0 mobile-hide-first-serial">
                 <thead>
                   <tr>
                     <th>#</th>

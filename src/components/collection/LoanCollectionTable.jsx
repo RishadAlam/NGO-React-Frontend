@@ -37,7 +37,7 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
         <div
           className="table-responsive table-scroll-both collection-sheet-table-wrap"
           style={{ minHeight: 'unset' }}>
-          <table className="table table-hover table-report collection-sheet-table collection-sheet-table--loan">
+          <table className="table table-hover table-report collection-sheet-table collection-sheet-table--loan mobile-hide-first-serial">
             <LoanCollectionSheetHead
               columnList={columnList}
               setApprovedList={setApprovedList}

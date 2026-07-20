@@ -1110,9 +1110,15 @@
     margin-bottom: 0 !important;
   }
 
-  .mobile-page-grid :where(.audit-metrics-grid, .audit-summary-grid, .audit-profit-grid) {
+  .mobile-page-grid .audit-metrics-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mobile-page-grid :where(.audit-summary-grid, .audit-profit-grid) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
   }
 
@@ -1754,10 +1760,13 @@
     padding-left: 20px !important;
   }
 
-  .mobile-page-grid
-    .internal-audit-report
-    :where(.audit-metrics-grid, .audit-summary-grid, .audit-profit-grid) {
+  .mobile-page-grid .internal-audit-report .audit-metrics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .mobile-page-grid .internal-audit-report :where(.audit-summary-grid, .audit-profit-grid) {
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 10px;
   }
 
@@ -1960,27 +1969,34 @@
   }
 
   .react-table-card {
-    border-radius: 18px;
+    overflow: hidden;
+    border-color: rgba(var(--primary-rgb), 0.1);
+    border-radius: 20px;
+    box-shadow: 0 18px 42px -34px rgba(15, 23, 42, 0.72);
   }
 
   .react-table-header-content {
-    min-height: 42px;
+    min-height: 44px;
 
     .heading {
-      font-size: 14px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
     }
   }
 
   .react-table-body {
-    padding: 11px !important;
+    padding: 0 !important;
   }
 
   .react-table-toolbar {
     display: grid !important;
-    grid-template-columns: minmax(92px, 0.72fr) minmax(0, 1.28fr);
-    align-items: end;
-    gap: 10px;
-    margin-bottom: 11px;
+    grid-template-columns: minmax(0, 1fr) minmax(70px, 0.34fr);
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 12px;
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.09);
+    background: rgba(var(--main-bg-rgb), 0.24);
   }
 
   .react-table-toolbar-item,
@@ -1990,9 +2006,34 @@
     margin-left: 0;
   }
 
+  .react-table-toolbar-item:not(.react-table-toolbar-item--right) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .react-table-toolbar-item--right {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .react-table-toolbar-item--right .search {
+    position: relative;
     width: 100%;
     margin-left: 0;
+  }
+
+  .react-table-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    z-index: 2;
+    display: grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    color: $soft-color;
+    pointer-events: none;
+    transform: translateY(-50%);
   }
 
   .react-table-toolbar-item .MuiFormControl-root {
@@ -2001,17 +2042,61 @@
     margin: 0 !important;
   }
 
+  .react-table-toolbar .MuiInput-root {
+    min-height: 46px;
+    padding: 3px 12px 0;
+    border: 1px solid rgba(var(--primary-rgb), 0.12);
+    border-radius: 14px;
+    background: var(--soft-bg);
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .react-table-toolbar .MuiInputLabel-root {
+    left: 11px;
+    z-index: 1;
+    max-width: calc(100% - 22px);
+    color: $soft-color;
+    font-size: 11px;
+  }
+
+  .react-table-toolbar-item--right .MuiInputLabel-root {
+    left: 39px;
+    max-width: calc(100% - 50px);
+  }
+
+  .react-table-toolbar-item--right .MuiInput-root {
+    padding-left: 40px;
+  }
+
+  .react-table-toolbar-item:not(.react-table-toolbar-item--right) .MuiInputLabel-root {
+    left: 7px;
+    max-width: calc(100% - 14px);
+    font-size: 9px;
+  }
+
+  .react-table-toolbar .MuiInputBase-input,
+  .react-table-toolbar .MuiSelect-select {
+    min-height: 0 !important;
+    padding-top: 12px !important;
+    padding-bottom: 4px !important;
+    font-size: 13px !important;
+  }
+
   .react-table-scroll,
   .table-scroll-both {
     max-height: calc(100dvh - 290px);
-    border-radius: 14px;
+    border-radius: 0;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
 
   .react-data-table,
-  .table-scroll-both > .table {
-    width: max-content !important;
+  .mobile-list-table {
+    width: 100% !important;
     min-width: 100% !important;
   }
 
@@ -2025,10 +2110,14 @@
     font-size: 10.5px;
   }
 
-  .react-data-table:not(.react-data-table--virtualized) {
+  :is(.react-data-table:not(.react-data-table--virtualized), .mobile-list-table) {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-hover-bg: transparent;
     display: block;
     width: 100% !important;
     min-width: 0 !important;
+    margin: 0;
     border-collapse: separate;
 
     thead {
@@ -2044,98 +2133,225 @@
 
     tbody,
     tfoot {
-      display: grid;
+      display: block;
       width: 100%;
-      gap: 9px;
     }
 
     tbody tr,
     tfoot tr {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr) minmax(76px, auto);
+      column-gap: 12px;
       width: 100%;
-      padding: 7px;
-      overflow: hidden;
-      border: 1px solid rgba(var(--primary-rgb), 0.12);
-      border-radius: 16px;
-      background: var(--soft-bg);
-      box-shadow: 0 12px 28px -25px rgba(15, 23, 42, 0.78);
+      min-height: 74px;
+      padding: 14px 42px 14px 68px;
+      overflow: visible;
+      border: 0;
+      border-bottom: 1px solid rgba(var(--primary-rgb), 0.085);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
-    tbody tr::before {
+    tbody tr::before,
+    tfoot tr::before {
       position: absolute;
-      top: 13px;
-      left: 0;
-      width: 3px;
-      height: 28px;
-      border-radius: 0 4px 4px 0;
-      background: var(--primary-color);
-      content: '';
-      opacity: 0.7;
+      top: 15px;
+      left: 14px;
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 1px solid rgba(var(--primary-rgb), 0.13);
+      border-radius: 50%;
+      background: rgba(var(--primary-rgb), 0.075);
+      color: var(--primary-color);
+      content: attr(data-mobile-sequence);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
     }
 
     tbody tr.react-table-row--clickable {
       cursor: pointer;
 
+      &::after {
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        color: $soft-color;
+        content: '›';
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 1;
+        transform: translateY(-50%);
+      }
+
       &:active {
-        transform: scale(0.992);
-        background: rgba(var(--primary-rgb), 0.045);
+        background: rgba(var(--primary-rgb), 0.055);
       }
     }
 
-    tbody tr > td,
-    tfoot tr > td {
+    tbody tr:has(> [data-mobile-action='true']) {
+      min-height: 92px;
+      padding-right: 64px;
+    }
+
+    tbody tr.react-table-row--clickable:has(> [data-mobile-action='true'])::after {
+      display: none;
+    }
+
+    tbody tr > :is(td, th),
+    tfoot tr > :is(td, th) {
       display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(82px, 0.68fr) minmax(0, 1.32fr);
       min-width: 0;
-      gap: 3px;
-      align-content: start;
-      padding: 7px 8px !important;
+      gap: 8px;
+      align-items: start;
+      padding: 3px 0 !important;
       overflow-wrap: anywhere;
       border: 0 !important;
       color: $main-color;
       background: transparent !important;
-      font-size: 12px;
-      line-height: 1.3;
+      box-shadow: none !important;
+      font-size: 11.5px;
+      line-height: 1.35;
+      text-align: left !important;
+      white-space: normal !important;
 
       &::before {
         display: block;
         overflow: hidden;
         color: $soft-color;
         content: attr(data-label);
-        font-size: 9px;
-        font-weight: 600;
-        line-height: 1.2;
+        font-size: 9.5px;
+        font-weight: 650;
+        line-height: 1.35;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
     }
 
-    tbody tr > td[data-mobile-primary='true'] {
-      grid-column: 1 / -1;
-      padding: 10px 11px !important;
-      border-radius: 12px;
-      background: rgba(var(--primary-rgb), 0.065) !important;
-      font-size: 13px;
-      font-weight: 700;
+    tbody tr > :is(td, th):empty:not([data-mobile-primary='true']),
+    tbody tr > [data-mobile-empty='true']:not([data-mobile-primary='true']),
+    tfoot tr > :is(td, th):empty,
+    tfoot tr > [data-mobile-empty='true'] {
+      display: none !important;
     }
 
-    tbody tr > td[data-mobile-action='true'] {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-top: 9px !important;
-      border-top: 1px solid rgba(var(--primary-rgb), 0.1) !important;
+    tbody tr > [data-mobile-primary='true'] {
+      grid-column: 1;
+      grid-row: 1;
+      display: block;
+      align-self: center;
+      padding: 0 !important;
+      font-size: 13.5px;
+      font-weight: 750;
+      line-height: 1.35;
 
       &::before {
         display: none;
       }
     }
 
+    tbody tr:not(:has(> [data-mobile-emphasis='true'])) > [data-mobile-primary='true'] {
+      grid-column: 1 / -1;
+    }
+
+    tbody tr > [data-mobile-emphasis='true'] {
+      grid-column: 2;
+      grid-row: 1;
+      display: block;
+      align-self: center;
+      padding: 0 !important;
+      color: var(--primary-color);
+      font-size: 12.5px;
+      font-weight: 750;
+      line-height: 1.35;
+      text-align: right !important;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    tbody tr > [data-mobile-leading='true'] {
+      position: absolute;
+      top: 14px;
+      left: 13px;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0 !important;
+      place-items: center;
+
+      &::before {
+        display: none;
+      }
+
+      :is(img, .MuiAvatar-root) {
+        width: 40px !important;
+        min-width: 40px;
+        height: 40px !important;
+        border: 1px solid rgba(var(--primary-rgb), 0.13);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    tbody tr:has(> [data-mobile-leading='true'])::before {
+      display: none;
+    }
+
+    tbody tr > [data-mobile-action='true'] {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      grid-column: auto;
+      grid-row: auto;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0 !important;
+      border: 0 !important;
+
+      &::before {
+        display: none;
+      }
+
+      :is(.btn, button, .MuiButton-root, .MuiIconButton-root) {
+        min-width: 40px;
+        min-height: 40px;
+        margin: 0 !important;
+      }
+    }
+
+    tbody tr[data-mobile-summary='true'],
+    tfoot tr {
+      background: rgba(var(--primary-rgb), 0.055);
+      font-weight: 700;
+
+      &::before {
+        border-color: rgba(var(--primary-rgb), 0.18);
+        background: rgba(var(--primary-rgb), 0.12);
+        content: 'Σ';
+        font-size: 14px;
+      }
+    }
+
+    tbody tr[data-mobile-empty-row='true'] {
+      display: none;
+    }
+
     .react-table-empty-row {
       grid-template-columns: minmax(0, 1fr);
-      padding: 20px 12px;
+      min-height: 92px;
+      padding: 22px 14px;
 
       &::before {
         display: none;
@@ -2143,8 +2359,15 @@
 
       .react-table-empty-cell {
         grid-column: 1 / -1;
+        min-height: 0;
+        height: auto;
+        padding: 0 !important;
+        place-items: center;
+        place-content: center;
         justify-items: center;
         color: $soft-color;
+        font-size: 12px;
+        text-align: center !important;
 
         &::before {
           display: none;
@@ -2153,19 +2376,130 @@
     }
 
     tfoot {
-      margin-top: 9px;
-    }
-
-    tfoot tr {
-      background: rgba(var(--primary-rgb), 0.055);
+      margin: 0;
     }
   }
 
-  .react-table-card
-    .react-table-scroll:has(> .react-data-table:not(.react-data-table--virtualized)) {
+  :is(.react-table-scroll, .table-scroll-both):has(
+    > :is(.react-data-table:not(.react-data-table--virtualized), .mobile-list-table)
+  ) {
     max-height: none;
     overflow: visible;
     border-radius: 0;
+  }
+
+  .collection-sheet .collection-sheet-table-wrap:has(> .mobile-list-table) {
+    max-height: none;
+    border: 0;
+    overflow: visible;
+  }
+
+  .mobile-page-grid .collection-sheet .collection-sheet-table.mobile-list-table {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .mobile-page-grid
+    .collection-sheet
+    .collection-sheet-table.mobile-list-table
+    :is(tbody, tfoot)
+    tr
+    > :is(td, th) {
+    position: static;
+    padding: 3px 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .collection-sheet-table.mobile-list-table .collection-sheet-thead {
+    position: static;
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 8px 10px;
+    overflow: visible;
+    clip: auto;
+    border-bottom: 1px solid rgba(var(--primary-rgb), 0.085);
+    white-space: normal;
+  }
+
+  .collection-sheet-table.mobile-list-table .collection-sheet-thead tr {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .collection-sheet-table.mobile-list-table .collection-sheet-thead th {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0 !important;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .collection-sheet-table.mobile-list-table .collection-sheet-thead th:has(input) {
+    position: static !important;
+    display: flex;
+    width: auto;
+    height: auto;
+    align-items: center;
+    gap: 5px;
+    padding: 0 !important;
+    overflow: visible;
+    clip: auto;
+    border: 0 !important;
+    background: transparent !important;
+    color: $soft-color !important;
+    font-size: 10px;
+  }
+
+  .mobile-table-action-trigger {
+    width: 40px;
+    min-width: 40px !important;
+    height: 40px;
+    min-height: 40px !important;
+    border: 1px solid rgba(var(--primary-rgb), 0.14) !important;
+    border-radius: 50% !important;
+    background: rgba(var(--primary-rgb), 0.065) !important;
+    color: var(--primary-color) !important;
+
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+
+  .mobile-table-action-menu .MuiPaper-root {
+    min-width: 190px;
+    overflow: hidden;
+    border: 1px solid rgba(var(--primary-rgb), 0.12);
+    border-radius: 15px;
+    background: var(--soft-bg);
+    box-shadow: 0 18px 44px -24px rgba(15, 23, 42, 0.55);
+  }
+
+  .mobile-table-action-menu .MuiList-root {
+    padding: 6px;
+  }
+
+  .mobile-table-action-menu__item {
+    gap: 10px;
+    min-height: 44px !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    color: $main-color !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+  }
+
+  .mobile-table-action-menu__icon {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(var(--primary-rgb), 0.075);
   }
 
   .react-table-footer {
@@ -2185,6 +2519,77 @@
     min-height: 42px;
     flex-shrink: 0;
     border-radius: 12px;
+  }
+
+  // Complex report and collection tables keep their native table structure on mobile.
+  // They scroll horizontally instead of being rewritten into unreliable card layouts.
+  .mobile-page-grid :where(.table-responsive, .table-scroll-both) {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: auto;
+    border-radius: 12px;
+    scrollbar-width: thin;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) {
+    display: table !important;
+    width: max-content !important;
+    min-width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) :is(thead, tbody, tfoot) {
+    display: table-row-group !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) thead {
+    display: table-header-group !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) tfoot {
+    display: table-footer-group !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) tr {
+    display: table-row !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) :is(th, td) {
+    position: static;
+    display: table-cell !important;
+    min-width: 88px;
+    padding: 9px 10px !important;
+    font-size: 11px;
+    line-height: 1.35;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .table-scroll-both > table:not(.react-data-table) :is(th, td).mobile-serial-column,
+  .table-scroll-both
+    > table.mobile-hide-first-serial
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :first-child,
+  .table-scroll-both
+    > table.mobile-hide-paired-serial
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :is(:nth-child(1), :nth-child(4)) {
+    display: none !important;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) :is(button, .btn) {
+    min-height: 38px;
   }
 
   .MuiDialog-paper {

@@ -40,7 +40,7 @@ export default function SavingCollectionTable({ center, columnList, mutate, isRe
         <div
           className="table-responsive table-scroll-both collection-sheet-table-wrap"
           style={{ minHeight: 'unset' }}>
-          <table className="table table-hover table-report collection-sheet-table collection-sheet-table--saving">
+          <table className="table table-hover table-report collection-sheet-table collection-sheet-table--saving mobile-hide-first-serial">
             <SavingCollectionSheetHead
               columnList={columnList}
               setApprovedList={setApprovedList}
