@@ -7,7 +7,7 @@ import MobileServiceIcon from './MobileServiceIcon'
 
 const mobileQuery = '(max-width: 767.98px)'
 
-export default function MobileQuickActions() {
+export default function MobileQuickActions({ isActive = true }) {
   const { t } = useTranslation()
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileQuery).matches)
   const [activeGroupId, setActiveGroupId] = useState(null)
@@ -32,6 +32,10 @@ export default function MobileQuickActions() {
     media.addEventListener('change', updateViewport)
     return () => media.removeEventListener('change', updateViewport)
   }, [])
+
+  useEffect(() => {
+    if (!isActive) setActiveGroupId(null)
+  }, [isActive])
 
   useEffect(() => {
     if (!activeGroupId) return undefined

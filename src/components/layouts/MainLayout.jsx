@@ -1,15 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { useTranslation } from 'react-i18next'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useIsAuthorizedValue } from '../../atoms/authAtoms'
+import XCircle from '../../icons/XCircle'
+import ErrorFallback from '../_helper/errorFallback/ErrorFallback'
+import Loader from '../loaders/Loader'
 import Menu from '../menu/Menu'
 import MobileBottomNav from '../mobile/MobileBottomNav'
 import MobilePageHeader from '../mobile/MobilePageHeader'
 import SideBarLogo from '../sidebarLogo/SideBarLogo'
 import TopBar from '../topBar/TopBar'
-import XCircle from '../../icons/XCircle'
-import { useTranslation } from 'react-i18next'
 import './layout.scss'
+
+const MobileServices = lazy(() => import('../../pages/mobileServices/MobileServices'))
 
 export default function MainLayout() {
   const navigate = useNavigate()
@@ -18,7 +23,10 @@ export default function MainLayout() {
   const isAuthorized = useIsAuthorizedValue()
   const [isSidebarMd, setIsSidebarMd] = useState(() => (window.innerWidth <= 1024 ? true : false))
   const [disableMenuScroll, setDisableMenuScroll] = useState(false)
+  const isServicesPage = location.pathname === '/services'
+  const [hasVisitedServices, setHasVisitedServices] = useState(isServicesPage)
   const contentRef = useRef(null)
+  const servicesScrollPositionRef = useRef(0)
 
   useEffect(() => {
     if (!isAuthorized) navigate('login', { state: { from: location }, replace: false })
@@ -52,11 +60,40 @@ export default function MainLayout() {
   }, [location.pathname])
 
   useEffect(() => {
+    if (isServicesPage) setHasVisitedServices(true)
+  }, [isServicesPage])
+
+  useEffect(() => {
+    if (window.innerWidth >= 768 || !isServicesPage) return undefined
+
+    const rememberServicesScroll = () => {
+      servicesScrollPositionRef.current = window.scrollY
+    }
+
+    rememberServicesScroll()
+    window.addEventListener('scroll', rememberServicesScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', rememberServicesScroll)
+    }
+  }, [isServicesPage])
+
+  useEffect(() => {
     if (window.innerWidth < 768) {
       setIsSidebarMd(true)
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+      const scrollFrame = window.requestAnimationFrame(() => {
+        window.scrollTo({
+          top: isServicesPage ? servicesScrollPositionRef.current : 0,
+          left: 0,
+          behavior: 'auto'
+        })
+      })
+
+      return () => window.cancelAnimationFrame(scrollFrame)
     }
-  }, [location.pathname])
+
+    return undefined
+  }, [isServicesPage, location.pathname])
 
   useEffect(() => {
     if (window.innerWidth >= 768 || isSidebarMd) return undefined
@@ -85,9 +122,7 @@ export default function MainLayout() {
               <Menu setMobileMenuClosed={setMobileMenuClosed} disableScroll={disableMenuScroll} />
             </div>
             <div
-              className={`main-body ${
-                location.pathname === '/services' ? 'main-body--services' : ''
-              }`}>
+              className={`main-body ${isServicesPage ? 'main-body--services' : ''}`}>
               <TopBar setIsSidebarMd={setIsSidebarMd} isSidebarMd={isSidebarMd} />
               <div
                 className={`mobile-menu d-md-none ${isSidebarMd ? '' : 'active'}`}
@@ -123,11 +158,29 @@ export default function MainLayout() {
               </div>
               <div
                 className={`content mobile-page-grid p-2 ${
-                  location.pathname === '/services' ? 'content--services-mobile' : ''
+                  isServicesPage ? 'content--services-mobile' : ''
                 }`}
                 ref={contentRef}>
                 <MobilePageHeader onMenuOpen={() => setIsSidebarMd(false)} />
-                <Outlet />
+                {(hasVisitedServices || isServicesPage) && (
+                  <div
+                    className="mobile-services-cache d-md-none"
+                    hidden={!isServicesPage}
+                    aria-hidden={!isServicesPage}>
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                      <Suspense
+                        fallback={
+                          <Loader
+                            className="mobile-services-loader"
+                            style={{ height: 'min(45dvh, 360px)' }}
+                          />
+                        }>
+                        <MobileServices isActive={isServicesPage} />
+                      </Suspense>
+                    </ErrorBoundary>
+                  </div>
+                )}
+                {!isServicesPage && <Outlet />}
               </div>
             </div>
           </div>

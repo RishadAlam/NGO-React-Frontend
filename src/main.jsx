@@ -13,11 +13,15 @@ import AuthProvider from './components/_helper/AuthProvider.jsx'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback.jsx'
 import './scss/app.scss'
 
+const mobileRouterFuture = window.matchMedia('(max-width: 767.98px)').matches
+  ? { v7_startTransition: true }
+  : undefined
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RecoilRoot>
       <RecoilNexus />
-      <BrowserRouter>
+      <BrowserRouter future={mobileRouterFuture}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <AuthProvider>
             <HelmetProvider>

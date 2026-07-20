@@ -22,6 +22,9 @@ import {
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
 
+let authBootstrapRequest = null
+let authBootstrapAccessToken = null
+
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .use(LanguageDetector)
@@ -60,6 +63,7 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate()
 
   useEffect(() => {
+    let isActive = true
     const lang = Cookies.get('i18next')
     const darkMood = Cookies.get('isDark')
     const paletteId = Cookies.get(THEME_PALETTE_COOKIE) || DEFAULT_THEME_PALETTE
@@ -68,32 +72,29 @@ export default function AuthProvider({ children }) {
     document.body.className = mode
     Cookies.set(THEME_PALETTE_COOKIE, paletteId, { expires: 30 })
     applyThemePalette(paletteId, mode)
-    const controller = new AbortController()
 
     if (!isAuthorized) {
       const Token = JSON.parse(GetSessionStorage('accessToken')) || Cookies.get('accessToken')
 
       if (Token) {
-        const signal = controller.signal
         authFetch(
           Token,
-          signal,
           setIsAuthorized,
           setAuthData,
           setAppSettings,
           setAppApprovalConfigs,
-          loading,
           setLoading,
           showBoundary,
           navigate,
-          setIsLoading
+          setIsLoading,
+          () => isActive
         )
       }
     }
     setIsLoading(false)
 
     return () => {
-      controller.abort()
+      isActive = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -121,27 +122,24 @@ export default function AuthProvider({ children }) {
 
 const authFetch = (
   Token,
-  signal,
   setIsAuthorized,
   setAuthData,
   setAppSettings,
   setAppApprovalConfigs,
-  loading,
   setLoading,
   showBoundary,
   navigate,
-  setIsLoading
+  setIsLoading,
+  isActive
 ) => {
-  setLoading({ ...loading, authorization: true })
-  const accessToken = `Bearer ${Token}`
-  const authorizedData = xFetch('authorization', null, signal, accessToken)
-  const appSettingsData = xFetch('app-settings', null, signal, accessToken)
-  const appApprovalConfigData = xFetch('approvals-config', null, signal, accessToken)
+  setLoading((currentLoading) => ({ ...currentLoading, authorization: true }))
+  const { request, accessToken } = getAuthBootstrapRequest(Token)
 
-  axios
-    .all([authorizedData, appSettingsData, appApprovalConfigData])
+  return request
     .then((Response) => {
-      setLoading({ ...loading, authorization: false })
+      if (!isActive()) return
+
+      setLoading((currentLoading) => ({ ...currentLoading, authorization: false }))
       const authorizedData = Response[0]
       const appSettingsData = Response[1]
       const appApprovalConfigData = Response[2]
@@ -187,12 +185,14 @@ const authFetch = (
       setAppApprovalConfigs(approvals)
     })
     .catch((error) => {
+      if (!isActive()) return
+
       if (error?.message) {
         if (error.message === 'Unauthenticated.' || error.status === 401) {
           removeSessionStorage('accessToken')
           Cookies.remove('accessToken')
           setIsAuthorized(false)
-          setLoading({ ...loading, authorization: false })
+          setLoading((currentLoading) => ({ ...currentLoading, authorization: false }))
           setIsLoading(false)
           navigate('login')
           return
@@ -201,4 +201,31 @@ const authFetch = (
         showBoundary(error?.message)
       }
     })
+}
+
+const getAuthBootstrapRequest = (Token) => {
+  const accessToken = `Bearer ${Token}`
+
+  if (!authBootstrapRequest || authBootstrapAccessToken !== accessToken) {
+    authBootstrapAccessToken = accessToken
+    const authorizedData = xFetch('authorization', null, null, accessToken)
+    const appSettingsData = xFetch('app-settings', null, null, accessToken)
+    const appApprovalConfigData = xFetch('approvals-config', null, null, accessToken)
+
+    const currentRequest = axios.all([
+      authorizedData,
+      appSettingsData,
+      appApprovalConfigData
+    ])
+
+    const sharedRequest = currentRequest.finally(() => {
+      if (authBootstrapRequest === sharedRequest) {
+        authBootstrapRequest = null
+        authBootstrapAccessToken = null
+      }
+    })
+    authBootstrapRequest = sharedRequest
+  }
+
+  return { request: authBootstrapRequest, accessToken }
 }

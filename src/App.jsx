@@ -72,8 +72,6 @@ const RegisteredSavingAccountList = lazy(
 const RegisteredLoanAccountList = lazy(
   () => import('./pages/registeredAccountList/RegisteredLoanAccountList')
 )
-const MobileServices = lazy(() => import('./pages/mobileServices/MobileServices'))
-
 const t = () => {}
 const mobileViewportQuery = '(max-width: 767.98px)'
 
@@ -123,16 +121,7 @@ export default function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<DefaultLandingPage />} />
             <Route path="dashboard" element={<Dashboard pageTitle="menu.dashboard" />} />
-            <Route
-              path="services"
-              element={
-                <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <Suspense fallback={<Loader />}>
-                    <MobileServices />
-                  </Suspense>
-                </ErrorBoundary>
-              }
-            />
+            <Route path="services" element={null} />
 
             {/* Dashboard View All Routes */}
             <Route
