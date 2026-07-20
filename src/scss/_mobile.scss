@@ -1590,10 +1590,39 @@
     border-radius: 18px;
   }
 
-  .mobile-page-grid .collection-sheet .collection-sheet-toolbar,
-  .mobile-page-grid .collection-sheet .collection-sheet-toolbar-actions,
+  .mobile-page-grid .collection-sheet .collection-sheet-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .mobile-page-grid .collection-sheet .collection-sheet-toolbar > .heading {
+    min-width: 0;
+    align-self: center;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-page-grid .collection-sheet .collection-sheet-toolbar-actions {
+    display: contents !important;
+  }
+
+  .mobile-page-grid .collection-sheet .collection-sheet-toolbar-actions > .column-hiding {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+  }
+
   .mobile-page-grid .collection-sheet .collection-sheet-filters {
     display: grid !important;
+    grid-column: 1 / -1;
+    grid-row: 2;
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
     width: 100%;
@@ -1989,31 +2018,30 @@
   }
 
   .react-table-toolbar {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(70px, 0.34fr);
+    display: flex !important;
+    min-height: 0;
     align-items: center;
-    gap: 9px;
+    justify-content: flex-end;
     margin: 0;
-    padding: 12px;
+    padding: 8px 12px;
     border-bottom: 1px solid rgba(var(--primary-rgb), 0.09);
     background: rgba(var(--main-bg-rgb), 0.24);
   }
 
   .react-table-toolbar-item,
   .react-table-toolbar-item--right {
-    width: 100%;
+    width: auto;
     min-width: 0;
     margin-left: 0;
   }
 
   .react-table-toolbar-item:not(.react-table-toolbar-item--right) {
-    grid-column: 2;
-    grid-row: 1;
+    width: min(136px, 100%);
+    margin-left: auto;
   }
 
   .react-table-toolbar-item--right {
-    grid-column: 1;
-    grid-row: 1;
+    display: none !important;
   }
 
   .react-table-toolbar-item--right .search {
@@ -2083,6 +2111,120 @@
     min-height: 0 !important;
     padding-top: 12px !important;
     padding-bottom: 4px !important;
+    font-size: 13px !important;
+  }
+
+  // Keep the shared table heading and controls in one predictable mobile row.
+  // These selectors intentionally outrank the generic card and form mobile rules above.
+  .mobile-page-grid .react-table-card > .react-table-header {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0;
+    padding: 10px 12px !important;
+  }
+
+  .mobile-page-grid .react-table-card .react-table-header-content {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 44px;
+    grid-template-columns: minmax(0, 1fr) 44px !important;
+    align-items: center;
+    column-gap: 14px;
+  }
+
+  .mobile-page-grid .react-table-card .react-table-header-content > .heading {
+    display: block !important;
+    min-width: 0;
+    margin: 0 !important;
+    overflow: hidden;
+    color: $main-color !important;
+    font-size: 14px !important;
+    font-weight: 700;
+    line-height: 1.35 !important;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-page-grid .react-table-card .react-table-header-content > .column-hiding {
+    position: static !important;
+    display: grid !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+    place-items: center;
+    justify-self: end;
+  }
+
+  .mobile-page-grid
+    .react-table-card
+    .react-table-header-content
+    > .column-hiding
+    > .table-btn--icon {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .mobile-page-grid .react-table-card .react-table-toolbar {
+    display: flex !important;
+    width: 100%;
+    min-height: 52px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6px 12px !important;
+  }
+
+  .mobile-page-grid
+    .react-table-card
+    .react-table-toolbar-item:not(.react-table-toolbar-item--right) {
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 0 0 auto !important;
+  }
+
+  .mobile-page-grid .react-table-card .showing-rows-control.MuiFormControl-root {
+    position: relative;
+    display: grid !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    grid-template-columns: auto 66px;
+    align-items: center;
+    gap: 8px;
+    margin: 0 !important;
+  }
+
+  .mobile-page-grid .react-table-card .showing-rows-control > .MuiInputLabel-root {
+    position: static !important;
+    max-width: none !important;
+    color: $soft-color;
+    font-size: 11px !important;
+    font-weight: 650;
+    line-height: 1.2;
+    transform: none !important;
+    transform-origin: center !important;
+    white-space: nowrap;
+  }
+
+  .mobile-page-grid .react-table-card .showing-rows-control > .MuiInput-root {
+    width: 66px !important;
+    min-width: 66px !important;
+    min-height: 40px;
+    padding: 0 8px !important;
+    border-radius: 12px;
+  }
+
+  .mobile-page-grid .react-table-card .showing-rows-control > .MuiInput-root .MuiSelect-select {
+    display: flex;
+    min-height: 40px !important;
+    align-items: center;
+    padding: 0 24px 0 4px !important;
     font-size: 13px !important;
   }
 
@@ -3074,7 +3216,6 @@
     .row:not(.dashboard-grid):not(.card-section):not(.staff-permissions-grid):has(
       > [class*='col-xxl-2']
     ),
-  .react-table-toolbar,
   .mobile-page-grid :where(.audit-metrics-grid, .audit-summary-grid, .audit-profit-grid),
   .mobile-page-grid :where(.recycle-bin-folder-grid, .recycle-bin-records),
   .mobile-page-grid .recycle-bin-page > .row.g-2.align-items-end {

@@ -1,9 +1,9 @@
-import { FormControlLabel, Switch } from '@mui/material'
+import { FormControlLabel, Switch, useMediaQuery } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { create } from 'mutative'
-import { memo, useState } from 'react'
+import { memo, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import MoreVertical from '../../icons/MoreVertical'
 import '../../pages/staffs/staffs.scss'
@@ -19,7 +19,10 @@ function SavingCollectionSheetHeader({
   onCenterChange
 }) {
   const [anchorEl, setAnchorEl] = useState(null)
+  const columnMenuTriggerId = useId()
+  const columnMenuId = `${columnMenuTriggerId}-menu`
   const open = Boolean(anchorEl)
+  const isMobileTable = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const { t } = useTranslation()
 
   const handleClick = (event) => {
@@ -51,26 +54,35 @@ function SavingCollectionSheetHeader({
           />
           <div className="column-hiding text-end position-relative">
             <Button
-              id="hide-column--button"
+              id={columnMenuTriggerId}
               className="table-btn table-btn--icon"
               aria-label={t('common.choose_columns')}
-              aria-controls={open ? 'hide-column-menu' : undefined}
+              aria-controls={open ? columnMenuId : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}>
               <MoreVertical size={24} />
             </Button>
             <Menu
-              id="hide-column-menu"
+              id={columnMenuId}
+              className="table-column-visibility-menu"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              anchorOrigin={isMobileTable ? { vertical: 'bottom', horizontal: 'right' } : undefined}
+              transformOrigin={isMobileTable ? { vertical: 'top', horizontal: 'right' } : undefined}
+              marginThreshold={isMobileTable ? 12 : undefined}
+              PaperProps={{
+                className: 'table-column-visibility-menu__paper'
+              }}
               MenuListProps={{
-                'aria-labelledby': 'hide-column--button'
+                'aria-labelledby': columnMenuTriggerId,
+                className: 'table-column-visibility-menu__list'
               }}>
               {Object.keys(columnList).map((column, index) => (
-                <MenuItem key={index}>
+                <MenuItem className="table-column-visibility-menu__item" key={index}>
                   <FormControlLabel
+                    className="table-column-visibility-menu__label"
                     control={
                       <Switch
                         size="small"

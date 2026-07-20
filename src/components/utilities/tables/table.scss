@@ -337,16 +337,50 @@
   }
 
   .react-table-header-content {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    column-gap: 16px;
     min-height: 42px;
   }
 
   .react-table-header-content .heading {
+    align-self: center;
     min-width: 0;
     margin: 0;
     overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .react-table-header-content .column-hiding {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    align-self: center;
+    justify-self: end;
+    place-items: center;
+  }
+
+  .react-table-header-content .table-btn--icon,
+  .collection-sheet-header .column-hiding .table-btn--icon {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0;
+    border-color: rgba(var(--primary-rgb), 0.13);
+    border-radius: 13px;
+    color: var(--primary-color) !important;
+    background: rgba(var(--primary-rgb), 0.055);
+  }
+
+  .react-table-header-content .table-btn--icon svg,
+  .collection-sheet-header .column-hiding .table-btn--icon svg {
+    display: block;
   }
 
   .react-table-toolbar {
@@ -369,6 +403,12 @@
     display: none !important;
   }
 
+  .showing-rows-control {
+    width: 136px !important;
+    min-width: 136px !important;
+    margin: 0 !important;
+  }
+
   .react-data-table {
     min-width: 100%;
   }
@@ -378,6 +418,94 @@
     min-width: 0;
     color: $main-color;
     background: var(--soft-bg);
+  }
+
+  .table-column-visibility-menu__paper {
+    width: min(286px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px) !important;
+    max-height: min(440px, calc(100dvh - 96px)) !important;
+    overflow: hidden;
+    border: 1px solid rgba(var(--primary-rgb), 0.14);
+    border-radius: 16px !important;
+    background: var(--soft-bg) !important;
+    box-shadow: 0 20px 52px -30px rgba(15, 23, 42, 0.58) !important;
+  }
+
+  .table-column-visibility-menu__list {
+    display: grid;
+    gap: 2px;
+    max-height: min(424px, calc(100dvh - 112px));
+    padding: 6px !important;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .table-column-visibility-menu__item {
+    width: 100%;
+    min-height: 44px !important;
+    padding: 4px 8px !important;
+    border-radius: 11px !important;
+    color: $main-color !important;
+  }
+
+  .table-column-visibility-menu__item:hover,
+  .table-column-visibility-menu__item.Mui-focusVisible {
+    background: rgba(var(--primary-rgb), 0.075) !important;
+  }
+
+  .table-column-visibility-menu__label {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 !important;
+  }
+
+  .table-column-visibility-menu__label .MuiFormControlLabel-label {
+    min-width: 0;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .table-column-visibility-menu__label .MuiSwitch-root {
+    flex: 0 0 auto;
+    margin-right: -4px;
+  }
+
+  .showing-rows-menu__paper {
+    min-width: 136px !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: min(320px, calc(100dvh - 24px)) !important;
+    overflow: hidden;
+    border: 1px solid rgba(var(--primary-rgb), 0.14);
+    border-radius: 14px !important;
+    background: var(--soft-bg) !important;
+    box-shadow: 0 18px 42px -28px rgba(15, 23, 42, 0.58) !important;
+  }
+
+  .showing-rows-menu__list {
+    display: grid;
+    gap: 2px;
+    padding: 6px !important;
+  }
+
+  .showing-rows-menu__list .MuiMenuItem-root {
+    min-height: 42px;
+    border-radius: 10px;
+    color: $main-color;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .showing-rows-menu__list .MuiMenuItem-root.Mui-selected {
+    color: var(--primary-color);
+    background: rgba(var(--primary-rgb), 0.1);
   }
 
   .mobile-data-list__body {
