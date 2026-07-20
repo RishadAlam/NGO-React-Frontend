@@ -42,7 +42,7 @@ export default function LoanCollectionSheetHead({
           `${isRegular ? 'regular' : 'pending'}_loan_collection_approval`,
           authPermissions
         ) && (
-          <th className={`${!columnList.approval ? 'd-none' : ''}`}>
+          <th className={`${!columnList.approval ? 'd-none' : ''} collection-sheet-bulk-approval`}>
             {t('common.approval')}
             &nbsp;&nbsp;
             {totalCollection > 0 && (
@@ -52,6 +52,7 @@ export default function LoanCollectionSheetHead({
                   setApprovedList(e.target.checked ? getLoanCollectionIds(accounts) : [])
                 }
                 disabled={loading?.collectionForm}
+                ariaLabel={t('common.approval')}
               />
             )}
           </th>

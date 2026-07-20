@@ -1661,12 +1661,19 @@
   }
 
   .mobile-page-grid .collection-sheet .collection-sheet-table-wrap {
-    max-height: 58dvh;
+    max-height: min(58dvh, 680px);
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     border-radius: 12px;
+    overscroll-behavior-y: auto;
+    scrollbar-width: thin;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
   }
 
   .mobile-page-grid .collection-sheet .collection-sheet-table {
-    min-width: 680px !important;
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
   // Calendars, timelines, reports and formal document previews.
@@ -2663,8 +2670,8 @@
     border-radius: 12px;
   }
 
-  // Complex report and collection tables keep their native table structure on mobile.
-  // They scroll horizontally instead of being rewritten into unreliable card layouts.
+  // Complex report tables keep their native table structure on mobile.
+  // Collection sheets opt into their dedicated member-card layout instead.
   .mobile-page-grid :where(.table-responsive, .table-scroll-both) {
     width: 100%;
     max-width: 100%;
@@ -2676,30 +2683,47 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table) {
     display: table !important;
     width: max-content !important;
     min-width: 100% !important;
     table-layout: auto !important;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) :is(thead, tbody, tfoot) {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table)
+    :is(thead, tbody, tfoot) {
     display: table-row-group !important;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) thead {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table)
+    thead {
     display: table-header-group !important;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) tfoot {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table)
+    tfoot {
     display: table-footer-group !important;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) tr {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table)
+    tr {
     display: table-row !important;
   }
 
-  .mobile-page-grid .table-scroll-both > table:not(.react-data-table) :is(th, td) {
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table):not(.collection-sheet-responsive-table)
+    :is(th, td) {
     position: static;
     display: table-cell !important;
     min-width: 88px;

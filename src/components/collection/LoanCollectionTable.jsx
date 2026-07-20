@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import CollectionSheetCenterHeader from './CollectionSheetCenterHeader'
 import LoanCollectionSheetBody from './LoanCollectionSheetBody'
 import LoanCollectionSheetFooter from './LoanCollectionSheetFooter'
 import LoanCollectionSheetHead from './LoanCollectionSheetHead'
@@ -33,11 +34,15 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
   return (
     <>
       <section className="collection-sheet-center-block">
-        <h2 className="heading collection-sheet-center-title">{center?.name}</h2>
+        <CollectionSheetCenterHeader
+          center={center}
+          accountKey="loan_account"
+          collectionKey="loan_collection"
+        />
         <div
           className="table-responsive table-scroll-both collection-sheet-table-wrap"
           style={{ minHeight: 'unset' }}>
-          <table className="table table-hover table-report collection-sheet-table collection-sheet-table--loan mobile-hide-first-serial">
+          <table className="table table-hover table-report collection-sheet-table collection-sheet-responsive-table collection-sheet-table--loan">
             <LoanCollectionSheetHead
               columnList={columnList}
               setApprovedList={setApprovedList}

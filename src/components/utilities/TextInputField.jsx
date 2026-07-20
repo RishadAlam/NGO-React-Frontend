@@ -3,14 +3,14 @@ import TextField from '@mui/material/TextField'
 export default function TextInputField({
   label,
   type,
-  icon,
   variant,
   defaultValue,
   error,
   setChange,
   isRequired = false,
   autoFocus = false,
-  disabled = false
+  disabled = false,
+  inputMode
 }) {
   const requiredLabel = (
     <span>
@@ -33,6 +33,7 @@ export default function TextInputField({
       autoFocus={autoFocus}
       required={isRequired}
       disabled={disabled ? true : false}
+      inputProps={inputMode ? { inputMode } : undefined}
     />
   )
 }

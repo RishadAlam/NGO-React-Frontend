@@ -9,6 +9,16 @@ import MoreVertical from '../../icons/MoreVertical'
 import '../../pages/staffs/staffs.scss'
 import CollectionSheetFilters from './CollectionSheetFilters'
 
+const MOBILE_LOCKED_COLUMNS = new Set([
+  '#',
+  'image',
+  'name',
+  'acc_no',
+  'deposit',
+  'approval',
+  'action'
+])
+
 function SavingCollectionSheetHeader({
   columnList,
   setColumnList,
@@ -79,21 +89,23 @@ function SavingCollectionSheetHeader({
                 'aria-labelledby': columnMenuTriggerId,
                 className: 'table-column-visibility-menu__list'
               }}>
-              {Object.keys(columnList).map((column, index) => (
-                <MenuItem className="table-column-visibility-menu__item" key={index}>
-                  <FormControlLabel
-                    className="table-column-visibility-menu__label"
-                    control={
-                      <Switch
-                        size="small"
-                        checked={columnList[column]}
-                        onChange={(e) => setColumnVisible(e.target.checked, column)}
-                      />
-                    }
-                    label={t(`common.${column}`)}
-                  />
-                </MenuItem>
-              ))}
+              {Object.keys(columnList)
+                .filter((column) => !isMobileTable || !MOBILE_LOCKED_COLUMNS.has(column))
+                .map((column) => (
+                  <MenuItem className="table-column-visibility-menu__item" key={column}>
+                    <FormControlLabel
+                      className="table-column-visibility-menu__label"
+                      control={
+                        <Switch
+                          size="small"
+                          checked={columnList[column]}
+                          onChange={(e) => setColumnVisible(e.target.checked, column)}
+                        />
+                      }
+                      label={t(`common.${column}`)}
+                    />
+                  </MenuItem>
+                ))}
             </Menu>
           </div>
         </div>

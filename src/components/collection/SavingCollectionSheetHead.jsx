@@ -38,7 +38,7 @@ export default function SavingCollectionSheetHead({
           `${isRegular ? 'regular' : 'pending'}_saving_collection_approval`,
           authPermissions
         ) && (
-          <th className={`${!columnList.approval ? 'd-none' : ''}`}>
+          <th className={`${!columnList.approval ? 'd-none' : ''} collection-sheet-bulk-approval`}>
             {t('common.approval')}
             &nbsp;&nbsp;
             {Number(totalCollection) > 0 && (
@@ -48,6 +48,7 @@ export default function SavingCollectionSheetHead({
                   setApprovedList(e.target.checked ? getSavingCollectionIds(accounts) : [])
                 }
                 disabled={loading?.collectionForm}
+                ariaLabel={t('common.approval')}
               />
             )}
           </th>

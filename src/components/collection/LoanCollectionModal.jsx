@@ -1,4 +1,5 @@
 import { create, rawReturn } from 'mutative'
+import { useMediaQuery } from '@mui/material'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +11,7 @@ import { isEmpty } from '../../helper/isEmpty'
 import { isEmptyObject } from '../../helper/isEmptyObject'
 import useFetch from '../../hooks/useFetch'
 import Save from '../../icons/Save'
+import MoneyCollect from '../../icons/MoneyCollect'
 import XCircle from '../../icons/XCircle'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
@@ -31,6 +33,7 @@ export default function LoanCollectionModal({
   const [loading, setLoading] = useLoadingState({})
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
+  const isMobileCollection = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
@@ -142,11 +145,26 @@ export default function LoanCollectionModal({
   return (
     <>
       <ModalPro open={open} handleClose={closeModal}>
-        <form onSubmit={onSubmit}>
-          <div className="card">
+        <form className="collection-entry-form" onSubmit={onSubmit}>
+          <div className="card collection-entry-card">
             <div className="card-header">
               <div className="d-flex align-items-center justify-content-between">
-                <b className="text-uppercase">{t('menu.collection.Loan_Collection')}</b>
+                {isMobileCollection ? (
+                  <div className="collection-entry-card__title">
+                    <span>
+                      <MoneyCollect size={20} />
+                    </span>
+                    <b>
+                      {t(
+                        collection?.newCollection
+                          ? 'common.collect_money'
+                          : 'common.edit_collection'
+                      )}
+                    </b>
+                  </div>
+                ) : (
+                  <b className="text-uppercase">{t('menu.collection.Loan_Collection')}</b>
+                )}
                 <Button
                   className={'text-danger p-0'}
                   loading={false}
@@ -156,21 +174,41 @@ export default function LoanCollectionModal({
               </div>
             </div>
             <div className="card-body">
+              {isMobileCollection && (
+                <div className="collection-entry-summary">
+                  <div>
+                    <span>{collection?.name}</span>
+                    <small>
+                      {t('common.acc_no')}: {tsNumbers(collection?.acc_no)}
+                    </small>
+                  </div>
+                  <div className="collection-entry-summary__amount">
+                    <strong>{tsNumbers(`$${collection?.total || 0}/-`)}</strong>
+                    <em>
+                      {t(
+                        collection?.newCollection ? 'common.due_today' : 'common.collected_amount'
+                      )}
+                    </em>
+                  </div>
+                </div>
+              )}
               {errors?.message && errors?.message !== '' && (
                 <div className="alert alert-danger" role="alert">
                   <strong>{errors?.message}</strong>
                 </div>
               )}
               <div className="row">
-                <div className="col-md-6 mb-3">
-                  <TextInputField
-                    label={t('common.name')}
-                    isRequired={true}
-                    defaultValue={collection?.name || ''}
-                    error={errors?.name}
-                    disabled={true}
-                  />
-                </div>
+                {!isMobileCollection && (
+                  <div className="col-md-6 mb-3">
+                    <TextInputField
+                      label={t('common.name')}
+                      isRequired={true}
+                      defaultValue={collection?.name || ''}
+                      error={errors?.name}
+                      disabled={true}
+                    />
+                  </div>
+                )}
                 <div className="col-md-6 mb-3">
                   <SelectBoxField
                     label={t('common.account')}
@@ -182,6 +220,24 @@ export default function LoanCollectionModal({
                 </div>
                 {Number(collection?.is_loan_approved) === 1 && (
                   <div className="col-md-6 mb-3">
+                    {isMobileCollection && (
+                      <div className="collection-entry-quick-picks">
+                        <span>{t('common.installment')}</span>
+                        <div>
+                          {[1, 2, 3].map((installment) => (
+                            <button
+                              type="button"
+                              className={
+                                Number(collection?.installment) === installment ? 'is-active' : ''
+                              }
+                              key={installment}
+                              onClick={() => setChange(installment, 'installment')}>
+                              {tsNumbers(`${installment}x`)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <TextInputField
                       label={t('common.installment')}
                       isRequired={true}
@@ -189,6 +245,7 @@ export default function LoanCollectionModal({
                       setChange={(val) => setChange(val, 'installment')}
                       error={errors?.installment}
                       disabled={loading?.collectionForm}
+                      inputMode="numeric"
                     />
                   </div>
                 )}
@@ -201,6 +258,7 @@ export default function LoanCollectionModal({
                     error={errors?.deposit}
                     autoFocus={true}
                     disabled={loading?.collectionForm}
+                    inputMode="decimal"
                   />
                 </div>
                 {Number(collection?.is_loan_approved) === 1 && (
@@ -213,6 +271,7 @@ export default function LoanCollectionModal({
                         setChange={(val) => setChange(val, 'loan')}
                         error={errors?.loan}
                         disabled={loading?.collectionForm}
+                        inputMode="decimal"
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -225,6 +284,7 @@ export default function LoanCollectionModal({
                         disabled={
                           !checkPermission('permission_to_do_edit_loan_interest', authPermissions)
                         }
+                        inputMode="decimal"
                       />
                     </div>
                   </>
@@ -237,6 +297,7 @@ export default function LoanCollectionModal({
                     setChange={(val) => setChange(val, 'total')}
                     error={errors?.total}
                     disabled={true}
+                    inputMode="decimal"
                   />
                 </div>
               </div>
@@ -253,10 +314,24 @@ export default function LoanCollectionModal({
             <div className="card-footer text-end">
               <Button
                 type="submit"
-                name={t('common.posting')}
-                className={'btn-primary py-2 px-3'}
+                name={
+                  isMobileCollection
+                    ? t(
+                        collection?.newCollection
+                          ? 'common.collect_money'
+                          : 'common.edit_collection'
+                      )
+                    : t('common.posting')
+                }
+                className={'btn-primary py-2 px-3 collection-entry-submit'}
                 loading={loading?.collectionForm || false}
-                endIcon={<Save size={20} />}
+                endIcon={
+                  isMobileCollection && collection?.newCollection ? (
+                    <MoneyCollect size={20} />
+                  ) : (
+                    <Save size={20} />
+                  )
+                }
                 disabled={Object.keys(errors).length || loading?.collectionForm || false}
               />
             </div>

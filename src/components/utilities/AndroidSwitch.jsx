@@ -38,7 +38,12 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
   }
 }))
 
-export default function AndroidSwitch({ value = false, toggleStatus, disabled = false }) {
+export default function AndroidSwitch({
+  value = false,
+  toggleStatus,
+  disabled = false,
+  ariaLabel
+}) {
   return (
     <FormControlLabel
       control={
@@ -46,6 +51,7 @@ export default function AndroidSwitch({ value = false, toggleStatus, disabled = 
           checked={value ? true : false}
           onChange={toggleStatus}
           disabled={disabled ? true : false}
+          inputProps={ariaLabel ? { 'aria-label': ariaLabel } : undefined}
         />
       }
     />

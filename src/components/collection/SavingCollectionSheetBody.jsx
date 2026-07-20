@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useMediaQuery } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import SavingCollectionSheetRow from './SavingCollectionSheetRow'
 import useVirtualRows from './useVirtualRows'
@@ -12,6 +13,7 @@ export default function SavingCollectionSheetBody({
   isRegular = true
 }) {
   const { t } = useTranslation()
+  const isMobileSheet = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const flatRows = useMemo(
     () =>
       (center?.saving_account || []).flatMap((account, accIndex) => {
@@ -29,9 +31,20 @@ export default function SavingCollectionSheetBody({
       }),
     [center?.saving_account]
   )
+  const displayRows = useMemo(
+    () =>
+      isMobileSheet
+        ? [...flatRows].sort(
+            (firstRow, secondRow) =>
+              Number(Object.keys(firstRow.collection || {}).length > 0) -
+              Number(Object.keys(secondRow.collection || {}).length > 0)
+          )
+        : flatRows,
+    [flatRows, isMobileSheet]
+  )
   const { bodyRef, isVirtualized, visibleRows, topPadding, bottomPadding } = useVirtualRows(
-    flatRows,
-    { enabled: flatRows.length > 40, rowHeight: 64, overscan: 8 }
+    displayRows,
+    { enabled: flatRows.length > 40 && !isMobileSheet, rowHeight: 64, overscan: 8 }
   )
 
   return (
@@ -59,6 +72,7 @@ export default function SavingCollectionSheetBody({
               approvedList={approvedList}
               setApprovedList={setApprovedList}
               isRegular={isRegular}
+              isMobileSheet={isMobileSheet}
             />
           ))}
           {isVirtualized && bottomPadding > 0 && (
