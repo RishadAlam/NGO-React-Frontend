@@ -80,8 +80,7 @@
     border-radius: 20px;
     color: $main-color;
     background:
-      linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), transparent 54%),
-      var(--soft-bg);
+      linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), transparent 54%), var(--soft-bg);
     box-shadow:
       inset 0 1px 0 rgba(var(--main-bg-rgb), 0.72),
       0 16px 34px -26px rgba(15, 23, 42, 0.7);
@@ -126,17 +125,7 @@
     }
 
     .top-bar-search {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      width: 100%;
-      max-width: none;
-      margin-top: 0;
-    }
-
-    &.top-bar--compact-mobile {
-      .top-bar-search {
-        display: none;
-      }
+      display: none;
     }
 
     .DarkLangButton {
@@ -682,7 +671,6 @@
         color: $main-color;
       }
     }
-
   }
 
   .mobile-services-page {
@@ -909,7 +897,9 @@
       border-radius: 14px;
       color: var(--primary-color);
       background: rgba(var(--primary-rgb), 0.08);
-      transition: transform 0.16s ease, background-color 0.16s ease;
+      transition:
+        transform 0.16s ease,
+        background-color 0.16s ease;
 
       &:active {
         transform: scale(0.96);
@@ -964,8 +954,7 @@
   }
 
   // Bootstrap rows become a predictable grid on mobile across forms, reports and settings.
-  .mobile-page-grid
-    .row:not(.dashboard-grid):not(.card-section):not(.staff-permissions-grid) {
+  .mobile-page-grid .row:not(.dashboard-grid):not(.card-section):not(.staff-permissions-grid) {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
@@ -997,10 +986,8 @@
     display: none !important;
   }
 
-  .mobile-page-grid
-    .row.align-items-center.my-3:has(.MuiBreadcrumbs-root),
-  .mobile-page-grid
-    .row.align-items-category.my-3:has(.MuiBreadcrumbs-root) {
+  .mobile-page-grid .row.align-items-center.my-3:has(.MuiBreadcrumbs-root),
+  .mobile-page-grid .row.align-items-category.my-3:has(.MuiBreadcrumbs-root) {
     gap: 8px;
     margin: 0 !important;
     padding: 0;
@@ -1086,9 +1073,7 @@
   }
 
   .mobile-page-grid
-    :where(.mb-3.text-end, .text-end.mb-3, .filter-actions):has(
-      > :where(.btn, .MuiButton-root)
-    ) {
+    :where(.mb-3.text-end, .text-end.mb-3, .filter-actions):has(> :where(.btn, .MuiButton-root)) {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
     gap: 8px;
@@ -1579,7 +1564,9 @@
     max-height: 260px !important;
   }
 
-  .mobile-page-grid .categories-config-modern :where(.category-config-grid-double, .category-config-toggle-grid) {
+  .mobile-page-grid
+    .categories-config-modern
+    :where(.category-config-grid-double, .category-config-toggle-grid) {
     grid-template-columns: minmax(0, 1fr) !important;
   }
 
@@ -1767,7 +1754,9 @@
     padding-left: 20px !important;
   }
 
-  .mobile-page-grid .internal-audit-report :where(.audit-metrics-grid, .audit-summary-grid, .audit-profit-grid) {
+  .mobile-page-grid
+    .internal-audit-report
+    :where(.audit-metrics-grid, .audit-summary-grid, .audit-profit-grid) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 10px;
   }
@@ -2172,7 +2161,8 @@
     }
   }
 
-  .react-table-card .react-table-scroll:has(> .react-data-table:not(.react-data-table--virtualized)) {
+  .react-table-card
+    .react-table-scroll:has(> .react-data-table:not(.react-data-table--virtualized)) {
     max-height: none;
     overflow: visible;
     border-radius: 0;
@@ -2698,7 +2688,6 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       column-gap: 4px;
     }
-
   }
 
   .mobile-action-sheet__grid {
