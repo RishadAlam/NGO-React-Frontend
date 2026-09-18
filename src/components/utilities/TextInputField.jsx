@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function TextInputField({
   label,
@@ -13,6 +14,7 @@ export default function TextInputField({
   inputMode,
   ariaLabel
 }) {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const requiredLabel = (
     <span>
       {label}
@@ -31,7 +33,7 @@ export default function TextInputField({
       variant={variant || 'standard'}
       error={error ? true : false}
       helperText={typeof error === 'string' ? error : typeof error === 'object' ? error[0] : ''}
-      autoFocus={autoFocus}
+      autoFocus={autoFocus && !mobile}
       required={isRequired}
       disabled={disabled ? true : false}
       inputProps={inputMode || ariaLabel ? { inputMode, 'aria-label': ariaLabel } : undefined}

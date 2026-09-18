@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/joy'
-import { Tooltip, Zoom } from '@mui/material'
+import { Tooltip, Zoom, useMediaQuery } from '@mui/material'
 import { create } from 'mutative'
 import { useTranslation } from 'react-i18next'
 import { setNomiGuarantorFields } from '../../helper/RegFormFieldsData'
@@ -21,6 +21,7 @@ export default function Nominees({
   editForm
 }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const addNominee = (length) => {
     if (length < 5) {
       setFormData((prevData) =>
@@ -150,6 +151,7 @@ export default function Nominees({
               <span>
                 <IconButton
                   className="text-success"
+                  aria-label={mobile ? t('common.add_nominee') : undefined}
                   onClick={() => addNominee(formData.nominees.length)}
                   disabled={formData?.nominees && formData?.nominees?.length < 5 ? false : true}>
                   {<PlusCircle size={24} />}
@@ -164,6 +166,7 @@ export default function Nominees({
               <span>
                 <IconButton
                   className="text-danger"
+                  aria-label={mobile ? t('common.remove_nominee') : undefined}
                   onClick={() => removeNominee(formData.nominees.length)}
                   disabled={formData?.nominees && formData?.nominees?.length > 1 ? false : true}>
                   {<XCircle size={24} />}

@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/joy'
-import { Tooltip, Zoom } from '@mui/material'
+import { Tooltip, Zoom, useMediaQuery } from '@mui/material'
 import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +21,7 @@ import { SearchAccountTableColumns } from '../../resources/staticData/tableColum
 import xFetch from '../../utilities/xFetch'
 
 export default function SearchAccount() {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const { t } = useTranslation()
   const location = useLocation()
   const windowWidth = useWindowInnerWidthValue()
@@ -97,12 +98,14 @@ export default function SearchAccount() {
                 type="text"
                 className="form-control form-input"
                 placeholder={t('common.search_placeholder')}
+                aria-label={mobile ? t('common.search_placeholder') : undefined}
                 value={searchKey ? tsNumbers(searchKey) : ''}
                 onChange={(e) => setSearchKey(tsNumbers(e.target.value, true))}
               />
               <span className="left-pan">
                 <Button
                   name={<Search size={20} />}
+                  aria-label={mobile ? t('common.search') : undefined}
                   disabled={false}
                   loading={false}
                   type="submit"

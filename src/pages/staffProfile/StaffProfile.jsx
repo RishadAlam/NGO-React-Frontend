@@ -1,5 +1,6 @@
 import { create, rawReturn } from 'mutative'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataState } from '../../atoms/authAtoms'
@@ -16,6 +17,9 @@ import xFetch from '../../utilities/xFetch'
 import localizedValidation from '../localizedValidation'
 
 export default function StaffProfile() {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pendingRef = useRef(false)
+  const [pending, setPending] = useState(false)
   const [authData, setAuthData] = useAuthDataState()
   const { t } = useTranslation()
   const [profileImage, setProfileImage] = useState(authData.image_uri || profilePlaceholder)
@@ -64,6 +68,7 @@ export default function StaffProfile() {
 
   const onSubmit = (event) => {
     event.preventDefault()
+    if (mobile && pendingRef.current) return
     if (profileInputs.name === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
@@ -75,34 +80,64 @@ export default function StaffProfile() {
     formData.append('phone', profileInputs.phone)
     formData.append('image', profileInputs.image)
 
+    if (mobile) {
+      pendingRef.current = true
+      setPending(true)
+      setErrors((previous) => {
+        const next = { ...previous }
+        delete next.message
+        return next
+      })
+    }
     setLoading({ ...loading, staffForm: true })
-    xFetch('profile-update', formData, null, authData.accessToken, null, 'POST', true).then(
-      (response) => {
-        setLoading({ ...loading, staffForm: false })
-        if (response?.success) {
-          toast.success(response.message)
-          // console.log(response)
-          setAuthData((prevData) =>
-            create(prevData, (draftAuthData) => {
-              draftAuthData.name = response?.name
-              draftAuthData.phone = response?.phone
-              draftAuthData.image = response?.image
-              draftAuthData.image_uri = response?.image_uri
-            })
-          )
-          return
-        }
-        setErrors((prevErr) =>
-          create(prevErr, (draftErr) => {
-            if (!response?.errors) {
-              draftErr.message = response?.message
-              return
-            }
-            return rawReturn(response?.errors || response)
+    const request = xFetch(
+      'profile-update',
+      formData,
+      null,
+      authData.accessToken,
+      null,
+      'POST',
+      true
+    ).then((response) => {
+      setLoading({ ...loading, staffForm: false })
+      if (response?.success) {
+        toast.success(response.message)
+        // console.log(response)
+        setAuthData((prevData) =>
+          create(prevData, (draftAuthData) => {
+            draftAuthData.name = response?.name
+            draftAuthData.phone = response?.phone
+            draftAuthData.image = response?.image
+            draftAuthData.image_uri = response?.image_uri
           })
         )
+        return
       }
-    )
+      setErrors((prevErr) =>
+        create(prevErr, (draftErr) => {
+          if (!response?.errors) {
+            draftErr.message = response?.message
+            return
+          }
+          return rawReturn(response?.errors || response)
+        })
+      )
+    })
+    if (mobile) {
+      request
+        .catch((error) => {
+          setLoading((previous) => ({ ...previous, staffForm: false }))
+          setErrors(
+            error?.errors || {
+              message: error?.message || t('localization.shared.unexpected_error')
+            }
+          )
+        })
+        .finally(() => {
+          pendingRef.current = false
+          setPending(false)
+        })
+    }
   }
 
   return (
@@ -136,7 +171,7 @@ export default function StaffProfile() {
                       autoFocus={true}
                       setChange={(val) => setChange(val, 'name')}
                       error={localizedValidation(errors?.name, t, t('common.name'))}
-                      disabled={loading?.profile}
+                      disabled={mobile ? pending : loading?.profile}
                     />
                   </div>
                   <div className="col-md-6 mb-3">
@@ -145,7 +180,7 @@ export default function StaffProfile() {
                       defaultValue={profileInputs?.phone || ''}
                       setChange={(val) => setChange(val, 'phone')}
                       error={localizedValidation(errors?.phone, t, t('common.phone'))}
-                      disabled={loading?.profile}
+                      disabled={mobile ? pending : loading?.profile}
                     />
                   </div>
                   <div className="col-md-6 mb-3 text-start">
@@ -155,7 +190,7 @@ export default function StaffProfile() {
                       setImageUri={setProfileImage}
                       setChange={(val) => setChange(val, 'image')}
                       error={localizedValidation(errors?.image, t, t('common.image'))}
-                      disabled={loading?.profile}
+                      disabled={mobile ? pending : loading?.profile}
                     />
                   </div>
                 </div>
@@ -164,10 +199,14 @@ export default function StaffProfile() {
                 <Button
                   name={t('common.update')}
                   className={'btn-primary py-2 px-3'}
-                  loading={loading?.profile || false}
+                  loading={mobile ? pending : loading?.profile || false}
                   endIcon={<Save size={20} />}
                   type="submit"
-                  disabled={Object.keys(errors).length || loading?.profile}
+                  disabled={
+                    mobile
+                      ? pending || Object.keys(errors).some((key) => key !== 'message')
+                      : Object.keys(errors).length || loading?.profile
+                  }
                 />
               </div>
             </form>

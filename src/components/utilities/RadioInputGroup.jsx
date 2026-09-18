@@ -31,6 +31,8 @@ export default function RadioInputGroup({
         <RadioGroup
           row
           aria-label={typeof label === 'string' ? label : undefined}
+          aria-invalid={mobile && error ? true : undefined}
+          aria-describedby={mobile && error ? `${groupId}-error` : undefined}
           name={mobile ? groupId : 'row-radio-buttons-group'}
           className="border rounded-2 px-2 w-100"
           ref={(el) => {
@@ -55,7 +57,11 @@ export default function RadioInputGroup({
           ))}
         </RadioGroup>
       </FormControl>
-      {error && <span className="text-danger my-3">{error}</span>}
+      {error && (
+        <span id={mobile ? `${groupId}-error` : undefined} className="text-danger my-3">
+          {error}
+        </span>
+      )}
     </>
   )
 }

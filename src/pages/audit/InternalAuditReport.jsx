@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import Loader from '../../components/loaders/Loader'
@@ -21,6 +22,8 @@ const toRecoveryPercentage = (recovered = 0, actual = 0) => {
 }
 
 export default function InternalAuditReport() {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const filterId = useId()
   const { t } = useTranslation()
   const [filters, setFilters] = useState({
     fromDate: '',
@@ -244,33 +247,38 @@ export default function InternalAuditReport() {
 
           <form className="row g-2 align-items-end audit-filter-form" onSubmit={applyFilters}>
             <div className="col-12 col-sm-6 col-lg-3">
-              <label className="form-label mb-1">
+              <label className="form-label mb-1" htmlFor={mobile ? `${filterId}-from` : undefined}>
                 {t('audit_report_page.internal.filters.from_date')}
               </label>
               <input
                 type="date"
                 name="fromDate"
+                id={mobile ? `${filterId}-from` : undefined}
                 value={filters.fromDate}
                 onChange={onFilterChange}
                 className="form-control"
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-3">
-              <label className="form-label mb-1">
+              <label className="form-label mb-1" htmlFor={mobile ? `${filterId}-to` : undefined}>
                 {t('audit_report_page.internal.filters.to_date')}
               </label>
               <input
                 type="date"
                 name="toDate"
+                id={mobile ? `${filterId}-to` : undefined}
                 value={filters.toDate}
                 onChange={onFilterChange}
                 className="form-control"
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-3">
-              <label className="form-label mb-1">{t('common.field')}</label>
+              <label className="form-label mb-1" htmlFor={mobile ? `${filterId}-field` : undefined}>
+                {t('common.field')}
+              </label>
               <select
                 name="fieldId"
+                id={mobile ? `${filterId}-field` : undefined}
                 value={filters.fieldId}
                 onChange={onFilterChange}
                 className="form-select">
@@ -283,9 +291,14 @@ export default function InternalAuditReport() {
               </select>
             </div>
             <div className="col-12 col-sm-6 col-lg-3">
-              <label className="form-label mb-1">{t('common.center')}</label>
+              <label
+                className="form-label mb-1"
+                htmlFor={mobile ? `${filterId}-center` : undefined}>
+                {t('common.center')}
+              </label>
               <select
                 name="centerId"
+                id={mobile ? `${filterId}-center` : undefined}
                 value={filters.centerId}
                 onChange={onFilterChange}
                 className="form-select">

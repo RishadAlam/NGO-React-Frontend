@@ -1,5 +1,6 @@
 import { create, rawReturn } from 'mutative'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useApprovalConfigsValue } from '../../atoms/appApprovalConfigAtoms'
@@ -19,6 +20,9 @@ import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 import xFetch from '../../utilities/xFetch'
 
 export default function ClientRegistration() {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pendingRef = useRef(false)
+  const [pending, setPending] = useState(false)
   const [imageUri, setImageUri] = useState(profilePlaceholder)
   const [signatureURL, setSignatureURL] = useState(SignaturePlaceholder)
   const [loading, setLoading] = useLoadingState({})
@@ -31,6 +35,7 @@ export default function ClientRegistration() {
 
   const onSubmit = (event) => {
     event.preventDefault()
+    if (mobile && pendingRef.current) return
     const validationErrors = checkRequiredFields(clientData, t, client_reg_sign_is_required)
 
     if (!isEmptyObject(validationErrors)) {
@@ -40,6 +45,11 @@ export default function ClientRegistration() {
     }
 
     const formData = setFormData(clientData)
+    if (mobile) {
+      pendingRef.current = true
+      setPending(true)
+      setErrors((previous) => ({ ...previous, message: '' }))
+    }
     setLoading({ ...loading, clientRegistrationForm: false })
 
     xFetch('client/registration', formData, null, accessToken, null, 'POST', true)
@@ -68,12 +78,20 @@ export default function ClientRegistration() {
         setErrors((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errResponse?.errors) {
-              draftErr.message = errResponse?.message
+              draftErr.message = mobile
+                ? errResponse?.message || t('localization.shared.unexpected_error')
+                : errResponse?.message
               return
             }
             return rawReturn(errResponse?.errors || errResponse)
           })
         )
+      })
+      .finally(() => {
+        if (mobile) {
+          pendingRef.current = false
+          setPending(false)
+        }
       })
   }
 
@@ -114,7 +132,7 @@ export default function ClientRegistration() {
                   client_reg_sign_is_required={client_reg_sign_is_required}
                   errors={errors}
                   setErrors={setErrors}
-                  disabled={loading.clientRegistrationForm}
+                  disabled={mobile ? pending : loading.clientRegistrationForm}
                 />
               </div>
               <div className="card-footer text-center">
@@ -122,9 +140,9 @@ export default function ClientRegistration() {
                   type="submit"
                   name={t('common.registration')}
                   className={'btn-primary py-2 px-3'}
-                  loading={loading?.clientRegistrationForm || false}
+                  loading={mobile ? pending : loading?.clientRegistrationForm || false}
                   endIcon={<Save size={20} />}
-                  disabled={loading?.clientRegistrationForm || false}
+                  disabled={mobile ? pending : loading?.clientRegistrationForm || false}
                 />
               </div>
             </form>

@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
@@ -9,6 +10,7 @@ import SelectBoxField from '../utilities/SelectBoxField'
 
 function CategoryConfigRow({ config, index, accounts, setChange, loading, error }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
 
   const DAY = t('common.day')
   const fieldLabels = {
@@ -226,6 +228,11 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
               <p className="mb-0">{fieldLabels.savingsAccount}</p>
               <AndroidSwitch
                 value={Boolean(config?.disable_unchecked_saving_acc)}
+                ariaLabel={
+                  mobile
+                    ? `${categoryName}: ${t('categories_config.disable_unchecked_accounts')}: ${fieldLabels.savingsAccount}`
+                    : undefined
+                }
                 toggleStatus={(e) =>
                   setChange(e.target.checked, 'disable_unchecked_saving_acc', index)
                 }
@@ -237,6 +244,11 @@ function CategoryConfigRow({ config, index, accounts, setChange, loading, error 
               <p className="mb-0">{fieldLabels.loanAccount}</p>
               <AndroidSwitch
                 value={Boolean(config?.disable_unchecked_loan_acc)}
+                ariaLabel={
+                  mobile
+                    ? `${categoryName}: ${t('categories_config.disable_unchecked_accounts')}: ${fieldLabels.loanAccount}`
+                    : undefined
+                }
                 toggleStatus={(e) =>
                   setChange(e.target.checked, 'disable_unchecked_loan_acc', index)
                 }
