@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
@@ -42,7 +43,8 @@ export default function Withdrawal() {
   const {
     data: { data: withdrawals } = [],
     mutate,
-    isLoading
+    isLoading,
+    hasError
   } = useFetch({
     action: 'accounts/withdrawals',
     queryParams: { date_range: JSON.stringify(dateRange) }
@@ -211,18 +213,25 @@ export default function Withdrawal() {
         <div className="mb-3 text-end">
           <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
-        <div className="staff-table">
-          {isLoading && !withdrawals ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={t('account_withdrawal.Withdrawal_List')}
-              columns={columns}
-              data={withdrawals}
-              footer={true}
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={withdrawals !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !withdrawals ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={t('account_withdrawal.Withdrawal_List')}
+                columns={columns}
+                data={withdrawals}
+                footer={true}
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mui/material'
 import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -9,6 +10,8 @@ const OTP_LEN = 6
 const RESEND_COOLDOWN = 30
 
 export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pending = useRef(false)
   const { t, i18n } = useTranslation()
   const formatNumber = (number) =>
     new Intl.NumberFormat(i18n.resolvedLanguage || i18n.language).format(number)
@@ -24,9 +27,11 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
   }, [cooldown])
 
   const otp = digits.join('')
+  const normalize = (value) =>
+    mobile ? value.replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit))) : value
 
   const setDigit = (idx, val) => {
-    const clean = val.replace(/\D/g, '').slice(0, 1)
+    const clean = normalize(val).replace(/\D/g, '').slice(0, 1)
     setDigits((prev) =>
       create(prev, (d) => {
         d[idx] = clean
@@ -51,7 +56,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
   }
 
   const handlePaste = (e) => {
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, OTP_LEN)
+    const pasted = normalize(e.clipboardData.getData('text')).replace(/\D/g, '').slice(0, OTP_LEN)
     if (!pasted) return
     e.preventDefault()
     const arr = Array(OTP_LEN).fill('')
@@ -64,41 +69,68 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
 
   const otpSubmit = (event) => {
     event.preventDefault()
+    if (mobile && pending.current) return
     if (otp.length !== OTP_LEN) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
+    if (mobile) pending.current = true
     setLoading({ ...loading, otp: true })
     const controller = new AbortController()
-    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST').then(
-      (response) => {
+    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST')
+      .then((response) => {
         setLoading({ ...loading, otp: false })
+        if (mobile) pending.current = false
         if (response?.success) {
           toast.success(response.message)
           setStep(2)
           return
         }
         setError(response?.errors || response)
-      }
-    )
-    controller.abort()
+      })
+      .catch((error) => {
+        if (!mobile) throw error
+        if (mobile) {
+          setLoading({ ...loading, otp: false })
+          if (mobile) pending.current = false
+          setError(
+            error?.errors || {
+              message: error?.message || t('localization.shared.unexpected_error')
+            }
+          )
+        }
+      })
+    if (!mobile) controller.abort()
   }
 
   const resendOTP = () => {
+    if (mobile && (loading?.resendOtp || cooldown > 0)) return
     if (!userId) {
       toast.error(t('localization.domain.otp_user_missing'))
       return
     }
     setLoading({ ...loading, resendOtp: true })
-    xFetch(`otp-resend/${userId}`).then((response) => {
-      setLoading({ ...loading, resendOtp: false })
-      if (response?.success) {
-        toast.success(response.message)
-        setCooldown(RESEND_COOLDOWN)
-        return
-      }
-      setError(response?.errors || response)
-    })
+    xFetch(`otp-resend/${userId}`)
+      .then((response) => {
+        setLoading({ ...loading, resendOtp: false })
+        if (response?.success) {
+          toast.success(response.message)
+          setCooldown(RESEND_COOLDOWN)
+          return
+        }
+        setError(response?.errors || response)
+      })
+      .catch((error) => {
+        if (!mobile) throw error
+        if (mobile) {
+          setLoading({ ...loading, resendOtp: false })
+          setError(
+            error?.errors || {
+              message: error?.message || t('localization.shared.unexpected_error')
+            }
+          )
+        }
+      })
   }
 
   return (

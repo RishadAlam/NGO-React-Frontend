@@ -8,12 +8,14 @@ import WithdrawalLists from '../../components/withdrawalLists/WithdrawalLists'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import './dashboard.scss'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 
 export default function Dashboard({ pageTitle }) {
   const { t } = useTranslation()
   const { company_name = '' } = useAppSettingsValue()
   const separator = !isEmpty(pageTitle) && !isEmpty(company_name) ? ' | ' : ''
 
+  const result = useFetch({ action: 'dashboard' })
   const {
     data: {
       data: {
@@ -32,10 +34,10 @@ export default function Dashboard({ pageTitle }) {
         top_collectionist = []
       } = {}
     } = [],
-    isLoading
-  } = useFetch({
-    action: 'dashboard'
-  })
+    isLoading,
+    hasError,
+    mutate
+  } = result
 
   return (
     <>
@@ -43,18 +45,83 @@ export default function Dashboard({ pageTitle }) {
         <title>{`${t(pageTitle) + separator + company_name}`}</title>
       </Helmet>
 
-      <div className="dashboard">
-        <div className="row g-3 dashboard-grid">
-          <div className="col-xl-3 d-xl-block d-none dashboard-column dashboard-column--analytics">
-            <div className="dashboard-stack">
-              <div className="box dashboard-panel pie-analytics">
+      <MobileFetchBoundary
+        hasError={hasError}
+        hasData={result.data?.data !== undefined}
+        onRetry={mutate}
+        errorKey="mobile.load_error"
+        staleKey="mobile.stale_data">
+        <div className="dashboard">
+          <div className="row g-3 dashboard-grid">
+            <div className="col-xl-3 d-xl-block d-none dashboard-column dashboard-column--analytics">
+              <div className="dashboard-stack">
+                <div className="box dashboard-panel pie-analytics">
+                  <PieChartBox
+                    chartName={t('dashboard.Savings_Collection_by_Sources')}
+                    sources={saving_collections_sources}
+                    isLoading={isLoading}
+                  />
+                </div>
+                <div className="box dashboard-panel pie-analytics">
+                  <PieChartBox
+                    chartName={t('dashboard.Loans_Collection_by_Sources')}
+                    sources={loan_collections_sources}
+                    isLoading={isLoading}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-6 col-lg-8 dashboard-column dashboard-column--metrics">
+              <CardSection
+                loan_distributions={loan_distributions}
+                loan_collections_summery={loan_collections_summery}
+                loan_saving_collections={loan_saving_collections}
+                monthly_loan_collections={monthly_loan_collections}
+                loan_collections={loan_collections}
+                saving_collections_summery={saving_collections_summery}
+                dps_collections={dps_collections}
+                saving_collections={saving_collections}
+                saving_withdrawal={saving_withdrawal}
+                loan_saving_withdrawal={loan_saving_withdrawal}
+                isLoading={isLoading}
+              />
+            </div>
+            <div className="col-xl-3 col-lg-4 col-md-6 dashboard-column collectors">
+              <div className="dashboard-stack">
+                <div className="box dashboard-panel top-collectors dashboard-grid-panel dashboard-grid-panel--people">
+                  <TopCollectors
+                    heading={t('dashboard.Todays_Top_Money_Collectors')}
+                    collectors={top_collectionist}
+                    isLoading={isLoading}
+                  />
+                </div>
+                <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
+                  <WithdrawalLists
+                    title={t('dashboard.Recent_Saving_Withdrawals')}
+                    withdrawal={saving_withdrawal}
+                    isLoading={isLoading}
+                  />
+                </div>
+                <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
+                  <WithdrawalLists
+                    title={t('dashboard.Recent_Loan_Withdrawals')}
+                    withdrawal={loan_saving_withdrawal}
+                    isLoading={isLoading}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
+              <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
                 <PieChartBox
                   chartName={t('dashboard.Savings_Collection_by_Sources')}
                   sources={saving_collections_sources}
                   isLoading={isLoading}
                 />
               </div>
-              <div className="box dashboard-panel pie-analytics">
+            </div>
+            <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
+              <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
                 <PieChartBox
                   chartName={t('dashboard.Loans_Collection_by_Sources')}
                   sources={loan_collections_sources}
@@ -63,66 +130,8 @@ export default function Dashboard({ pageTitle }) {
               </div>
             </div>
           </div>
-          <div className="col-xl-6 col-lg-8 dashboard-column dashboard-column--metrics">
-            <CardSection
-              loan_distributions={loan_distributions}
-              loan_collections_summery={loan_collections_summery}
-              loan_saving_collections={loan_saving_collections}
-              monthly_loan_collections={monthly_loan_collections}
-              loan_collections={loan_collections}
-              saving_collections_summery={saving_collections_summery}
-              dps_collections={dps_collections}
-              saving_collections={saving_collections}
-              saving_withdrawal={saving_withdrawal}
-              loan_saving_withdrawal={loan_saving_withdrawal}
-              isLoading={isLoading}
-            />
-          </div>
-          <div className="col-xl-3 col-lg-4 col-md-6 dashboard-column collectors">
-            <div className="dashboard-stack">
-              <div className="box dashboard-panel top-collectors dashboard-grid-panel dashboard-grid-panel--people">
-                <TopCollectors
-                  heading={t('dashboard.Todays_Top_Money_Collectors')}
-                  collectors={top_collectionist}
-                  isLoading={isLoading}
-                />
-              </div>
-              <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
-                <WithdrawalLists
-                  title={t('dashboard.Recent_Saving_Withdrawals')}
-                  withdrawal={saving_withdrawal}
-                  isLoading={isLoading}
-                />
-              </div>
-              <div className="box dashboard-panel withdrawal-list d-lg-block d-none">
-                <WithdrawalLists
-                  title={t('dashboard.Recent_Loan_Withdrawals')}
-                  withdrawal={loan_saving_withdrawal}
-                  isLoading={isLoading}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
-            <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
-              <PieChartBox
-                chartName={t('dashboard.Savings_Collection_by_Sources')}
-                sources={saving_collections_sources}
-                isLoading={isLoading}
-              />
-            </div>
-          </div>
-          <div className="col-md-6 d-lg-none d-block dashboard-column dashboard-column--insight">
-            <div className="box dashboard-panel pie-analytics dashboard-grid-panel dashboard-grid-panel--insight">
-              <PieChartBox
-                chartName={t('dashboard.Loans_Collection_by_Sources')}
-                sources={loan_collections_sources}
-                isLoading={isLoading}
-              />
-            </div>
-          </div>
         </div>
-      </div>
+      </MobileFetchBoundary>
     </>
   )
 }

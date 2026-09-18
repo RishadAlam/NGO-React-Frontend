@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
@@ -38,7 +39,12 @@ export default function Accounts() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const mobilePermissions = windowWidth < 768 ? authPermissions : null
-  const { data: { data: accounts } = [], mutate, isLoading } = useFetch({ action: 'accounts' })
+  const {
+    data: { data: accounts } = [],
+    mutate,
+    isLoading,
+    hasError
+  } = useFetch({ action: 'accounts' })
 
   const statusSwitch = (value, id) => (
     <PermissionStatusSwitch
@@ -239,13 +245,20 @@ export default function Accounts() {
             )}
           </div>
         </div>
-        <div className="staff-table">
-          {isLoading && !accounts ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable title={t('account.Account_List')} columns={columns} data={accounts} />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={accounts !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !accounts ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable title={t('account.Account_List')} columns={columns} data={accounts} />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

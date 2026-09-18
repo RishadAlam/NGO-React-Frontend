@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
@@ -39,7 +40,8 @@ export default function ExpenseCategories() {
   const {
     data: { data: expenseCategories } = [],
     mutate,
-    isLoading
+    isLoading,
+    hasError
   } = useFetch({ action: 'accounts/expenses/categories' })
 
   const statusSwitch = (value, id) => (
@@ -189,17 +191,24 @@ export default function ExpenseCategories() {
               )}
           </div>
         </div>
-        <div className="staff-table">
-          {isLoading && !expenseCategories ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={t('expense_categories.Expense_Categories_List')}
-              columns={columns}
-              data={expenseCategories}
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={expenseCategories !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !expenseCategories ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={t('expense_categories.Expense_Categories_List')}
+                columns={columns}
+                data={expenseCategories}
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -14,7 +15,12 @@ import { RegisteredSavingsTableColumns } from '../../resources/staticData/tableC
 export default function RegisteredSavingAccountList() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
-  const { data: { data: clientProfiles } = [], isLoading } = useFetch({
+  const {
+    data: { data: clientProfiles } = [],
+    isLoading,
+    mutate,
+    hasError
+  } = useFetch({
     action: 'client/registration/saving/get'
   })
 
@@ -46,19 +52,26 @@ export default function RegisteredSavingAccountList() {
             />
           </div>
         </div>
-        <div className="staff-table">
-          {isLoading && !clientProfiles ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={`${t('menu.registration.saving_account_registration')} ${t('common.list')}`}
-              columns={columns}
-              data={clientProfiles}
-              rowLinkPath="/saving-account"
-              rowLinkPrefix="id"
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={clientProfiles !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !clientProfiles ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={`${t('menu.registration.saving_account_registration')} ${t('common.list')}`}
+                columns={columns}
+                data={clientProfiles}
+                rowLinkPath="/saving-account"
+                rowLinkPrefix="id"
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

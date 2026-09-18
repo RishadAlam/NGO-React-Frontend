@@ -66,9 +66,7 @@ describe('mobile dock profile disclosure', () => {
       fireEvent.click(trigger)
       const profileLink = screen.getByRole('link', { name: profile })
       expect(profileLink.getAttribute('href')).toBe('/profile')
-      expect(screen.getByRole('link', { name: password }).getAttribute('href')).toBe(
-        '/change-password'
-      )
+      expect(screen.queryByRole('link', { name: password })).toBe(null)
       expect(screen.getByRole('button', { name: logout })).toBeTruthy()
       expect(screen.getByRole('combobox', { name: palette }).options.length).toBeGreaterThan(1)
       expect(screen.getByText('Amina Rahman')).toBeTruthy()
@@ -105,8 +103,8 @@ describe('mobile dock profile disclosure', () => {
     renderProfile()
     const trigger = screen.getByRole('button', { name: 'Profile' })
     fireEvent.click(trigger)
-    fireEvent.click(screen.getByRole('link', { name: 'Change Password' }))
-    expect(screen.getByLabelText('Current route').textContent).toBe('/change-password')
+    fireEvent.click(screen.getByRole('link', { name: 'Profile' }))
+    expect(screen.getByLabelText('Current route').textContent).toBe('/profile')
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     fireEvent.click(trigger)
     fireEvent.click(screen.getByRole('link', { name: 'Other route' }))
@@ -130,6 +128,9 @@ describe('mobile dock profile disclosure', () => {
     expect(container.querySelector('.profile--dock')).toBe(null)
     fireEvent.click(trigger)
     expect(screen.getByRole('link', { name: 'Profile' })).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'Change Password' }).getAttribute('href')).toBe(
+      '/change-password'
+    )
     expect(screen.queryByRole('combobox', { name: 'Template' })).toBe(null)
     expect(screen.queryByText('Community Cooperative')).toBe(null)
   })

@@ -2,7 +2,14 @@ import { useRef, useState } from 'react'
 import { useMediaQuery } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-export default function MobileFetchBoundary({ hasError, hasData, onRetry, children }) {
+export default function MobileFetchBoundary({
+  hasError,
+  hasData,
+  onRetry,
+  children,
+  errorKey = 'mobile.collection_load_error',
+  staleKey = 'mobile.stale_collection_data'
+}) {
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const { t } = useTranslation()
   const [retrying, setRetrying] = useState(false)
@@ -28,8 +35,8 @@ export default function MobileFetchBoundary({ hasError, hasData, onRetry, childr
       {showError && (
         <section className="mobile-fetch-error" role="alert">
           <div className="mobile-fetch-error__message">
-            <p>{t('mobile.collection_load_error')}</p>
-            {hasData && <p>{t('mobile.stale_collection_data')}</p>}
+            <p>{t(errorKey)}</p>
+            {hasData && <p>{t(staleKey)}</p>}
           </div>
           <button
             type="button"

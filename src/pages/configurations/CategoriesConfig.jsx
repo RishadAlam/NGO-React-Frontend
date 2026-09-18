@@ -12,6 +12,7 @@ import Home from '../../icons/Home'
 import Settings from '../../icons/Settings'
 import Tool from '../../icons/Tool'
 import xFetch from '../../utilities/xFetch'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 
 export default function CategoriesConfig() {
   const { t } = useTranslation()
@@ -20,13 +21,14 @@ export default function CategoriesConfig() {
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
   const {
-    data: { data: categories = [] } = [],
+    data: { data: categories } = [],
     mutate,
-    isLoading
+    isLoading,
+    hasError
   } = useFetch({ action: 'categories-config' })
 
   useEffect(() => {
-    categories.length && setAllConfigurations(categories)
+    categories?.length && setAllConfigurations(categories)
   }, [categories])
 
   const updateConfig = async (event) => {
@@ -94,18 +96,25 @@ export default function CategoriesConfig() {
           ]}
         />
 
-        {isLoading ? (
-          <ReactTableSkeleton />
-        ) : (
-          <CategoryConfig
-            allConfigurations={allConfigurations}
-            setAllConfigurations={setAllConfigurations}
-            error={error}
-            setError={setError}
-            update={updateConfig}
-            loading={loading?.CategoriesConfig || false}
-          />
-        )}
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={categories !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          {isLoading ? (
+            <ReactTableSkeleton />
+          ) : (
+            <CategoryConfig
+              allConfigurations={allConfigurations}
+              setAllConfigurations={setAllConfigurations}
+              error={error}
+              setError={setError}
+              update={updateConfig}
+              loading={loading?.CategoriesConfig || false}
+            />
+          )}
+        </MobileFetchBoundary>
       </section>
     </>
   )

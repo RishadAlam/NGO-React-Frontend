@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import Cookies from 'js-cookie'
 import { create } from 'mutative'
 import { useEffect, useId, useState } from 'react'
@@ -47,6 +48,7 @@ const LockIcon = () => (
 export default function Login() {
   const { t } = useTranslation()
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pending = useRef(false)
   const PasswordToggle = mobile ? 'button' : 'span'
   const errorId = useId()
   const navigate = useNavigate()
@@ -58,6 +60,10 @@ export default function Login() {
   const [, setIsAuthorized] = useIsAuthorizedState()
   const [inputs, setInputs] = useState({ email: '', password: '', rememberMe: false })
   const [errors, SetErrors] = useState({ email: '', password: '' })
+  const responseErrors = (response) =>
+    mobile && (Number(response?.status) >= 500 || response instanceof Error)
+      ? { message: t('localization.shared.unexpected_error') }
+      : response?.errors || response
 
   useEffect(() => {
     document.title = t('auth.sign_in')
@@ -78,15 +84,18 @@ export default function Login() {
 
   const loginUser = (event) => {
     event.preventDefault()
+    if (mobile && pending.current) return
     if (inputs.email === '' || inputs.password === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
+    if (mobile) pending.current = true
     setLoading({ ...loading, login: true })
     const requestData = { email: inputs.email, password: inputs.password }
     xFetch('login', requestData, null, null, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, login: false })
+        if (mobile) pending.current = false
         if (response.success) {
           inputs.rememberMe
             ? Cookies.set('accessToken', response.access_token, { expires: 30 })
@@ -115,11 +124,12 @@ export default function Login() {
             state: { id: response.user_id, message: response?.errors?.message }
           })
         }
-        SetErrors(response?.errors || response)
+        SetErrors(responseErrors(response))
       })
       .catch((error) => {
         setLoading({ ...loading, login: false })
-        SetErrors(error?.errors || error)
+        if (mobile) pending.current = false
+        SetErrors(responseErrors(error))
       })
   }
 
@@ -222,7 +232,11 @@ export default function Login() {
         <button
           type="submit"
           className="auth-btn"
-          disabled={Object.keys(errors).length || loading?.login}>
+          disabled={
+            (mobile
+              ? Object.keys(errors).some((key) => !['message', 'status', 'success'].includes(key))
+              : Object.keys(errors).length) || loading?.login
+          }>
           {t('auth.sign_in', 'Sign in')}
           {loading?.login && <LoaderSm size={18} clr="#fff" />}
         </button>

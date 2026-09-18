@@ -128,14 +128,16 @@ export default function ProfileBox({ t, variant }) {
                   {t('profile_box.profile')}
                 </Link>
               </li>
-              <li className="pb-3 border-bottom mb-3">
-                <Link to="/change-password" onClick={() => setIsProfileVisible(false)}>
-                  <span className="me-2">
-                    <Key size={20} />
-                  </span>
-                  {t('profile_box.change_password')}
-                </Link>
-              </li>
+              {!isMobile && (
+                <li className="pb-3 border-bottom mb-3">
+                  <Link to="/change-password" onClick={() => setIsProfileVisible(false)}>
+                    <span className="me-2">
+                      <Key size={20} />
+                    </span>
+                    {t('profile_box.change_password')}
+                  </Link>
+                </li>
+              )}
               {isDock && (
                 <li className="profile-palette pb-3 border-bottom mb-3">
                   <span className="profile-palette__label">{t('theme_palette.template')}</span>

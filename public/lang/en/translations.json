@@ -267,6 +267,9 @@
     "expense_category_id": "Expense category"
   },
   "mobile": {
+    "empty_data": "No data found.",
+    "load_error": "Data could not be loaded. Please try again.",
+    "stale_data": "Showing previously loaded data. It may be out of date.",
     "collection_load_error": "Collection data could not be loaded. Please try again.",
     "retry": "Retry",
     "retrying": "Retrying…",

@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -23,7 +24,7 @@ export default function Transactions() {
     data: { data: transactions } = [],
     mutate,
     isLoading,
-    isError
+    hasError
   } = useFetch({
     action: `accounts/transactions/${selectedAcc ? selectedAcc?.id : 0}`,
     queryParams: { date_range: JSON.stringify(dateRange) }
@@ -118,18 +119,25 @@ export default function Transactions() {
             <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
           </div>
         </div>
-        <div className="staff-table">
-          {isLoading && !transactions ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={t('account_transaction.Transaction_List')}
-              columns={columns}
-              data={transactions}
-              footer={true}
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={transactions !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !transactions ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={t('account_transaction.Transaction_List')}
+                columns={columns}
+                data={transactions}
+                footer={true}
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

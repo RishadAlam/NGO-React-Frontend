@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -24,7 +25,8 @@ export default function Transfers() {
   const {
     data: { data: transfers } = [],
     mutate,
-    isLoading
+    isLoading,
+    hasError
   } = useFetch({
     action: 'accounts/transfers',
     queryParams: { date_range: JSON.stringify(dateRange) }
@@ -85,18 +87,25 @@ export default function Transfers() {
         <div className="text-end mb-3">
           <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
-        <div className="staff-table">
-          {isLoading && !transfers ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={t('account_transfer.Transfer_List')}
-              columns={columns}
-              data={transfers}
-              footer={true}
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={transfers !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !transfers ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={t('account_transfer.Transfer_List')}
+                columns={columns}
+                data={transfers}
+                footer={true}
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

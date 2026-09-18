@@ -87,13 +87,21 @@ export default async function xFetch(
       return res.data
     })
     .catch((errors) => {
+      const mobileLogin = endpoint === 'login' && window.matchMedia('(max-width:767.98px)').matches
+      const safeLoginMessage = i18n.isInitialized
+        ? i18n.t('localization.shared.unexpected_error')
+        : 'Something went wrong. Please try again.'
       if (errors.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         // console.log(errors.response.data)
         // console.log(errors.response.status)
         // console.log(errors.response.headers)
-        toast.error(errors.response.data.message)
+        toast.error(
+          mobileLogin && errors.response.status >= 500
+            ? safeLoginMessage
+            : errors.response.data.message
+        )
         errors.response.data['status'] = errors.response.status
         // return errors.response.data
         return Promise.reject(errors.response.data)
@@ -110,7 +118,10 @@ export default async function xFetch(
         // Something happened in setting up the request that triggered an Error
         // console.log('Error', errors.message)
         // return { success: false, errors: { message: errors.message } }
-        return Promise.reject({ success: false, errors: { message: errors.message } })
+        return Promise.reject({
+          success: false,
+          errors: { message: mobileLogin ? safeLoginMessage : errors.message }
+        })
       }
     })
 

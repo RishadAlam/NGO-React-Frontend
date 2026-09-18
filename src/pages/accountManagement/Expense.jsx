@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
 import { useMemo, useState } from 'react'
@@ -42,7 +43,8 @@ export default function Expense() {
   const {
     data: { data: expenses } = [],
     mutate,
-    isLoading
+    isLoading,
+    hasError
   } = useFetch({
     action: 'accounts/expenses',
     queryParams: { date_range: JSON.stringify(dateRange) }
@@ -202,18 +204,25 @@ export default function Expense() {
         <div className="mb-3 text-end">
           <DateRangePickerInputField defaultValue={dateRange} setChange={setDateRangeField} />
         </div>
-        <div className="staff-table">
-          {isLoading && !expenses ? (
-            <ReactTableSkeleton />
-          ) : (
-            <ReactTable
-              title={t('expense.Expense_List')}
-              columns={columns}
-              data={expenses}
-              footer={true}
-            />
-          )}
-        </div>
+        <MobileFetchBoundary
+          hasError={hasError}
+          hasData={expenses !== undefined}
+          onRetry={mutate}
+          errorKey="mobile.load_error"
+          staleKey="mobile.stale_data">
+          <div className="staff-table">
+            {isLoading && !expenses ? (
+              <ReactTableSkeleton />
+            ) : (
+              <ReactTable
+                title={t('expense.Expense_List')}
+                columns={columns}
+                data={expenses}
+                footer={true}
+              />
+            )}
+          </div>
+        </MobileFetchBoundary>
       </section>
     </>
   )

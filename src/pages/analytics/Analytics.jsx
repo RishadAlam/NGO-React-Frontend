@@ -1,3 +1,4 @@
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
@@ -272,7 +273,12 @@ export default function Analytics() {
     t
   ])
 
-  const { data: { data: analyticsRows } = [], isLoading } = useFetch({
+  const {
+    data: { data: analyticsRows } = [],
+    isLoading,
+    mutate,
+    hasError
+  } = useFetch({
     action: 'analytics',
     queryParams: {
       date_range: JSON.stringify(dateRange),
@@ -839,18 +845,25 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="staff-table">
-        {isLoading && !analyticsRows ? (
-          <ReactTableSkeleton />
-        ) : (
-          <ReactTable
-            title={t('analytics.table_title')}
-            columns={columns}
-            data={analyticsRows || []}
-            footer={true}
-          />
-        )}
-      </div>
+      <MobileFetchBoundary
+        hasError={hasError}
+        hasData={analyticsRows !== undefined}
+        onRetry={mutate}
+        errorKey="mobile.load_error"
+        staleKey="mobile.stale_data">
+        <div className="staff-table">
+          {isLoading && !analyticsRows ? (
+            <ReactTableSkeleton />
+          ) : (
+            <ReactTable
+              title={t('analytics.table_title')}
+              columns={columns}
+              data={analyticsRows || []}
+              footer={true}
+            />
+          )}
+        </div>
+      </MobileFetchBoundary>
     </section>
   )
 }

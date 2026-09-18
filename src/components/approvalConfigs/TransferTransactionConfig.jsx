@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -10,6 +11,7 @@ import xFetch from '../../utilities/xFetch'
 import ReactTableSkeleton from '../loaders/skeleton/ReactTableSkeleton'
 import Button from '../utilities/Button'
 import TransactionConfigRow from './TransactionConfigRow'
+import { useMediaQuery } from '@mui/material'
 
 export default function TransferTransactionConfig({
   accTransferConfigs,
@@ -18,6 +20,8 @@ export default function TransferTransactionConfig({
   isLoading
 }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pending = useRef(false)
   const [loading, setLoading] = useLoadingState({})
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
@@ -52,7 +56,9 @@ export default function TransferTransactionConfig({
 
   const update = (event) => {
     event.preventDefault()
+    if (mobile && pending.current) return
 
+    if (mobile) pending.current = true
     setLoading({ ...loading, transferTransaction: true })
     xFetch(
       'transfer-transaction-config-update',
@@ -64,6 +70,7 @@ export default function TransferTransactionConfig({
     )
       .then((response) => {
         setLoading({ ...loading, transferTransaction: false })
+        if (mobile) pending.current = false
         if (response?.success) {
           toast.success(response.message)
           mutate()
@@ -81,6 +88,7 @@ export default function TransferTransactionConfig({
       })
       .catch((errorResponse) => {
         setLoading({ ...loading, transferTransaction: false })
+        if (mobile) pending.current = false
         setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errorResponse?.errors) {
@@ -149,7 +157,13 @@ export default function TransferTransactionConfig({
               loading={loading?.transferTransaction || false}
               endIcon={<Save size={20} />}
               onclick={(e) => update(e)}
-              disabled={Object.keys(error).length || loading?.transferTransaction}
+              disabled={
+                (mobile
+                  ? Object.keys(error).some(
+                      (key) => !['message', 'status', 'success'].includes(key)
+                    )
+                  : Object.keys(error).length) || loading?.transferTransaction
+              }
             />
           </div>
         </div>

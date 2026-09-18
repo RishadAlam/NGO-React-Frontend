@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { create, rawReturn } from 'mutative'
 import React, { Fragment, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -16,6 +17,7 @@ import { useMediaQuery } from '@mui/material'
 export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprovals, mutate }) {
   const { t } = useTranslation()
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pending = useRef(false)
   const [loading, setLoading] = useLoadingState({})
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
@@ -36,11 +38,14 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
 
   const updatePermissions = (event) => {
     event.preventDefault()
+    if (mobile && pending.current) return
 
+    if (mobile) pending.current = true
     setLoading({ ...loading, ApprovalsConfig: true })
     xFetch('approvals-config-update', { approvals: allApprovals }, null, accessToken, null, 'PUT')
       .then((response) => {
         setLoading({ ...loading, ApprovalsConfig: false })
+        if (mobile) pending.current = false
         if (response?.success) {
           toast.success(response.message)
           mutate()
@@ -58,6 +63,7 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
       })
       .catch((errorResponse) => {
         setLoading({ ...loading, ApprovalsConfig: false })
+        if (mobile) pending.current = false
         setError((prevErr) =>
           create(prevErr, (draftErr) => {
             if (!errorResponse?.errors) {
@@ -138,7 +144,13 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
               loading={loading?.ApprovalsConfig || false}
               endIcon={<Save size={20} />}
               onclick={(e) => updatePermissions(e)}
-              disabled={Object.keys(error).length || loading?.ApprovalsConfig}
+              disabled={
+                (mobile
+                  ? Object.keys(error).some(
+                      (key) => !['message', 'status', 'success'].includes(key)
+                    )
+                  : Object.keys(error).length) || loading?.ApprovalsConfig
+              }
             />
           </div>
         </div>

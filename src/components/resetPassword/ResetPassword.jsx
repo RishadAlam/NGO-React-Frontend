@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { create } from 'mutative'
 import { useId, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -29,6 +30,7 @@ const LockIcon = () => (
 export default function ResetPassword({ userId, loading, setLoading }) {
   const { t } = useTranslation()
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const pending = useRef(false)
   const PasswordToggle = mobile ? 'button' : 'span'
   const errorId = useId()
   const [isPlainText, SetIsPlainText] = useState({ password: false, confirmPassword: false })
@@ -70,10 +72,12 @@ export default function ResetPassword({ userId, loading, setLoading }) {
 
   const submitPassword = (event) => {
     event.preventDefault()
+    if (mobile && pending.current) return
     if (!inputs.password || !inputs.confirmPassword || !userId) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
+    if (mobile) pending.current = true
     setLoading({ ...loading, resetPassword: true })
     const controller = new AbortController()
     xFetch(
@@ -87,15 +91,29 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       controller.signal,
       null,
       'PUT'
-    ).then((response) => {
-      setLoading({ ...loading, resetPassword: false })
-      if (response?.success) {
-        toast.success(response.message)
-        return (window.location.href = '/login')
-      }
-      SetErrors(response?.errors || response)
-    })
-    controller.abort()
+    )
+      .then((response) => {
+        setLoading({ ...loading, resetPassword: false })
+        if (mobile) pending.current = false
+        if (response?.success) {
+          toast.success(response.message)
+          return (window.location.href = '/login')
+        }
+        SetErrors(response?.errors || response)
+      })
+      .catch((error) => {
+        if (!mobile) throw error
+        if (mobile) {
+          setLoading({ ...loading, resetPassword: false })
+          if (mobile) pending.current = false
+          SetErrors(
+            error?.errors || {
+              message: error?.message || t('localization.shared.unexpected_error')
+            }
+          )
+        }
+      })
+    if (!mobile) controller.abort()
   }
 
   const Rule = ({ ok, label }) => (
@@ -202,7 +220,11 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       <button
         type="submit"
         className="auth-btn"
-        disabled={Object.keys(errors).length || loading?.resetPassword}>
+        disabled={
+          (mobile
+            ? Object.keys(errors).some((key) => !['message', 'status', 'success'].includes(key))
+            : Object.keys(errors).length) || loading?.resetPassword
+        }>
         {t('auth.reset_password_btn', 'Reset password')}
         {loading?.resetPassword && <LoaderSm size={18} clr="#fff" />}
       </button>
