@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { authDataState } from '../atoms/authAtoms'
+import { windowInnerWidthState } from '../atoms/windowSize'
 import SavingForm from '../components/collection/SavingCollectionModal'
 import LoanForm from '../components/collection/LoanCollectionModal'
 import SavingHistory from '../components/savingAccount/SavingCollections'
@@ -64,7 +65,10 @@ function mount(element, permissions, width = 390) {
   window.innerWidth = width
   return render(
     <RecoilRoot
-      initializeState={({ set }) => set(authDataState, { permissions, accessToken: 'test-token' })}>
+      initializeState={({ set }) => {
+        set(authDataState, { permissions, accessToken: 'test-token' })
+        set(windowInnerWidthState, width)
+      }}>
       <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         {element}
       </MemoryRouter>
