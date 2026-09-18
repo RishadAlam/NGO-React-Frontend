@@ -84,6 +84,22 @@ describe('Mobile shell entry navigation', () => {
 
 describe.each(['en', 'bn'])('Original mobile page names in %s', (language) => {
   it.each([
+    ['/collection/regular/saving', 'Regular Savings Collection', 'দৈনিক সঞ্চয় কালেকশন'],
+    ['/collection/regular/loan', 'Regular Loan Collection', 'দৈনিক ঋণ কালেকশন'],
+    ['/collection/pending/saving', 'Pending Savings Collection', 'তামাদি সঞ্চয় কালেকশন'],
+    ['/collection/pending/loan', 'Pending Loan Collection', 'তামাদি ঋণ কালেকশন']
+  ])('keeps workflow context throughout %s', async (path, english, bengali) => {
+    await i18n.changeLanguage(language)
+    for (const suffix of ['', '/3', '/3/1']) {
+      const view = mountMemory(`${path}${suffix}`)
+      const heading = screen.getByRole('heading', { level: 1 })
+      expect(heading.textContent).toBe(language === 'en' ? english : bengali)
+      expect(heading.parentElement.textContent).toBe(heading.textContent)
+      view.unmount()
+    }
+  })
+
+  it.each([
     ['/client-register/42', 'Client Register', 'সদস্য রেজিস্টার'],
     ['/saving-account/42', 'Saving Account', 'সঞ্চয় অ্যাকাউন্ট'],
     ['/loan-account/42', 'Loan Account', 'ঋণ অ্যাকাউন্ট'],

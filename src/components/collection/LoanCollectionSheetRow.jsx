@@ -359,13 +359,23 @@ function LoanCollectionSheetRow({
                     </span>
                   </div>
                 </div>
-                <div className="collection-sheet-mobile-card__status">
-                  {hasCollection ? <CheckCircle size={14} /> : <MoneyCollect size={14} />}
-                  <span>{t(hasCollection ? 'common.collected' : 'common.due_today')}</span>
-                </div>
+                {(hasCollection || isRegular) && (
+                  <div className="collection-sheet-mobile-card__status">
+                    {hasCollection ? <CheckCircle size={14} /> : <MoneyCollect size={14} />}
+                    <span>{t(hasCollection ? 'common.collected' : 'common.due_today')}</span>
+                  </div>
+                )}
               </div>
               <div className="collection-sheet-mobile-card__payment">
-                <span>{t(hasCollection ? 'common.collected_amount' : 'common.due_today')}</span>
+                <span>
+                  {t(
+                    hasCollection
+                      ? 'common.collected_amount'
+                      : isRegular
+                        ? 'common.due_today'
+                        : 'common.estimate_collection'
+                  )}
+                </span>
                 <strong>{tsNumbers(`$${mobileAmount ?? 0}/-`)}</strong>
               </div>
               <dl

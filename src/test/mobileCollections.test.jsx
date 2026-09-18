@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { RecoilRoot } from 'recoil'
 import { describe, expect, it, vi } from 'vitest'
 import { authDataState } from '../atoms/authAtoms'
@@ -37,6 +37,43 @@ describe.each([
   ['saving', SavingRow],
   ['loan', LoanRow]
 ])('Mobile %s collection privileges', (kind, Row) => {
+  it('labels a pending row without a collection as an estimate, not today’s money', () => {
+    mount(Row, [], { isRegular: false })
+    const card = screen.getByRole('article')
+    expect(within(card).queryAllByText('common.due_today')).toHaveLength(0)
+    expect(within(card).getByText('common.estimate_collection')).toBeTruthy()
+    expect(card.querySelector('.collection-sheet-mobile-card__status')).toBeNull()
+    expect(card.querySelector('.collection-sheet-mobile-card__payment strong').textContent).toBe(
+      '৳200/-'
+    )
+  })
+
+  it('keeps today’s due label on regular collection rows', () => {
+    mount(Row, [], { isRegular: true })
+    expect(screen.getAllByText('common.due_today')).toHaveLength(2)
+  })
+
+  it('keeps an actual historical collection marked collected with its recorded amount', () => {
+    mount(Row, [], {
+      isRegular: false,
+      collection: { ...collection, created_at: '2026-04-11T10:00:00.000Z' }
+    })
+    const card = screen.getByRole('article')
+    expect(within(card).getByText('common.collected')).toBeTruthy()
+    expect(within(card).getByText('common.collected_amount')).toBeTruthy()
+    expect(within(card).queryByText('common.due_today')).toBeNull()
+    expect(card.querySelector('.collection-sheet-mobile-card__payment strong').textContent).toBe(
+      kind === 'saving' ? '৳100/-' : '৳125/-'
+    )
+  })
+
+  it('leaves the desktop pending row as the existing table cells', () => {
+    mount(Row, [], { isRegular: false, isMobileSheet: false })
+    expect(screen.queryByRole('article')).toBeNull()
+    expect(screen.queryByText('common.estimate_collection')).toBeNull()
+    expect(screen.getByRole('row').className).toBe('collection-sheet-desktop-row')
+  })
+
   it('keeps a read-only employee free of mutation controls', () => {
     mount(Row, [], { collection })
     expect(screen.queryByRole('button', { name: 'common.edit_collection' })).toBeNull()

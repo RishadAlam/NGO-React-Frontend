@@ -21,6 +21,15 @@ const detailPageTitles = [
   ['/dashboard/dps-collections', 'dashboard.cards.DPS_Collections']
 ]
 
+// The two workflows share child-menu names. Use the existing complete mobile
+// titles so collectors keep their regular/pending context at every drill-down.
+const collectionPageTitles = [
+  ['/collection/regular/saving', 'mobile.regular_savings_collection'],
+  ['/collection/regular/loan', 'mobile.regular_loan_collection'],
+  ['/collection/pending/saving', 'mobile.pending_savings_collection'],
+  ['/collection/pending/loan', 'mobile.pending_loan_collection']
+]
+
 const flattenMenu = (items, parentLabel = '') =>
   items.flatMap((item) => {
     const currentItem = item.path ? [{ label: item.label, parentLabel, path: item.path }] : []
@@ -61,6 +70,11 @@ export default function MobilePageHeader({ onMenuOpen }) {
 
     const detailPage = detailPageTitles.find(([path]) => matchPath(path, location.pathname))
     if (detailPage) return { label: t(detailPage[1]), parentLabel: '' }
+
+    const collectionPage = collectionPageTitles.find(([path]) =>
+      matchPath({ path, end: false }, location.pathname)
+    )
+    if (collectionPage) return { label: t(collectionPage[1]), parentLabel: '' }
 
     const menuItems = Object.values(mainMenu(t)).flatMap((items) => flattenMenu(items))
     const matchedItem = menuItems
