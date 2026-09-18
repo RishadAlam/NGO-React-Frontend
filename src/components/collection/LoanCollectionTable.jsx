@@ -33,7 +33,12 @@ export default function LoanCollectionTable({ center, columnList, mutate, isRegu
 
   return (
     <>
-      <section className="collection-sheet-center-block">
+      <section
+        className={`collection-sheet-center-block${
+          Array.isArray(center?.loan_account) && center.loan_account.length === 0
+            ? ' collection-sheet-center-block--empty'
+            : ''
+        }`}>
         <CollectionSheetCenterHeader
           center={center}
           accountKey="loan_account"

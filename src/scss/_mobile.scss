@@ -1129,6 +1129,29 @@
     grid-column: 1 / -1;
   }
 
+  // Only explicit zero-member centers opt in; zero collections on a populated
+  // center still need their progress, totals and posting controls.
+  .mobile-page-grid .collection-sheet .collection-sheet-center-block--empty {
+    .collection-sheet-mobile-center-header {
+      padding: 10px 12px 4px;
+      gap: 0;
+    }
+
+    .collection-sheet-mobile-center-header__copy > span,
+    .collection-sheet-mobile-center-header > strong,
+    .collection-sheet-mobile-center-header__progress,
+    .collection-sheet-mobile-summary-row {
+      display: none !important;
+    }
+
+    .collection-sheet-responsive-table .collection-sheet-empty-row > .collection-sheet-empty-cell {
+      min-height: 44px;
+      padding: 8px 12px !important;
+      place-items: center start;
+      text-align: left !important;
+    }
+  }
+
   // The shared app header replaces legacy breadcrumbs on phone-sized screens.
   .mobile-page-grid .MuiBreadcrumbs-root {
     display: none !important;

@@ -36,7 +36,12 @@ export default function SavingCollectionTable({ center, columnList, mutate, isRe
 
   return (
     <>
-      <section className="collection-sheet-center-block">
+      <section
+        className={`collection-sheet-center-block${
+          Array.isArray(center?.saving_account) && center.saving_account.length === 0
+            ? ' collection-sheet-center-block--empty'
+            : ''
+        }`}>
         <CollectionSheetCenterHeader
           center={center}
           accountKey="saving_account"
