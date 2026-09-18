@@ -49,6 +49,15 @@ export function passwordCheckAlert(t, accessToken) {
           'POST'
         )
         if (!response?.success) {
+          if (window.matchMedia('(max-width:767.98px)').matches) {
+            // xFetch returns the parsed response, not a Fetch Response object.
+            Swal.showValidationMessage(
+              response?.errors?.message ||
+                response?.message ||
+                t('localization.shared.unexpected_error')
+            )
+            return false
+          }
           return Swal.showValidationMessage(`
             ${JSON.stringify(await response.json())}
           `)

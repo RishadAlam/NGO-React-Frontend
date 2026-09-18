@@ -65,6 +65,7 @@ export default function DatePickerInputField({
       adapterLocale={locale}
       localeText={localeText}>
       <DatePicker
+        desktopModeMediaQuery="(min-width: 768px) and (pointer: fine)"
         label={isRequired ? requiredLabel : label}
         className="form-control"
         value={(defaultValue && new Date(defaultValue)) || new Date()}

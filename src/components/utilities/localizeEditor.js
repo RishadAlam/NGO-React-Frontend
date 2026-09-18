@@ -18,6 +18,8 @@ export default function localizeEditor(editor, t, label) {
   const update = () => {
     toolbar.querySelectorAll('button').forEach((button) => {
       const type = [...button.classList].find((name) => name.startsWith('ql-'))?.slice(3)
+      // React-owned disclosure controls supply their own translated names.
+      if (!type) return
       const value = button.getAttribute('value')
       let key = type
       if (type === 'list' || type === 'script') key = `${type}_${value}`

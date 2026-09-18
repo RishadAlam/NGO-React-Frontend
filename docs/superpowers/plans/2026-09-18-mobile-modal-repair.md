@@ -19,9 +19,19 @@ Stack: React, MUI, Sass, ReactQuill, RSuite, SweetAlert, Vitest/Testing Library.
 
 ## Coverage checklist
 
-- [ ] Shared shells: card → form, form → card, direct card, nested permission cards.
-- [ ] Collection forms, approval forms, setup forms, registration edits/read-only details, staff permissions.
-- [ ] Editors, upload previews, signature drawing, report previews and action history.
-- [ ] Date/date-range pickers, confirmation/password/error dialogs, menu overlays.
-- [ ] Phone width and short landscape; desktop/tablet boundary unchanged.
-- [ ] Tests, lint, build, desktop CSS comparison, safe visual verification and commits.
+- [x] Shared shells: card → form, form → card, direct card, nested permission cards.
+- [x] All 36 ModalPro consumers reviewed and explicitly named; existing permission gates retained.
+- [x] Editors, upload previews, signature geometry, report title/close and action history reviewed.
+- [x] Date/date-range pickers, confirmation/password/error dialogs, menu overlays reviewed.
+- [x] Phone width and short landscape; desktop/tablet boundary unchanged.
+- [x] Tests, lint, build, desktop CSS comparison, safe visual verification and step commits.
+
+## Verification results
+
+- Full suite: 812 tests in 34 files pass. Changed JavaScript: zero ESLint errors (one existing StoreAccountCheck hook warning). Production build passes with existing dependency/chunk warnings.
+- Compiled app and collection styles outside media queries below 768px match baseline 9d82ab5 exactly. DatePicker tests cover phone fine-pointer behavior and the unchanged 768px desktop boundary.
+- Live checks: 320×568, 390×844, 430×932 and 667×375; EN/BN and light/dark collection forms; standard income form, date/date-range overlays, signature pad. No financial submissions or record changes.
+- Collection modal inner/outer widths now match (374px at390). Basic toolbar reduced from approximately250px to54px. Short-screen collection form has one body scroller and a visible footer.
+- Fixed calendar issues found during live checks: trigger-positioned popup below viewport/dock, wrong MUI action-bar selector, and shrinking calendar content clipping the last date rows. Final short-screen body scrolls364px of content in223px, with44px Cancel/OK controls fully visible.
+- Report list contained no records. Report preview close/title and desktop branches verified in component tests/source review, not a live report. Real phone keyboards and drawing precision require physical-device confirmation; no biometric signature was entered.
+- Independent final review found no blocking source issues. Browser appearance/language restored and temporary viewport reset.
