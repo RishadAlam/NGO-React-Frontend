@@ -5,6 +5,11 @@ import { toast } from 'react-hot-toast'
 import { getRecoil } from 'recoil-nexus'
 import { authDataState } from '../atoms/authAtoms'
 import { resolveMobileMutationPermissions } from '../helper/mobileMutationPermissions'
+import {
+  getImpersonationSession,
+  isImpersonationRead,
+  returnToOwnAccount
+} from '../helper/impersonationSession'
 
 export default async function xFetch(
   endpoint,
@@ -16,6 +21,37 @@ export default async function xFetch(
   multipart = false,
   permissionContext = {}
 ) {
+  let currentAuth
+  try {
+    currentAuth = getRecoil(authDataState)
+  } catch (_error) {
+    /* Auth bootstrap has no snapshot yet. */
+  }
+  const temporarySession = getImpersonationSession()
+  if (currentAuth?.impersonation || temporarySession) {
+    const expectedToken = temporarySession
+      ? `Bearer ${temporarySession.accessToken}`
+      : currentAuth?.accessToken
+    if (temporarySession && temporarySession.expiresAt <= Date.now()) {
+      returnToOwnAccount()
+      return Promise.reject({ status: 401, code: 'IMPERSONATION_ENDED' })
+    }
+    if (
+      (accessToken && accessToken !== expectedToken) ||
+      !isImpersonationRead(endpoint, method, data)
+    ) {
+      const message = i18n.isInitialized
+        ? i18n.t('impersonation.read_only')
+        : 'This session is view only. Return to your account to make changes.'
+      toast.error(message)
+      return Promise.reject({
+        status: 403,
+        success: false,
+        code: 'IMPERSONATION_READ_ONLY',
+        message
+      })
+    }
+  }
   const uri = new URL(`/api/${endpoint}`, import.meta.env.VITE_BASE_URI)
   // append query params in url
   if (queryParam) {
@@ -92,6 +128,14 @@ export default async function xFetch(
         ? i18n.t('localization.shared.unexpected_error')
         : 'Something went wrong. Please try again.'
       if (errors.response) {
+        if (temporarySession && errors.response.status === 401) {
+          returnToOwnAccount()
+          return Promise.reject({
+            ...errors.response.data,
+            status: 401,
+            code: 'IMPERSONATION_ENDED'
+          })
+        }
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         // console.log(errors.response.data)

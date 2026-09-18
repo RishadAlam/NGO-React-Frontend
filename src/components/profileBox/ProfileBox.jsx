@@ -16,10 +16,11 @@ import Avatar from '../utilities/Avatar'
 import Button from '../utilities/Button'
 import DarkLangButton from '../darkLangButton/DarkLangButton'
 import './profileBox.scss'
+import { returnToOwnAccount } from '../../helper/impersonationSession'
 
 export default function ProfileBox({ t, variant }) {
   const [isProfileVisible, setIsProfileVisible] = useState(false)
-  const { name, accessToken, role, image_uri } = useAuthDataValue()
+  const { name, accessToken, role, image_uri, impersonation } = useAuthDataValue()
   const setIsAuthorized = useSetIsAuthorizedState()
   const [loading, setLoading] = useLoadingState()
   const navigate = useNavigate()
@@ -64,6 +65,10 @@ export default function ProfileBox({ t, variant }) {
       .then((response) => {
         setLoading({ ...loading, logout: false })
         if (response.success) {
+          if (impersonation) {
+            returnToOwnAccount()
+            return
+          }
           removeSessionStorage('accessToken')
           Cookies.remove('accessToken')
           setIsAuthorized(false)
@@ -128,7 +133,7 @@ export default function ProfileBox({ t, variant }) {
                   {t('profile_box.profile')}
                 </Link>
               </li>
-              {!isMobile && (
+              {!isMobile && !impersonation && (
                 <li className="pb-3 border-bottom mb-3">
                   <Link to="/change-password" onClick={() => setIsProfileVisible(false)}>
                     <span className="me-2">
@@ -152,7 +157,7 @@ export default function ProfileBox({ t, variant }) {
                       <span className="me-2">
                         <Logout size={20} />
                       </span>
-                      {t('profile_box.logout')}
+                      {t(impersonation ? 'impersonation.return' : 'profile_box.logout')}
                     </p>
                   }
                   disabled={loading?.logout || false}

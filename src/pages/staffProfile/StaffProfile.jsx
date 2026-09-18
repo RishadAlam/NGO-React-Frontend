@@ -68,6 +68,7 @@ export default function StaffProfile() {
 
   const onSubmit = (event) => {
     event.preventDefault()
+    if (authData.impersonation) return
     if (mobile && pendingRef.current) return
     if (profileInputs.name === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
@@ -171,7 +172,7 @@ export default function StaffProfile() {
                       autoFocus={true}
                       setChange={(val) => setChange(val, 'name')}
                       error={localizedValidation(errors?.name, t, t('common.name'))}
-                      disabled={mobile ? pending : loading?.profile}
+                      disabled={!!authData.impersonation || (mobile ? pending : loading?.profile)}
                     />
                   </div>
                   <div className="col-md-6 mb-3">
@@ -180,7 +181,7 @@ export default function StaffProfile() {
                       defaultValue={profileInputs?.phone || ''}
                       setChange={(val) => setChange(val, 'phone')}
                       error={localizedValidation(errors?.phone, t, t('common.phone'))}
-                      disabled={mobile ? pending : loading?.profile}
+                      disabled={!!authData.impersonation || (mobile ? pending : loading?.profile)}
                     />
                   </div>
                   <div className="col-md-6 mb-3 text-start">
@@ -190,25 +191,27 @@ export default function StaffProfile() {
                       setImageUri={setProfileImage}
                       setChange={(val) => setChange(val, 'image')}
                       error={localizedValidation(errors?.image, t, t('common.image'))}
-                      disabled={mobile ? pending : loading?.profile}
+                      disabled={!!authData.impersonation || (mobile ? pending : loading?.profile)}
                     />
                   </div>
                 </div>
               </div>
-              <div className="card-footer">
-                <Button
-                  name={t('common.update')}
-                  className={'btn-primary py-2 px-3'}
-                  loading={mobile ? pending : loading?.profile || false}
-                  endIcon={<Save size={20} />}
-                  type="submit"
-                  disabled={
-                    mobile
-                      ? pending || Object.keys(errors).some((key) => key !== 'message')
-                      : Object.keys(errors).length || loading?.profile
-                  }
-                />
-              </div>
+              {!authData.impersonation && (
+                <div className="card-footer">
+                  <Button
+                    name={t('common.update')}
+                    className={'btn-primary py-2 px-3'}
+                    loading={mobile ? pending : loading?.profile || false}
+                    endIcon={<Save size={20} />}
+                    type="submit"
+                    disabled={
+                      mobile
+                        ? pending || Object.keys(errors).some((key) => key !== 'message')
+                        : Object.keys(errors).length || loading?.profile
+                    }
+                  />
+                </div>
+              )}
             </form>
           </div>
         </div>

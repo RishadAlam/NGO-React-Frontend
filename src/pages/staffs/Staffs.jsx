@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
@@ -31,6 +31,8 @@ import UserPlus from '../../icons/UserPlus'
 import Users from '../../icons/Users'
 import { StaffTableColumns } from '../../resources/staticData/tableColumns'
 import xFetch from '../../utilities/xFetch'
+import { navigateSession, saveImpersonationSession } from '../../helper/impersonationSession'
+import UserCheck from '../../icons/UserCheck'
 import './staffs.scss'
 
 export default function Staffs() {
@@ -41,7 +43,14 @@ export default function Staffs() {
   const [editableStaff, setEditableStaff] = useState(false)
   const [userPermissions, setUserPermissions] = useState([])
   const [actionHistory, setActionHistory] = useState([])
-  const { accessToken, id: authId, permissions: authPermissions } = useAuthDataValue()
+  const {
+    accessToken,
+    id: authId,
+    permissions: authPermissions,
+    impersonation
+  } = useAuthDataValue()
+  const [visitingId, setVisitingId] = useState(null)
+  const visitingRef = useRef(false)
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { data: { data: staffs } = [], mutate, isLoading } = useFetch({ action: 'users' })
@@ -63,6 +72,28 @@ export default function Staffs() {
   )
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
+      {!impersonation &&
+        authId !== id &&
+        Number(staff?.status) === 1 &&
+        staff?.verified_at &&
+        checkPermission('staff_impersonate', authPermissions) && (
+          <Tooltip title={t('impersonation.visit')} arrow>
+            <span>
+              <IconButton
+                aria-label={t('impersonation.visit')}
+                color="primary"
+                disabled={visitingId !== null}
+                aria-busy={visitingId === id}
+                onClick={() => visitUser(id)}>
+                {visitingId === id ? (
+                  <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+                ) : (
+                  <UserCheck size={20} />
+                )}
+              </IconButton>
+            </span>
+          </Tooltip>
+        )}
       {checkPermission('staff_permission_view', authPermissions) && (
         <Tooltip
           TransitionComponent={Zoom}
@@ -121,14 +152,42 @@ export default function Staffs() {
             'staff_data_update',
             'staff_soft_delete',
             'staff_action_history',
-            'staff_reset_password'
+            'staff_reset_password',
+            'staff_impersonate'
           ],
           authPermissions
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, authPermissions, authId, accessToken, impersonation, visitingId]
   )
+
+  const visitUser = async (id) => {
+    if (
+      visitingRef.current ||
+      impersonation ||
+      !checkPermission('staff_impersonate', authPermissions)
+    )
+      return
+    visitingRef.current = true
+    setVisitingId(id)
+    try {
+      const response = await xFetch(
+        `users/${id}/impersonation`,
+        null,
+        null,
+        accessToken,
+        null,
+        'POST'
+      )
+      saveImpersonationSession(response)
+      navigateSession('/profile')
+    } catch (error) {
+      toast.error(error?.message || t('impersonation.start_failed'))
+      visitingRef.current = false
+      setVisitingId(null)
+    }
+  }
 
   const toggleStatus = (id, isChecked) => {
     if (!checkPermission('staff_status_update', authPermissions)) return

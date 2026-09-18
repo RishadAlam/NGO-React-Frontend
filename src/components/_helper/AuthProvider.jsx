@@ -4,7 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi from 'i18next-http-backend'
 import Cookies from 'js-cookie'
 import { create } from 'mutative'
-import { useEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useErrorBoundary } from 'react-error-boundary'
 import { Toaster, toast } from 'react-hot-toast'
 import { initReactI18next } from 'react-i18next'
@@ -21,6 +21,12 @@ import {
 } from '../../resources/staticData/themePalettes'
 import xFetch from '../../utilities/xFetch'
 import Loader from '../loaders/Loader'
+import ImpersonationBanner from '../staff/ImpersonationBanner'
+import {
+  getImpersonationSession,
+  returnToOwnAccount,
+  sessionNavigationEvent
+} from '../../helper/impersonationSession'
 
 let authBootstrapRequest = null
 let authBootstrapAccessToken = null
@@ -60,10 +66,20 @@ export default function AuthProvider({ children }) {
   const [isAuthorized, setIsAuthorized] = useIsAuthorizedState()
   const [isLoading, setIsLoading] = useIsLoadingState()
   const [loading, setLoading] = useLoadingState()
+  const [switchingSession, setSwitchingSession] = useState(false)
+  const [bootstrapError, setBootstrapError] = useState(false)
   const navigate = useNavigate()
 
-  useEffect(() => {
+  // Register session navigation before the banner's expiry effect can run.
+  useLayoutEffect(() => {
     let isActive = true
+    const switchSession = (event) => {
+      if (!isActive || !['/profile', '/staffs'].includes(event.detail)) return
+      isActive = false
+      setSwitchingSession(true)
+      window.location.replace(event.detail)
+    }
+    window.addEventListener(sessionNavigationEvent, switchSession)
     const lang = Cookies.get('i18next')
     const darkMood = Cookies.get('isDark')
     const paletteId = Cookies.get(THEME_PALETTE_COOKIE) || DEFAULT_THEME_PALETTE
@@ -74,7 +90,11 @@ export default function AuthProvider({ children }) {
     applyThemePalette(paletteId, mode)
 
     if (!isAuthorized) {
-      const Token = JSON.parse(GetSessionStorage('accessToken')) || Cookies.get('accessToken')
+      const temporary = getImpersonationSession()
+      const Token =
+        temporary?.accessToken ||
+        JSON.parse(GetSessionStorage('accessToken')) ||
+        Cookies.get('accessToken')
 
       if (Token) {
         authFetch(
@@ -87,7 +107,8 @@ export default function AuthProvider({ children }) {
           showBoundary,
           navigate,
           setIsLoading,
-          () => isActive
+          () => isActive,
+          setBootstrapError
         )
       }
     }
@@ -95,6 +116,7 @@ export default function AuthProvider({ children }) {
 
     return () => {
       isActive = false
+      window.removeEventListener(sessionNavigationEvent, switchSession)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -115,7 +137,22 @@ export default function AuthProvider({ children }) {
         }}
       />
 
-      {isLoading || loading?.authorization ? <Loader /> : children}
+      {!switchingSession && <ImpersonationBanner />}
+      {switchingSession || isLoading || loading?.authorization ? (
+        <Loader />
+      ) : bootstrapError ? (
+        <div className="alert alert-warning m-3" role="alert">
+          <p>{i18n.t('impersonation.load_failed')}</p>
+          <button
+            type="button"
+            className="btn btn-outline-dark"
+            onClick={() => window.location.reload()}>
+            {i18n.t('impersonation.retry')}
+          </button>
+        </div>
+      ) : (
+        children
+      )}
     </>
   )
 }
@@ -130,7 +167,8 @@ const authFetch = (
   showBoundary,
   navigate,
   setIsLoading,
-  isActive
+  isActive,
+  setBootstrapError
 ) => {
   setLoading((currentLoading) => ({ ...currentLoading, authorization: true }))
   const { request, accessToken } = getAuthBootstrapRequest(Token)
@@ -149,6 +187,7 @@ const authFetch = (
         !appSettingsData?.success ||
         !appApprovalConfigData?.success
       ) {
+        if (getImpersonationSession()) setBootstrapError(true)
         toast.error(
           !authorizedData?.success
             ? authorizedData?.message
@@ -174,6 +213,7 @@ const authFetch = (
           draftAuthData.status = authorizedData?.status
           draftAuthData.role = authorizedData?.role
           draftAuthData.permissions = authorizedData?.permissions
+          draftAuthData.impersonation = authorizedData?.impersonation || null
         })
       )
       setAppSettings(appSettingsData?.data)
@@ -186,6 +226,18 @@ const authFetch = (
     })
     .catch((error) => {
       if (!isActive()) return
+
+      if (error?.code === 'IMPERSONATION_ENDED') {
+        returnToOwnAccount()
+        return
+      }
+
+      if (getImpersonationSession()) {
+        setLoading((currentLoading) => ({ ...currentLoading, authorization: false }))
+        setIsLoading(false)
+        setBootstrapError(true)
+        return
+      }
 
       if (error?.message) {
         if (error.message === 'Unauthenticated.' || error.status === 401) {
@@ -212,11 +264,7 @@ const getAuthBootstrapRequest = (Token) => {
     const appSettingsData = xFetch('app-settings', null, null, accessToken)
     const appApprovalConfigData = xFetch('approvals-config', null, null, accessToken)
 
-    const currentRequest = axios.all([
-      authorizedData,
-      appSettingsData,
-      appApprovalConfigData
-    ])
+    const currentRequest = axios.all([authorizedData, appSettingsData, appApprovalConfigData])
 
     const sharedRequest = currentRequest.finally(() => {
       if (authBootstrapRequest === sharedRequest) {

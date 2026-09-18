@@ -76,6 +76,7 @@ const exactPolicies = {
 }
 
 const endpointPolicies = [
+  ['POST', /^users\/[^/]+\/impersonation$/, 'staff_impersonate'],
   ['PUT', /^permissions\/[^/]+$/, 'staff_permission_update'],
   ['PUT', /^roles\/[^/]+\/permissions$/, 'role_permission_update'],
   ['PUT', /^client\/registration\/approved\/[^/]+$/, 'pending_client_registration_approval'],
