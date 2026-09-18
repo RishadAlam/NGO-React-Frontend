@@ -30,4 +30,10 @@ Frontend: `npm run test:mobile -- src/test/impersonation.test.jsx src/test/imper
 
 On Node versions with experimental global web storage, run Vitest with `NODE_OPTIONS=--no-experimental-webstorage` so jsdom supplies browser storage.
 
-The feature was checked with synthetic users in an isolated SQLite database, including desktop/mobile rendering, starting a visit, refreshing, and returning to the original user. No real users, permissions, or production database were changed.
+The feature was checked with synthetic users in an isolated SQLite database, including desktop/mobile rendering, starting a visit, refreshing, and returning to the original user. Verification used no real accounts. Separately, the requested migrations and permission grants were applied to the local development database; production was not changed.
+
+## Release hardening
+
+Return requests time out after 10 seconds so a stalled connection leaves a retryable action. The scheduler also finalizes visits whose original or temporary login token was revoked.
+
+Deploy this frontend with the matching backend: password recovery now sends the account ID and OTP purpose and uses a one-time reset proof kept in component memory. Production workflows test before deployment, use locked dependencies and serialize release uploads. The backend release report in `NGO-Laravel-Backend-API/docs/production-readiness-2026-09-19.md` records the verification results and host activation steps.

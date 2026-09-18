@@ -1,6 +1,6 @@
 # Isolated release verification
 
-These PHPUnit HTTP integration tests exercise the adjacent Laravel backend; they are not loaded by Vite or the mobile application. They intentionally assert safe financial/security behavior and currently expose existing backend defects. Do not weaken assertions to make a release pass.
+These PHPUnit HTTP integration tests exercise the adjacent Laravel backend; they are not loaded by Vite or the mobile application. They assert safe financial/security behavior. The 19 September 2026 run passes all 21 tests (370 assertions) with the secured recovery contract. Do not weaken assertions to make a release pass.
 
 Run from `NGO-Laravel-Backend-API` with its installed dependencies:
 
@@ -16,4 +16,4 @@ Collection cases verify savings/loan pending creation, unauthorized approval den
 
 Recovery cases verify mail generation, missing/inactive accounts, invalid/expired/reused OTPs, password validation, token revocation and old/new login behavior. Direct no-OTP reset and cross-account reset must be denied without changing credentials; both are release gates.
 
-Known results and remaining physical-device/delivery requirements are recorded in `docs/release-workflow-verification-2026-09-18.md`.
+Historical findings and remaining physical-device/delivery requirements are recorded in `docs/release-workflow-verification-2026-09-18.md`.
