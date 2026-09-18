@@ -1,5 +1,7 @@
 # Mobile UI/UX verification — 18 September 2026
 
+> **Release update:** The subsequent collection/recovery verification found critical shared-backend blockers. **Do not deploy.** See [release workflow verification](release-workflow-verification-2026-09-18.md) for failing tests and remaining inbox/physical-device checks. The UI results below are not full release sign-off.
+
 ## Scope
 
 Impeccable guided the audit-first, accessibility, responsive-layout, and recovery work. The approved design, dock, original EN/BN menu names, permission grants, financial calculations, endpoints, and request payloads were retained. Visual/behavioral repairs are scoped below 768px. No deployment or push was performed.
