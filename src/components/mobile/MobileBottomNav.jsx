@@ -21,13 +21,11 @@ export default function MobileBottomNav() {
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           <Home size={22} />
         </span>
-        <span className="mobile-bottom-nav__label">{t('menu.dashboard')}</span>
       </NavLink>
       <NavLink to="/search" className={linkClassName} aria-label={t('common.search')}>
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           <Search size={22} />
         </span>
-        <span className="mobile-bottom-nav__label">{t('common.search')}</span>
       </NavLink>
       <NavLink
         to="/services"
@@ -40,7 +38,6 @@ export default function MobileBottomNav() {
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           <Grid size={27} />
         </span>
-        <span className="mobile-bottom-nav__label">{t('mobile.all_services')}</span>
       </NavLink>
       <button
         type="button"
@@ -51,7 +48,6 @@ export default function MobileBottomNav() {
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           {isDark ? <Moon size={22} /> : <Sun size={22} />}
         </span>
-        <span className="mobile-bottom-nav__label">{t('mobile.theme')}</span>
       </button>
       <button
         type="button"
@@ -67,7 +63,6 @@ export default function MobileBottomNav() {
             {t('localization.shared.bengali_badge')}
           </span>
         </span>
-        <span className="mobile-bottom-nav__label">{t('mobile.language')}</span>
       </button>
     </nav>
   )
