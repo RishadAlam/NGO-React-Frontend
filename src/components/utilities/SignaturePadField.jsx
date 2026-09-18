@@ -104,6 +104,7 @@ export default function SignaturePadField({
         </div>
       </ModalPro>
       <img
+        className="signature-field__preview"
         src={signatureURL || SignaturePlaceholder}
         alt={t('common.signature')}
         style={{
