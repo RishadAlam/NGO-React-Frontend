@@ -41,6 +41,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const [loading, setLoading] = useLoadingState({})
   const endpoint = `withdrawal/${prefix}`
   const permissionPrefix = prefix === 'saving' ? 'saving' : 'loan_saving'
+  const mobilePrefix = windowWidth < 768 ? prefix : null
 
   const { data: { data: fields = [] } = [] } = useFetch({ action: 'fields/active' })
   const { data: { data: creators = [] } = [] } = useFetch({ action: 'users/active' })
@@ -107,7 +108,12 @@ export default function PendingSavingWithdrawal({ prefix }) {
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const creatorConfig = {
-    options: !checkPermission(`pending_${permissionPrefix}_acc_list_view_as_admin`, authPermissions)
+    options: !checkPermission(
+      windowWidth < 768
+        ? `pending_${permissionPrefix}_withdrawal_list_view_as_admin`
+        : `pending_${permissionPrefix}_acc_list_view_as_admin`,
+      authPermissions
+    )
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: selectedCreator || null,
@@ -179,7 +185,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobilePrefix]
   )
 
   const setWithdrawalEdit = (account) => {

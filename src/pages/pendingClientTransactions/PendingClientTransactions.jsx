@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/joy'
 import { Tooltip, Zoom } from '@mui/material'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
@@ -25,6 +25,9 @@ export default function PendingClientTransactions({ type }) {
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
+  const approvalInFlight = useRef(false)
+  const isMobile = windowWidth < 768
+  const mobileType = isMobile ? type : null
 
   const {
     data: { data: transactions } = [],
@@ -44,18 +47,24 @@ export default function PendingClientTransactions({ type }) {
     checkPermission(`pending_client_transactions_approval`, authPermissions) && (
       <AndroidSwitch
         value={Number(value) ? true : false}
-        toggleStatus={(e) =>
-          e.target.checked &&
+        toggleStatus={(e) => {
+          if (!e.target.checked || (isMobile && approvalInFlight.current)) return
+          if (isMobile) approvalInFlight.current = true
           approveTransaction(
             `transactions/approve-transactions/${id}/${type}`,
             t,
             accessToken,
             mutate,
             loading,
-            setLoading
+            isMobile
+              ? (nextLoading) => {
+                  approvalInFlight.current = Boolean(nextLoading.transactionApprove)
+                  setLoading(nextLoading)
+                }
+              : setLoading
           )
-        }
-        disabled={loading?.approval || false}
+        }}
+        disabled={(isMobile ? loading?.transactionApprove : loading?.approval) || false}
       />
     )
 
@@ -70,6 +79,7 @@ export default function PendingClientTransactions({ type }) {
           disabled={loading?.transactionDelete || false}>
           <IconButton
             className="text-danger"
+            disabled={isMobile ? loading?.transactionDelete || false : undefined}
             onClick={() =>
               deleteTransaction(
                 `transactions/delete-transactions/${id}/${type}`,
@@ -111,7 +121,7 @@ export default function PendingClientTransactions({ type }) {
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobileType]
   )
 
   return (

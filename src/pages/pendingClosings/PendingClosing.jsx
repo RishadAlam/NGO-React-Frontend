@@ -105,7 +105,12 @@ export default function PendingClosing({ prefix }) {
     isOptionEqualToValue: (option, value) => option.id === value.id
   }
   const creatorConfig = {
-    options: !checkPermission(`pending_${prefix}_acc_list_view_as_admin`, authPermissions)
+    options: !checkPermission(
+      windowWidth < 768
+        ? `pending_req_to_delete_${prefix}_acc_list_view_as_admin`
+        : `pending_${prefix}_acc_list_view_as_admin`,
+      authPermissions
+    )
       ? creators.filter((creator) => creator?.id === id)
       : creators,
     value: selectedCreator || null,
