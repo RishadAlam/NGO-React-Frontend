@@ -45,6 +45,13 @@ function mountMemory(path) {
 }
 
 describe('Mobile shell entry navigation', () => {
+  it('shows only the current page name without a second group-title row', () => {
+    mountMemory('/registration/client')
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading.textContent).toBe(i18n.t('menu.registration.Client_Registration'))
+    expect(heading.parentElement.textContent).toBe(heading.textContent)
+  })
+
   it('returns a directly opened page to Services without leaving the app', () => {
     mountMemory('/analytics')
     fireEvent.click(screen.getByRole('button', { name: i18n.t('mobile.back') }))

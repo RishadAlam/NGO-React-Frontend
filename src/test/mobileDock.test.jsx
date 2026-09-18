@@ -3,10 +3,12 @@ import { createInstance } from 'i18next'
 import Cookies from 'js-cookie'
 import { I18nextProvider } from 'react-i18next'
 import { MemoryRouter } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
 import { afterEach, expect, it, vi } from 'vitest'
 import en from '../../public/lang/en/translations.json'
 import bn from '../../public/lang/bn/translations.json'
 import MobileBottomNav from '../components/mobile/MobileBottomNav'
+import { authDataState } from '../atoms/authAtoms'
 
 vi.unmock('react-i18next')
 
@@ -22,6 +24,7 @@ it.each([
 ])(
   'keeps the icon-only dock accessible in %s',
   async (language, home, search, services, theme, languageLabel, badge, profile) => {
+    window.innerWidth = 390
     Cookies.set('i18next', language)
     Cookies.set('isDark', 'false')
     const i18n = createInstance()
@@ -32,17 +35,21 @@ it.each([
     })
     render(
       <I18nextProvider i18n={i18n}>
-        <MemoryRouter initialEntries={['/services']}>
-          <MobileBottomNav />
-        </MemoryRouter>
+        <RecoilRoot
+          initializeState={({ set }) =>
+            set(authDataState, { name: 'Employee', role: ['Officer'] })
+          }>
+          <MemoryRouter initialEntries={['/services']}>
+            <MobileBottomNav />
+          </MemoryRouter>
+        </RecoilRoot>
       </I18nextProvider>
     )
 
     for (const [name, path] of [
       [home, '/dashboard'],
       [search, '/search'],
-      [services, '/services'],
-      [profile, '/profile']
+      [services, '/services']
     ]) {
       const link = screen.getByRole('link', { name, exact: true })
       expect(link.getAttribute('href')).toBe(path)
@@ -56,7 +63,14 @@ it.each([
     const languageButton = screen.getByRole('button', { name: languageLabel, exact: true })
     expect(languageButton.textContent).toBe(`EN${badge}`)
     expect(languageButton.getAttribute('aria-pressed')).toBe(String(language === 'bn'))
-    fireEvent.click(screen.getByRole('link', { name: profile, exact: true }))
-    expect(screen.getByRole('link', { name: profile }).getAttribute('aria-current')).toBe('page')
+    const profileButton = screen.getByRole('button', { name: profile, exact: true })
+    expect(profileButton.textContent).toBe('')
+    expect(profileButton.getAttribute('aria-expanded')).toBe('false')
+    fireEvent.click(profileButton)
+    expect(profileButton.getAttribute('aria-expanded')).toBe('true')
+    const profileLink = screen.getByRole('link', { name: profile, exact: true })
+    expect(profileLink.getAttribute('href')).toBe('/profile')
+    fireEvent.click(profileLink)
+    expect(profileButton.getAttribute('aria-expanded')).toBe('false')
   }
 )

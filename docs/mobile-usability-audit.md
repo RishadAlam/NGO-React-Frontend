@@ -36,3 +36,11 @@ The review combined independent source audits of navigation/services, tables/col
 This is a source-wide/shared-component review plus representative live flows, not a claim that every account/role, record, browser, or physical device was manually exercised. Physical iOS/Android keyboard and touch behavior still require device testing. Large-value and error states are covered using controlled fixtures, not changes to real financial records.
 
 The source detector examined 439 relevant files and reported 11 warnings, zero errors. Several warnings are prefixed duplicates, desktop-only transitions, or semantic collection-status decoration; these were not treated as proven mobile defects. No live detector overlay was injected because browser evaluation is read-only. Existing Sass legacy API, React Router future flags, ReactQuill `findDOMNode`, ModalPro `ownerState`, and mixed icon-import build warnings remain outside this mobile repair.
+
+## Follow-up: compact mobile shell
+
+After user approval, the phone shell now uses six evenly spaced, icon-only dock controls without an off-center raised Services button. Profile opens an upward account panel containing the existing profile/password/logout actions, identity, company name, and color-theme selector. The large top profile bar is unmounted below 768px; inner pages retain a single 44px title row without the group subtitle or separate card shell. Desktop/tablet keep the existing topbar and palette.
+
+Live checks covered 320px/390px, EN/BN, light/dark, popup focus and Escape dismissal, and the 768px boundary. At 667×375 the popup fits between y=20 and y=299 and scrolls internally. No real account update or logout was submitted. Compiled tablet/desktop CSS remains unchanged.
+
+Final verification passed 778 tests across 28 files, the production build, changed-file ESLint, and diff checks. Two previously order-dependent collection tests now explicitly initialize their Recoil viewport fixture to match the browser viewport; production collection behavior was not changed.

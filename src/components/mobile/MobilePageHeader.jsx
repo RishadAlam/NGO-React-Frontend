@@ -105,7 +105,6 @@ export default function MobilePageHeader({ onMenuOpen }) {
       </button>
       <div className="mobile-page-header__title">
         <h1>{page.label}</h1>
-        {page.parentLabel ? <span>{page.parentLabel}</span> : null}
       </div>
       <button
         type="button"

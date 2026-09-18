@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import useLanguageMode from '../../hooks/useLanguageMode'
@@ -7,12 +8,13 @@ import Home from '../../icons/Home'
 import Moon from '../../icons/Moon'
 import Search from '../../icons/Search'
 import Sun from '../../icons/Sun'
-import User from '../../icons/User'
+import ProfileBox from '../profileBox/ProfileBox'
 
 export default function MobileBottomNav() {
   const { t } = useTranslation()
   const { language, toggleLanguage } = useLanguageMode()
   const { isDark, toggleThemeMode } = useThemeMode()
+  const isMobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const linkClassName = ({ isActive }) =>
     `mobile-bottom-nav__item ${isActive ? 'mobile-bottom-nav__item--active' : ''}`
 
@@ -37,7 +39,7 @@ export default function MobileBottomNav() {
         }
         aria-label={t('mobile.all_services')}>
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
-          <Grid size={27} />
+          <Grid size={22} />
         </span>
       </NavLink>
       <button
@@ -65,11 +67,7 @@ export default function MobileBottomNav() {
           </span>
         </span>
       </button>
-      <NavLink to="/profile" className={linkClassName} aria-label={t('profile_box.profile')}>
-        <span className="mobile-bottom-nav__icon" aria-hidden="true">
-          <User size={22} />
-        </span>
-      </NavLink>
+      {isMobile && <ProfileBox t={t} variant="dock" />}
     </nav>
   )
 }

@@ -112,7 +112,7 @@ export default function MainLayout() {
               <Menu setMobileMenuClosed={setMobileMenuClosed} disableScroll={disableMenuScroll} />
             </div>
             <div className={`main-body ${isServicesPage ? 'main-body--services' : ''}`}>
-              <TopBar setIsSidebarMd={setIsSidebarMd} isSidebarMd={isSidebarMd} />
+              {!isMobile && <TopBar setIsSidebarMd={setIsSidebarMd} isSidebarMd={isSidebarMd} />}
               <Modal
                 open={isMobile && !isSidebarMd}
                 onClose={() => setIsSidebarMd(true)}
