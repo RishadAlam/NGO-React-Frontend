@@ -2,7 +2,7 @@
 
 ## Follow-up — 19 September 2026
 
-The three backend blockers below have been repaired. The updated isolated suite now passes 21 tests / 370 assertions; the main backend suite passes 92 tests / 929 assertions. OTP verification and reset use account-bound recovery proof. See the adjacent backend’s `docs/production-readiness-2026-09-19.md` for the reviewed release and activation requirements. Live email delivery and physical-device checks remain unverified. The findings below are retained as the original audit record.
+The three backend blockers below have been repaired. The updated isolated suite now passes 21 tests / 370 assertions; the main backend suite passes 89 tests / 913 assertions after removal of the deployment-only tests. OTP verification and reset use account-bound recovery proof. See the adjacent backend’s `docs/production-readiness-2026-09-19.md` for the reviewed release and activation requirements. Live email delivery and physical-device checks remain unverified. The findings below are retained as the original audit record.
 
 ## Original decision: do not deploy
 

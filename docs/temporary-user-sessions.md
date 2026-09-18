@@ -32,8 +32,8 @@ On Node versions with experimental global web storage, run Vitest with `NODE_OPT
 
 The feature was checked with synthetic users in an isolated SQLite database, including desktop/mobile rendering, starting a visit, refreshing, and returning to the original user. Verification used no real accounts. Separately, the requested migrations and permission grants were applied to the local development database; production was not changed.
 
-## Release hardening
+## Session and recovery hardening
 
 Return requests time out after 10 seconds so a stalled connection leaves a retryable action. The scheduler also finalizes visits whose original or temporary login token was revoked.
 
-Deploy this frontend with the matching backend: password recovery now sends the account ID and OTP purpose and uses a one-time reset proof kept in component memory. Production workflows test before deployment, use locked dependencies and serialize release uploads. The backend release report in `NGO-Laravel-Backend-API/docs/production-readiness-2026-09-19.md` records the verification results and host activation steps.
+Deploy this frontend with the matching backend: password recovery now sends the account ID and OTP purpose and uses a one-time reset proof kept in component memory. The existing deployment workflows and hook are retained. The backend release report in `NGO-Laravel-Backend-API/docs/production-readiness-2026-09-19.md` records the verification results and application setup requirements.

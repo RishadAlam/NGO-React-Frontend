@@ -1,16 +1,8 @@
 name: Deploy React App to cPanel (FTP)
 
 on:
-  pull_request:
   release:
     types: [published]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.event_name == 'release' && 'frontend-production' || format('frontend-{0}', github.ref) }}
-  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -23,25 +15,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Install locked dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run frontend tests
-        run: pnpm run test:mobile
+      - name: Install Dependencies
+        run: npm install
 
       - name: Build React App (Vite)
-        run: pnpm run build
+        run: npm run build
         env:
           VITE_BASE_URI: ${{ secrets.VITE_BASE_URI }}
 
       - name: Deploy to cPanel via FTP
-        if: github.event_name == 'release'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
