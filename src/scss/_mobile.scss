@@ -2,6 +2,28 @@
 
 // Mobile application layer. Every rule in this file is isolated below the tablet breakpoint.
 @media screen and (max-width: 767.98px) {
+  .mobile-services-empty {
+    margin: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    color: var(--main-color);
+    background: var(--soft-bg);
+    line-height: 1.6;
+  }
+
+  .profile > button.img {
+    padding: 0;
+    border: 0;
+    min-width: 44px;
+    min-height: 44px;
+    background: transparent;
+  }
+
+  .profile > button.img:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+  }
   html {
     width: 100%;
     max-width: 100%;
@@ -267,12 +289,18 @@
     }
   }
 
-  .main .main-body .mobile-menu {
+  .main .main-body .mobile-menu,
+  .mobile-menu.MuiModal-root {
     position: fixed;
     inset: 0;
     z-index: 90;
     display: block !important;
     pointer-events: none;
+
+    .mobile-menu__contents {
+      position: absolute;
+      inset: 0;
+    }
 
     .mobile-menu__backdrop {
       position: absolute;
@@ -368,7 +396,8 @@
     }
   }
 
-  .main .main-body .mobile-menu.active {
+  .main .main-body .mobile-menu.active,
+  .mobile-menu.MuiModal-root.active {
     pointer-events: auto;
 
     .mobile-menu__backdrop {
@@ -758,6 +787,11 @@
     inset: 0;
     z-index: 100;
 
+    &__contents {
+      position: absolute;
+      inset: 0;
+    }
+
     &__backdrop {
       position: absolute;
       inset: 0;
@@ -816,8 +850,8 @@
       }
 
       button {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         flex: 0 0 auto;
         display: inline-flex;
         align-items: center;
@@ -2237,9 +2271,9 @@
 
   .react-table-scroll,
   .table-scroll-both {
-    max-height: calc(100dvh - 290px);
+    max-height: max(180px, calc(100dvh - 290px));
     border-radius: 0;
-    overscroll-behavior: contain;
+    overscroll-behavior: contain auto;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -2735,6 +2769,14 @@
   }
 
   .table-scroll-both > table:not(.react-data-table) :is(th, td).mobile-serial-column,
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table)
+    :is(thead, tbody, tfoot, tr, th, td).d-none,
+  .mobile-page-grid
+    .table-scroll-both
+    > table:not(.react-data-table)
+    :is(thead, tbody, tfoot, tr, th, td)[hidden],
   .table-scroll-both
     > table.mobile-hide-first-serial
     > :is(thead, tbody, tfoot)

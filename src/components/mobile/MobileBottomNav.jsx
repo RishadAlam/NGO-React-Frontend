@@ -46,6 +46,7 @@ export default function MobileBottomNav() {
         type="button"
         className="mobile-bottom-nav__item mobile-bottom-nav__item--theme"
         onClick={toggleThemeMode}
+        aria-pressed={isDark}
         aria-label={t('mobile.theme')}>
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           {isDark ? <Moon size={22} /> : <Sun size={22} />}

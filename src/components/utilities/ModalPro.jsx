@@ -1,6 +1,8 @@
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
+import { useMediaQuery } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { animated, useSpring } from '@react-spring/web'
 import { cloneElement, forwardRef } from 'react'
 
@@ -54,13 +56,15 @@ const style = {
   }
 }
 
-export default function ModalPro({ open, handleClose, children }) {
+export default function ModalPro({ open, handleClose, children, label }) {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const { t } = useTranslation()
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
+        aria-labelledby={mobile ? undefined : 'spring-modal-title'}
+        aria-describedby={mobile ? undefined : 'spring-modal-description'}
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -72,7 +76,13 @@ export default function ModalPro({ open, handleClose, children }) {
           }
         }}>
         <Fade in={open}>
-          <Box sx={style}>{children}</Box>
+          <Box
+            sx={style}
+            role={mobile ? 'dialog' : undefined}
+            aria-modal={mobile ? true : undefined}
+            aria-label={mobile ? label || t('common.details') : undefined}>
+            {children}
+          </Box>
         </Fade>
       </Modal>
     </div>

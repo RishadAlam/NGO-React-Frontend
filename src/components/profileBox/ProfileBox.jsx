@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { useMediaQuery } from '@mui/material'
 import toast from 'react-hot-toast'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,6 +21,27 @@ export default function ProfileBox({ t }) {
   const setIsAuthorized = useSetIsAuthorizedState()
   const [loading, setLoading] = useLoadingState()
   const navigate = useNavigate()
+  const isMobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const profileRef = useRef(null)
+  const triggerRef = useRef(null)
+  const popoverId = useId()
+  const AvatarTrigger = isMobile ? 'button' : 'div'
+
+  useEffect(() => {
+    if (!isMobile || !isProfileVisible) return
+    const dismiss = (event) => {
+      if (event.type === 'keydown' && event.key !== 'Escape') return
+      if (event.type === 'pointerdown' && profileRef.current?.contains(event.target)) return
+      setIsProfileVisible(false)
+      if (event.type === 'keydown') triggerRef.current?.focus()
+    }
+    document.addEventListener('keydown', dismiss)
+    document.addEventListener('pointerdown', dismiss)
+    return () => {
+      document.removeEventListener('keydown', dismiss)
+      document.removeEventListener('pointerdown', dismiss)
+    }
+  }, [isMobile, isProfileVisible])
 
   const logout = () => {
     setLoading({ ...loading, logout: true })
@@ -44,13 +66,21 @@ export default function ProfileBox({ t }) {
 
   return (
     <>
-      <div className="profile position-relative">
-        <div
+      <div className="profile position-relative" ref={profileRef}>
+        <AvatarTrigger
+          ref={triggerRef}
+          type={isMobile ? 'button' : undefined}
+          aria-label={isMobile ? t('profile_box.profile') : undefined}
+          aria-expanded={isMobile ? isProfileVisible : undefined}
+          aria-controls={isMobile ? popoverId : undefined}
           className="img cursor-pointer"
           onClick={() => setIsProfileVisible((prevState) => !prevState)}>
           <Avatar name={name} img={image_uri} />
-        </div>
-        <div className={`profile-dropdown position-absolute  ${isProfileVisible ? 'active' : ''}`}>
+        </AvatarTrigger>
+        <div
+          id={popoverId}
+          hidden={isMobile && !isProfileVisible}
+          className={`profile-dropdown position-absolute  ${isProfileVisible ? 'active' : ''}`}>
           <ul className="mb-0 p-3 shadow">
             <li className="pb-3 border-bottom mb-3">
               <div className="profile-info">

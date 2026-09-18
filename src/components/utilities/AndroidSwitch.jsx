@@ -1,4 +1,5 @@
-import { FormControlLabel } from '@mui/material'
+import { FormControlLabel, useMediaQuery } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 
@@ -44,14 +45,26 @@ export default function AndroidSwitch({
   disabled = false,
   ariaLabel
 }) {
+  const isMobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const { t } = useTranslation()
+  const accessibleLabel = ariaLabel || (isMobile ? t('common.status') : undefined)
   return (
     <FormControlLabel
       control={
         <Android12Switch
+          sx={
+            isMobile
+              ? {
+                  minHeight: 44,
+                  '& .MuiSwitch-input': { display: 'block' },
+                  '&:focus-within': { outline: '2px solid var(--primary-color)', outlineOffset: 2 }
+                }
+              : undefined
+          }
           checked={value ? true : false}
           onChange={toggleStatus}
           disabled={disabled ? true : false}
-          inputProps={ariaLabel ? { 'aria-label': ariaLabel } : undefined}
+          inputProps={accessibleLabel ? { 'aria-label': accessibleLabel } : undefined}
         />
       }
     />

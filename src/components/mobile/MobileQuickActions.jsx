@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import Modal from '@mui/material/Modal'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { mainMenu } from '../../resources/staticData/mainMenu'
 import MobileServiceIcon from './MobileServiceIcon'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 
 const mobileQuery = '(max-width: 767.98px)'
 
 export default function MobileQuickActions({ isActive = true }) {
   const { t } = useTranslation()
+  const { permissions } = useAuthDataValue()
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileQuery).matches)
   const [activeGroupId, setActiveGroupId] = useState(null)
   const activeGroupCloseRef = useRef(null)
@@ -36,24 +38,6 @@ export default function MobileQuickActions({ isActive = true }) {
   useEffect(() => {
     if (!isActive) setActiveGroupId(null)
   }, [isActive])
-
-  useEffect(() => {
-    if (!activeGroupId) return undefined
-
-    const previousOverflow = document.body.style.overflow
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') closeGroupMenu()
-    }
-
-    document.body.style.overflow = 'hidden'
-    document.addEventListener('keydown', closeOnEscape)
-    window.requestAnimationFrame(() => activeGroupCloseRef.current?.focus())
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      document.removeEventListener('keydown', closeOnEscape)
-    }
-  }, [activeGroupId, closeGroupMenu])
 
   const { quickActions, otherActionGroups } = useMemo(() => {
     const serviceIcons = {
@@ -111,7 +95,9 @@ export default function MobileQuickActions({ isActive = true }) {
       '/pending/transactions/loan_to_loan': t('analytics.source_types.loan_to_loan')
     }
 
-    const visibleActions = Object.values(mainMenu(t)).flatMap((sectionItems) =>
+    const visibleActions = Object.values(
+      mainMenu(t, { mobilePermissions: permissions || [] })
+    ).flatMap((sectionItems) =>
       sectionItems.flatMap((item) => {
         if (!item.view) return []
 
@@ -213,7 +199,7 @@ export default function MobileQuickActions({ isActive = true }) {
     }
 
     return { quickActions, otherActionGroups }
-  }, [t])
+  }, [t, permissions])
 
   const otherActionCount = otherActionGroups.reduce(
     (actionCount, group) => actionCount + group.actions.length,
@@ -221,7 +207,18 @@ export default function MobileQuickActions({ isActive = true }) {
   )
   const activeGroup = otherActionGroups.find((group) => group.id === activeGroupId)
 
-  if (!isMobile || quickActions.length + otherActionCount === 0) return null
+  useEffect(() => {
+    if (!activeGroup) setActiveGroupId(null)
+  }, [activeGroup])
+
+  if (!isMobile) return null
+  if (quickActions.length + otherActionCount === 0) {
+    return (
+      <p className="mobile-services-empty" role="status">
+        {t('mobile.no_services')}
+      </p>
+    )
+  }
 
   const renderAction = (action, onSelect) => (
     <Link
@@ -244,6 +241,7 @@ export default function MobileQuickActions({ isActive = true }) {
         type="button"
         className="mobile-quick-actions__item mobile-quick-actions__group-trigger"
         aria-haspopup="dialog"
+        aria-expanded={activeGroupId === group.id}
         aria-controls="mobile-action-group-sheet"
         onClick={(event) => {
           activeGroupTriggerRef.current = event.currentTarget
@@ -259,11 +257,15 @@ export default function MobileQuickActions({ isActive = true }) {
   }
 
   return (
-    <section className="mobile-quick-actions" aria-labelledby="mobile-quick-actions-title">
-      <div className="mobile-quick-actions__primary">
-        <h2 id="mobile-quick-actions-title">{t('mobile.quick_actions')}</h2>
-        <div className="mobile-quick-actions__grid">{quickActions.map(renderAction)}</div>
-      </div>
+    <section className="mobile-quick-actions" aria-label={t('mobile.all_services')}>
+      {quickActions.length > 0 && (
+        <div className="mobile-quick-actions__primary">
+          <h2 id="mobile-quick-actions-title">{t('mobile.quick_actions')}</h2>
+          <div className="mobile-quick-actions__grid">
+            {quickActions.map((action) => renderAction(action))}
+          </div>
+        </div>
+      )}
 
       {otherActionCount > 0 && (
         <div id="mobile-other-services" className="mobile-quick-actions__secondary">
@@ -274,11 +276,12 @@ export default function MobileQuickActions({ isActive = true }) {
         </div>
       )}
 
-      {activeGroup &&
-        createPortal(
-          <div className="mobile-action-sheet">
+      {activeGroup && isActive && (
+        <Modal open onClose={closeGroupMenu} hideBackdrop className="mobile-action-sheet">
+          <div className="mobile-action-sheet__contents" tabIndex={-1}>
             <button
               type="button"
+              tabIndex={-1}
               className="mobile-action-sheet__backdrop"
               onClick={closeGroupMenu}
               aria-label={t('mobile.close_menu')}
@@ -297,6 +300,7 @@ export default function MobileQuickActions({ isActive = true }) {
                 </div>
                 <button
                   type="button"
+                  autoFocus
                   ref={activeGroupCloseRef}
                   onClick={closeGroupMenu}
                   aria-label={t('mobile.close_menu')}>
@@ -309,9 +313,9 @@ export default function MobileQuickActions({ isActive = true }) {
                 )}
               </div>
             </section>
-          </div>,
-          document.body
-        )}
+          </div>
+        </Modal>
+      )}
     </section>
   )
 }
