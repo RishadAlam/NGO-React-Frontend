@@ -1,4 +1,5 @@
-import { Children, createContext, isValidElement, useContext, useState } from 'react'
+import { Children, createContext, isValidElement, useContext, useId, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import ButtonGroup from '@mui/joy/ButtonGroup'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -29,6 +30,8 @@ const getActionDetails = (child, index) => {
 }
 
 export default function ActionBtnGroup({ children }) {
+  const { t } = useTranslation()
+  const menuId = useId()
   const visibleChildren = Children.toArray(children).filter(Boolean)
   const useCompactMobileMenu = useContext(MobileTableActionContext)
   const [anchorEl, setAnchorEl] = useState(null)
@@ -44,7 +47,8 @@ export default function ActionBtnGroup({ children }) {
         <IconButton
           type="button"
           className="mobile-row-action-trigger"
-          aria-label="Actions"
+          aria-label={t('common.action')}
+          aria-controls={anchorEl ? menuId : undefined}
           aria-haspopup="menu"
           aria-expanded={anchorEl ? 'true' : undefined}
           onClick={(event) => {
@@ -54,6 +58,7 @@ export default function ActionBtnGroup({ children }) {
           <MoreVertical size={20} />
         </IconButton>
         <Menu
+          id={menuId}
           className="mobile-row-action-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -66,10 +71,13 @@ export default function ActionBtnGroup({ children }) {
               disabled={action.disabled}
               onClick={(event) => {
                 event.stopPropagation()
+                if (action.disabled) return
                 closeMenu()
                 action.onClick?.(event)
               }}>
-              <span className="mobile-row-action-menu__icon">{action.icon}</span>
+              <span className="mobile-row-action-menu__icon" aria-hidden="true">
+                {action.icon}
+              </span>
               <span>{action.label}</span>
             </MenuItem>
           ))}
@@ -80,7 +88,7 @@ export default function ActionBtnGroup({ children }) {
 
   return (
     <ButtonGroup
-      aria-label="radius button group"
+      aria-label={useCompactMobileMenu ? t('common.action') : 'radius button group'}
       sx={{
         '--ButtonGroup-radius': '40px',
         '& .MuiIconButton-root': {

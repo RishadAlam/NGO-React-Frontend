@@ -184,6 +184,7 @@ const isInteractiveTarget = (target) =>
   )
 
 function MobileTableList({
+  title,
   rows,
   prepareRow,
   isRowClickable,
@@ -210,8 +211,11 @@ function MobileTableList({
   }
 
   return (
-    <div className="mobile-data-list" role="table">
-      <div className="mobile-data-list__body" role="rowgroup">
+    <div className="mobile-data-list">
+      <div
+        className="mobile-data-list__body"
+        role="list"
+        aria-label={typeof title === 'string' ? title : undefined}>
         {rows.map((row) => {
           prepareRow(row)
 
@@ -219,7 +223,9 @@ function MobileTableList({
           const primaryIndex = getMobilePrimaryCellIndex(mobileCells)
           const emphasisIndex = getMobileEmphasisCellIndex(mobileCells, primaryIndex)
           const leadingIndex = mobileCells.findIndex(isMobileLeadingCell)
-          const actionIndex = mobileCells.findIndex((cell) => cell.column?.isActionHide === false)
+          const actionIndex = mobileCells.findIndex(
+            (cell) => getCellColumnId(cell) === 'action' || cell.column?.mobileAction === true
+          )
           const primaryCell = mobileCells[primaryIndex]
           const emphasisCell = emphasisIndex >= 0 ? mobileCells[emphasisIndex] : null
           const leadingCell = leadingIndex >= 0 ? mobileCells[leadingIndex] : null
@@ -227,9 +233,8 @@ function MobileTableList({
           const detailCells = mobileCells.filter(
             (cell, index) =>
               ![primaryIndex, emphasisIndex, leadingIndex, actionIndex].includes(index) &&
-              cell.value !== null &&
-              cell.value !== undefined &&
-              cell.value !== ''
+              (cell.column?.isActionHide === false ||
+                (cell.value !== null && cell.value !== undefined && cell.value !== ''))
           )
           const hasExpandableDetails = isLargeMobileDetailSet(detailCells)
           const renderedDetails = (
@@ -249,7 +254,7 @@ function MobileTableList({
               className={`mobile-data-row ${actionCell ? 'mobile-data-row--has-actions' : ''} ${
                 isRowClickable ? 'mobile-data-row--clickable' : ''
               }`.trim()}
-              role="row"
+              role="listitem"
               tabIndex={isRowClickable ? 0 : undefined}
               onClick={(event) => {
                 if (!isInteractiveTarget(event.target)) openRow(row)
@@ -319,7 +324,7 @@ function MobileTableList({
       </div>
 
       {showFooter && (
-        <div className="mobile-data-list__summary" role="rowgroup">
+        <div className="mobile-data-list__summary">
           {footerGroups.flatMap((footerGroup, footerGroupIndex) =>
             footerGroup.headers
               .filter(
@@ -331,8 +336,7 @@ function MobileTableList({
               .map((column) => (
                 <div
                   className="mobile-data-list__summary-item"
-                  key={`${footerGroupIndex}-${column.id}`}
-                  role="row">
+                  key={`${footerGroupIndex}-${column.id}`}>
                   <span>{typeof column.Header === 'string' ? column.Header : column.id}</span>
                   <div>{column.render('Footer')}</div>
                 </div>
@@ -346,7 +350,7 @@ function MobileTableList({
 
 function ReactTable({
   title,
-  columns,
+  columns: suppliedColumns,
   data = [],
   footer = false,
   classnames = '',
@@ -367,16 +371,25 @@ function ReactTable({
     setAnchorEl(null)
   }
   const isMobileTable = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  // Saved preferences are presentation only: they must never restore a
+  // permission-disabled action in the mobile renderer.
+  const columns = useMemo(
+    () =>
+      isMobileTable
+        ? suppliedColumns.filter((column) => column.isActionHide !== true)
+        : suppliedColumns,
+    [isMobileTable, suppliedColumns]
+  )
   const columnVisibilitySignature = useMemo(() => getColumnVisibilitySignature(columns), [columns])
   const columnVisibilityStorageKey = useMemo(
     () =>
       createTableColumnVisibilityStorageKey(
-        'react_table',
+        isMobileTable ? 'react_table_mobile' : 'react_table',
         rowLinkPath,
         rowLinkPrefix,
         columnVisibilitySignature
       ),
-    [columnVisibilitySignature, rowLinkPath, rowLinkPrefix]
+    [columnVisibilitySignature, rowLinkPath, rowLinkPrefix, isMobileTable]
   )
   const initialHiddenColumns = useMemo(() => {
     const defaultVisibilityState = getDefaultColumnVisibilityState(columns)
@@ -385,7 +398,7 @@ function ReactTable({
       defaultVisibilityState
     )
 
-    if (window.matchMedia('(max-width: 767.98px)').matches) {
+    if (isMobileTable) {
       columns.forEach((column, index) => {
         if (column?.isActionHide === false) {
           visibilityState[getColumnVisibilityId(column, index)] = true
@@ -394,7 +407,7 @@ function ReactTable({
     }
 
     return getHiddenColumnsFromVisibilityState(columns, visibilityState)
-  }, [columnVisibilityStorageKey, columns])
+  }, [columnVisibilityStorageKey, columns, isMobileTable])
   const [isVisibilityHydrated, setIsVisibilityHydrated] = useState(false)
   const setFooterColSpan = (totalCol, colIndex, colSpan = null, isAfterSpan = false) => {
     return colSpan ? colSpan : isAfterSpan ? totalCol - colIndex : 1
@@ -504,7 +517,10 @@ function ReactTable({
                 className: 'table-column-visibility-menu__list'
               }}>
               {allColumns
-                .filter((column) => !column?.isActionHide)
+                .filter(
+                  (column) =>
+                    !column?.isActionHide && (!isMobileTable || !isMobileSerialColumn(column))
+                )
                 .map((column, index) => (
                   <MenuItem className="table-column-visibility-menu__item" key={index}>
                     <FormControlLabel
@@ -529,13 +545,16 @@ function ReactTable({
           <div className="react-table-toolbar-item">
             <ShowingRows pageSize={pageSize} setPageSize={setPageSize} t={t} />
           </div>
-          <div className="react-table-toolbar-item react-table-toolbar-item--right">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} t={t} />
-          </div>
+          {!isMobileTable && (
+            <div className="react-table-toolbar-item react-table-toolbar-item--right">
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} t={t} />
+            </div>
+          )}
         </div>
 
         {isMobileTable ? (
           <MobileTableList
+            title={title}
             rows={pageRows}
             prepareRow={prepareRow}
             isRowClickable={isRowClickable}
