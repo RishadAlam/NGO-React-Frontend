@@ -52,7 +52,7 @@ export default function PieChartBox({ chartName, sources = [], isLoading }) {
                 {processedData.length > 0 && (
                   <div className="chart-center-label">
                     <span className="chart-center-label__value">৳ {tsNumbers(total)}</span>
-                    <span className="chart-center-label__sub">{t('common.Total') || 'Total'}</span>
+                    <span className="chart-center-label__sub">{t('common.total')}</span>
                   </div>
                 )}
               </div>

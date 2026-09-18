@@ -68,8 +68,9 @@ export default function LoanCollections() {
   const actionBtnGroup = (id, collection) => (
     <ActionBtnGroup>
       {authPermissions.includes('client_loan_account_collection_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.view')} arrow followCursor>
           <IconButton
+            aria-label={t('common.view')}
             className="text-primary"
             onClick={() => {
               setActionHistory(collection?.loan_collection_action_history || [])
@@ -81,8 +82,11 @@ export default function LoanCollections() {
       )}
       {isEmpty(collection.deleted_at) &&
         authPermissions.includes('client_loan_account_collection_update') && (
-          <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
-            <IconButton className="text-warning" onClick={() => collectionEdit(collection)}>
+          <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
+            <IconButton
+              aria-label={t('common.edit')}
+              className="text-warning"
+              onClick={() => collectionEdit(collection)}>
               {<Edit size={20} />}
             </IconButton>
           </Tooltip>
@@ -91,11 +95,12 @@ export default function LoanCollections() {
         authPermissions.includes('client_loan_account_collection_permanently_delete') && (
           <Tooltip
             TransitionComponent={Zoom}
-            title="Delete"
+            title={t('common.delete')}
             arrow
             followCursor
             disabled={loading?.collectionDelete || false}>
             <IconButton
+              aria-label={t('common.delete')}
               className="text-danger"
               onClick={() =>
                 collectionDelete('loan', id, t, accessToken, mutate, loading, setLoading, 'account')

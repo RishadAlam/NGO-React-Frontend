@@ -129,7 +129,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
   const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
       {checkPermission(`pending_${permissionPrefix}_withdrawal_update`, authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => setWithdrawalEdit(withdrawal)}>
             {<Edit size={20} />}
           </IconButton>
@@ -138,7 +138,7 @@ export default function PendingSavingWithdrawal({ prefix }) {
       {checkPermission(`pending_${permissionPrefix}_withdrawal_delete`, authPermissions) && (
         <Tooltip
           TransitionComponent={Zoom}
-          title="Delete"
+          title={t('common.delete')}
           arrow
           followCursor
           disabled={loading?.withdrawalDelete || false}>

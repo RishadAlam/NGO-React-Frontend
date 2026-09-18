@@ -10,20 +10,20 @@ export default function ProfitLoss({ expenses, incomes, profit_loss }) {
       <table className="table table-bordered table-light mobile-hide-paired-serial">
         <thead>
           <tr className="text-center">
-            <th style={{ width: '8%' }}>ক্র/নং</th>
-            <th style={{ width: '27%' }}>ব্যয়ের বিবরণ</th>
-            <th style={{ width: '15%' }}>টাকা</th>
-            <th style={{ width: '8%' }}>ক্র/নং</th>
-            <th style={{ width: '27%' }}>আয়ের বিবরণ</th>
-            <th style={{ width: '15%' }}>টাকা</th>
+            <th style={{ width: '8%' }}>{t('localization.domain.serial_no')}</th>
+            <th style={{ width: '27%' }}>{t('localization.domain.expense_details')}</th>
+            <th style={{ width: '15%' }}>{t('localization.domain.taka')}</th>
+            <th style={{ width: '8%' }}>{t('localization.domain.serial_no')}</th>
+            <th style={{ width: '27%' }}>{t('localization.domain.income_details')}</th>
+            <th style={{ width: '15%' }}>{t('localization.domain.taka')}</th>
           </tr>
           <tr className="text-center">
-            <th>১</th>
-            <th>২</th>
-            <th>৩</th>
-            <th>৪</th>
-            <th>৫</th>
-            <th>৬ </th>
+            <th>{tsNumbers(1)}</th>
+            <th>{tsNumbers(2)}</th>
+            <th>{tsNumbers(3)}</th>
+            <th>{tsNumbers(4)}</th>
+            <th>{tsNumbers(5)}</th>
+            <th>{tsNumbers(6)}</th>
           </tr>
         </thead>
         <tbody style={{ border: 'none' }}>

@@ -17,7 +17,7 @@ export default function RegisterProfileBox({
         <div className="img register-profile__media" style={{ width: '180px', height: '180px' }}>
           <img
             className="rounded-2"
-            alt="image"
+            alt={t('common.image')}
             src={image_uri}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
             loading="lazy"

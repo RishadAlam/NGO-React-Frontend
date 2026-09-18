@@ -33,11 +33,7 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
     description: ''
   })
 
-  const {
-    data: { data } = [],
-    isLoading,
-    isError
-  } = useFetch({
+  const { data: { data } = [], isError } = useFetch({
     action: `${endpoint}/${id}`
   })
 
@@ -131,6 +127,7 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
             <div className="d-flex align-items-center justify-content-between">
               <b className="text-uppercase">{t('common.account_check')}</b>
               <Button
+                aria-label={t('localization.shared.close')}
                 className={'text-danger p-0'}
                 loading={false}
                 endIcon={<XCircle size={24} />}

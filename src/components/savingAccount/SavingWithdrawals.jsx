@@ -37,8 +37,9 @@ export default function SavingWithdrawals() {
   const actionBtnGroup = (id, withdrawal) => (
     <ActionBtnGroup>
       {authPermissions.includes('client_saving_account_withdrawal_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.view')} arrow followCursor>
           <IconButton
+            aria-label={t('common.view')}
             className="text-primary"
             onClick={() => {
               setActionHistory(withdrawal?.saving_withdrawal_action_history || [])

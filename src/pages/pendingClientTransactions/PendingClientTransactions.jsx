@@ -64,7 +64,7 @@ export default function PendingClientTransactions({ type }) {
       {checkPermission(`pending_client_transactions_delete`, authPermissions) && (
         <Tooltip
           TransitionComponent={Zoom}
-          title="Delete"
+          title={t('common.delete')}
           arrow
           followCursor
           disabled={loading?.transactionDelete || false}>

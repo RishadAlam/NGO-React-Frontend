@@ -8,7 +8,7 @@ import MoreVertical from '../../icons/MoreVertical'
 
 export const MobileTableActionContext = createContext(false)
 
-const getActionDetails = (child, index) => {
+const getActionDetails = (child, index, t) => {
   const nestedChild = isValidElement(child?.props?.children) ? child.props.children : null
   const actionElement =
     typeof child?.props?.onClick === 'function' || child?.props?.['aria-label']
@@ -18,7 +18,7 @@ const getActionDetails = (child, index) => {
     child?.props?.title ||
     actionElement?.props?.['aria-label'] ||
     actionElement?.props?.title ||
-    `Action ${index + 1}`
+    t('localization.shared.action_number', { number: index + 1 })
 
   return {
     disabled: Boolean(child?.props?.disabled || actionElement?.props?.disabled),
@@ -39,7 +39,7 @@ export default function ActionBtnGroup({ children }) {
   if (!visibleChildren.length) return null
 
   if (useCompactMobileMenu && visibleChildren.length > 1) {
-    const mobileActions = visibleChildren.map(getActionDetails)
+    const mobileActions = visibleChildren.map((child, index) => getActionDetails(child, index, t))
     const closeMenu = () => setAnchorEl(null)
 
     return (
@@ -88,7 +88,7 @@ export default function ActionBtnGroup({ children }) {
 
   return (
     <ButtonGroup
-      aria-label={useCompactMobileMenu ? t('common.action') : 'radius button group'}
+      aria-label={t('common.action')}
       sx={{
         '--ButtonGroup-radius': '40px',
         '& .MuiIconButton-root': {

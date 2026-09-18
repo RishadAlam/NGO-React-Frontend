@@ -84,21 +84,21 @@ export default function PendingClientReg() {
   const actionBtnGroup = (id, profile) => (
     <ActionBtnGroup>
       {authPermissions.includes('pending_client_registration_list_view') && (
-        <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.view')} arrow followCursor>
           <IconButton className="text-primary" onClick={() => viewClientProfile(profile)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('pending_client_registration_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => clientProfileEdit(profile)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('pending_client_registration_permanently_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => clientProfileDelete(id)}>
             {<Trash size={20} />}
           </IconButton>

@@ -1,4 +1,5 @@
 import Camera from '../../icons/Camera'
+import { useTranslation } from 'react-i18next'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
 
 export default function ImagePreview({
@@ -11,6 +12,7 @@ export default function ImagePreview({
   disabled = false,
   isRequired = false
 }) {
+  const { t } = useTranslation()
   const requiredLabel = (
     <span>
       {label}
@@ -20,7 +22,7 @@ export default function ImagePreview({
 
   const save = (val) => {
     setImageUri(URL.createObjectURL(val))
-    
+
     if (setChange) {
       setChange(val)
     }
@@ -35,17 +37,21 @@ export default function ImagePreview({
         <div className="img image-preview__media" style={{ width: '250px', height: '250px' }}>
           <img
             className="rounded-2"
-            alt="image"
+            alt={typeof label === 'string' ? label : t('common.image')}
             src={imageUri || profilePlaceholder}
             style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
             loading="lazy"
           />
         </div>
         <div className={`mx-auto position-relative mt-3 ${disabled ? 'd-none' : ''}`}>
-          <label htmlFor="image" className="btn btn-primary form-control">
+          <label
+            htmlFor="image"
+            className="btn btn-primary form-control"
+            aria-label={t('localization.shared.upload_image')}>
             <Camera />
           </label>
           <input
+            aria-label={t('localization.shared.upload_image')}
             type="file"
             id="image"
             className="image-preview__input top-0 start-0 position-absolute opacity-0 cursor-pointer"

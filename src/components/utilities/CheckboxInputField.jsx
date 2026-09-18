@@ -1,5 +1,6 @@
 import Checkbox from '@mui/material/Checkbox'
 import { styled } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
 
 const BpIcon = styled('span')(({ theme }) => ({
   borderRadius: 3,
@@ -53,6 +54,7 @@ export default function CheckboxInputField({
   isRequired = false,
   disabled = false
 }) {
+  const { t } = useTranslation()
   const requiredLabel = (
     <span>
       {label}
@@ -74,7 +76,7 @@ export default function CheckboxInputField({
           icon={<BpIcon />}
           checked={isChecked}
           onChange={setChange}
-          inputProps={{ 'aria-label': 'Checkbox demo' }}
+          inputProps={{ 'aria-label': typeof label === 'string' ? label : t('common.select') }}
           disabled={disabled}
         />
         <label htmlFor={label} className="form-label mb-1 cursor-pointer">

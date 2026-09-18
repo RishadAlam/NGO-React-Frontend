@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React, { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 import PageOption from './PageOption'
 
 export default function PageOptions({
@@ -12,9 +13,14 @@ export default function PageOptions({
   pageIndex,
   gotoPage
 }) {
+  const { t } = useTranslation()
   return (
     <>
-      <button className="table-btn" onClick={() => previousPage()} disabled={!canPreviousPage}>
+      <button
+        aria-label={t('localization.shared.previous')}
+        className="table-btn"
+        onClick={() => previousPage()}
+        disabled={!canPreviousPage}>
         <ChevronLeft size={30} />
       </button>
       {pageCount > 5
@@ -38,7 +44,11 @@ export default function PageOptions({
             <PageOption key={key} pageIndex={pageIndex} page={page} gotoPage={gotoPage} />
           ))}
 
-      <button className="table-btn" onClick={() => nextPage()} disabled={!canNextPage}>
+      <button
+        aria-label={t('localization.shared.next')}
+        className="table-btn"
+        onClick={() => nextPage()}
+        disabled={!canNextPage}>
         <ChevronRight size={30} />
       </button>
     </>

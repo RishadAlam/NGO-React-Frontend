@@ -67,7 +67,13 @@ export default function MainSearchBox({ t }) {
             onChange={setChange}
           />
           <span className="left-pan">
-            <Button name={<Search size={20} />} disabled={false} loading={false} type="submit" />
+            <Button
+              aria-label={t('common.search')}
+              name={<Search size={20} />}
+              disabled={false}
+              loading={false}
+              type="submit"
+            />
           </span>
         </form>
         {!isEmptyArray(searchData) && (

@@ -1,5 +1,9 @@
 import ReactQuill from 'react-quill'
+import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import 'react-quill/dist/quill.snow.css'
+import './editorLocale.css'
+import localizeEditor from './localizeEditor'
 
 export default function TextAreaInputField({
   label,
@@ -9,6 +13,12 @@ export default function TextAreaInputField({
   isRequired = false,
   disabled = false
 }) {
+  const { t } = useTranslation()
+  const editorRef = useRef(null)
+  useEffect(() => {
+    if (!editorRef.current) return
+    return localizeEditor(editorRef.current.getEditor(), t, label)
+  }, [t, label])
   const requiredLabel = (
     <span>
       {label}
@@ -41,6 +51,7 @@ export default function TextAreaInputField({
     <>
       <label className="form-label mb-1">{isRequired ? requiredLabel : label}</label>
       <ReactQuill
+        ref={editorRef}
         className="quill-text-editor"
         theme="snow"
         modules={modules}

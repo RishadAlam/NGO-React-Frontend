@@ -1,7 +1,15 @@
+import { useTranslation } from 'react-i18next'
+
 export default function LoaderSm({ size, className, clr = 'var(--accent-color)', style }) {
+  const { t } = useTranslation()
   return (
-    <div className={className} style={{ height: size, width: size, ...style }}>
+    <div
+      role="status"
+      aria-label={t('common.loading')}
+      className={className}
+      style={{ height: size, width: size, ...style }}>
       <svg
+        aria-hidden="true"
         version="1.1"
         style={{ height: size, width: size }}
         x="0px"

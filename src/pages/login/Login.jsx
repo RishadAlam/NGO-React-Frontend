@@ -12,6 +12,7 @@ import { setSessionStorage } from '../../helper/GetDataFromStorage'
 import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import xFetch from '../../utilities/xFetch'
+import localizedValidation from '../localizedValidation'
 
 const MailIcon = () => (
   <svg
@@ -55,8 +56,8 @@ export default function Login() {
   const [errors, SetErrors] = useState({ email: '', password: '' })
 
   useEffect(() => {
-    document.title = 'Login'
-  }, [])
+    document.title = t('auth.sign_in')
+  }, [t])
 
   const setChange = (name, val) => {
     setInputs((prev) =>
@@ -66,7 +67,7 @@ export default function Login() {
     )
     SetErrors((prev) =>
       create(prev, (d) => {
-        val === '' ? (d[name] = `${name} is required!`) : delete d[name]
+        val === '' ? (d[name] = 'localization.pages.validation.required') : delete d[name]
       })
     )
   }
@@ -149,7 +150,11 @@ export default function Login() {
               disabled={loading?.login}
             />
           </div>
-          {errors?.email && <div className="field-error">{errors.email}</div>}
+          {errors?.email && (
+            <div className="field-error">
+              {localizedValidation(errors.email, t, t('auth.email'))}
+            </div>
+          )}
         </div>
 
         <div className="auth-field">
@@ -173,7 +178,11 @@ export default function Login() {
               {isPlainText ? <Eye size={18} /> : <EyeOff size={18} />}
             </span>
           </div>
-          {errors?.password && <div className="field-error">{errors.password}</div>}
+          {errors?.password && (
+            <div className="field-error">
+              {localizedValidation(errors.password, t, t('auth.password'))}
+            </div>
+          )}
         </div>
 
         <div className="auth-row">

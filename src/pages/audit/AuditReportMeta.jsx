@@ -45,7 +45,7 @@ export default function AuditReportMeta() {
   const actionBtnGroup = (id, metaData, isDefault) => (
     <ActionBtnGroup>
       {authPermissions.includes('audit_report_meta_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => metaEdit(metaData, isDefault)}>
             {<Edit size={20} />}
           </IconButton>
@@ -54,7 +54,7 @@ export default function AuditReportMeta() {
       {authPermissions.includes('audit_report_meta_soft_delete') && !Number(isDefault) && (
         <Tooltip
           TransitionComponent={Zoom}
-          title="Delete"
+          title={t('common.delete')}
           arrow
           followCursor
           disabled={loading?.metaForm || false}>
@@ -64,7 +64,11 @@ export default function AuditReportMeta() {
         </Tooltip>
       )}
       {authPermissions.includes('audit_report_meta_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => metaActionHistory(metaData.audit_report_meta_action_history)}>

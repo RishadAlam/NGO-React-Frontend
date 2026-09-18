@@ -88,17 +88,13 @@ describe.each([
 ])('Mobile %s collection request scope', (kind, Form, History, Row, Footer) => {
   it('opens account-history editing with only its account-specific update permission', () => {
     mount(<History />, [`client_${kind}_account_collection_update`])
-    fireEvent.click(
-      screen.getByRole('button', { name: kind === 'saving' ? 'common.edit' : 'Edit' })
-    )
+    fireEvent.click(screen.getByRole('button', { name: 'common.edit' }))
     expect(screen.getByRole('dialog', { name: 'common.edit_collection' })).toBeTruthy()
   })
 
   it('keeps the original account ID when submitting a mobile account-history edit', async () => {
     mount(<History />, [`client_${kind}_account_collection_update`])
-    fireEvent.click(
-      screen.getByRole('button', { name: kind === 'saving' ? 'common.edit' : 'Edit' })
-    )
+    fireEvent.click(screen.getByRole('button', { name: 'common.edit' }))
     fireEvent.submit(screen.getByRole('button', { name: 'common.edit_collection' }).closest('form'))
     await waitFor(() => {
       const request = xFetch.mock.calls.find(([endpoint]) => endpoint === `collection/${kind}/9`)
@@ -109,9 +105,7 @@ describe.each([
 
   it('preserves the existing desktop history payload mapping', async () => {
     mount(<History />, [`client_${kind}_account_collection_update`], 768)
-    fireEvent.click(
-      screen.getByRole('button', { name: kind === 'saving' ? 'common.edit' : 'Edit' })
-    )
+    fireEvent.click(screen.getByRole('button', { name: 'common.edit' }))
     fireEvent.submit(screen.getByRole('button', { name: 'common.posting' }).closest('form'))
     await waitFor(() => {
       const request = xFetch.mock.calls.find(([endpoint]) => endpoint === `collection/${kind}/9`)
@@ -203,9 +197,7 @@ describe.each([
 
   it('passes account-history deletion context through the confirmation helper', async () => {
     mount(<History />, [`client_${kind}_account_collection_permanently_delete`])
-    fireEvent.click(
-      screen.getByRole('button', { name: kind === 'saving' ? 'common.delete' : 'Delete' })
-    )
+    fireEvent.click(screen.getByRole('button', { name: 'common.delete' }))
     await waitFor(() =>
       expect(xFetch).toHaveBeenCalledWith(
         `collection/${kind}/force-delete/9`,

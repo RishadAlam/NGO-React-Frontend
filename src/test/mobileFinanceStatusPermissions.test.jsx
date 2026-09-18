@@ -127,9 +127,9 @@ describe.each(financePages)('$name mobile permissions', ({ Page, update, create,
 
   it('removes a cached edit action when update permission is revoked', () => {
     mount(Page, [update])
-    expect(mobileRow().getByRole('button', { name: 'Edit' })).toBeTruthy()
+    expect(mobileRow().getByRole('button', { name: 'common.edit' })).toBeTruthy()
     setPermissions([])
-    expect(mobileRow().queryByRole('button', { name: 'Edit' })).toBeNull()
+    expect(mobileRow().queryByRole('button', { name: 'common.edit' })).toBeNull()
   })
 
   it('unmounts an open creation form when creation permission is revoked', () => {

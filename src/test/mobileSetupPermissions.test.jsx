@@ -93,9 +93,9 @@ describe.each([
   })
   it('removes memoized edit controls when update permission is revoked', () => {
     mount(Page, [`${kind}_data_update`])
-    expect(screen.getByRole('button', { name: 'Edit' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'common.edit' })).toBeTruthy()
     act(() => setAuth({ permissions: [`${kind}_list_view`], accessToken: 'Bearer test' }))
-    expect(screen.queryByRole('button', { name: 'Edit' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'common.edit' })).toBeNull()
   })
   it('closes creation when its independent permission is revoked', () => {
     mount(Page, [`${kind}_registration`])

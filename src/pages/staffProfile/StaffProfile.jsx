@@ -13,6 +13,7 @@ import Save from '../../icons/Save'
 import User from '../../icons/User'
 import profilePlaceholder from '../../resources/placeholderImg/profilePlaceholder.webp'
 import xFetch from '../../utilities/xFetch'
+import localizedValidation from '../localizedValidation'
 
 export default function StaffProfile() {
   const [authData, setAuthData] = useAuthDataState()
@@ -42,7 +43,7 @@ export default function StaffProfile() {
 
         if (name !== 'phone' && name !== 'image') {
           val === ''
-            ? (draftErr[name] = `${t(`common.${name}`)} is Required!`)
+            ? (draftErr[name] = 'localization.pages.validation.required')
             : delete draftErr[name]
           return
         }
@@ -50,12 +51,12 @@ export default function StaffProfile() {
         if (name === 'phone') {
           !isNaN(val)
             ? delete draftErr.phone
-            : (draftErr[name] = `${t(`common.${name}`)} is invalid!`)
+            : (draftErr[name] = 'localization.pages.validation.invalid')
         }
         if (name === 'image') {
           val.size / 1024 <= 5120
             ? delete draftErr[name]
-            : (draftErr[name] = `${t(`common.${name}`)} is Max size 5MB!`)
+            : (draftErr[name] = 'localization.pages.validation.image_size')
         }
       })
     )
@@ -118,7 +119,7 @@ export default function StaffProfile() {
           <div className="card">
             <form onSubmit={onSubmit}>
               <div className="card-header">
-                <b className="text-uppercase">Profile</b>
+                <b className="text-uppercase">{t('localization.pages.profile')}</b>
               </div>
               <div className="card-body">
                 {errors?.message && errors?.message !== '' && (
@@ -134,7 +135,7 @@ export default function StaffProfile() {
                       defaultValue={profileInputs.name}
                       autoFocus={true}
                       setChange={(val) => setChange(val, 'name')}
-                      error={errors?.name}
+                      error={localizedValidation(errors?.name, t, t('common.name'))}
                       disabled={loading?.profile}
                     />
                   </div>
@@ -143,7 +144,7 @@ export default function StaffProfile() {
                       label={t('common.phone')}
                       defaultValue={profileInputs?.phone || ''}
                       setChange={(val) => setChange(val, 'phone')}
-                      error={errors?.phone}
+                      error={localizedValidation(errors?.phone, t, t('common.phone'))}
                       disabled={loading?.profile}
                     />
                   </div>
@@ -153,7 +154,7 @@ export default function StaffProfile() {
                       imageUri={profileImage}
                       setImageUri={setProfileImage}
                       setChange={(val) => setChange(val, 'image')}
-                      error={errors?.image}
+                      error={localizedValidation(errors?.image, t, t('common.image'))}
                       disabled={loading?.profile}
                     />
                   </div>

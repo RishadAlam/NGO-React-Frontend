@@ -54,14 +54,14 @@ export default function Center() {
   const actionBtnGroup = (id, center) => (
     <ActionBtnGroup>
       {authPermissions.includes('center_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => centerEdit(center)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('center_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton
             className="text-danger"
             onClick={() => centerDelete(id)}
@@ -71,7 +71,11 @@ export default function Center() {
         </Tooltip>
       )}
       {authPermissions.includes('center_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => centerActionHistory(center.center_action_history)}>

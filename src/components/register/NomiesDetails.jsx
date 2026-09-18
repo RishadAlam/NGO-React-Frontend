@@ -61,7 +61,12 @@ export default function NomsDetails({ data = [], index = 0, status }) {
                 </span>
               </p>
               <p className="truncate mb-3">
-                {t('common.gender')}:<span className="float-end fw-medium">{data?.gender}</span>
+                {t('common.gender')}:
+                <span className="float-end fw-medium">
+                  {['male', 'female', 'others'].includes(data?.gender)
+                    ? t(`common.${data.gender}`)
+                    : data?.gender}
+                </span>
               </p>
               <p className="truncate mb-3">
                 {t('common.occupation')}:
@@ -79,7 +84,7 @@ export default function NomsDetails({ data = [], index = 0, status }) {
                     style={{ width: '180px', height: '180px' }}>
                     <img
                       className="rounded-2"
-                      alt="image"
+                      alt={t('common.image')}
                       src={data?.image_uri || UserPlaceholder}
                       style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
                       loading="lazy"
@@ -112,7 +117,7 @@ export default function NomsDetails({ data = [], index = 0, status }) {
                     style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
                     <img
                       className="rounded-2"
-                      alt="image"
+                      alt={t('common.signature')}
                       src={data?.signature_uri || SignaturePlaceholder}
                       style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
                       loading="lazy"

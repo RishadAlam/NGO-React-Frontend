@@ -25,6 +25,7 @@ export default function RoleFormModal({
               <div className="d-flex align-items-center justify-content-between">
                 <b className="text-uppercase">{modalTitle}</b>
                 <Button
+                  aria-label={t('localization.shared.close')}
                   className={'text-danger p-0'}
                   loading={false}
                   endIcon={<XCircle size={30} />}

@@ -56,6 +56,7 @@ export default function SignaturePadField({
             <div className="d-flex align-items-category justify-content-between">
               <b className="text-uppercase">{label}</b>
               <Button
+                aria-label={t('localization.shared.close')}
                 className={'text-danger p-0'}
                 loading={false}
                 endIcon={<XCircle size={24} />}
@@ -68,6 +69,7 @@ export default function SignaturePadField({
               ref={sigCanvas}
               backgroundColor="#fff"
               canvasProps={{
+                'aria-label': t('common.signature'),
                 className: 'signatureCanvas',
                 style: { width: '-webkit-fill-available', height: '100%' }
               }}
@@ -76,12 +78,12 @@ export default function SignaturePadField({
           <div className="card-footer text-center">
             <div className="d-inline-block">
               <ActionBtnGroup>
-                <Tooltip TransitionComponent={Zoom} title="Save" arrow followCursor>
+                <Tooltip TransitionComponent={Zoom} title={t('common.save')} arrow followCursor>
                   <IconButton className="text-primary" onClick={(e) => save(e)}>
                     {<Save size={20} />}
                   </IconButton>
                 </Tooltip>
-                <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+                <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
                   <IconButton className="text-danger" onClick={(e) => clear(e)}>
                     {<Trash size={20} />}
                   </IconButton>
@@ -93,7 +95,7 @@ export default function SignaturePadField({
       </ModalPro>
       <img
         src={signatureURL || SignaturePlaceholder}
-        alt="my signature"
+        alt={t('common.signature')}
         style={{
           border: '1px solid black',
           width: '100%',

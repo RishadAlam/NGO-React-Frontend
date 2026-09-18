@@ -9,7 +9,9 @@ export default function Button({
   style,
   className,
   onclick,
-  endIcon
+  endIcon,
+  'aria-label': ariaLabel,
+  title
 }) {
   const trailingIcon = loading ? (
     <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />
@@ -22,12 +24,16 @@ export default function Button({
       <button
         className={`btn btn-block ${className || 'btn-primary'}`}
         type={type}
+        aria-label={ariaLabel}
+        title={title}
         disabled={disabled}
         style={style}
         onClick={onclick}>
         <div className="d-inline-flex align-items-center justify-content-center">
           {name}
-          {trailingIcon ? <span className="ms-2 d-inline-flex align-items-center">{trailingIcon}</span> : null}
+          {trailingIcon ? (
+            <span className="ms-2 d-inline-flex align-items-center">{trailingIcon}</span>
+          ) : null}
         </div>
       </button>
     </>

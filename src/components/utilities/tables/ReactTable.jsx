@@ -581,6 +581,7 @@ function ReactTable({
                       <th
                         key={index}
                         {...withoutReactKey(column.getHeaderProps(column.getSortByToggleProps()))}
+                        title={column.canSort ? t('localization.shared.sort_column') : undefined}
                         className={`text-nowrap react-table-head-cell ${
                           column.isSorted ? 'is-sorted' : ''
                         }`}>

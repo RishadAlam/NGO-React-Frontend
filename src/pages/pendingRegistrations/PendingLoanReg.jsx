@@ -158,21 +158,21 @@ export default function PendingLoanReg() {
         ['pending_loan_acc_list_view', 'pending_loan_acc_list_view_as_admin'],
         authPermissions
       ) && (
-        <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.view')} arrow followCursor>
           <IconButton className="text-primary" onClick={() => viewLoanAccount(account)}>
             {<Eye size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {checkPermission('pending_loan_acc_update', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => loanAccountEdit(account)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {checkPermission('pending_loan_acc_permanently_delete', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => loanAccountDelete(id)}>
             {<Trash size={20} />}
           </IconButton>

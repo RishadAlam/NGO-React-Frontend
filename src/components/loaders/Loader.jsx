@@ -1,14 +1,20 @@
+import { useTranslation } from 'react-i18next'
+
 export default function Loader({
   color = 'var(--accent-color)',
   style = { height: '100vh' },
   className = ''
 }) {
+  const { t } = useTranslation()
   return (
     <div
+      role="status"
+      aria-label={t('common.loading')}
       className={`app-loader d-flex align-items-center justify-content-center ${className}`}
       style={style}>
       <div>
         <svg
+          aria-hidden="true"
           version="1.1"
           style={{ height: 100 }}
           x="0px"

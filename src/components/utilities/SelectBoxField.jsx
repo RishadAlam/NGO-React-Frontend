@@ -1,5 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
+import { useId } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function SelectBoxField({
   label,
@@ -9,6 +11,8 @@ export default function SelectBoxField({
   isRequired = false,
   disabled = false
 }) {
+  const { t } = useTranslation()
+  const inputId = useId()
   const requiredLabel = (
     <span>
       {label}
@@ -20,8 +24,13 @@ export default function SelectBoxField({
     <>
       <div className="select-box-field" style={{ minWidth: '150px' }}>
         <Autocomplete
+          clearText={t('localization.shared.clear')}
+          openText={t('localization.shared.open')}
+          closeText={t('localization.shared.close')}
+          loadingText={t('common.loading')}
+          noOptionsText={t('localization.shared.no_options')}
           {...config}
-          id="combo-box-demo"
+          id={config?.id ?? inputId}
           disabled={disabled ? true : false}
           renderInput={(params) => (
             <TextField

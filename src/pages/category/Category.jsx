@@ -56,14 +56,14 @@ export default function Category() {
   const actionBtnGroup = (id, category) => (
     <ActionBtnGroup>
       {authPermissions.includes('category_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => categoryEdit(category)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('category_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton
             className="text-danger"
             onClick={() => categoryDelete(id)}
@@ -73,7 +73,11 @@ export default function Category() {
         </Tooltip>
       )}
       {authPermissions.includes('category_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => categoryActionHistory(category.category_action_history)}>

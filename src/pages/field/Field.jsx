@@ -54,14 +54,14 @@ export default function Field() {
   const actionBtnGroup = (id, field) => (
     <ActionBtnGroup>
       {authPermissions.includes('field_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => fieldEdit(field)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('field_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton
             className="text-danger"
             onClick={() => fieldDelete(id)}
@@ -71,7 +71,11 @@ export default function Field() {
         </Tooltip>
       )}
       {authPermissions.includes('field_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => fieldActionHistory(field.field_action_history)}>

@@ -58,21 +58,25 @@ export default function Expense() {
   const actionBtnGroup = (id, expense) => (
     <ActionBtnGroup>
       {authPermissions.includes('expense_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => expenseEdit(expense)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('expense_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => expenseDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authPermissions.includes('expense_action_history') && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => expenseActionHistory(expense.expense_action_history)}>

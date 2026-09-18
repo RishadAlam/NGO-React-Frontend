@@ -52,7 +52,7 @@ export default function ExpenseCategories() {
   const actionBtnGroup = (id, expenseCategories) => (
     <ActionBtnGroup>
       {authPermissions.includes('expense_category_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton
             className="text-warning"
             onClick={() => expenseCategoriesEdit(expenseCategories)}>
@@ -61,7 +61,7 @@ export default function ExpenseCategories() {
         </Tooltip>
       )}
       {authPermissions.includes('expense_category_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => expenseCategoriesDelete(id)}>
             {<Trash size={20} />}
           </IconButton>

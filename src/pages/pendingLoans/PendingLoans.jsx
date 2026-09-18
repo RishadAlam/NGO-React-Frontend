@@ -19,8 +19,7 @@ export default function PendingLoans() {
   const {
     data: { data: loanAccounts = [] } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({
     action: 'client/registration/loan/pending-loans',
     queryParams: {
@@ -28,11 +27,7 @@ export default function PendingLoans() {
     }
   })
 
-  const events = useMemo(
-    () => loanAccounts.map((loan) => eventsMap(loan, t)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [loanAccounts]
-  )
+  const events = useMemo(() => loanAccounts.map((loan) => eventsMap(loan, t)), [loanAccounts, t])
 
   const viewLoan = (event) => {
     setLoanData(event)

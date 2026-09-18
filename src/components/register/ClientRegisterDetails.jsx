@@ -59,11 +59,20 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
                   </span>
                 </p>
                 <p className="truncate mb-3">
-                  {t('common.gender')}:<span className="float-end fw-medium">{data?.gender}</span>
+                  {t('common.gender')}:
+                  <span className="float-end fw-medium">
+                    {['male', 'female', 'others'].includes(data?.gender)
+                      ? t(`common.${data.gender}`)
+                      : data?.gender}
+                  </span>
                 </p>
                 <p className="truncate mb-3">
                   {t('common.religion')}:
-                  <span className="float-end fw-medium">{data?.religion}</span>
+                  <span className="float-end fw-medium">
+                    {['islam', 'hindu', 'christian', 'Buddhist', 'others'].includes(data?.religion)
+                      ? t(`common.${data.religion}`)
+                      : data?.religion}
+                  </span>
                 </p>
                 <p className="truncate mb-3">
                   {t('common.occupation')}:
@@ -119,7 +128,7 @@ export default function ClientRegisterDetails({ data = {}, mutate }) {
                       style={{ width: '250px', height: '180px', objectFit: 'cover' }}>
                       <img
                         className="rounded-2"
-                        alt="image"
+                        alt={t('common.signature')}
                         src={data?.signature_uri || SignaturePlaceholder}
                         style={{ width: 'inherit', height: 'inherit', objectFit: 'cover' }}
                         loading="lazy"

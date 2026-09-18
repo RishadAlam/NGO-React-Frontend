@@ -1,6 +1,7 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function PasswordInputField({
   label,
@@ -10,6 +11,7 @@ export default function PasswordInputField({
   setChange,
   disabled = false
 }) {
+  const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (event) => event.preventDefault()
@@ -35,7 +37,11 @@ export default function PasswordInputField({
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                aria-label="toggle password visibility"
+                aria-label={t(
+                  showPassword
+                    ? 'localization.shared.hide_password'
+                    : 'localization.shared.show_password'
+                )}
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}>
                 {showPassword ? <VisibilityOff /> : <Visibility />}

@@ -26,12 +26,16 @@ export default function RadioInputGroup({
         <FormLabel>{isRequired ? requiredLabel : label}</FormLabel>
         <RadioGroup
           row
-          aria-labelledby="demo-row-radio-buttons-group-label"
+          aria-label={typeof label === 'string' ? label : undefined}
           name="row-radio-buttons-group"
           className="border rounded-2 px-2 w-100"
           ref={(el) => {
             if (el) {
-              el.style.setProperty('border-color', error ? 'red' : 'var(--accent-color)', 'important')
+              el.style.setProperty(
+                'border-color',
+                error ? 'red' : 'var(--accent-color)',
+                'important'
+              )
             }
           }}>
           {options?.map((option, index) => (

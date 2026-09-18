@@ -19,6 +19,7 @@ export default function ActionHistoryModal({ open, setOpen, actionHistory }) {
             <div className="d-flex align-items-center justify-content-between">
               <b className="text-uppercase">{t('common.action_history.action_history')}</b>
               <Button
+                aria-label={t('localization.shared.close')}
                 className={'text-danger p-0'}
                 loading={false}
                 endIcon={<XCircle size={24} />}

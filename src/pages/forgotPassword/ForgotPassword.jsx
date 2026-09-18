@@ -7,9 +7,18 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import AuthShell from '../../components/_helper/AuthShell'
 import LoaderSm from '../../components/loaders/LoaderSm'
 import xFetch from '../../utilities/xFetch'
+import localizedValidation from '../localizedValidation'
 
 const MailIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <rect x="3" y="5" width="18" height="14" rx="2" />
     <path d="m3 7 9 6 9-6" />
   </svg>
@@ -24,11 +33,14 @@ export default function ForgotPassword() {
 
   const setChange = (val) => {
     setEmail(val)
-    setError((prev) => create(prev, (d) => {
-      d?.message && delete d.message
-      val === '' ? (d.email = 'Email Address is required!') : delete d.email
-      if (val !== '' && !/\S+@\S+\.\S+/.test(val)) d.email = 'Email is invalid!'
-    }))
+    setError((prev) =>
+      create(prev, (d) => {
+        d?.message && delete d.message
+        val === '' ? (d.email = 'localization.pages.validation.required') : delete d.email
+        if (val !== '' && !/\S+@\S+\.\S+/.test(val))
+          d.email = 'localization.pages.validation.invalid'
+      })
+    )
   }
 
   const emailSubmit = (event) => {
@@ -66,7 +78,9 @@ export default function ForgotPassword() {
         <div className="auth-field">
           <label htmlFor="email">{t('auth.email', 'Email')}</label>
           <div className="input-wrap">
-            <span className="leading-icon"><MailIcon /></span>
+            <span className="leading-icon">
+              <MailIcon />
+            </span>
             <input
               type="email"
               id="email"
@@ -78,7 +92,11 @@ export default function ForgotPassword() {
               disabled={loading?.email}
             />
           </div>
-          {error?.email && <div className="field-error">{error.email}</div>}
+          {error?.email && (
+            <div className="field-error">
+              {localizedValidation(error.email, t, t('auth.email'))}
+            </div>
+          )}
         </div>
 
         <button

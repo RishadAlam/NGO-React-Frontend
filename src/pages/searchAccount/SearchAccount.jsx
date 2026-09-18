@@ -57,7 +57,7 @@ export default function SearchAccount() {
 
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
-      <Tooltip TransitionComponent={Zoom} title="View" arrow followCursor>
+      <Tooltip TransitionComponent={Zoom} title={t('common.view')} arrow followCursor>
         <IconButton className="text-primary">
           <Link to={`/client-register/${id}`}>
             <Folder size={20} />

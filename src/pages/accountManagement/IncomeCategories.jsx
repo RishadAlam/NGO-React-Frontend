@@ -51,7 +51,7 @@ export default function IncomeCategories() {
   const actionBtnGroup = (id, incomeCategories) => (
     <ActionBtnGroup>
       {authPermissions.includes('income_category_data_update') && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton
             className="text-warning"
             onClick={() => incomeCategoriesEdit(incomeCategories)}>
@@ -60,7 +60,7 @@ export default function IncomeCategories() {
         </Tooltip>
       )}
       {authPermissions.includes('income_category_soft_delete') && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => incomeCategoriesDelete(id)}>
             {<Trash size={20} />}
           </IconButton>

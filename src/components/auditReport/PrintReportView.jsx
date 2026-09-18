@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import tsNumbers from '../../libs/tsNumbers'
 import ClientList from './ClientList'
 import DepositExpenditure from './DepositExpenditure'
@@ -8,6 +9,7 @@ import ReportLayout from './ReportLayout'
 import SurplusValue from './SurplusValue'
 
 export default function PrintReportView({ data, innerRef }) {
+  const { t } = useTranslation()
   const {
     financial_year,
     deposit_expenditure,
@@ -22,7 +24,8 @@ export default function PrintReportView({ data, innerRef }) {
 
   return (
     <section className="print-report ps-5 pe-5 bg-white text-dark" ref={innerRef}>
-      <ReportLayout desc={`${tsNumbers(financial_year)} ইং সনের জমা খরচের হিসাব`}>
+      <ReportLayout
+        desc={t('localization.domain.receipts_payments_year', { year: tsNumbers(financial_year) })}>
         <DepositExpenditure
           depositMeta={depositMeta}
           expenditureMeta={expenditureMeta}
@@ -30,8 +33,8 @@ export default function PrintReportView({ data, innerRef }) {
         />
       </ReportLayout>
       <ReportLayout
-        title="লাভ-ক্ষতি হিসাব"
-        desc={`${tsNumbers(financial_year)} ইং সনের ৩০ জুন সমাপ্ত বছরের জন্য`}>
+        title={t('localization.domain.profit_loss')}
+        desc={t('localization.domain.year_ended_june', { year: tsNumbers(financial_year) })}>
         <ProfitLoss
           expenses={profit_loss.expenses}
           incomes={profit_loss.incomes}
@@ -40,8 +43,8 @@ export default function PrintReportView({ data, innerRef }) {
       </ReportLayout>
       {profit_loss.total_expenses.net_profits > 0 && (
         <ReportLayout
-          title="লাভ-ক্ষতি হিসাব"
-          desc={`${tsNumbers(financial_year)} ইং সনের ৩০ জুন সমাপ্ত বছরের জন্য`}>
+          title={t('localization.domain.profit_loss')}
+          desc={t('localization.domain.year_ended_june', { year: tsNumbers(financial_year) })}>
           <NetProfit
             expense_meta={net_profit.expense_meta}
             income_meta={net_profit.income_meta}
@@ -50,8 +53,10 @@ export default function PrintReportView({ data, innerRef }) {
         </ReportLayout>
       )}
       <ReportLayout
-        title="উদ্বৃত্তপত্র"
-        desc={`৩০ জুন ${tsNumbers(financial_year.split('-')[1])} তারিখের`}>
+        title={t('localization.domain.balance_sheet')}
+        desc={t('localization.domain.as_of_june', {
+          year: tsNumbers(financial_year.split('-')[1])
+        })}>
         <SurplusValue
           capital_meta={surplus_value.capital_meta}
           resource_meta={surplus_value.resource_meta}
@@ -61,7 +66,9 @@ export default function PrintReportView({ data, innerRef }) {
         />
       </ReportLayout>
       <ReportLayout
-        desc={`${tsNumbers('30/06/')}${tsNumbers(financial_year.split('-')[1])} ইং তারিখে সদস্যদের শেয়ার, সঞ্চয় ও ঋণ পাওনার স্থিতি তালিকা`}>
+        desc={t('localization.domain.member_balances', {
+          date: tsNumbers(`30/06/${financial_year.split('-')[1]}`)
+        })}>
         <ClientList
           client_list={client_list.client_list}
           total_shares={client_list.total_shares}

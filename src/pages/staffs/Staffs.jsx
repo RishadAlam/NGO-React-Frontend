@@ -64,7 +64,11 @@ export default function Staffs() {
   const actionBtnGroup = (id, staff) => (
     <ActionBtnGroup>
       {checkPermission('staff_permission_view', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Permissions" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('menu.staffs.Staff_Permissions')}
+          arrow
+          followCursor>
           <IconButton
             className="text-success"
             onClick={() => viewUserPermissions(id, staff?.permissions)}>
@@ -73,21 +77,25 @@ export default function Staffs() {
         </Tooltip>
       )}
       {checkPermission('staff_data_update', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Edit" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.edit')} arrow followCursor>
           <IconButton className="text-warning" onClick={() => staffEdit(staff)}>
             {<Edit size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {authId !== id && checkPermission('staff_soft_delete', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => staffDelete(id)}>
             {<Trash size={20} />}
           </IconButton>
         </Tooltip>
       )}
       {checkPermission('staff_action_history', authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Action History" arrow followCursor>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={t('common.action_history.action_history')}
+          arrow
+          followCursor>
           <IconButton
             className="text-info"
             onClick={() => staffActionHistory(staff.action_history)}>

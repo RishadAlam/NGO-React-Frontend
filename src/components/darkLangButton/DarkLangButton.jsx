@@ -55,7 +55,12 @@ export default function DarkLangButton() {
         </div>
         <Button
           type="button"
-          name={language === 'en' ? 'Eng' : 'বাংলা'}
+          name={t(
+            language === 'en'
+              ? 'localization.shared.english_short'
+              : 'localization.shared.bengali_short'
+          )}
+          aria-label={t('mobile.language')}
           disabled={false}
           loading={false}
           onclick={toggleLanguage}
@@ -68,6 +73,7 @@ export default function DarkLangButton() {
         <Button
           type="button"
           name={isDark ? <Moon /> : <Sun />}
+          aria-label={t('mobile.theme')}
           disabled={false}
           loading={false}
           onclick={toggleThemeMode}

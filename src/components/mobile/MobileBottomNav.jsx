@@ -57,11 +57,15 @@ export default function MobileBottomNav() {
         type="button"
         className="mobile-bottom-nav__item mobile-bottom-nav__item--language"
         onClick={toggleLanguage}
-        aria-label={`${t('mobile.language')}: ${language === 'en' ? 'EN' : 'BN'}`}
+        aria-label={`${t('mobile.language')}: ${t(language === 'en' ? 'localization.shared.english_short' : 'localization.shared.bengali_short')}`}
         aria-pressed={language === 'bn'}>
         <span className="mobile-bottom-nav__language-toggle" aria-hidden="true">
-          <span className={language === 'en' ? 'is-active' : ''}>EN</span>
-          <span className={language === 'bn' ? 'is-active' : ''}>BN</span>
+          <span className={language === 'en' ? 'is-active' : ''}>
+            {t('localization.shared.english_badge')}
+          </span>
+          <span className={language === 'bn' ? 'is-active' : ''}>
+            {t('localization.shared.bengali_badge')}
+          </span>
         </span>
         <span className="mobile-bottom-nav__label">{t('mobile.language')}</span>
       </button>

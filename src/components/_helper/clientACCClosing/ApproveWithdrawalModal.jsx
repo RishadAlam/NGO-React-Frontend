@@ -99,6 +99,7 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
                     : t('menu.withdrawal.Loan_Saving_Withdrawal')}
                 </b>
                 <Button
+                  aria-label={t('localization.shared.close')}
                   className={'text-danger p-0'}
                   loading={false}
                   endIcon={<XCircle size={24} />}

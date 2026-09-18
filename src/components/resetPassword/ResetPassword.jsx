@@ -11,7 +11,15 @@ import XCircle from '../../icons/XCircle'
 import xFetch from '../../utilities/xFetch'
 
 const LockIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round">
     <rect x="4" y="11" width="16" height="10" rx="2" />
     <path d="M8 11V7a4 4 0 0 1 8 0v4" />
   </svg>
@@ -30,21 +38,30 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     passwordDigits: true,
     passwordSpecial: true
   })
+  const validationMessage = (message) =>
+    typeof message === 'string' && message.startsWith('localization.domain.') ? t(message) : message
 
   const setChange = (name, val) => {
-    setInputs((prev) => create(prev, (d) => { d[name] = val }))
-    SetErrors((prev) => create(prev, (d) => {
-      d?.message && delete d.message
-      if (name === 'password') {
-        val === '' ? (d.password = 'password required!') : delete d.password
-        checkPassword(val, SetErrors)
-      } else {
-        val === ''
-          ? (d.confirmPassword = 'Confirm password required!')
-          : delete d.confirmPassword
-        if (val !== '' && inputs.password !== val) d.confirmPassword = 'Confirm password does not match!'
-      }
-    }))
+    setInputs((prev) =>
+      create(prev, (d) => {
+        d[name] = val
+      })
+    )
+    SetErrors((prev) =>
+      create(prev, (d) => {
+        d?.message && delete d.message
+        if (name === 'password') {
+          val === '' ? (d.password = 'localization.domain.password_required') : delete d.password
+          checkPassword(val, SetErrors)
+        } else {
+          val === ''
+            ? (d.confirmPassword = 'localization.domain.confirm_password_required')
+            : delete d.confirmPassword
+          if (val !== '' && inputs.password !== val)
+            d.confirmPassword = 'localization.domain.password_mismatch'
+        }
+      })
+    )
   }
 
   const submitPassword = (event) => {
@@ -55,11 +72,18 @@ export default function ResetPassword({ userId, loading, setLoading }) {
     }
     setLoading({ ...loading, resetPassword: true })
     const controller = new AbortController()
-    xFetch('reset-password', {
-      user_id: userId,
-      new_password: inputs.password,
-      confirm_password: inputs.confirmPassword
-    }, null, controller.signal, null, 'PUT').then((response) => {
+    xFetch(
+      'reset-password',
+      {
+        user_id: userId,
+        new_password: inputs.password,
+        confirm_password: inputs.confirmPassword
+      },
+      null,
+      controller.signal,
+      null,
+      'PUT'
+    ).then((response) => {
       setLoading({ ...loading, resetPassword: false })
       if (response?.success) {
         toast.success(response.message)
@@ -84,9 +108,12 @@ export default function ResetPassword({ userId, loading, setLoading }) {
       <div className="auth-field">
         <label>{t('auth.new_password', 'New password')}</label>
         <div className="input-wrap">
-          <span className="leading-icon"><LockIcon /></span>
+          <span className="leading-icon">
+            <LockIcon />
+          </span>
           <input
             type={isPlainText.password ? 'text' : 'password'}
+            aria-label={t('auth.new_password')}
             className={errors?.password ? 'has-error' : ''}
             placeholder="••••••••"
             value={inputs.password}
@@ -99,15 +126,20 @@ export default function ResetPassword({ userId, loading, setLoading }) {
             {isPlainText.password ? <Eye size={18} /> : <EyeOff size={18} />}
           </span>
         </div>
-        {errors?.password && <div className="field-error">{errors.password}</div>}
+        {errors?.password && (
+          <div className="field-error">{validationMessage(errors.password)}</div>
+        )}
       </div>
 
       <div className="auth-field">
         <label>{t('auth.confirm_password', 'Confirm password')}</label>
         <div className="input-wrap">
-          <span className="leading-icon"><LockIcon /></span>
+          <span className="leading-icon">
+            <LockIcon />
+          </span>
           <input
             type={isPlainText.confirmPassword ? 'text' : 'password'}
+            aria-label={t('auth.confirm_password')}
             className={errors?.confirmPassword ? 'has-error' : ''}
             placeholder="••••••••"
             value={inputs.confirmPassword}
@@ -120,7 +152,9 @@ export default function ResetPassword({ userId, loading, setLoading }) {
             {isPlainText.confirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
           </span>
         </div>
-        {errors?.confirmPassword && <div className="field-error">{errors.confirmPassword}</div>}
+        {errors?.confirmPassword && (
+          <div className="field-error">{validationMessage(errors.confirmPassword)}</div>
+        )}
       </div>
 
       <ul className="auth-strength">

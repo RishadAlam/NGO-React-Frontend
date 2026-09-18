@@ -1,0 +1,22 @@
+/* Only replace Quill's generated English text; preserve its layout and styling. */
+.quill-text-editor .ql-tooltip::before {
+  content: var(--editor-visit-link);
+}
+.quill-text-editor .ql-tooltip[data-mode='link']::before {
+  content: var(--editor-enter-link);
+}
+.quill-text-editor .ql-tooltip[data-mode='formula']::before {
+  content: var(--editor-enter-formula);
+}
+.quill-text-editor .ql-tooltip[data-mode='video']::before {
+  content: var(--editor-enter-video);
+}
+.quill-text-editor .ql-tooltip a.ql-action::after {
+  content: var(--editor-edit);
+}
+.quill-text-editor .ql-tooltip.ql-editing a.ql-action::after {
+  content: var(--editor-save);
+}
+.quill-text-editor .ql-tooltip a.ql-remove::before {
+  content: var(--editor-remove);
+}

@@ -1,11 +1,13 @@
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export default function Breadcrumb({ breadcrumbs }) {
+  const { t } = useTranslation()
   return (
     <div role="presentation">
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label={t('localization.shared.breadcrumb')}>
         {breadcrumbs.map((breadcrumb, key) =>
           !breadcrumb.active ? (
             <Link

@@ -28,7 +28,7 @@ export default function AccNoUpdateModal({ open, setOpen, id, defaultField = nul
     event.preventDefault()
 
     if (isEmpty(accNo)) {
-      toast.error(t('common_validation.required_categories_are_empty'))
+      toast.error(t('localization.domain.account_number_required'))
       return
     }
 

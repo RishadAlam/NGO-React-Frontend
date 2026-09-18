@@ -14,12 +14,12 @@ export default function ClientList({
       <table className="table table-bordered table-light client-list mobile-hide-first-serial">
         <thead>
           <tr className="text-center">
-            <th style={{ width: '8%' }}>ক্র/নং</th>
-            <th style={{ width: '12%' }}>সদস্য নং</th>
-            <th style={{ width: '30%' }}>নাম</th>
-            <th style={{ width: '10%' }}>শেয়ার</th>
-            <th style={{ width: '20%' }}>সঞ্চয়</th>
-            <th style={{ width: '20%' }}>ঋণ পাওনা</th>
+            <th style={{ width: '8%' }}>{t('localization.domain.serial_no')}</th>
+            <th style={{ width: '12%' }}>{t('localization.domain.member_no')}</th>
+            <th style={{ width: '30%' }}>{t('common.name')}</th>
+            <th style={{ width: '10%' }}>{t('common.share')}</th>
+            <th style={{ width: '20%' }}>{t('common.saving')}</th>
+            <th style={{ width: '20%' }}>{t('localization.domain.loan_receivable')}</th>
           </tr>
         </thead>
         <tbody style={{ border: 'none' }}>

@@ -14,6 +14,7 @@ import Home from '../../icons/Home'
 import Save from '../../icons/Save'
 import Tool from '../../icons/Tool'
 import xFetch from '../../utilities/xFetch'
+import localizedValidation from '../localizedValidation'
 
 const FALLBACK_LOGO = '/logo.svg'
 
@@ -56,7 +57,7 @@ export default function AppSettings() {
       create(prevErr, (draftErr) => {
         delete draftErr.message
         val === ''
-          ? (draftErr[name] = `${t(`app_settings.${name}`)} is Required!`)
+          ? (draftErr[name] = 'localization.pages.validation.required')
           : delete draftErr[name]
       })
     )
@@ -151,7 +152,11 @@ export default function AppSettings() {
                         imageUri={companyLogo}
                         setImageUri={setCompanyLogo}
                         setChange={(val) => setChange(val, 'company_logo')}
-                        error={errors?.company_logo}
+                        error={localizedValidation(
+                          errors?.company_logo,
+                          t,
+                          t('app_settings.company_logo')
+                        )}
                         disabled={loading?.appSettings}
                         isRequired={true}
                         style={{ width: 'max-content', margin: 'auto' }}
@@ -164,7 +169,11 @@ export default function AppSettings() {
                         defaultValue={inputs.company_name}
                         autoFocus={true}
                         setChange={(val) => setChange(val, 'company_name')}
-                        error={errors?.company_name}
+                        error={localizedValidation(
+                          errors?.company_name,
+                          t,
+                          t('app_settings.company_name')
+                        )}
                         disabled={loading?.appSettings}
                       />
                     </div>
@@ -174,7 +183,11 @@ export default function AppSettings() {
                         isRequired={true}
                         defaultValue={inputs.company_short_name}
                         setChange={(val) => setChange(val, 'company_short_name')}
-                        error={errors?.company_short_name}
+                        error={localizedValidation(
+                          errors?.company_short_name,
+                          t,
+                          t('app_settings.company_short_name')
+                        )}
                         disabled={loading?.appSettings}
                       />
                     </div>
@@ -184,7 +197,11 @@ export default function AppSettings() {
                         isRequired={true}
                         defaultValue={inputs.company_address}
                         setChange={(val) => setChange(val, 'company_address')}
-                        error={errors?.company_address}
+                        error={localizedValidation(
+                          errors?.company_address,
+                          t,
+                          t('app_settings.company_address')
+                        )}
                         disabled={loading?.appSettings}
                       />
                     </div>

@@ -36,20 +36,20 @@ export default function SurplusValue({
       <table className="table table-bordered table-light mobile-hide-paired-serial">
         <thead>
           <tr className="text-center">
-            <th style={{ width: '8%' }}>ক্র/নং</th>
-            <th style={{ width: '27%' }}>মূলধন ও দায়</th>
-            <th style={{ width: '15%' }}>টাকা</th>
-            <th style={{ width: '8%' }}>ক্র/নং</th>
-            <th style={{ width: '27%' }}>সম্পদ ও পরিসম্পদ</th>
-            <th style={{ width: '15%' }}>টাকা</th>
+            <th style={{ width: '8%' }}>{t('localization.domain.serial_no')}</th>
+            <th style={{ width: '27%' }}>{t('localization.domain.capital_liabilities')}</th>
+            <th style={{ width: '15%' }}>{t('localization.domain.taka')}</th>
+            <th style={{ width: '8%' }}>{t('localization.domain.serial_no')}</th>
+            <th style={{ width: '27%' }}>{t('localization.domain.assets')}</th>
+            <th style={{ width: '15%' }}>{t('localization.domain.taka')}</th>
           </tr>
           <tr className="text-center">
-            <th>১</th>
-            <th>২</th>
-            <th>৩</th>
-            <th>৪</th>
-            <th>৫</th>
-            <th>৬ </th>
+            <th>{tsNumbers(1)}</th>
+            <th>{tsNumbers(2)}</th>
+            <th>{tsNumbers(3)}</th>
+            <th>{tsNumbers(4)}</th>
+            <th>{tsNumbers(5)}</th>
+            <th>{tsNumbers(6)}</th>
           </tr>
         </thead>
         <tbody style={{ border: 'none' }}>
@@ -72,7 +72,11 @@ export default function SurplusValue({
                           <Fragment key={key}>
                             <div className="d-flex justify-content-between mt-2">
                               {meta_key === 'share_per_each' ? (
-                                <span>{`প্রতিটি শেয়ার ${tsNumbers(capital_meta[index].child_meta[meta_key])}/= হারে`}</span>
+                                <span>
+                                  {t('localization.domain.share_rate', {
+                                    amount: tsNumbers(capital_meta[index].child_meta[meta_key])
+                                  })}
+                                </span>
                               ) : (
                                 capital_meta[index].child_meta[meta_key] > 0 && (
                                   <>

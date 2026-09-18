@@ -206,8 +206,7 @@ export default function Analytics() {
     []
   )
 
-  const sourceCapabilities =
-    sourceCapabilitiesMap[selectedSourceType] || sourceCapabilitiesMap.all
+  const sourceCapabilities = sourceCapabilitiesMap[selectedSourceType] || sourceCapabilitiesMap.all
   const {
     supportsField,
     supportsCenter,
@@ -273,10 +272,7 @@ export default function Analytics() {
     t
   ])
 
-  const {
-    data: { data: analyticsRows } = [],
-    isLoading
-  } = useFetch({
+  const { data: { data: analyticsRows } = [], isLoading } = useFetch({
     action: 'analytics',
     queryParams: {
       date_range: JSON.stringify(dateRange),
@@ -299,7 +295,10 @@ export default function Analytics() {
         id: 'saving_account_registration',
         name: t('analytics.source_types.saving_account_registration')
       },
-      { id: 'loan_account_registration', name: t('analytics.source_types.loan_account_registration') },
+      {
+        id: 'loan_account_registration',
+        name: t('analytics.source_types.loan_account_registration')
+      },
       { id: 'loan_given', name: t('analytics.source_types.loan_given') },
       { id: 'saving_collection', name: t('analytics.source_types.saving_collection') },
       { id: 'loan_collection', name: t('analytics.source_types.loan_collection') },
@@ -406,7 +405,9 @@ export default function Analytics() {
 
   const approvalStatusConfig = {
     options: approvalStatusOptions,
-    value: selectedApprovalStatus || approvalStatusOptions[0],
+    value:
+      approvalStatusOptions.find((option) => option.id === selectedApprovalStatus?.id) ||
+      approvalStatusOptions[0],
     getOptionLabel: (option) => option.name,
     onChange: (e, option) => setSelectedApprovalStatus(option || approvalStatusOptions[0]),
     isOptionEqualToValue: (option, value) => option.id === value.id
@@ -549,7 +550,8 @@ export default function Analytics() {
     []
   )
 
-  const shouldShowAccNoColumn = selectedSourceType === 'all' || clientSourceTypes.has(selectedSourceType)
+  const shouldShowAccNoColumn =
+    selectedSourceType === 'all' || clientSourceTypes.has(selectedSourceType)
   const shouldShowClientColumn =
     selectedSourceType === 'all' || clientSourceTypes.has(selectedSourceType)
   const shouldShowAccountColumn =
@@ -605,7 +607,11 @@ export default function Analytics() {
       return `${t('analytics.from_account')}: ${balanceFlow(meta.tx_prev_balance, meta.tx_balance)}, ${t('analytics.to_account')}: ${balanceFlow(meta.rx_prev_balance, meta.rx_balance)}`
     }
 
-    if (sourceType === 'income' || sourceType === 'expense' || sourceType === 'account_withdrawal') {
+    if (
+      sourceType === 'income' ||
+      sourceType === 'expense' ||
+      sourceType === 'account_withdrawal'
+    ) {
       return `${t('common.previous_balance')}: ${formatMoney(meta.previous_balance)}, ${t('common.balance')}: ${formatMoney(meta.balance)}`
     }
 
@@ -735,7 +741,11 @@ export default function Analytics() {
         accessor: 'description',
         show: false,
         Cell: ({ value }) =>
-          value ? <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: value }} /> : ''
+          value ? (
+            <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: value }} />
+          ) : (
+            ''
+          )
       },
       {
         Header: t('common.details'),

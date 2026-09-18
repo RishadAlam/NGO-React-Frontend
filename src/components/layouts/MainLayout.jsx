@@ -183,9 +183,9 @@ export default function MainLayout() {
           </div>
           <MobileBottomNav />
           <div className="footer">
-            <p>v 1.0.0</p>
+            <p>{t('localization.shared.version', { version: '1.0.0' })}</p>
             <p>
-              <small>Developed By</small> RISHAD ALAM
+              <small>{t('localization.shared.developed_by')}</small> RISHAD ALAM
             </p>
           </div>
         </section>

@@ -127,7 +127,7 @@ export default function PendingClosing({ prefix }) {
   const actionBtnGroup = (id) => (
     <ActionBtnGroup>
       {checkPermission(`pending_req_to_delete_${prefix}_acc_delete`, authPermissions) && (
-        <Tooltip TransitionComponent={Zoom} title="Delete" arrow followCursor>
+        <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
           <IconButton className="text-danger" onClick={() => deleteClosing(id)}>
             {<Trash size={20} />}
           </IconButton>

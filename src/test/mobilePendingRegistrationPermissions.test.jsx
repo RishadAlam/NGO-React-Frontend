@@ -92,27 +92,27 @@ describe.each([
 ])('Pending %s registration editing', (_type, Page, permission, title) => {
   it('opens the real mobile edit form using the account-specific update grant', () => {
     mount(Page, [permission])
-    fireEvent.click(mobileRow().getByRole('button', { name: 'Edit' }))
+    fireEvent.click(mobileRow().getByRole('button', { name: 'common.edit' }))
     expect(within(screen.getByRole('dialog')).getByText(title)).toBeTruthy()
   })
 
   it('does not expose Edit through the unrelated client-registration grant', () => {
     mount(Page, ['pending_client_registration_update'])
-    expect(mobileRow().queryByRole('button', { name: 'Edit' })).toBeNull()
+    expect(mobileRow().queryByRole('button', { name: 'common.edit' })).toBeNull()
   })
 
   it.each([768, 1024])('preserves the existing desktop form gate at %i px', (width) => {
     mount(Page, [permission], width)
-    fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Edit' }))
+    fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'common.edit' }))
     expect(screen.queryByText(title)).toBeNull()
   })
 })
 
 describe('Pending client registration mobile row actions', () => {
   it.each([
-    ['pending_client_registration_list_view', 'View'],
-    ['pending_client_registration_update', 'Edit'],
-    ['pending_client_registration_permanently_delete', 'Delete']
+    ['pending_client_registration_list_view', 'common.view'],
+    ['pending_client_registration_update', 'common.edit'],
+    ['pending_client_registration_permanently_delete', 'common.delete']
   ])('exposes only the independently granted %s action', (permission, label) => {
     mount(PendingClientReg, [permission])
     expect(mobileRow().getByRole('button', { name: label })).toBeTruthy()
@@ -121,9 +121,9 @@ describe('Pending client registration mobile row actions', () => {
 
   it('removes cached Edit after the grant is revoked', () => {
     mount(PendingClientReg, ['pending_client_registration_update'])
-    expect(mobileRow().getByRole('button', { name: 'Edit' })).toBeTruthy()
+    expect(mobileRow().getByRole('button', { name: 'common.edit' })).toBeTruthy()
     act(() => setAuth({ id: 1, accessToken: 'test-token', permissions: [] }))
-    expect(mobileRow().queryByRole('button', { name: 'Edit' })).toBeNull()
+    expect(mobileRow().queryByRole('button', { name: 'common.edit' })).toBeNull()
   })
 
   it('keeps denied row actions absent', () => {
@@ -133,6 +133,8 @@ describe('Pending client registration mobile row actions', () => {
 
   it('preserves the existing desktop Edit action', () => {
     mount(PendingClientReg, ['pending_client_registration_update'], 1024)
-    expect(within(screen.getByRole('table')).getByRole('button', { name: 'Edit' })).toBeTruthy()
+    expect(
+      within(screen.getByRole('table')).getByRole('button', { name: 'common.edit' })
+    ).toBeTruthy()
   })
 })

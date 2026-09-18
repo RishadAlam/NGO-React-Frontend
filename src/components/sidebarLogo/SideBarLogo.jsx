@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { useAppSettingsValue } from '../../atoms/appSettingsAtoms'
@@ -8,6 +9,7 @@ import './sidebarLogo.scss'
 const FALLBACK_LOGO = '/logo.svg'
 
 export default function SideBarLogo() {
+  const { t } = useTranslation()
   const { company_logo_uri, company_short_name } = useAppSettingsValue()
   const [imageSrc, setImageSrc] = useState(
     company_logo_uri && company_logo_uri.trim() ? company_logo_uri : FALLBACK_LOGO
@@ -27,7 +29,7 @@ export default function SideBarLogo() {
             height="100%"
             placeholderSrc={logoPlaceholder}
             effect="blur"
-            alt="logo"
+            alt={t('localization.shared.logo')}
             onError={handleImageError}
           />
         </div>

@@ -9,7 +9,9 @@ const OTP_LEN = 6
 const RESEND_COOLDOWN = 30
 
 export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const formatNumber = (number) =>
+    new Intl.NumberFormat(i18n.resolvedLanguage || i18n.language).format(number)
   const [digits, setDigits] = useState(() => Array(OTP_LEN).fill(''))
   const [error, setError] = useState({ otp: '', message })
   const [cooldown, setCooldown] = useState(RESEND_COOLDOWN)
@@ -25,12 +27,18 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
 
   const setDigit = (idx, val) => {
     const clean = val.replace(/\D/g, '').slice(0, 1)
-    setDigits((prev) => create(prev, (d) => { d[idx] = clean }))
-    setError((prev) => create(prev, (d) => {
-      delete d?.message
-      const joined = [...digits.slice(0, idx), clean, ...digits.slice(idx + 1)].join('')
-      joined.length === OTP_LEN ? delete d.otp : (d.otp = '')
-    }))
+    setDigits((prev) =>
+      create(prev, (d) => {
+        d[idx] = clean
+      })
+    )
+    setError((prev) =>
+      create(prev, (d) => {
+        delete d?.message
+        const joined = [...digits.slice(0, idx), clean, ...digits.slice(idx + 1)].join('')
+        joined.length === OTP_LEN ? delete d.otp : (d.otp = '')
+      })
+    )
     if (clean && idx < OTP_LEN - 1) inputRefs.current[idx + 1]?.focus()
   }
 
@@ -47,7 +55,9 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
     if (!pasted) return
     e.preventDefault()
     const arr = Array(OTP_LEN).fill('')
-    pasted.split('').forEach((c, i) => { arr[i] = c })
+    pasted.split('').forEach((c, i) => {
+      arr[i] = c
+    })
     setDigits(arr)
     inputRefs.current[Math.min(pasted.length, OTP_LEN - 1)]?.focus()
   }
@@ -60,21 +70,23 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
     }
     setLoading({ ...loading, otp: true })
     const controller = new AbortController()
-    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST').then((response) => {
-      setLoading({ ...loading, otp: false })
-      if (response?.success) {
-        toast.success(response.message)
-        setStep(2)
-        return
+    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST').then(
+      (response) => {
+        setLoading({ ...loading, otp: false })
+        if (response?.success) {
+          toast.success(response.message)
+          setStep(2)
+          return
+        }
+        setError(response?.errors || response)
       }
-      setError(response?.errors || response)
-    })
+    )
     controller.abort()
   }
 
   const resendOTP = () => {
     if (!userId) {
-      toast.error('Undefined User!')
+      toast.error(t('localization.domain.otp_user_missing'))
       return
     }
     setLoading({ ...loading, resendOtp: true })
@@ -101,6 +113,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
               key={i}
               ref={(el) => (inputRefs.current[i] = el)}
               type="text"
+              aria-label={t('localization.domain.otp_digit', { number: formatNumber(i + 1) })}
               inputMode="numeric"
               maxLength={1}
               value={d}
@@ -120,7 +133,13 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
           <LoaderSm size={20} clr="var(--primary-color)" />
         ) : cooldown > 0 ? (
           <>
-            {t('auth.otp_resend_in', 'Resend code in')} <strong>{cooldown}s</strong>
+            {t('auth.otp_resend_in', 'Resend code in')}{' '}
+            <strong>
+              {t('localization.domain.seconds', {
+                count: cooldown,
+                number: formatNumber(cooldown)
+              })}
+            </strong>
           </>
         ) : (
           <>
@@ -132,10 +151,7 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
         )}
       </div>
 
-      <button
-        type="submit"
-        className="auth-btn"
-        disabled={otp.length !== OTP_LEN || loading?.otp}>
+      <button type="submit" className="auth-btn" disabled={otp.length !== OTP_LEN || loading?.otp}>
         {t('auth.verify', 'Verify')}
         {loading?.otp && <LoaderSm size={18} clr="#fff" />}
       </button>

@@ -41,9 +41,7 @@ const resolveRoleNameLabel = (t, roleName) => {
   const translationKey = `staff_roles.default.${normalizedRoleName}`
   const translatedRoleName = t(translationKey)
 
-  return translatedRoleName === translationKey
-    ? normalizedRoleName.replaceAll('_', ' ')
-    : translatedRoleName
+  return translatedRoleName === translationKey ? roleName : translatedRoleName
 }
 
 export default function StaffPermissions() {
