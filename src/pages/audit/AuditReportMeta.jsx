@@ -10,6 +10,7 @@ import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHis
 import CreateAuditReportMeta from '../../components/audit/CreateAuditReportMeta'
 import MetaUpdate from '../../components/audit/MetaUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -156,21 +157,23 @@ export default function AuditReportMeta() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('audit_report_meta.create_meta')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsMetaModalOpen(true)}
-            />
-            {isMetaModalOpen && (
-              <CreateAuditReportMeta
-                isOpen={isMetaModalOpen}
-                setIsOpen={setIsMetaModalOpen}
-                t={t}
-                accessToken={accessToken}
-                mutate={mutate}
+            <MobilePermission permission="audit_report_meta_create">
+              <PrimaryBtn
+                name={t('audit_report_meta.create_meta')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsMetaModalOpen(true)}
               />
-            )}
+              {isMetaModalOpen && (
+                <CreateAuditReportMeta
+                  isOpen={isMetaModalOpen}
+                  setIsOpen={setIsMetaModalOpen}
+                  t={t}
+                  accessToken={accessToken}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isMetaUpdateModalOpen && Object.keys(editableMeta).length && (
               <MetaUpdate
                 isOpen={isMetaUpdateModalOpen}

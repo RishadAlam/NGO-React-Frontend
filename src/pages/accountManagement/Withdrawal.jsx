@@ -9,6 +9,7 @@ import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHis
 import WithdrawalRegistration from '../../components/accountWithdrawal/WithdrawalRegistration'
 import WithdrawalUpdate from '../../components/accountWithdrawal/WithdrawalUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
 import DateRangePickerInputField from '../../components/utilities/DateRangePickerInputField'
@@ -171,19 +172,21 @@ export default function Withdrawal() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('account_withdrawal.Withdrawal_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsWithdrawalModalOpen(true)}
-            />
-            {isWithdrawalModalOpen && (
-              <WithdrawalRegistration
-                isOpen={isWithdrawalModalOpen}
-                setIsOpen={setIsWithdrawalModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="account_withdrawal_registration">
+              <PrimaryBtn
+                name={t('account_withdrawal.Withdrawal_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsWithdrawalModalOpen(true)}
               />
-            )}
+              {isWithdrawalModalOpen && (
+                <WithdrawalRegistration
+                  isOpen={isWithdrawalModalOpen}
+                  setIsOpen={setIsWithdrawalModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isWithdrawalUpdateModalOpen && Object.keys(editableWithdrawal).length && (
               <WithdrawalUpdate
                 isOpen={isWithdrawalUpdateModalOpen}

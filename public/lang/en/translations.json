@@ -170,6 +170,7 @@
     "details_summary": "Details Summary",
     "running": "Running",
     "active": "Active",
+    "inactive": "Inactive",
     "hold": "Hold",
     "closed": "Closed",
     "register_account": "Register Account",

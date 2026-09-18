@@ -12,7 +12,8 @@ import CenterRegistration from '../../components/center/CenterRegistration'
 import CenterUpdate from '../../components/center/CenterUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -38,11 +39,13 @@ export default function Center() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const [loading, setLoading] = useLoadingState({})
   const { data: { data: centers } = [], mutate, isLoading } = useFetch({ action: 'centers' })
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="center_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={loading?.changeStatus || false}
@@ -97,7 +100,7 @@ export default function Center() {
         descParser
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -181,21 +184,23 @@ export default function Center() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('center.Center_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsCenterModalOpen(true)}
-            />
-            {isCenterModalOpen && (
-              <CenterRegistration
-                isOpen={isCenterModalOpen}
-                setIsOpen={setIsCenterModalOpen}
-                t={t}
-                accessToken={accessToken}
-                mutate={mutate}
+            <MobilePermission permission="center_registration">
+              <PrimaryBtn
+                name={t('center.Center_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsCenterModalOpen(true)}
               />
-            )}
+              {isCenterModalOpen && (
+                <CenterRegistration
+                  isOpen={isCenterModalOpen}
+                  setIsOpen={setIsCenterModalOpen}
+                  t={t}
+                  accessToken={accessToken}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isCenterUpdateModalOpen && Object.keys(editableCenter).length && (
               <CenterUpdate
                 isOpen={isCenterUpdateModalOpen}

@@ -12,7 +12,8 @@ import CategoryRegistration from '../../components/category/CategoryRegistration
 import CategoryUpdate from '../../components/category/CategoryUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -40,11 +41,13 @@ export default function Category() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const [loading, setLoading] = useLoadingState({})
   const { data: { data: categories } = [], mutate, isLoading } = useFetch({ action: 'categories' })
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="category_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={loading?.changeStatus || false}
@@ -110,7 +113,7 @@ export default function Category() {
         savingLoanStatus
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -195,21 +198,23 @@ export default function Category() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('category.Category_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsCategoryModalOpen(true)}
-            />
-            {isCategoryModalOpen && (
-              <CategoryRegistration
-                isOpen={isCategoryModalOpen}
-                setIsOpen={setIsCategoryModalOpen}
-                t={t}
-                accessToken={accessToken}
-                mutate={mutate}
+            <MobilePermission permission="category_registration">
+              <PrimaryBtn
+                name={t('category.Category_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsCategoryModalOpen(true)}
               />
-            )}
+              {isCategoryModalOpen && (
+                <CategoryRegistration
+                  isOpen={isCategoryModalOpen}
+                  setIsOpen={setIsCategoryModalOpen}
+                  t={t}
+                  accessToken={accessToken}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isCategoryUpdateModalOpen && Object.keys(editableCategory).length && (
               <CategoryUpdate
                 isOpen={isCategoryUpdateModalOpen}

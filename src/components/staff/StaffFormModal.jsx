@@ -18,7 +18,8 @@ export default function StaffFormModal({
   defaultValues,
   setChange,
   loading,
-  onSubmit
+  onSubmit,
+  allowPasswordChange = true
 }) {
   const { data: { data: roles } = [] } = useFetch({ action: 'roles' })
   const rolesOptions =
@@ -73,24 +74,28 @@ export default function StaffFormModal({
                     disabled={loading?.staffForm}
                   />
                 </div>
-                <div className="col-md-6 mb-3">
-                  <PasswordInputField
-                    label={t('common.password')}
-                    defaultValue={defaultValues?.password || ''}
-                    setChange={(val) => setChange(val, 'password')}
-                    error={error?.password}
-                    disabled={loading?.staffForm}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <PasswordInputField
-                    label={t('common.confirm_password')}
-                    defaultValue={defaultValues?.confirm_password || ''}
-                    setChange={(val) => setChange(val, 'confirm_password')}
-                    error={error?.confirm_password}
-                    disabled={loading?.staffForm}
-                  />
-                </div>
+                {allowPasswordChange && (
+                  <div className="col-md-6 mb-3">
+                    <PasswordInputField
+                      label={t('common.password')}
+                      defaultValue={defaultValues?.password || ''}
+                      setChange={(val) => setChange(val, 'password')}
+                      error={error?.password}
+                      disabled={loading?.staffForm}
+                    />
+                  </div>
+                )}
+                {allowPasswordChange && (
+                  <div className="col-md-6 mb-3">
+                    <PasswordInputField
+                      label={t('common.confirm_password')}
+                      defaultValue={defaultValues?.confirm_password || ''}
+                      setChange={(val) => setChange(val, 'confirm_password')}
+                      error={error?.confirm_password}
+                      disabled={loading?.staffForm}
+                    />
+                  </div>
+                )}
                 <div className="col-md-6 mb-3">
                   <TextInputField
                     label={t('common.phone')}

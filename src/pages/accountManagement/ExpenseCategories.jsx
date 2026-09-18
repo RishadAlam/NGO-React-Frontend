@@ -9,8 +9,9 @@ import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ExpenseCategoriesRegistration from '../../components/expenseCategories/ExpenseCategoriesRegistration'
 import ExpenseCategoriesUpdate from '../../components/expenseCategories/ExpenseCategoriesUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
+import MobilePermission from '../../components/mobile/MobilePermission'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -34,6 +35,7 @@ export default function ExpenseCategories() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const {
     data: { data: expenseCategories } = [],
     mutate,
@@ -41,7 +43,8 @@ export default function ExpenseCategories() {
   } = useFetch({ action: 'accounts/expenses/categories' })
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="expense_category_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
@@ -80,7 +83,7 @@ export default function ExpenseCategories() {
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -160,19 +163,21 @@ export default function ExpenseCategories() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('expense_categories.Expense_Categories_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsExpenseCategoriesModalOpen(true)}
-            />
-            {isExpenseCategoriesModalOpen && (
-              <ExpenseCategoriesRegistration
-                isOpen={isExpenseCategoriesModalOpen}
-                setIsOpen={setIsExpenseCategoriesModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="expense_category_registration">
+              <PrimaryBtn
+                name={t('expense_categories.Expense_Categories_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsExpenseCategoriesModalOpen(true)}
               />
-            )}
+              {isExpenseCategoriesModalOpen && (
+                <ExpenseCategoriesRegistration
+                  isOpen={isExpenseCategoriesModalOpen}
+                  setIsOpen={setIsExpenseCategoriesModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isExpenseCategoriesUpdateModalOpen &&
               Object.keys(editableExpenseCategories).length && (
                 <ExpenseCategoriesUpdate

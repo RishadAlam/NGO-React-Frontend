@@ -2,6 +2,7 @@ import { create, rawReturn } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import useMobilePermission from '../../hooks/useMobilePermission'
 import xFetch from '../../utilities/xFetch'
 import StaffFormModal from './StaffFormModal'
 
@@ -9,6 +10,7 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
   const [staffData, setStaffData] = useState({ ...data })
   const [error, setError] = useState({})
   const [loading, setLoading] = useLoadingState({})
+  const canResetPassword = useMobilePermission('staff_reset_password')
 
   const setChange = (val, name) => {
     setStaffData((prevData) =>
@@ -65,7 +67,12 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
     }
 
     setLoading({ ...loading, staffForm: true })
-    xFetch(`users/${staffData.id}`, staffData, null, accessToken, null, 'PUT')
+    const requestData = { ...staffData }
+    if (!canResetPassword) {
+      delete requestData.password
+      delete requestData.confirm_password
+    }
+    xFetch(`users/${staffData.id}`, requestData, null, accessToken, null, 'PUT')
       .then((response) => {
         setLoading({ ...loading, staffForm: false })
         if (response?.success) {
@@ -118,6 +125,7 @@ export default function StaffUpdate({ isOpen, setIsOpen, data, accessToken, t, m
         setChange={setChange}
         t={t}
         onSubmit={onSubmit}
+        allowPasswordChange={canResetPassword}
         loading={loading}
       />
     </>

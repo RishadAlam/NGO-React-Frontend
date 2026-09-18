@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import IncomeRegistration from '../../components/income/IncomeRegistration'
 import IncomeUpdate from '../../components/income/IncomeUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
@@ -162,19 +163,21 @@ export default function Income() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('income.Income_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsIncomeModalOpen(true)}
-            />
-            {isIncomeModalOpen && (
-              <IncomeRegistration
-                isOpen={isIncomeModalOpen}
-                setIsOpen={setIsIncomeModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="income_registration">
+              <PrimaryBtn
+                name={t('income.Income_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsIncomeModalOpen(true)}
               />
-            )}
+              {isIncomeModalOpen && (
+                <IncomeRegistration
+                  isOpen={isIncomeModalOpen}
+                  setIsOpen={setIsIncomeModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isIncomeUpdateModalOpen && Object.keys(editableIncome).length && (
               <IncomeUpdate
                 isOpen={isIncomeUpdateModalOpen}

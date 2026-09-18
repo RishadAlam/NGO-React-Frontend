@@ -7,6 +7,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import ExpenseRegistration from '../../components/expense/ExpenseRegistration'
 import ExpenseUpdate from '../../components/expense/ExpenseUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
@@ -162,19 +163,21 @@ export default function Expense() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('expense.Expense_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsExpenseModalOpen(true)}
-            />
-            {isExpenseModalOpen && (
-              <ExpenseRegistration
-                isOpen={isExpenseModalOpen}
-                setIsOpen={setIsExpenseModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="expense_registration">
+              <PrimaryBtn
+                name={t('expense.Expense_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsExpenseModalOpen(true)}
               />
-            )}
+              {isExpenseModalOpen && (
+                <ExpenseRegistration
+                  isOpen={isExpenseModalOpen}
+                  setIsOpen={setIsExpenseModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isExpenseUpdateModalOpen && Object.keys(editableExpense).length && (
               <ExpenseUpdate
                 isOpen={isExpenseUpdateModalOpen}

@@ -272,14 +272,17 @@ export default function PendingSavingReg() {
             setAccountData={setViewSavingAccData}
           />
         )}
-        {editSavingAccData && authPermissions.includes('pending_client_registration_update') && (
-          <EditSavingAccountModal
-            open={editSavingAccDataModal}
-            setOpen={setEditSavingAccDataModal}
-            accountData={editSavingAccData}
-            mutate={mutate}
-          />
-        )}
+        {editSavingAccData &&
+          authPermissions.includes(
+            windowWidth < 768 ? 'pending_saving_acc_update' : 'pending_client_registration_update'
+          ) && (
+            <EditSavingAccountModal
+              open={editSavingAccDataModal}
+              setOpen={setEditSavingAccDataModal}
+              accountData={editSavingAccData}
+              mutate={mutate}
+            />
+          )}
         <div className="row">
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
             {fields && <SelectBoxField label={t('common.field')} config={fieldConfig} />}

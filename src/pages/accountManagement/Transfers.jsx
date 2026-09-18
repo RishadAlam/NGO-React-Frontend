@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import TransferRegistration from '../../components/transfer/TransferRegistration'
 import Badge from '../../components/utilities/Badge'
@@ -23,8 +24,7 @@ export default function Transfers() {
   const {
     data: { data: transfers } = [],
     mutate,
-    isLoading,
-    isError
+    isLoading
   } = useFetch({
     action: 'accounts/transfers',
     queryParams: { date_range: JSON.stringify(dateRange) }
@@ -65,19 +65,21 @@ export default function Transfers() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('account_transfer.Transfer_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsTransferModalOpen(true)}
-            />
-            {isTransferModalOpen && (
-              <TransferRegistration
-                isOpen={isTransferModalOpen}
-                setIsOpen={setIsTransferModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="account_transfer_registration">
+              <PrimaryBtn
+                name={t('account_transfer.Transfer_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsTransferModalOpen(true)}
               />
-            )}
+              {isTransferModalOpen && (
+                <TransferRegistration
+                  isOpen={isTransferModalOpen}
+                  setIsOpen={setIsTransferModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
           </div>
         </div>
         <div className="text-end mb-3">

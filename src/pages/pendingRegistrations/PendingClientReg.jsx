@@ -8,13 +8,14 @@ import { useLoadingState } from '../../atoms/loaderAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
 import EditClientProfileModal from '../../components/pendingReg/EditClientProfileModal'
 import ViewClientProfileModal from '../../components/pendingReg/ViewClientProfileModal'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { clientRegApprovalAlert } from '../../helper/approvalAlert'
+import { checkPermissions } from '../../helper/checkPermission'
 import { passwordCheckAlert, permanentDeleteAlert } from '../../helper/deleteAlert'
 import { setProfileDataObj } from '../../helper/setProfileDataObj'
 import successAlert from '../../helper/successAlert'
@@ -36,6 +37,7 @@ export default function PendingClientReg() {
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const [loading, setLoading] = useLoadingState({})
   const {
     data: { data: clientProfiles } = [],
@@ -47,7 +49,10 @@ export default function PendingClientReg() {
 
   const avatar = (name, img) => <Avatar name={name} img={img} />
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="pending_client_registration_approval"
+      trueLabel="analytics.approval_status.approved"
+      falseLabel="common.pending"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={loading?.approval || false}
@@ -103,9 +108,27 @@ export default function PendingClientReg() {
   )
 
   const columns = useMemo(
-    () => PendingClientRegTableColumns(t, windowWidth, avatar, statusSwitch, actionBtnGroup),
+    () =>
+      PendingClientRegTableColumns(
+        t,
+        windowWidth,
+        avatar,
+        statusSwitch,
+        actionBtnGroup,
+        undefined,
+        windowWidth < 768
+          ? !checkPermissions(
+              [
+                'pending_client_registration_list_view',
+                'pending_client_registration_update',
+                'pending_client_registration_permanently_delete'
+              ],
+              authPermissions
+            )
+          : undefined
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobilePermissions]
   )
 
   const viewClientProfile = (profile) => {

@@ -12,7 +12,8 @@ import FieldRegistration from '../../components/field/FieldRegistration'
 import FieldUpdate from '../../components/field/FieldUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -38,11 +39,13 @@ export default function Field() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const { data: { data: fields } = [], mutate, isLoading } = useFetch({ action: 'fields' })
   const [loading, setLoading] = useLoadingState({})
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="field_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={loading?.changeStatus || false}
@@ -97,7 +100,7 @@ export default function Field() {
         descParser
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth, loading]
+    [t, windowWidth, loading, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -179,21 +182,23 @@ export default function Field() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('field.Field_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsFieldModalOpen(true)}
-            />
-            {isFieldModalOpen && (
-              <FieldRegistration
-                isOpen={isFieldModalOpen}
-                setIsOpen={setIsFieldModalOpen}
-                t={t}
-                accessToken={accessToken}
-                mutate={mutate}
+            <MobilePermission permission="field_registration">
+              <PrimaryBtn
+                name={t('field.Field_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsFieldModalOpen(true)}
               />
-            )}
+              {isFieldModalOpen && (
+                <FieldRegistration
+                  isOpen={isFieldModalOpen}
+                  setIsOpen={setIsFieldModalOpen}
+                  t={t}
+                  accessToken={accessToken}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isFieldUpdateModalOpen && Object.keys(editableField).length && (
               <FieldUpdate
                 isOpen={isFieldUpdateModalOpen}

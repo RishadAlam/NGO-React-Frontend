@@ -10,8 +10,9 @@ import AccountRegistration from '../../components/accounts/AccountRegistration'
 import AccountUpdate from '../../components/accounts/AccountUpdate'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
+import MobilePermission from '../../components/mobile/MobilePermission'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -36,10 +37,12 @@ export default function Accounts() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const { data: { data: accounts } = [], mutate, isLoading } = useFetch({ action: 'accounts' })
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="account_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
@@ -121,7 +124,7 @@ export default function Accounts() {
         accBalance
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -200,19 +203,21 @@ export default function Accounts() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('account.Account_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsAccountModalOpen(true)}
-            />
-            {isAccountModalOpen && (
-              <AccountRegistration
-                isOpen={isAccountModalOpen}
-                setIsOpen={setIsAccountModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="account_registration">
+              <PrimaryBtn
+                name={t('account.Account_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsAccountModalOpen(true)}
               />
-            )}
+              {isAccountModalOpen && (
+                <AccountRegistration
+                  isOpen={isAccountModalOpen}
+                  setIsOpen={setIsAccountModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isAccountUpdateModalOpen && Object.keys(editableAccount).length && (
               <AccountUpdate
                 isOpen={isAccountUpdateModalOpen}

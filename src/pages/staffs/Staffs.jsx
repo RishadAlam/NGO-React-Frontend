@@ -7,12 +7,13 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useWindowInnerWidthValue } from '../../atoms/windowSize'
 import ActionHistoryModal from '../../components/_helper/actionHistory/ActionHistoryModal'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
+import MobilePermission from '../../components/mobile/MobilePermission'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
 import StaffPermissions from '../../components/staff/StaffPermissions'
 import StaffRegistration from '../../components/staff/StaffRegistration'
 import StaffUpdate from '../../components/staff/StaffUpdate'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
 import Avatar from '../../components/utilities/Avatar'
 import Badge from '../../components/utilities/Badge'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
@@ -53,7 +54,8 @@ export default function Staffs() {
   )
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="staff_status_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
       disabled={!checkPermission('staff_status_update', authPermissions)}
@@ -210,21 +212,23 @@ export default function Staffs() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('staffs.Staff_Registration')}
-              loading={false}
-              endIcon={<UserPlus size={20} />}
-              onclick={() => setIsUserModalOpen(true)}
-            />
-            {isUserModalOpen && (
-              <StaffRegistration
-                isOpen={isUserModalOpen}
-                setIsOpen={setIsUserModalOpen}
-                t={t}
-                accessToken={accessToken}
-                mutate={mutate}
+            <MobilePermission permission="staff_registration">
+              <PrimaryBtn
+                name={t('staffs.Staff_Registration')}
+                loading={false}
+                endIcon={<UserPlus size={20} />}
+                onclick={() => setIsUserModalOpen(true)}
               />
-            )}
+              {isUserModalOpen && (
+                <StaffRegistration
+                  isOpen={isUserModalOpen}
+                  setIsOpen={setIsUserModalOpen}
+                  t={t}
+                  accessToken={accessToken}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isUserUpdateModalOpen && Object.keys(editableStaff).length && (
               <StaffUpdate
                 isOpen={isUserUpdateModalOpen}

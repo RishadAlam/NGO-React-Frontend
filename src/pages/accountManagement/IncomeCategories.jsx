@@ -9,8 +9,9 @@ import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import IncomeCategoriesRegistration from '../../components/incomeCategories/IncomeCategoriesRegistration'
 import IncomeCategoriesUpdate from '../../components/incomeCategories/IncomeCategoriesUpdate'
 import ReactTableSkeleton from '../../components/loaders/skeleton/ReactTableSkeleton'
+import MobilePermission from '../../components/mobile/MobilePermission'
+import PermissionStatusSwitch from '../../components/mobile/PermissionStatusSwitch'
 import ActionBtnGroup from '../../components/utilities/ActionBtnGroup'
-import AndroidSwitch from '../../components/utilities/AndroidSwitch'
 import PrimaryBtn from '../../components/utilities/PrimaryBtn'
 import ReactTable from '../../components/utilities/tables/ReactTable'
 import { checkPermissions } from '../../helper/checkPermission'
@@ -33,6 +34,7 @@ export default function IncomeCategories() {
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const { t } = useTranslation()
   const windowWidth = useWindowInnerWidthValue()
+  const mobilePermissions = windowWidth < 768 ? authPermissions : null
   const {
     data: { data: incomeCategories } = [],
     mutate,
@@ -40,7 +42,8 @@ export default function IncomeCategories() {
   } = useFetch({ action: 'accounts/incomes/categories' })
 
   const statusSwitch = (value, id) => (
-    <AndroidSwitch
+    <PermissionStatusSwitch
+      permission="income_category_data_update"
       value={Number(value) ? true : false}
       toggleStatus={(e) => toggleStatus(id, e.target.checked)}
     />
@@ -79,7 +82,7 @@ export default function IncomeCategories() {
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, mobilePermissions]
   )
 
   const toggleStatus = (id, isChecked) => {
@@ -159,19 +162,21 @@ export default function IncomeCategories() {
             />
           </div>
           <div className="col-sm-6 text-end">
-            <PrimaryBtn
-              name={t('income_categories.Income_Categories_Registration')}
-              loading={false}
-              endIcon={<Pen size={20} />}
-              onclick={() => setIsIncomeCategoriesModalOpen(true)}
-            />
-            {isIncomeCategoriesModalOpen && (
-              <IncomeCategoriesRegistration
-                isOpen={isIncomeCategoriesModalOpen}
-                setIsOpen={setIsIncomeCategoriesModalOpen}
-                mutate={mutate}
+            <MobilePermission permission="income_category_registration">
+              <PrimaryBtn
+                name={t('income_categories.Income_Categories_Registration')}
+                loading={false}
+                endIcon={<Pen size={20} />}
+                onclick={() => setIsIncomeCategoriesModalOpen(true)}
               />
-            )}
+              {isIncomeCategoriesModalOpen && (
+                <IncomeCategoriesRegistration
+                  isOpen={isIncomeCategoriesModalOpen}
+                  setIsOpen={setIsIncomeCategoriesModalOpen}
+                  mutate={mutate}
+                />
+              )}
+            </MobilePermission>
             {isIncomeCategoriesUpdateModalOpen && Object.keys(editableIncomeCategories).length && (
               <IncomeCategoriesUpdate
                 isOpen={isIncomeCategoriesUpdateModalOpen}

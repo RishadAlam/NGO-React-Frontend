@@ -273,14 +273,17 @@ export default function PendingLoanReg() {
             setAccountData={setViewLoanAccData}
           />
         )}
-        {editLoanAccData && authPermissions.includes('pending_client_registration_update') && (
-          <EditLoanAccountModal
-            open={editLoanAccDataModal}
-            setOpen={setEditLoanAccDataModal}
-            accountData={editLoanAccData}
-            mutate={mutate}
-          />
-        )}
+        {editLoanAccData &&
+          authPermissions.includes(
+            windowWidth < 768 ? 'pending_loan_acc_update' : 'pending_client_registration_update'
+          ) && (
+            <EditLoanAccountModal
+              open={editLoanAccDataModal}
+              setOpen={setEditLoanAccDataModal}
+              accountData={editLoanAccData}
+              mutate={mutate}
+            />
+          )}
         <div className="row">
           <div className="col-md-6 col-lg-4 col-xxl-2 mb-3">
             {fields && <SelectBoxField label={t('common.field')} config={fieldConfig} />}
