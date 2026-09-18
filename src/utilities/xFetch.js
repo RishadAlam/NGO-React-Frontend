@@ -73,6 +73,14 @@ export default async function xFetch(
     }
   }
 
+  // Let the user retry returning even when the connection never responds.
+  if (
+    (currentAuth?.impersonation || temporarySession) &&
+    ['impersonation/stop', 'logout'].includes(endpoint)
+  ) {
+    config.timeout = 10000
+  }
+
   if (method.toLowerCase() === 'post' || method.toLowerCase() === 'put') {
     config.data = data instanceof FormData ? data : JSON.stringify(data)
   }
