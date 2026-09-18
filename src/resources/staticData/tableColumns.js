@@ -1428,6 +1428,7 @@ export const CategoryCollectionSavingReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.deposit'),
     accessor: 'saving_collection',
+    mobileSortAccessor: (record) => Number(record.saving_collection?.[0]?.deposit || 0),
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1454,6 +1455,7 @@ export const FieldCollectionSavingReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.deposit'),
     accessor: 'saving_collection',
+    mobileSortAccessor: (record) => Number(record.saving_collection?.[0]?.deposit || 0),
     Cell: ({ value }) => tsNumbers(`$${value[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1482,6 +1484,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.deposit'),
     accessor: 'deposit',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.deposit || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1494,6 +1497,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.loan'),
     accessor: 'loan',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.loan || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1506,6 +1510,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.interest'),
     accessor: 'interest',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.interest || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1518,6 +1523,7 @@ export const CategoryCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.total'),
     accessor: 'total',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.total || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1544,6 +1550,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.deposit'),
     accessor: 'deposit',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.deposit || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.deposit || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1556,6 +1563,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.loan'),
     accessor: 'loan',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.loan || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.loan || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1568,6 +1576,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.interest'),
     accessor: 'interest',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.interest || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.interest || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -1580,6 +1589,7 @@ export const FieldCollectionLoanReportTableColumns = (t, windowWidth) => [
   {
     Header: t('common.total'),
     accessor: 'total',
+    mobileSortAccessor: (record) => Number(record.loan_collection?.[0]?.total || 0),
     Cell: ({ row }) => tsNumbers(`$${row.original?.loan_collection[0]?.total || 0}/-`),
     Footer: ({ data }) => {
       const totalAmount = data.reduce((sum, transaction) => {
@@ -2305,6 +2315,7 @@ export const RegisteredSavingsTableColumns = (t, windowWidth, avatar) => [
   {
     Header: t('common.name'),
     accessor: 'name',
+    mobileSortAccessor: (record) => record.client_registration?.name || '',
     Cell: ({ row }) => row.original.client_registration.name
   },
   {
@@ -2414,6 +2425,7 @@ export const RegisteredLoanTableColumns = (t, windowWidth, avatar) => [
   {
     Header: t('common.name'),
     accessor: 'name',
+    mobileSortAccessor: (record) => record.client_registration?.name || '',
     Cell: ({ row }) => row.original.client_registration.name
   },
   {

@@ -850,3 +850,121 @@
     padding-right: 56px;
   }
 }
+
+// Phone-only refinements: keep the existing 768px tablet presentation intact.
+@media screen and (max-width: 767.98px) {
+  .mobile-table-sort {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+
+    label {
+      display: grid;
+      min-width: 0;
+      gap: 6px;
+      color: $soft-color;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      min-width: 0;
+      min-height: 44px;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: $main-color;
+      background: var(--soft-bg);
+      font-size: 16px;
+
+      &:disabled {
+        opacity: 0.6;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .mobile-table-pagination {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 12px;
+
+    .table-btn {
+      width: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      margin: 0;
+    }
+
+    [role='status'] {
+      font-size: 14px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .mobile-data-row__primary > span,
+  .mobile-data-row__emphasis > span,
+  .mobile-data-row__field > span,
+  .mobile-data-list__summary-item > span {
+    overflow: visible;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-data-row__value,
+  .mobile-data-row__field > div,
+  .mobile-data-list__summary-item > div {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .mobile-data-row__value > a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+
+  .mobile-data-row__disclosure > summary {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .mobile-data-row__disclosure-count {
+    font-size: 12px;
+  }
+
+  .mobile-data-row__actions,
+  .mobile-data-row__actions .MuiButtonGroup-root :is(button, .MuiIconButton-root),
+  .mobile-row-action-trigger {
+    width: 44px;
+    min-width: 44px !important;
+    height: 44px;
+    min-height: 44px !important;
+  }
+
+  .mobile-row-action-menu__item {
+    font-size: 14px !important;
+  }
+}

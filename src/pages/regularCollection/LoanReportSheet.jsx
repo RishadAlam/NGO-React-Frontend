@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import LoanCollectionSheet from '../../components/collection/LoanCollectionSheet'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import { checkPermission } from '../../helper/checkPermission'
 import useFetch from '../../hooks/useFetch'
@@ -29,6 +30,7 @@ export default function LoanReportSheet({ isRegular = true }) {
   const {
     data: { data: { category_name = '', field_name = '', dates = [], collections = [] } = [] } = [],
     mutate,
+    hasError,
     isLoading
   } = useFetch({
     action: `collection/loan/${prefix}/collection-sheet/${category_id}/${field_id}`,
@@ -102,14 +104,16 @@ export default function LoanReportSheet({ isRegular = true }) {
             </div>
           )}
         </div>
-        <LoanCollectionSheet
-          data={collections}
-          loading={isLoading}
-          mutate={mutate}
-          isRegular={isRegular}
-          categoryName={category_name}
-          fieldName={field_name}
-        />
+        <MobileFetchBoundary hasError={hasError} hasData={collections.length > 0} onRetry={mutate}>
+          <LoanCollectionSheet
+            data={collections}
+            loading={isLoading}
+            mutate={mutate}
+            isRegular={isRegular}
+            categoryName={category_name}
+            fieldName={field_name}
+          />
+        </MobileFetchBoundary>
       </section>
     </>
   )

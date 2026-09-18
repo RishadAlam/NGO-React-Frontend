@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import SavingCollectionReport from '../../components/collection/SavingCollectionReport'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import BusinessOpportunity from '../../icons/BusinessOpportunity'
@@ -19,7 +20,12 @@ export default function SavingReport({ isRegular = true }) {
     ? `collection/saving/${prefix}/collection-sheet`
     : `collection/saving/${prefix}/collection-sheet/${category_id}`
 
-  const { data: { data: { category_name = '', report = [] } = [] } = [], isLoading } = useFetch({
+  const {
+    data: { data: { category_name = '', report = [] } = [] } = [],
+    isLoading,
+    hasError,
+    mutate
+  } = useFetch({
     action: endpoint
   })
 
@@ -31,11 +37,13 @@ export default function SavingReport({ isRegular = true }) {
             <Breadcrumb breadcrumbs={dynamicBreadcrumb(category_name, category_id, t, isRegular)} />
           </div>
         </div>
-        <SavingCollectionReport
-          data={report}
-          loading={isLoading}
-          hasCategoryId={!isEmpty(category_id)}
-        />
+        <MobileFetchBoundary hasError={hasError} hasData={report.length > 0} onRetry={mutate}>
+          <SavingCollectionReport
+            data={report}
+            loading={isLoading}
+            hasCategoryId={!isEmpty(category_id)}
+          />
+        </MobileFetchBoundary>
       </section>
     </>
   )

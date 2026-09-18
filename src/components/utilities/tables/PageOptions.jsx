@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import PageOption from './PageOption'
+import tsNumbers from '../../../libs/tsNumbers'
 
 export default function PageOptions({
   previousPage,
@@ -11,9 +12,35 @@ export default function PageOptions({
   pageCount,
   pageOptions,
   pageIndex,
-  gotoPage
+  gotoPage,
+  compact = false
 }) {
   const { t } = useTranslation()
+  if (compact) {
+    return (
+      <nav className="mobile-table-pagination" aria-label={t('mobile.pagination')}>
+        <button
+          type="button"
+          className="table-btn"
+          aria-label={t('localization.shared.previous')}
+          onClick={previousPage}
+          disabled={!canPreviousPage}>
+          <ChevronLeft />
+        </button>
+        <span role="status" aria-live="polite">
+          {t('mobile.page_of', { page: tsNumbers(pageIndex + 1), total: tsNumbers(pageCount) })}
+        </span>
+        <button
+          type="button"
+          className="table-btn"
+          aria-label={t('localization.shared.next')}
+          onClick={nextPage}
+          disabled={!canNextPage}>
+          <ChevronRight />
+        </button>
+      </nav>
+    )
+  }
   return (
     <>
       <button

@@ -25,6 +25,7 @@ export default function useFetch({
     data,
     mutate,
     isLoading,
+    hasError: Boolean(error),
     isError: !error?.success ? error?.errors : ''
   }
 }

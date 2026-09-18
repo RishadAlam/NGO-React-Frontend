@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import LoanCollectionReport from '../../components/collection/LoanCollectionReport'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import { isEmpty } from '../../helper/isEmpty'
 import useFetch from '../../hooks/useFetch'
 import { dynamicBreadcrumb } from './SavingReport'
@@ -14,7 +15,12 @@ export default function LoanReport({ isRegular = true }) {
     ? `collection/loan/${prefix}/collection-sheet`
     : `collection/loan/${prefix}/collection-sheet/${category_id}`
 
-  const { data: { data: { category_name = '', report = [] } = [] } = [], isLoading } = useFetch({
+  const {
+    data: { data: { category_name = '', report = [] } = [] } = [],
+    isLoading,
+    hasError,
+    mutate
+  } = useFetch({
     action: endpoint
   })
 
@@ -26,11 +32,13 @@ export default function LoanReport({ isRegular = true }) {
             <Breadcrumb breadcrumbs={dynamicBreadcrumb(category_name, category_id, t, isRegular)} />
           </div>
         </div>
-        <LoanCollectionReport
-          data={report}
-          loading={isLoading}
-          hasCategoryId={!isEmpty(category_id)}
-        />
+        <MobileFetchBoundary hasError={hasError} hasData={report.length > 0} onRetry={mutate}>
+          <LoanCollectionReport
+            data={report}
+            loading={isLoading}
+            hasCategoryId={!isEmpty(category_id)}
+          />
+        </MobileFetchBoundary>
       </section>
     </>
   )

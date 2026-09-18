@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import Breadcrumb from '../../components/breadcrumb/Breadcrumb'
 import SavingCollectionSheet from '../../components/collection/SavingCollectionSheet'
+import MobileFetchBoundary from '../../components/mobile/MobileFetchBoundary'
 import SelectBoxField from '../../components/utilities/SelectBoxField'
 import { checkPermission } from '../../helper/checkPermission'
 import { isEmpty } from '../../helper/isEmpty'
@@ -35,6 +36,7 @@ export default function SavingReportSheet({ isRegular = true }) {
   const {
     data: { data: { category_name = '', field_name = '', dates = [], collections = [] } = [] } = [],
     mutate,
+    hasError,
     isLoading
   } = useFetch({
     action: `collection/saving/${prefix}/collection-sheet/${category_id}/${field_id}`,
@@ -108,14 +110,16 @@ export default function SavingReportSheet({ isRegular = true }) {
             </div>
           )}
         </div>
-        <SavingCollectionSheet
-          data={collections}
-          loading={isLoading}
-          mutate={mutate}
-          isRegular={isRegular}
-          categoryName={category_name}
-          fieldName={field_name}
-        />
+        <MobileFetchBoundary hasError={hasError} hasData={collections.length > 0} onRetry={mutate}>
+          <SavingCollectionSheet
+            data={collections}
+            loading={isLoading}
+            mutate={mutate}
+            isRegular={isRegular}
+            categoryName={category_name}
+            fieldName={field_name}
+          />
+        </MobileFetchBoundary>
       </section>
     </>
   )

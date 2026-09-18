@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { memo, useEffect, useId, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useGlobalFilter, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table'
 import {
   createTableColumnVisibilityStorageKey,
@@ -255,19 +255,8 @@ function MobileTableList({
                 isRowClickable ? 'mobile-data-row--clickable' : ''
               }`.trim()}
               role="listitem"
-              tabIndex={isRowClickable ? 0 : undefined}
               onClick={(event) => {
                 if (!isInteractiveTarget(event.target)) openRow(row)
-              }}
-              onKeyDown={(event) => {
-                if (
-                  !isRowClickable ||
-                  isInteractiveTarget(event.target) ||
-                  !['Enter', ' '].includes(event.key)
-                )
-                  return
-                event.preventDefault()
-                openRow(row)
               }}>
               <div
                 className={`mobile-data-row__topline ${
@@ -279,7 +268,15 @@ function MobileTableList({
                 {primaryCell && (
                   <div className="mobile-data-row__primary">
                     <span>{getCellLabel(primaryCell)}</span>
-                    <div className="mobile-data-row__value">{primaryCell.render('Cell')}</div>
+                    <div className="mobile-data-row__value">
+                      {isRowClickable ? (
+                        <Link to={`${rowLinkPath}/${row.original[rowLinkPrefix]}`}>
+                          {primaryCell.render('Cell')}
+                        </Link>
+                      ) : (
+                        primaryCell.render('Cell')
+                      )}
+                    </div>
                   </div>
                 )}
                 {emphasisCell && (
@@ -376,7 +373,27 @@ function ReactTable({
   const columns = useMemo(
     () =>
       isMobileTable
-        ? suppliedColumns.filter((column) => column.isActionHide !== true)
+        ? suppliedColumns
+            .filter((column) => column.isActionHide !== true)
+            .map((column) =>
+              typeof column.mobileSortAccessor === 'function'
+                ? {
+                    ...column,
+                    sortType: (first, second) => {
+                      const firstValue = column.mobileSortAccessor(first.original)
+                      const secondValue = column.mobileSortAccessor(second.original)
+                      if (typeof firstValue === 'number' && typeof secondValue === 'number') {
+                        return firstValue - secondValue
+                      }
+                      return String(firstValue ?? '').localeCompare(
+                        String(secondValue ?? ''),
+                        undefined,
+                        { numeric: true, sensitivity: 'base' }
+                      )
+                    }
+                  }
+                : column
+            )
         : suppliedColumns,
     [isMobileTable, suppliedColumns]
   )
@@ -431,7 +448,9 @@ function ReactTable({
     gotoPage,
     pageCount,
     setHiddenColumns,
-    allColumns
+    allColumns,
+    rows,
+    setSortBy
   } = useTable(
     {
       columns,
@@ -452,6 +471,20 @@ function ReactTable({
     useResizeColumns
   )
   const { globalFilter, pageIndex, pageSize, hiddenColumns = [] } = state
+  const mobileSort = state.sortBy?.[0]
+  const sortableColumns = allColumns.filter(
+    (column) =>
+      column.canSort &&
+      (typeof column.mobileSortAccessor === 'function' ||
+        rows.some((row) =>
+          ['string', 'number', 'boolean'].includes(typeof row.values[column.id])
+        )) &&
+      typeof column.Header === 'string' &&
+      column.Header.trim().length > 0 &&
+      !isMobileSerialColumn(column) &&
+      column.id !== 'action' &&
+      column.mobileAction !== true
+  )
   const currentColumnVisibilityState = useMemo(
     () => getColumnVisibilityStateFromHiddenColumns(allColumns, hiddenColumns),
     [allColumns, hiddenColumns]
@@ -551,6 +584,40 @@ function ReactTable({
             </div>
           )}
         </div>
+
+        {isMobileTable && sortableColumns.length > 0 && (
+          <div className="mobile-table-sort">
+            <label>
+              <span>{t('mobile.sort_by')}</span>
+              <select
+                value={mobileSort?.id || ''}
+                onChange={(event) => {
+                  setSortBy(event.target.value ? [{ id: event.target.value, desc: false }] : [])
+                  gotoPage(0)
+                }}>
+                <option value="">{t('mobile.default_order')}</option>
+                {sortableColumns.map((column) => (
+                  <option key={column.id} value={column.id}>
+                    {column.Header}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>{t('mobile.sort_direction')}</span>
+              <select
+                value={mobileSort?.desc ? 'desc' : 'asc'}
+                disabled={!mobileSort}
+                onChange={(event) => {
+                  setSortBy([{ id: mobileSort.id, desc: event.target.value === 'desc' }])
+                  gotoPage(0)
+                }}>
+                <option value="asc">{t('mobile.ascending')}</option>
+                <option value="desc">{t('mobile.descending')}</option>
+              </select>
+            </label>
+          </div>
+        )}
 
         {isMobileTable ? (
           <MobileTableList
@@ -706,6 +773,7 @@ function ReactTable({
                   pageOptions={pageOptions}
                   pageIndex={pageIndex}
                   gotoPage={gotoPage}
+                  compact={isMobileTable}
                 />
               )}
             </div>
