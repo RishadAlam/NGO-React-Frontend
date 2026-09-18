@@ -32,11 +32,17 @@ export default function tsNumbers(numbers, en = false) {
     $: '৳'
   }
 
-  return lang !== 'bn' || en
-    ? String(numbers).replace(/[১২৩৪৫৬৭৮৯০৳]/g, function (e) {
-        return bn_to_en[e]
-      })
-    : String(numbers).replace(/[1234567890$]/g, function (e) {
-        return en_to_bn[e]
-      })
+  const translated =
+    lang !== 'bn' || en
+      ? String(numbers).replace(/[১২৩৪৫৬৭৮৯০৳]/g, function (e) {
+          return bn_to_en[e]
+        })
+      : String(numbers).replace(/[1234567890$]/g, function (e) {
+          return en_to_bn[e]
+        })
+
+  // This is a BDT application. The legacy dollar marker is a display
+  // placeholder, not a request to change currency when choosing English.
+  // Keep explicit input normalization (`en = true`) unchanged.
+  return en ? translated : translated.replace(/\$/g, '৳')
 }

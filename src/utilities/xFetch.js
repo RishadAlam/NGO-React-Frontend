@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import i18n from 'i18next'
 import { toast } from 'react-hot-toast'
 import { getRecoil } from 'recoil-nexus'
 import { authDataState } from '../atoms/authAtoms'
@@ -72,7 +73,9 @@ export default async function xFetch(
         return Promise.reject({
           status: 403,
           success: false,
-          message: 'This action is unauthorized.'
+          message: i18n.isInitialized
+            ? i18n.t('common_validation.unauthorized_action')
+            : 'This action is unauthorized.'
         })
       }
     }
@@ -98,7 +101,9 @@ export default async function xFetch(
         // The request was made but no response was received
         // `errors.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        toast.error('Something went wrong!')
+        toast.error(
+          i18n.isInitialized ? i18n.t('common_validation.network_error') : 'Something went wrong!'
+        )
         // return errors.request
         return Promise.reject(errors.request)
       } else {
