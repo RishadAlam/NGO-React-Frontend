@@ -1,5 +1,5 @@
 import ReactQuill from 'react-quill'
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import 'react-quill/dist/quill.snow.css'
 import './editorLocale.css'
@@ -15,10 +15,20 @@ export default function TextAreaInputField({
 }) {
   const { t } = useTranslation()
   const editorRef = useRef(null)
+  const inputId = useId()
+  const errorId = `${inputId}-error`
   useEffect(() => {
     if (!editorRef.current) return
     return localizeEditor(editorRef.current.getEditor(), t, label)
   }, [t, label])
+  useEffect(() => {
+    const editor = editorRef.current?.getEditor().root
+    if (!editor) return
+    editor.setAttribute('aria-invalid', String(Boolean(error)))
+    editor.setAttribute('aria-required', String(isRequired))
+    if (error) editor.setAttribute('aria-describedby', errorId)
+    else editor.removeAttribute('aria-describedby')
+  }, [error, errorId, isRequired])
   const requiredLabel = (
     <span>
       {label}
@@ -59,7 +69,11 @@ export default function TextAreaInputField({
         onChange={setChange}
         readOnly={disabled}
       />
-      {error && <span className="text-danger my-3">{error}</span>}
+      {error && (
+        <span id={errorId} className="text-danger my-3">
+          {error}
+        </span>
+      )}
     </>
   )
 }

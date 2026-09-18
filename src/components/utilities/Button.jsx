@@ -1,5 +1,8 @@
 import React from 'react'
 import LoaderSm from '../loaders/LoaderSm'
+import { useMediaQuery } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import XCircle from '../../icons/XCircle'
 
 export default function Button({
   name,
@@ -13,6 +16,10 @@ export default function Button({
   'aria-label': ariaLabel,
   title
 }) {
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const { t } = useTranslation()
+  const isUnnamedClose =
+    mobile && type === 'button' && !name && !ariaLabel && endIcon?.type === XCircle
   const trailingIcon = loading ? (
     <LoaderSm size={20} clr="var(--primary-color)" className="ms-2" />
   ) : (
@@ -22,9 +29,9 @@ export default function Button({
   return (
     <>
       <button
-        className={`btn btn-block ${className || 'btn-primary'}`}
+        className={`btn btn-block ${className || 'btn-primary'}${isUnnamedClose ? ' mobile-dialog-close' : ''}`}
         type={type}
-        aria-label={ariaLabel}
+        aria-label={ariaLabel || (isUnnamedClose ? t('localization.shared.close') : undefined)}
         title={title}
         disabled={disabled}
         style={style}

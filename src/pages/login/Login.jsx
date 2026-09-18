@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { create } from 'mutative'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import xFetch from '../../utilities/xFetch'
 import localizedValidation from '../localizedValidation'
+import { useMediaQuery } from '@mui/material'
 
 const MailIcon = () => (
   <svg
@@ -45,6 +46,9 @@ const LockIcon = () => (
 
 export default function Login() {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const PasswordToggle = mobile ? 'button' : 'span'
+  const errorId = useId()
   const navigate = useNavigate()
   const [isPlainText, SetIsPlainText] = useState(false)
   const [loading, setLoading] = useLoadingState({})
@@ -143,6 +147,8 @@ export default function Login() {
               id="email"
               name="email"
               autoComplete="email"
+              aria-invalid={Boolean(errors?.email)}
+              aria-describedby={errors?.email ? `${errorId}-email` : undefined}
               className={errors?.email ? 'has-error' : ''}
               placeholder={t('auth.email_placeholder', 'name@example.com')}
               value={inputs.email}
@@ -151,7 +157,7 @@ export default function Login() {
             />
           </div>
           {errors?.email && (
-            <div className="field-error">
+            <div id={`${errorId}-email`} className="field-error">
               {localizedValidation(errors.email, t, t('auth.email'))}
             </div>
           )}
@@ -168,18 +174,33 @@ export default function Login() {
               id="password"
               name="password"
               autoComplete="current-password"
+              aria-invalid={Boolean(errors?.password)}
+              aria-describedby={errors?.password ? `${errorId}-password` : undefined}
               className={errors?.password ? 'has-error' : ''}
               placeholder="••••••••"
               value={inputs.password}
               onChange={(e) => setChange('password', e.target.value)}
               disabled={loading?.login}
             />
-            <span className="trailing-icon is-button" onClick={() => SetIsPlainText((p) => !p)}>
+            <PasswordToggle
+              className={`trailing-icon is-button${mobile ? ' mobile-password-toggle' : ''}`}
+              type={mobile ? 'button' : undefined}
+              aria-label={
+                mobile
+                  ? t(
+                      isPlainText
+                        ? 'localization.shared.hide_password'
+                        : 'localization.shared.show_password'
+                    )
+                  : undefined
+              }
+              aria-pressed={mobile ? isPlainText : undefined}
+              onClick={() => SetIsPlainText((p) => !p)}>
               {isPlainText ? <Eye size={18} /> : <EyeOff size={18} />}
-            </span>
+            </PasswordToggle>
           </div>
           {errors?.password && (
-            <div className="field-error">
+            <div id={`${errorId}-password`} className="field-error">
               {localizedValidation(errors.password, t, t('auth.password'))}
             </div>
           )}

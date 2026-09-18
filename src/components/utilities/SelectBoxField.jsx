@@ -9,10 +9,12 @@ export default function SelectBoxField({
   config,
   error,
   isRequired = false,
-  disabled = false
+  disabled = false,
+  ariaLabel
 }) {
   const { t } = useTranslation()
   const inputId = useId()
+  const errorId = `${inputId}-error`
   const requiredLabel = (
     <span>
       {label}
@@ -35,12 +37,23 @@ export default function SelectBoxField({
           renderInput={(params) => (
             <TextField
               {...params}
+              inputProps={{
+                ...params.inputProps,
+                ...(ariaLabel ? { 'aria-label': ariaLabel } : {}),
+                'aria-invalid': Boolean(error),
+                'aria-required': isRequired,
+                'aria-describedby': error ? errorId : undefined
+              }}
               label={isRequired ? requiredLabel : label}
               variant={variant || 'standard'}
             />
           )}
         />
-        {error && <span className="text-danger my-3">{error}</span>}
+        {error && (
+          <span id={errorId} className="text-danger my-3">
+            {error}
+          </span>
+        )}
       </div>
     </>
   )

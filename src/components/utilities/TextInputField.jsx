@@ -10,7 +10,8 @@ export default function TextInputField({
   isRequired = false,
   autoFocus = false,
   disabled = false,
-  inputMode
+  inputMode,
+  ariaLabel
 }) {
   const requiredLabel = (
     <span>
@@ -33,7 +34,7 @@ export default function TextInputField({
       autoFocus={autoFocus}
       required={isRequired}
       disabled={disabled ? true : false}
-      inputProps={inputMode ? { inputMode } : undefined}
+      inputProps={inputMode || ariaLabel ? { inputMode, 'aria-label': ariaLabel } : undefined}
     />
   )
 }

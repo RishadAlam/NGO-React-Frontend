@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import LoaderSm from '../loaders/LoaderSm'
@@ -9,6 +9,7 @@ import Eye from '../../icons/Eye'
 import EyeOff from '../../icons/EyeOff'
 import XCircle from '../../icons/XCircle'
 import xFetch from '../../utilities/xFetch'
+import { useMediaQuery } from '@mui/material'
 
 const LockIcon = () => (
   <svg
@@ -27,6 +28,9 @@ const LockIcon = () => (
 
 export default function ResetPassword({ userId, loading, setLoading }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const PasswordToggle = mobile ? 'button' : 'span'
+  const errorId = useId()
   const [isPlainText, SetIsPlainText] = useState({ password: false, confirmPassword: false })
   const [inputs, setInputs] = useState({ password: '', confirmPassword: '' })
   const [errors, SetErrors] = useState({
@@ -114,20 +118,35 @@ export default function ResetPassword({ userId, loading, setLoading }) {
           <input
             type={isPlainText.password ? 'text' : 'password'}
             aria-label={t('auth.new_password')}
+            aria-invalid={Boolean(errors?.password)}
+            aria-describedby={errors?.password ? `${errorId}-password` : undefined}
             className={errors?.password ? 'has-error' : ''}
             placeholder="••••••••"
             value={inputs.password}
             onChange={(e) => setChange('password', e.target.value)}
             disabled={loading?.resetPassword}
           />
-          <span
-            className="trailing-icon is-button"
+          <PasswordToggle
+            className={`trailing-icon is-button${mobile ? ' mobile-password-toggle' : ''}`}
+            type={mobile ? 'button' : undefined}
+            aria-label={
+              mobile
+                ? t(
+                    isPlainText.password
+                      ? 'localization.shared.hide_password'
+                      : 'localization.shared.show_password'
+                  )
+                : undefined
+            }
+            aria-pressed={mobile ? isPlainText.password : undefined}
             onClick={() => SetIsPlainText((p) => ({ ...p, password: !p.password }))}>
             {isPlainText.password ? <Eye size={18} /> : <EyeOff size={18} />}
-          </span>
+          </PasswordToggle>
         </div>
         {errors?.password && (
-          <div className="field-error">{validationMessage(errors.password)}</div>
+          <div id={`${errorId}-password`} className="field-error">
+            {validationMessage(errors.password)}
+          </div>
         )}
       </div>
 
@@ -140,20 +159,35 @@ export default function ResetPassword({ userId, loading, setLoading }) {
           <input
             type={isPlainText.confirmPassword ? 'text' : 'password'}
             aria-label={t('auth.confirm_password')}
+            aria-invalid={Boolean(errors?.confirmPassword)}
+            aria-describedby={errors?.confirmPassword ? `${errorId}-confirm` : undefined}
             className={errors?.confirmPassword ? 'has-error' : ''}
             placeholder="••••••••"
             value={inputs.confirmPassword}
             onChange={(e) => setChange('confirmPassword', e.target.value)}
             disabled={loading?.resetPassword}
           />
-          <span
-            className="trailing-icon is-button"
+          <PasswordToggle
+            className={`trailing-icon is-button${mobile ? ' mobile-password-toggle' : ''}`}
+            type={mobile ? 'button' : undefined}
+            aria-label={
+              mobile
+                ? t(
+                    isPlainText.confirmPassword
+                      ? 'localization.shared.hide_password'
+                      : 'localization.shared.show_password'
+                  )
+                : undefined
+            }
+            aria-pressed={mobile ? isPlainText.confirmPassword : undefined}
             onClick={() => SetIsPlainText((p) => ({ ...p, confirmPassword: !p.confirmPassword }))}>
             {isPlainText.confirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-          </span>
+          </PasswordToggle>
         </div>
         {errors?.confirmPassword && (
-          <div className="field-error">{validationMessage(errors.confirmPassword)}</div>
+          <div id={`${errorId}-confirm`} className="field-error">
+            {validationMessage(errors.confirmPassword)}
+          </div>
         )}
       </div>
 

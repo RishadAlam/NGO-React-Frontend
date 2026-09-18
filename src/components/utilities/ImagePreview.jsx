@@ -1,6 +1,7 @@
 import Camera from '../../icons/Camera'
 import { useTranslation } from 'react-i18next'
 import profilePlaceholder from '../../resources/img/UserPlaceholder.jpg'
+import { useId } from 'react'
 
 export default function ImagePreview({
   label,
@@ -13,6 +14,7 @@ export default function ImagePreview({
   isRequired = false
 }) {
   const { t } = useTranslation()
+  const inputId = useId()
   const requiredLabel = (
     <span>
       {label}
@@ -45,7 +47,7 @@ export default function ImagePreview({
         </div>
         <div className={`mx-auto position-relative mt-3 ${disabled ? 'd-none' : ''}`}>
           <label
-            htmlFor="image"
+            htmlFor={inputId}
             className="btn btn-primary form-control"
             aria-label={t('localization.shared.upload_image')}>
             <Camera />
@@ -53,7 +55,7 @@ export default function ImagePreview({
           <input
             aria-label={t('localization.shared.upload_image')}
             type="file"
-            id="image"
+            id={inputId}
             className="image-preview__input top-0 start-0 position-absolute opacity-0 cursor-pointer"
             onChange={(event) => save(event.target.files[0])}
             accept="image/*"

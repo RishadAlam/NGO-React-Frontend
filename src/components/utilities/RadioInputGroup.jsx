@@ -3,6 +3,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+import { useMediaQuery } from '@mui/material'
+import { useId } from 'react'
 
 export default function RadioInputGroup({
   label,
@@ -13,6 +15,8 @@ export default function RadioInputGroup({
   isRequired = false,
   disabled = false
 }) {
+  const groupId = useId()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const requiredLabel = (
     <span>
       {label}
@@ -27,7 +31,7 @@ export default function RadioInputGroup({
         <RadioGroup
           row
           aria-label={typeof label === 'string' ? label : undefined}
-          name="row-radio-buttons-group"
+          name={mobile ? groupId : 'row-radio-buttons-group'}
           className="border rounded-2 px-2 w-100"
           ref={(el) => {
             if (el) {

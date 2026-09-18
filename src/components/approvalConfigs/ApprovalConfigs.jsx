@@ -11,9 +11,11 @@ import StaffPermissionSkeleton from '../loaders/skeleton/StaffPermissionSkeleton
 import AndroidSwitch from '../utilities/AndroidSwitch'
 import Button from '../utilities/Button'
 import TextInputField from '../utilities/TextInputField'
+import { useMediaQuery } from '@mui/material'
 
 export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprovals, mutate }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const [loading, setLoading] = useLoadingState({})
   const [error, setError] = useState({})
   const { accessToken } = useAuthDataValue()
@@ -96,6 +98,9 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
                           <div className="col-4 text-end text-success">
                             <div className="d-inline-block" style={{ maxWidth: '80px' }}>
                               <TextInputField
+                                ariaLabel={
+                                  mobile ? t(`approvals_config.${approval.meta_key}`) : undefined
+                                }
                                 defaultValue={tsNumbers(approval.meta_value)}
                                 setChange={(val) => setChange(approval.id, val)}
                               />
@@ -111,6 +116,9 @@ export default function ApprovalConfigs({ allApprovals, isLoading, setAllApprova
                           </div>
                           <div className="col-2 text-end text-success">
                             <AndroidSwitch
+                              ariaLabel={
+                                mobile ? t(`approvals_config.${approval.meta_key}`) : undefined
+                              }
                               value={approval.meta_value}
                               toggleStatus={(e) => setChange(approval.id, e.target.checked)}
                             />

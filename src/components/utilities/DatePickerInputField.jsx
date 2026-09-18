@@ -3,6 +3,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { bn, enUS } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
+import { useId } from 'react'
 
 export default function DatePickerInputField({
   label,
@@ -13,6 +14,8 @@ export default function DatePickerInputField({
   disabled = false
 }) {
   const { t, i18n } = useTranslation()
+  const inputId = useId()
+  const errorId = `${inputId}-error`
   const locale = (i18n.resolvedLanguage || i18n.language).startsWith('bn') ? bn : enUS
   const localeText = {
     previousMonth: t('localization.shared.date.previous_month'),
@@ -69,8 +72,22 @@ export default function DatePickerInputField({
         onChange={(newValue) => setChange(newValue)}
         error={error ? true : false}
         disabled={disabled ? true : false}
+        slotProps={{
+          textField: {
+            id: inputId,
+            inputProps: {
+              ...(error ? { 'aria-invalid': true } : {}),
+              'aria-required': isRequired,
+              'aria-describedby': error ? errorId : undefined
+            }
+          }
+        }}
       />
-      {error && <span className="text-danger my-3">{error}</span>}
+      {error && (
+        <span id={errorId} className="text-danger my-3">
+          {error}
+        </span>
+      )}
     </LocalizationProvider>
   )
 }

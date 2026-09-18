@@ -1,6 +1,6 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default function PasswordInputField({
@@ -12,6 +12,8 @@ export default function PasswordInputField({
   disabled = false
 }) {
   const { t } = useTranslation()
+  const inputId = useId()
+  const errorId = `${inputId}-error`
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (event) => event.preventDefault()
@@ -26,9 +28,10 @@ export default function PasswordInputField({
   return (
     <>
       <FormControl variant={variant || 'standard'} className="form-control">
-        <InputLabel htmlFor="standard-adornment-password">{requiredLabel}</InputLabel>
+        <InputLabel htmlFor={inputId}>{requiredLabel}</InputLabel>
         <Input
-          //   id="standard-adornment-password"
+          id={inputId}
+          inputProps={{ 'aria-describedby': error ? errorId : undefined, 'aria-required': true }}
           type={showPassword ? 'text' : 'password'}
           defaultValue={defaultValue}
           onChange={(e) => setChange(e.target.value)}
@@ -50,7 +53,11 @@ export default function PasswordInputField({
           }
         />
       </FormControl>
-      {error && <span className="text-danger my-3">{error}</span>}
+      {error && (
+        <span id={errorId} className="text-danger my-3">
+          {error}
+        </span>
+      )}
     </>
   )
 }

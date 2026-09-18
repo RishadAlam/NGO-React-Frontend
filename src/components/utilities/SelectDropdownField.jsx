@@ -3,6 +3,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import { useId } from 'react'
 
 export default function SelectDropdownField({
   label,
@@ -15,6 +16,9 @@ export default function SelectDropdownField({
   isRequired = false,
   disabled = false
 }) {
+  const inputId = useId()
+  const labelId = `${inputId}-label`
+  const errorId = `${inputId}-error`
   const requiredLabel = (
     <span>
       {label}
@@ -28,12 +32,12 @@ export default function SelectDropdownField({
       variant={variant || 'standard'}
       sx={{ m: 1, minWidth: 120 }}
       error={error ? true : false}>
-      <InputLabel id="demo-simple-select-error-label">
-        {isRequired ? requiredLabel : label}
-      </InputLabel>
+      <InputLabel id={labelId}>{isRequired ? requiredLabel : label}</InputLabel>
       <Select
-        labelId="demo-simple-select-error-label"
-        id="demo-simple-select-error"
+        labelId={labelId}
+        id={inputId}
+        aria-describedby={error ? errorId : undefined}
+        inputProps={{ 'aria-required': isRequired }}
         value={defaultValue || ''}
         label={isRequired ? requiredLabel : label}
         onChange={(e) => setChange(e.target.value)}
@@ -50,7 +54,7 @@ export default function SelectDropdownField({
             </MenuItem>
           ))}
       </Select>
-      <FormHelperText>{error}</FormHelperText>
+      <FormHelperText id={errorId}>{error}</FormHelperText>
     </FormControl>
   )
 }

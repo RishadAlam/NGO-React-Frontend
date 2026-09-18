@@ -3,6 +3,7 @@ import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import InputFieldSetup from '../_helper/InputFieldSetup'
 import AndroidSwitch from '../utilities/AndroidSwitch'
 import SelectBoxField from '../utilities/SelectBoxField'
+import { useMediaQuery } from '@mui/material'
 
 export default function TransactionConfigRow({
   config,
@@ -14,6 +15,9 @@ export default function TransactionConfigRow({
   error
 }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const controlLabel = (key) =>
+    mobile ? `${t(`common.${data_key}`)}: ${t(`common.${key}`)}` : undefined
   if (!config[data_key]?.account) {
     config[data_key]['account'] =
       accounts?.filter((account) => account.id === config[data_key].fee_store_acc_id)[0] || null
@@ -34,12 +38,14 @@ export default function TransactionConfigRow({
       <td>{t(`common.${data_key}`)}</td>
       <td>
         <AndroidSwitch
+          ariaLabel={controlLabel('approval_required')}
           value={Number(config[data_key]?.approval_required ?? false)}
           toggleStatus={(e) => setChange(e.target.checked, 'approval_required', data_key)}
         />
       </td>
       <td>
         <InputFieldSetup
+          ariaLabel={controlLabel('fee')}
           val={config[data_key]?.fee}
           name="fee"
           index={data_key}
@@ -50,6 +56,7 @@ export default function TransactionConfigRow({
       </td>
       <td>
         <SelectBoxField
+          ariaLabel={controlLabel('account')}
           label=""
           config={selectBoxConfig}
           error={error?.fee_store_acc_id}
@@ -58,6 +65,7 @@ export default function TransactionConfigRow({
       </td>
       <td>
         <InputFieldSetup
+          ariaLabel={controlLabel('min')}
           val={config[data_key]?.min}
           name="min"
           index={data_key}
@@ -68,6 +76,7 @@ export default function TransactionConfigRow({
       </td>
       <td>
         <InputFieldSetup
+          ariaLabel={controlLabel('max')}
           val={config[data_key]?.max}
           name="max"
           index={data_key}
