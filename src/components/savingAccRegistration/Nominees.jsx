@@ -180,30 +180,6 @@ export default function Nominees({
   )
 }
 
-const nomineeFields = {
-  name: '',
-  father_name: '',
-  husband_name: '',
-  mother_name: '',
-  nid: '',
-  dob: dateFormat(new Date(), 'yyyy-MM-dd'),
-  occupation: '',
-  relation: '',
-  gender: '',
-  primary_phone: '',
-  secondary_phone: '',
-  image: '',
-  signature: '',
-  address: {
-    street_address: '',
-    city: '',
-    word_no: '',
-    post_office: '',
-    police_station: '',
-    district: '',
-    division: ''
-  }
-}
 const nomineeFieldsErrs = {
   name: '',
   father_name: '',
