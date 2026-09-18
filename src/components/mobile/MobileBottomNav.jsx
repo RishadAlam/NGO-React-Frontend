@@ -7,6 +7,7 @@ import Home from '../../icons/Home'
 import Moon from '../../icons/Moon'
 import Search from '../../icons/Search'
 import Sun from '../../icons/Sun'
+import User from '../../icons/User'
 
 export default function MobileBottomNav() {
   const { t } = useTranslation()
@@ -64,6 +65,11 @@ export default function MobileBottomNav() {
           </span>
         </span>
       </button>
+      <NavLink to="/profile" className={linkClassName} aria-label={t('profile_box.profile')}>
+        <span className="mobile-bottom-nav__icon" aria-hidden="true">
+          <User size={22} />
+        </span>
+      </NavLink>
     </nav>
   )
 }

@@ -475,7 +475,7 @@
     left: 50%;
     z-index: 80;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(44px, 1fr)) 64px minmax(44px, 1fr);
     width: min(calc(100% - 20px), 410px);
     min-height: 64px;
     padding: 6px 8px;
@@ -3417,6 +3417,11 @@
 }
 
 @media screen and (max-width: 360px) {
+  .mobile-bottom-nav__item--services .mobile-bottom-nav__icon {
+    width: 44px;
+    height: 44px;
+  }
+
   .mobile-page-grid
     .row:not(.dashboard-grid):not(.card-section):not(.staff-permissions-grid):has(
       > [class*='col-xxl-2']

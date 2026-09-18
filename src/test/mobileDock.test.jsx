@@ -17,11 +17,11 @@ afterEach(() => {
 })
 
 it.each([
-  ['en', 'Dashboard', 'Search', 'All services', 'Theme', 'Language: Eng', 'BN'],
-  ['bn', 'ড্যাশবোর্ড', 'অনুসন্ধান করুন', 'সব সেবা', 'থিম', 'ভাষা: বাংলা', 'বাং']
+  ['en', 'Dashboard', 'Search', 'All services', 'Theme', 'Language: Eng', 'BN', 'Profile'],
+  ['bn', 'ড্যাশবোর্ড', 'অনুসন্ধান করুন', 'সব সেবা', 'থিম', 'ভাষা: বাংলা', 'বাং', 'প্রোফাইল']
 ])(
   'keeps the icon-only dock accessible in %s',
-  async (language, home, search, services, theme, languageLabel, badge) => {
+  async (language, home, search, services, theme, languageLabel, badge, profile) => {
     Cookies.set('i18next', language)
     Cookies.set('isDark', 'false')
     const i18n = createInstance()
@@ -41,7 +41,8 @@ it.each([
     for (const [name, path] of [
       [home, '/dashboard'],
       [search, '/search'],
-      [services, '/services']
+      [services, '/services'],
+      [profile, '/profile']
     ]) {
       const link = screen.getByRole('link', { name, exact: true })
       expect(link.getAttribute('href')).toBe(path)
@@ -55,5 +56,7 @@ it.each([
     const languageButton = screen.getByRole('button', { name: languageLabel, exact: true })
     expect(languageButton.textContent).toBe(`EN${badge}`)
     expect(languageButton.getAttribute('aria-pressed')).toBe(String(language === 'bn'))
+    fireEvent.click(screen.getByRole('link', { name: profile, exact: true }))
+    expect(screen.getByRole('link', { name: profile }).getAttribute('aria-current')).toBe('page')
   }
 )
