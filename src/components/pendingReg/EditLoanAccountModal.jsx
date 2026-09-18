@@ -14,7 +14,13 @@ import LoanAccRegFormFields from '../loanAccRegistration/LoanAccRegFormFields'
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditLoanAccountModal({ open, setOpen, accountData, mutate }) {
+export default function EditLoanAccountModal({
+  open,
+  setOpen,
+  accountData,
+  mutate,
+  mobilePermission = 'pending_loan_acc_update'
+}) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
@@ -46,7 +52,8 @@ export default function EditLoanAccountModal({ open, setOpen, accountData, mutat
       accessToken,
       null,
       'POST',
-      true
+      true,
+      { mobilePermission }
     )
       .then((response) => {
         setLoading({ ...loading, LoanAccRegForm: false })
@@ -159,7 +166,7 @@ const checkRequiredFields = (formFields, t, guarantor_reg_sign_is_required) => {
   }
 
   if (formFields.guarantors && Array.isArray(formFields.guarantors)) {
-    const guarantorsErr = formFields.guarantors.map((guarantor, key) => {
+    const guarantorsErr = formFields.guarantors.map((guarantor) => {
       const guarantorErrors = {}
 
       for (const guarantorField of [

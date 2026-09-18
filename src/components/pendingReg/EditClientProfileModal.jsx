@@ -16,7 +16,13 @@ import ClientRegistrationFormFields from '../clientRegistration/ClientRegistrati
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditClientProfileModal({ open, setOpen, profileData, mutate }) {
+export default function EditClientProfileModal({
+  open,
+  setOpen,
+  profileData,
+  mutate,
+  mobilePermission = 'pending_client_registration_update'
+}) {
   const [imageUri, setImageUri] = useState(profileData?.image_uri || profilePlaceholder)
   const [signatureURL, setSignatureURL] = useState(
     profileData?.signature_uri || SignaturePlaceholder
@@ -45,7 +51,16 @@ export default function EditClientProfileModal({ open, setOpen, profileData, mut
     const formData = setFormData(clientData)
     setLoading({ ...loading, clientRegistrationForm: false })
 
-    xFetch(`client/registration/${profileData.id}`, formData, null, accessToken, null, 'POST', true)
+    xFetch(
+      `client/registration/${profileData.id}`,
+      formData,
+      null,
+      accessToken,
+      null,
+      'POST',
+      true,
+      { mobilePermission }
+    )
       .then((response) => {
         setLoading({ ...loading, clientRegistrationForm: false })
         if (response?.success) {

@@ -90,6 +90,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           setOpen={setIsEditClientModalOpen}
           profileData={setProfileDataObj(data)}
           mutate={mutate}
+          mobilePermission="client_register_account_update"
         />
       )}
       {isEditSavingModalOpen && module === 'saving_account' && (
@@ -98,6 +99,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           setOpen={setIsEditSavingModalOpen}
           accountData={setSavingFields(data)}
           mutate={mutate}
+          mobilePermission="client_saving_account_update"
         />
       )}
       {isEditLoanModalOpen && module === 'loan_account' && (
@@ -106,6 +108,7 @@ export default function CRDButtonGrp({ module, data = {}, mutate }) {
           setOpen={setIsEditLoanModalOpen}
           accountData={setLoanAccFields(data)}
           mutate={mutate}
+          mobilePermission="client_loan_account_update"
         />
       )}
       {isCUModalOpen && module === 'register_account' && (

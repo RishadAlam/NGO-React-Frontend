@@ -1,9 +1,19 @@
 import toast from 'react-hot-toast'
 import xFetch from '../utilities/xFetch'
 import { passwordCheckAlert, permanentDeleteAlert } from './deleteAlert'
+import { collectionPermission } from './collectionPermission'
 import successAlert from './successAlert'
 
-export const collectionDelete = (action, id, t, accessToken, mutate, loading, setLoading) => {
+export const collectionDelete = (
+  action,
+  id,
+  t,
+  accessToken,
+  mutate,
+  loading,
+  setLoading,
+  scope
+) => {
   permanentDeleteAlert(t).then((result) => {
     if (!result.isConfirmed) {
       return
@@ -16,7 +26,18 @@ export const collectionDelete = (action, id, t, accessToken, mutate, loading, se
 
       const toasterLoading = toast.loading(`${t('common.delete')}...`)
       setLoading({ ...loading, collectionDelete: true })
-      xFetch(`collection/${action}/force-delete/${id}`, null, null, accessToken, null, 'DELETE')
+      xFetch(
+        `collection/${action}/force-delete/${id}`,
+        null,
+        null,
+        accessToken,
+        null,
+        'DELETE',
+        false,
+        {
+          mobilePermission: collectionPermission(action, scope, 'permanently_delete')
+        }
+      )
         .then((response) => {
           toast.dismiss(toasterLoading)
           setLoading({ ...loading, collectionDelete: false })

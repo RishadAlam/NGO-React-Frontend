@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/joy'
-import { Tooltip, Zoom } from '@mui/material'
+import { Tooltip, Zoom, useMediaQuery } from '@mui/material'
 import { create } from 'mutative'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -51,6 +51,7 @@ export default function SavingCollections() {
   const { t } = useTranslation()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const windowWidth = useWindowInnerWidthValue()
+  const isMobileHistory = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const {
     data: { data: collections } = [],
     mutate,
@@ -97,7 +98,16 @@ export default function SavingCollections() {
             <IconButton
               className="text-danger"
               onClick={() =>
-                collectionDelete('saving', id, t, accessToken, mutate, loading, setLoading)
+                collectionDelete(
+                  'saving',
+                  id,
+                  t,
+                  accessToken,
+                  mutate,
+                  loading,
+                  setLoading,
+                  'account'
+                )
               }>
               {<Trash size={20} />}
             </IconButton>
@@ -123,7 +133,7 @@ export default function SavingCollections() {
         )
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, windowWidth]
+    [t, windowWidth, isMobileHistory]
   )
 
   const setDateRangeField = (dateRanges) => {
@@ -137,7 +147,7 @@ export default function SavingCollections() {
     setCollectionData((prevData) =>
       create(prevData, (draftData) => {
         draftData.newCollection = false
-        draftData.saving_account_id = collection.id
+        draftData.saving_account_id = isMobileHistory ? collection.saving_account_id : collection.id
         draftData.field_id = collection.field_id
         draftData.center_id = collection.center_id
         draftData.category_id = collection.category_id
@@ -171,6 +181,7 @@ export default function SavingCollections() {
           collectionData={collectionData}
           mutate={mutate}
           isRegular={false}
+          scope="account"
         />
       )}
       <div className="text-end my-3">

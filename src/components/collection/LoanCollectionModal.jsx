@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
+import { collectionPermission } from '../../helper/collectionPermission'
 import { checkPermission } from '../../helper/checkPermission'
 import { defaultNameCheck } from '../../helper/defaultNameCheck'
 import { isEmpty } from '../../helper/isEmpty'
@@ -26,7 +27,8 @@ export default function LoanCollectionModal({
   setOpen,
   collectionData,
   mutate,
-  isRegular = true
+  isRegular = true,
+  scope = isRegular ? 'regular' : 'pending'
 }) {
   const { t } = useTranslation()
   const { accessToken, permissions: authPermissions } = useAuthDataValue()
@@ -34,9 +36,12 @@ export default function LoanCollectionModal({
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
   const isMobileCollection = useMediaQuery('(max-width:767.98px)', { noSsr: true })
-  const canSubmit = collection?.newCollection
-    ? isRegular && authPermissions?.includes('permission_to_do_loan_collection')
-    : authPermissions?.includes(`${isRegular ? 'regular' : 'pending'}_loan_collection_update`)
+  const submitPermission = collectionPermission(
+    'loan',
+    scope,
+    collection?.newCollection ? 'create' : 'update'
+  )
+  const canSubmit = Boolean(submitPermission && authPermissions?.includes(submitPermission))
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
@@ -70,7 +75,9 @@ export default function LoanCollectionModal({
     const formData = setFormData(collection, isRegular)
     setLoading({ ...loading, collectionForm: true })
 
-    xFetch(endpoint, formData, null, accessToken, null, 'POST', true)
+    xFetch(endpoint, formData, null, accessToken, null, 'POST', true, {
+      mobilePermission: submitPermission
+    })
       .then((response) => {
         setLoading({ ...loading, collectionForm: false })
         if (response?.success) {

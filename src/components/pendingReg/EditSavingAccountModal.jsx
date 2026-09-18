@@ -14,7 +14,13 @@ import SavingAccRegFormFields from '../savingAccRegistration/SavingAccRegFormFie
 import Button from '../utilities/Button'
 import ModalPro from '../utilities/ModalPro'
 
-export default function EditSavingAccountModal({ open, setOpen, accountData, mutate }) {
+export default function EditSavingAccountModal({
+  open,
+  setOpen,
+  accountData,
+  mutate,
+  mobilePermission = 'pending_saving_acc_update'
+}) {
   const { t } = useTranslation()
   const { accessToken } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
@@ -46,7 +52,8 @@ export default function EditSavingAccountModal({ open, setOpen, accountData, mut
       accessToken,
       null,
       'POST',
-      true
+      true,
+      { mobilePermission }
     )
       .then((response) => {
         setLoading({ ...loading, SavingAccRegForm: false })
@@ -159,7 +166,7 @@ const checkRequiredFields = (formFields, t, nominee_reg_sign_is_required) => {
   }
 
   if (formFields?.nominees && Array.isArray(formFields.nominees)) {
-    const nomineesErr = formFields.nominees.map((nominee, key) => {
+    const nomineesErr = formFields.nominees.map((nominee) => {
       const nomineeErrors = {}
 
       for (const nomineeField of [

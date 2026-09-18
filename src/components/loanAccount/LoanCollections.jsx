@@ -98,7 +98,7 @@ export default function LoanCollections() {
             <IconButton
               className="text-danger"
               onClick={() =>
-                collectionDelete('loan', id, t, accessToken, mutate, loading, setLoading)
+                collectionDelete('loan', id, t, accessToken, mutate, loading, setLoading, 'account')
               }>
               {<Trash size={20} />}
             </IconButton>
@@ -183,6 +183,7 @@ export default function LoanCollections() {
           collectionData={collectionData}
           mutate={mutate}
           isRegular={false}
+          scope="account"
         />
       )}
       <div className="text-end my-3">

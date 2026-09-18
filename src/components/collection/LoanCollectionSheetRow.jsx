@@ -107,7 +107,16 @@ function LoanCollectionSheetRow({
             disabled={isMobileSheet ? Boolean(loading?.collectionDelete) : undefined}
             onClick={() =>
               collection?.id &&
-              collectionDelete('loan', collection?.id, t, accessToken, mutate, loading, setLoading)
+              collectionDelete(
+                'loan',
+                collection?.id,
+                t,
+                accessToken,
+                mutate,
+                loading,
+                setLoading,
+                isRegular ? 'regular' : 'pending'
+              )
             }>
             {<Trash size={20} />}
           </IconButton>
@@ -182,6 +191,7 @@ function LoanCollectionSheetRow({
       collectionData={collectionData}
       mutate={mutate}
       isRegular={isRegular}
+      scope={isRegular ? 'regular' : 'pending'}
     />
   )
 

@@ -6,6 +6,7 @@ import { useAuthDataValue } from '../../atoms/authAtoms'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import { checkPermission } from '../../helper/checkPermission'
 import { getSavingEstimateDeposit } from '../../helper/collectionEstimate'
+import { collectionPermission } from '../../helper/collectionPermission'
 import Save from '../../icons/Save'
 import tsNumbers from '../../libs/tsNumbers'
 import xFetch from '../../utilities/xFetch'
@@ -27,10 +28,12 @@ export default function SavingCollectionSheetFooter({
     () => calculateDepositSum(center?.saving_account),
     [center]
   )
-  const canApprove = checkPermission(
-    `${isRegular ? 'regular' : 'pending'}_saving_collection_approval`,
-    authPermissions
+  const approvalPermission = collectionPermission(
+    'saving',
+    isRegular ? 'regular' : 'pending',
+    'approval'
   )
+  const canApprove = checkPermission(approvalPermission, authPermissions)
   const remainingSum = Math.max(Number(estimateSum || 0) - Number(depositSum || 0), 0)
 
   const approved = (event) => {
@@ -40,7 +43,9 @@ export default function SavingCollectionSheetFooter({
 
     const toasterLoading = toast.loading(`${t('common.approval')}...`)
     setLoading({ ...loading, collectionForm: true })
-    xFetch(`collection/saving/approved`, { approvedList }, null, accessToken, null, 'POST')
+    xFetch(`collection/saving/approved`, { approvedList }, null, accessToken, null, 'POST', false, {
+      mobilePermission: approvalPermission
+    })
       .then((response) => {
         toast.dismiss(toasterLoading)
         setLoading({ ...loading, collectionForm: false })

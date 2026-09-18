@@ -1,6 +1,9 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { toast } from 'react-hot-toast'
+import { getRecoil } from 'recoil-nexus'
+import { authDataState } from '../atoms/authAtoms'
+import { resolveMobileMutationPermissions } from '../helper/mobileMutationPermissions'
 
 export default async function xFetch(
   endpoint,
@@ -9,7 +12,8 @@ export default async function xFetch(
   accessToken = null,
   queryParam = null,
   method = 'GET',
-  multipart = false
+  multipart = false,
+  permissionContext = {}
 ) {
   const uri = new URL(`/api/${endpoint}`, import.meta.env.VITE_BASE_URI)
   // append query params in url
@@ -45,6 +49,33 @@ export default async function xFetch(
   // AbortController Signal
   if (signal) {
     config.signal = signal
+  }
+
+  // Read the current session immediately before dispatch, not the session that
+  // opened a form or a delayed password/deletion confirmation.
+  if (window.matchMedia('(max-width:767.98px)').matches) {
+    const required = resolveMobileMutationPermissions(endpoint, data, method, permissionContext)
+    if (required !== null) {
+      let auth
+      try {
+        auth = getRecoil(authDataState)
+      } catch (_error) {
+        // No current auth snapshot is not authorization to mutate.
+      }
+      if (
+        !required.length ||
+        !Array.isArray(auth?.permissions) ||
+        !required.every((permission) => auth.permissions.includes(permission)) ||
+        !auth.accessToken ||
+        auth.accessToken !== accessToken
+      ) {
+        return Promise.reject({
+          status: 403,
+          success: false,
+          message: 'This action is unauthorized.'
+        })
+      }
+    }
   }
 
   const response = await axios(config)

@@ -112,7 +112,8 @@ function SavingCollectionSheetRow({
                 accessToken,
                 mutate,
                 loading,
-                setLoading
+                setLoading,
+                isRegular ? 'regular' : 'pending'
               )
             }>
             {<Trash size={20} />}
@@ -164,6 +165,7 @@ function SavingCollectionSheetRow({
       collectionData={collectionData}
       mutate={mutate}
       isRegular={isRegular}
+      scope={isRegular ? 'regular' : 'pending'}
     />
   )
 
