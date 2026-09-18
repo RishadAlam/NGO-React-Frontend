@@ -104,6 +104,7 @@ function LoanCollectionSheetRow({
           disabled={loading?.collectionDelete || false}>
           <IconButton
             className="text-danger"
+            disabled={isMobileSheet ? Boolean(loading?.collectionDelete) : undefined}
             onClick={() =>
               collection?.id &&
               collectionDelete('loan', collection?.id, t, accessToken, mutate, loading, setLoading)
@@ -116,6 +117,7 @@ function LoanCollectionSheetRow({
   )
 
   const collectionEdit = (collection, account) => {
+    if (isMobileSheet && !canEditCollection) return
     setCollectionData((prevData) =>
       create(prevData, (draftData) => {
         draftData.loan_account_id = account.id
@@ -409,13 +411,7 @@ function LoanCollectionSheetRow({
               </div>
               <CollectionSheetMobileDetails fields={mobileDetailFields} />
             </article>
-            {checkPermissions(
-              [
-                isRegular && 'permission_to_do_loan_collection',
-                `${isRegular ? 'regular' : 'pending'}_loan_collection_update`
-              ],
-              authPermissions
-            ) && collectionModal()}
+            {openCollectionModal && canEditCollection && collectionModal()}
           </td>
         </tr>
       )}

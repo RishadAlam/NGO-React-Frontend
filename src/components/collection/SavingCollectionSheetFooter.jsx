@@ -35,6 +35,7 @@ export default function SavingCollectionSheetFooter({
 
   const approved = (event) => {
     event.preventDefault()
+    if (isMobileSheet && (!canApprove || loading?.collectionForm)) return
     if (approvedList.length === 0) return
 
     const toasterLoading = toast.loading(`${t('common.approval')}...`)

@@ -34,6 +34,9 @@ export default function LoanCollectionModal({
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
   const isMobileCollection = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const canSubmit = collection?.newCollection
+    ? isRegular && authPermissions?.includes('permission_to_do_loan_collection')
+    : authPermissions?.includes(`${isRegular ? 'regular' : 'pending'}_loan_collection_update`)
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
@@ -51,7 +54,8 @@ export default function LoanCollectionModal({
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (!isRegular && !collection.newCollection) closeModal()
+    if (isMobileCollection && (!canSubmit || loading?.collectionForm)) return
+    if (!isMobileCollection && !isRegular && !collection.newCollection) closeModal()
 
     const validationErrors = checkRequiredFields(collection, t)
     if (!isEmptyObject(validationErrors)) {
@@ -144,7 +148,10 @@ export default function LoanCollectionModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={closeModal}>
+      <ModalPro
+        open={open && (!isMobileCollection || Boolean(canSubmit))}
+        handleClose={closeModal}
+        label={t(collection?.newCollection ? 'common.collect_money' : 'common.edit_collection')}>
         <form className="collection-entry-form" onSubmit={onSubmit}>
           <div className="card collection-entry-card">
             <div className="card-header">
@@ -165,12 +172,22 @@ export default function LoanCollectionModal({
                 ) : (
                   <b className="text-uppercase">{t('menu.collection.Loan_Collection')}</b>
                 )}
-                <Button
-                  className={'text-danger p-0'}
-                  loading={false}
-                  endIcon={<XCircle size={24} />}
-                  onclick={closeModal}
-                />
+                {isMobileCollection ? (
+                  <button
+                    type="button"
+                    className="btn text-danger p-0"
+                    aria-label={t('mobile.close_dialog')}
+                    onClick={closeModal}>
+                    <XCircle size={24} />
+                  </button>
+                ) : (
+                  <Button
+                    className={'text-danger p-0'}
+                    loading={false}
+                    endIcon={<XCircle size={24} />}
+                    onclick={closeModal}
+                  />
+                )}
               </div>
             </div>
             <div className="card-body">

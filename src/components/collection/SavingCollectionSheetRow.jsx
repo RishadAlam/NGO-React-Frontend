@@ -102,6 +102,7 @@ function SavingCollectionSheetRow({
           disabled={loading?.collectionDelete || false}>
           <IconButton
             className="text-danger"
+            disabled={isMobileSheet ? Boolean(loading?.collectionDelete) : undefined}
             onClick={() =>
               collection?.id &&
               collectionDelete(
@@ -122,6 +123,7 @@ function SavingCollectionSheetRow({
   )
 
   const collectionEdit = (collection, account) => {
+    if (isMobileSheet && !canEditCollection) return
     setCollectionData((prevData) =>
       create(prevData, (draftData) => {
         draftData.saving_account_id = account.id
@@ -353,13 +355,7 @@ function SavingCollectionSheetRow({
               </div>
               <CollectionSheetMobileDetails fields={mobileDetailFields} />
             </article>
-            {checkPermissions(
-              [
-                isRegular && 'permission_to_do_saving_collection',
-                `${isRegular ? 'regular' : 'pending'}_saving_collection_update`
-              ],
-              authPermissions
-            ) && collectionModal()}
+            {openCollectionModal && canEditCollection && collectionModal()}
           </td>
         </tr>
       )}

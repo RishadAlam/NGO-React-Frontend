@@ -28,11 +28,14 @@ export default function SavingCollectionModal({
   isRegular = true
 }) {
   const { t } = useTranslation()
-  const { accessToken } = useAuthDataValue()
+  const { accessToken, permissions: authPermissions } = useAuthDataValue()
   const [loading, setLoading] = useLoadingState({})
   const [errors, setErrors] = useState({})
   const [collection, setCollection] = useState(collectionData)
   const isMobileCollection = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const canSubmit = collection?.newCollection
+    ? isRegular && authPermissions?.includes('permission_to_do_saving_collection')
+    : authPermissions?.includes(`${isRegular ? 'regular' : 'pending'}_saving_collection_update`)
   const { data: { data: accounts = [] } = [] } = useFetch({ action: 'accounts/active' })
 
   useEffect(() => {
@@ -50,7 +53,8 @@ export default function SavingCollectionModal({
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (!isRegular && !collection.newCollection) closeModal()
+    if (isMobileCollection && (!canSubmit || loading?.collectionForm)) return
+    if (!isMobileCollection && !isRegular && !collection.newCollection) closeModal()
 
     const validationErrors = checkRequiredFields(collection, t)
     if (!isEmptyObject(validationErrors)) {
@@ -137,7 +141,10 @@ export default function SavingCollectionModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={closeModal}>
+      <ModalPro
+        open={open && (!isMobileCollection || Boolean(canSubmit))}
+        handleClose={closeModal}
+        label={t(collection?.newCollection ? 'common.collect_money' : 'common.edit_collection')}>
         <form className="collection-entry-form" onSubmit={onSubmit}>
           <div className="card collection-entry-card">
             <div className="card-header">
@@ -158,12 +165,22 @@ export default function SavingCollectionModal({
                 ) : (
                   <b className="text-uppercase">{t('menu.collection.Saving_Collection')}</b>
                 )}
-                <Button
-                  className={'text-danger p-0'}
-                  loading={false}
-                  endIcon={<XCircle size={24} />}
-                  onclick={closeModal}
-                />
+                {isMobileCollection ? (
+                  <button
+                    type="button"
+                    className="btn text-danger p-0"
+                    aria-label={t('mobile.close_dialog')}
+                    onClick={closeModal}>
+                    <XCircle size={24} />
+                  </button>
+                ) : (
+                  <Button
+                    className={'text-danger p-0'}
+                    loading={false}
+                    endIcon={<XCircle size={24} />}
+                    onclick={closeModal}
+                  />
+                )}
               </div>
             </div>
             <div className="card-body">
