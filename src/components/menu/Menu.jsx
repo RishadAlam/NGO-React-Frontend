@@ -5,20 +5,25 @@ import Home from '../../icons/Home'
 import { mainMenu } from '../../resources/staticData/mainMenu'
 import './Menu.scss'
 import NavItem from './NavItem'
+import { useAuthDataValue } from '../../atoms/authAtoms'
 
-function Menu({ setMobileMenuClosed, disableScroll = false, dashboardPath = '/' }) {
+const NO_PERMISSIONS = []
+
+function Menu({ setMobileMenuClosed, disableScroll = false, dashboardPath = '/', mobile = false }) {
   const { t } = useTranslation()
-  const menu = useMemo(() => mainMenu(t), [t])
+  const { permissions } = useAuthDataValue()
+  const mobilePermissions = mobile ? permissions || NO_PERMISSIONS : undefined
+  const menu = useMemo(() => mainMenu(t, { mobilePermissions }), [t, mobilePermissions])
   const sections = useMemo(
     () =>
       Object.entries(menu)
         .map(([sectionLabel, sectionItems], sectionIndex) => ({
-          sectionId: `section-${sectionIndex}`,
+          sectionId: `${mobile ? 'mobile-' : ''}section-${sectionIndex}`,
           sectionLabel,
           sectionItems: sectionItems.filter((item) => item.view)
         }))
         .filter((section) => section.sectionItems.length > 0),
-    [menu]
+    [menu, mobile]
   )
   const [dropDowns, setDropDowns] = useState({})
 

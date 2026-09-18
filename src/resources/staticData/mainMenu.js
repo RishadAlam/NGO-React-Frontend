@@ -2,8 +2,15 @@ import { getRecoil } from 'recoil-nexus'
 import { authDataState } from '../../atoms/authAtoms'
 import { checkPermission, checkPermissions } from '../../helper/checkPermission'
 
-export const mainMenu = (t) => {
-  const { permissions } = getRecoil(authDataState)
+// Mobile callers supply their subscribed permission snapshot. The default keeps
+// the existing desktop menu contract unchanged.
+export const mainMenu = (t, { mobilePermissions } = {}) => {
+  const isMobileMenu = mobilePermissions !== undefined
+  const permissions = isMobileMenu
+    ? Array.isArray(mobilePermissions)
+      ? mobilePermissions
+      : []
+    : getRecoil(authDataState).permissions
 
   return {
     [t('menu.categories.Basic')]: [
@@ -12,7 +19,12 @@ export const mainMenu = (t) => {
         label: t('menu.label.registration'),
         path: '',
         icon: 'UserPlus',
-        view: checkPermissions(['client_registration'], permissions),
+        view: checkPermissions(
+          isMobileMenu
+            ? ['client_registration', 'saving_acc_registration', 'loan_acc_registration']
+            : ['client_registration'],
+          permissions
+        ),
         subMenu: [
           {
             id: 'reg1',
@@ -372,7 +384,21 @@ export const mainMenu = (t) => {
         label: t('menu.label.account_management'),
         path: '',
         icon: 'BankTransfer',
-        view: checkPermissions(['account_list_view'], permissions),
+        view: checkPermissions(
+          isMobileMenu
+            ? [
+                'account_list_view',
+                'account_transaction_list_view',
+                'income_list_view',
+                'expense_list_view',
+                'account_transfer_list_view',
+                'account_withdrawal_list_view',
+                'income_category_list_view',
+                'expense_category_list_view'
+              ]
+            : ['account_list_view'],
+          permissions
+        ),
         subMenu: [
           {
             id: 'acc1',
@@ -504,7 +530,12 @@ export const mainMenu = (t) => {
         label: t('menu.label.settings_and_privacy'),
         path: '',
         icon: 'Settings',
-        view: checkPermissions(['app_settings', 'approvals_config'], permissions),
+        view: checkPermissions(
+          isMobileMenu
+            ? ['app_settings', 'approvals_config', 'categories_config']
+            : ['app_settings', 'approvals_config'],
+          permissions
+        ),
         subMenu: [
           {
             id: 'config1',

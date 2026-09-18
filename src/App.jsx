@@ -6,6 +6,7 @@ import { useAppSettingsValue } from './atoms/appSettingsAtoms'
 import ErrorFallback from './components/_helper/errorFallback/ErrorFallback'
 import Layout from './components/layouts/Layout'
 import MainLayout from './components/layouts/MainLayout'
+import MobileAccessScope from './components/mobile/MobileAccessScope'
 import RequirePermissions from './components/layouts/RequirePermissions'
 import Loader from './components/loaders/Loader'
 import AccountVerification from './pages/accountVerification/AccountVerification'
@@ -118,7 +119,13 @@ export default function App() {
           </Route>
 
           {/* Authenticate Routes */}
-          <Route path="/" element={<MainLayout />}>
+          <Route
+            path="/"
+            element={
+              <MobileAccessScope>
+                <MainLayout />
+              </MobileAccessScope>
+            }>
             <Route index element={<DefaultLandingPage />} />
             <Route path="dashboard" element={<Dashboard pageTitle="menu.dashboard" />} />
             <Route path="services" element={null} />
