@@ -66,7 +66,15 @@ function mount(element, width = 390, fallback = {}) {
 }
 function Stateful({ Component }) {
   const [loading, setLoading] = useState({})
-  return <Component userId={7} loading={loading} setLoading={setLoading} setStep={() => {}} />
+  return (
+    <Component
+      userId={7}
+      resetToken={'a'.repeat(64)}
+      loading={loading}
+      setLoading={setLoading}
+      setStep={() => {}}
+    />
+  )
 }
 it.each([390, 768])('normalizes pasted Bangla OTP only on mobile (%i)', (width) => {
   mount(<Stateful Component={OtpVerification} />, width)
@@ -92,7 +100,7 @@ it('normalizes typed Bangla OTP and preserves the verification payload', async (
   fireEvent.submit(container.querySelector('form'))
   await screen.findByText('Invalid code')
   expect(xFetch.mock.calls[0][0]).toBe('account-verification')
-  expect(xFetch.mock.calls[0][1]).toEqual({ otp: '123456' })
+  expect(xFetch.mock.calls[0][1]).toEqual({ otp: '123456', user_id: 7, purpose: 'verification' })
   expect(xFetch.mock.calls[0][5]).toBe('POST')
 })
 it.each([Login, ForgotPassword])(

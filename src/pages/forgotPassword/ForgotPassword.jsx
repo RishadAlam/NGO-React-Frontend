@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { useMediaQuery } from '@mui/material'
 import { create } from 'mutative'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -27,7 +26,6 @@ const MailIcon = () => (
 )
 
 export default function ForgotPassword() {
-  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const pending = useRef(false)
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -49,37 +47,34 @@ export default function ForgotPassword() {
 
   const emailSubmit = (event) => {
     event.preventDefault()
-    if (mobile && pending.current) return
+    if (pending.current) return
     if (email === '') {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-    if (mobile) pending.current = true
+    pending.current = true
     setLoading({ ...loading, email: true })
-    const controller = new AbortController()
-    xFetch('forget-password', { email }, null, controller.signal, null, 'POST')
+    xFetch('forget-password', { email }, null, null, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, email: false })
-        if (mobile) pending.current = false
+        pending.current = false
         if (response?.success) {
           toast.success(response.message)
-          return navigate('/account-verification', { state: { id: response.id } })
+          return navigate('/account-verification', {
+            state: { id: response.id, purpose: 'recovery' }
+          })
         }
         setError(response?.errors || response)
       })
       .catch((error) => {
-        if (!mobile) throw error
-        if (mobile) {
-          setLoading({ ...loading, email: false })
-          if (mobile) pending.current = false
-          setError(
-            error?.errors || {
-              message: error?.message || t('localization.shared.unexpected_error')
-            }
-          )
-        }
+        setLoading({ ...loading, email: false })
+        pending.current = false
+        setError(
+          error?.errors || {
+            message: error?.message || t('localization.shared.unexpected_error')
+          }
+        )
       })
-    if (!mobile) controller.abort()
   }
 
   return (
@@ -123,9 +118,8 @@ export default function ForgotPassword() {
           type="submit"
           className="auth-btn"
           disabled={
-            (mobile
-              ? Object.keys(error).some((key) => !['message', 'status', 'success'].includes(key))
-              : Object.keys(error).length) || loading?.email
+            Object.keys(error).some((key) => !['message', 'status', 'success'].includes(key)) ||
+            loading?.email
           }>
           {t('auth.send_otp', 'Send Reset OTP')}
           {loading?.email && <LoaderSm size={18} clr="#fff" />}

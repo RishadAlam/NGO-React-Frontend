@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLoadingState } from '../../atoms/loaderAtoms'
 import AuthShell from '../../components/_helper/AuthShell'
 import OtpVerification from '../../components/otpVerification/OtpVerification'
@@ -9,7 +9,10 @@ import ResetPassword from '../../components/resetPassword/ResetPassword'
 export default function AccountVerification() {
   const { t } = useTranslation()
   const location = useLocation()
+  const navigate = useNavigate()
   const userId = location?.state?.id
+  const purpose = location?.state?.purpose === 'recovery' ? 'recovery' : 'verification'
+  const [resetToken, setResetToken] = useState(null)
   const message = location?.state?.message || null
   const [loading, setLoading] = useLoadingState({})
   const [step, setStep] = useState(1)
@@ -35,13 +38,23 @@ export default function AccountVerification() {
       {isOtp ? (
         <OtpVerification
           userId={userId}
-          setStep={setStep}
+          purpose={purpose}
+          onVerified={(response) => {
+            if (purpose === 'verification') return navigate('/login', { replace: true })
+            setResetToken(response.reset_token)
+            setStep(2)
+          }}
           loading={loading}
           setLoading={setLoading}
           message={message}
         />
       ) : (
-        <ResetPassword userId={userId} loading={loading} setLoading={setLoading} />
+        <ResetPassword
+          userId={userId}
+          resetToken={resetToken}
+          loading={loading}
+          setLoading={setLoading}
+        />
       )}
     </AuthShell>
   )

@@ -266,16 +266,21 @@ describe('Temporary session lifetime and recovery', () => {
   it('allows retrying a stalled return request before the visit expires', async () => {
     vi.useFakeTimers()
     mountBanner()
-    axios.mockImplementation(({ timeout }) => new Promise((_resolve, reject) => {
-      if (timeout) setTimeout(() => reject({ request: {}, code: 'ECONNABORTED' }), timeout)
-    }))
+    axios.mockImplementation(
+      ({ timeout }) =>
+        new Promise((_resolve, reject) => {
+          if (timeout) setTimeout(() => reject({ request: {}, code: 'ECONNABORTED' }), timeout)
+        })
+    )
     fireEvent.click(screen.getByRole('button', { name: 'impersonation.return' }))
     await act(async () => vi.advanceTimersByTimeAsync(10000))
     expect(screen.getByRole('button', { name: 'impersonation.return' }).disabled).toBe(false)
     expect(screen.getByRole('alert').textContent).toBe('impersonation.return_failed')
     expect(getImpersonationSession().accessToken).toBe('temporary')
     axios.mockResolvedValue({ data: { success: true } })
-    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'impersonation.return' })))
+    await act(async () =>
+      fireEvent.click(screen.getByRole('button', { name: 'impersonation.return' }))
+    )
     expect(getImpersonationSession()).toBeNull()
   })
 

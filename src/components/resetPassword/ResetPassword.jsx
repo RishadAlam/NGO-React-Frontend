@@ -27,7 +27,7 @@ const LockIcon = () => (
   </svg>
 )
 
-export default function ResetPassword({ userId, loading, setLoading }) {
+export default function ResetPassword({ userId, resetToken, loading, setLoading }) {
   const { t } = useTranslation()
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const pending = useRef(false)
@@ -72,29 +72,29 @@ export default function ResetPassword({ userId, loading, setLoading }) {
 
   const submitPassword = (event) => {
     event.preventDefault()
-    if (mobile && pending.current) return
-    if (!inputs.password || !inputs.confirmPassword || !userId) {
+    if (pending.current) return
+    if (!inputs.password || !inputs.confirmPassword || !userId || !resetToken) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-    if (mobile) pending.current = true
+    pending.current = true
     setLoading({ ...loading, resetPassword: true })
-    const controller = new AbortController()
     xFetch(
       'reset-password',
       {
         user_id: userId,
+        reset_token: resetToken,
         new_password: inputs.password,
         confirm_password: inputs.confirmPassword
       },
       null,
-      controller.signal,
+      null,
       null,
       'PUT'
     )
       .then((response) => {
         setLoading({ ...loading, resetPassword: false })
-        if (mobile) pending.current = false
+        pending.current = false
         if (response?.success) {
           toast.success(response.message)
           return (window.location.href = '/login')
@@ -102,18 +102,14 @@ export default function ResetPassword({ userId, loading, setLoading }) {
         SetErrors(response?.errors || response)
       })
       .catch((error) => {
-        if (!mobile) throw error
-        if (mobile) {
-          setLoading({ ...loading, resetPassword: false })
-          if (mobile) pending.current = false
-          SetErrors(
-            error?.errors || {
-              message: error?.message || t('localization.shared.unexpected_error')
-            }
-          )
-        }
+        setLoading({ ...loading, resetPassword: false })
+        pending.current = false
+        SetErrors(
+          error?.errors || {
+            message: error?.message || t('localization.shared.unexpected_error')
+          }
+        )
       })
-    if (!mobile) controller.abort()
   }
 
   const Rule = ({ ok, label }) => (
@@ -221,9 +217,8 @@ export default function ResetPassword({ userId, loading, setLoading }) {
         type="submit"
         className="auth-btn"
         disabled={
-          (mobile
-            ? Object.keys(errors).some((key) => !['message', 'status', 'success'].includes(key))
-            : Object.keys(errors).length) || loading?.resetPassword
+          Object.keys(errors).some((key) => !['message', 'status', 'success'].includes(key)) ||
+          loading?.resetPassword
         }>
         {t('auth.reset_password_btn', 'Reset password')}
         {loading?.resetPassword && <LoaderSm size={18} clr="#fff" />}

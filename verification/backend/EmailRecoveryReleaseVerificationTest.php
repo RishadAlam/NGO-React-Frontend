@@ -117,7 +117,7 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
         $user = $this->syntheticUser('valid-code', false);
         $this->code($user);
         $this->code($user, '345678');
-        $this->postJson('/api/account-verification', ['otp' => '234567'])
+        $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => '234567', 'purpose' => 'verification'])
             ->assertOk()->assertJsonPath('success', true);
         $this->assertNotNull($user->fresh()->email_verified_at);
         $this->assertDatabaseMissing('users_verifies', ['user_id' => $user->id]);
@@ -127,7 +127,7 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
     {
         $user = $this->syntheticUser('incorrect-code', false);
         $otp = $this->code($user);
-        $this->postJson('/api/account-verification', ['otp' => '999999'])
+        $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => '999999', 'purpose' => 'verification'])
             ->assertStatus(202)->assertJsonPath('success', false);
         $this->assertNull($user->fresh()->email_verified_at);
         $this->assertDatabaseHas('users_verifies', ['id' => $otp->id]);
@@ -137,7 +137,7 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
     {
         $user = $this->syntheticUser('expired-code', false);
         $this->code($user, '234567', -1);
-        $this->postJson('/api/account-verification', ['otp' => '234567'])
+        $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => '234567', 'purpose' => 'verification'])
             ->assertStatus(202)->assertJsonPath('success', false);
         $this->assertNull($user->fresh()->email_verified_at);
     }
@@ -146,9 +146,9 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
     {
         $user = $this->syntheticUser('reused-code', false);
         $this->code($user);
-        $this->postJson('/api/account-verification', ['otp' => '234567'])
+        $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => '234567', 'purpose' => 'verification'])
             ->assertOk()->assertJsonPath('success', true);
-        $this->postJson('/api/account-verification', ['otp' => '234567'])
+        $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => '234567', 'purpose' => 'verification'])
             ->assertStatus(202)->assertJsonPath('success', false);
     }
 
@@ -159,9 +159,9 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
         $this->postJson('/api/forget-password', ['email' => $user->email])
             ->assertOk()->assertJsonPath('success', true);
         $otp = UsersVerify::where('user_id', $user->id)->sole();
-        $this->postJson('/api/account-verification', ['otp' => $otp->otp])
+        $verified = $this->postJson('/api/account-verification', ['user_id' => $user->id, 'otp' => $otp->otp, 'purpose' => 'recovery'])
             ->assertOk()->assertJsonPath('success', true);
-        $this->putJson('/api/reset-password', $this->resetPayload($user))
+        $this->putJson('/api/reset-password', array_merge($this->resetPayload($user), ['reset_token' => $verified->json('reset_token')]))
             ->assertOk()->assertJsonPath('success', true);
         $this->assertTrue(Hash::check(self::NEW_PASSWORD, $user->fresh()->password));
         $this->assertDatabaseMissing('personal_access_tokens', ['id' => $tokenId]);
@@ -215,7 +215,7 @@ final class EmailRecoveryReleaseVerificationTest extends TestCase
         $hash = $victim->password;
         $tokenId = $victim->createToken('synthetic-cross-account-token')->accessToken->id;
         $this->code($owner);
-        $this->postJson('/api/account-verification', ['otp' => '234567'])
+        $this->postJson('/api/account-verification', ['user_id' => $owner->id, 'otp' => '234567', 'purpose' => 'verification'])
             ->assertOk()->assertJsonPath('success', true);
         $response = $this->putJson('/api/reset-password', $this->resetPayload($victim));
         $actual = [

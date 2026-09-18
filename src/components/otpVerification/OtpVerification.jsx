@@ -9,7 +9,15 @@ import xFetch from '../../utilities/xFetch'
 const OTP_LEN = 6
 const RESEND_COOLDOWN = 30
 
-export default function OtpVerification({ userId, setStep, loading, setLoading, message = null }) {
+export default function OtpVerification({
+  userId,
+  setStep,
+  loading,
+  setLoading,
+  message = null,
+  purpose = 'verification',
+  onVerified
+}) {
   const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const pending = useRef(false)
   const { t, i18n } = useTranslation()
@@ -69,48 +77,48 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
 
   const otpSubmit = (event) => {
     event.preventDefault()
-    if (mobile && pending.current) return
+    if (pending.current) return
     if (otp.length !== OTP_LEN) {
       toast.error(t('common_validation.required_fields_are_empty'))
       return
     }
-    if (mobile) pending.current = true
+    pending.current = true
     setLoading({ ...loading, otp: true })
-    const controller = new AbortController()
-    xFetch('account-verification', { otp }, null, controller.signal, null, 'POST')
+    xFetch('account-verification', { otp, user_id: userId, purpose }, null, null, null, 'POST')
       .then((response) => {
         setLoading({ ...loading, otp: false })
-        if (mobile) pending.current = false
+        pending.current = false
         if (response?.success) {
+          if (purpose === 'recovery' && !response.reset_token) {
+            setError({ message: t('localization.shared.unexpected_error') })
+            return
+          }
           toast.success(response.message)
-          setStep(2)
+          if (onVerified) onVerified(response)
+          else setStep?.(2)
           return
         }
         setError(response?.errors || response)
       })
       .catch((error) => {
-        if (!mobile) throw error
-        if (mobile) {
-          setLoading({ ...loading, otp: false })
-          if (mobile) pending.current = false
-          setError(
-            error?.errors || {
-              message: error?.message || t('localization.shared.unexpected_error')
-            }
-          )
-        }
+        setLoading({ ...loading, otp: false })
+        pending.current = false
+        setError(
+          error?.errors || {
+            message: error?.message || t('localization.shared.unexpected_error')
+          }
+        )
       })
-    if (!mobile) controller.abort()
   }
 
   const resendOTP = () => {
-    if (mobile && (loading?.resendOtp || cooldown > 0)) return
+    if (loading?.resendOtp || cooldown > 0) return
     if (!userId) {
       toast.error(t('localization.domain.otp_user_missing'))
       return
     }
     setLoading({ ...loading, resendOtp: true })
-    xFetch(`otp-resend/${userId}`)
+    xFetch(`otp-resend/${userId}`, null, null, null, { purpose })
       .then((response) => {
         setLoading({ ...loading, resendOtp: false })
         if (response?.success) {
@@ -121,15 +129,12 @@ export default function OtpVerification({ userId, setStep, loading, setLoading, 
         setError(response?.errors || response)
       })
       .catch((error) => {
-        if (!mobile) throw error
-        if (mobile) {
-          setLoading({ ...loading, resendOtp: false })
-          setError(
-            error?.errors || {
-              message: error?.message || t('localization.shared.unexpected_error')
-            }
-          )
-        }
+        setLoading({ ...loading, resendOtp: false })
+        setError(
+          error?.errors || {
+            message: error?.message || t('localization.shared.unexpected_error')
+          }
+        )
       })
   }
 
