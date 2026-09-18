@@ -234,6 +234,7 @@ function MobileTableList({
             (cell, index) =>
               ![primaryIndex, emphasisIndex, leadingIndex, actionIndex].includes(index) &&
               (cell.column?.isActionHide === false ||
+                cell.column.mobileHasCustomCell ||
                 (cell.value !== null && cell.value !== undefined && cell.value !== ''))
           )
           const hasExpandableDetails = isLargeMobileDetailSet(detailCells)
@@ -375,6 +376,9 @@ function ReactTable({
       isMobileTable
         ? suppliedColumns
             .filter((column) => column.isActionHide !== true)
+            // react-table supplies a default Cell for every column, so retain
+            // whether the caller provided a computed display before normalization.
+            .map((column) => ({ ...column, mobileHasCustomCell: Boolean(column.Cell) }))
             .map((column) =>
               typeof column.mobileSortAccessor === 'function'
                 ? {
@@ -471,6 +475,11 @@ function ReactTable({
     useResizeColumns
   )
   const { globalFilter, pageIndex, pageSize, hiddenColumns = [] } = state
+  useEffect(() => {
+    if (!isMobileTable) return
+    const lastPageIndex = Math.max(0, pageCount - 1)
+    if (pageIndex > lastPageIndex) gotoPage(lastPageIndex)
+  }, [isMobileTable, pageCount, pageIndex, gotoPage])
   const mobileSort = state.sortBy?.[0]
   const sortableColumns = allColumns.filter(
     (column) =>

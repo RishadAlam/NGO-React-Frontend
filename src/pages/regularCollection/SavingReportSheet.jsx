@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
@@ -19,6 +20,7 @@ import dateFormat from '../../libs/dateFormat'
 import tsNumbers from '../../libs/tsNumbers'
 
 export default function SavingReportSheet({ isRegular = true }) {
+  const isMobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const { category_id, field_id } = useParams()
   const { id, permissions: authPermissions } = useAuthDataValue()
   const [dateRange, setDateRange] = useState()
@@ -57,6 +59,7 @@ export default function SavingReportSheet({ isRegular = true }) {
   }
 
   const datesConfig = {
+    disableClearable: isMobile,
     options: dates?.map((date) => ({
       label: tsNumbers(dateFormat(date, 'dd/MM/yyyy')),
       value: date
@@ -74,6 +77,7 @@ export default function SavingReportSheet({ isRegular = true }) {
 
   const setParamsState = (val, name) => {
     if (name === 'dateRange') {
+      if (isMobile && !val) return
       setDateRange(val.value)
     } else if (name === 'creator') {
       setSelectedCreator(val)
