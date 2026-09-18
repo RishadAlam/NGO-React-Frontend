@@ -475,7 +475,7 @@
     left: 50%;
     z-index: 80;
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: min(calc(100% - 16px), 432px);
     min-height: 60px;
     padding: 6px 8px;

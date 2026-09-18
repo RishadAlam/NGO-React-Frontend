@@ -44,3 +44,9 @@ After user approval, the phone shell now uses six evenly spaced, icon-only dock 
 Live checks covered 320px/390px, EN/BN, light/dark, popup focus and Escape dismissal, and the 768px boundary. At 667×375 the popup fits between y=20 and y=299 and scrolls internally. No real account update or logout was submitted. Compiled tablet/desktop CSS remains unchanged.
 
 Final verification passed 778 tests across 28 files, the production build, changed-file ESLint, and diff checks. Two previously order-dependent collection tests now explicitly initialize their Recoil viewport fixture to match the browser viewport; production collection behavior was not changed.
+
+## Follow-up: five-control dock
+
+Moved Dashboard from the mobile dock to the end of Quick Services, using its original EN/BN name and a Home icon. Existing service priorities and permission checks are unchanged; Dashboard remains available to signed-in users without business-service permissions, alongside an explanatory access message. The icon-only dock now reads Search, Theme, Services, Language, Profile, with Services centered.
+
+Verified live at 320px and 390px in BN/EN and light/dark mode: no horizontal overflow, minimum 48px-high dock targets, Dashboard navigation and return to Services, and the Profile popup. At 768px the original navigation remains and mobile controls are hidden. All 783 tests across 28 files, production build, changed-file ESLint, and diff checks pass; compiled tablet/desktop CSS is unchanged.

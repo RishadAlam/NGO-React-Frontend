@@ -47,7 +47,6 @@ it.each([
     )
 
     for (const [name, path] of [
-      [home, '/dashboard'],
       [search, '/search'],
       [services, '/services']
     ]) {
@@ -55,6 +54,13 @@ it.each([
       expect(link.getAttribute('href')).toBe(path)
       expect(link.textContent).toBe('')
     }
+    expect(screen.queryByRole('link', { name: home, exact: true })).toBeNull()
+    const dock = screen.getByRole('navigation')
+    expect(
+      Array.from(dock.querySelectorAll('a, button')).map((control) =>
+        control.getAttribute('aria-label')
+      )
+    ).toEqual([search, theme, services, languageLabel, profile])
     expect(screen.getByRole('link', { name: services }).getAttribute('aria-current')).toBe('page')
     const themeButton = screen.getByRole('button', { name: theme, exact: true })
     expect(themeButton.textContent).toBe('')

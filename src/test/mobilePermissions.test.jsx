@@ -50,7 +50,8 @@ describe('Mobile service permissions', () => {
   ])('keeps an independently granted submenu accessible: %s', (permission, path) => {
     const { container } = mountWithPermissions(<MobileQuickActions />, [permission])
     expect(container.querySelector(`a[href="${path}"]`)).not.toBeNull()
-    expect(container.querySelectorAll('a').length).toBe(1)
+    expect(container.querySelectorAll('a:not([href="/dashboard"])').length).toBe(1)
+    expect(container.querySelectorAll('a[href="/dashboard"]').length).toBe(1)
   })
 
   it('updates cached services immediately when privileges are revoked or granted', () => {
@@ -61,10 +62,57 @@ describe('Mobile service permissions', () => {
     expect(container.querySelector('a[href="/recycle-bin"]')).not.toBeNull()
   })
 
-  it('does not expose approval children without their parent permission', () => {
+  it('keeps only Dashboard accessible without business-service permissions', () => {
     const { container } = mountWithPermissions(<MobileQuickActions />, [])
     expect(container.querySelector('a[href^="/pending/"]')).toBeNull()
-    expect(screen.getByRole('status')).toBeTruthy()
+    expect(screen.getAllByRole('link')).toHaveLength(1)
+    expect(screen.getByRole('link', { name: 'menu.dashboard' }).getAttribute('href')).toBe(
+      '/dashboard'
+    )
+    expect(screen.getByRole('status').textContent).toBe('mobile.no_services')
+  })
+
+  it('places Dashboard after existing quick-service priorities without duplicating it', () => {
+    const { container } = mountWithPermissions(<MobileQuickActions />, [
+      'client_registration',
+      'regular_saving_collection_list_view',
+      'pending_saving_collection_list_view',
+      'analytics_dashboard_view',
+      'recycle_bin_view'
+    ])
+    expect(
+      Array.from(container.querySelectorAll('.mobile-quick-actions__primary a')).map((link) =>
+        link.getAttribute('href')
+      )
+    ).toEqual([
+      '/registration/client',
+      '/collection/regular/saving',
+      '/collection/pending/saving',
+      '/analytics',
+      '/recycle-bin',
+      '/dashboard'
+    ])
+    expect(container.querySelectorAll('a[href="/dashboard"]')).toHaveLength(1)
+  })
+
+  it('navigates to Dashboard from Quick Services without business permissions', async () => {
+    mountWithPermissions(
+      <Routes>
+        <Route path="/services" element={<MobileQuickActions />} />
+        <Route path="/dashboard" element={<h1>Dashboard destination</h1>} />
+      </Routes>,
+      []
+    )
+    fireEvent.click(screen.getByRole('link', { name: 'menu.dashboard' }))
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Dashboard destination' })).toBeTruthy()
+    )
+  })
+
+  it.each([768, 1024, 1440])('does not add mobile services at %i px', (width) => {
+    window.innerWidth = width
+    const { container } = mountWithPermissions(<MobileQuickActions />, [])
+    expect(container.innerHTML).toBe('')
   })
 
   it('navigates when a quick service is clicked, including non-first tiles', async () => {

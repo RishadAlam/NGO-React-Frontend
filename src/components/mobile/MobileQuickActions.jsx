@@ -39,7 +39,7 @@ export default function MobileQuickActions({ isActive = true }) {
     if (!isActive) setActiveGroupId(null)
   }, [isActive])
 
-  const { quickActions, otherActionGroups } = useMemo(() => {
+  const { quickActions, otherActionGroups, hasBusinessServices } = useMemo(() => {
     const serviceIcons = {
       '/registration/client': 'memberRegistration',
       '/registration/saving-account': 'savings',
@@ -131,6 +131,9 @@ export default function MobileQuickActions({ isActive = true }) {
     const quickActions = quickPriorityMatchers.flatMap((matchesPath) =>
       routeActions.filter((action) => matchesPath(action.path))
     )
+    // Dashboard was available to every signed-in user in the dock. Keep that
+    // access here without changing any business-service permission checks.
+    quickActions.push({ path: '/dashboard', label: t('menu.dashboard'), icon: 'home' })
     const quickPaths = new Set(quickActions.map((action) => action.path))
     let remainingActions = routeActions.filter((action) => !quickPaths.has(action.path))
 
@@ -198,7 +201,7 @@ export default function MobileQuickActions({ isActive = true }) {
       })
     }
 
-    return { quickActions, otherActionGroups }
+    return { quickActions, otherActionGroups, hasBusinessServices: routeActions.length > 0 }
   }, [t, permissions])
 
   const otherActionCount = otherActionGroups.reduce(
@@ -212,13 +215,6 @@ export default function MobileQuickActions({ isActive = true }) {
   }, [activeGroup])
 
   if (!isMobile) return null
-  if (quickActions.length + otherActionCount === 0) {
-    return (
-      <p className="mobile-services-empty" role="status">
-        {t('mobile.no_services')}
-      </p>
-    )
-  }
 
   const renderAction = (action, onSelect) => (
     <Link
@@ -265,6 +261,12 @@ export default function MobileQuickActions({ isActive = true }) {
             {quickActions.map((action) => renderAction(action))}
           </div>
         </div>
+      )}
+
+      {!hasBusinessServices && (
+        <p className="mobile-services-empty" role="status">
+          {t('mobile.no_services')}
+        </p>
       )}
 
       {otherActionCount > 0 && (

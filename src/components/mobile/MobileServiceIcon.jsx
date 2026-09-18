@@ -14,6 +14,7 @@ import FolderSharedOutlined from '@mui/icons-material/FolderSharedOutlined'
 import GridViewOutlined from '@mui/icons-material/GridViewOutlined'
 import GroupsOutlined from '@mui/icons-material/GroupsOutlined'
 import HowToRegOutlined from '@mui/icons-material/HowToRegOutlined'
+import HomeOutlined from '@mui/icons-material/HomeOutlined'
 import HubOutlined from '@mui/icons-material/HubOutlined'
 import ListAltOutlined from '@mui/icons-material/ListAltOutlined'
 import ManageSearchOutlined from '@mui/icons-material/ManageSearchOutlined'
@@ -52,6 +53,7 @@ const icons = {
   field: MapOutlined,
   finance: AccountBalanceOutlined,
   grid: GridViewOutlined,
+  home: HomeOutlined,
   income: TrendingUpOutlined,
   internalAudit: RuleOutlined,
   loan: AccountBalanceWalletOutlined,

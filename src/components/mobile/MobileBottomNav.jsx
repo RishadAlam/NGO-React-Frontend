@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom'
 import useLanguageMode from '../../hooks/useLanguageMode'
 import useThemeMode from '../../hooks/useThemeMode'
 import Grid from '../../icons/Grid'
-import Home from '../../icons/Home'
 import Moon from '../../icons/Moon'
 import Search from '../../icons/Search'
 import Sun from '../../icons/Sun'
@@ -20,26 +19,9 @@ export default function MobileBottomNav() {
 
   return (
     <nav className="mobile-bottom-nav d-md-none" aria-label={t('mobile.navigation')}>
-      <NavLink to="/dashboard" className={linkClassName} aria-label={t('menu.dashboard')}>
-        <span className="mobile-bottom-nav__icon" aria-hidden="true">
-          <Home size={22} />
-        </span>
-      </NavLink>
       <NavLink to="/search" className={linkClassName} aria-label={t('common.search')}>
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
           <Search size={22} />
-        </span>
-      </NavLink>
-      <NavLink
-        to="/services"
-        className={({ isActive }) =>
-          `mobile-bottom-nav__item mobile-bottom-nav__item--services ${
-            isActive ? 'mobile-bottom-nav__item--active' : ''
-          }`
-        }
-        aria-label={t('mobile.all_services')}>
-        <span className="mobile-bottom-nav__icon" aria-hidden="true">
-          <Grid size={22} />
         </span>
       </NavLink>
       <button
@@ -52,6 +34,18 @@ export default function MobileBottomNav() {
           {isDark ? <Moon size={22} /> : <Sun size={22} />}
         </span>
       </button>
+      <NavLink
+        to="/services"
+        className={({ isActive }) =>
+          `mobile-bottom-nav__item mobile-bottom-nav__item--services ${
+            isActive ? 'mobile-bottom-nav__item--active' : ''
+          }`
+        }
+        aria-label={t('mobile.all_services')}>
+        <span className="mobile-bottom-nav__icon" aria-hidden="true">
+          <Grid size={22} />
+        </span>
+      </NavLink>
       <button
         type="button"
         className="mobile-bottom-nav__item mobile-bottom-nav__item--language"

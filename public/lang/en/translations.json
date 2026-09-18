@@ -279,7 +279,7 @@
     "sort_direction": "Sort direction",
     "pagination": "Pagination",
     "close_dialog": "Close dialog",
-    "no_services": "No services are available for your account. Contact an administrator if you need access.",
+    "no_services": "No additional services are available for your account. Contact an administrator if you need access.",
     "permissions_unavailable": "Your access permissions could not be loaded. Please sign in again or contact an administrator.",
     "navigation": "Primary navigation",
     "menu": "Menu",
