@@ -43,7 +43,7 @@ export default function MobileBottomNav() {
         }
         aria-label={t('mobile.all_services')}>
         <span className="mobile-bottom-nav__icon" aria-hidden="true">
-          <Grid size={22} />
+          <Grid size={26} />
         </span>
       </NavLink>
       <button

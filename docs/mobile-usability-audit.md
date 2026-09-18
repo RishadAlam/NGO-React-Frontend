@@ -50,3 +50,7 @@ Final verification passed 778 tests across 28 files, the production build, chang
 Moved Dashboard from the mobile dock to the end of Quick Services, using its original EN/BN name and a Home icon. Existing service priorities and permission checks are unchanged; Dashboard remains available to signed-in users without business-service permissions, alongside an explanatory access message. The icon-only dock now reads Search, Theme, Services, Language, Profile, with Services centered.
 
 Verified live at 320px and 390px in BN/EN and light/dark mode: no horizontal overflow, minimum 48px-high dock targets, Dashboard navigation and return to Services, and the Profile popup. At 768px the original navigation remains and mobile controls are hidden. All 783 tests across 28 files, production build, changed-file ESLint, and diff checks pass; compiled tablet/desktop CSS is unchanged.
+
+### Raised Services emphasis
+
+The approved Services highlight uses a 52px circular theme-colored surface, a 26px icon, and an 8px lift relative to the neighboring controls. Absolute positioning preserves the 60px dock and 48px link target. Active and keyboard-focus rings remain distinct; Plain Dark uses a lighter icon for contrast. Verified 320px/390px, EN/BN, light/dark, raised-area hit testing, keyboard navigation, and the hidden dock at 768px. All 783 tests, build, lint, and mobile layout scan pass; tablet/desktop CSS remains unchanged.

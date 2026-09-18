@@ -61,7 +61,15 @@ it.each([
         control.getAttribute('aria-label')
       )
     ).toEqual([search, theme, services, languageLabel, profile])
-    expect(screen.getByRole('link', { name: services }).getAttribute('aria-current')).toBe('page')
+    const servicesLink = screen.getByRole('link', { name: services })
+    expect(servicesLink.getAttribute('aria-current')).toBe('page')
+    // The central destination is visually distinct without adding a caption.
+    const servicesIcon = servicesLink.querySelector('svg')
+    const searchIcon = screen.getByRole('link', { name: search }).querySelector('svg')
+    expect(Number(servicesIcon.getAttribute('width'))).toBeGreaterThan(
+      Number(searchIcon.getAttribute('width'))
+    )
+    expect(servicesIcon.getAttribute('width')).toBe(servicesIcon.getAttribute('height'))
     const themeButton = screen.getByRole('button', { name: theme, exact: true })
     expect(themeButton.textContent).toBe('')
     fireEvent.click(themeButton)

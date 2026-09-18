@@ -583,6 +583,43 @@
         background: rgba(var(--primary-rgb), 0.1);
       }
     }
+
+    &__item--services {
+      // Lift only the visual surface, preserving the dock row and full link target.
+      .mobile-bottom-nav__icon {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        color: var(--main-bg);
+        background: var(--primary-color);
+        box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.4);
+      }
+
+      &.mobile-bottom-nav__item--active .mobile-bottom-nav__icon {
+        box-shadow:
+          inset 0 0 0 2px var(--main-bg),
+          0 6px 16px -6px rgba(15, 23, 42, 0.4);
+      }
+
+      &:focus-visible {
+        outline: none;
+
+        .mobile-bottom-nav__icon {
+          outline: 2px solid var(--main-color);
+          outline-offset: 3px;
+        }
+      }
+    }
+  }
+
+  body.dark[data-theme-palette='plain-dark'] .mobile-bottom-nav__item--services {
+    .mobile-bottom-nav__icon {
+      color: var(--main-color);
+    }
   }
 
   .mobile-bottom-nav > .profile--dock {
