@@ -13,7 +13,7 @@ export default function ViewSavingAccountModal({ open, setOpen, accountData, set
   }
 
   return (
-    <ModalPro open={open} handleClose={closeModal}>
+    <ModalPro open={open} handleClose={closeModal} label={t('saving.view_saving_acc')}>
       <div className="card">
         <div className="card-header">
           <div className="d-flex align-items-center justify-content-between">

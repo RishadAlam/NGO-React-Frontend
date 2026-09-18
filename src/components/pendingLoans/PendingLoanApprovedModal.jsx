@@ -85,7 +85,10 @@ export default function PendingLoanApprovedModal({ open, setOpen, mutate, data =
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={`${t('common.loan')} ${t('common.approval')}`}>
         <form onSubmit={onSubmit}>
           <div className="card">
             <div className="card-header">

@@ -19,7 +19,7 @@ export default function FieldFormModal({
 }) {
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro open={open} handleClose={() => setOpen(false)} label={modalTitle}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

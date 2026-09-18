@@ -96,7 +96,7 @@ export default function EditSavingAccountModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={closeModal}>
+      <ModalPro open={open} handleClose={closeModal} label={t('saving.edit_saving_acc')}>
         <form onSubmit={onSubmit}>
           <div className="card">
             <div className="card-header">

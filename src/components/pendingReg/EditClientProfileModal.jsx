@@ -104,7 +104,7 @@ export default function EditClientProfileModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={closeModal}>
+      <ModalPro open={open} handleClose={closeModal} label={t('client.edit_client_profile')}>
         <form onSubmit={onSubmit}>
           <div className="card">
             <div className="card-header">

@@ -146,7 +146,7 @@ export default function StaffPermissions({
 
   return (
     <>
-      <ModalPro open={isOpen} handleClose={() => setIsOpen(false)}>
+      <ModalPro open={isOpen} handleClose={() => setIsOpen(false)} label={modalTitle}>
         <div className="staff-permission-modal card">
           <div className="card-header staff-permission-modal__header">
             <div className="staff-permission-modal__heading">

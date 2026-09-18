@@ -94,7 +94,7 @@ export default function TransactionModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro open={open} handleClose={() => setOpen(false)} label={t('common.transaction')}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

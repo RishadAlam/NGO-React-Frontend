@@ -96,7 +96,7 @@ export default function EditLoanAccountModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={closeModal}>
+      <ModalPro open={open} handleClose={closeModal} label={t('loan.edit_loan_acc')}>
         <form onSubmit={onSubmit}>
           <div className="card">
             <div className="card-header">

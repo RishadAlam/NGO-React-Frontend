@@ -97,7 +97,10 @@ export default function CategoryUpdateModal({
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={`${t('common.category')} ${t('common.edit')}`}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

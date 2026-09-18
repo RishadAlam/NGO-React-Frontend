@@ -76,7 +76,10 @@ export default function AccNoUpdateModal({ open, setOpen, id, defaultField = nul
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={`${t('common.acc_no')} ${t('common.edit')}`}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

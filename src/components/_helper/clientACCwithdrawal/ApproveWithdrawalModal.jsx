@@ -88,7 +88,14 @@ export default function ApproveWithdrawalModal({ open, setOpen, mutate, data = {
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={
+          prefix === 'saving'
+            ? t('menu.withdrawal.Saving_Withdrawal')
+            : t('menu.withdrawal.Loan_Saving_Withdrawal')
+        }>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

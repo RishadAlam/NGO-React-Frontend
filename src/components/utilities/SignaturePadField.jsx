@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/joy'
-import { Tooltip, Zoom } from '@mui/material'
+import { Tooltip, useMediaQuery, Zoom } from '@mui/material'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignaturePad from 'react-signature-canvas'
@@ -24,6 +24,7 @@ export default function SignaturePadField({
   disabled = false
 }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
   const sigCanvas = useRef({})
 
   const clear = (e) => {
@@ -50,7 +51,10 @@ export default function SignaturePadField({
   return (
     <div className="text-center">
       <label className="form-label mb-3">{isRequired ? requiredLabel : label}</label>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={label || t('common.signature')}>
         <div className="card signature-pad-card" style={{ width: '100vw', height: '100vh' }}>
           <div className="card-header">
             <div className="d-flex align-items-category justify-content-between">
@@ -79,12 +83,18 @@ export default function SignaturePadField({
             <div className="d-inline-block">
               <ActionBtnGroup>
                 <Tooltip TransitionComponent={Zoom} title={t('common.save')} arrow followCursor>
-                  <IconButton className="text-primary" onClick={(e) => save(e)}>
+                  <IconButton
+                    aria-label={mobile ? t('common.save') : undefined}
+                    className="text-primary"
+                    onClick={(e) => save(e)}>
                     {<Save size={20} />}
                   </IconButton>
                 </Tooltip>
                 <Tooltip TransitionComponent={Zoom} title={t('common.delete')} arrow followCursor>
-                  <IconButton className="text-danger" onClick={(e) => clear(e)}>
+                  <IconButton
+                    aria-label={mobile ? t('common.delete') : undefined}
+                    className="text-danger"
+                    onClick={(e) => clear(e)}>
                     {<Trash size={20} />}
                   </IconButton>
                 </Tooltip>

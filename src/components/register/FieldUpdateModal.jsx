@@ -78,7 +78,10 @@ export default function FieldFormModal({ open, setOpen, id, defaultField = null,
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={`${t('common.field')} ${t('common.edit')}`}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

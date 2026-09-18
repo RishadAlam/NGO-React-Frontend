@@ -13,7 +13,10 @@ export default function ActionHistoryModal({ open, setOpen, actionHistory }) {
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={t('common.action_history.action_history')}>
         <div className="card">
           <div className="card-header">
             <div className="d-flex align-items-center justify-content-between">

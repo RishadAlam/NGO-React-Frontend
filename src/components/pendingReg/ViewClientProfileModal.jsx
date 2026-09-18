@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import XCircle from '../../icons/XCircle'
@@ -9,6 +10,8 @@ import ModalPro from '../utilities/ModalPro'
 
 export default function ViewClientProfileModal({ open, setOpen, profileData, setProfileData }) {
   const { t } = useTranslation()
+  const mobile = useMediaQuery('(max-width:767.98px)', { noSsr: true })
+  const title = t(mobile ? 'client.view_client_profile' : 'client.edit_client_profile')
   const [imageUri, setImageUri] = useState(profileData?.image_uri || profilePlaceholder)
   const [signatureUri, setSignatureUri] = useState(
     profileData?.signature_uri || SignaturePlaceholder
@@ -20,11 +23,11 @@ export default function ViewClientProfileModal({ open, setOpen, profileData, set
   }
 
   return (
-    <ModalPro open={open} handleClose={closeModal}>
+    <ModalPro open={open} handleClose={closeModal} label={title}>
       <div className="card">
         <div className="card-header">
           <div className="d-flex align-items-center justify-content-between">
-            <b className="text-uppercase">{t('client.edit_client_profile')}</b>
+            <b className="text-uppercase">{title}</b>
             <Button
               className={'text-danger p-0'}
               loading={false}

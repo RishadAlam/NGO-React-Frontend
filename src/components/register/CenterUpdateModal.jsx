@@ -78,7 +78,10 @@ export default function CenterUpdateModal({ open, setOpen, id, defaultField = nu
 
   return (
     <>
-      <ModalPro open={open} handleClose={() => setOpen(false)}>
+      <ModalPro
+        open={open}
+        handleClose={() => setOpen(false)}
+        label={`${t('common.center')} ${t('common.edit')}`}>
         <div className="card">
           <form onSubmit={onSubmit}>
             <div className="card-header">

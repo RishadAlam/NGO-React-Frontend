@@ -120,7 +120,7 @@ export default function StoreAccountCheck({ open, setOpen, prefix }) {
   }
 
   return (
-    <ModalPro open={open} handleClose={() => setOpen(false)}>
+    <ModalPro open={open} handleClose={() => setOpen(false)} label={t('common.account_check')}>
       <div className="card">
         <form onSubmit={onSubmit}>
           <div className="card-header">
