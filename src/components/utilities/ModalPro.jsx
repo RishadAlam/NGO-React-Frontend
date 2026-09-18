@@ -78,6 +78,7 @@ export default function ModalPro({ open, handleClose, children, label }) {
         <Fade in={open}>
           <Box
             sx={style}
+            className={mobile ? 'mobile-app-dialog' : undefined}
             role={mobile ? 'dialog' : undefined}
             aria-modal={mobile ? true : undefined}
             aria-label={mobile ? label || t('common.details') : undefined}>

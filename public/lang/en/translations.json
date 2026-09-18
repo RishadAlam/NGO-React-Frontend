@@ -267,6 +267,17 @@
     "expense_category_id": "Expense category"
   },
   "mobile": {
+    "collection_load_error": "Collection data could not be loaded. Please try again.",
+    "retry": "Retry",
+    "retrying": "Retrying…",
+    "stale_collection_data": "Previously loaded data is shown below.",
+    "page_of": "Page {{page}} of {{total}}",
+    "sort_by": "Sort by",
+    "default_order": "Default order",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "sort_direction": "Sort direction",
+    "pagination": "Pagination",
     "close_dialog": "Close dialog",
     "no_services": "No services are available for your account. Contact an administrator if you need access.",
     "permissions_unavailable": "Your access permissions could not be loaded. Please sign in again or contact an administrator.",
