@@ -92,3 +92,52 @@ were submitted during live verification.
 - This is not a claim that every unique page, modal, theme and language
   combination is fully audited. Shared mobile infrastructure and the listed
   high-risk collection/navigation paths are the verified coverage.
+
+## September 18: action-permission follow-up
+
+The screenshot exposed a separate gap: several list pages checked Edit
+permissions but never checked their status-switch or registration permissions.
+The earlier shared-table repairs did not cover these controls.
+
+- Phone-only status controls use the exact update/approval grant. Without it,
+  the status is translated read-only text, not a switch.
+- Creation buttons and their open forms use their independent registration
+  grants; an update grant alone does not authorize creation.
+- Mobile staff editing requires `staff_reset_password` to show or submit
+  password fields. Initial credentials during staff registration are retained.
+- Reviewed mobile mutations recheck the current session immediately before HTTP
+  dispatch, including delayed confirmations. Missing/revoked grants and old
+  session tokens are rejected before reaching the network.
+  The policy inventory covers 106 current call sites and 100 endpoint/method
+  shapes using 108 established grants. New mutation endpoints must be added to
+  the policy explicitly; this is not a blanket guard for future API additions.
+- Workflows sharing an endpoint carry explicit internal permission context.
+  Regular collections, pending collections and account-history collections do
+  not borrow each other's grants. Pending and registered account editing are
+  also distinguished. This context is not sent to the server.
+- Pending savings/loan editors use their own update grants on mobile. Authorized
+  pending-client row actions are discoverable without toggling hidden columns.
+- Saving-history mobile edits retain the savings-account ID rather than sending
+  the collection record's ID. Loan-history account IDs were already correct.
+
+Follow-up verification: **621 tests passed in 15 targeted files**, including
+396 actual `xFetch`/mocked-HTTP cases and shared edit-form submissions. Changed
+JavaScript/JSX modules and all targeted tests pass ESLint; the production Vite
+build passes. Existing Sass and mixed static/dynamic icon-import warnings remain.
+The build output was directed to `/private/tmp` rather than added to the project.
+
+Actual list/form tests cover Fields, Center, Category, Accounts, income/expense
+categories, income, expense, transfers, withdrawals, audit metadata, Staffs and
+pending client/saving/loan registrations. Collection tests distinguish regular,
+pending and account-history workflows. Boundary tests preserve existing controls
+at 768px and above. These are frontend regression checks, not a claim of full
+server-side authorization or every possible role combination.
+
+No server rules, actual user permissions or financial data were changed.
+The live browser account was authorized, so denied-user verification uses
+isolated fixtures rather than changing live roles. The browser's temporary
+phone viewport was reset after inspection.
+
+Independent final source review found no significant issue in the current
+mutation mappings, shared-endpoint contexts or desktop isolation. It did not
+test live API enforcement.
